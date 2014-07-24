@@ -1,0 +1,52 @@
+<% content_for(:box1) do %>
+
+  <h4>Course Rosters</h4>
+  <%=form_tag :action => :list do %>
+    <table>
+      <tr class="bottom">
+        <td>
+        <label for="filter_dept">Semester:</label><br>
+        <%=property_select :filter, :academic_period, :style => "width:100px" %>
+        </td>
+        <td>
+        <label for="filter_dept">Filter (e.g., ITE317 or ITE317-001):</label><br>
+        <%=text_field :filter, :course_name %>
+        </td>
+        <td>
+        <%=submit_tag "Show" %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+<% end %>
+
+
+<% content_for(:box2) do %>
+  <table id="course_list">
+    <tr>
+      <th>Course</th>
+      <th>CRN</th>
+      <th>Title</th>
+      <th>Instructor</th>
+      <th>Registration</th>
+      <% if @current_user.manage? :course, :delegate => :export  %><th>Progress</th><% end %>
+    </tr>
+
+  <% for assessment_course in @assessment_courses %>
+    <tr>
+      <td><%=h assessment_course.name %></td>
+      <td><%=h assessment_course.crn %></td>
+      <td><%=h assessment_course.title %></td>
+      <td><%=h assessment_course.instructor %></td>
+      <td><%=h assessment_course.assessment_course_registrations.length.to_i %></td>
+      <% if @current_user.manage? :course, :delegate => :export %><td><%=number_to_percentage assessment_course.progress, :precision => 2 %></td><% end %>
+      <td><%=link_to "Show", course_rosters_path(:action => :show, :id => assessment_course) %></td>
+    </tr>
+  <% end %>
+  </table>
+  <br>
+  <div class="center"><%=will_paginate @assessment_courses%></div>
+  <p class="right"><%=link_to "Download", :action => :export if @current_user.manage? :course, :delegate => :export %></p>
+
+<% end %>

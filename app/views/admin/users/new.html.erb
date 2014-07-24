@@ -1,0 +1,38 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#person_id_number').keyup(function() {
+        if($(this).val().match(/[\d]{8}/i)) {
+          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>',
+          {key: $(this).val()},
+          function(data) { $('#person_form').html(data);},
+          'html');
+        }
+      })
+
+      $('#person_email').keyup(function() {
+        if($(this).val().match(/\w+@hawaii.edu/i)) {
+          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>',
+          {key: $(this).val()},
+          function(data) { $('#person_form').html(data);},
+          'html');
+        }
+      })
+    });
+  </script>
+<%end%>
+
+<% content_for(:box1) do %>
+
+<h4>New User</h4>
+
+<%=label_form_for :person, :url => {:action => :create}, :remote => true do %>
+  <div id="person_form">
+    <%=render :partial => "/main/person_form" %>
+  </div>
+  <%=controls if @current_user.manage? :admin, :delegate => :user %>
+<% end %>
+
+<%=link_to "Back", :action => :list %>
+
+<% end %>

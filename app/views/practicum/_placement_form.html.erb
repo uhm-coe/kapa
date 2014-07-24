@@ -1,0 +1,19 @@
+<%=label_fields_for :practicum_placement do |a| %>
+<table>
+    <tr>
+      <td width="50%">
+        <%=a.property_select :academic_period, {:label => "Semester"}, {:disabled => !@current_user.manage?(:practicum, :delegate => :maintain)} %>
+        <%=a.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Coordinator Primary"}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
+        <%=a.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Coordinator Secondary"}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
+        <%=a.history_select :status, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
+        <%=a.text_field :uid, :label => "Group", :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
+      </td>
+      <td width="50%">
+        <%=a.history_select :category, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
+        <%=a.history_select :sequence, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
+        <%=a.history_select :mentor_type, {:include_blank => true} %>
+      </td>
+    </tr>
+</table>
+<%=a.hidden_field :practicum_profile_id %>
+<% end %>

@@ -1,0 +1,21 @@
+<% content_for(:box1) do %>
+  <%=render :partial => "/main/person_detail" %>
+<%end%>
+
+<% content_for(:box2) do %>
+  <h4>New Transition Point</h4>
+  <%=label_form_for :transition_point, :url => {:action => :create, :id => @person}, :remote => true do |f| %>
+    <table>
+      <tr>
+        <td>
+          <%=f.property_select :academic_period, :label => "Semester" %>
+        </td>
+        <td>
+          <%=f.property_select :type, :name => :transition_point, :depts => @current_user.depts %>
+        </td>
+      </tr>
+    </table>
+    <%=f.hidden_field :curriculum_id %>
+    <%=controls if @current_user.write? %>
+  <% end %>
+<%end%>

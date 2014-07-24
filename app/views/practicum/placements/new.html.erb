@@ -1,0 +1,34 @@
+<% content_for(:box1) do %>
+  <%=render :partial => "/main/person_detail" %>
+<%end%>
+
+<% content_for(:box2) do %>
+  <h4>New Placement</h4>
+  <div class="tabs">
+    <ul>
+      <li><a href="#practicum_profile_tab">Profile</a></li>
+    </ul>
+
+    <div id="practicum_profile_tab">
+      <%=label_form_for :practicum_placement, :url => {:action => :create, :id => @person}, :remote => true do |f| %>
+        <table>
+          <tr>
+            <td>
+              <%=f.property_select :academic_period, :label => "Semester" %>
+            </td>
+            <td>
+              <%=label_fields_for :practicum_profile do |p| %>
+              <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code} - #{c.academic_period_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+        <%=controls if @current_user.write? %>
+      <% end %>
+    </div>
+  </div>
+
+  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :practicum) %>
+
+<% end %>
+

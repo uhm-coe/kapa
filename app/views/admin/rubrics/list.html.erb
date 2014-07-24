@@ -1,0 +1,57 @@
+<% content_for(:box1) do %>
+
+  <h4>Assessments</h4>
+  <%=form_tag :action => :list do %>
+    <table><tr class="bottom">
+        <td>
+          <label for="filter_dept">Filter:</label><br>
+          <%=text_field :filter, :title %>
+        </td>
+        <td>
+          <label for="filter_dept">Program:</label><br>
+          <%=program_select :filter, :program, :include_blank => true %>
+        </td>
+        <td>
+          <label for="filter_dept">Course:</label><br>
+          <%=property_select :filter, :assessment_course, :include_blank => true %>
+        </td>
+      <td>
+        <label for="filter_dept">Transition Point:</label><br>
+        <%=property_select :filter, :transition_point, :include_blank => true %>
+      </td>
+        <td>
+          <%=submit_tag "Show" %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+<% end %>
+
+
+<% content_for(:box2) do %>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Program(s)</th>
+      <th>Effective</th>
+      <th>Criteria</th>
+      <th>Dept</th>
+    </tr>
+
+    <% for assessment_rubric in @assessment_rubrics %>
+      <tr>
+        <td><%=abbr assessment_rubric.title, 50 %></td>
+        <td><%=abbr assessment_rubric.program, 23 %></td>
+        <td><%=h assessment_rubric.effective_academic_period %></td>
+        <td><%=h assessment_rubric.assessment_criterions.length.to_i %></td>
+        <td><%=h assessment_rubric.dept %></td>
+        <td><%=link_to "Show", :action => :show, :id => assessment_rubric %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <div class="center"><%=will_paginate @assessment_rubrics %></div>
+  <div class="right"><%=link_to "New", :action => :new %></div>
+
+<% end %>

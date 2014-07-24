@@ -1,0 +1,14 @@
+<% content_for(:box1) do %>          
+  <%=render :partial => "/main/person_detail" %>
+<%end%>
+
+<% content_for(:box2) do %>
+  <h4>New Program</h4>
+
+  <%=label_form_for :curriculum, :url => main_curriculums_path(:action => :create, :id => @person), :remote => true do |f| %>
+    <%= f.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"}, {:style => "width:300px"} %>
+    <%=controls if @current_user.write? %>
+  <% end %>
+  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :curriculum) %>
+
+<% end %>

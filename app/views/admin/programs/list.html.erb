@@ -1,0 +1,51 @@
+
+<% content_for(:box1) do %>
+  <h4>Academic Programs</h4>
+  <%=form_tag :action => :list do %>
+    <table>
+      <tr class="bottom">
+        <td>
+          <p><label for="filter_dept">Dept:</label><br>
+          <%=property_select :filter, :dept, :include_blank => true %></p>
+        </td>
+        <td>
+          <p><label for="filter_dept">Active:</label><br>
+          <%=select :filter, :active, [["Active", "1"],["In-Active","0"]], :include_blank => true %></p>
+          <%#=check_box :filter, :active, {}, 1, nil %>
+        </td>
+        <td>
+          <%=submit_tag "Show" %>
+        </td>
+      </tr>
+    </table>
+  <%end%>
+<%end%>
+
+
+<% content_for(:box2) do %>
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Dept</th>
+      <th>Sequence</th>
+      <th>Active</th>
+    </tr>
+
+    <% for program in @programs %>
+      <tr>
+        <td><%=h program.code %></td>
+        <td><%=h program.description %></td>
+        <td><%=abbr program.category, 20 %></td>
+        <td><%=h program.dept %></td>
+        <td><%=h program.sequence %></td>
+        <td><%=h program.active %></td>
+        <td><%=link_to "Show", :action => :show, :id => program %></td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="center"><%=will_paginate @programs %></div>
+  <div class="right"><%=link_to "New", :action => :new %></div>
+
+<%end%>

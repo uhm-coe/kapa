@@ -1,0 +1,162 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+
+      $('#person_id_number').keyup(function() {
+        if($(this).val().match(/[\d]{8}/i)) {
+          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>', 
+                {key: $(this).val()}, 
+                function(data) { $('#person_form').html(data);},
+                'html');
+        }
+      })
+
+      $('#person_email').keyup(function() {
+        if($(this).val().match(/\w+@hawaii.edu/i)) {
+          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>', 
+                {key: $(this).val()}, 
+                function(data) { $('#person_form').html(data);},
+                'html');
+        }
+      })
+      
+      $('#person_sync_button').click(function() {
+          $.get('<%=main_persons_path(:action => :sync, :id => @person)%>', 
+                {key: $('#person_id_number').val()}, 
+                function(data) { $('#person_form').html(data);},
+                'html');      
+      })
+    });
+  </script>
+<%end%>
+
+<h3>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="glyphicon glyphicon-user"></span><span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><% if @current_user.read? :main %><a href="#" data-toggle="modal" data-target="#person_profile_dialog">Show Profile</a><% end %></li>
+      <li><% if @current_user.read? :main %><a href="#" data-toggle="modal" data-target="#person_contact_dialog">Show Contacts</a><% end %></li>
+      <li class="divider"></li>
+      <li><% if @current_user.read? :artifact %><a href="#" data-toggle="modal" data-target="#person_documents_dialog">Show Documents</a><% end %></li>
+      <li><% if @current_user.read? :artifact %><a href="#" data-toggle="modal" data-target="#person_forms_dialog">Show Forms</a><% end %></li>
+      <li><% if @current_user.read? :artifact %><a href="#" data-toggle="modal" data-target="#person_exams_dialog">Show Praxis</a><% end %></li>
+      <li class="divider"></li>
+      <li><a href="#">Send E-mail</a></li>
+      <li><a href="#">Go to STAR</a></li>
+    </ul>
+  </div>
+  <%=link_to @person.full_name, main_persons_path(:action => :show, :id => @person) %>
+</h3>
+
+
+<div class="modal fade" id="person_profile_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Profile</h4>
+      </div>
+      <div class="modal-body">
+        <%=label_form_for :person, :url => main_persons_path(:action => :update, :id => @person, :focus => "profile", :return_uri => request.symbolized_path_parameters), :remote => true do %>
+          <div id="person_form"><%=render :partial => "/main/person_form" %></div><br>
+          <%=content_tag :p, :class => "center" do %>
+            <%=submit_tag "Save" %>
+            <%=button_to_reset "Cancel"%>
+            <%=button_to_function "Sync", nil, :id => "person_sync_button" if @person.verified? %>
+          <% end if @current_user.write? :main %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-submit="#filter_form">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="person_contact_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Contacts</h4>
+      </div>
+      <div class="modal-body">
+
+        <%=label_form_for :contact, :url => main_contacts_path(:action => :update, :id => @person, :focus => "contact", :return_uri => request.symbolized_path_parameters), :remote => true do %>
+          <%=render :partial => "/main/contact_form", :locals => {:object_name => :contact} %><br>
+          <%=content_tag :p, :class => "center" do %>
+            <%=submit_tag "Save" %>
+            <%=button_to_reset "Cancel" %>
+          <% end if @current_user.write? :main %>
+        <% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-submit="#filter_form">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="person_forms_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Forms</h4>
+      </div>
+      <div class="modal-body">
+
+        <%=render :partial => "/artifact/form_table" %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-submit="#filter_form">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="person_documents_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Documents</h4>
+      </div>
+      <div class="modal-body">
+
+        <%=render :partial => "/artifact/document_table" %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-submit="#filter_form">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="person_exams_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Praxis</h4>
+      </div>
+      <div class="modal-body">
+        <%=render :partial => "/artifact/exam_table" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-submit="#filter_form">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+

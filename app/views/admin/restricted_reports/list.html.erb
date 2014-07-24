@@ -1,0 +1,90 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4>SSN Reporting</h4>
+  <%=form_tag(:action => :list) do %>
+    <table>
+    <tr class="bottom">
+      <td>
+        <label>Semester Start:<br>
+          <%=property_select :filter, :academic_period_first, :name => :academic_period %></label>
+      </td>
+      <td>
+        <label>Semester End:<br>
+          <%=property_select :filter, :academic_period_last, :name => :academic_period%></label>
+      </td>
+      <td>
+        <label>Program:<br>
+        <%=property_select :filter, :program, :include_blank => "Any", :depts => @current_user.depts %></label>
+      </td>
+      <td>
+        <label>Distribution:<br>
+        <%=property_select :filter, :distribution, :name => :distribution, :include_blank => "Any" %></label>
+      </td>
+    </tr>
+    <tr class="bottom">
+      <td>
+        <label>Type<br>
+        <%=property_select :filter, :type, :name => :transition_point %></label>
+      </td>
+      <td>
+        <label>Major/Concentration:<br>
+        <%=property_select :filter, :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %></label>
+      </td>
+      <td>
+        <label>Status:<br>
+        <%=property_select :filter, :status, :name => :admission_status, :include_blank => "Any" %></label>
+      </td>
+      <td class="right">
+        <%=submit_tag "Show" %>
+      </td>
+    </tr>
+    </table>
+  <% end %>
+
+<%end%>
+
+
+<% content_for(:box2) do %>
+
+  <table id="admission_list">
+    <tr>
+      <th>UH ID</th>
+      <th>Name</th>
+      <th>SSN</th>
+      <th>Program</th>
+      <th>Latest Action</th>
+      <th>Status</th>
+    </tr>
+
+    <% for transition_point in @transition_points %>
+      <tr>
+        <td><%=link_to_id_number transition_point.curriculum.person %></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_persons_path(:action => :show, :id => transition_point.curriculum.person_id) %></td>
+        <td><%=h transition_point.curriculum.person.ssn_agreement %>-<%=h transition_point.curriculum.person.ssn%> </td>
+        <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
+        <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+        <td><%=h transition_point.status_desc %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <div class="center"><%=will_paginate @transition_points %></div>
+
+  <p class="right"><%=link_to_function "Download", nil, :id => "open_dialog" if @current_user.manage? :admin, :delegate => :restricted_report %></p>
+  <div id="dialog" class="form-dialog" title="Key Verification">
+    <p>Please select the key file and enter the passphrase.</p>
+    <%=form_tag({:action => :export}, {:multipart => true, :id => "persons_export_form"}) do %>
+      <p><label>Key file:<br>
+          <%=file_field_tag :key_file, :style => "width:200px;" %></label></p>
+    <% end %>
+  </div>
+
+<%end%>

@@ -1,0 +1,23 @@
+<% content_for(:document) do %>
+  <%=content_tag :iframe, :src => artifact_documents_url(:action => :show, :id => @document, :format => :file, :inline => true) do %>
+  [Your browser does not support iframe, or has been configured not to display inline frames.
+   You can access <%=link_to "the document", :action => :show, :id => @document, :format => :file %>
+   via a link though.]
+  <% end %>
+<% end %>
+
+<% content_for(:navigation) do %>
+  <%=label_form_for :document, :url => {:action => :update, :id => @document}, :html => { :multipart => true }, :remote => true do |f| %>
+      <%=f.text_field :name %>
+      <%=f.file_field :data, :text => "Replace file" if @current_user.write? :artifact, :dept => @document.dept %>
+      <%=f.check_box :public, {:text => "Share document"}, "Y", "N" %>
+      <%=f.text_area :note, :size => "25x30" %>
+      <%=f.text_field :dept if @current_user.manage? %>
+      <%=f.hidden_field :person_id, :value => @person.id %>
+      <%= controls do %>
+        <%= button_to_redirect "Delete", artifact_documents_path(:action => :destroy, :id => @document), {"confirm" => "Are you sure?"} %>
+      <% end if @current_user.write? :artifact, :dept => @document.dept %>
+  <% end %>
+
+<% end %>
+

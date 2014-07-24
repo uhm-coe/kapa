@@ -1,0 +1,33 @@
+<% content_for(:form) do %>
+
+  <div style="text-align: right;"><h3><%=h @form.academic_period_desc %> ID:<%=h @form.id%></h3></div>
+
+  <%=form_tag({:action => :update, :id => @form}, {:class => "uniForm"}) do %>
+
+    <%=content_tag :div, :id => "errorMsg" do %>
+      <h3><%=flash[:error] %></h3>
+    <% end if flash[:error] %>
+
+    <%=content_tag :div, :id => "OKMsg" do %>
+      <p><%=flash[:notice] %></p>
+    <% end if flash[:notice] %>
+
+
+    <%=render :partial => "/artifact/#{@form.type}_form" %>
+    <%=hidden_field :form, :person_id%>
+    <%=hidden_field :form, :type%>
+    <br>
+
+  <% end %>
+
+<% end %>
+
+<% content_for(:navigation) do %>
+
+  <%=label_form_for(:form, :url => {:action => :update, :id => @form}, :remote => true) do |f| %>
+    <%=f.text_area :note, :text => "Note", :size => "25x30"%>
+    <%=f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :text => "Lock status" %>
+    <%=controls if @current_user.write? :artifact, :dept => @form.dept %>
+  <% end %>
+
+<% end %>

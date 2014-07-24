@@ -1,0 +1,76 @@
+<% content_for(:box1) do %>
+
+  <h4><%=h @practicum_school.name%></h4>
+  
+  <div class="tabs">
+    <ul>
+      <li><a href="#school_profile_tab">Profile</a></li>
+      <li><a href="#school_contact_tab">Contact</a></li>
+      <li><a href="#mentors_tab">Mentors</a></li>
+      <li><a href="#placements_tab">Placements</a></li>
+    </ul>
+
+    <div id="school_profile_tab">
+      <%=label_form_for :practicum_school, :url => {:action => :update, :id => @practicum_school}, :remote => true do |f|%>
+        <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
+        <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
+      <% end %>
+
+    </div>
+
+    <div id="school_contact_tab">
+      <%=label_form_for :practicum_school, :url => {:action => :update, :id => @practicum_school, :focus => "school_contact"}, :remote => true do |f|%>
+        <%=render :partial => "/practicum/school_contact_form" %>
+        <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
+      <% end %>
+    </div>
+
+    <div id="mentors_tab">
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>E-Mail</th>
+          <th>Placements</th>
+        </tr>
+
+        <% for mentor in @mentors %>
+          <tr>
+            <td><%=h mentor.full_name %></td>
+            <td><%=mail_to mentor.contact.email if mentor.contact%></td>
+            <td><%=h mentor.practicum_assignments.length.to_i %></td>
+          </tr>
+        <% end %>
+      </table>
+      <br/>
+
+    </div>
+
+    <div id="placements_tab">
+      <table id="placement_list">
+        <tr>
+          <th>Semester</th>
+          <th>UH ID</th>
+          <th>Name</th>
+          <th>Mentor</th>
+        </tr>
+
+        <% for practicum_assignment in @practicum_assignments %>
+          <tr>
+            <td><%=h practicum_assignment.practicum_placement.academic_period_desc %></td>
+            <td><%=link_to_id_number practicum_assignment.practicum_placement.practicum_profile.person %></td>
+            <td><%=abbr practicum_assignment.practicum_placement.practicum_profile.person.full_name%></td>
+            <td><%=h practicum_assignment.person.full_name %></td>
+            <td class="right"><%=link_to "Show", practicum_placements_path(:action => :show, :id => practicum_assignment.practicum_placement, :focus => "mentors") if practicum_assignment.practicum_placement.practicum_profile.coordinator?(@current_user) %></td>
+          </tr>
+        <% end %>
+      </table>
+      <br>
+
+    </div>
+
+  </div>
+
+  <%=link_to "Back", :action => :list %>
+
+<%end%>
+

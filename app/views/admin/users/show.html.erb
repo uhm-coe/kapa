@@ -1,0 +1,41 @@
+<% content_for(:box1) do %>
+  <%=render :partial => "/main/person_detail" %>
+<%end%>
+
+<% content_for(:box2) do %>
+
+  <h4>User Record</h4>
+  <div class="tabs">
+    <ul>
+      <li><a href="#user_profile_tab">Profile</a></li>
+      <li><a href="#role_tab">Roles</a></li>
+      <li><a href="#activity_tab">Activities</a></li>
+      <li><a href="#other_accounts_tab">Associated Accounts</a></li>
+    </ul>
+
+    <div id="user_profile_tab">
+      <%=label_form_for :user, :url => {:action => :update, :id => @user}, :remote => true do |f| %>
+        <%=render :partial => "/admin/user_form", :locals => {:f => f} %>
+        <%=controls if @current_user.manage?  :admin, :delegate => :user %>
+      <% end %>
+    </div>
+
+    <div id="role_tab">
+      <%=label_form_for :user_roles, :url => {:action => :update, :id => @user, :focus => "role"}, :remote => true do |f| %>
+        <%=render :partial => "/admin/role_form", :locals => {:f => f} %>
+        <%=controls if @current_user.manage?  :admin, :delegate => :user  %>
+      <% end %>
+    </div>
+
+    <div id="activity_tab">
+      <%=render :partial => "/admin/activity_table" %>
+    </div>
+
+    <div id="other_accounts_tab">
+      <%=render :partial => "/admin/account_table" %>
+    </div>
+  </div>
+
+  <%=link_to "Back", :action => :list %>
+<%end%>
+s

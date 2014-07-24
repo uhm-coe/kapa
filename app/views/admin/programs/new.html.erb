@@ -1,0 +1,21 @@
+<% content_for(:box1) do %>
+
+  <h4>New Program</h4>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#program_profile_tab">Profile</a></li>
+    </ul>
+
+    <div id="program_profile_tab">
+      <%=label_form_for :program, :url => {:action => :create}, :remote => true do |f| %>
+        <%=render :partial => "/admin/program_form" %>
+        <%=controls if @current_user.manage? %>
+      <% end %>
+    </div>
+
+  <%=link_to "Back", :action => :list %>
+
+  </div>
+
+<% end %>

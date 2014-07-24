@@ -1,0 +1,12 @@
+ServerName localhost
+<VirtualHost *:80>
+        DocumentRoot /vagrant/public
+        RailsEnv development
+        PassengerUserSwitching on
+        PassengerDefaultUser vagrant
+        PassengerMaxPoolSize 1
+        <Directory /vagrant/public>
+                Allow from all
+                Options -MultiViews
+        </Directory>
+</VirtualHost>

@@ -1,0 +1,56 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+
+      $('#filter_assessment_rubric_id').change(function() {
+        $(this).parents('form').submit();
+      });
+
+      appFn.initAssessmentTable('#assessment_table');
+
+      $('#all_green_button').click(function() {
+        if(confirm('Would you like to fill all empty cells in green?')) {
+          appFn.setAssessmentScores('2');
+        }
+      });
+    });
+  </script>
+<% end %>
+
+
+<% content_for(:box1) do %>
+  <%=render :partial => "/main/person_detail" %>
+<%end%>
+
+<% content_for(:box2) do %>
+  <h4>Assessment Course/<%=@assessment_course.name%></h4>
+  <div class="tabs">
+    <ul>
+      <li><a href="#course_tab">Course</a></li>
+      <li><a href="#assessment_tab">Assessment</a></li>
+    </ul>
+
+    <div id="course_tab">
+      <%=label_form_for :course_registration, :url => {:action => :update, :id => params[:id]}, :remote => true do |f| %>
+        <%=render :partial => "/course/registration_form" %>
+      <% end %>
+    </div>
+
+
+    <div id="assessment_tab">
+      <h5>
+        <%=form_for :filter, :url => {:action => :show, :id => @assessment_course_registration, :focus => :assessment} do |f| %>
+        <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => "600"}) %>
+        <% end %>
+      </h5>
+      <%=label_form_for :assessment_score, :url => {:action => :update, :id => params[:id]}, :remote => true do |f| %>
+        <%=render :partial => "/course/assessment_form" %>
+        <%=controls if @current_user.write?(:course) %>
+      <% end %>
+    </div>
+  </div>
+
+  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :course) %>
+
+<% end %>

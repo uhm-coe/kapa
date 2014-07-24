@@ -1,0 +1,147 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+
+      var prefix;
+      $('div#mentor_dialog').dialog(
+       {autoOpen: false,
+        width: 'auto',
+        height: 'auto',
+        buttons: {
+          'Cancel': function() {
+            $(this).dialog('close');
+           },
+          'Save' : function() {
+            $.getJSON('<%=practicum_assignments_path(:action => :update_mentor)%>',
+                      $('#mentor_form').serialize(),
+                      function(data) {
+                        $(prefix + 'name').val(data['full_name']);
+                        $(prefix + 'person_id').val(data['person_id']);
+
+                        if(prefix  == '#practicum_assignment_') {
+                          $(prefix + 'practicum_school_id').val(data['practicum_school_id']);
+                          $(prefix + 'practicum_school_id').multiselect('refresh');
+                          $(prefix + 'user_primary_id').val(data['user_primary_id']);
+                          $(prefix + 'user_primary_id').multiselect('refresh');
+                          $(prefix + 'user_secondary_id').val(data['user_secondary_id']);
+                          $(prefix + 'user_secondary_id').multiselect('refresh');
+                          $(prefix + 'content_area').val(data['content_area']);
+                        }
+                        $('#mentor_dialog').dialog('close');
+                      });
+          }
+        }
+      });
+
+      $('a.edit-mentor').click(function() {
+        prefix = '#' + $(this).siblings('input').attr('id').replace('name', '');
+        $('#mentor_person_id').val($(prefix + 'person_id').val());
+        $('#mentor_person_id').multiselect('refresh');
+        $('#mentor_person_id').change();
+        $('#mentor_dialog').dialog('open');
+      });
+
+      $('#mentor_person_id').change(function() {
+        if($(this).val() != '') {
+          $.getJSON('<%=practicum_assignments_path(:action => :get_mentor)%>',
+                  { person_id: $(this).val()},
+                  function(data) {
+                    $('#id').val($(this).attr('practicum_assignment_id'));
+                    $('#mentor_last_name').val(data['last_name']);
+                    $('#mentor_first_name').val(data['first_name']);
+                    $('#mentor_email').val(data['email']);
+                  }
+           );
+        }
+        else {
+          $('#mentor_last_name').val('');
+          $('#mentor_first_name').val('');
+          $('#mentor_email').val('');
+        }
+      });
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+  <%=render :partial => "/main/person_detail" %>
+<% end %>
+
+<% content_for(:box2) do %>
+  <h4>Placement</h4>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#practicum_profile_tab">Profile</a></li>
+      <li><a href="#practicum_placement_tab">Placement</a></li>
+      <li><a href="#mentors_tab">Mentor/School Assignments</a></li>
+    </ul>
+
+    <div id="practicum_profile_tab">
+      <%=label_form_for :practicum_profile, :url => {:action => :update, :id => @practicum_placement}, :remote => true do |f| %>
+        <%=render :partial => "/practicum/profile_form", :locals => {:f => f}%>
+        <%=controls if @current_user.manage?(:practicum, :delegate => :maintain) %>
+      <% end %>
+    </div>
+
+    <div id="practicum_placement_tab">
+      <%=label_form_for :practicum_placement, :url => {:action => :update, :id => @practicum_placement, :focus => :practicum_placement}, :remote => true do |f| %>
+        <%=render :partial => "/practicum/placement_form", :locals => {:f => f}%>
+        <%=controls if @current_user.write? %>
+      <% end %>
+    </div>
+
+    <div id="mentors_tab">
+      <div class="accordion">
+        <% @practicum_assignments.each_with_index do |practicum_assignment, index| %>
+          <% @practicum_assignment = practicum_assignment %>
+          <h3>
+            <a href="#"><span class="strong"><%="#{index + 1}."%> <%=h [@practicum_assignment.person ? @practicum_assignment.person.full_name : nil, @practicum_assignment.practicum_school ? @practicum_assignment.practicum_school.name_short : nil].join("/") %></span></a>
+          </h3>
+          <div>
+            <%=label_form_for :practicum_assignment, :url => practicum_assignments_path(:action => :update, :id => @practicum_assignment, :focus => "mentors"), :remote => true  do %>
+              <%=render :partial => "/practicum/assignment_form" %><br/>
+              <%=controls do %>
+                <%= button_to_redirect "Delete", practicum_assignments_path(:action => :destroy, :id => @practicum_assignment, :focus => "mentors"), {"confirm" => "Are you sure?"} %>
+              <% end if @current_user.write?  %>
+            <% end %>
+          </div>
+        <% end %>
+        <h3>
+          <a href="#"><span class="new">New Mentor/School Assignment</span></a>
+        </h3>
+        <div>
+          <% @practicum_assignment = PracticumAssignment.new(:assignment_type => "mentor") %>
+          <%=label_form_for :practicum_assignment, :url => practicum_assignments_path(:action => :create, :id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
+            <%=render :partial => "/practicum/assignment_form" %>
+            <%=controls if @current_user.write? %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="mentor_dialog" title="Select/Create Mentor">
+    <%=label_form_for(:mentor, :html => {:id => "mentor_form"}) do |p| %>
+      <%=p.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"}, :class => "single-select", :label => "Mentor Teacher" %>
+      <table>
+        <tr>
+          <td>
+            <%=p.text_field :last_name, :tabindex => 1 %>
+          </td>
+          <td>
+            <%=p.text_field :first_name, :tabindex => 2 %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%=p.text_field :email, :tabindex => 3, :style => "width:100%" %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+
+  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :practicum) if @current_user.read?(:main)%>
+
+<% end %>

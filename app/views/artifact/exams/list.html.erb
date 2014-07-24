@@ -1,0 +1,74 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4>Praxis Scores Reports</h4>
+  <table>
+    <tr class="bottom">
+      <%=form_tag({:action => :list}, {:method => :get}) do %>
+        <td>
+          <p><label>Name:<br>
+            <%=text_field :filter, :name %></label></p>
+        </td>
+        <td>
+          <p><label>Birth Date:<br>
+            <%=date_picker :filter, :birth_date, :year_range => 70.years.ago..0.years.from_now, :popup => :no %></label></p>
+        </td>
+        <td>
+          <p><label for="filter_user">Report date start:</label><br>
+            <%=date_picker :filter, :date_start %></p>
+        </td>
+        <td>
+          <p><label for="filter_user">Report date end:</label><br>
+            <%=date_picker :filter, :date_end %></p>
+        </td>
+        <td>
+          <p class="right"><%=submit_tag "Show" %></p>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% content_for(:box2) do %>
+
+  <table id="report_list">
+    <tr>
+      <th>UH ID</th>
+      <th>Name</th>
+      <th>Birth Date</th>
+      <th>Report Date</th>
+      <th>Records</th>
+      <th>Dept</th>
+    </tr>
+
+    <% for exam in @exams %>
+      <tr>
+        <td><%=link_to_id_number exam.person %></td>
+        <td><%=link_to abbr(exam.person.full_name), main_persons_path(:action => :show, :id => exam.person) %></td>
+        <td><%=format_date exam.person.birth_date %></td>
+        <td><%=format_date exam.report_date %></td>
+        <td><%=h exam.exam_scores.length %></td>
+        <td><%=h exam.dept %></td>
+        <td><%=link_to "Show", {:action => :show, :id => exam}, :target => :blank %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <div class="center"><%=will_paginate @exams %></div>
+
+  <p class="right"><%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :artifact, :delegate => :import %></p>
+  <div id="dialog" class="form-dialog" title="Import Praxis Data">
+    <%=label_form_for(:data, :url => {:action => :import}, :html => {:multipart => true, :id => "import_exam_form"}) do |f|%>
+      <%=f.file_field :import_file %></p>
+      <%=f.hidden_field :type, :value => "Praxis" %></p>
+    <% end %>
+  </div>
+
+<% end %>

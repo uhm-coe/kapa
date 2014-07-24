@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <td>
+      <%=f.text_field :name %>
+      <%=f.text_field :code, :label => "Key" %>
+      <%=f.text_field :description, :label => "Value" %>
+      <%=f.text_field :description_short, :label => "Abbr Value" %>
+    </td>
+
+    <td>
+      <%=f.text_field :category %>
+      <%=f.text_field :dept %>
+      <%=f.text_field :sequence %>
+      <%=f.check_box :active, {}, 1, 0 %>
+    </td>
+  </tr>
+</table>

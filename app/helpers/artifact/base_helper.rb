@@ -1,0 +1,2 @@
+module Artifact::BaseHelper
+end

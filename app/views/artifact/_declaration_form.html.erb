@@ -1,0 +1,59 @@
+
+<%
+  if @form.version == 1
+   codes = @form.rsend([:deserialize, :form_option, :as => OpenStruct], :curriculum, [:split, "/"])
+   @program_code = "#{codes[1]}-#{codes[0]}" if codes.is_a? Array
+   @declaration_curriculum = @form.deserialize(:declaration_curriculum, :as => OpenStruct)
+   @declaration_background = @form.deserialize(:curriculum_admission, :as => OpenStruct)
+  else
+   @declaration_curriculum = @form.deserialize(:declaration_curriculum, :as => OpenStruct)
+   @declaration_background = @form.deserialize(:declaration_background, :as => OpenStruct)
+   program = Program.find_by_id(@declaration_curriculum.program_id)
+   @program_code = program ? program.code : "NA"
+  end
+
+  @declaration_agreement = OpenStruct.new(@form.deserialize(:declaration_agreement).each_value { |v| v.replace("Y") if v == "1" })
+%>
+
+<fieldset class="blockLabels">
+  <legend>Program Information</legend>
+  <%= uni_fields_for(:declaration_curriculum) do |curriculum| %>
+    <%=curriculum.model_select(:program_id, {:model_name => :program, :model_options => {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')"}, :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
+    <%#=curriculum.property_select :degree, :locked => true, :label => "Degree" %>
+    <%#=curriculum.property_select :distribution, :locked => true, :label => "Program Distribution" %>
+    <%#=curriculum.property_select :track, :locked => true , :label => "Track"  %>
+    <%=curriculum.select :second_degree, [["No", "N"], ["Yes", "Y"]], :class => "required", :label => "Is this going to be your second baccalaureate degree?" %>
+    <%=curriculum.property_select(:major_primary, :class => "required", :label => "Please select your intended major.",:name => :major, :include_blank => true, :include_current => false) %>
+    <%=curriculum.select(:major_secondary, [["Yes", "XHLI"]], :label => "Please indicate if you also intend to pursue Hawaiian language immersion (k-12).", :include_blank => true, :include_current => false) %>
+    <%=curriculum.property_select :location, :class => "required", :label => "Please select the location from where you will be participating.",:name => :location, :include_blank => true %>
+
+  <% end %>
+</fieldset>
+
+<fieldset class="blockLabels">
+  <legend>Academic Background</legend>
+  <%= uni_fields_for(:declaration_background) do |declaration_background| %>
+    <%= declaration_background.select :current, [["No", "N"], ["Yes", "Y"]], :label => "Are currently attending UHM as a classified undergraduate?" %>
+    <%= declaration_background.text_field :current_college, :label => "If so, what college are you in now?" %>
+    <%= declaration_background.property_select :aa_degree, {:name => :cc_program, :include_blank => "No", :label => "Indicate if you have completed or are in progress of completing any of these UH system Community College programs."} %>
+    <%= declaration_background.property_select :aa_degree_when, :name => :academic_period, :conditions => "code >= '200510'", :include_blank => true, :label => "Please select the semester you completed or will complete the above program." %>
+  <% end %>
+</fieldset>
+
+<fieldset class="blockLabels">
+  <legend>Checklist</legend>
+  <%= uni_fields_for(:declaration_agreement) do |declaration_agreement| %>
+    <%=declaration_agreement.check_box :agreement_saf1, :class => "required", :label => "I have completed and submitted the UHM System Application Form to the Manoa Admissions Office (required for new UHM undergraduate students)."%>
+  <% end %>
+</fieldset>
+
+<fieldset class="blockLabels">
+  <legend>Acknowledgement</legend>
+  <%= uni_fields_for(:declaration_agreement) do |declaration_agreement| %>
+    <%=declaration_agreement.check_box :agreement, :class => "required", :label => "I hereby certify that I have completed this module and I acknowledge that it is my responsibility to be aware of all requirements.  I certify that the information submitted for this application is complete and correct.  I recognize that any intentional misrepresentation may be grounds for non-admittance or disenrollment from the College of Education.  I authorize the University of Hawaii College of Education to obtain information from my current and past employers or from any individual listed on this application form and attachments and waive the right to hold liable those persons from providing any requested information.  It is understood that such information is to be held confidential."%>
+    <%=declaration_agreement.text_area :question, :cols => 75, :label => "Please give us any questions or comments." %>
+  <% end %>
+</fieldset>
+
+<h6 class="notice">Form version: <%= @form.version %></h6>
+<h6 class="notice">Program: <%= @program_code %></h6>

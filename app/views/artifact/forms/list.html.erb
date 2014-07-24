@@ -1,0 +1,59 @@
+<% content_for(:box1) do %>
+
+  <h4>Forms</h4>
+  <%=form_tag :action => :list do %>
+    <table>
+      <tr class="bottom">
+        <td>
+          <label>Semester:</label><br>
+          <%=property_select :filter, :academic_period%>
+        </td>
+        <td>
+          <label>Form Title:</label><br>
+          <%=property_select :filter, :type, :name => :form %>
+        </td>
+        <td>
+          <label>Lock:</label><br>
+          <%=select :filter, :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => true %>
+        </td>
+        <td>
+          <p class="center"><%=submit_tag "Show" %></p>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+<%end%>
+s
+
+<% content_for(:box2) do %>
+  <table id="form_list">
+    <tr>
+      <th>UH ID</th>
+      <th>Name</th>
+      <th>Form ID</th>
+      <th>Last Update</th>
+      <th>Submitted</th>
+      <th>Lock</th>
+      <th>Dept</th>
+    </tr>
+  
+    <% for form in @forms %>
+      <tr>
+        <td><%=link_to_id_number form.person if form.person %></td>
+        <td><%=link_to abbr(form.person.full_name), main_persons_path(:action => :show, :id => form.person_id) if form.person %></td>
+        <td><%=h form.id %></td>
+        <td><%=time_ago_in_words form.updated_at if form.updated_at %> ago</td>
+        <td><%=format_date form.submitted_at %></td>
+        <td><%=h form.lock %></td>
+        <td><%=h form.dept %></td>
+        <td><%=link_to "Show", {:action => :show, :id => form}, {:target => "_blank"} %></td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="center"><%=will_paginate @forms %></div>
+  <p class="right"><%=link_to "Download", :action => :export if @current_user.manage? :artifact, :delegate => :export %></p>
+
+<%end%>
+
+

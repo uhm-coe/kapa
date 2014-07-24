@@ -1,0 +1,26 @@
+
+<%unless @advising_session.anonymous?%>
+  <% content_for(:box1) do %>
+    <%=render :partial => "/main/person_detail" %>
+  <%end%>
+<%end%>
+
+<% content_for(:box2) do %>
+  <h4>Advising Record</h4>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#tabs-1">Advising</a></li>
+    </ul>
+
+    <div id="tabs-1">
+      <%=label_form_for :advising_session, :url => {:action => :create, :id => @advising_session}, :remote => true do %>
+        <%=render :partial => "/advising/session_form", :locals => { :anonymous => @advising_session.anonymous? } %>
+        <%=controls if @current_user.write? %>
+      <% end %>
+    </div>
+  </div>
+
+  <%=link_to_unless @advising_session.anonymous?, "Back", main_persons_path(:action => :show, :id => @person) %>
+
+<%end%>

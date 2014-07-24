@@ -1,0 +1,18 @@
+<table>
+<tr>
+  <th>UID</th>
+  <th>Category</th>
+  <th>Status</th>
+  <th>Last update</th>
+</tr>
+
+<% for user in @users %>
+<tr>
+  <td><%=h user.uid %></td>
+  <td><%=h user.category %></td>
+  <td><%=h user.status_desc %></td>
+  <td><%=format_datetime user.updated_at %></td>
+  <td><%=link_to "Show", :action => :show, :id => user %></td>
+</tr>
+<% end %>
+</table>

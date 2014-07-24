@@ -1,0 +1,74 @@
+<% content_for(:head) do %>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Transition Points/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%=ApplicationProperty.lookup_description(:academic_period, @filter.academic_period)%>)</h3>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Apply Filter</h4>
+        </div>
+        <div class="modal-body">
+          <%=bootstrap_form_for(:filter, :url => {:action => :list}, :html => {:class => "", :id => "filter_form"}) do |f| %>
+            <div class="row">
+              <div class="col-xs-6">
+                <%= f.property_select :academic_period, :include_blank => "Any", :label => "Semester" %>
+                <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts %>
+                <%= f.property_select :type, :name => :transition_point %>
+                <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
+              </div>
+              <div class="col-xs-6">
+                <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
+                <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
+                <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-submit="#filter_form">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text-right">
+      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
+      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Filter</button>
+    </div>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Latest Action</th>
+      <th>Status</th>
+      <th>User</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for transition_point in @transition_points %>
+      <tr>
+        <td><%=link_to_id_number transition_point.curriculum.person %></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_persons_path(:action => :show, :id => transition_point.curriculum.person_id) %></td>
+        <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
+        <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+        <td><%=h transition_point.status_desc %></td>
+        <td><%=h transition_point.user_primary.person.last_name if transition_point.user_primary %></td>
+        <td><%=link_to "Show", {:action => :show, :id => transition_point}, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%=will_paginate @transition_points, :renderer => BootstrapPagination::Rails %></div>
+
+<%end%>

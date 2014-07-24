@@ -1,0 +1,75 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+
+  <h4>Schools</h4>
+  <table>
+    <tr class="bottom">
+      <%=form_tag :action => :list do %>
+        <td>
+          <p><label for="filter_user">Name:</label><br>
+            <%=text_field :filter, :name %></p>
+        </td>
+        <td>
+          <p><label for="filter_user">District:</label><br>
+            <%=property_select :filter, :district, :include_blank => true %></p>
+        </td>
+        <td>
+          <p><label for="filter_user">Area:</label><br>
+            <%=property_select :filter, :area_group, :include_blank => true %></p>
+        </td>
+        <td>
+          <p class="right"><%=submit_tag "Show" %></p>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+<% end %>
+
+
+<% content_for(:box2) do %>
+  <table id="school_list">
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>District</th>
+      <th>Area</th>
+      <th>Type</th>
+      <th>Grades</th>
+      <th>Placements</th>
+    </tr>
+
+    <% for practicum_school in @practicum_schools %>
+      <tr>
+        <td><%=h practicum_school.code %></td>
+        <td><%=abbr practicum_school.name, practicum_school.name_short %></td>
+        <td><%=h practicum_school.district %></td>
+        <td><%=h practicum_school.area %></td>
+        <td><%=h practicum_school.school_type %></td>
+        <td><%=h practicum_school.grades %></td>
+        <td><%=h practicum_school.practicum_assignments.length.to_i %></td>
+        <td class="right"><%=link_to "Show", :action => :show, :id => practicum_school %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <div class="center"><%=will_paginate @practicum_schools %></div>
+  <div class="right">
+    <%=link_to "Download", :action => :export, :action => :export if @current_user.manage? :practicum, :delegate => :export %>
+    <%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :practicum, :delegate => :import %>
+    <%=link_to "New", :action => :new if @current_user.manage?(:practicum, :delegate => :maintain) %>
+  </div>
+  <div id="dialog" class="form-dialog" title="Import School Data">
+    <%=label_form_for(:filter, :url => {:action => :import}, :html => {:multipart => true, :id => "import_school_form"} ) do |f| %>
+      <%=f.file_field :import_file %>
+    <% end %>
+  </div>
+
+<% end %>

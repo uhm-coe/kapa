@@ -1,0 +1,24 @@
+<%= bootstrap_fields_for :contact do |f| %>
+  <div class="row">
+    <div class="col-xs-4">
+      <%= f.text_field :cur_phone, :class => "phone" %>
+      <%= f.text_field :mobile_phone, :class => "phone" %>
+      <%= f.text_field :email %>
+    </div>
+
+    <div class="col-xs-4">
+      <%= f.text_field :cur_street %>
+      <%= f.text_field :cur_city %>
+      <%= f.text_field :cur_state, :size => 5 %>
+      <%= f.text_field :cur_postal_code, :size => 5 %>
+    </div>
+
+    <div class="col-xs-4">
+      <%= f.text_field :per_street %>
+      <%= f.text_field :per_city %>
+      <%= f.text_field :per_state, :size => 5 %>
+      <%= f.text_field :per_postal_code, :size => 5 %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,31 @@
+<%=label_fields_for :program do |f| %>
+<table>
+  <tr>
+    <td>
+      <%=f.text_field :code %>
+      <%=f.text_field :description  %>
+      <%=f.text_field :description_short %>
+      <%=f.text_field :category %>
+      <%=f.text_field :dept %>
+      <%=f.text_field :active %>
+    </td>
+
+    <td>
+      <%=f.property_select :degree, {:include_code => true, :label => "Degree", :include_blank => true}, {:style => "width:250px"} %>
+      <%=f.property_select :major, {:include_code => true, :label => "Default Major", :include_blank => true}, {:style => "width:250px"} %>
+      <%=f.property_select :available_majors, {:name => :major,:include_code => true, :label => "Available Majors", :selected => @program.available_major}, {:multiple => true, :style => "width:250px"} %>
+      <%=f.property_select :distribution, {:include_code => true, :label =>"Default Distribution", :include_blank => true}, {:style => "width:250px"} %>
+      <%=f.property_select :available_distributions, {:name => :distribution, :include_code => true, :label =>"Available Distributions", :selected => @program.available_distribution}, {:multiple => true, :style => "width:250px"} %>
+      <%=f.property_select :track, {:include_code => true, :label => "Default Track", :include_blank => true}, {:style => "width:250px"} %>
+      <%=f.property_select :available_tracks, {:name => :track, :include_code => true, :label => "Available Tracks", :selected => @program.available_track}, {:multiple => true, :style => "width:250px"} %>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+
+
+<table>
+  <tr>
+  </tr>
+</table>

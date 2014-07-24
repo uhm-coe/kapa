@@ -1,0 +1,64 @@
+<% content_for(:box1) do %>
+
+  <h4>Import Person/User</h4>
+
+  <%=form_tag({:action => :import}, {:multipart => true}) do %>
+  <table>
+      <tr class="bottom">
+        <td>
+          <p><label>Data file:</label><br>
+          <%=file_field_tag :import_file%></p>
+        </td>
+        <td>
+          <p><label>Action:</label><br>
+          <%=select_tag :import_action, options_for_select([["Parse Test", "test"], ["Import Users", "users"], ["Import Persons", "persons"]]) %></p>
+        </td>
+        <td>
+          <%=submit_tag "Start" %>
+        </td>
+      </tr>
+    </table>
+  <%end%>
+
+<%end%>
+
+
+<% content_for(:box2) do %>
+
+  <table>
+    <tr>
+      <th>Person ID</th>
+      <th>ID Number</th>
+      <th>E-mail</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+
+    <% for person in @persons %>
+      <tr>
+        <td><%=h person.id%></td>
+        <td><%=h person.id_number%></td>
+        <td><%=h person.email %></td>
+        <td><%=h person.first_name%></td>
+        <td><%=h person.last_name%></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <% if @unmatched_ids.length > 0 %>
+    <h5>Following IDs did not match with UH Records</h5>
+
+    <table>
+      <tr>
+        <th>Unmatched ID</th>
+      </tr>
+
+      <% for unmatched_id in @unmatched_ids %>
+        <tr>
+          <td><%=h unmatched_id %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+<%end%>

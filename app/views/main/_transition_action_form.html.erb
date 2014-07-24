@@ -1,0 +1,28 @@
+<%= label_fields_for @transition_action.new_record? ? "transition_action" : "transition_action[]" do |a| %>
+  <table>
+    <tr>
+      <td>
+        <%= a.date_picker "action_date" %>
+
+      </td>
+
+      <td>
+        <%= a.property_select "action", :name => "#{@transition_action.transition_point.type}_action", :include_blank => true %>
+      </td>
+
+      <td>
+        <%= a.text_field "action_specify" %>
+      </td>
+
+      <td>
+        <%= a.user_select "user_id", :include_blank => true, :locked => !@current_user.manage? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="4">
+        <%= a.hidden_text_area "note", :style => "width:100%; height:100px" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

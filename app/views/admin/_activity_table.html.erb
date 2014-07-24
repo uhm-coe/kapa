@@ -1,0 +1,19 @@
+<table id="activities">
+<tr>
+  <th>Date</th>
+  <th>Action</th>
+  <th>Location</th>
+  <th>Client</th>
+  <% if params[:action] == "logs" %><th>User</th><% end %>
+</tr>
+
+<% for timestamp in @timestamps %>
+<tr>
+  <td><%=format_datetime timestamp.created_at %></td>
+  <td><%=h timestamp.path %></td>
+  <td><%=h timestamp.remote_ip %></td>
+  <td><%=abbr timestamp.agent, 10 %></td>
+  <% if params[:action] == "logs" %><td><%=link_to abbr(timestamp.user.uid, 10), :action => :show, :id => timestamp.user if timestamp.user %></td><% end %>
+</tr>
+<% end %>
+</table>

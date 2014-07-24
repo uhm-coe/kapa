@@ -1,0 +1,54 @@
+<% content_for(:box1) do %>
+
+  <h4><%=h @program.description %></h4>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#program_profile_tab">Profile</a></li>
+      <li><a href="#offers_tab">Offering Groups</a></li>
+    </ul>
+
+    <div id="program_profile_tab">
+      <%=label_form_for :program, :url => {:action => :update, :id => @program}, :remote => true do |f| %>
+        <%=render :partial => "/admin/program_form" %>
+        <%=controls do%>
+          <%= button_to_redirect "Delete", admin_programs_path(:action => :destroy, :id => @program), {"confirm" => "Are you sure?"} %>
+        <% end if @current_user.manage? %>
+      <% end %>
+    </div>
+
+    <div id="offers_tab">
+      <div class="accordion">
+        <%for @program_offer in @program_offers %>
+          <h3>
+            <a href="#"><span class="strong"><%=h "#{@program.code}/#{@program_offer.description}" %></span></a>
+          </h3>
+          <div>
+            <%=label_form_for :program_offer, :url => admin_program_offers_path(:action => :update, :id => @program_offer), :remote => true do |f| %>
+              <%=render :partial => "/admin/program_offer_form" %>
+              <%=controls do %>
+                <%= button_to_redirect "Delete", admin_program_offers_path(:action => :destroy, :id => @program_offer), {"confirm" => "Are you sure?"} %>
+              <% end if @current_user.manage? %>
+            <% end %>
+          </div>
+        <%end%>
+
+        <h3>
+          <a href="#"><span class="new">New Availability</span></a>
+        </h3>
+        <div>
+          <% @program_offer = ProgramOffer.new %>
+          <%=label_form_for :program_offer, :url => admin_program_offers_path(:action => :create, :id => @program, :focus => :offers), :remote => true do |f| %>
+            <%=render :partial => "/admin/program_offer_form", :locals => {:f => f} %>
+            <%=controls if @current_user.manage? %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <%=link_to "Back", :action => :list %>
+
+<% end %>

@@ -1,0 +1,85 @@
+
+<fieldset class="blockLabels">
+  <legend>Praxis Scores Overview</legend>
+  <table>
+    <tr>
+      <th>Test date</th>
+      <th>Code</th>
+      <th>Subject</th>
+      <th>Score</th>
+      <th>Required score</th>
+      <th>Status</th>
+    </tr>
+  <% @exam.exam_scores.each_with_index do |exam_score, i| %>
+    <tr class="middle">
+      <td><%=format_date exam_score.taken_date%></td>
+      <td><%=h exam_score.subject%></td>
+      <td><%=abbr exam_score.subject_desc, 45%></td>
+      <td><%=h exam_score.score%></td>
+      <td><%=h exam_score.required_score%></td>
+      <td><%=h exam_score.status%></td>
+    </tr>
+  <% end if @exam %>
+  </table>
+  <br>
+</fieldset>
+
+<% for exam_score in @exam_scores %>
+  <% if exam_score.subscores.length > 0 %>
+  <fieldset class="blockLabels">
+    <legend><%=h exam_score.subject%>/<%=abbr exam_score.subject_desc, 80%></legend>
+    <table>
+      <tr>
+        <th width="5%">#</th>
+        <th width="70%">Title</th>
+        <th width="25%">Subscores</th>
+      </tr>
+    <% for subscore in exam_score.subscores %>
+      <tr>
+        <td><%=h subscore[:category_number] %></td>
+        <td><%=h subscore[:category_text] %></td>
+        <td><%=h subscore[:category_points] %>/<%=h subscore[:category_points_max] %></td>
+      </tr>
+    <% end %>
+    </table>
+    <br>
+  </fieldset>
+  <% end %>
+<% end %>
+
+<fieldset class="blockLabels">
+  <legend>Background Information</legend>
+
+  <div class="col">
+    <%=uni_text_field :examinee_profile, :last_name %>
+    <%=uni_text_field :examinee_profile, :birth_date %>
+    <%=uni_text_field :examinee_profile, :ets_id, :text => "ETS ID" %>
+    <%=uni_text_field :examinee_profile, :gender %>
+    <%=uni_text_field :examinee_profile, :ethnicity %>
+  </div>
+
+  <div class="col">
+    <%=uni_text_field :examinee_profile, :first_name %>
+    <%=uni_text_field :examinee_contact, :street %>
+    <%=uni_text_field :examinee_contact, :city %>
+    <%=uni_text_field :examinee_contact, :state %>
+    <%=uni_text_field :examinee_contact, :postal_code %>
+  </div>
+
+</fieldset>
+
+<fieldset class="blockLabels">
+  <legend>Educational Information</legend>
+
+  <div class="col">
+    <%=uni_text_field :examinee_profile, :attending_institution %>
+    <%=uni_text_field :examinee_profile, :educational_level %>
+  </div>
+
+  <div class="col">
+    <%=uni_text_field :examinee_profile, :undergraduate_gpa %>
+    <%=uni_text_field :examinee_profile, :undergraduate_major %>
+    <%=uni_text_field :examinee_profile, :graduate_major %>
+  </div>
+
+</fieldset>

@@ -1,0 +1,2 @@
+module Advising::BaseHelper
+end

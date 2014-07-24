@@ -1,0 +1,23 @@
+<%=label_fields_for "school_contact" do |c| %>
+  <table>
+    <tr>
+
+      <td>
+        <%=c.text_field :principal_last_name %>
+        <%=c.text_field :phone  %>
+        <%=c.text_field :fax  %>
+        <%=c.text_field :email  %>
+      </td>
+
+      <td>
+        <%=c.text_field :principal_first_name %>
+        <%=c.text_field :street  %>
+        <%=c.text_field :city  %>
+        <%=c.text_field :state, :size => 5  %>
+        <%=c.text_field :postal_code, :size => 5  %>
+      </td>
+
+    </tr>
+  </table>
+<% end %>
+

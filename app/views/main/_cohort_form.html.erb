@@ -1,0 +1,15 @@
+<%= label_fields_for :curriculum do |f| %>
+  <table>
+    <tr>
+      <td width="50%">
+        <%= f.user_select :user_primary_id, :include_blank => true, :include => :employee, :label => "Coordinator Primary" %>
+        <%= f.user_select :user_secondary_id, :include_blank => true, :include => :employee, :label => "Coordinator Secondary" %>
+        <%#= f.property_select :academic_period, :label => "Semester Started" %>
+        <%#= f.text_field :cohort, :label => "Cohort Code" %>
+        <%= f.hidden_field :person_id %>
+      </td>
+      <td width="50%">
+      </td>
+    </tr>
+  </table>
+<% end %>

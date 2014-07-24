@@ -1,0 +1,23 @@
+<% @show_options = true if FileTest.exists?("#{Rails.root}/app/views/admin/_#{@property.name}_form.html.erb") %>
+
+<% content_for(:box1) do %>
+
+  <h4><%=@property.name%>/<%=@property.code%></h4>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#property_tab">Properties</a></li>
+    </ul>
+
+    <div id="property_tab">
+      <%=label_form_for :property, :url => {:action => :update, :id => @property}, :remote => true do |f| %>
+        <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
+        <%=controls %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <%=link_to "Back", :action => :list %>
+
+<% end %>

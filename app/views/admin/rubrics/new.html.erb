@@ -1,0 +1,21 @@
+<% content_for(:box1) do %>
+
+  <h4>New Assessment</h4>
+
+  <div class="tabs">
+    <ul>
+      <li><a href="#rubric_profile_tab">Profile</a></li>
+    </ul>
+
+    <div id="rubric_profile_tab">
+      <%=label_form_for :assessment_rubric, :url => {:action => :create}, :remote => true do |f| %>
+        <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
+        <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <%=link_to "Back", :action => :list %>
+
+<% end %>

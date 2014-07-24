@@ -1,0 +1,48 @@
+
+<% content_for(:box1) do %>
+  <h4>System Properties</h4>
+  <%=form_tag :action => :list do %>
+    <table>
+      <tr class="bottom">
+        <td>
+          <p><label for="filter_admin_user">Name:</label><br>
+          <%=history_select :filter, :name, :model_name => :application_property, :model_method => :name %></p>
+        </td>
+        <td>
+          <p><label for="filter_dept">Active:</label><br>
+          <%=select :filter, :active, [["Active", "1"],["In-Active","0"]], :include_blank => true %></p>
+        </td>
+        <td>
+          <%=submit_tag "Show" %>
+        </td>
+      </tr>
+    </table>
+  <%end%>
+<%end%>
+
+
+<% content_for(:box2) do %>
+  <table>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+      <th>Category</th>
+      <th>Dept</th>
+      <th>Sequence</th>
+      <th>Active</th>
+    </tr>
+
+    <% for property in @properties %>
+      <tr>
+        <td><%=h property.code %></td>
+        <td><%=h property.description %></td>
+        <td><%=abbr property.category, 20 %></td>
+        <td><%=h property.dept %></td>
+        <td><%=h property.sequence %></td>
+        <td><%=h property.active %></td>
+        <td><%=link_to "Show", :action => :show, :id => property %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%=link_to "New", :action => :new %>
+<%end%>

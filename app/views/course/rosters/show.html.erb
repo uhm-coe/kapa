@@ -1,0 +1,83 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      appFn.initAssessmentTable('#assessment_course_table');
+      
+      $('#all_green_button').click(function() {
+        if(confirm('Would you like to fill in all empty cells in green?')) {
+          appFn.setAssessmentScores('2');
+        }
+      });
+      
+      $('#filter_assessment_rubric_id').change(function() {
+        $(this).parents('form').submit();
+      });
+      
+      $('#save_button').click(function() {
+        form = $('#assessment_course_form');
+        $.post(form.attr('action'), form.serialize(), 
+          function(data) {
+            var now = new Date();
+            $('#assessment_course_table').html(data); 
+            $('#notice2').html('Scores were saved on ' + now).effect('highlight'); 
+            appFn.initAssessmentTable('#assessment_course_table');
+          },
+          "html");
+        return false;
+      })
+      
+      window.setInterval(function() {
+        form = $('#assessment_course_form');
+        console.log('form updated?', form.attr('data-changed'));
+        if(form.attr('data-changed') == 'true') {
+          $.post(form.attr('action'), form.serialize(), 
+            function(data) {
+              var now = new Date();
+              $('#notice2').html('Scores were saved on ' + now);
+              form.attr('data-changed', false);
+            },
+            "html");
+        }
+      }, 15000);
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <%=label_form_for :filter, :url => {:action => :show, :id =>  @assessment_course} do |f| %>
+    <table>
+      <tr class="bottom">
+        <td>
+          <h4><%=h @assessment_course.name %> Assessment</h4>
+        </td>
+        <td>
+          <%=f.select :assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => 500}%>
+        </td>
+        <td>
+          <%=link_to "Open Rubric", @assessment_rubric.reference_url, {:target => "_blank"} unless @assessment_rubric.reference_url.blank? %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box2) do %>
+
+
+  <%=label_form_for(:assessment_course, :url => {:action => :update, :id => @assessment_course}, :html => {:id => "assessment_course_form", "data-changed" => false}) do %>
+    <div class="right">
+      <span id="save_notice"><%=flash[:save_notice] %></span>
+      <%=button_to_function "Save", nil, :id => "save_button" if @current_user.write? %>
+      <%=button_to_redirect "Download", {:action => :show, :id => @assessment_course, :format => :file}, {:id => "export_button"} %>
+    </div>
+
+    <div id = "assessment_course_table">
+      <%=render :partial => "/course/table" %>
+    </div>
+  <% end %>
+  <br>
+  <%=link_to "Back", course_rosters_path(:action => :list) %>
+  <p class="right"><%=button_to_function "All Green", nil, :id => "all_green_button" if @current_user.write? %></p>
+<% end %>
