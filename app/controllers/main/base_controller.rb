@@ -6,31 +6,17 @@ class Main::BaseController < ApplicationController
 
   def login
     reset_session
-    if request.get?
-      if params[:ticket]
-        user = cas_validate(params[:ticket], login_url)
-        unless user
-          flash[:notice] = "Error during CAS authentication!"
-          redirect_to :action => :index and return false
-        end
-        UserSession.create(user, true)
-        redirect_to root_path
-      else
-        cas_login(login_url)
-      end
-    else
-      session = UserSession.new(params[:user_session])
-      unless session.save
-        flash[:notice] = "Invalid user/password combination!"
-        redirect_to :action => :index and return false
-      end
-      redirect_to root_path
+    session = UserSession.new(params[:user_session])
+    unless session.save
+      flash[:notice] = "Invalid user/password combination!"
+      redirect_to :action => :index and return false
     end
+    redirect_to root_path
   end
 
   def logout
     UserSession.find.destroy if UserSession.find
-    cas_logout root_url
+    redirect_to root_path
   end
 
   def error

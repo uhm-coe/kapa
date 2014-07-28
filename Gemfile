@@ -7,7 +7,6 @@ gem 'net-ldap'
 gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
 gem 'paperclip', '~> 3.0'
-gem 'newrelic_rpm'
 
 gem 'jquery-rails'
 gem 'libv8', '~> 3.11.8'

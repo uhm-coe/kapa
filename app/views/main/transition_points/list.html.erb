@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel">Apply Filter</h4>
+          <h4 class="modal-title" id="myModalLabel">Showing Criteria</h4>
         </div>
         <div class="modal-body">
           <%=bootstrap_form_for(:filter, :url => {:action => :list}, :html => {:class => "", :id => "filter_form"}) do |f| %>
@@ -25,13 +25,14 @@
                 <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
                 <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
                 <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+                <%= f.select :per_page, [10, 20, 30, 40, 50] %>
               </div>
             </div>
           <% end %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-submit="#filter_form">Apply</button>
+          <button type="button" class="btn btn-primary" data-submit="#filter_form">Show</button>
         </div>
       </div>
     </div>
@@ -40,7 +41,7 @@
   <div class="row">
     <div class="text-right">
       <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
-      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Filter</button>
+      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Change Criteria</button>
     </div>
   </div>
 

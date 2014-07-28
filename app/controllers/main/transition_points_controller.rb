@@ -75,7 +75,7 @@ class Main::TransitionPointsController < Main::BaseController
   def list
     @filter = transition_point_filter
     order = "persons.last_name, persons.first_name"
-    @transition_points = TransitionPoint.paginate(:page => params[:page], :per_page => 20, :include => [{:curriculum => [:person, :program]}, :last_transition_action], :conditions => @filter.conditions, :order => order)
+    @transition_points = TransitionPoint.paginate(:page => params[:page], :per_page => @filter.per_page, :include => [{:curriculum => [:person, :program]}, :last_transition_action], :conditions => @filter.conditions, :order => order)
   end
 
   def export

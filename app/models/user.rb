@@ -144,6 +144,28 @@ class User < ApplicationModel
     return users
   end
 
+  protected
+  def valid_credential?(password)
+    if category == "ldap"
+      ldap = Rails.application.config.ldap
+      base = AppConfig.ldap_search_base
+      filter = "#{AppConfig.ldap_attr_uid}=#{self.uid}"
+      dn = nil
+      ldap.search(:base => base, :filter => filter) do |entry|
+        dn = entry.dn
+      end
+#      logger.debug "---:#{base}, filter:#{filter}, dn: #{dn}"
+      return false if dn.nil?
+
+      result = ldap.bind(:method => :simple, :dn => dn , :password => password)
+#      logger.debug "---bind?:#{result}"
+      return result
+    else
+      #Use Authlogic authentication for local users.
+      valid_password?(password)
+    end
+  end
+
   private
   def check_role(level, name, options = {})
     roles = self.role

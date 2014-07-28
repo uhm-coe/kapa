@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     unless @current_user_session and @current_user and @current_user.status >= 3 and @current_user.emp_status >= 1
       @current_user_session.destroy if @current_user_session
       flash[:notice] = "You are not authorized to use this system!  Please contact system administrator."
-      cas_logout(root_url) and return
+      redirect_to(root_url) and return
     end
   end
 
@@ -56,94 +56,8 @@ class ApplicationController < ActionController::Base
       user.request = request if user.request.nil?
       user.put_timestamp
     end
-    logger.debug "---inspection begin----"
-    logger.debug params.inspect
-    logger.debug session.inspect
-    logger.debug @filter.inspect if @filter
-    logger.debug @current_user.inspect if @current_user
-    logger.debug UserSession.find.inspect
-    logger.debug "---inspection end----"
   end
 
-  def cas_login(return_url, options = {})
-    cas_host = AppConfig.cas_host
-    cas_login_path = AppConfig.cas_login_path
-    redirect_to "#{cas_host}#{cas_login_path}?service=#{return_url}"
-  end
-
-  def cas_validate(ticket, return_url, options = {})
-    cas_host = AppConfig.cas_host
-    cas_validate_path = AppConfig.cas_validate_path
-    uri = URI.parse(cas_host)
-    http = Net::HTTP.new(uri.host, uri.port)
-    if uri.scheme == "https"
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-
-    body = http.start{ |h| h.get("#{cas_validate_path}?service=#{return_url}&ticket=#{ticket}") }.body
-    results = body.split(/\n/)
-
-    if results[0] == "yes"
-      uid = results[1]
-      id_number = results[2]
-      user = User.where(:uid => uid, :category => "ldap").first
-      if(user.nil?)
-        person = Person.search(:first, id_number.to_s, :verified => true)
-        if person.nil?
-          logger.error "Invalid ID Number: #{id_number}"
-          return nil
-        end
-        person.id_number = id_number #UH LDAP omits id_number for off-site access.
-        person.save if person.new_record?
-        user = person.ldap_user
-        user = person.users.build(:uid => uid, :category => "ldap", :status => 1, :emp_status => 0) if user.nil?
-        user.uid = uid
-        unless user.save
-          logger.error "Fail to create the new ldap user: #{user.errors.inspect}"
-          return nil
-        end
-      end
-
-      if user.emp_status < 3
-        if body.include?("=staff") or body.include?("=faculty")
-          user.update_attribute(:emp_status, 2)
-        else
-          user.update_attribute(:emp_status, 0)
-        end
-      end
-
-      return user
-    else
-      return nil
-    end
-  end
-
-  def cas_logout(return_url, options = {})
-    cas_host = AppConfig.cas_host
-    cas_logout_path = AppConfig.cas_logout_path
-    redirect_to "#{cas_host}#{cas_logout_path}?service=#{return_url}&url=#{return_url}"
-  end
-
-  def render_node(nid)
-    host = "http://coe.hawaii.edu"
-    path = "/api/node"
-    uri = URI.parse(host)
-    http = Net::HTTP.new(uri.host, uri.port)
-    if uri.scheme == "https"
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-
-    res = http.start{ |h| h.get("#{path}/#{node}.json") }
-    if res.code == "200"
-      json = ActiveSupport::JSON.decode(res.body)
-      return json["body"]["und"][0]["value"]
-    else
-      return "Error #{res.code}: #{res.message}"
-    end
-  end
-  
   def url_for(options = {})
     if options.kind_of?(Hash)
       #This will avoid generating absolute path when hash is passed in.
@@ -233,10 +147,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def next_academic_period
     value = ApplicationProperty.where("code > ?", current_academic_period).order("code").first
-    logger.debug "----next academic period: #{value.code}"
     return value.code
   end
   
