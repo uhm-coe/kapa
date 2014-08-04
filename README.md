@@ -1,6 +1,6 @@
 #KAPA
 
-KAPA is a web-based system to provide consolidated information tools to support academic program administration including Advising, Admission, Graduation, Praxis, and Field Placement.
+KAPA provides consolidated information tools to support academic program administration including Advising, Admission, Graduation, Praxis, and Field Placement.  Tools are distributed as [Rails Engine](http://guides.rubyonrails.org/engines.html) so that developers can easily customize designs and functions to fit your organizational needs.
 
 ##Features
 - Transition Points (i.e., Admission, Declaration of Intent, Qualifying Exam, Proposal Defense, Graduation)
@@ -17,19 +17,18 @@ This project is still in alpha stage, and there are many tasks we need to comple
 
 Here is how to get started with KAPA development.
 
-  ### Preparation
+### Preparation
   1. Get familiarized yourself with Ruby on Rails (Current Kapa is based on Rails 3.1)
   2. Establish GitHub account.
   3. Install Git on your machine and set up your Git profile.
   
-  ### Checkout Source Code
+### Checkout Source Code
   1. Checkout source code.
   ```
   git clone https://github.com/uhm-coe/kapa.git
   ```
-  2. Copy app_config.yml to the “config/” directory.
-  
-  ### Setup Development environment
+
+### Setup Development environment
   Current KAPA is being tested with Ubuntu 12.04 and Ruby 1.9.3.  We found that using vagrant is very useful for keeping consistent development environments.  While it is possible to set up your own development environment, we highly recommend to use vagrant.
  
   1. Follow [this instruction](http://docs.vagrantup.com/v2/installation/index.html) and install Virtual Box and Vagrant.
@@ -44,10 +43,10 @@ Here is how to get started with KAPA development.
   ```
   4. Go to the application directory in the virtual machine and run setup commands.
   ```
-  cd /vagrant
+  cd /vagrant/test/dummy
   rake db:setup
   ```
-  Now, you are running KAPA application on your machine.  Open a web browser and try entering following URLs.
+  Now, you are running KAPA on your machine.  Open a web browser and try entering following URLs.
   ```
   http://localhost:8080
   ```
