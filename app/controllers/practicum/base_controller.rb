@@ -1,4 +1,4 @@
-class Practicum::BaseController < ApplicationController
+class Practicum::BaseController < ApplicationBaseController
 
   private
   def filter_defaults

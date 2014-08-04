@@ -1,6 +1,6 @@
 ServerName localhost
 <VirtualHost *:80>
-        DocumentRoot /vagrant/public
+        DocumentRoot /vagrant/test/dummy/public
         RailsEnv development
         PassengerUserSwitching on
         PassengerDefaultUser vagrant

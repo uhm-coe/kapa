@@ -1,4 +1,4 @@
-class Course::BaseController < ApplicationController
+class Course::BaseController < ApplicationBaseController
 
   private
   def filter_defaults

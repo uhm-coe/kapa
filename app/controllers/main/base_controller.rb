@@ -1,5 +1,6 @@
-class Main::BaseController < ApplicationController
-                
+class Main::BaseController < ApplicationBaseController
+
+
   def index
     validate_login if UserSession.find
   end

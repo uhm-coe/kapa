@@ -1,4 +1,4 @@
-class Advising::BaseController < ApplicationController
+class Advising::BaseController < ApplicationBaseController
 
   private
   def filter_defaults

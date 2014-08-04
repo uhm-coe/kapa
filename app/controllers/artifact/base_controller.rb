@@ -1,4 +1,4 @@
-class Artifact::BaseController < ApplicationController
+class Artifact::BaseController < ApplicationBaseController
   private
   def filter_defaults
     {:academic_period => current_academic_period,
