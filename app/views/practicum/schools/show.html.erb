@@ -11,7 +11,7 @@
     </ul>
 
     <div id="school_profile_tab">
-      <%=label_form_for :practicum_school, :url => {:action => :update, :id => @practicum_school}, :remote => true do |f|%>
+      <%=label_form_for :practicum_school, :url => practicum_school_path(:id => @practicum_school), :remote => true, :html => {:method => :put} do |f|%>
         <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
         <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
       <% end %>
@@ -19,7 +19,7 @@
     </div>
 
     <div id="school_contact_tab">
-      <%=label_form_for :practicum_school, :url => {:action => :update, :id => @practicum_school, :focus => "school_contact"}, :remote => true do |f|%>
+      <%=label_form_for :practicum_school, :url => practicum_school_path(:id => @practicum_school, :focus => "school_contact"), :remote => true, :html => {:method => :put}  do |f|%>
         <%=render :partial => "/practicum/school_contact_form" %>
         <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
       <% end %>
@@ -70,7 +70,7 @@
 
   </div>
 
-  <%=link_to "Back", :action => :list %>
+  <%=link_to "Back", :action => :index %>
 
 <%end%>
 

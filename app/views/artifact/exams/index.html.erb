@@ -11,7 +11,7 @@
   <h4>Praxis Scores Reports</h4>
   <table>
     <tr class="bottom">
-      <%=form_tag({:action => :list}, {:method => :get}) do %>
+      <%=form_tag({:action => :index}, {:method => :get}) do %>
         <td>
           <p><label>Name:<br>
             <%=text_field :filter, :name %></label></p>
@@ -65,7 +65,7 @@
 
   <p class="right"><%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :artifact, :delegate => :import %></p>
   <div id="dialog" class="form-dialog" title="Import Praxis Data">
-    <%=label_form_for(:data, :url => {:action => :import}, :html => {:multipart => true, :id => "import_exam_form"}) do |f|%>
+    <%=label_form_for(:data, :url => import_artifact_exams_path, :html => {:multipart => true, :id => "import_exam_form"}) do |f|%>
       <%=f.file_field :import_file %></p>
       <%=f.hidden_field :type, :value => "Praxis" %></p>
     <% end %>

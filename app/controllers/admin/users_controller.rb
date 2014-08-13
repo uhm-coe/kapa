@@ -70,7 +70,7 @@ class Admin::UsersController < Admin::BaseController
     redirect_to :action => :show, :id => @user
   end
 
-  def list
+  def index
     @filter = users_filter
     @users = User.paginate(:page => params[:page], :per_page => 20, :include => :person, :conditions => @filter.conditions, :order => "users.uid")
   end

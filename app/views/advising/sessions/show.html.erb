@@ -14,10 +14,10 @@
     </ul>
 
     <div id="tabs-1">
-      <%=label_form_for :advising_session, :url => {:action => :update, :id => @advising_session}, :remote => true do %>
+      <%=label_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put}  do %>
         <%=render :partial => "/advising/session_form", :locals => { :anonymous => @advising_session.anonymous? } %>
         <%=controls do %>
-          <%= button_to_redirect "Delete", advising_sessions_path(:action => :destroy, :id => @advising_session), {"data-confirm" => "Are you sure?"} %>
+          <%= link_to_button "Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?"} %>
         <% end if @current_user.write? %>
       <% end %>
     </div>

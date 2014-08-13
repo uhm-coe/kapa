@@ -53,7 +53,7 @@ class Main::CurriculumsController < Main::BaseController
     redirect_to main_curriculums_path(:action => :show, :id => @curriculum)
   end
 
-  def list
+  def index
     @filter = curriculums_filter
     order = "persons.last_name, persons.first_name"
     @transition_points = TransitionPoint.paginate(:page => params[:page], :per_page => 20, :include => [{:curriculum => [:person, :program]}, :last_transition_action], :conditions => @filter.conditions, :order => order)

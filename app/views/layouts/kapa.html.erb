@@ -137,6 +137,10 @@
     </div>
   <% end %>
 
+  <% if content_for?(:dialog) %>
+    <%= yield :dialog %>
+  <% end %>
+
   <footer>
     <p class="text-center">&copy; College of Education, University of Hawaii at Manoa 2014</p>
   </footer>

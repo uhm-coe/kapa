@@ -12,7 +12,7 @@
     </ul>
 
     <div id="curriculum_tab">
-      <%=label_form_for :curriculum, :url => main_curriculums_path(:action => :update, :id => @curriculum), :remote => true do %>
+      <%=label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
         <%=render :partial => "/main/curriculum_form" %>
         <%=controls if @current_user.write?(:main) %>
       <% end %>
@@ -38,7 +38,7 @@
     </div>
 
     <div id="journey_tab">
-      <%=label_form_for :curriculum, :url => main_curriculums_path(:action => :update, :id => @curriculum), :remote => true do %>
+      <%=label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
         <%=render :partial => "/main/journey_form" %>
         <%=controls if @current_user.manage?(:main) %>
       <% end %>

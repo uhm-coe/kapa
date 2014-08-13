@@ -26,13 +26,13 @@
 
 <h4>New User</h4>
 
-<%=label_form_for :person, :url => {:action => :create}, :remote => true do %>
+<%=label_form_for :person, :url => admin_users_path, :remote => true do %>
   <div id="person_form">
     <%=render :partial => "/main/person_form" %>
   </div>
   <%=controls if @current_user.manage? :admin, :delegate => :user %>
 <% end %>
 
-<%=link_to "Back", :action => :list %>
+<%=link_to "Back", :action => :index %>
 
 <% end %>

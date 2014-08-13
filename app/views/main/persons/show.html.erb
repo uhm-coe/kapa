@@ -1,77 +1,98 @@
 <% content_for(:box1) do %>
-
   <%=render :partial => "/main/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
-<% end %>
-
-
-<% content_for(:box2) do %>
-  <br>
-
-  <div class="accordion">
+  <div class="panel-group" id="accordion">
     <% if @current_user.read?(:main) %>
-      <h2><%=link_to_function "Academic Programs (#{@person.curriculums.length})", nil, :id => "curriculum_detail" %> </h2>
-      <div>
-        <table>
-          <% for curriculum in @curriculums %>
-            <% journey = curriculum.deserialize(:journey, :as => OpenStruct) %>
-            <tr>
-              <td colspan="4">
-                <%=content_tag :h5, link_to("#{curriculum.code_desc}#{journey.active == 'Y' ? "*" : ""}", main_curriculums_path(:action => :show, :id => curriculum)) %>
-              </td>
-            </tr>
-            <tr>
-              <th>Semester</th>
-              <th>Transition Point</th>
-              <th>Latest Action</th>
-            </tr>
-            <% for transition_point in curriculum.transition_points.includes(:last_transition_action).order("academic_period DESC, id DESC") %>
-              <tr>
-                <td><%=h transition_point.academic_period_desc %></td>
-                <td><%=h transition_point.type_desc %></td>
-                <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-                <td class="right"><%=link_to "Show", main_transition_points_path(:action => :show, :id => transition_point) %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        </table>
-        <p class="new right"><%=link_to "New Program", main_curriculums_path(:action => :new, :id => @person) %></p>
-
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#curriculum_detail">
+            Programs (<%=@person.curriculums.length%>)
+          </a>
+        </h4>
       </div>
+      <div id="curriculum_detail" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Program".html_safe, new_main_curriculum_path(:id => @person),:class => "btn btn-default" %></p>
+          <table class="table table-hover">
+            <% for curriculum in @curriculums %>
+              <% journey = curriculum.deserialize(:journey, :as => OpenStruct) %>
+              <tr>
+                <td colspan="4">
+                  <%=content_tag :h5, link_to("#{curriculum.code_desc}#{journey.active == 'Y' ? "*" : ""}", main_curriculum_path(:id => curriculum)) %>
+                </td>
+              </tr>
+              <tr>
+                <th>Semester</th>
+                <th>Transition Point</th>
+                <th>Latest Action</th>
+              </tr>
+              <% for transition_point in curriculum.transition_points.includes(:last_transition_action).order("academic_period DESC, id DESC") %>
+                <tr>
+                  <td><%=h transition_point.academic_period_desc %></td>
+                  <td><%=h transition_point.type_desc %></td>
+                  <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+                  <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point) %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
     <% end %>
 
     <% if @current_user.read?(:advising) %>
-      <h2><%=link_to_function "Academic Advising (#{@advising_sessions.length})", nil, :id => "advising_detail" %></h2>
-      <div>
-        <table>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Task</th>
-            <th>Note</th>
-          </tr>
-          <% for advising_session in @advising_sessions %>
-            <tr>
-              <td><%=format_date advising_session.session_date %></td>
-              <td><%=h advising_session.session_type.to_s.capitalize %></td>
-              <td><%=h advising_session.task.to_s.capitalize %></td>
-              <td><%=abbr advising_session.note, 30 %></td>
-              <td class="right"><%=link_to "Show", advising_sessions_path(:action => :show, :id => advising_session) %></td>
-            </tr>
-          <% end %>
-        </table>
-        <p class="new right"><%=link_to "New Session", advising_sessions_path(:action => :new, :id => @person) %></p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#advising_detail">
+            Advising (<%=@advising_sessions.length%>)
+          </a>
+        </h4>
       </div>
+      <div id="advising_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Advising Session".html_safe, new_advising_session_path(:id => @person),:class => "btn btn-default"  %></p>
+          <table class="table table-hover">
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Task</th>
+              <th>Note</th>
+            </tr>
+            <% for advising_session in @advising_sessions %>
+              <tr>
+                <td><%=format_date advising_session.session_date %></td>
+                <td><%=h advising_session.session_type.to_s.capitalize %></td>
+                <td><%=h advising_session.task.to_s.capitalize %></td>
+                <td><%=abbr advising_session.note, 30 %></td>
+                <td class="right"><%=link_to "Show", advising_session_path(:id => advising_session) %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
     <% end %>
 
     <% if @current_user.read?(:course) %>
-      <h2><%=link_to_function "Courses (#{@assessment_course_registrations.length})", nil, :id => "course_detail" %></h2>
-      <div>
-        <table>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#coruse_detail">
+            Courses (<%=@assessment_course_registrations.length%>)
+          </a>
+        </h4>
+      </div>
+      <div id="coruse_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Coruse Registration".html_safe, new_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
+          <table class="table table-hover">
           <% @assessment_course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
             <tr>
               <td colspan="4"><h5><%=subject %></h5></td>
-            </tr>  
+            </tr>
             <tr>
               <th>Semester</th>
               <th>Name</th>
@@ -84,45 +105,56 @@
                 <td><%=h "#{course_registration.assessment_course.name}" %></td>
                 <td><%=abbr "#{course_registration.assessment_course.title}", 50 %></td>
                 <td><%=abbr "#{course_registration.assessment_course.instructor}", 50 %></td>
-                <td class="right"><%=link_to "Show", course_registrations_path(:action => :show, :id => course_registration)%></td>
-              </tr>
-            <% end %>
-          <% end %>   
-        </table>
-        <p class="new right"><%#=link_to "New Course Registration", course_registrations_path(:action => :new, :id => @person) %></p>
-      </div>
-    <% end %>
-
-    <% if @current_user.read?(:practicum) %>
-      <h2><%=link_to_function "Field Placements (#{@practicum_profiles.length})", nil, :id => "practicum_detail" %></h2>
-      <div>
-        <table>
-          <% for practicum_profile in @practicum_profiles %>
-            <tr>
-              <td colspan="4">
-                <h5><%=h "#{practicum_profile.curriculum.code_desc} - #{practicum_profile.curriculum.academic_period_desc}" if practicum_profile.curriculum %></h5>
-              </td>
-            </tr>
-            <tr>
-              <th>Semester</th>
-              <th>Category</th>
-              <th>Sequence</th>
-              <th>Classification</th>
-            </tr>
-            <% for practicum_placement in practicum_profile.practicum_placements %>
-              <tr>
-                <td><%=h practicum_placement.academic_period_desc %></td>
-                <td><%=h practicum_placement.category %></td>
-                <td><%=h practicum_placement.sequence %></td>
-                <td><%=h practicum_placement.status %></td>
-                <td class="right"><%=link_to "Show", practicum_placements_path(:action => :show, :id=> practicum_placement) %></td>
+                <td class="right"><%=link_to "Show", course_registration_path(:id => course_registration)%></td>
               </tr>
             <% end %>
           <% end %>
         </table>
-        <p class="new right"><%=link_to "New Placement", practicum_placements_path(:action => :new, :id => @person) %></p>
+        </div>
       </div>
+    </div>
     <% end %>
-  </div>
 
+    <% if @current_user.read?(:practicum) %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#practicum_detail">
+            Field Placements (<%=@practicum_profiles.length%>)
+          </a>
+        </h4>
+      </div>
+      <div id="practicum_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
+          <table class="table table-hover">
+            <% for practicum_profile in @practicum_profiles %>
+              <tr>
+                <td colspan="4">
+                  <h5><%=h "#{practicum_profile.curriculum.code_desc} - #{practicum_profile.curriculum.academic_period_desc}" if practicum_profile.curriculum %></h5>
+                </td>
+              </tr>
+              <tr>
+                <th>Semester</th>
+                <th>Category</th>
+                <th>Sequence</th>
+                <th>Classification</th>
+              </tr>
+              <% for practicum_placement in practicum_profile.practicum_placements %>
+                <tr>
+                  <td><%=h practicum_placement.academic_period_desc %></td>
+                  <td><%=h practicum_placement.category %></td>
+                  <td><%=h practicum_placement.sequence %></td>
+                  <td><%=h practicum_placement.status %></td>
+                  <td class="right"><%=link_to "Show", practicum_placement_path(:id=> practicum_placement) %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
 <% end %>

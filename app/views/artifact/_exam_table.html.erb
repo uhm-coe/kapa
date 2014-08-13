@@ -9,8 +9,8 @@
       <td><%=format_date exam.report_date %></td>
       <td><%=format_date exam.report_number %></td>
       <td><%=h exam.dept %></td>
-      <td class="right"><%=link_to "Show", artifact_exams_path(:action => :show, :id => exam),  {:target => "_blank", :class => "btn btn-default btn-xs" } %></td>
+      <td class="right"><%=link_to "Show", artifact_exam_path(:id => exam),  {:target => "_blank", :class => "btn btn-default btn-xs" } %></td>
     </tr>
   <% end %>
 </table>
-<p class="right new"><%=link_to "Lookup by name", artifact_exams_path(:action => :list, :filter => {:name => "#{@person.full_name}"}), :confirm => "Searching '#{@person.full_name}' on received score reports.\nPlease verify name and birth date before matching records." if @current_user.read?(:artifact) %></p>
+<p class="right new"><%=link_to "Lookup by name", artifact_exams_path(:action => :index, :filter => {:name => "#{@person.full_name}"}), :confirm => "Searching '#{@person.full_name}' on received score reports.\nPlease verify name and birth date before matching records." if @current_user.read?(:artifact) %></p>

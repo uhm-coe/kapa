@@ -8,7 +8,7 @@
     </ul>
 
     <div id="rubric_profile_tab">
-      <%=label_form_for :assessment_rubric, :url => {:action => :create}, :remote => true do |f| %>
+      <%=label_form_for :assessment_rubric, :url => admin_rubrics_path, :remote => true do |f| %>
         <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
         <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
       <% end %>
@@ -16,6 +16,6 @@
 
   </div>
 
-  <%=link_to "Back", :action => :list %>
+  <%=link_to "Back", :action => :index %>
 
 <% end %>

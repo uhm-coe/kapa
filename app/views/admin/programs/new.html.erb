@@ -8,13 +8,13 @@
     </ul>
 
     <div id="program_profile_tab">
-      <%=label_form_for :program, :url => {:action => :create}, :remote => true do |f| %>
+      <%=label_form_for :program, :url => admin_programs_path, :remote => true do |f| %>
         <%=render :partial => "/admin/program_form" %>
         <%=controls if @current_user.manage? %>
       <% end %>
     </div>
 
-  <%=link_to "Back", :action => :list %>
+  <%=link_to "Back", :action => :index %>
 
   </div>
 

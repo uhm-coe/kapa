@@ -1,19 +1,14 @@
-<% content_for(:head) do %>
-<% end %>
+<% content_for(:dialog) do %>
 
-<% content_for(:box1) do %>
-
-  <h3>Transition Points/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%=ApplicationProperty.lookup_description(:academic_period, @filter.academic_period)%>)</h3>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="filter_dialog" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel">Showing Criteria</h4>
+          <h4 class="modal-title" id="modal_label">Filter Criteria</h4>
         </div>
         <div class="modal-body">
-          <%=bootstrap_form_for(:filter, :url => {:action => :list}, :html => {:class => "", :id => "filter_form"}) do |f| %>
+          <%=bootstrap_form_for(:filter, :url => main_transition_points_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
             <div class="row">
               <div class="col-xs-6">
                 <%= f.property_select :academic_period, :include_blank => "Any", :label => "Semester" %>
@@ -38,10 +33,16 @@
     </div>
   </div>
 
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Transition Points/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%=ApplicationProperty.lookup_description(:academic_period, @filter.academic_period)%>)</h3>
+
   <div class="row">
     <div class="text-right">
       <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
-      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Change Criteria</button>
+      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
 

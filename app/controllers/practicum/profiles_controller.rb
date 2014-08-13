@@ -12,7 +12,7 @@ class Practicum::ProfilesController < Practicum::BaseController
     redirect_to :action => :show, :id => @person.id, :focus => params[:focus]
   end
 
-  def list
+  def index
     @filter = profiles_filter
     order = "curriculum_events.academic_period, persons.last_name, persons.first_name"
     @curriculum_enrollments = CurriculumEvent.paginate(:page => params[:page], :per_page => 20, :include => [{:person => [:contact, :practicum_profile]}], :conditions => @filter.conditions, :order => order)

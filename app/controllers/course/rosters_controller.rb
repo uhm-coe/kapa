@@ -66,7 +66,7 @@ class Course::RostersController < Course::BaseController
     render :partial => "/course/table", :layout => false
   end
 
-  def list
+  def index
     @filter = course_filter
     @assessment_courses = AssessmentCourse.paginate(:page => params[:page], :per_page => 20, :include => [[:assessment_course_registrations => :assessment_scores]], :conditions => @filter.conditions, :order => "subject, number, section")
   end

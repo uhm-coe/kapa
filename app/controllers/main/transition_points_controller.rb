@@ -72,7 +72,7 @@ class Main::TransitionPointsController < Main::BaseController
     redirect_to main_transition_points_path(:action => :show, :id => @transition_point, :focus => params[:focus])
   end
 
-  def list
+  def index
     @filter = transition_point_filter
     order = "persons.last_name, persons.first_name"
     @transition_points = TransitionPoint.paginate(:page => params[:page], :per_page => @filter.per_page, :include => [{:curriculum => [:person, :program]}, :last_transition_action], :conditions => @filter.conditions, :order => order)

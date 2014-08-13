@@ -2,7 +2,7 @@
 
   <h4>Import Person/User</h4>
 
-  <%=form_tag({:action => :import}, {:multipart => true}) do %>
+  <%=form_tag(import_admin_users_path, {:multipart => true}) do %>
   <table>
       <tr class="bottom">
         <td>

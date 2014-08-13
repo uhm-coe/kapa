@@ -42,10 +42,10 @@ class Admin::RubricsController < Admin::BaseController
       render_notice and return false
     end
     flash[:notice1] = "Rubric was successfully deleted."
-    redirect_to :action => :list
+    redirect_to :action => :index
   end
 
-  def list
+  def index
     @filter = filter
     @filter.append_condition "assessment_rubrics.title like ?", :title, :like => true
     @filter.append_condition "assessment_rubrics.program like ?", :program, :like => true

@@ -78,14 +78,14 @@
     </ul>
 
     <div id="practicum_profile_tab">
-      <%=label_form_for :practicum_profile, :url => {:action => :update, :id => @practicum_placement}, :remote => true do |f| %>
+      <%=label_form_for :practicum_profile, :url => practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/practicum/profile_form", :locals => {:f => f}%>
         <%=controls if @current_user.manage?(:practicum, :delegate => :maintain) %>
       <% end %>
     </div>
 
     <div id="practicum_placement_tab">
-      <%=label_form_for :practicum_placement, :url => {:action => :update, :id => @practicum_placement, :focus => :practicum_placement}, :remote => true do |f| %>
+      <%=label_form_for :practicum_placement, :url => practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/practicum/placement_form", :locals => {:f => f}%>
         <%=controls if @current_user.write? %>
       <% end %>
@@ -99,10 +99,10 @@
             <a href="#"><span class="strong"><%="#{index + 1}."%> <%=h [@practicum_assignment.person ? @practicum_assignment.person.full_name : nil, @practicum_assignment.practicum_school ? @practicum_assignment.practicum_school.name_short : nil].join("/") %></span></a>
           </h3>
           <div>
-            <%=label_form_for :practicum_assignment, :url => practicum_assignments_path(:action => :update, :id => @practicum_assignment, :focus => "mentors"), :remote => true  do %>
+            <%=label_form_for :practicum_assignment, :url => practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
               <%=render :partial => "/practicum/assignment_form" %><br/>
               <%=controls do %>
-                <%= button_to_redirect "Delete", practicum_assignments_path(:action => :destroy, :id => @practicum_assignment, :focus => "mentors"), {"confirm" => "Are you sure?"} %>
+                <%= link_to_button "Delete", practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), {:method => :delete, "data-confirm" => "Are you sure?"} %>
               <% end if @current_user.write?  %>
             <% end %>
           </div>
@@ -112,7 +112,7 @@
         </h3>
         <div>
           <% @practicum_assignment = PracticumAssignment.new(:assignment_type => "mentor") %>
-          <%=label_form_for :practicum_assignment, :url => practicum_assignments_path(:action => :create, :id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
+          <%=label_form_for :practicum_assignment, :url => practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
             <%=render :partial => "/practicum/assignment_form" %>
             <%=controls if @current_user.write? %>
           <% end %>

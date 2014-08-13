@@ -34,7 +34,7 @@ class Admin::PropertiesController < Admin::BaseController
     redirect_to :action => :show, :id => @property, :focus => params[:focus]
   end
 
-  def list
+  def index
     @filter = filter
     @filter.append_condition "name = ?", :name
     @filter.append_condition "active = ?", :active

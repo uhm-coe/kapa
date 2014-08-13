@@ -14,13 +14,13 @@
     </ul>
 
     <div id="tabs-1">
-      <%=label_form_for :advising_session, :url => {:action => :create, :id => @advising_session}, :remote => true do %>
-        <%=render :partial => "/advising/session_form", :locals => { :anonymous => @advising_session.anonymous? } %>
+      <%=label_form_for :advising_session, :url => advising_sessions_path, :remote => true do %>
+        <%=render :partial => "/advising/session_form"%>
         <%=controls if @current_user.write? %>
       <% end %>
     </div>
   </div>
 
-  <%=link_to_unless @advising_session.anonymous?, "Back", main_persons_path(:action => :show, :id => @person) %>
+  <%=link_to "Back", main_persons_path(:action => :show, :id => @person) %>
 
 <%end%>

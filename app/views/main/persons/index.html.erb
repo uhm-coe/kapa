@@ -1,0 +1,80 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#filter_key').mouseover(function() {
+        if($(this).val() == 'Please enter key...') $(this).val('');
+      });
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <div class="modal fade" id="filter_dialog" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="modal_label">Filter Criteria</h4>
+        </div>
+        <div class="modal-body">
+          <%=bootstrap_form_for(:filter, :url => main_persons_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+            <%=f.text_field :key %>
+            <%=f.submit "Show" %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-submit="#filter_form">Show</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Search Person (Key=<%=@filter.key%>)</h3>
+
+  <div class="row">
+    <div class="text-right">
+      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+      <%=link_to "New", {:action => :new}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
+    </div>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Other Names</th>
+      <th>Email</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% for person in @persons %>
+      <% if person.new_record? %>
+      <tr class="new">
+        <td><%=h person.id_number %></td>
+        <td><%=h person.full_name %></td>
+        <td></td>
+        <td><%=mail_to person.email %></td>
+        <td><%=link_to_unless person.id_number.blank?, "Add", :action => :create, :mode => :promote, "person[id_number]" => person.id_number %></td>
+      </tr>
+      <% else %>
+      <tr>
+        <td><%=link_to_id_number person %></td>
+        <td><%=h person.full_name %></td>
+        <td><%=abbr person.other_name, 30 %></td>
+        <td><%=mail_to person.email %></td>
+        <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

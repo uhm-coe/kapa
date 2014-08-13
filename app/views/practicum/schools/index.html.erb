@@ -12,7 +12,7 @@
   <h4>Schools</h4>
   <table>
     <tr class="bottom">
-      <%=form_tag :action => :list do %>
+      <%=form_tag :action => :index do %>
         <td>
           <p><label for="filter_user">Name:</label><br>
             <%=text_field :filter, :name %></p>
@@ -67,7 +67,7 @@
     <%=link_to "New", :action => :new if @current_user.manage?(:practicum, :delegate => :maintain) %>
   </div>
   <div id="dialog" class="form-dialog" title="Import School Data">
-    <%=label_form_for(:filter, :url => {:action => :import}, :html => {:multipart => true, :id => "import_school_form"} ) do |f| %>
+    <%=label_form_for(:filter, :url => import_practicum_schools_path, :html => {:multipart => true, :id => "import_school_form"} ) do |f| %>
       <%=f.file_field :import_file %>
     <% end %>
   </div>

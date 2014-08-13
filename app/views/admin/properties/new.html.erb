@@ -2,11 +2,11 @@
 
 <h4>New System Property</h4>
 
-<%=label_form_for :property, :url => {:action => :create}, :remote => true do |f| %>
+<%=label_form_for :property, :url => admin_properties_path, :remote => true do |f| %>
   <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
   <%=controls %>
 <% end %>
 
-<%=link_to "Back", :action => :list %>
+<%=link_to "Back", :action => :index %>
 
 <% end %>

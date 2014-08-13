@@ -37,7 +37,7 @@ class Practicum::AssignmentsController < Practicum::BaseController
     redirect_to practicum_placements_path(:action => :show, :id => @practicum_placement, :focus => params[:focus])
   end
   
-  def list
+  def index
     @filter = assignment_filter
     @practicum_schools = PracticumSchool.find(:all, :include => :practicum_assignments, :conditions => "practicum_assignments.id is not null", :order => "name_short")
     @practicum_assignments = PracticumAssignment.paginate(:page => params[:page], :per_page => 20, :include => [:person, :practicum_school, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")

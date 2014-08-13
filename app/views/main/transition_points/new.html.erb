@@ -4,7 +4,7 @@
 
 <% content_for(:box2) do %>
   <h4>New Transition Point</h4>
-  <%=label_form_for :transition_point, :url => {:action => :create, :id => @person}, :remote => true do |f| %>
+  <%=label_form_for :transition_point, :url => main_transition_points_path(:id => @person), :remote => true do |f| %>
     <table>
       <tr>
         <td>

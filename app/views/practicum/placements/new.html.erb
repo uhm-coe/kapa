@@ -10,7 +10,7 @@
     </ul>
 
     <div id="practicum_profile_tab">
-      <%=label_form_for :practicum_placement, :url => {:action => :create, :id => @person}, :remote => true do |f| %>
+      <%=label_form_for :practicum_placement, :url => practicum_placments_path(:id => @person), :remote => true do |f| %>
         <table>
           <tr>
             <td>

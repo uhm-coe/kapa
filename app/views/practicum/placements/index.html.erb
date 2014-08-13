@@ -79,7 +79,7 @@
     <%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :practicum, :delegate => :import %>
   </p>
   <div id="dialog" class="form-dialog" title="Import Placement Data">
-    <%=label_form_for(:filter, :url => {:action => :import}, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
+    <%=label_form_for(:filter, :url => import_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
       <%=f.property_select :academic_period, {:name => :academic_period, :label => "Semester"}, :id => "filter_import_academic_period" %>
         <%=label_fields_for :data do |d| %>
           <%=d.file_field :import_file %>

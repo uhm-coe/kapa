@@ -72,10 +72,10 @@ class Practicum::SchoolsController < Practicum::BaseController
       school.serialize(:school_contact, school_contact)
       school.save
     end
-    redirect_to(:action => :list)
+    redirect_to(:action => :index)
   end
 
-  def list
+  def index
     @filter = school_filter
     @practicum_schools = PracticumSchool.paginate(:page => params[:page], :per_page => 20, :include => :practicum_assignments, :conditions => @filter.conditions, :order => "name_short")
   end

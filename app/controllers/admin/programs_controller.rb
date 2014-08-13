@@ -37,7 +37,7 @@ class Admin::ProgramsController < Admin::BaseController
     redirect_to :action => :show, :id => @program, :focus => params[:focus]
   end
 
-  def list
+  def index
     @filter = filter
     @filter.append_condition "dept like ?", :dept, :like => true
     @filter.append_condition "active = ?", :active

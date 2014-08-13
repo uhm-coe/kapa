@@ -9,10 +9,10 @@
     </ul>
 
     <div id="rubric_profile_tab">
-      <%=label_form_for :assessment_rubric, :url => {:action => :update, :id => @assessment_rubric}, :remote => true do |f| %>
+      <%=label_form_for :assessment_rubric, :url => admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
         <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
         <%=controls do %>
-          <%= button_to_redirect "Delete", admin_rubrics_path(:action => :destroy, :id => @assessment_rubric), {"confirm" => "Are you sure?"} %>
+          <%= link_to_button "Delete", admin_rubric_path(:id => @assessment_rubric), {:method => :delete, "data-confirm" => "Are you sure?"} %>
         <% end if @current_user.manage?  :admin, :delegate => :rubric %>
       <% end %>
     </div>
@@ -24,10 +24,10 @@
             <a href="#"><span class="strong"><%=h @assessment_criterion.criterion %></span></a>
           </h3>
           <div>
-            <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:action => :update, :id => @assessment_criterion), :remote => true do |f| %>
+            <%=label_form_for :assessment_criterion, :url => admin_criterion_path(:id => @assessment_criterion), :remote => true, :html => {:method => :put} do |f| %>
               <%=render :partial => "/admin/criterion_form" %>
               <%=controls do %>
-                <%= button_to_redirect "Delete", admin_criterions_path(:action => :destroy, :id => @assessment_criterion), {"confirm" => "Are you sure?"} %>
+                <%= link_to_button "Delete", admin_criterion_path(:id => @assessment_criterion), {:method => :delete, "data-confirm" => "Are you sure?"} %>
               <% end if @current_user.manage?  :admin, :delegate => :rubric %>
             <% end %>
           </div>
@@ -38,7 +38,7 @@
         </h3>
         <div>
           <% @assessment_criterion = AssessmentCriterion.new %>
-          <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:action => :create, :id => @assessment_rubric), :remote => true do |f| %>
+          <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:id => @assessment_rubric), :remote => true do |f| %>
             <%=render :partial => "/admin/criterion_form" %>
             <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
           <% end %>
@@ -52,6 +52,6 @@
 
   </div>
 
-  <%=link_to "Back", :action => :list %>
+  <%=link_to "Back", :action => :index %>
 
 <% end %>

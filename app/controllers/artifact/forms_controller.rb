@@ -45,7 +45,7 @@ class Artifact::FormsController < Artifact::BaseController
     redirect_to main_persons_path(:action => :show, :id => @form.person_id)
   end
 
-  def list
+  def index
     @filter = form_filter
     @forms = Form.paginate(:page => params[:page], :per_page => 20, :include => :person, :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name")
   end

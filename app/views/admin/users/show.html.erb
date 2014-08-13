@@ -14,14 +14,14 @@
     </ul>
 
     <div id="user_profile_tab">
-      <%=label_form_for :user, :url => {:action => :update, :id => @user}, :remote => true do |f| %>
+      <%=label_form_for :user, :url => admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
         <%=render :partial => "/admin/user_form", :locals => {:f => f} %>
         <%=controls if @current_user.manage?  :admin, :delegate => :user %>
       <% end %>
     </div>
 
     <div id="role_tab">
-      <%=label_form_for :user_roles, :url => {:action => :update, :id => @user, :focus => "role"}, :remote => true do |f| %>
+      <%=label_form_for :user_roles, :url => admin_user_path(:id => @user, :focus => "role"), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/admin/role_form", :locals => {:f => f} %>
         <%=controls if @current_user.manage?  :admin, :delegate => :user  %>
       <% end %>
@@ -36,6 +36,6 @@
     </div>
   </div>
 
-  <%=link_to "Back", :action => :list %>
+  <%=link_to "Back", :action => :index %>
 <%end%>
 s

@@ -16,17 +16,17 @@
   <% for document in @documents %>
     <tr>
       <td><%=format_date document.data_updated_at %></td>
-      <td><%=link_to document.name, artifact_documents_path(:action => :show, :id => document, :format => :file) %></td>
+      <td><%=link_to document.name, artifact_document_path(:id => document, :format => :file) %></td>
       <td><%=h document.public %></td>
       <td><%=h document.dept %></td>
-      <td class="right"><%=link_to "Show", artifact_documents_path(:action => :show, :id => document), :target => :blank, :class => "btn btn-default btn-xs"  %></td>
+      <td class="right"><%=link_to "Show", artifact_document_path(:id => document), :target => :blank, :class => "btn btn-default btn-xs"  %></td>
     </tr>
   <% end if @documents %>
 </table>
 <p class="new right"><%=link_to_function "New document", nil, :id => "open_document_dialog" if @current_user.write? :artifact %></p>
 
 <div id="document_dialog" class="form-dialog" title="Document Upload">
-  <%=label_form_for :document, :url => artifact_documents_path(:action => :create, :id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => { :multipart => true , :id => "new_document_form"} do |f| %>
+  <%=label_form_for :document, :url => artifact_documents_path(:id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => { :multipart => true , :id => "new_document_form"} do |f| %>
     <%=f.file_field :data, :lable => "File" %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
   <% end %>

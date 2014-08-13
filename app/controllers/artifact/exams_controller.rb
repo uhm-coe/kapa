@@ -32,7 +32,7 @@ class Artifact::ExamsController < Artifact::BaseController
     redirect_to main_persons_path(:action => :show, :id => @exam.person_id, :focus => :exam)
   end
 
-  def list
+  def index
     @filter = exams_filter
     @exams = Exam.paginate(:page => params[:page], :per_page => 20, :include => [:person, :exam_scores], :conditions => @filter.conditions, :order => "report_date DESC, persons.last_name, persons.first_name")
   end
@@ -50,7 +50,7 @@ class Artifact::ExamsController < Artifact::BaseController
 
       unless exam.check_format
         flash[:notice2] = "Invalid file format!"
-        redirect_to :action => :list and return false
+        redirect_to :action => :index and return false
       end
 
       existing_exam = Exam.find_by_report_number(exam.extract_report_number)
@@ -63,14 +63,14 @@ class Artifact::ExamsController < Artifact::BaseController
 
       unless exam.parse
         flash[:notice2] = "Error while parsing data!"
-        redirect_to :action => :list and return false
+        redirect_to :action => :index and return false
       end
 
       @exams.push exam
     end
 
     flash[:notice2] = "#{@exams.length} records are imported."
-    redirect_to :action => :list
+    redirect_to :action => :index
   end
 
   private

@@ -1,7 +1,7 @@
 class Main::BaseController < ApplicationBaseController
 
 
-  def index
+  def welcome
     validate_login if UserSession.find
   end
 

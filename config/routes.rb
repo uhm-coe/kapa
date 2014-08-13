@@ -1,48 +1,58 @@
 Rails.application.routes.draw do
 
-  root :to => 'main/base#index'
+  extra_actions = Proc.new do
+    collection do
+      get :export
+      post :import
+    end
+
+    member do
+      get :ajax
+    end
+  end
+
+  root :to => 'main/base#welcome'
   match '/login' => 'main/base#login', :as => :login
   match '/logout' => 'main/base#logout', :as => :logout
   match '/error' => 'main/base#error', :as => :error
 
   namespace :main do
-      match 'persons/:action(/:id)' => 'persons', :as => :persons
-      match 'contacts/:action(/:id)' => 'contacts', :as => :contacts
-      match 'curriculums/:action(/:id)' => 'curriculums', :as => :curriculums
-      match 'transition_points/:action(/:id)' => 'transition_points', :as => :transition_points
-      match 'transition_actions/:action(/:id)' => 'transition_actions', :as => :transition_actions
+    resources :persons, &extra_actions
+    resources :contacts, &extra_actions
+    resources :curriculums, &extra_actions
+    resources :transition_points, &extra_actions
+    resources :transition_actions, &extra_actions
   end
 
   namespace :artifact do
-      match 'documents/:action(/:id)' => 'documents', :as => :documents
-      match 'forms/:action(/:id)' => 'forms', :as => :forms
-      match 'exams/:action(/:id)' => 'exams', :as => :exams
+    resources :documents, &extra_actions
+    resources :forms, &extra_actions
+    resources :exams, &extra_actions
   end
 
   namespace :advising do
-      match 'sessions/:action(/:id)' => 'sessions', :as => :sessions
+    resources :sessions, &extra_actions
   end
 
   namespace :course do
-      match 'rosters/:action(/:id)' => 'rosters', :as => :rosters
-      match 'registrations/:action(/:id)' => 'registrations', :as => :registrations
+    resources :rosters, &extra_actions
+    resources :registrations, &extra_actions
   end
 
   namespace :practicum do
-      match 'profiles/:action(/:id)' => 'profiles', :as => :profiles
-      match 'placements/:action(/:id)' => 'placements', :as => :placements
-      match 'schools/:action(/:id)' => 'schools', :as => :schools
-      match 'assignments/:action(/:id)' => 'assignments', :as => :assignments
+    resources :placements, &extra_actions
+    resources :schools, &extra_actions
+    resources :assignments, &extra_actions
   end
 
   namespace :admin do
-      match 'users/:action(/:id)' => 'users', :as => :users
-      match 'programs/:action(/:id)' => 'programs', :as => :programs
-      match 'program_offers/:action(/:id)' => 'program_offers', :as => :program_offers
-      match 'properties/:action(/:id)' => 'properties', :as => :properties
-      match 'restricted_reports/:action(/:id)' => 'restricted_reports', :as => :restricted_reports
-      match 'rubrics/:action(/:id)' => 'rubrics', :as => :rubrics
-      match 'criterions/:action(/:id)' => 'criterions', :as => :criterions
+    resources :users, &extra_actions
+    resources :programs, &extra_actions
+    resources :program_offers, &extra_actions
+    resources :properties, &extra_actions
+    resources :restricted_reports, &extra_actions
+    resources :rubrics, &extra_actions
+    resources :criterions, &extra_actions
   end
 
 end

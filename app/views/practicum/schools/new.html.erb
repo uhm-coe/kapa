@@ -2,12 +2,12 @@
 
 <h4>New School</h4>
 
-<%=label_form_for :practicum_school, :url => {:action => :create} do |f| %>
+<%=label_form_for :practicum_school, :url => practicum_schools_path do |f| %>
   <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
   <%=controls if @current_user.write? %>
 <% end %>
 
-<%=link_to "Back", :action => :list %>
+<%=link_to "Back", :action => :index %>
 
 <% end %>
 

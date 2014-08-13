@@ -136,10 +136,10 @@ class Practicum::PlacementsController < Practicum::BaseController
         next
       end
     end
-    redirect_to(:action => :list)
+    redirect_to(:action => :index)
   end
     
-  def list
+  def index
     @filter = placement_filter
     @practicum_placements = PracticumPlacement.paginate(:page => params[:page], :per_page => 20, :include => [{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, :practicum_assignments], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name")
   end

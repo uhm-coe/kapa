@@ -10,7 +10,7 @@
 
 <% content_for(:navigation) do %>
 
-  <%=label_form_for(:exam, :url => {:action => :update, :id => @exam}, :remote => true ) do |f| %>
+  <%=label_form_for(:exam, :url => artifact_exam_path(:id => @exam), :remote => true, :html => {:method => :put}  ) do |f| %>
     <%=f.text_area :note, :text => "Note", :size => "25x30"%>
     <%=controls if @current_user.write? :artifact, :dept => @exam.dept %>
   <% end %>

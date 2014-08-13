@@ -60,7 +60,7 @@ class Advising::SessionsController < Advising::BaseController
     redirect_to main_persons_path(:action => :show, :id => @advising_session.person_id)
   end
 
-  def list
+  def index
     @filter = sessions_filter
     @advising_sessions = AdvisingSession.paginate(:page => params[:page], :per_page => 20, :include => :person, :order => "session_date DESC, id DESC", :conditions => @filter.conditions)
   end

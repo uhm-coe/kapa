@@ -9,7 +9,7 @@
 
 <% content_for(:box1) do %>
 <h4>Users</h4>
-  <%=form_tag :action => :list do %>
+  <%=form_tag :action => :index do %>
     <table>
     <tr class="bottom">
       <td>
@@ -72,7 +72,7 @@
 </p>
 
 <div id="dialog" class="form-dialog" title="Import User Data">
-  <%=label_form_for(:filter, :url => admin_users_path(:action => :import), :html => {:multipart => true, :id => "import_user_form"} ) do |f| %>
+  <%=label_form_for(:filter, :url => import_admin_users_path, :html => {:multipart => true, :id => "import_user_form"} ) do |f| %>
      <%=f.file_field :import_file %>
   <% end %>
 </div>

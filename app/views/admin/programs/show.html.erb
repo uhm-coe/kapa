@@ -9,10 +9,10 @@
     </ul>
 
     <div id="program_profile_tab">
-      <%=label_form_for :program, :url => {:action => :update, :id => @program}, :remote => true do |f| %>
+      <%=label_form_for :program, :url => admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
         <%=render :partial => "/admin/program_form" %>
         <%=controls do%>
-          <%= button_to_redirect "Delete", admin_programs_path(:action => :destroy, :id => @program), {"confirm" => "Are you sure?"} %>
+          <%= link_to_button "Delete", admin_program_path(:id => @program), {:method => :delete, "data-confirm" => "Are you sure?"} %>
         <% end if @current_user.manage? %>
       <% end %>
     </div>
@@ -24,10 +24,10 @@
             <a href="#"><span class="strong"><%=h "#{@program.code}/#{@program_offer.description}" %></span></a>
           </h3>
           <div>
-            <%=label_form_for :program_offer, :url => admin_program_offers_path(:action => :update, :id => @program_offer), :remote => true do |f| %>
+            <%=label_form_for :program_offer, :url => admin_program_offer_path(:id => @program_offer), :remote => true, :html => {:method => :put} do |f| %>
               <%=render :partial => "/admin/program_offer_form" %>
               <%=controls do %>
-                <%= button_to_redirect "Delete", admin_program_offers_path(:action => :destroy, :id => @program_offer), {"confirm" => "Are you sure?"} %>
+                <%= link_to_button "Delete", admin_program_offer_path(:id => @program_offer), {:method => :delete, "data-confirm" => "Are you sure?"} %>
               <% end if @current_user.manage? %>
             <% end %>
           </div>
@@ -38,7 +38,7 @@
         </h3>
         <div>
           <% @program_offer = ProgramOffer.new %>
-          <%=label_form_for :program_offer, :url => admin_program_offers_path(:action => :create, :id => @program, :focus => :offers), :remote => true do |f| %>
+          <%=label_form_for :program_offer, :url => admin_program_offers_path(:id => @program, :focus => :offers), :remote => true do |f| %>
             <%=render :partial => "/admin/program_offer_form", :locals => {:f => f} %>
             <%=controls if @current_user.manage? %>
           <% end %>
@@ -49,6 +49,6 @@
 
   </div>
 
-  <%=link_to "Back", :action => :list %>
+  <%=link_to "Back", :action => :index %>
 
 <% end %>

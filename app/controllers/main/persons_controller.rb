@@ -81,12 +81,11 @@ class Main::PersonsController < Main::BaseController
     end
   end
 
-  def list
+  def index
     @filter = filter
     @persons = Person.search(:all, @filter.key)
-    if not @persons.blank? and @persons.first.new_record?
-      flash.now[:notice] = "Person was found in UH Directory."
-    elsif @persons.blank?
+
+    if @persons.blank?
       flash.now[:notice] = "No record was found."
     end
   end

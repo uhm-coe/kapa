@@ -9,7 +9,7 @@
 <% content_for(:hidden) do %>
 
   <div id="change_program_dialog" class="form-dialog" title="Change Program">
-    <%=label_form_for(:curriculum, :url => main_curriculums_path(:action => :update, :id => @curriculum, :return_uri => request.symbolized_path_parameters)) do |t| %>
+    <%=label_form_for(:curriculum, :url => main_curriculum_path(:id => @curriculum, :return_uri => request.symbolized_path_parameters), :html => {:method => :put}) do |t| %>
       <%= t.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"} %>
     <% end %>
     <div style = "width:300px;">
