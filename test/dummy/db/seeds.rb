@@ -15,6 +15,7 @@ user.password = "admin"
 user.serialize(:role, {:main => '3', :artifact => '3', :advising => '3', :course => '3', :practicum => '3', :admin => '3'})
 user.save!
 
-ActiveRecord::Fixtures.create_fixtures("#{Rails.root}/db", "properties")
-ActiveRecord::Fixtures.create_fixtures("#{Rails.root}/db", "programs")
-ActiveRecord::Fixtures.create_fixtures("#{Rails.root}/db", "program_offers")
+fixture_path = "#{Rails.root.parent}/fixtures"
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "properties")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "programs")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "program_offers")
