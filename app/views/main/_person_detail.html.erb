@@ -1,34 +1,40 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
 
-      $('#person_id_number').keyup(function() {
-        if($(this).val().match(/[\d]{8}/i)) {
+      $('#person_id_number').keyup(function () {
+        if ($(this).val().match(/[\d]{8}/i)) {
           $.get('<%=ajax_main_person_path(:id => @person, :commnad => :verify)%>',
-                {key: $(this).val()}, 
-                function(data) { $('#person_form').html(data);},
-                'html');
+                  {key: $(this).val()},
+                  function (data) {
+                    $('#person_form').html(data);
+                  },
+                  'html');
         }
       })
 
-      $('#person_email').keyup(function() {
-        if($(this).val().match(/\w+@hawaii.edu/i)) {
+      $('#person_email').keyup(function () {
+        if ($(this).val().match(/\w+@hawaii.edu/i)) {
           $.get('<%=ajax_main_person_path(:id => @person, :commnad => :verify)%>',
-                {key: $(this).val()}, 
-                function(data) { $('#person_form').html(data);},
-                'html');
+                  {key: $(this).val()},
+                  function (data) {
+                    $('#person_form').html(data);
+                  },
+                  'html');
         }
       })
-      
-      $('#person_sync_button').click(function() {
-          $.get('<%=ajax_main_person_path(:id => @person, :commnad => :sync)%>',
-                {key: $('#person_id_number').val()}, 
-                function(data) { $('#person_form').html(data);},
-                'html');      
+
+      $('#person_sync_button').click(function () {
+        $.get('<%=ajax_main_person_path(:id => @person, :commnad => :sync)%>',
+                {key: $('#person_id_number').val()},
+                function (data) {
+                  $('#person_form').html(data);
+                },
+                'html');
       })
     });
   </script>
-<%end%>
+<% end %>
 
 <h3>
   <div class="btn-group">
@@ -40,55 +46,67 @@
       <li><a href="#">Open External Site</a></li>
     </ul>
   </div>
-  <%=link_to @person.full_name, main_person_path(:action => :show, :id => @person) %>
+  <%= link_to @person.full_name, main_person_path(:action => :show, :id => @person) %>
 </h3>
 
 <div class="panel panel-default">
   <div class="panel-body">
-<ul class="nav nav-tabs closable-tabs">
-  <% if @current_user.read? :main %><li><a href="#profile_tab" data-toggle="tab">Profile</a></li><% end %>
-  <% if @current_user.read? :main %><li><a href="#contact_tab" data-toggle="tab">Contacts</a></li><% end %>
-  <% if @current_user.read? :artifact %><li><a href="#document_tab" data-toggle="tab">Documents</a></li><% end %>
-  <% if @current_user.read? :artifact %><li><a href="#form_tab" data-toggle="tab">Forms</a></li><% end %>
-  <% if @current_user.read? :artifact %><li><a href="#exam_tab" data-toggle="tab">Praxis</a></li><% end %>
-</ul>
+    <ul class="nav nav-tabs closable-tabs">
+      <% if @current_user.read? :main %>
+        <li><a href="#profile_tab" data-toggle="tab">Profile</a></li>
+      <% end %>
+      <% if @current_user.read? :main %>
+        <li><a href="#contact_tab" data-toggle="tab">Contacts</a></li>
+      <% end %>
+      <% if @current_user.read? :artifact %>
+        <li><a href="#document_tab" data-toggle="tab">Documents</a></li>
+      <% end %>
+      <% if @current_user.read? :artifact %>
+        <li><a href="#form_tab" data-toggle="tab">Forms</a></li>
+      <% end %>
+      <% if @current_user.read? :artifact %>
+        <li><a href="#exam_tab" data-toggle="tab">Praxis</a></li>
+      <% end %>
+    </ul>
 
-<div class="tab-content">
+    <div class="tab-content">
 
-  <%=content_tag :div, :id => "profile_tab", :class => "tab-pane" do %>
-    <%=label_form_for :person, :url => main_person_path(:id => @person, :focus => "profile", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put}  do %>
-      <div id="person_form"><%=render :partial => "/main/person_form" %></div><br>
-      <%=content_tag :p, :class => "center" do %>
-        <%=submit_tag "Save" %>
-        <%=button_to_reset "Cancel"%>
-        <%=button_to_function "Sync", nil, :id => "person_sync_button" if @person.verified? %>
-      <% end if @current_user.write? :main %>
-    <% end %>
-  <% end if @current_user.read? :main %>
+      <%= content_tag :div, :id => "profile_tab", :class => "tab-pane" do %>
+        <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :focus => "profile", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put} do %>
+          <div id="person_form"><%= render :partial => "/main/person_form" %></div>
+          <br>
+          <%= content_tag :p, :class => "center" do %>
+            <%= submit_tag "Save" %>
+            <%= button_to_reset "Cancel" %>
+            <%= button_to_function "Sync", nil, :id => "person_sync_button" if @person.verified? %>
+          <% end if @current_user.write? :main %>
+        <% end %>
+      <% end if @current_user.read? :main %>
 
-  <%=content_tag :div, :id => "contact_tab", :class => "tab-pane" do %>
-    <%=label_form_for :contact, :url => main_contact_path(:id => @person, :focus => "contact", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put}  do %>
-      <%=render :partial => "/main/contact_form", :locals => {:object_name => :contact} %><br>
-      <%=content_tag :p, :class => "center" do %>
-        <%=submit_tag "Save" %>
-        <%=button_to_reset "Cancel" %>
-      <% end if @current_user.write? :main %>
-    <% end %>
-  <% end if @current_user.read? :main %>
+      <%= content_tag :div, :id => "contact_tab", :class => "tab-pane" do %>
+        <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :focus => "contact", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put} do %>
+          <%= render :partial => "/main/contact_form", :locals => {:object_name => :contact} %>
+          <br>
+          <%= content_tag :p, :class => "center" do %>
+            <%= submit_tag "Save" %>
+            <%= button_to_reset "Cancel" %>
+          <% end if @current_user.write? :main %>
+        <% end %>
+      <% end if @current_user.read? :main %>
 
-  <%=content_tag :div, :id => "document_tab", :class => "tab-pane" do %>
-    <%=render :partial => "/artifact/document_table" %>
-  <% end if @current_user.read? :artifact %>
+      <%= content_tag :div, :id => "document_tab", :class => "tab-pane" do %>
+        <%= render :partial => "/artifact/document_table" %>
+      <% end if @current_user.read? :artifact %>
 
-  <%=content_tag :div, :id => "form_tab", :class => "tab-pane" do %>
-    <%=render :partial => "/artifact/form_table" %>
-  <% end if @current_user.read? :artifact %>
+      <%= content_tag :div, :id => "form_tab", :class => "tab-pane" do %>
+        <%= render :partial => "/artifact/form_table" %>
+      <% end if @current_user.read? :artifact %>
 
-  <%=content_tag :div, :id => "exam_tab", :class => "tab-pane" do %>
-    <%=render :partial => "/artifact/exam_table" %>
-  <% end if @current_user.read? :artifact %>
+      <%= content_tag :div, :id => "exam_tab", :class => "tab-pane" do %>
+        <%= render :partial => "/artifact/exam_table" %>
+      <% end if @current_user.read? :artifact %>
 
-</div>
+    </div>
 
-</div>
   </div>
+</div>

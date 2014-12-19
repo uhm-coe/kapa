@@ -30,11 +30,11 @@
             <td><%=h transition_point.academic_period_desc %></td>
             <td><%=h transition_point.type.to_s.capitalize %></td>
             <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-            <td class="right"><%=link_to "Show", main_transition_points_path(:action => :show, :id => transition_point) %></td>
+            <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point) %></td>
           </tr>
         <% end %>
       </table>
-      <p class="new right"><%=link_to "New Transition Point", main_transition_points_path(:action => :new, :id => @curriculum) %></p>
+      <p class="new right"><%=link_to "New Transition Point", new_main_transition_point_path(:id => @curriculum) %></p>
     </div>
 
     <div id="journey_tab">
@@ -45,6 +45,6 @@
     </div>
   </div>
 
-  <%=link_to "Back", main_persons_path(:action => :show, :id => @curriculum.person_id, :focus => :curriculum) %>
+  <%=link_to "Back", main_person_path(:id => @curriculum.person_id, :focus => :curriculum) %>
 
 <%end%>
