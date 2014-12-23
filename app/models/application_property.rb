@@ -1,5 +1,5 @@
 class ApplicationProperty < ApplicationModel
-  set_table_name :properties
+  self.table_name = :properties
   @@description_cache = HashWithIndifferentAccess.new
   @@description_detail_cache = HashWithIndifferentAccess.new
   @@category_cache = HashWithIndifferentAccess.new

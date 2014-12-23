@@ -99,7 +99,7 @@ class ApplicationBaseController < ActionController::Base
       render_notice and return false
     else
       flash[:notice] = "We are sorry, but something went wrong."
-      redirect_to(AppConfig.routing_mode == "student" ? student_error_path : error_path) and return false     
+      redirect_to(config.routing_mode == "student" ? student_error_path : error_path) and return false
     end
   end
     
@@ -157,7 +157,7 @@ class ApplicationBaseController < ActionController::Base
     items = []
     case name.to_s
     when "main"
-      items.push ["Search Person", main_persons_path]  if @current_user.manage?(:main, :delegate => :search)
+      items.push ["Search Person", main_persons_path(:modal => true)]  if @current_user.manage?(:main, :delegate => :search)
       items.push ["Program Cohorts", main_curriculums_path]  if @current_user.read? (:main)
       items.push ["Transition Points", main_transition_points_path] if @current_user.read?(:main)
     when "artifact"

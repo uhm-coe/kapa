@@ -1,6 +1,6 @@
 class Person < ApplicationModel
 #class Person < ActiveRecord::Base
-  set_table_name :persons
+  self.table_name = :persons
   #Main module associations
   has_one  :contact, :as => :entity, :autosave => true
   has_many :curriculums
@@ -132,26 +132,26 @@ class Person < ApplicationModel
 
     case key
     when /[\d]{8}/
-      filter = "#{AppConfig.ldap_attr_id_number}=#{key}"
+      filter = "#{config.ldap_attr_id_number}=#{key}"
     when /^[A-Z0-9_%+-]+@hawaii.edu$/i
-      filter = "#{AppConfig.ldap_attr_email}=#{key}"
+      filter = "#{config.ldap_attr_email}=#{key}"
     else
       filter = nil
     end
 
     persons = Array.new
-    Rails.application.config.ldap.search(:base => AppConfig.ldap_search_base, :filter => filter ) do |entry|
+    Rails.application.config.ldap.search(:base => config.ldap_search_base, :filter => filter ) do |entry|
       person = Person.new
       logger.debug "----LDAP search entry #{entry.dn}"
       entry.each do |attribute, values|
         case attribute.to_s
-          when AppConfig.ldap_attr_id_number
+          when config.ldap_attr_id_number
             person.id_number = values.first.to_s
-          when AppConfig.ldap_attr_last_name
+          when config.ldap_attr_last_name
             person.last_name = values.first.to_s
-          when AppConfig.ldap_attr_first_name
+          when config.ldap_attr_first_name
             person.first_name = values.first.to_s
-          when AppConfig.ldap_attr_email
+          when config.ldap_attr_email
             person.email = values.first.to_s
         end
       end
@@ -221,13 +221,13 @@ class Person < ApplicationModel
 
   private
   def self.encrypt(string)
-    public_key = OpenSSL::PKey::RSA.new(File.read("#{Rails.root}/config/#{AppConfig.public_key}"))
+    public_key = OpenSSL::PKey::RSA.new(File.read("#{Rails.root}/config/#{config.public_key}"))
     return Base64.encode64(public_key.public_encrypt(string))
   end
 
   def self.decrypt(string, key)
     unless string.blank?
-      private_key = OpenSSL::PKey::RSA.new(key, AppConfig.passphrase)
+      private_key = OpenSSL::PKey::RSA.new(key, config.passphrase)
       return private_key.private_decrypt(Base64.decode64(string))
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 153) do
+ActiveRecord::Schema.define(:version => 20141220051200) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false

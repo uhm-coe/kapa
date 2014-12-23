@@ -1,6 +1,6 @@
 class Document < ApplicationModel
   belongs_to :person
-  has_attached_file :data, :path => "#{AppConfig.document_root}:id_partition/:style.:extension"
+#  has_attached_file :data, :path => "#{config.document_root}:id_partition/:style.:extension"
 
   def url(*args)
     data.url(*args)

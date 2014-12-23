@@ -9,11 +9,6 @@ require 'active_record/fixtures'
 
 Person.delete_all
 User.delete_all
-person = Person.create(:last_name => "Admin", :first_name => "User")
-user = person.users.create(:uid => "admin", :category => "local", :status => 3, :emp_status => 3)
-user.password = "admin"
-user.serialize(:role, {:main => '3', :artifact => '3', :advising => '3', :course => '3', :practicum => '3', :admin => '3'})
-user.save!
 
 fixture_path = "#{Rails.root.parent}/fixtures"
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "properties")
@@ -26,3 +21,13 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_points")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_actions")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "assessment_courses")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "assessment_course_registrations")
+
+[Curriculum, TransitionPoint, AssessmentCourse].each do |c|
+  c.update_all("academic_period = #{201510}")
+end
+
+person = Person.create(:last_name => "Admin", :first_name => "User")
+user = person.users.create(:uid => "admin", :category => "local", :status => 3, :emp_status => 3)
+user.password = "admin"
+user.serialize(:role, {:main => '3', :main_list => '3', :artifact => '3', :artifact_list => '3', :advising => '3', :advising_list => '3', :course => '3', :course_list => '3', :practicum => '3', :practicum_list => '3', :admin => '3'})
+user.save!

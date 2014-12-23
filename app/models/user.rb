@@ -58,11 +58,11 @@ class User < ApplicationModel
 
   def acknowledgements
     acknowledgements = {}
-    unless AppConfig.ldap_attr_acknowledgement.blank? or self.person.id_number.blank?
-      Rails.application.config.ldap.search(:base => AppConfig.ldap_search_base, :filter => "#{AppConfig.ldap_attr_id_number}=#{self.person.id_number}") do |entry|
+    unless config.ldap_attr_acknowledgement.blank? or self.person.id_number.blank?
+      Rails.application.config.ldap.search(:base => config.ldap_search_base, :filter => "#{config.ldap_attr_id_number}=#{self.person.id_number}") do |entry|
         entry.each do |attribute, values|
           case attribute.to_s
-            when AppConfig.ldap_attr_acknowledgement
+            when config.ldap_attr_acknowledgement
               acknowledgements = {}
               values.each do |value|
                 v = value.split("=")
@@ -148,8 +148,8 @@ class User < ApplicationModel
   def valid_credential?(password)
     if category == "ldap"
       ldap = Rails.application.config.ldap
-      base = AppConfig.ldap_search_base
-      filter = "#{AppConfig.ldap_attr_uid}=#{self.uid}"
+      base = config.ldap_search_base
+      filter = "#{config.ldap_attr_uid}=#{self.uid}"
       dn = nil
       ldap.search(:base => base, :filter => filter) do |entry|
         dn = entry.dn

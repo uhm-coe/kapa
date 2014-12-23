@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default :from => AppConfig.mail_from
+  default :from => config.mail_from
   
   def build(headers, options = {})
     logger.debug "---headers : #{headers.inspect}"
