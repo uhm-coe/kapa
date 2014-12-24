@@ -166,7 +166,7 @@ class ApplicationBaseController < ActionController::Base
     when "advising"
       items.push ["Sessions", advising_sessions_path(:modal => true)]  if @current_user.read?(:advising)
     when "course"
-      items.push ["Rosters", course_rosters_path] if @current_user.read?(:course)
+      items.push ["Rosters", course_rosters_path(:modal => true)] if @current_user.read?(:course)
     when "practicum"
       items.push ["Placement Audits", practicum_placements_path]  if @current_user.read?(:practicum)
       items.push ["Mentor Assignments", practicum_assignments_path]  if @current_user.read?(:practicum)
