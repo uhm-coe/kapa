@@ -20,10 +20,10 @@
           <p><label>Area of Interest:<br>
             <%=property_select :filter, :interest, :include_blank => true, :name => :advising_interest %></label></p>
         </td>
-        <!-- <td>
-          <p><label>User:<br> -->
-            <%#=user_select :filter, :user_id, :include_blank => true, :depts => @current_user.depts%><!-- </label></p>
-        </td> -->
+        <td>
+          <p><label>User:<br>
+            <%=user_select :filter, :user_id, :include_blank => true, :depts => @current_user.depts%></label></p>
+        </td>
         <td>
           <p class="right"><%=submit_tag "Show" %></p>
         </td>
