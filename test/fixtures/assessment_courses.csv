@@ -1,51 +1,9 @@
-academic_period,subject,number,section,title,instructor,status
-200410,Math,421,134,Foundations in Math,Sophia Calderon,A
-200210,Math,323,134,Foundations in Math,Christen Buchanan,A
-200030,Math,232,561,Foundations in Math,Sarah Nash,A
-200010,Math,433,324,Foundations in Math,Cathleen Hartman,A
-200210,Math,134,432,Foundations in Math,Karyn Marks,A
-200510,English,423,432,Foundations in English,Audra Acosta,A
-200030,English,767,423,Foundations in English,Ora Camacho,A
-199910,English,566,431,Foundations in English,Patience Morrow,A
-200410,English,565,553,Foundations in English,Miriam Ortega,A
-200330,English,656,876,Foundations in English,Montana Rivera,A
-200510,Science,743,142,Foundations in Science,Lydia Nolan,A
-200130,Science,421,657,Foundations in Science,Lenore Wiley,A
-200530,Science,323,767,Foundations in Science,Alexis Glass,A
-200510,Science,232,232,Foundations in Science,Martina Bush,A
-199710,Science,433,123,Foundations in Science,Hedwig Santos,A
-199710,History,134,412,Foundations in History,Leila Watkins,A
-200210,History,423,132,Foundations in History,Desiree Soto,A
-200130,History,767,767,Foundations in History,Jasmine Cannon,A
-199830,History,566,134,Foundations in History,Buffy Bryan,A
-199910,History,565,123,Foundations in History,Demetria Barr,A
-199710,Special Education,656,233,Foundations in Special Education,Desiree Mcclure,A
-200130,Special Education,743,656,Foundations in Special Education,September Short,A
-199930,Special Education,421,553,Foundations in Special Education,Carla Sanchez,A
-200230,Special Education,323,876,Foundations in Special Education,Keiko Duran,A
-200210,Special Education,232,142,Foundations in Special Education,Chava Colon,A
-200710,Math,433,657,Advanced Math,Travis Mendez,A
-200510,Math,134,767,Advanced Math,Ignatius Osborne,A
-199730,Math,423,232,Advanced Math,Perry House,A
-199710,Math,767,123,Advanced Math,Xander Singleton,A
-200110,Math,566,412,Advanced Math,Damon Harmon,A
-199910,English,565,132,Advanced English,Amal Pena,A
-199810,English,656,767,Advanced English,Orlando Tyson,A
-200110,English,743,134,Advanced English,Darius Carr,A
-200010,English,421,123,Advanced English,Lucius Grimes,A
-200010,English,323,233,Advanced English,Mufutau Powell,A
-199910,Science,232,656,Advanced Science,Justin Pacheco,A
-200010,Science,433,434,Advanced Science,Timon Waller,A
-200010,Science,134,553,Advanced Science,Lev Wiggins,A
-200510,Science,423,876,Advanced Science,Roth Albert,A
-200330,Science,767,142,Advanced Science,Hamish Rodriquez,A
-200230,History,421,657,Advanced History,Harper Hurst,A
-200510,History,323,767,Advanced History,Daniel Nicholson,A
-200330,History,232,232,Advanced History,Vladimir Blackwell,A
-200330,History,433,123,Advanced History,Arthur Singleton,A
-200010,History,134,412,Advanced History,Noble Mays,A
-199930,Special Education,423,132,Advanced Special Education,Carlos Cash,A
-200210,Special Education,767,767,Advanced Special Education,Dexter Vargas,A
-200130,Special Education,566,134,Advanced Special Education,Vernon Cervantes,A
-200130,Special Education,565,123,Advanced Special Education,Bradley Williams,A
-199710,Special Education,656,233,Advanced Special Education,Henry Stevens,A
+id,academic_period,crn,subject,number,section,title,instructor,status
+1,201610,85412,SPED,421,134,Foundations of Exceptionality,Sophia Calderon,A
+2,201610,43840,ETEC,323,134,Theory & Practice in Ed Tech,Christen Buchanan,A
+3,201610,66208,ITE,232,561,Field Experience,Sarah Nash,A
+4,201610,47538,EDEF,433,324,Cultural Diversity & Education,Cathleen Hartman,A
+5,201610,29897,EDCS,134,432,Early Childhood,Karyn Marks,A
+6,201610,62767,KRS,423,432,Teaching Residency,Audra Acosta,A
+7,201610,45250,EDEA,767,423,Education Law,Ora Camacho,A
+8,201610,49064,EDEP,566,431,Instructional Psychology,Patience Morrow,A

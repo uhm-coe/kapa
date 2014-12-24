@@ -23,7 +23,11 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "assessment_courses")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "assessment_course_registrations")
 
 [Curriculum, TransitionPoint, AssessmentCourse].each do |c|
-  c.update_all("academic_period = #{201510}")
+  c.update_all("academic_period = #{201610}")
+end
+
+[AdvisingSession].each do |c|
+  c.update_all("session_date = '#{Date.today}'")
 end
 
 person = Person.create(:last_name => "Admin", :first_name => "User")
