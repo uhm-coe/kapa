@@ -71,7 +71,7 @@ class ApplicationBaseController < ActionController::Base
   #  end
   #  super(options)
   #end
-  
+
   def redirect_to(options = {}, response_status = {})
     if request.xhr?
        render(:js => "window.location.href = '#{url_for(options)}'")
@@ -102,7 +102,7 @@ class ApplicationBaseController < ActionController::Base
       redirect_to(config.routing_mode == "student" ? student_error_path : error_path) and return false
     end
   end
-    
+
   private
   def authkey(string)
     Digest::SHA1.hexdigest("#{current_academic_period}#{string}")
@@ -136,7 +136,7 @@ class ApplicationBaseController < ActionController::Base
   def filter_defaults
     {}
   end
-  
+
   def current_academic_period
     today = Date.today
     if today.month >= 1 and today.month < 6
@@ -152,14 +152,14 @@ class ApplicationBaseController < ActionController::Base
     value = ApplicationProperty.where("code > ?", current_academic_period).order("code").first
     return value.code
   end
-  
+
   def menu_items(name, options = {})
     items = []
     case name.to_s
     when "main"
       items.push ["Search Person", main_persons_path(:modal => true)]  if @current_user.manage?(:main, :delegate => :search)
-      items.push ["Program Cohorts", main_curriculums_path]  if @current_user.read? (:main)
-      items.push ["Transition Points", main_transition_points_path] if @current_user.read?(:main)
+      items.push ["Program Cohorts", main_curriculums_path(:modal => true)]  if @current_user.read? (:main)
+      items.push ["Transition Points", main_transition_points_path(:modal => true)] if @current_user.read?(:main)
     when "artifact"
       items.push ["Forms", artifact_forms_path] if @current_user.manage?(:artifact, :delegate => :form)
       items.push ["Praxis Scores", artifact_exams_path] if @current_user.manage?(:artifact, :delegate => :exam)
@@ -181,7 +181,7 @@ class ApplicationBaseController < ActionController::Base
     end
     items
   end
-  
+
   #This method returns nil if it encounter any nil object during reflection.
   def rsend(object, *args, &block)
     obj = object

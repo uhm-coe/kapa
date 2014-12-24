@@ -1,37 +1,31 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if params[:modal] %>$('#filter_dialog').modal({show : true});<% end %>
+    });
+  </script>
+<% end %>
+
 <% content_for(:dialog) do %>
 
-  <div class="modal fade" id="filter_dialog" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="modal_label">Filter Criteria</h4>
+  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => main_transition_points_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.property_select :academic_period, :include_blank => "Any", :label => "Semester" %>
+          <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts %>
+          <%= f.property_select :type, :name => :transition_point %>
+          <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
         </div>
-        <div class="modal-body">
-          <%=bootstrap_form_for(:filter, :url => main_transition_points_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-            <div class="row">
-              <div class="col-xs-6">
-                <%= f.property_select :academic_period, :include_blank => "Any", :label => "Semester" %>
-                <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts %>
-                <%= f.property_select :type, :name => :transition_point %>
-                <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
-              </div>
-              <div class="col-xs-6">
-                <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
-                <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
-                <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
-                <%= f.select :per_page, [10, 20, 30, 40, 50] %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-submit="#filter_form">Show</button>
+        <div class="col-xs-6">
+          <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
+          <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
+          <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+          <%= f.select :per_page, [10, 20, 30, 40, 50] %>
         </div>
       </div>
-    </div>
-  </div>
+    <% end %>
+  <% end %>
 
 <% end %>
 
