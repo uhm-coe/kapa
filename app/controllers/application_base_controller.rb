@@ -164,7 +164,7 @@ class ApplicationBaseController < ActionController::Base
       items.push ["Forms", artifact_forms_path(:modal => true)] if @current_user.manage?(:artifact, :delegate => :form)
       items.push ["Praxis Scores", artifact_exams_path(:modal => true)] if @current_user.manage?(:artifact, :delegate => :exam)
     when "advising"
-      items.push ["Sessions", advising_sessions_path]  if @current_user.read?(:advising)
+      items.push ["Sessions", advising_sessions_path(:modal => true)]  if @current_user.read?(:advising)
     when "course"
       items.push ["Rosters", course_rosters_path] if @current_user.read?(:course)
     when "practicum"
