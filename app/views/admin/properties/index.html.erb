@@ -1,48 +1,57 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if params[:modal] %>$('#filter_dialog').modal({show : true});<% end %>
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => admin_properties_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%= f.history_select :name, :model_name => :application_property, :model_method => :name %>
+      <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => true %>
+    <% end %>
+  <% end %>
+
+<% end %>
 
 <% content_for(:box1) do %>
-  <h4>System Properties</h4>
-  <%=form_tag :action => :index do %>
-    <table>
-      <tr class="bottom">
-        <td>
-          <p><label for="filter_admin_user">Name:</label><br>
-          <%=history_select :filter, :name, :model_name => :application_property, :model_method => :name %></p>
-        </td>
-        <td>
-          <p><label for="filter_dept">Active:</label><br>
-          <%=select :filter, :active, [["Active", "1"],["In-Active","0"]], :include_blank => true %></p>
-        </td>
-        <td>
-          <%=submit_tag "Show" %>
-        </td>
-      </tr>
-    </table>
-  <%end%>
-<%end%>
 
+  <h3>System Properties</h3>
 
-<% content_for(:box2) do %>
-  <table>
-    <tr>
-      <th>Key</th>
-      <th>Value</th>
-      <th>Category</th>
-      <th>Dept</th>
-      <th>Sequence</th>
-      <th>Active</th>
-    </tr>
+  <div class="row">
+    <div class="text-right">
+      <%=link_to "New", {:action => :new}, :class => "btn btn-default" %>
+      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+    </div>
+  </div>
 
-    <% for property in @properties %>
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%=h property.code %></td>
-        <td><%=h property.description %></td>
-        <td><%=abbr property.category, 20 %></td>
-        <td><%=h property.dept %></td>
-        <td><%=h property.sequence %></td>
-        <td><%=h property.active %></td>
-        <td><%=link_to "Show", :action => :show, :id => property %></td>
+        <th>Key</th>
+        <th>Value</th>
+        <th>Category</th>
+        <th>Dept</th>
+        <th>Sequence</th>
+        <th>Active</th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% for property in @properties %>
+        <tr>
+          <td><%=h property.code %></td>
+          <td><%=h property.description %></td>
+          <td><%=abbr property.category, 20 %></td>
+          <td><%=h property.dept %></td>
+          <td><%=h property.sequence %></td>
+          <td><%=h property.active %></td>
+          <td><%=link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-  <%=link_to "New", :action => :new %>
+
 <%end%>
