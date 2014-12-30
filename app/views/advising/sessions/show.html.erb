@@ -17,12 +17,13 @@
       <%=label_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put}  do %>
         <%=render :partial => "/advising/session_form", :locals => { :anonymous => @advising_session.anonymous? } %>
         <%=controls do %>
-          <%= link_to_button "Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+          <%# TODO: link_to_button method is undefined %>
+          <%#= link_to_button "Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?"} %>
         <% end if @current_user.write? %>
       <% end %>
     </div>
   </div>
 
-  <%=link_to_unless @advising_session.anonymous?, "Back", main_persons_path(:action => :show, :id => @person) %>
+  <%=link_to_unless @advising_session.anonymous?, "Back", main_person_path(:id => @person) %>
 
 <%end%>
