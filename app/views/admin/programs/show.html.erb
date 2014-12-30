@@ -3,47 +3,66 @@
   <h4><%=h @program.description %></h4>
 
   <div class="tabs">
-    <ul>
-      <li><a href="#program_profile_tab">Profile</a></li>
-      <li><a href="#offers_tab">Offering Groups</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#offers_tab" data-toggle="tab">Offering Groups</a></li>
     </ul>
 
-    <div id="program_profile_tab">
-      <%=label_form_for :program, :url => admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
-        <%=render :partial => "/admin/program_form" %>
-        <%=controls do%>
-          <%= link_to_button "Delete", admin_program_path(:id => @program), {:method => :delete, "data-confirm" => "Are you sure?"} %>
-        <% end if @current_user.manage? %>
-      <% end %>
-    </div>
+    <div class="tab-content">
+      <div id="program_profile_tab" class="tab-pane active">
+        <%=label_form_for :program, :url => admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
+          <%=render :partial => "/admin/program_form" %>
+          <%=controls do%>
+            <%# TODO: link_to_button method is undefined %>
+            <%# TODO: delete method is undefined %>
+            <%#= link_to_button "Delete", admin_program_path(:id => @program), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+          <% end if @current_user.manage? %>
+        <% end %>
+      </div>
 
-    <div id="offers_tab">
-      <div class="accordion">
-        <%for @program_offer in @program_offers %>
-          <h3>
-            <a href="#"><span class="strong"><%=h "#{@program.code}/#{@program_offer.description}" %></span></a>
-          </h3>
-          <div>
-            <%=label_form_for :program_offer, :url => admin_program_offer_path(:id => @program_offer), :remote => true, :html => {:method => :put} do |f| %>
-              <%=render :partial => "/admin/program_offer_form" %>
-              <%=controls do %>
-                <%= link_to_button "Delete", admin_program_offer_path(:id => @program_offer), {:method => :delete, "data-confirm" => "Are you sure?"} %>
-              <% end if @current_user.manage? %>
-            <% end %>
+      <div id="offers_tab" class="tab-pane">
+        <div class="panel-group" id="accordion">
+          <%@program_offers.each_with_index do |program_offer, index| %>
+            <%@program_offer = program_offer %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#program_offer_<%=@program_offer.id %>"><span class="strong"><%=h "#{@program.code}/#{@program_offer.description}" %></span></a>
+                </h3>
+              </div>
+              <div id="program_offer_<%=@program_offer.id %>" class="panel-collapse collapse<%=' in' if index == 0 %>">
+                <div class="panel-body">
+                  <%=label_form_for :program_offer, :url => admin_program_offer_path(:id => @program_offer), :remote => true, :html => {:method => :put} do |f| %>
+                    <%=render :partial => "/admin/program_offer_form" %>
+                    <%=controls do %>
+                      <%# TODO: link_to_button method is undefined %>
+                      <%# TODO: delete method is undefined %>
+                      <%#= link_to_button "Delete", admin_program_offer_path(:id => @program_offer), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+                    <% end if @current_user.manage? %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <%end%>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_program_offer"><span class="new">New Availability</span></a>
+              </h3>
+            </div>
+            <div id="new_program_offer" class="panel-collapse collapse<%=' in' if @program_offers.length == 0 %>">
+              <div class="panel-body">
+                <% @program_offer = ProgramOffer.new %>
+                <%=label_form_for :program_offer, :url => admin_program_offers_path(:id => @program, :focus => :offers), :remote => true do |f| %>
+                  <%=render :partial => "/admin/program_offer_form", :locals => {:f => f} %>
+                  <%=controls if @current_user.manage? %>
+                <% end %>
+              </div>
+            </div>
           </div>
-        <%end%>
 
-        <h3>
-          <a href="#"><span class="new">New Availability</span></a>
-        </h3>
-        <div>
-          <% @program_offer = ProgramOffer.new %>
-          <%=label_form_for :program_offer, :url => admin_program_offers_path(:id => @program, :focus => :offers), :remote => true do |f| %>
-            <%=render :partial => "/admin/program_offer_form", :locals => {:f => f} %>
-            <%=controls if @current_user.manage? %>
-          <% end %>
         </div>
-
       </div>
     </div>
 
