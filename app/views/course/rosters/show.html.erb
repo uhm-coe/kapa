@@ -2,35 +2,35 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
       appFn.initAssessmentTable('#assessment_course_table');
-      
+
       $('#all_green_button').click(function() {
         if(confirm('Would you like to fill in all empty cells in green?')) {
           appFn.setAssessmentScores('2');
         }
       });
-      
+
       $('#filter_assessment_rubric_id').change(function() {
         $(this).parents('form').submit();
       });
-      
+
       $('#save_button').click(function() {
         form = $('#assessment_course_form');
-        $.post(form.attr('action'), form.serialize(), 
+        $.post(form.attr('action'), form.serialize(),
           function(data) {
             var now = new Date();
-            $('#assessment_course_table').html(data); 
-            $('#notice2').html('Scores were saved on ' + now).effect('highlight'); 
+            $('#assessment_course_table').html(data);
+            $('#notice2').html('Scores were saved on ' + now).effect('highlight');
             appFn.initAssessmentTable('#assessment_course_table');
           },
           "html");
         return false;
       })
-      
+
       window.setInterval(function() {
         form = $('#assessment_course_form');
         console.log('form updated?', form.attr('data-changed'));
         if(form.attr('data-changed') == 'true') {
-          $.post(form.attr('action'), form.serialize(), 
+          $.post(form.attr('action'), form.serialize(),
             function(data) {
               var now = new Date();
               $('#notice2').html('Scores were saved on ' + now);
@@ -66,7 +66,7 @@
 <% content_for(:box2) do %>
 
 
-  <%=label_form_for(:assessment_course, :url => couse_roster_path(:id => @assessment_course), :html => {:method => :put, :id => "assessment_course_form", "data-changed" => false}) do %>
+  <%=label_form_for(:assessment_course, :url => course_roster_path(:id => @assessment_course), :html => {:method => :put, :id => "assessment_course_form", "data-changed" => false}) do %>
     <div class="right">
       <span id="save_notice"><%=flash[:save_notice] %></span>
       <%=button_to_function "Save", nil, :id => "save_button" if @current_user.write? %>

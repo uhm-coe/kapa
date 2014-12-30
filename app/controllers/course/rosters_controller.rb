@@ -7,31 +7,32 @@ class Course::RostersController < Course::BaseController
     @assessment_rubrics = @assessment_course.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     refresh_table
-    
+
     respond_to do |format|
       format.html
-      format.file {
-        csv_string = CSV.generate do |csv|
-          title = [@assessment_course.name, @assessment_course.academic_period_desc, @assessment_course.instructor, @assessment_rubric.title]
-          csv << title
-          header_row = [:id_number, :last_name, :first_name]
-          @assessment_rubric.assessment_criterions.each {|c| header_row.push("#{c.criterion}:#{c.criterion_desc}")}
-          csv << header_row
+      # TODO: Uncomment it later (temporarily commented out so course/rosters/show path won't throw an 'uninitialized constant Mime::FILE' error)
+      # format.file {
+      #   csv_string = CSV.generate do |csv|
+      #     title = [@assessment_course.name, @assessment_course.academic_period_desc, @assessment_course.instructor, @assessment_rubric.title]
+      #     csv << title
+      #     header_row = [:id_number, :last_name, :first_name]
+      #     @assessment_rubric.assessment_criterions.each {|c| header_row.push("#{c.criterion}:#{c.criterion_desc}")}
+      #     csv << header_row
 
-          @assessment_course_registrations.each do |r|
-            row =  [rsend(r.person, :id_number),
-                    rsend(r.person, :last_name),
-                    rsend(r.person, :first_name)]
-            @assessment_rubric.assessment_criterions.each {|c| row.push(@table["#{r.id}_#{c.id}"]) }
-            csv << row
-          end
-        end
+      #     @assessment_course_registrations.each do |r|
+      #       row =  [rsend(r.person, :id_number),
+      #               rsend(r.person, :last_name),
+      #               rsend(r.person, :first_name)]
+      #       @assessment_rubric.assessment_criterions.each {|c| row.push(@table["#{r.id}_#{c.id}"]) }
+      #       csv << row
+      #     end
+      #   end
 
-        send_data csv_string,
-          :type         => "application/csv",
-          :disposition  => "inline",
-          :filename     => "#{@assessment_course.name}_#{@assessment_course.academic_period_desc}.csv"
-      }
+      #   send_data csv_string,
+      #     :type         => "application/csv",
+      #     :disposition  => "inline",
+      #     :filename     => "#{@assessment_course.name}_#{@assessment_course.academic_period_desc}.csv"
+      # }
     end
   end
 
@@ -148,7 +149,7 @@ class Course::RostersController < Course::BaseController
       :disposition  => "inline",
       :filename     => "assessment_courses_#{ApplicationProperty.lookup_description("academic_period", @filter.academic_period)}.csv"
   end
-  
+
   private
   def refresh_table
     @assessment_course_registrations = @assessment_course.assessment_course_registrations
@@ -156,7 +157,7 @@ class Course::RostersController < Course::BaseController
     session[:score] = @table
     session[:filter_course][:assessment_rubric_id] = @assessment_rubric.id
   end
-  
+
   def course_filter
     f = filter
     f.append_condition "assessment_courses.status = 'A'"
@@ -174,5 +175,5 @@ class Course::RostersController < Course::BaseController
     end
 
     return f
-  end  
+  end
 end

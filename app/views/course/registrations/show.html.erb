@@ -44,13 +44,13 @@
         <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => "600"}) %>
         <% end %>
       </h5>
-      <%=label_form_for :assessment_score, :url => course_regitration_path(:id => @assessment_course_registration), :remote => true, :html => {:method => :put} do |f| %>
+      <%=label_form_for :assessment_score, :url => course_registration_path(:id => @assessment_course_registration), :remote => true, :html => {:method => :put} do |f| %>
         <%=render :partial => "/course/assessment_form" %>
         <%=controls if @current_user.write?(:course) %>
       <% end %>
     </div>
   </div>
 
-  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :course) %>
+  <%=link_to "Back", main_person_path(:id => @person, :focus => :course) %>
 
 <% end %>

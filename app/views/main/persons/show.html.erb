@@ -80,14 +80,14 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#coruse_detail">
+          <a data-toggle="collapse" data-parent="#accordion" href="#course_detail">
             Courses (<%=@assessment_course_registrations.length%>)
           </a>
         </h4>
       </div>
-      <div id="coruse_detail" class="panel-collapse collapse">
+      <div id="course_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Coruse Registration".html_safe, new_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
           <% @assessment_course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
             <tr>
