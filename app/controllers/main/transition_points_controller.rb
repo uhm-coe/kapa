@@ -1,5 +1,5 @@
 class Main::TransitionPointsController < Main::BaseController
-  
+
   def show
     session[:filter_main][:assessment_rubric_id] = nil if session[:filter_main] and request.get?
     @filter = filter
@@ -69,7 +69,7 @@ class Main::TransitionPointsController < Main::BaseController
       render_notice and return false
     end
     flash[:notice2] = "Academic record was successfully created."
-    redirect_to main_transition_points_path(:action => :show, :id => @transition_point, :focus => params[:focus])
+    redirect_to main_transition_point_path(:id => @transition_point, :focus => params[:focus])
   end
 
   def index
@@ -126,7 +126,7 @@ class Main::TransitionPointsController < Main::BaseController
      :ethnicity,
      :gender,
      :email,
-     :email_alt,     
+     :email_alt,
      :ssn,
      :ssn_agreement,
      :cur_street,
