@@ -50,7 +50,7 @@ class Main::CurriculumsController < Main::BaseController
     end
 
     @curriculum.update_serialized_attributes(:journey, :active => "Y")
-    redirect_to main_curriculums_path(:action => :show, :id => @curriculum)
+    redirect_to main_curriculum_path(:id => @curriculum)
   end
 
   def index
