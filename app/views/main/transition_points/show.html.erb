@@ -19,14 +19,14 @@
 
   <div class="tab-content">
     <div id="curriculum_tab" class="tab-pane active">
-      <%= label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
+      <%= label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put} do %>
         <%= render :partial => "/main/curriculum_form" %>
         <%= controls if @current_user.write?(:main) %>
       <% end %>
     </div>
 
     <div id="transition_point_tab" class="tab-pane">
-      <%= label_form_for :transition_point, :url => main_transition_point_path(:id => @transition_point, :focus => "transition_point"), :remote => true, :html => {:method => :put}  do %>
+      <%= label_form_for :transition_point, :url => main_transition_point_path(:id => @transition_point, :focus => "transition_point"), :remote => true, :html => {:method => :put} do %>
         <%= render :partial => "/main/transition_point_form" %>
         <%= controls do %>
           <%= button_to_function "Move", nil, :id => "open_dialog" if @current_user.manage? %>
@@ -36,11 +36,11 @@
 
     <div id="assessment_tab" class="tab-pane">
       <h5>
-        <%= form_for :filter, :url => main_transition_point_url(:id => @transition_point, :focus => :course), :html => {:method => :get}  do |f| %>
+        <%= form_for :filter, :url => main_transition_point_url(:id => @transition_point, :focus => :course), :html => {:method => :get} do |f| %>
           <%= f.select(:assessment_rubric_id, @assessment_rubrics.collect { |r| [r.title, "0#{r.id}"] }, {}, {:minWidth => "600"}) %>
         <% end %>
       </h5>
-      <%= label_form_for :assessment_score, :url => {:action => :update, :id => params[:id]}, :remote => true do |f| %>
+      <%= label_form_for :assessment_score, :url => main_transition_point_url(:id => @transition_point, :focus => :course), :remote => true, :html => {:method => :put} do |f| %>
         <%= render :partial => "/main/assessment_form" %>
         <%= controls if @current_user.write?(:main) %>
       <% end %>
@@ -60,7 +60,7 @@
             </div>
             <div id="transition_action_<%=@transition_action.id %>" class="panel-collapse collapse<%=' in' if index == 0 %>">
               <div class="panel-body">
-                <%= label_form_for :transition_action, :url => main_transition_action_path(:id => @transition_action, :focus => :action), :remote => true, :html => {:method => :put}  do %>
+                <%= label_form_for :transition_action, :url => main_transition_action_path(:id => @transition_action, :focus => :action), :remote => true, :html => {:method => :put} do %>
                   <%= render :partial => "/main/transition_action_form" %>
                   <%= controls do %>
                     <%# TODO: link_to_button method is undefined %>
@@ -95,7 +95,7 @@
     </div>
   </div>
 
-  <%= link_to "Back", main_persons_path(:action => :show, :id => @transition_point.curriculum.person_id, :focus => :curriculum) %>
+  <%= link_to "Back", main_person_path(:id => @transition_point.curriculum.person_id, :focus => :curriculum) %>
 
   <div id="dialog" class="form-dialog" title="Move Transition Point to Different Curriculum">
     <%= label_form_for(:transition_point, :url => main_transition_point_path(:id => @transition_point, :focus => :curriculum), :remote => true, :html => {:method => :put} ) do |t| %>
