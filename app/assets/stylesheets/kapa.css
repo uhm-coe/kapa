@@ -5,3 +5,18 @@
  *= require_self
  *= require_tree .
 */
+
+.section-header {
+  padding-bottom: 9px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.section-header a.glyphicon {
+  color: #7C7C7C;
+  text-decoration: none;
+  margin-right: 12px;
+}
+
+.section-header a.glyphicon:hover {
+  color: #333333;
+}
