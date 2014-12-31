@@ -21,3 +21,15 @@
 .section-header a.glyphicon:hover {
   color: #333333;
 }
+
+.right {
+  text-align: right;
+}
+
+.tabs {
+  margin-top: -20px;
+}
+
+.tab-content {
+  margin-top: 24px;
+}

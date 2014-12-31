@@ -3,18 +3,19 @@
 <%end%>
 
 <% content_for(:box2) do %>
-  <h4>New Transition Point</h4>
-  <%=label_form_for :transition_point, :url => main_transition_points_path(:id => @person), :remote => true do |f| %>
-    <table>
-      <tr>
-        <td>
-          <%=f.property_select :academic_period, :label => "Semester" %>
-        </td>
-        <td>
-          <%=f.property_select :type, :name => :transition_point, :depts => @current_user.depts %>
-        </td>
-      </tr>
-    </table>
+  <h4 class="section-header">
+    <%=link_to "", main_curriculum_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    New Transition Point
+  </h4>
+  <%=bootstrap_form_for :transition_point, :url => main_transition_points_path(:id => @person), :remote => true do |f| %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%=f.property_select :academic_period, :label => "Semester" %>
+      </div>
+      <div class="col-sm-6">
+        <%=f.property_select :type, :name => :transition_point, :depts => @current_user.depts %>
+      </div>
+    </div>
     <%=f.hidden_field :curriculum_id %>
     <%=controls if @current_user.write? %>
   <% end %>

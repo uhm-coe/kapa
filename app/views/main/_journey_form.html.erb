@@ -1,24 +1,25 @@
-<%= label_fields_for :journey do |t| %>
-  <%= t.select :active, [["Yes", "Y"],["No", "N"]], :include_blank => true ,:label => "Enable this profile in Makalei?"  %>
-<table>
-  <tr>
-    <td>
+<%= bootstrap_fields_for :journey do |t| %>
+  <div class="row">
+    <div class="col-sm-12 col-sm-4">
+      <%= t.select :active, [["Yes", "Y"],["No", "N"]], :include_blank => true ,:label => "Enable this profile in Makalei?"  %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
       <h4>Get Started</h4>
       <%= t.select :form_declaration_id, @person.forms.where("type = 'declaration'").collect{|f| ["ID:#{f.id} (#{f.academic_period_desc})", f.id]}, {:include_blank => true}, {:disabled => true}  %>
       <%= t.check_box :completed_start_programs, :label => "Select a Program and Major" %>
       <%= t.check_box :completed_start_tutorials, :label => "Prepare for Registration"  %>
       <%= t.check_box :completed_start_appointments, :label => "Advising Options"  %>
       <%= t.check_box :completed_start, :label => "Module Complete" %>
-    </td>
-    <td>
+    </div>
+    <div class="col-sm-6">
       <h4>Apply to Program</h4>
       <%= t.select :form_admission_id, @person.forms.where("type = 'admission'").collect{|f| ["ID:#{f.id} (#{f.academic_period_desc})", f.id]}, :include_blank => true  %>
       <%= t.check_box :completed_admission_checklists, :label => "Complete Admission Checklist"  %>
       <%= t.check_box :completed_admission_applications, :label => "Submit Application"  %>
       <%= t.check_box :completed_admission_status, :label => "Await Application Decision"  %>
       <%= t.check_box :completed_admission, :label => "Module Complete"  %>
-    </td>
-  </tr>
-</table>
-
+    </div>
+  </div>
 <% end %>

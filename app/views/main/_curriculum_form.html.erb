@@ -21,7 +21,7 @@
 
 <%= bootstrap_fields_for :curriculum do |f| %>
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <div class="form-group"><%=label :program, :description, "Program" %>
         <p class="form-control-static"></span><%=@program.description%> <%=link_to_function("<span class='glyphicon glyphicon-pencil'></span>".html_safe, nil, :id => "change_program", :class => "btn btn-default btn-xs") if @current_user.manage? %></p>
       </div>
@@ -29,12 +29,12 @@
       <%= f.property_select :track, {:include_blank => true, :program => @program} %>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <%= f.property_select :distribution, {:label =>"Program Distribution", :program => @program} %>
       <%= f.property_select :location, {:include_blank => true, :label =>"Program Location"} %>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <%= f.property_select :major_primary, {:name => :major, :label => "Primary Major/Concentration", :include_code => true, :program => @program} %>
       <%= f.property_select :major_secondary, {:name => :major, :label => "Secondary Major/Concentration", :include_code => true, :include_blank => true} %>
     </div>
