@@ -1,6 +1,9 @@
 <% content_for(:box1) do %>
 
-  <h4><%=h @program.description %></h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=h @program.description %>
+  </h4>
 
   <div class="tabs">
     <ul class="nav nav-tabs">
@@ -67,7 +70,5 @@
     </div>
 
   </div>
-
-  <%=link_to "Back", :action => :index %>
 
 <% end %>

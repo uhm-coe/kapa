@@ -1,22 +1,19 @@
-<%=label_fields_for :program_offer do |f| %>
-<table>
-  <tr>
-    <td>
-      <%=f.text_field :description, {:style => "width:250px"} %>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%=f.property_select :distribution, {:conditions => "code in ('#{@available_distributions.join("','")}')"}, {:style => "width:250px", :id => id_for_multiple(:program_offer, :distribution)} %>
-    </td>
+<%=bootstrap_fields_for :program_offer do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :description %>
+    </div>
+    <div class="col-sm-6">
+      <%=f.property_select :distribution, {:conditions => "code in ('#{@available_distributions.join("','")}')"}, {:id => id_for_multiple(:program_offer, :distribution)} %>
+    </div>
+  </div>
 
-    <td>
-      <%=f.property_select :available_majors, {:name => :major,:include_code => true, :selected => @program_offer.available_major, :label => "Available Majors", :conditions => "code in ('#{@available_majors.join("','")}')"}, {:multiple => true, :style => "width:250px",  :id => id_for_multiple(:program_offer, :available_majors)} %>
-    </td>
-
-    <td>
-      <%=f.property_select :available_academic_periods, {:name => :academic_period, :selected => @program_offer.available_academic_period, :label => "Accepting Semesters"}, {:multiple => true, :style => "width:250px", :id => id_for_multiple(:program_offer, :available_academic_periods)} %>
-    </td>
-  </tr>
-</table>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.property_select :available_majors, {:name => :major,:include_code => true, :selected => @program_offer.available_major, :label => "Available Majors", :conditions => "code in ('#{@available_majors.join("','")}')"}, {:multiple => true, :id => id_for_multiple(:program_offer, :available_majors)} %>
+    </div>
+    <div class="col-sm-6">
+      <%=f.property_select :available_academic_periods, {:name => :academic_period, :selected => @program_offer.available_academic_period, :label => "Accepting Semesters"}, {:multiple => true, :id => id_for_multiple(:program_offer, :available_academic_periods)} %>
+    </div>
+  </div>
 <% end %>

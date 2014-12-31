@@ -1,59 +1,74 @@
 <% content_for(:box1) do %>
 
-  <h4><%=h @assessment_rubric.title %></h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=h @assessment_rubric.title %>
+  </h4>
 
   <div class="tabs">
-    <ul>
-      <li><a href="#rubric_profile_tab">Profile</a></li>
-      <li><a href="#criterions_tab">Criteria</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#criterions_tab" data-toggle="tab">Criteria</a></li>
     </ul>
 
-    <div id="rubric_profile_tab">
-      <%=label_form_for :assessment_rubric, :url => admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
-        <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
-        <%=controls do %>
-          <%# TODO: link_to_button method is undefined %>
-          <%#= link_to_button "Delete", admin_rubric_path(:id => @assessment_rubric), {:method => :delete, "data-confirm" => "Are you sure?"} %>
-        <% end if @current_user.manage?  :admin, :delegate => :rubric %>
-      <% end %>
-    </div>
-
-    <div id="criterions_tab">
-      <div class="accordion">
-        <%for @assessment_criterion in @assessment_criterions %>
-          <h3>
-            <a href="#"><span class="strong"><%=h @assessment_criterion.criterion %></span></a>
-          </h3>
-          <div>
-            <%=label_form_for :assessment_criterion, :url => admin_criterion_path(:id => @assessment_criterion), :remote => true, :html => {:method => :put} do |f| %>
-              <%=render :partial => "/admin/criterion_form" %>
-              <%=controls do %>
-                <%# TODO: link_to_button method is undefined %>
-                <%#= link_to_button "Delete", admin_criterion_path(:id => @assessment_criterion), {:method => :delete, "data-confirm" => "Are you sure?"} %>
-              <% end if @current_user.manage?  :admin, :delegate => :rubric %>
-            <% end %>
-          </div>
-        <%end%>
-
-        <h3>
-          <a href="#"><span class="new">New Criterion</span></a>
-        </h3>
-        <div>
-          <% @assessment_criterion = AssessmentCriterion.new %>
-          <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:id => @assessment_rubric), :remote => true do |f| %>
-            <%=render :partial => "/admin/criterion_form" %>
-            <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
-          <% end %>
-        </div>
-
+    <div class="tab-content">
+      <div id="rubric_profile_tab" class="tab-pane active">
+        <%=label_form_for :assessment_rubric, :url => admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
+          <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
+          <%=controls do %>
+            <%# TODO: link_to_button method is undefined %>
+            <%#= link_to_button "Delete", admin_rubric_path(:id => @assessment_rubric), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+          <% end if @current_user.manage?  :admin, :delegate => :rubric %>
+        <% end %>
       </div>
-    </div>
 
-    <div id="preview_tab">
+      <div id="criterions_tab" class="tab-pane">
+        <div id="accordion" class="panel-group">
+          <%@assessment_criterions.each_with_index do |assessment_criterion, index| %>
+            <%@assessment_criterion = assessment_criterion %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#assessment_criterion_<%=@assessment_criterion.id %>"><span class="strong"><%=h @assessment_criterion.criterion %></span></a>
+                </h3>
+              </div>
+              <div id="assessment_criterion_<%=@assessment_criterion.id %>" class="panel-collapse collapse<%=' in' if index == 0 %>">
+                <div class="panel-body">
+                  <%=label_form_for :assessment_criterion, :url => admin_criterion_path(:id => @assessment_criterion), :remote => true, :html => {:method => :put} do |f| %>
+                    <%=render :partial => "/admin/criterion_form" %>
+                    <%=controls do %>
+                      <%# TODO: link_to_button method is undefined %>
+                      <%#= link_to_button "Delete", admin_criterion_path(:id => @assessment_criterion), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+                    <% end if @current_user.manage?  :admin, :delegate => :rubric %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <%end%>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_assessment_criterion"><span class="new">New Criterion</span></a>
+              </h3>
+            </div>
+            <div id="new_assessment_criterion" class="panel-collapse collapse<%=' in' if @assessment_criterions.length == 0 %>">
+              <div class="panel-body">
+                <% @assessment_criterion = AssessmentCriterion.new %>
+                <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:id => @assessment_rubric), :remote => true do |f| %>
+                  <%=render :partial => "/admin/criterion_form" %>
+                  <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div id="preview_tab">
+      </div> -->
     </div>
 
   </div>
-
-  <%=link_to "Back", :action => :index %>
 
 <% end %>

@@ -1,19 +1,17 @@
-<%=label_fields_for :assessment_rubric do |f| %>
-<table>
-<tr>
-  <td width="50%">
-    <%=f.text_field :title %>
-    <%=f.text_field :dept %>
-    <%=f.text_field :reference_url %>
-    <%=f.property_select :academic_period_start, :name => :academic_period, :label => "Effective From" %>
-    <%=f.property_select :academic_period_end, :name => :academic_period, :label => "Effective To" %>
-  </td>
+<%=bootstrap_fields_for :assessment_rubric do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :title %>
+      <%=f.text_field :dept %>
+      <%=f.text_field :reference_url %>
+      <%=f.property_select :academic_period_start, :name => :academic_period, :label => "Effective From" %>
+      <%=f.property_select :academic_period_end, :name => :academic_period, :label => "Effective To" %>
+    </div>
 
-  <td width="50%">
-     <%=f.model_select :programs, {:model_name => :program, :selected => @assessment_rubric.program}, {:multiple => true, :size => "10", :class => "multi-select", :selectedlist => 1} %>
-     <%=f.property_select :courses, {:name => :assessment_course, :selected => @assessment_rubric.course}, {:multiple => true, :size => "10", :class => "multi-select"} %>
-     <%=f.property_select :transition_points, {:name => :transition_point, :selected => @assessment_rubric.transition_point}, {:multiple => true, :size => "10", :class => "multi-select"}  %>
-  </td>
-</tr>
-</table>
+    <div class="col-sm-6">
+      <%=f.model_select :programs, {:model_name => :program, :selected => @assessment_rubric.program}, {:multiple => true, :size => "10", :class => "multi-select", :selectedlist => 1} %>
+      <%=f.property_select :courses, {:name => :assessment_course, :selected => @assessment_rubric.course}, {:multiple => true, :size => "10", :class => "multi-select"} %>
+      <%=f.property_select :transition_points, {:name => :transition_point, :selected => @assessment_rubric.transition_point}, {:multiple => true, :size => "10", :class => "multi-select"} %>
+    </div>
+  </div>
 <% end %>

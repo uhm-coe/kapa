@@ -1,21 +1,24 @@
 <% content_for(:box1) do %>
 
-  <h4>New Assessment</h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Assessment
+  </h4>
 
   <div class="tabs">
-    <ul>
-      <li><a href="#rubric_profile_tab">Profile</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
     </ul>
 
-    <div id="rubric_profile_tab">
-      <%=label_form_for :assessment_rubric, :url => admin_rubrics_path, :remote => true do |f| %>
-        <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
-        <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
-      <% end %>
+    <div class="tab-content">
+      <div id="rubric_profile_tab" class="tab-pane active">
+        <%=label_form_for :assessment_rubric, :url => admin_rubrics_path, :remote => true do |f| %>
+          <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
+          <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
+        <% end %>
+      </div>
     </div>
 
   </div>
-
-  <%=link_to "Back", :action => :index %>
 
 <% end %>
