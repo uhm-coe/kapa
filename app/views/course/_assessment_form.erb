@@ -1,15 +1,19 @@
-<table id="assessment_table">
-  <tr>
-    <th>Label</th>
-    <th>Criterion</th>
-    <th>Evaluation</th>
-  </tr>
-  <% for assessment_criterion in @assessment_rubric.assessment_criterions %>
-  <tr>
-    <td><%=h assessment_criterion.criterion %></td>
-    <td><%=abbr assessment_criterion.criterion_desc, 30 %></td>
-    <% index = "#{params[:id]}_#{assessment_criterion.id}" %>
-    <td><%=score_select(:assessment_scores, index, :value => @table[index], :next_id => next_id(:assessment_scores, index), :type => assessment_criterion.type, :type_option => assessment_criterion.type_option) %></td>
-  </tr>
-  <% end %>
+<table id="assessment_table" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Criterion</th>
+      <th>Evaluation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for assessment_criterion in @assessment_rubric.assessment_criterions %>
+      <tr>
+        <td><%=h assessment_criterion.criterion %></td>
+        <td><%=abbr assessment_criterion.criterion_desc, 30 %></td>
+        <% index = "#{params[:id]}_#{assessment_criterion.id}" %>
+        <td><%=score_select(:assessment_scores, index, :value => @table[index], :next_id => next_id(:assessment_scores, index), :type => assessment_criterion.type, :type_option => assessment_criterion.type_option) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

@@ -1,28 +1,22 @@
-<%= label_fields_for @transition_action.new_record? ? "transition_action" : "transition_action[]" do |a| %>
-  <table>
-    <tr>
-      <td>
-        <%= a.date_picker "action_date" %>
+<%= bootstrap_fields_for @transition_action.new_record? ? "transition_action" : "transition_action[]" do |a| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <%= a.date_select "action_date" %>
+    </div>
+    <div class="col-sm-3">
+      <%= a.property_select "action", :name => "#{@transition_action.transition_point.type}_action", :include_blank => true %>
+    </div>
+    <div class="col-sm-3">
+      <%= a.text_field "action_specify" %>
+    </div>
+    <div class="col-sm-3">
+      <%= a.user_select "user_id", :include_blank => true, :locked => !@current_user.manage? %>
+    </div>
+  </div>
 
-      </td>
-
-      <td>
-        <%= a.property_select "action", :name => "#{@transition_action.transition_point.type}_action", :include_blank => true %>
-      </td>
-
-      <td>
-        <%= a.text_field "action_specify" %>
-      </td>
-
-      <td>
-        <%= a.user_select "user_id", :include_blank => true, :locked => !@current_user.manage? %>
-      </td>
-    </tr>
-
-    <tr>
-      <td colspan="4">
-        <%= a.hidden_text_area "note", :style => "width:100%; height:100px" %>
-      </td>
-    </tr>
-  </table>
+  <div class="row">
+    <div class="col-sm-12">
+      <%= a.hidden_text_area "note", :style => "width:100%; height:100px" %>
+    </div>
+  </div>
 <% end %>

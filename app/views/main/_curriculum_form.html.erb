@@ -1,29 +1,29 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      $('#change_program').click(function() {jQuery('#change_program_dialog').dialog('open');})
+      <% if params[:modal] %>$('#change_program_dialog').modal({show : true});<% end %>
     });
   </script>
 <% end %>
 
-<% content_for(:hidden) do %>
-
-  <div id="change_program_dialog" class="form-dialog" title="Change Program">
-    <%=label_form_for(:curriculum, :url => main_curriculum_path(:id => @curriculum, :return_uri => request.symbolized_path_parameters), :html => {:method => :put}) do |t| %>
+<% content_for(:dialog) do %>
+  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "change_program_dialog", :modal_title => "Change Program", :modal_form_id => "change_program_form"} do %>
+    <%=bootstrap_form_for(:curriculum, :url => main_curriculum_path(:id => @curriculum, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "change_program_form"}) do |t| %>
       <%= t.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"} %>
     <% end %>
-    <div style = "width:300px;">
-      <p class="notice">Changing academic program will reset major, distribution, location, and track options to default values.</p>
-    </div>
-  </div>
-
+    <p>Changing academic program will reset major, distribution, location, and track options to default values.</p>
+  <% end %>
 <% end %>
 
 <%= bootstrap_fields_for :curriculum do |f| %>
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group"><%=label :program, :description, "Program" %>
-        <p class="form-control-static"></span><%=@program.description%> <%=link_to_function("<span class='glyphicon glyphicon-pencil'></span>".html_safe, nil, :id => "change_program", :class => "btn btn-default btn-xs") if @current_user.manage? %></p>
+        <p class="form-control-static"></span><%=@program.description%>
+          <% if @current_user.manage? %>
+            <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_program_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
+          <% end %>
+        </p>
       </div>
       <%= f.select :second_degree, [["Second Degree", "Y"]], {:label => "Degree option", :inlucde_blank => "Regular"} %>
       <%= f.property_select :track, {:include_blank => true, :program => @program} %>

@@ -1,6 +1,6 @@
 <%= bootstrap_fields_for :transition_point do |t| %>
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-sm-6">
       <%= t.property_select :academic_period, :label => "Semester" %>
       <%= t.property_select :category, :name => "#{@transition_point.type}_category", :include_blank => true %>
       <%= t.property_select :priority, :name => "#{@transition_point.type}_priority", :include_blank => true %>
@@ -9,7 +9,7 @@
       <%= t.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Reviewer" %>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-sm-6">
       <%= bootstrap_fields_for :transition_point_ext do |t| %>
         <% if @transition_point.type == "admission" %>
           <%= t.date_select :coe_received_date %>
@@ -23,14 +23,10 @@
         <% end %>
       <% end %>
     </div>
-
-    <div class="col-xs-4">
-    </div>
-
   </div>
 
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
        <%= t.text_area :note, :style => "width:100%", :rows => 3 %>
     </div>
   </div>
