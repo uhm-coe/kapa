@@ -6,21 +6,15 @@
 <%end%>
 
 <% content_for(:box2) do %>
-  <h4>Advising Record</h4>
+  <h4 class="section-header">
+    <%=link_to "", main_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    Advising Record
+  </h4>
 
-  <div class="tabs">
-    <ul>
-      <li><a href="#tabs-1">Advising</a></li>
-    </ul>
-
-    <div id="tabs-1">
-      <%=label_form_for :advising_session, :url => advising_sessions_path, :remote => true do %>
-        <%=render :partial => "/advising/session_form"%>
-        <%=controls if @current_user.write? %>
-      <% end %>
-    </div>
+  <div>
+    <%=bootstrap_form_for :advising_session, :url => advising_sessions_path, :remote => true do |f| %>
+      <%=render :partial => "/advising/session_form", :locals => {:f => f} %>
+      <%=controls if @current_user.write? %>
+    <% end %>
   </div>
-
-  <%=link_to "Back", main_persons_path(:action => :show, :id => @person) %>
-
 <%end%>

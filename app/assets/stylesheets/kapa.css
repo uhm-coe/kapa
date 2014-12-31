@@ -9,6 +9,7 @@
 .section-header {
   padding-bottom: 9px;
   border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 30px;
 }
 
 .section-header a.glyphicon {

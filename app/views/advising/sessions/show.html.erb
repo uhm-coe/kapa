@@ -6,24 +6,18 @@
 <%end%>
 
 <% content_for(:box2) do %>
-  <h4>Advising Session</h4>
+  <h4 class="section-header">
+    <%=link_to_unless @advising_session.anonymous?, "", main_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    Advising Session
+  </h4>
 
-  <div class="tabs">
-    <ul>
-      <li><a href="#tabs-1">Advising</a></li>
-    </ul>
-
-    <div id="tabs-1">
-      <%=label_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put}  do %>
-        <%=render :partial => "/advising/session_form", :locals => { :anonymous => @advising_session.anonymous? } %>
-        <%=controls do %>
-          <%# TODO: link_to_button method is undefined %>
-          <%#= link_to_button "Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?"} %>
-        <% end if @current_user.write? %>
-      <% end %>
-    </div>
+  <div>
+    <%=bootstrap_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put} do |f| %>
+      <%=render :partial => "/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
+      <%=controls do %>
+        <%# TODO: link_to_button method is undefined %>
+        <%#= link_to_button "Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+      <% end if @current_user.write? %>
+    <% end %>
   </div>
-
-  <%=link_to_unless @advising_session.anonymous?, "Back", main_person_path(:id => @person) %>
-
 <%end%>

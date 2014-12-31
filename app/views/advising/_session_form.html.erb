@@ -1,9 +1,6 @@
-<%= label_fields_for :advising_session do |f| %>
-<table>
-<tr>
-  
-  <td>
-    <%=f.date_picker :session_date %>
+<div class="row">
+  <div class="col-sm-6">
+    <%=f.date_select :session_date %>
     <%=f.property_select :session_type, :name => :advising_type %></p>
     <%=f.property_select :task, :name => :advising_task %></p>
     <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :label => "Program", :include_blank => true %>
@@ -11,13 +8,10 @@
     <%=f.property_select :interest, {:name => :advising_interest, :include_blank => true} %></p>
     <%=f.property_select :location, {:include_blank => true} %></p>
     <%=f.user_select :user_primary_id, {:include_blank => true, :locked => !@current_user.manage?, :label => "Adviser"} %></p>
-  </td>
+  </div>
 
-<td>
-  <%=f.text_area :note, {:cols => 54, :rows => 20} %>
-  <%=f.hidden_field :person_id  %>
-</td>
-
-</tr>
-</table>
-<% end %>
+  <div class="col-sm-6">
+    <%=f.text_area :note, {:cols => 54, :rows => 20} %>
+    <%=f.hidden_field :person_id  %>
+  </div>
+</div>
