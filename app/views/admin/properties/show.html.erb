@@ -2,22 +2,24 @@
 
 <% content_for(:box1) do %>
 
-  <h4><%=@property.name%>/<%=@property.code%></h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@property.name%>/<%=@property.code %>
+  </h4>
 
   <div class="tabs">
-    <ul>
-      <li><a href="#property_tab">Properties</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#property_tab" data-toggle="tab">Properties</a></li>
     </ul>
 
-    <div id="property_tab">
-      <%=label_form_for :property, :url => admin_property_path(:id => @property), :remote => true, :html => {:method => :put} do |f| %>
-        <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
-        <%=controls %>
-      <% end %>
+    <div class="tab-content">
+      <div id="property_tab" class="tab-pane active">
+        <%=bootstrap_form_for :property, :url => admin_property_path(:id => @property), :remote => true, :html => {:method => :put} do |f| %>
+          <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
+          <%=controls %>
+        <% end %>
+      </div>
     </div>
-
   </div>
-
-  <%=link_to "Back", :action => :index %>
 
 <% end %>

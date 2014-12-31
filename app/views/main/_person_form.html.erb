@@ -1,27 +1,25 @@
 <%= bootstrap_fields_for :person do |f| %>
 
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <%= f.text_field :id_number, :size => 10, :readonly => @person.verified?, :class => "id_number", :label => "ID" %>
       <%= f.text_field :last_name, :size => 30 %>
       <%= f.text_field :ssn, :size => 10, :class => "ssn", :label => "SSN" %>
       <%= f.check_box :ssn_agreement, {:label => "SSN Agreement"}, "Y", "N" %>
-
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <%= f.text_field :email, :size => 30, :readonly => @person.verified? %>
       <%= f.text_field :first_name, :size => 30 %>
       <%= f.text_field :other_name %>
       <%= f.select :gender, [["Male", "M"], ["Female", "F"]], :include_blank => true %>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <%= f.text_field :birth_date %>
       <%= f.text_field :middle_initial, :size => 30 %>
       <%= f.select :title, [["Mr.", "MR"], ["Ms.", "MS"], ["Dr.", "DR"]], :include_blank => true %>
     </div>
-
   </div>
   <%= hidden_field_tag :mode, @mode %>
 

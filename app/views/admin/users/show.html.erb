@@ -4,38 +4,42 @@
 
 <% content_for(:box2) do %>
 
-  <h4>User Record</h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    User Record
+  </h4>
+
   <div class="tabs">
-    <ul>
-      <li><a href="#user_profile_tab">Profile</a></li>
-      <li><a href="#role_tab">Roles</a></li>
-      <li><a href="#activity_tab">Activities</a></li>
-      <li><a href="#other_accounts_tab">Associated Accounts</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#role_tab" data-toggle="tab">Roles</a></li>
+      <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
+      <li><a href="#other_accounts_tab" data-toggle="tab">Associated Accounts</a></li>
     </ul>
 
-    <div id="user_profile_tab">
-      <%=label_form_for :user, :url => admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
-        <%=render :partial => "/admin/user_form", :locals => {:f => f} %>
-        <%=controls if @current_user.manage?  :admin, :delegate => :user %>
-      <% end %>
-    </div>
+    <div class="tab-content">
+      <div id="user_profile_tab" class="tab-pane active">
+        <%=bootstrap_form_for :user, :url => admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
+          <%=render :partial => "/admin/user_form", :locals => {:f => f} %>
+          <%=controls if @current_user.manage?  :admin, :delegate => :user %>
+        <% end %>
+      </div>
 
-    <div id="role_tab">
-      <%=label_form_for :user_roles, :url => admin_user_path(:id => @user, :focus => "role"), :remote => true, :html => {:method => :put}  do |f| %>
-        <%=render :partial => "/admin/role_form", :locals => {:f => f} %>
-        <%=controls if @current_user.manage?  :admin, :delegate => :user  %>
-      <% end %>
-    </div>
+      <div id="role_tab" class="tab-pane">
+        <%=bootstrap_form_for :user_roles, :url => admin_user_path(:id => @user, :focus => "role"), :remote => true, :html => {:method => :put}  do |f| %>
+          <%=render :partial => "/admin/role_form", :locals => {:f => f} %>
+          <%=controls if @current_user.manage?  :admin, :delegate => :user  %>
+        <% end %>
+      </div>
 
-    <div id="activity_tab">
-      <%=render :partial => "/admin/activity_table" %>
-    </div>
+      <div id="activity_tab" class="tab-pane">
+        <%=render :partial => "/admin/activity_table" %>
+      </div>
 
-    <div id="other_accounts_tab">
-      <%=render :partial => "/admin/account_table" %>
+      <div id="other_accounts_tab" class="tab-pane">
+        <%=render :partial => "/admin/account_table" %>
+      </div>
     </div>
   </div>
 
-  <%=link_to "Back", :action => :index %>
 <%end%>
-s

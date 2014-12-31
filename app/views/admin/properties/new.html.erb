@@ -1,12 +1,13 @@
 <% content_for(:box1) do %>
 
-<h4>New System Property</h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New System Property
+  </h4>
 
-<%=label_form_for :property, :url => admin_properties_path, :remote => true do |f| %>
-  <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
-  <%=controls %>
-<% end %>
-
-<%=link_to "Back", :action => :index %>
+  <%=bootstrap_form_for :property, :url => admin_properties_path, :remote => true do |f| %>
+    <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
+    <%=controls %>
+  <% end %>
 
 <% end %>
