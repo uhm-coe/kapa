@@ -1,13 +1,14 @@
 <% content_for(:box1) do %>
 
-<h4>New School</h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New School
+  </h4>
 
-<%=label_form_for :practicum_school, :url => practicum_schools_path do |f| %>
-  <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
-  <%=controls if @current_user.write? %>
-<% end %>
-
-<%=link_to "Back", :action => :index %>
+  <%=bootstrap_form_for :practicum_school, :url => practicum_schools_path do |f| %>
+    <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
+    <%=controls if @current_user.write? %>
+  <% end %>
 
 <% end %>
 

@@ -1,40 +1,45 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+      <% if params[:modal] %>$('#filter_dialog').modal({show : true});<% end %>
+      // $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');});
     });
   </script>
 <% end %>
 
-<% content_for(:box1) do %>
+<% content_for(:dialog) do %>
 
+  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => practicum_schools_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.text_field :name %>
+      <%=f.property_select :district, :include_blank => true %>
+      <%=f.property_select :area_group, :include_blank => true, :label => "Area" %>
+    <% end %>
+  <% end %>
 
-  <h4>Schools</h4>
-  <table>
-    <tr class="bottom">
-      <%=form_tag :action => :index do %>
-        <td>
-          <p><label for="filter_user">Name:</label><br>
-            <%=text_field :filter, :name %></p>
-        </td>
-        <td>
-          <p><label for="filter_user">District:</label><br>
-            <%=property_select :filter, :district, :include_blank => true %></p>
-        </td>
-        <td>
-          <p><label for="filter_user">Area:</label><br>
-            <%=property_select :filter, :area_group, :include_blank => true %></p>
-        </td>
-        <td>
-          <p class="right"><%=submit_tag "Show" %></p>
-        </td>
-      <% end %>
-    </tr>
-  </table>
+  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import School Data", :modal_form_id => "import_school_form"} do %>
+    <%=bootstrap_form_for(:data, :url => import_practicum_schools_path, :html => {:multipart => true, :id => "import_school_form"}) do |f|%>
+      <%=f.file_field :import_file %>
+    <% end %>
+  <% end %>
+
 <% end %>
 
+<% content_for(:box1) do %>
 
-<% content_for(:box2) do %>
+  <h3>Schools</h3>
+
+  <div class="row">
+    <div class="text-right">
+      <%=link_to "New", {:action => :new}, :class => "btn btn-default" if @current_user.manage? :practicum, :delegate => :maintain %>
+      <% if @current_user.manage? :practicum, :delegate => :import %>
+        <button class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
+      <% end %>
+      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :practicum, :delegate => :export %>
+      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+    </div>
+  </div>
+
   <table id="school_list" class="table table-striped">
     <thead>
       <tr>
@@ -63,17 +68,6 @@
       <% end %>
     </tbody>
   </table>
-  <br>
-  <div class="center"><%=will_paginate @practicum_schools %></div>
-  <div class="right">
-    <%=link_to "Download", :action => :export, :action => :export if @current_user.manage? :practicum, :delegate => :export %>
-    <%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :practicum, :delegate => :import %>
-    <%=link_to "New", :action => :new if @current_user.manage?(:practicum, :delegate => :maintain) %>
-  </div>
-  <div id="dialog" class="form-dialog" title="Import School Data">
-    <%=label_form_for(:filter, :url => import_practicum_schools_path, :html => {:multipart => true, :id => "import_school_form"} ) do |f| %>
-      <%=f.file_field :import_file %>
-    <% end %>
-  </div>
+  <div class="text-center"><%=will_paginate @practicum_schools, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

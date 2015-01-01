@@ -170,7 +170,7 @@ class ApplicationBaseController < ActionController::Base
     when "practicum"
       items.push ["Placement Audits", practicum_placements_path]  if @current_user.read?(:practicum)
       items.push ["Mentor Assignments", practicum_assignments_path]  if @current_user.read?(:practicum)
-      items.push ["Schools", practicum_schools_path]  if @current_user.read?(:practicum)
+      items.push ["Schools", practicum_schools_path(:modal => true)]  if @current_user.read?(:practicum)
     when "admin"
       items.push ["Programs", admin_programs_path(:modal => true)]  if @current_user.manage?(:admin, :delegate => :program)
       items.push ["Assessments", admin_rubrics_path(:modal => true)]  if @current_user.manage?(:admin, :delegate => :rubric)
