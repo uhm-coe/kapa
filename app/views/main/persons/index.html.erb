@@ -26,41 +26,41 @@
 
   <div class="row">
     <div class="text-right">
-      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
       <%=link_to "New", {:action => :new}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
+      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
 
-  <table class="table table-hover">
+  <table class="table table-striped">
     <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Other Names</th>
-      <th>Email</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% for person in @persons %>
-      <% if person.new_record? %>
-      <tr class="new">
-        <td><%=h person.id_number %></td>
-        <td><%=h person.full_name %></td>
-        <td></td>
-        <td><%=mail_to person.email %></td>
-        <td><%=link_to_unless person.id_number.blank?, "Add", :action => :create, :mode => :promote, "person[id_number]" => person.id_number %></td>
-      </tr>
-      <% else %>
       <tr>
-        <td><%=link_to_id_number person %></td>
-        <td><%=h person.full_name %></td>
-        <td><%=abbr person.other_name, 30 %></td>
-        <td><%=mail_to person.email %></td>
-        <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Other Names</th>
+        <th>Email</th>
+        <th></th>
       </tr>
+    </thead>
+    <tbody>
+      <% for person in @persons %>
+        <% if person.new_record? %>
+          <tr class="new">
+            <td><%=h person.id_number %></td>
+            <td><%=h person.full_name %></td>
+            <td></td>
+            <td><%=mail_to person.email %></td>
+            <td><%=link_to_unless person.id_number.blank?, "Add", :action => :create, :mode => :promote, "person[id_number]" => person.id_number %></td>
+          </tr>
+        <% else %>
+          <tr>
+            <td><%=link_to_id_number person %></td>
+            <td><%=h person.full_name %></td>
+            <td><%=abbr person.other_name, 30 %></td>
+            <td><%=mail_to person.email %></td>
+            <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
     </tbody>
   </table>
 

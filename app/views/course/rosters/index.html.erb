@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <table id="course_list" class="table table-hover">
+  <table id="course_list" class="table table-striped">
     <thead>
       <tr>
         <th>Course</th>
@@ -37,9 +37,9 @@
         <th>Instructor</th>
         <th>Registration</th>
         <% if @current_user.manage? :course, :delegate => :export  %><th>Progress</th><% end %>
+        <th></th>
       </tr>
     </thead>
-
     <tbody>
       <% for assessment_course in @assessment_courses %>
         <tr>
@@ -49,7 +49,7 @@
           <td><%=h assessment_course.instructor %></td>
           <td><%=h assessment_course.assessment_course_registrations.length.to_i %></td>
           <% if @current_user.manage? :course, :delegate => :export %><td><%=number_to_percentage assessment_course.progress, :precision => 2 %></td><% end %>
-          <td><%=link_to "Show", course_roster_path(:id => assessment_course), :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=link_to "Show", course_roster_path(:id => assessment_course), :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>

@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <table class="table table-hover">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Code</th>
@@ -37,9 +37,9 @@
         <th>Dept</th>
         <th>Sequence</th>
         <th>Active</th>
+        <th></th>
       </tr>
     </thead>
-
     <tbody>
       <% for program in @programs %>
         <tr>
@@ -49,7 +49,7 @@
           <td><%=h program.dept %></td>
           <td><%=h program.sequence %></td>
           <td><%=h program.active %></td>
-          <td><%=link_to "Show", {:action => :show, :id => program}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => program}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>

@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <table id="form_list" class="table table-hover">
+  <table id="form_list" class="table table-striped">
     <thead>
       <tr>
         <th>UH ID</th>
@@ -39,6 +39,7 @@
         <th>Submitted</th>
         <th>Lock</th>
         <th>Dept</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -51,7 +52,7 @@
           <td><%=format_date form.submitted_at %></td>
           <td><%=h form.lock %></td>
           <td><%=h form.dept %></td>
-          <td><%=link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
         </tr>
       <% end %>
     </tbody>

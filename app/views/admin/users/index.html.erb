@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <table id="user_list" class="table table-hover">
+  <table id="user_list" class="table table-striped">
     <thead>
       <tr>
         <th>User ID</th>
@@ -50,6 +50,7 @@
         <th>US</th>
         <th>Department</th>
         <th>Data Access</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -62,7 +63,7 @@
           <td><%=h user.status %></td>
           <td><%=h user.department %></td>
           <td><%=h user.dept %></td>
-          <td><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>

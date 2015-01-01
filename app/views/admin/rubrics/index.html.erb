@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <table class="table table-hover">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Title</th>
@@ -41,6 +41,7 @@
         <th>Effective</th>
         <th>Criteria</th>
         <th>Dept</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -51,7 +52,7 @@
           <td><%=h assessment_rubric.effective_academic_period %></td>
           <td><%=h assessment_rubric.assessment_criterions.length.to_i %></td>
           <td><%=h assessment_rubric.dept %></td>
-          <td><%=link_to "Show", {:action => :show, :id => assessment_rubric}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => assessment_rubric}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>

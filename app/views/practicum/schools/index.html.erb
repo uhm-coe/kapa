@@ -35,29 +35,33 @@
 
 
 <% content_for(:box2) do %>
-  <table id="school_list">
-    <tr>
-      <th>Code</th>
-      <th>Name</th>
-      <th>District</th>
-      <th>Area</th>
-      <th>Type</th>
-      <th>Grades</th>
-      <th>Placements</th>
-    </tr>
-
-    <% for practicum_school in @practicum_schools %>
+  <table id="school_list" class="table table-striped">
+    <thead>
       <tr>
-        <td><%=h practicum_school.code %></td>
-        <td><%=abbr practicum_school.name, practicum_school.name_short %></td>
-        <td><%=h practicum_school.district %></td>
-        <td><%=h practicum_school.area %></td>
-        <td><%=h practicum_school.school_type %></td>
-        <td><%=h practicum_school.grades %></td>
-        <td><%=h practicum_school.practicum_assignments.length.to_i %></td>
-        <td class="right"><%=link_to "Show", :action => :show, :id => practicum_school %></td>
+        <th>Code</th>
+        <th>Name</th>
+        <th>District</th>
+        <th>Area</th>
+        <th>Type</th>
+        <th>Grades</th>
+        <th>Placements</th>
+        <th></th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% for practicum_school in @practicum_schools %>
+        <tr>
+          <td><%=h practicum_school.code %></td>
+          <td><%=abbr practicum_school.name, practicum_school.name_short %></td>
+          <td><%=h practicum_school.district %></td>
+          <td><%=h practicum_school.area %></td>
+          <td><%=h practicum_school.school_type %></td>
+          <td><%=h practicum_school.grades %></td>
+          <td><%=h practicum_school.practicum_assignments.length.to_i %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => practicum_school}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
   <br>
   <div class="center"><%=will_paginate @practicum_schools %></div>

@@ -40,29 +40,30 @@
     </div>
   </div>
 
-  <table class="table table-hover">
+  <table class="table table-striped">
     <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Program</th>
-      <th>Latest Action</th>
-      <th>Status</th>
-      <th>User</th>
-    </tr>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Program</th>
+        <th>Latest Action</th>
+        <th>Status</th>
+        <th>User</th>
+        <th></th>
+      </tr>
     </thead>
     <tbody>
-    <% for transition_point in @transition_points %>
-      <tr>
-        <td><%=link_to_id_number transition_point.curriculum.person %></td>
-        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_persons_path(:action => :show, :id => transition_point.curriculum.person_id) %></td>
-        <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
-        <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-        <td><%=h transition_point.status_desc %></td>
-        <td><%=h transition_point.user_primary.person.last_name if transition_point.user_primary %></td>
-        <td><%=link_to "Show", {:action => :show, :id => transition_point}, :class => "btn btn-default btn-xs" %></td>
-      </tr>
-    <% end %>
+      <% for transition_point in @transition_points %>
+        <tr>
+          <td><%=link_to_id_number transition_point.curriculum.person %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_persons_path(:action => :show, :id => transition_point.curriculum.person_id) %></td>
+          <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
+          <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+          <td><%=h transition_point.status_desc %></td>
+          <td><%=h transition_point.user_primary.person.last_name if transition_point.user_primary %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => transition_point}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
   <div class="text-center"><%=will_paginate @transition_points, :renderer => BootstrapPagination::Rails %></div>
