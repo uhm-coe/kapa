@@ -131,7 +131,7 @@ module ApplicationBaseHelper
 
   def button_to_redirect(name, url, options = {})
     logger.debug "-----btr:#{options.inspect}"
-    button_to_function(name, nil, options.merge(:class => "redirect", "data-url" => url_for(url)))
+    button_to_function(name, nil, options.merge(:class => "redirect btn btn-default", "data-url" => url_for(url)))
   end
 
   def button_to_reset(value = "Reset", options = {})

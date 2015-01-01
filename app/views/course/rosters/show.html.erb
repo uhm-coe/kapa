@@ -45,20 +45,17 @@
 
 <% content_for(:box1) do %>
 
-  <%=label_form_for :filter, :url => course_roster_path(:id =>  @assessment_course), :html => {:method => :get}  do |f| %>
-    <table>
-      <tr class="bottom">
-        <td>
-          <h4><%=h @assessment_course.name %> Assessment</h4>
-        </td>
-        <td>
-          <%=f.select :assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => 500}%>
-        </td>
-        <td>
-          <%=link_to "Open Rubric", @assessment_rubric.reference_url, {:target => "_blank"} unless @assessment_rubric.reference_url.blank? %>
-        </td>
-      </tr>
-    </table>
+  <%=bootstrap_form_for :filter, :url => course_roster_path(:id =>  @assessment_course), :html => {:method => :get}  do |f| %>
+    <h4 class="section-header">
+      <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+      <%=h @assessment_course.name %> Assessment
+    </h4>
+    <div class="row">
+      <div class="col-sm-6">
+        <%=f.select :assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => 500}%>
+        <%=link_to "Open Rubric", @assessment_rubric.reference_url, {:target => "_blank", :class => "btn btn-default"} unless @assessment_rubric.reference_url.blank? %>
+      </div>
+    </div>
   <% end %>
 
 <% end %>
@@ -69,7 +66,7 @@
   <%=label_form_for(:assessment_course, :url => course_roster_path(:id => @assessment_course), :html => {:method => :put, :id => "assessment_course_form", "data-changed" => false}) do %>
     <div class="right">
       <span id="save_notice"><%=flash[:save_notice] %></span>
-      <%=button_to_function "Save", nil, :id => "save_button" if @current_user.write? %>
+      <%=button_to_function "Save", nil, {:id => "save_button", :class => "btn btn-default"} if @current_user.write? %>
       <%=button_to_redirect "Download", {:action => :show, :id => @assessment_course, :format => :file}, {:id => "export_button"} %>
     </div>
 
@@ -77,7 +74,5 @@
       <%=render :partial => "/course/table" %>
     </div>
   <% end %>
-  <br>
-  <%=link_to "Back", course_rosters_path %>
-  <p class="right"><%=button_to_function "All Green", nil, :id => "all_green_button" if @current_user.write? %></p>
+  <p class="right"><%=button_to_function "All Green", nil, {:id => "all_green_button", :class => "btn btn-default"} if @current_user.write? %></p>
 <% end %>
