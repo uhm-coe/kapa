@@ -26,13 +26,14 @@
                 <th>Semester</th>
                 <th>Transition Point</th>
                 <th>Latest Action</th>
+                <th></th>
               </tr>
               <% for transition_point in curriculum.transition_points.includes(:last_transition_action).order("academic_period DESC, id DESC") %>
                 <tr>
                   <td><%=h transition_point.academic_period_desc %></td>
                   <td><%=h transition_point.type_desc %></td>
                   <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-                  <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point) %></td>
+                  <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -60,6 +61,7 @@
               <th>Type</th>
               <th>Task</th>
               <th>Note</th>
+              <th></th>
             </tr>
             <% for advising_session in @advising_sessions %>
               <tr>
@@ -67,7 +69,7 @@
                 <td><%=h advising_session.session_type.to_s.capitalize %></td>
                 <td><%=h advising_session.task.to_s.capitalize %></td>
                 <td><%=abbr advising_session.note, 30 %></td>
-                <td class="right"><%=link_to "Show", advising_session_path(:id => advising_session) %></td>
+                <td class="right"><%=link_to "Show", advising_session_path(:id => advising_session), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </table>
@@ -91,13 +93,14 @@
           <table class="table table-hover">
           <% @assessment_course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
             <tr>
-              <td colspan="4"><h5><%=subject %></h5></td>
+              <td colspan="5"><h5><%=subject %></h5></td>
             </tr>
             <tr>
               <th>Semester</th>
               <th>Name</th>
               <th>Title</th>
               <th>Instructor</th>
+              <th></th>
             </tr>
             <% for course_registration in course_registrations %>
               <tr>
@@ -105,7 +108,7 @@
                 <td><%=h "#{course_registration.assessment_course.name}" %></td>
                 <td><%=abbr "#{course_registration.assessment_course.title}", 50 %></td>
                 <td><%=abbr "#{course_registration.assessment_course.instructor}", 50 %></td>
-                <td class="right"><%=link_to "Show", course_registration_path(:id => course_registration)%></td>
+                <td class="right"><%=link_to "Show", course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           <% end %>
@@ -130,7 +133,7 @@
           <table class="table table-hover">
             <% for practicum_profile in @practicum_profiles %>
               <tr>
-                <td colspan="4">
+                <td colspan="5">
                   <h5><%=h "#{practicum_profile.curriculum.code_desc} - #{practicum_profile.curriculum.academic_period_desc}" if practicum_profile.curriculum %></h5>
                 </td>
               </tr>
@@ -139,6 +142,7 @@
                 <th>Category</th>
                 <th>Sequence</th>
                 <th>Classification</th>
+                <th></th>
               </tr>
               <% for practicum_placement in practicum_profile.practicum_placements %>
                 <tr>
@@ -146,7 +150,7 @@
                   <td><%=h practicum_placement.category %></td>
                   <td><%=h practicum_placement.sequence %></td>
                   <td><%=h practicum_placement.status %></td>
-                  <td class="right"><%=link_to "Show", practicum_placement_path(:id=> practicum_placement) %></td>
+                  <td class="right"><%=link_to "Show", practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>
                 </tr>
               <% end %>
             <% end %>

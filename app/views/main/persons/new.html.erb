@@ -3,8 +3,8 @@
     jQuery(document).ready(function($) {
       $('#person_id_number').keyup(function() {
         if($(this).val().match(/[\d]{8}/i)) {
-          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>', 
-          {key: $(this).val()}, 
+          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>',
+          {key: $(this).val()},
           function(data) { $('#person_form').html(data);},
           'html');
         }
@@ -12,8 +12,8 @@
 
       $('#person_email').keyup(function() {
         if($(this).val().match(/\w+@hawaii.edu/i)) {
-          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>', 
-          {key: $(this).val()}, 
+          $.get('<%=main_persons_path(:action => :verify, :id => @person)%>',
+          {key: $(this).val()},
           function(data) { $('#person_form').html(data);},
           'html');
         }
@@ -24,7 +24,10 @@
 
 <% content_for(:box1) do %>
 
-  <h4>New Person</h4>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Person
+  </h4>
 
   <%=label_form_for :person, :url => main_persons_path, :remote => true do %>
     <div id="person_form">
@@ -32,8 +35,6 @@
     </div>
     <%=controls if @current_user.write? %>
   <% end %>
-
-  <%=link_to "Back", :action => :index %>
 
 <% end %>
 
