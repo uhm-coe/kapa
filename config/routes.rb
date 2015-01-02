@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   match '/error' => 'main/base#error', :as => :error
 
   namespace :main do
+    get 'persons/verify(/:id)' => 'persons#verify', :as => :persons_verify
     resources :persons, &extra_actions
     resources :contacts, &extra_actions
     resources :curriculums, &extra_actions
