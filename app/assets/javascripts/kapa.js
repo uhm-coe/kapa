@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap-datepicker
 //= require_tree .
 
 jQuery(document).ready(function($) {
@@ -20,6 +21,12 @@ jQuery(document).ready(function($) {
     if ($(this).parent().hasClass('active')){
       $($(this).attr("href")).toggleClass('active');
     }
+  });
+
+  $('.kapa-datepicker').datepicker({
+    format: 'yyyy-mm-dd'
+  }).on('changeDate', function(event) {
+    $(this).datepicker('hide');
   });
 
 });

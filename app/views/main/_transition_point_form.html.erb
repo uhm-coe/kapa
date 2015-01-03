@@ -12,14 +12,45 @@
     <div class="col-sm-6">
       <%= bootstrap_fields_for :transition_point_ext do |t| %>
         <% if @transition_point.type == "admission" %>
-          <%= t.date_select :coe_received_date %>
-          <%= t.date_select :caf_received_date %>
-          <%= t.date_select :caf_returned_date %>
-          <%= t.date_select :fe_received_date %>
-          <%= t.date_select :praxis1_received_date, :label => "Passing Praxis I Received date" %>
-          <%= t.date_select :praxis2_received_date, :label => "Passing Praxis II Received date" %>
-          <%= t.date_select :lack_letter_sent_date %>
-          <%= t.date_select :rsvp_date %>
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_coe_received_date", "Coe Received Date" %>
+            <%= date_picker :transition_point_ext, :coe_received_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_caf_received_date", "Caf Received Date" %>
+            <%= date_picker :transition_point_ext, :caf_received_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_caf_returned_date", "Caf Returned Date" %>
+            <%= date_picker :transition_point_ext, :caf_returned_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_fe_received_date", "Fe Received Date" %>
+            <%= date_picker :transition_point_ext, :fe_received_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_praxis1_received_date", "Passing Praxis I Received Date" %>
+            <%= date_picker :transition_point_ext, :praxis1_received_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_praxis2_received_date", "Passing Praxis II Received Date" %>
+            <%= date_picker :transition_point_ext, :praxis2_received_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_lack_letter_sent_date", "Lack Letter Sent Date" %>
+            <%= date_picker :transition_point_ext, :lack_letter_sent_date %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "transition_point_ext_rsvp_date", "RSVP Date" %>
+            <%= date_picker :transition_point_ext, :rsvp_date %>
+          </div>
         <% end %>
       <% end %>
     </div>

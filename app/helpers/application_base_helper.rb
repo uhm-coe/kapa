@@ -94,9 +94,10 @@ module ApplicationBaseHelper
 
   def date_picker(object_name, method, options = {})
     object = instance_variable_get("@#{object_name}".delete("[]"))
-    options[:class] = "datepicker #{options[:class]}"
-    options[:size] = options[:time] ? 20 : 10
+    options[:class] = "kapa-datepicker form-control #{options[:class]}"
+    options[:size] = nil
     options[:readonly] = true
+    options["data-provide"] = "datepicker"
     options[:id] = "#{object_name}_#{method}"
     options[:id] << "_#{object.object_id}" if object
     text_field(object_name, method, options)
