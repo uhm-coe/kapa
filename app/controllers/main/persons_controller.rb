@@ -84,7 +84,7 @@ class Main::PersonsController < Main::BaseController
   def index
     @filter = filter
     @persons = Person.search(:all, @filter.key)
-
+    @modal = true if filter.key.blank?
     if @persons.blank?
       flash.now[:notice] = "No record was found."
     end

@@ -1,7 +1,7 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      <% if params[:modal] %>$('#change_program_dialog').modal({show : true});<% end %>
+      <% if @modal %>$('#change_program_dialog').modal({show : true});<% end %>
     });
   </script>
 <% end %>

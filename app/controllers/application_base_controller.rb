@@ -157,27 +157,27 @@ class ApplicationBaseController < ActionController::Base
     items = []
     case name.to_s
     when "main"
-      items.push ["Search Person", main_persons_path(:modal => true)]  if @current_user.manage?(:main, :delegate => :search)
-      items.push ["Program Cohorts", main_curriculums_path(:modal => true)]  if @current_user.read? (:main)
-      items.push ["Transition Points", main_transition_points_path(:modal => true)] if @current_user.read?(:main)
+      items.push ["Search Person", main_persons_path]  if @current_user.manage?(:main, :delegate => :search)
+      items.push ["Program Cohorts", main_curriculums_path]  if @current_user.read? (:main)
+      items.push ["Transition Points", main_transition_points_path] if @current_user.read?(:main)
     when "artifact"
-      items.push ["Forms", artifact_forms_path(:modal => true)] if @current_user.manage?(:artifact, :delegate => :form)
-      items.push ["Praxis Scores", artifact_exams_path(:modal => true)] if @current_user.manage?(:artifact, :delegate => :exam)
+      items.push ["Forms", artifact_forms_path] if @current_user.manage?(:artifact, :delegate => :form)
+      items.push ["Praxis Scores", artifact_exams_path] if @current_user.manage?(:artifact, :delegate => :exam)
     when "advising"
-      items.push ["Sessions", advising_sessions_path(:modal => true)]  if @current_user.read?(:advising)
+      items.push ["Sessions", advising_sessions_path]  if @current_user.read?(:advising)
     when "course"
-      items.push ["Rosters", course_rosters_path(:modal => true)] if @current_user.read?(:course)
+      items.push ["Rosters", course_rosters_path] if @current_user.read?(:course)
     when "practicum"
       items.push ["Placement Audits", practicum_placements_path]  if @current_user.read?(:practicum)
       items.push ["Mentor Assignments", practicum_assignments_path]  if @current_user.read?(:practicum)
-      items.push ["Schools", practicum_schools_path(:modal => true)]  if @current_user.read?(:practicum)
+      items.push ["Schools", practicum_schools_path]  if @current_user.read?(:practicum)
     when "admin"
-      items.push ["Programs", admin_programs_path(:modal => true)]  if @current_user.manage?(:admin, :delegate => :program)
-      items.push ["Assessments", admin_rubrics_path(:modal => true)]  if @current_user.manage?(:admin, :delegate => :rubric)
-      items.push ["SSN Reporting", admin_restricted_reports_path(:modal => true)]  if @current_user.manage?(:admin, :delegate => :restricted_report)
-      items.push ["User Accounts", admin_users_path(:modal => true)]  if @current_user.manage?(:admin, :delegate => :user)
+      items.push ["Programs", admin_programs_path]  if @current_user.manage?(:admin, :delegate => :program)
+      items.push ["Assessments", admin_rubrics_path]  if @current_user.manage?(:admin, :delegate => :rubric)
+      items.push ["SSN Reporting", admin_restricted_reports_path]  if @current_user.manage?(:admin, :delegate => :restricted_report)
+      items.push ["User Accounts", admin_users_path]  if @current_user.manage?(:admin, :delegate => :user)
 #      items.push ["User Activities", admin_users_path(:action => :logs)]   if @current_user.manage?(:admin, :delegate => :user)
-      items.push ["System Properties", admin_properties_path(:modal => true)]   if @current_user.manage?(:admin)
+      items.push ["System Properties", admin_properties_path]   if @current_user.manage?(:admin)
     end
     items
   end
