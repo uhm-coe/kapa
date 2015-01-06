@@ -27,10 +27,8 @@ class ApplicationFilter < OpenStruct
     return param_query
   end
 
-  def append_condition(statement, attribute_name = :no_value, options = {})
-    if attribute_name == :no_value
-      @conditions[0] << " and (#{statement})"
-    else
+  def append_condition(statement, attribute_name = nil, options = {})
+    if attribute_name
       value = self.send(attribute_name)
       unless value.blank?
         @conditions[0] << " and (#{statement})"
@@ -38,6 +36,19 @@ class ApplicationFilter < OpenStruct
         statement.count("?").times do
           @conditions.push value
         end
+      end
+    else
+      @conditions[0] << " and (#{statement})"
+    end
+  end
+
+  def append_search_condition(statement, attribute_name)
+    value = self.send(attribute_name)
+    unless value.blank?
+      @conditions[0] << " and (#{statement})"
+      value = "%#{value}%"
+      statement.count("?").times do
+        @conditions.push value
       end
     end
   end

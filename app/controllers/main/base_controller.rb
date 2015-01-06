@@ -25,7 +25,7 @@ class Main::BaseController < ApplicationBaseController
 
   private
   def filter_defaults
-    {:key => "Please enter key...",
+    {:key => "",
      :academic_period => current_academic_period,
      :type => :admission}
   end
