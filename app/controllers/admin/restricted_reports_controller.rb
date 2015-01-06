@@ -8,7 +8,7 @@ class Admin::RestrictedReportsController < Admin::BaseController
 
   def export
     if params[:key_file].blank?
-      flash[:notice] = "Please select your key file."
+      flash[:warning] = "Please select your key file."
       redirect_to error_path
       return false
     end
@@ -19,7 +19,7 @@ class Admin::RestrictedReportsController < Admin::BaseController
       test_person = Person.find(:first, :conditions => "ssn_crypted is not null")
       Person.decrypt(test_person.ssn_crypted, @key_file)
     rescue StandardError
-      flash[:notice] = $ERROR_INFO
+      flash[:danger] = $ERROR_INFO
       redirect_to error_path
       return false
     end

@@ -21,12 +21,12 @@ class Admin::UsersController < Admin::BaseController
     @user = User.find params[:id]
     @user.attributes= params[:user]
     @user.serialize(:role, params[:role]) if params[:role]
-    unless @user.save
-      flash.now[:notice2] = error_message_for(@user)
-      render_notice and return false
+    if @user.save
+      flash[:success] = "User was successfully updated."
+    else
+      flash[:danger] = error_message_for(@user)
     end
-    flash[:notice2] = "User was successfully updated."
-    render_notice
+    redirect_to admin_user_path(:id => @user)
   end
 
   def create
@@ -36,21 +36,21 @@ class Admin::UsersController < Admin::BaseController
       @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
-      flash.now[:notice1] = "Person was successfully imported."
+      flash[:success] = "Person was successfully imported."
 
     when "consolidate"
       @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
-      flash.now[:notice1] = "Records were successfully consolidated."
-
+      flash[:success] = "Records were successfully consolidated."
     else
-      flash.now[:notice1] = "Person was successfully created."
+      flash[:success] = "Person was successfully created."
     end
 
     unless @person.save
-      flash.now[:notice1] = "Failed to save this record."
-      render_notice and return false
+      flash[:success] = nil
+      flash[:danger] = "Failed to save this record."
+      redirect_to new_admin_user_path and return false
     end
 
     if not @person.email.blank?
@@ -63,11 +63,12 @@ class Admin::UsersController < Admin::BaseController
 
     @user = @person.users.create(:uid => uid)
     unless @user.save
-      flash[:notice1] = error_message_for(@user)
-      render_notice and return false
+      flash[:success] = nil
+      flash[:danger] = error_message_for(@user)
+      redirect_to new_admin_user_path and return false
     end
 
-    flash[:notice] = 'User was successfully created...'
+    flash[:success] = 'User was successfully created...'
     redirect_to :action => :show, :id => @user
   end
 
@@ -106,7 +107,7 @@ class Admin::UsersController < Admin::BaseController
         end
       end
     end
-    flash.now[:notice] = "#{@persons.length} found."
+    flash[:info] = "#{@persons.length} found."
   end
 
   def export

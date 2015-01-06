@@ -12,37 +12,37 @@ class Admin::RubricsController < Admin::BaseController
   def update
     @assessment_rubric = AssessmentRubric.find(params[:id])
     @assessment_rubric.attributes = params[:assessment_rubric]
-    unless @assessment_rubric.save
-      flash.now[:notice1] = @assessment_rubric.errors.full_messages.join(", ")
-      render_notice and return false
+    if @assessment_rubric.save
+      flash[:success] = "Rubric was successfully updated."
+    else
+      flash[:danger] = @assessment_rubric.errors.full_messages.join(", ")
     end
-    flash[:notice1] = "Rubric was successfully updated."
-    render_notice
+    redirect_to admin_rubric_path(:id => @assessment_rubric)
   end
 
   def create
     @assessment_rubric = AssessmentRubric.new
     @assessment_rubric.attributes= params[:assessment_rubric]
     unless @assessment_rubric.save
-      flash.now[:notice1] = @assessment_rubric.errors.full_messages.join(", ")
-      render_notice and return false
+      flash[:danger] = @assessment_rubric.errors.full_messages.join(", ")
+      redirect_to new_admin_rubric_path and return false
     end
-    flash[:notice1] = "Rubric was successfully created."
-    redirect_to :action => :show, :id => @assessment_rubric
+    flash[:success] = "Rubric was successfully created."
+    redirect_to admin_rubric_path(:id => @assessment_rubric)
   end
 
   def destroy
     @assessment_rubric = AssessmentRubric.find(params[:id])
     unless @assessment_rubric.assessment_criterions.blank?
-      flash.now[:notice1] = "Rubric can not be deleted since it contains one or more criteria."
-      render_notice and return false
+      flash[:danger] = "Rubric can not be deleted since it contains one or more criteria."
+      redirect_to admin_rubric_path(:id => @assessment_rubric) and return false
     end
     unless @assessment_rubric.destroy
-      flash.now[:notice1] = @assessment_rubric.errors.full_messages.join(", ")
-      render_notice and return false
+      flash[:danger] = @assessment_rubric.errors.full_messages.join(", ")
+      redirect_to admin_rubric_path(:id => @assessment_rubric) and return false
     end
-    flash[:notice1] = "Rubric was successfully deleted."
-    redirect_to :action => :index
+    flash[:success] = "Rubric was successfully deleted."
+    redirect_to admin_rubrics_path
   end
 
   def index

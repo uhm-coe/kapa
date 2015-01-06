@@ -15,23 +15,24 @@ class Admin::PropertiesController < Admin::BaseController
     @property = ApplicationProperty.find params[:id]
     @property.attributes= params[:property]
 
-    unless @property.save
-      flash.now[:notice1] = error_message_for(@property)
-      render_notice and return false
+    if @property.save
+      flash[:success] = "System property was successfully updated."
+    else
+      flash[:danger] = error_message_for(@property)
     end
-    flash[:notice1] = "System property was successfully updated."
-    render_notice
+    redirect_to admin_property_path(:id => @property)
   end
 
   def create
     @property = ApplicationProperty.new
     @property.attributes= params[:property]
+
     unless @property.save
-      flash.now[:notice1] = error_message_for(@property)
-      render_notice and return false
+      flash[:danger] = error_message_for(@property)
+      redirect_to new_admin_property_path and return false
     end
-    flash[:notice1] = 'System property was successfully created..'
-    redirect_to :action => :show, :id => @property, :focus => params[:focus]
+    flash[:success] = 'System property was successfully created.'
+    redirect_to admin_property_path(:id => @property, :focus => params[:focus])
   end
 
   def index

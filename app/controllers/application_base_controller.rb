@@ -14,7 +14,7 @@ class ApplicationBaseController < ActionController::Base
 
   def validate_authkey
     if validate_authkey? and params[:authkey] != authkey(params[:id])
-      flash[:notice] = "URL you requested was invalid!"
+      flash[:danger] = "URL you requested was invalid!"
       redirect_to(error_path) and return false
     end
   end
@@ -25,28 +25,28 @@ class ApplicationBaseController < ActionController::Base
     @current_user.request = request
     unless @current_user_session and @current_user and @current_user.status >= 3 and @current_user.emp_status >= 1
       @current_user_session.destroy if @current_user_session
-      flash[:notice] = "You are not authorized to use this system!  Please contact system administrator."
+      flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(root_url) and return
     end
   end
 
   def check_read_permission
     unless @current_user.read?(module_name)
-      flash[:notice] = "You do not have a permission to read on the #{module_name} module."
+      flash[:danger] = "You do not have a permission to read on the #{module_name} module."
       redirect_to(error_path) and return false
     end
   end
 
   def check_write_permission
     unless @current_user.write?(module_name, :delegate => params[:action])
-      flash[:notice] = "You do not have a permission to write records on the #{module_name} module."
+      flash[:danger] = "You do not have a permission to write records on the #{module_name} module."
       redirect_to(error_path) and return false
     end
   end
 
   def check_manage_permission
     unless @current_user.write?(module_name, :delegate => params[:action])
-      flash[:notice] = "You do not have a permission to manage records on the #{module_name} module."
+      flash[:danger] = "You do not have a permission to manage records on the #{module_name} module."
       redirect_to(error_path) and return false
     end
   end
@@ -95,10 +95,10 @@ class ApplicationBaseController < ActionController::Base
 
   def rescue_action_in_public(exception)
     if request.xhr?
-      flash[:notice1] = "We are sorry, but something went wrong."
+      flash[:danger] = "We are sorry, but something went wrong."
       render_notice and return false
     else
-      flash[:notice] = "We are sorry, but something went wrong."
+      flash[:danger] = "We are sorry, but something went wrong."
       redirect_to(config.routing_mode == "student" ? student_error_path : error_path) and return false
     end
   end

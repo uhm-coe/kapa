@@ -13,12 +13,12 @@ class Admin::ProgramsController < Admin::BaseController
     @program = Program.find params[:id]
     @program.attributes = params[:program]
 
-    unless @program.save
-      flash.now[:notice1] = @program.errors.full_messages.join(", ")
-      render_notice and return false
+    if @program.save
+      flash[:success] = "Program was successfully updated."
+    else
+      flash[:danger] = @program.errors.full_messages.join(", ")
     end
-    flash[:notice1] = "Program was successfully updated."
-    render_notice
+    redirect_to admin_program_path(:id => @program)
   end
 
   def new
@@ -30,11 +30,11 @@ class Admin::ProgramsController < Admin::BaseController
     @program.attributes = params[:program]
 
     unless @program.save
-      flash.now[:notice1] = @program.errors.full_messages.join(", ")
-      render_notice and return false
+      flash[:danger] = @program.errors.full_messages.join(", ")
+      redirect_to new_admin_program_path and return false
     end
-    flash[:notice1] = "Program was successfully created."
-    redirect_to :action => :show, :id => @program, :focus => params[:focus]
+    flash[:success] = "Program was successfully created."
+    redirect_to admin_program_path(:id => @program, :focus => params[:focus])
   end
 
   def index
