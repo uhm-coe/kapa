@@ -26,8 +26,8 @@ class Main::TransitionPointsController < Main::BaseController
       @transition_point.update_serialized_attributes(:_ext, params[:transition_point_ext])
 
       unless @transition_point.save
-        flash[:notice2] = @transition_point.errors.full_messages.join(", ")
-        render_notice and return false
+        flash[:danger] = @transition_point.errors.full_messages.join(", ")
+        redirect_to main_transition_point_path(:id => @transition_point) and return false
       end
     end
 
@@ -39,14 +39,14 @@ class Main::TransitionPointsController < Main::BaseController
         score.rating = v
         score.rated_by = @current_user.uid
         unless score.save
-          flash.now[:notice2] = "There was an error! Please try again."
-          render_notice and return false
+          flash[:danger] = "There was an error updating scores. Please try again."
+          redirect_to main_transition_point_path(:id => @transition_point) and return false
         end
       end
     end
 
-    flash[:notice2] = "Transition point was successfully updated."
-    render_notice
+    flash[:success] = "Transition point was successfully updated."
+    redirect_to main_transition_point_path(:id => @transition_point)
   end
 
   def new
@@ -65,10 +65,10 @@ class Main::TransitionPointsController < Main::BaseController
     @transition_point.dept = @current_user.primary_dept
     @transition_point.active = true
     unless @transition_point.save
-      flash[:notice2] = @transition_point.errors.full_messages.join(", ")
-      render_notice and return false
+      flash[:danger] = @transition_point.errors.full_messages.join(", ")
+      redirect_to new_main_transition_point_path(:id => @curriculum) and return false
     end
-    flash[:notice2] = "Academic record was successfully created."
+    flash[:success] = "Academic record was successfully created."
     redirect_to main_transition_point_path(:id => @transition_point, :focus => params[:focus])
   end
 

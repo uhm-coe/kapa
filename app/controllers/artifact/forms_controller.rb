@@ -12,12 +12,13 @@ class Artifact::FormsController < Artifact::BaseController
     @person = @form.person
     #attributes= was not used because I do not want to accidentally delete form.data
     @form.note = params[:form][:note] if not params[:form][:note].blank?
-    unless @form.save
-      flash.now[:notice1] = error_message_for(@form)
-      render_notice and return false
+
+    if @form.save
+      flash[:success] = "Form was updated."
+    else
+      flash[:danger] = error_message_for(@form)
     end
-    flash[:notice1] = 'Form was updated.'
-    redirect_to :action => :show, :id => @form
+    redirect_to artifact_form_path(:id => @form)
   end
 
   def create
@@ -26,11 +27,11 @@ class Artifact::FormsController < Artifact::BaseController
     @form.dept = @current_user.primary_dept
 
     unless @form.save
-      flash.now[:notice] = error_message_for(@form)
+      flash[:danger] = error_message_for(@form)
       redirect_to(error_path) and return false
     end
 
-    flash[:notice1] = 'Form was successfully created.'
+    flash[:success] = "Form was successfully created."
     params[:return_url][:focus] = params[:focus]
     redirect_to params[:return_url]
   end
@@ -38,10 +39,10 @@ class Artifact::FormsController < Artifact::BaseController
   def destroy
     @form = Form.find params[:id]
     unless @form.destroy
-      flash.now[:notice1] = error_message_for(@form)
-      render_notice and return false
+      flash[:danger] = error_message_for(@form)
+      redirect_to artifact_form_path(:id => @form) and return false
     end
-    flash[:notice1] = "Form was successfully deleted."
+    flash[:success] = "Form was successfully deleted."
     redirect_to main_persons_path(:action => :show, :id => @form.person_id)
   end
 

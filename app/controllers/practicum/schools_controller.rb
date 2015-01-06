@@ -15,10 +15,10 @@ class Practicum::SchoolsController < Practicum::BaseController
   def create
     @practicum_school = PracticumSchool.new params[:practicum_school]
     unless @practicum_school.save
-      flash.now[:notice1] = "Faild to create school!<br>#{@practicum_school.errors.full_messages.join("<br>")}"
-      render_notice and return false
+      flash[:danger] = @practicum_school.errors.full_messages.join(", ")
+      redirect_to new_practicum_school_path and return false
     end
-    flash[:notice1] = "School was sccessfully created."
+    flash[:success] = "School was sccessfully created."
     redirect_to :action => :show, :id => @practicum_school
   end
 
@@ -26,27 +26,26 @@ class Practicum::SchoolsController < Practicum::BaseController
     @practicum_school = PracticumSchool.find(params[:id])
     @practicum_school.attributes= params[:practicum_school]
     @practicum_school.serialize(:school_contact, params[:school_contact]) if not params[:school_contact].blank?
-    unless @practicum_school.save
-      flash[:notice1] = "Faild to update school profile!"
-      render :action => :show
+
+    if @practicum_school.save
+      flash[:success] = "School info was successfully updated."
+    else
+      flash[:danger] = "Failed to update school profile."
     end
-    
-    flash[:notice1] = "School info was successfully updated."
-    render_notice
-#    redirect_to :action => :show, :id => @practicum_school, :focus => params[:focus]
+    redirect_to practicum_school_path(:id => @practicum_school)
   end
 
   def import
     import_file = params[:filter][:import_file]
     #Do error checking of the file
     unless import_file
-      flash[:notice] = "Please specify the file you are importing!"
+      flash[:warning] = "Please specify the file you are importing!"
       redirect_to(error_path) and return false
     end
 
     CSV.new(import_file, :headers => true).each do |row|
       if row["school_code"].blank?
-        flash[:notice] = "No school code defined!"
+        flash[:danger] = "No school code defined!"
         redirect_to(error_path) and return false
       end
       school = PracticumSchool.find_or_create_by_code(row["school_code"])

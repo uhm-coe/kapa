@@ -30,34 +30,35 @@ class Advising::SessionsController < Advising::BaseController
     @advising_session.attributes = params[:advising_session]
     @advising_session.dept = @current_user.primary_dept
     @person = @advising_session.person
+
     unless @advising_session.save
-      flash.now[:notice2] = error_message_for(@advising_session)
-      render_notice and return false
+      flash[:danger] = error_message_for(@advising_session)
+      redirect_to new_advising_session_path(:id => @person) and return false
     end
-    flash[:notice2] = "Advising record was successfully created."
-    redirect_to :action => :show, :id => @advising_session
+    flash[:success] = "Advising record was successfully created."
+    redirect_to advising_session_path(:id => @advising_session)
   end
 
   def update
     @advising_session = AdvisingSession.find(params[:id])
     @advising_session.attributes = params[:advising_session]
-    unless @advising_session.save
-      flash.now[:notice2] = error_message_for(@advising_session)
-      render_notice and return false
+
+    if @advising_session.save
+      flash[:success] = "Advising record was successfully updated."
+    else
+      flash[:danger] = error_message_for(@advising_session)
     end
-    flash[:notice2] = "Advising record was successfully updated."
-#    redirect_to :action => :show, :id => @advising_session
-    render_notice
+    redirect_to advising_session_path(:id => @advising_session)
   end
 
   def destroy
     @advising_session = AdvisingSession.find(params[:id])
     unless @advising_session.destroy
-      flash.now[:notice2] = error_message_for(@advising_session)
-      render_notice and return false
+      flash[:danger] = error_message_for(@advising_session)
+      redirect_to advising_session_path(:id => @advising_session) and return false
     end
-    flash[:notice2] = "Advising record was successfully deleted."
-    redirect_to main_persons_path(:action => :show, :id => @advising_session.person_id)
+    flash[:success] = "Advising record was successfully deleted."
+    redirect_to main_person_path(:id => @advising_session.person_id)
   end
 
   def index

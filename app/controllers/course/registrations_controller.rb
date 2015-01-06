@@ -10,7 +10,7 @@ class Course::RegistrationsController < Course::BaseController
     @assessment_rubric = @filter.assessment_rubric_id ? AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @table = AssessmentScore.table_for(@assessment_rubric, "AssessmentCourseRegistration", params[:id])
   end
-  
+
   def update
     params[:assessment_scores].each_pair do |k, v|
       scorable_id = k.split("_").first
@@ -21,13 +21,15 @@ class Course::RegistrationsController < Course::BaseController
       score.rating = v
       score.rated_by = @current_user.uid
       unless score.save
-        flash.now[:notice2] = "There was an error! Please try again."
-        render_notice and return false
+        flash[:danger] = "There was an error updating scores. Please try again."
+        # TODO: Fix redirect_to path
+        redirect_to course_registration_path(:id => params[:id]) and return false
       end
     end
-    
-    flash.now[:notice2] = "Scores are successfully saved on #{DateTime.now.strftime("%H:%M:%S")}"
-    render_notice and return
+
+    flash[:success] = "Scores are successfully saved on #{DateTime.now.strftime("%H:%M:%S")}"
+    # TODO: Fix redirect_to path
+    redirect_to course_registration_path(:id => params[:id])
   end
 
 end

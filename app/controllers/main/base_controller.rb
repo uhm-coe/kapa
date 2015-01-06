@@ -1,6 +1,5 @@
 class Main::BaseController < ApplicationBaseController
 
-
   def welcome
     validate_login if UserSession.find
   end
@@ -9,7 +8,7 @@ class Main::BaseController < ApplicationBaseController
     reset_session
     session = UserSession.new(params[:user_session])
     unless session.save
-      flash[:notice] = "Invalid user/password combination!"
+      flash[:danger] = "Invalid user/password combination!"
       redirect_to :action => :index and return false
     end
     redirect_to root_path

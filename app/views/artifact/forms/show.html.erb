@@ -3,15 +3,7 @@
   <div style="text-align: right;"><h3><%=h @form.academic_period_desc %> ID:<%=h @form.id%></h3></div>
 
   <%=form_tag({:action => :update, :id => @form}, {:class => "uniForm"}) do %>
-
-    <%=content_tag :div, :id => "errorMsg" do %>
-      <h3><%=flash[:error] %></h3>
-    <% end if flash[:error] %>
-
-    <%=content_tag :div, :id => "OKMsg" do %>
-      <p><%=flash[:notice] %></p>
-    <% end if flash[:notice] %>
-
+    <%= bootstrap_flash %>
 
     <%=render :partial => "/artifact/#{@form.type}_form" %>
     <%=hidden_field :form, :person_id%>

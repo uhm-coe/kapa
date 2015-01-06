@@ -14,21 +14,22 @@ class Artifact::ExamsController < Artifact::BaseController
     @exam = Exam.find params[:id]
     #attributes= was not used because I do not want to accidentally delete form.data
     @exam.note = params[:exam][:note] if not params[:exam][:note].blank?
-    unless @exam.save
-      flash.now[:notice1] = error_message_for(@exam)
-      render_notice and return false
+
+    if @exam.save
+      flash[:success] = "Exam was updated."
+    else
+      flash[:danger] = error_message_for(@exam)
     end
-    flash[:notice1] = 'Exam was updated.'
-    redirect_to :action => :show, :id => @exam
+    redirect_to artifact_exam_path(:id => @exam)
   end
 
   def destroy
     @exam = Exam.find params[:id]
     unless @exam.destroy and @exam.exam_scores.clear
-      flash.now[:notice1] = error_message_for(@exam)
-      render_notice and return false
+      flash[:danger] = error_message_for(@exam)
+      redirect_to artifact_exam_path(:id => @exam) and return false
     end
-    flash[:notice1] = "Exam was successfully deleted."
+    flash[:success] = "Exam was successfully deleted."
     redirect_to main_persons_path(:action => :show, :id => @exam.person_id, :focus => :exam)
   end
 
@@ -41,7 +42,7 @@ class Artifact::ExamsController < Artifact::BaseController
     @exams = []
     import_file = params[:data][:import_file]
     unless import_file
-      flash[:notice] = "Please specify the file you are importing!"
+      flash[:warning] = "Please specify the file you are importing!"
       redirect_to(error_path) and return false
     end
 
@@ -49,7 +50,7 @@ class Artifact::ExamsController < Artifact::BaseController
       exam = Exam.new(:raw => line, :dept => @current_user.primary_dept)
 
       unless exam.check_format
-        flash[:notice2] = "Invalid file format!"
+        flash[:warning] = "Invalid file format!"
         redirect_to :action => :index and return false
       end
 
@@ -62,14 +63,14 @@ class Artifact::ExamsController < Artifact::BaseController
       end
 
       unless exam.parse
-        flash[:notice2] = "Error while parsing data!"
+        flash[:danger] = "Error while parsing data!"
         redirect_to :action => :index and return false
       end
 
       @exams.push exam
     end
 
-    flash[:notice2] = "#{@exams.length} records are imported."
+    flash[:success] = "#{@exams.length} records are imported."
     redirect_to :action => :index
   end
 

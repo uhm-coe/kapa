@@ -3,40 +3,42 @@ class Practicum::AssignmentsController < Practicum::BaseController
   def create
     @practicum_placement = PracticumPlacement.find(params[:id])
     @practicum_assignment = @practicum_placement.practicum_assignments.build(params[:practicum_assignment])
-    unless @practicum_assignment.save
+
+    if @practicum_assignment.save
+      flash[:success] = "Assignment record was successfully created."
+    else
       @person = @practicum_placement.person
-      flash[:notice2] = "Failed to create new assignment record!"
-      render_notice and return false
+      flash[:danger] = "Failed to create new assignment record."
     end
-    flash[:notice2] = "Assignment record was successfully created."
-    redirect_to practicum_placements_path(:action => :show, :id => @practicum_placement, :focus => params[:focus])
+    redirect_to practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
   end
 
   def update
     @practicum_assignment = PracticumAssignment.find(params[:id])
     @practicum_placement = @practicum_assignment.practicum_placement
     @practicum_assignment.attributes = params[:practicum_assignment][params[:id]]
-    unless @practicum_assignment.save
+
+    if @practicum_assignment.save
+      flash[:success] = "Assignment record was successfully updated."
+    else
       @person = @practicum_placement.person
-      flash[:notice2] = "Failed to update assignment record!"
-      render_notice and return false
+      flash[:danger] = "Failed to update assignment record."
     end
-    flash[:notice2] = "Assignment record was successfully updated."
-    render_notice
-#    redirect_to practicum_placements_path(:action => :show, :id => @practicum_placement, :focus => params[:focus])
+    redirect_to practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
   end
-  
+
   def destroy
     @practicum_assignment = PracticumAssignment.find(params[:id])
     @practicum_placement = @practicum_assignment.practicum_placement
-    unless @practicum_assignment.destroy
-      flash.now[:notice2] = error_message_for(@practicum_assignment)
-      render_notice and return false
+
+    if @practicum_assignment.destroy
+      flash[:success] = "Assignment record was successfully deleted."
+    else
+      flash[:danger] = error_message_for(@practicum_assignment)
     end
-    flash[:notice2] = "Assignment record was successfully deleted."
-    redirect_to practicum_placements_path(:action => :show, :id => @practicum_placement, :focus => params[:focus])
+    redirect_to practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
   end
-  
+
   def index
     @filter = assignment_filter
     @practicum_schools = PracticumSchool.find(:all, :include => :practicum_assignments, :conditions => "practicum_assignments.id is not null", :order => "name_short")
@@ -55,7 +57,7 @@ class Practicum::AssignmentsController < Practicum::BaseController
       :disposition  => "inline",
       :filename     => "mentor_assignments_#{@filter.academic_period_desc}_#{Date.today}.csv"
   end
-    
+
   def get_mentor
     person = Person.find(params[:person_id])
     mentor = {}
@@ -68,7 +70,7 @@ class Practicum::AssignmentsController < Practicum::BaseController
     end
     render :json => mentor
   end
-  
+
   def update_mentor
     if params[:mentor][:person_id].blank?
       person = Person.new(:source => "Placement")
@@ -109,8 +111,8 @@ class Practicum::AssignmentsController < Practicum::BaseController
       [:status, rsend(o, :practicum_placement, :status)],
       [:total_mentors, rsend(o, :practicum_placement, [:practicum_assignments_select, :mentor], :length)]
     ]
-    
-    row += [ 
+
+    row += [
       [:school_name, rsend(o, :practicum_school, :name_short)],
       [:content_area, rsend(o, :content_area)],
       [:mentor_person_id, rsend(o, :person_id)],

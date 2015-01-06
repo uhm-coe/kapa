@@ -26,11 +26,11 @@ class Practicum::PlacementsController < Practicum::BaseController
     @practicum_profile.attributes = params[:practicum_profile]
     @practicum_placement = @practicum_profile.practicum_placements.build(params[:practicum_placement])
     unless @practicum_profile.save and @practicum_placement.save
-      flash.now[:notice2] = error_message_for(@practicum_profile, @practicum_placement)
-      render_notice and return false
+      flash[:danger] = error_message_for(@practicum_profile, @practicum_placement)
+      redirect_to new_practicum_placement_path and return false
     end
-    flash[:notice2] = "Placement record was successfully created."
-    redirect_to :action => :show, :id => @practicum_placement
+    flash[:success] = "Placement record was successfully created."
+    redirect_to practicum_placement_path(:id => @practicum_placement)
   end
 
   def update
@@ -39,30 +39,31 @@ class Practicum::PlacementsController < Practicum::BaseController
     @practicum_profile = @practicum_placement.practicum_profile
     @practicum_profile.attributes = params[:practicum_profile]
     @practicum_profile.update_serialized_attributes(:_ext, params[:practicum_profile_ext])
-    unless @practicum_placement.save and @practicum_profile.save
-      flash.now[:notice2] = error_message_for(@practicum_placement, @practicum_profile)
-      render_notice and return false
+
+    if @practicum_placement.save and @practicum_profile.save
+      flash[:success] = "Placement record was successfully updated."
+    else
+      flash[:danger] = error_message_for(@practicum_placement, @practicum_profile)
     end
-    flash[:notice2] = "Placement record was successfully updated."
-    render_notice
+    redirect_to practicum_placement_path(:id => @practicum_placement)
   end
-  
+
   def destroy
     @practicum_placement = PracticumPlacement.find(params[:id])
     unless @practicum_placement.destroy
-      flash.now[:notice2] = error_message_for(@practicum_placement)
-      render_notice and return false
+      flash[:danger] = error_message_for(@practicum_placement)
+      redirect_to practicum_placement_path(:id => @practicum_placement) and return false
     end
-    flash[:notice2] = "Placement record successfully deleted."
-    redirect_to main_persons_path(:action => :show, :id => @practicum_placement.person_id, :focus => :practicum)
-  end  
+    flash[:success] = "Placement record successfully deleted."
+    redirect_to main_person_path(:id => @practicum_placement.person_id, :focus => :practicum)
+  end
 
   def import
     @filter = placement_filter
     import_file = params[:data][:import_file].read if params[:data]
     #Do error checking of the file
     unless import_file
-      flash[:notice] = "Please specify the file you are importing!"
+      flash[:danger] = "Please specify the file you are importing!"
       redirect_to(error_path) and return false
     end
 
@@ -106,7 +107,7 @@ class Practicum::PlacementsController < Practicum::BaseController
           logger.debug "No match! Creating a new one."
           placement = practicum_profile.practicum_placements.build(:academic_period => params[:filter][:academic_period], :dept => @current_user.primary_dept)
         end
-        
+
         placement.status = row["status"]
         placement.category = row["category"]
         placement.sequence = row["sequence"]
@@ -132,13 +133,13 @@ class Practicum::PlacementsController < Practicum::BaseController
         end
 
       else
-        flash[:notice2] = "System was not able to find one or more person records!"
+        flash[:danger] = "System was not able to find one or more person records!"
         next
       end
     end
     redirect_to(:action => :index)
   end
-    
+
   def index
     @filter = placement_filter
     @practicum_placements = PracticumPlacement.paginate(:page => params[:page], :per_page => 20, :include => [{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, :practicum_assignments], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name")
@@ -156,7 +157,7 @@ class Practicum::PlacementsController < Practicum::BaseController
       :disposition  => "inline",
       :filename     => "placements_#{@filter.academic_period_desc}_#{Date.today}.csv"
   end
-  
+
   private
   def table_format(o = nil)
     row = [
@@ -168,7 +169,7 @@ class Practicum::PlacementsController < Practicum::BaseController
       [:sequence, rsend(o, :sequence)],
       [:mentor_type, rsend(o, :mentor_type)]
     ]
-    
+
     row += [
       [:curriculum_id, rsend(o, :practicum_profile, :curriculum, :id)],
       [:cohort, rsend(o, :practicum_profile, :cohort)],

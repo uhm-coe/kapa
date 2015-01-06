@@ -56,7 +56,7 @@
       <% if content_for?(:navigation) %>
         <div id="navigation">
           <%=yield :navigation %>
-          <%=content_tag :div, flash[:notice1], :id => "notice1", :class => "notice" %>
+          <%= bootstrap_flash %>
         </div>
       <% end %>
 

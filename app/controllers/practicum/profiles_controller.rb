@@ -3,12 +3,12 @@ class Practicum::ProfilesController < Practicum::BaseController
   def update
     @practicum_profile = PracticumProfile.find(params[:id])
     @practicum_profile.attributes = params[:practicum_profile]
-    unless @practicum_profile.save
-      flash.now[:notice2] = error_message_for(@practicum_profile)
-      render_notice and return
-    end
 
-    flash[:notice2] = "Placement profile record was successfully updated."
+    if @practicum_profile.save
+      flash[:success] = "Placement profile record was successfully updated."
+    else
+      flash[:danger] = error_message_for(@practicum_profile)
+    end
     redirect_to :action => :show, :id => @person.id, :focus => params[:focus]
   end
 

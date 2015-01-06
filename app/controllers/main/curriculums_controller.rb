@@ -22,15 +22,15 @@ class Main::CurriculumsController < Main::BaseController
     end
 
     unless @curriculum.save
-      flash[:notice2] = @curriculum.errors.full_messages.join(", ")
-      render_notice and return false
+      flash[:danger] = @curriculum.errors.full_messages.join(", ")
+      redirect_to main_curriculum_path(:id => @curriculum) and return false
     end
 
-    flash[:notice2] = "Academic record was successfully updated."
+    flash[:success] = "Academic record was successfully updated."
     if params[:return_uri]
       redirect_to params[:return_uri]
     else
-      render_notice
+      redirect_to main_curriculum_path(:id => @curriculum)
     end
   end
 
@@ -44,11 +44,11 @@ class Main::CurriculumsController < Main::BaseController
     @curriculum = @person.curriculums.build(params[:curriculum])
     @curriculum.set_default_options
     @curriculum.update_serialized_attributes(:journey, :active => "Y")
-    unless @curriculum.save
-      flash[:notice2] = @@curriculum.errors.full_messages.join(", ")
-      render_notice and return false
-    end
 
+    unless @curriculum.save
+      flash[:danger] = @curriculum.errors.full_messages.join(", ")
+      redirect_to new_main_curriculum_path(:id => @person) and return false
+    end
     @curriculum.update_serialized_attributes(:journey, :active => "Y")
     redirect_to main_curriculum_path(:id => @curriculum)
   end
