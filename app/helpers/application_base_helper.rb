@@ -245,7 +245,7 @@ module ApplicationBaseHelper
   #      return false
   #    end
   #
-  #  elsif object.is_a? AssessmentCourse
+  #  elsif object.is_a? Course
   #    access_scope = @current_user.access_scope(:course)
   #    if access_scope >= 3
   #      return true

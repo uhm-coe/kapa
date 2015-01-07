@@ -29,13 +29,13 @@ class AssessmentScore < ApplicationModel
   #end
   #
   #def course?
-  #  assessment_scorable_type == "AssessmentCourseRegistration"
+  #  assessment_scorable_type == "CourseRegistration"
   #end
   #
   #def self.find_assessment(assessment_rubric, assessment_scorable_type, assessment_scorable_id)
   #  sql = "SELECT
-  #         if(assessment_scorable_type = 'CurriculumEvent', curriculum_events.program, concat(assessment_courses.subject, assessment_courses.number)) as rated_for,
-  #         if(assessment_scorable_type = 'CurriculumEvent', assessments.academic_period_concat, assessment_courses.academic_period) as academic_period,
+  #         if(assessment_scorable_type = 'CurriculumEvent', curriculum_events.program, concat(courses.subject, courses.number)) as rated_for,
+  #         if(assessment_scorable_type = 'CurriculumEvent', assessments.academic_period_concat, courses.academic_period) as academic_period,
   #         assessments.*,
   #         assessment_rubrics.*
   #         FROM
@@ -60,8 +60,8 @@ class AssessmentScore < ApplicationModel
   #           assessment_scorable_id,
   #           assessment_criterions.assessment_rubric_id) as assessments
   #         INNER JOIN assessment_rubrics ON assessments.assessment_rubric_id = assessment_rubrics.id
-  #         LEFT OUTER JOIN assessment_course_registrations on assessments.assessment_scorable_type = 'AssessmentCourseRegistration' and assessments.assessment_scorable_id = assessment_course_registrations.id
-  #         LEFT OUTER JOIN assessment_courses on assessment_course_registrations.assessment_course_id = assessment_courses.id
+  #         LEFT OUTER JOIN course_registrations on assessments.assessment_scorable_type = 'CourseRegistration' and assessments.assessment_scorable_id = course_registrations.id
+  #         LEFT OUTER JOIN courses on course_registrations.course_id = courses.id
   #         LEFT OUTER JOIN curriculum_events on assessments.assessment_scorable_type = 'CurriculumEvent' and assessments.assessment_scorable_id = curriculum_events.id
   #         WHERE assessment_rubrics.id = ?
   #         limit 1"
@@ -71,8 +71,8 @@ class AssessmentScore < ApplicationModel
   #
   #def self.find_assessments(person_id)
   #  sql = "SELECT
-  #         if(assessment_scorable_type = 'CurriculumEvent', curriculum_events.program, concat(assessment_courses.subject, assessment_courses.number)) as rated_for,
-  #         if(assessment_scorable_type = 'CurriculumEvent', assessments.academic_period_concat, assessment_courses.academic_period) as academic_period,
+  #         if(assessment_scorable_type = 'CurriculumEvent', curriculum_events.program, concat(courses.subject, courses.number)) as rated_for,
+  #         if(assessment_scorable_type = 'CurriculumEvent', assessments.academic_period_concat, courses.academic_period) as academic_period,
   #         assessments.*,
   #         assessment_rubrics.*
   #         FROM
@@ -95,10 +95,10 @@ class AssessmentScore < ApplicationModel
   #           assessment_scorable_id,
   #           assessment_criterions.assessment_rubric_id) as assessments
   #         INNER JOIN assessment_rubrics ON assessments.assessment_rubric_id = assessment_rubrics.id
-  #         LEFT OUTER JOIN assessment_course_registrations on assessments.assessment_scorable_type = 'AssessmentCourseRegistration' and assessments.assessment_scorable_id = assessment_course_registrations.id
-  #         LEFT OUTER JOIN assessment_courses on assessment_course_registrations.assessment_course_id = assessment_courses.id
+  #         LEFT OUTER JOIN course_registrations on assessments.assessment_scorable_type = 'CourseRegistration' and assessments.assessment_scorable_id = course_registrations.id
+  #         LEFT OUTER JOIN courses on course_registrations.course_id = courses.id
   #         LEFT OUTER JOIN curriculum_events on assessments.assessment_scorable_type = 'CurriculumEvent' and assessments.assessment_scorable_id = curriculum_events.id
-  #         WHERE assessment_course_registrations.person_id = ? or curriculum_events.person_id = ?
+  #         WHERE course_registrations.person_id = ? or curriculum_events.person_id = ?
   #         ORDER BY 2 DESC"
   #  self.find_by_sql([sql, person_id, person_id])
   #end

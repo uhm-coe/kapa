@@ -1,5 +1,5 @@
-class AssessmentCourse < ApplicationModel
-  has_many :assessment_course_registrations, :include => [:person, :assessment_scores], :conditions => "assessment_course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
+class Course < ApplicationModel
+  has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
 
   def assessment_rubrics
     logger.debug "----looking for rubrics"
@@ -21,23 +21,23 @@ class AssessmentCourse < ApplicationModel
 
   def table_for(assessment_rubric) 
     table = ActiveSupport::OrderedHash.new
-    self.assessment_course_registrations.each do |r|
-      table.update AssessmentScore.table_for(assessment_rubric, "AssessmentCourseRegistration", r.id)
+    self.course_registrations.each do |r|
+      table.update AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
     end
     return table
   end  
   
 #  def table_for(assessment_rubric) 
 #    table = Hash.new
-#    for assessment_course_registration in self.assessment_course_registrations
+#    for course_registration in self.course_registrations
 #      #initialize table first
 #      for assessment_criterion in assessment_rubric.assessment_criterions
-#        index = "#{assessment_course_registration.id}_#{assessment_criterion.id}"
+#        index = "#{course_registration.id}_#{assessment_criterion.id}"
 #        table[index] = ""
 #      end
 #      #then, fill in scores using ActiveRecord cache.  this is more efficient than filing everything one by one (save SQL execution)
-#      assessment_course_registration.assessment_scores.each do |s|
-#        index = "#{assessment_course_registration.id}_#{s.assessment_criterion_id}"
+#      course_registration.assessment_scores.each do |s|
+#        index = "#{course_registration.id}_#{s.assessment_criterion_id}"
 #        table[index] = s.rating if table[index]
 #      end
 #    end

@@ -83,7 +83,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#course_detail">
-            Courses (<%=@assessment_course_registrations.length%>)
+            Courses (<%=@course_registrations.length%>)
           </a>
         </h4>
       </div>
@@ -91,7 +91,7 @@
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
-          <% @assessment_course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
+          <% @course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
             <tr>
               <td colspan="5"><h5><%=subject %></h5></td>
             </tr>
@@ -104,10 +104,10 @@
             </tr>
             <% for course_registration in course_registrations %>
               <tr>
-                <td><%=h "#{ApplicationProperty.lookup_description(:academic_period, course_registration.assessment_course.academic_period)}" %></td>
-                <td><%=h "#{course_registration.assessment_course.name}" %></td>
-                <td><%=abbr "#{course_registration.assessment_course.title}", 50 %></td>
-                <td><%=abbr "#{course_registration.assessment_course.instructor}", 50 %></td>
+                <td><%=h "#{ApplicationProperty.lookup_description(:academic_period, course_registration.course.academic_period)}" %></td>
+                <td><%=h "#{course_registration.course.name}" %></td>
+                <td><%=abbr "#{course_registration.course.title}", 50 %></td>
+                <td><%=abbr "#{course_registration.course.instructor}", 50 %></td>
                 <td class="right"><%=link_to "Show", course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>

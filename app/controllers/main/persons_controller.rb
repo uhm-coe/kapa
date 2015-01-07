@@ -7,7 +7,7 @@ class Main::PersonsController < Main::BaseController
     @person.details(self)
     @advising_sessions = @person.advising_sessions.find(:all, :conditions => f.conditions, :order => "session_date DESC")
     @curriculums = @person.curriculums.find(:all, :include => :transition_points, :order => "academic_period DESC")
-    @assessment_course_registrations = AssessmentCourseRegistration.includes(:assessment_course).where(["person_id = ?", @person.id]).order("assessment_courses.academic_period DESC")
+    @course_registrations = CourseRegistration.includes(:course).where(["person_id = ?", @person.id]).order("courses.academic_period DESC")
     @practicum_profiles = @person.practicum_profiles
   end
 

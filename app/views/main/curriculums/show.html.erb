@@ -12,7 +12,6 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
       <li><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
-      <li><a href="#journey_tab" data-toggle="tab">Mākālei</a></li>
     </ul>
 
     <div class="tab-content">
@@ -45,13 +44,6 @@
           </tbody>
         </table>
         <p class="new right"><%=link_to "New Transition Point", new_main_transition_point_path(:id => @curriculum) %></p>
-      </div>
-
-      <div id="journey_tab" class="tab-pane">
-        <%=label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
-          <%=render :partial => "/main/journey_form" %>
-          <%=controls if @current_user.manage?(:main) %>
-        <% end %>
       </div>
     </div>
   </div>

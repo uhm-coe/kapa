@@ -49,7 +49,7 @@ class Admin::RubricsController < Admin::BaseController
     @filter = filter
     @filter.append_condition "assessment_rubrics.title like ?", :title, :like => true
     @filter.append_condition "assessment_rubrics.program like ?", :program, :like => true
-    @filter.append_condition "assessment_rubrics.course like ?", :assessment_course, :like => true
+    @filter.append_condition "assessment_rubrics.course like ?", :course, :like => true
     @filter.append_condition "assessment_rubrics.transition_point like ?", :transition_point, :like => true
     @assessment_rubrics = AssessmentRubric.paginate(:page => params[:page], :per_page => 20, :include => :assessment_criterions, :conditions => @filter.conditions, :order => "dept, title")
   end

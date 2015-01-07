@@ -24,7 +24,7 @@
 <%end%>
 
 <% content_for(:box2) do %>
-  <h4>Assessment Course/<%=@assessment_course.name%></h4>
+  <h4>Assessment Course/<%=@course.name%></h4>
   <div class="tabs">
     <ul>
       <li><a href="#course_tab">Course</a></li>
@@ -32,7 +32,7 @@
     </ul>
 
     <div id="course_tab">
-      <%=label_form_for :course_registration, :url => course_registration_path(:id => @assessment_course_registration), :remote => true, :html => {:method => :put}  do |f| %>
+      <%=label_form_for :course_registration, :url => course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/course/registration_form" %>
       <% end %>
     </div>
@@ -40,11 +40,11 @@
 
     <div id="assessment_tab">
       <h5>
-        <%=form_for :filter, :url => course_registration_path(:id => @assessment_course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
+        <%=form_for :filter, :url => course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
         <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => "600"}) %>
         <% end %>
       </h5>
-      <%=label_form_for :assessment_score, :url => course_registration_path(:id => @assessment_course_registration), :remote => true, :html => {:method => :put} do |f| %>
+      <%=label_form_for :assessment_score, :url => course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put} do |f| %>
         <%=render :partial => "/course/assessment_form" %>
         <%=controls if @current_user.write?(:course) %>
       <% end %>

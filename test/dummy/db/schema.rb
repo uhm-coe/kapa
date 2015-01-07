@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141220051200) do
+ActiveRecord::Schema.define(:version => 20150107021411) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -58,36 +58,6 @@ ActiveRecord::Schema.define(:version => 20141220051200) do
   add_index "advising_sessions", ["person_id"], :name => "index_advisings_on_person_id"
   add_index "advising_sessions", ["session_date"], :name => "index_advisings_on_inquiry_date"
   add_index "advising_sessions", ["task"], :name => "index_advisings_on_task"
-
-  create_table "assessment_course_registrations", :force => true do |t|
-    t.integer  "assessment_course_id"
-    t.integer  "person_id"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml"
-    t.text     "xml"
-  end
-
-  add_index "assessment_course_registrations", ["assessment_course_id", "person_id"], :name => "index_assessment_course_registrations_on_course_id_and_person_id", :unique => true
-
-  create_table "assessment_courses", :force => true do |t|
-    t.string   "academic_period", :limit => 150
-    t.string   "crn",             :limit => 150
-    t.string   "subject"
-    t.string   "number"
-    t.string   "section"
-    t.string   "title"
-    t.string   "instructor"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml"
-    t.text     "xml"
-    t.string   "final_grade"
-  end
-
-  add_index "assessment_courses", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
 
   create_table "assessment_criterions", :force => true do |t|
     t.string   "criterion"
@@ -163,6 +133,36 @@ ActiveRecord::Schema.define(:version => 20141220051200) do
   end
 
   add_index "contacts", ["entity_id"], :name => "index_contacts_on_entity_id"
+
+  create_table "course_registrations", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "person_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml"
+    t.text     "xml"
+  end
+
+  add_index "course_registrations", ["course_id", "person_id"], :name => "index_assessment_course_registrations_on_course_id_and_person_id", :unique => true
+
+  create_table "courses", :force => true do |t|
+    t.string   "academic_period", :limit => 150
+    t.string   "crn",             :limit => 150
+    t.string   "subject"
+    t.string   "number"
+    t.string   "section"
+    t.string   "title"
+    t.string   "instructor"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml"
+    t.text     "xml"
+    t.string   "final_grade"
+  end
+
+  add_index "courses", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
 
   create_table "curriculum_actions", :force => true do |t|
     t.integer  "curriculum_event_id"
@@ -331,27 +331,6 @@ ActiveRecord::Schema.define(:version => 20141220051200) do
   add_index "curriculums", ["user_primary_id"], :name => "index_curriculums_on_user_primary_id"
   add_index "curriculums", ["user_secondary_id"], :name => "index_curriculums_on_user_secondary_id"
 
-  create_table "documents", :force => true do |t|
-    t.integer  "person_id",                          :null => false
-    t.string   "name"
-    t.string   "category"
-    t.string   "status"
-    t.string   "uploaded_by"
-    t.string   "dept"
-    t.string   "public",            :default => "N"
-    t.text     "note"
-    t.string   "data_file_name"
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.datetime "data_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml"
-    t.text     "xml"
-  end
-
-  add_index "documents", ["person_id"], :name => "index_documents_on_person_id"
-
   create_table "exam_scores", :force => true do |t|
     t.integer  "exam_id"
     t.string   "subject"
@@ -393,6 +372,27 @@ ActiveRecord::Schema.define(:version => 20141220051200) do
   end
 
   add_index "exams", ["person_id"], :name => "index_exams_on_person_id"
+
+  create_table "file_attachments", :force => true do |t|
+    t.integer  "person_id",                          :null => false
+    t.string   "name"
+    t.string   "category"
+    t.string   "status"
+    t.string   "uploaded_by"
+    t.string   "dept"
+    t.string   "public",            :default => "N"
+    t.text     "note"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml"
+    t.text     "xml"
+  end
+
+  add_index "file_attachments", ["person_id"], :name => "index_documents_on_person_id"
 
   create_table "form_templates", :force => true do |t|
     t.string   "name"
