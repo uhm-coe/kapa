@@ -99,7 +99,7 @@ class ApplicationBaseController < ActionController::Base
       render_notice and return false
     else
       flash[:danger] = "We are sorry, but something went wrong."
-      redirect_to(config.routing_mode == "student" ? student_error_path : error_path) and return false
+      redirect_to(Rails.configuration.routing_mode == "student" ? student_error_path : error_path) and return false
     end
   end
 
@@ -109,7 +109,7 @@ class ApplicationBaseController < ActionController::Base
   end
 
   def validate_authkey?(action = params[:action])
-    Rails.application.config.validate_authkey.include? action.to_s
+    Rails.configuration.validate_authkey.include? action.to_s
   end
 
   def error_message_for(*args)

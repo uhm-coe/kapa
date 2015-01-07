@@ -110,7 +110,7 @@ module ApplicationBaseHelper
     body << "Time: #{format_datetime Time.now}\n"
     body << "Client: #{request.env['HTTP_USER_AGENT'].downcase}\n"
     body << "Network Address: #{request.remote_ip}\n"
-    mail_to(config.mail_from, name, :subject => subject, :body => body)
+    mail_to(Rails.configuration.mail_from, name, :subject => subject, :body => body)
   end
 
   def controls(&block)
