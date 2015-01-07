@@ -25,7 +25,7 @@
           <% end %>
         </p>
       </div>
-      <%= f.select :second_degree, [["Second Degree", "Y"]], {:label => "Degree option", :inlucde_blank => "Regular"} %>
+      <%= f.select :second_degree, [["Second Degree", "Y"]], {:label => "Degree option", :include_blank => "Regular"} %>
       <%= f.property_select :track, {:include_blank => true, :program => @program} %>
     </div>
 
