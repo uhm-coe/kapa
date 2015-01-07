@@ -20,7 +20,7 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "advising_sessions")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_points")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_actions")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "courses")
-ActiveRecord::Fixtures.create_fixtures(fixture_path, "registrations")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_registrations")
 
 [Curriculum, TransitionPoint, AssessmentCourse].each do |c|
   c.update_all("academic_period = #{201610}")
