@@ -32,7 +32,7 @@
   <table id="form_list" class="table table-striped">
     <thead>
       <tr>
-        <th>UH ID</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Form ID</th>
         <th>Last Update</th>
@@ -45,8 +45,8 @@
     <tbody>
       <% for form in @forms %>
         <tr>
-          <td><%=link_to_id_number form.person if form.person %></td>
-          <td><%=link_to abbr(form.person.full_name), main_persons_path(:action => :show, :id => form.person_id) if form.person %></td>
+          <td><%=form.person.id_number if form.person %></td>
+          <td><%=link_to abbr(form.person.full_name), main_person_path(:id => form.person_id) if form.person %></td>
           <td><%=h form.id %></td>
           <td><%=time_ago_in_words form.updated_at if form.updated_at %> ago</td>
           <td><%=format_date form.submitted_at %></td>

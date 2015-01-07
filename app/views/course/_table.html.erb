@@ -11,8 +11,8 @@
   <tbody>
     <% for assessment_course_registration in @assessment_course_registrations %>
       <tr>
-        <td><%=link_to_id_number assessment_course_registration.person %></td>
-        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(assessment_course_registration.person.full_name), main_persons_path(:action => :show, :id => assessment_course_registration.person_id, :focus => :course) %></td>
+        <td><%=assessment_course_registration.person.id_number %></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(assessment_course_registration.person.full_name), main_person_path(:id => assessment_course_registration.person_id, :focus => :course) %></td>
         <% for assessment_criterion in @assessment_rubric.assessment_criterions %>
           <% index = "#{assessment_course_registration.id}_#{assessment_criterion.id}" %>
           <td><%=score_select :score, index, :value => @table[index], :next_id => next_id(:score, index) %></td>

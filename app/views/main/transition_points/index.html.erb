@@ -55,8 +55,8 @@
     <tbody>
       <% for transition_point in @transition_points %>
         <tr>
-          <td><%=link_to_id_number transition_point.curriculum.person %></td>
-          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_persons_path(:action => :show, :id => transition_point.curriculum.person_id) %></td>
+          <td><%=transition_point.curriculum.person.id_number %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_person_path(:id => transition_point.curriculum.person_id) %></td>
           <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
           <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
           <td><%=h transition_point.status_desc %></td>

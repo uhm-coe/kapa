@@ -22,15 +22,15 @@
 <% content_for(:box2) do %>
   <table id="student_list">
     <tr>
-      <th>UH ID</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Mentor</th>
       <th>School</th>
     </tr>
     <% for practicum_assignment in @practicum_assignments %>
       <tr>
-        <td><%=link_to_id_number practicum_assignment.practicum_placement.practicum_profile.person %></td>
-        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(practicum_assignment.practicum_placement.practicum_profile.person.full_name), main_persons_path(:action => :show, :id => practicum_assignment.practicum_placement.practicum_profile.person, :focus => :practicum)%></td>
+        <td><%=practicum_assignment.practicum_placement.practicum_profile.person.id_number %></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(practicum_assignment.practicum_placement.practicum_profile.person.full_name), main_person_path(:id => practicum_assignment.practicum_placement.practicum_profile.person, :focus => :practicum)%></td>
         <td><%=h practicum_assignment.person.full_name if practicum_assignment.person %></td>
         <td><%=link_to practicum_assignment.practicum_school.name_short, practicum_schools_path(:action => :show, :id => practicum_assignment.practicum_school) if practicum_assignment.practicum_school %></td>
         <td class="right"><%=link_to "Show", practicum_placements_path(:action => :show, :id => practicum_assignment.practicum_placement) %></td>

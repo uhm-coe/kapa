@@ -43,7 +43,7 @@
   <table id="admission_list" class="table table-striped">
     <thead>
       <tr>
-        <th>UH ID</th>
+        <th>ID</th>
         <th>Name</th>
         <th>SSN</th>
         <th>Program</th>
@@ -54,7 +54,7 @@
     <tbody>
       <% for transition_point in @transition_points %>
         <tr>
-          <td><%=link_to_id_number transition_point.curriculum.person %></td>
+          <td><%=transition_point.curriculum.person.id_number %></td>
           <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), main_person_path(:id => transition_point.curriculum.person_id) %></td>
           <td><%=h transition_point.curriculum.person.ssn_agreement %>-<%=h transition_point.curriculum.person.ssn%> </td>
           <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>

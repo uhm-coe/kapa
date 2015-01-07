@@ -40,7 +40,7 @@
   <table id="report_list" class="table table-striped">
     <thead>
       <tr>
-        <th>UH ID</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Birth Date</th>
         <th>Report Date</th>
@@ -52,8 +52,8 @@
     <tbody>
       <% for exam in @exams %>
         <tr>
-          <td><%=link_to_id_number exam.person %></td>
-          <td><%=link_to abbr(exam.person.full_name), main_persons_path(:action => :show, :id => exam.person) %></td>
+          <td><%=exam.person.id_number %></td>
+          <td><%=link_to abbr(exam.person.full_name), main_person_path(:id => exam.person) %></td>
           <td><%=format_date exam.person.birth_date %></td>
           <td><%=format_date exam.report_date %></td>
           <td><%=h exam.exam_scores.length %></td>
