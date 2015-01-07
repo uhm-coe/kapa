@@ -53,7 +53,7 @@
 <% content_for(:box2) do %>
   <table id="student_list">
     <tr>
-      <th>UH ID</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Program</th>
       <th>Category</th>
@@ -62,8 +62,8 @@
 
     <% for placement in @practicum_placements %>
       <tr>
-        <td><%=link_to_id_number placement.practicum_profile.person %></td>
-        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(placement.practicum_profile.person.full_name), main_persons_path(:action => :show, :id => placement.practicum_profile.person_id, :focus => "practicum")%></td>
+        <td><%=placement.practicum_profile.person.id_number %></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(placement.practicum_profile.person.full_name), main_person_path(:id => placement.practicum_profile.person_id, :focus => "practicum")%></td>
         <td><%=h abbr(placement.practicum_profile.curriculum.code_desc, placement.practicum_profile.curriculum.code) if placement.practicum_profile.curriculum %></td>
         <td><%=h placement.category %></td>
         <td><%=h placement.uid %></td>

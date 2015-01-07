@@ -33,7 +33,7 @@
   <table id="advising_list" class="table table-striped">
     <thead>
       <tr>
-        <th>UH ID</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Date</th>
         <th>Task</th>
@@ -45,8 +45,8 @@
     <tbody>
       <% for advising_session in @advising_sessions %>
         <tr>
-          <td><%=link_to_id_number advising_session.person %></td>
-          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(advising_session.person.full_name), main_persons_path(:action => :show, :id => advising_session.person_id) %></td>
+          <td><%=advising_session.person.id_number %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(advising_session.person.full_name), main_person_path(:id => advising_session.person_id) %></td>
           <td><%=format_date advising_session.session_date %></td>
           <td><%=abbr advising_session.task.to_s, 25 %></td>
           <td><%=abbr advising_session.interest.to_s, 25 %></td>

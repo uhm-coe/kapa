@@ -1,7 +1,7 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      appFn.initAssessmentTable('#course_table');
+      appFn.initAssessmentTable('#assessment_course_table');
 
       $('#all_green_button').click(function() {
         if(confirm('Would you like to fill in all empty cells in green?')) {
@@ -14,20 +14,20 @@
       });
 
       $('#save_button').click(function() {
-        form = $('#course_form');
+        form = $('#assessment_course_form');
         $.post(form.attr('action'), form.serialize(),
           function(data) {
             var now = new Date();
-            $('#course_table').html(data);
+            $('#assessment_course_table').html(data);
             $('#notice2').html('Scores were saved on ' + now).effect('highlight');
-            appFn.initAssessmentTable('#course_table');
+            appFn.initAssessmentTable('#assessment_course_table');
           },
           "html");
         return false;
       })
 
       window.setInterval(function() {
-        form = $('#course_form');
+        form = $('#assessment_course_form');
         console.log('form updated?', form.attr('data-changed'));
         if(form.attr('data-changed') == 'true') {
           $.post(form.attr('action'), form.serialize(),
@@ -45,10 +45,10 @@
 
 <% content_for(:box1) do %>
 
-  <%=bootstrap_form_for :filter, :url => course_roster_path(:id =>  @course), :html => {:method => :get}  do |f| %>
+  <%=bootstrap_form_for :filter, :url => course_roster_path(:id =>  @assessment_course), :html => {:method => :get}  do |f| %>
     <h4 class="section-header">
       <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-      <%=h @course.name %> Assessment
+      <%=h @assessment_course.name %> Assessment
     </h4>
     <div class="row">
       <div class="col-sm-6">
@@ -58,19 +58,14 @@
     </div>
   <% end %>
 
-<% end %>
-
-<% content_for(:box2) do %>
-
-
-  <%=label_form_for(:course, :url => course_roster_path(:id => @course), :html => {:method => :put, :id => "course_form", "data-changed" => false}) do %>
+  <%=label_form_for(:assessment_course, :url => course_roster_path(:id => @assessment_course), :html => {:method => :put, :id => "assessment_course_form", "data-changed" => false}) do %>
     <div class="right">
       <span id="save_notice"><%=flash[:save_notice] %></span>
       <%=button_to_function "Save", nil, {:id => "save_button", :class => "btn btn-default"} if @current_user.write? %>
-      <%=button_to_redirect "Download", {:action => :show, :id => @course, :format => :file}, {:id => "export_button"} %>
+      <%=button_to_redirect "Download", {:action => :show, :id => @assessment_course, :format => :file}, {:id => "export_button"} %>
     </div>
 
-    <div id = "course_table">
+    <div id = "assessment_course_table">
       <%=render :partial => "/course/table" %>
     </div>
   <% end %>

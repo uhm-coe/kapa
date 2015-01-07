@@ -14,6 +14,10 @@
   margin-bottom: 30px;
 }
 
+.section-header.divider {
+  margin-top: 30px;
+}
+
 .section-header a.glyphicon {
   color: #7C7C7C;
   text-decoration: none;

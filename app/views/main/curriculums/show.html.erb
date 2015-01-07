@@ -1,9 +1,7 @@
 <% content_for(:box1) do %>
   <%=render :partial => "/main/person_detail" %>
-<%end%>
 
-<% content_for(:box2) do %>
-  <h4 class="section-header">
+  <h4 class="section-header divider">
     <%=link_to "", main_person_path(:id => @curriculum.person_id, :focus => :curriculum), :class => "glyphicon glyphicon-chevron-left" %>
     <%= @program.description %>
   </h4>

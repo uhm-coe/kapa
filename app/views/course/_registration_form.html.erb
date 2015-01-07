@@ -1,7 +1,6 @@
-<%= label_fields_for :course do |c| %>
-<table>
-  <tr>
-    <td>
+<%= bootstrap_fields_for :assessment_course do |c| %>
+  <div class="row">
+    <div class="col-sm-6">
       <%=c.property_select :academic_period, :label => "Semester", :disabled => true %>
       <%=c.text_field :name, :disabled => true  %>
       <%=c.text_field :crn, :disabled => true  %>
@@ -9,8 +8,6 @@
       <%=c.text_field :instructor, :disabled => true %>
       <%=c.text_field :final_grade, :disabled => true  %>
       <%=c.text_field :status, :disabled => true  %>
-    </td>
-
-  </tr>
-</table>
+    </div>
+  </div>
 <% end %>
