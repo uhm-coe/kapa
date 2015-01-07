@@ -58,11 +58,6 @@
     </div>
   <% end %>
 
-<% end %>
-
-<% content_for(:box2) do %>
-
-
   <%=label_form_for(:assessment_course, :url => course_roster_path(:id => @assessment_course), :html => {:method => :put, :id => "assessment_course_form", "data-changed" => false}) do %>
     <div class="right">
       <span id="save_notice"><%=flash[:save_notice] %></span>

@@ -1,12 +1,9 @@
-
-<%unless @advising_session.anonymous?%>
-  <% content_for(:box1) do %>
+<% content_for(:box1) do %>
+  <%unless @advising_session.anonymous?%>
     <%=render :partial => "/main/person_detail" %>
   <%end%>
-<%end%>
 
-<% content_for(:box2) do %>
-  <h4 class="section-header">
+  <h4 class="section-header <%='divider' unless @advising_session.anonymous? %>">
     <%=link_to_unless @advising_session.anonymous?, "", main_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
     Advising Session
   </h4>
