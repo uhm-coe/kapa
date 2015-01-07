@@ -12,9 +12,15 @@
 
 jQuery(document).ready(function($) {
 
-  //Submit a form if data-submit attribute is set.
+  // Submit a form if data-submit attribute is set
   $('button[data-submit]').click(function() {
     $($(this).attr('data-submit')).submit();
+  });
+
+  // Reset a form if data-reset attribute is set
+  $('button[data-reset]').click(function() {
+    var form_id = $(this).attr('data-reset');
+    $(form_id).trigger('reset');
   });
 
   $('.closable-tabs [data-toggle=tab]').click(function(){
