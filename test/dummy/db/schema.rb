@@ -164,143 +164,6 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
 
   add_index "courses", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
 
-  create_table "curriculum_actions", :force => true do |t|
-    t.integer  "curriculum_event_id"
-    t.string   "action"
-    t.string   "action_specify"
-    t.date     "action_date"
-    t.string   "action_note"
-    t.string   "handled_by"
-    t.integer  "sequence",            :default => 99
-    t.string   "context",             :default => "", :null => false
-    t.text     "yml"
-    t.text     "xml"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "curriculum_actions", ["action"], :name => "index_curriculum_actions_on_action"
-  add_index "curriculum_actions", ["curriculum_event_id"], :name => "index_curriculum_actions_on_curriculum_id"
-
-  create_table "curriculum_admissions", :force => true do |t|
-    t.integer "curriculum_event_id"
-    t.string  "population"
-    t.string  "location"
-    t.date    "coe_received_date"
-    t.date    "coe_interviewed_date"
-    t.date    "caf_received_date"
-    t.date    "caf_returned_date"
-    t.date    "lack_letter_sent_date"
-    t.date    "rsvp_date"
-    t.date    "tb_date"
-    t.string  "previous_application"
-    t.integer "cat1"
-    t.integer "cat2"
-    t.integer "cat3"
-    t.integer "cat4"
-    t.integer "cat5"
-    t.integer "cat6"
-    t.string  "trans1_from"
-    t.string  "trans2_from"
-    t.string  "trans3_from"
-    t.string  "trans4_from"
-    t.date    "trans1_received_date"
-    t.date    "trans2_received_date"
-    t.date    "trans3_received_date"
-    t.date    "trans4_received_date"
-    t.string  "trans_all_received"
-    t.string  "assigned_to"
-    t.text    "application_note"
-    t.string  "status"
-    t.decimal "cum_gpa",                   :precision => 6, :scale => 3
-    t.decimal "major_cum_gpa",             :precision => 6, :scale => 3
-    t.string  "field_exp_req1"
-    t.string  "field_exp_req2"
-    t.string  "field_exp_req3"
-    t.string  "field_exp_req4"
-    t.integer "field_exp_points"
-    t.string  "praxis_reading_passed"
-    t.string  "praxis_math_passed"
-    t.string  "praxis_writing_passed"
-    t.string  "praxis_conknow_passed"
-    t.integer "praxis_points"
-    t.string  "interview_first_passed"
-    t.date    "interview_first_date"
-    t.string  "interview_first_by"
-    t.text    "interview_first_note"
-    t.string  "interview_second_passed"
-    t.date    "interview_second_date"
-    t.string  "interview_second_by"
-    t.text    "interview_second_note"
-    t.decimal "interview_points",          :precision => 6, :scale => 3
-    t.string  "evaluation_complete"
-    t.text    "admission_note"
-    t.decimal "score",                     :precision => 6, :scale => 3
-    t.string  "aa_degree",                                               :default => "N"
-    t.string  "previous_application_when"
-    t.date    "fe_received_date"
-    t.string  "praxis_composit_passed"
-    t.string  "coursework_req01"
-    t.string  "coursework_req02"
-    t.string  "coursework_req03"
-    t.string  "coursework_req04"
-    t.string  "coursework_req05"
-    t.string  "coursework_req06"
-    t.string  "coursework_req07"
-    t.string  "coursework_req08"
-    t.string  "coursework_req09"
-    t.string  "coursework_req10"
-    t.string  "cum_gpa_type"
-    t.string  "major_cum_gpa_type"
-    t.date    "praxis1_received_date"
-    t.date    "praxis2_received_date"
-    t.string  "aa_degree_when"
-    t.string  "current_college"
-  end
-
-  add_index "curriculum_admissions", ["curriculum_event_id"], :name => "index_curriculum_admissions_on_curriculum_id"
-
-  create_table "curriculum_events", :force => true do |t|
-    t.integer  "person_id",                                 :null => false
-    t.string   "academic_period",          :default => "",  :null => false
-    t.string   "program"
-    t.string   "degree"
-    t.string   "second_degree"
-    t.string   "major_primary"
-    t.string   "major_secondary"
-    t.string   "distribution"
-    t.string   "location"
-    t.string   "context",                  :default => "",  :null => false
-    t.string   "priority"
-    t.string   "status"
-    t.string   "assigned_to"
-    t.integer  "form_id"
-    t.text     "note"
-    t.text     "yml"
-    t.text     "xml"
-    t.integer  "curriculum_enrollment_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "track",                    :default => "N"
-    t.string   "category"
-    t.string   "dept"
-  end
-
-  add_index "curriculum_events", ["academic_period"], :name => "index_curriculum_events_on_academic_period"
-  add_index "curriculum_events", ["form_id"], :name => "index_curriculum_events_on_form_id"
-
-  create_table "curriculum_graduations", :force => true do |t|
-    t.integer "curriculum_event_id"
-    t.decimal "cum_gpa",             :precision => 6, :scale => 3
-    t.integer "regular_credits"
-    t.integer "transfer_credits"
-    t.text    "application_note"
-    t.string  "assigned_to"
-    t.text    "graduation_note"
-  end
-
-  add_index "curriculum_graduations", ["curriculum_event_id"], :name => "index_curriculum_graduations_on_curriculum_id"
-
   create_table "curriculums", :force => true do |t|
     t.integer  "person_id",                               :null => false
     t.integer  "program_id",                              :null => false
@@ -330,6 +193,27 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
   add_index "curriculums", ["program_id"], :name => "index_curriculums_on_program_id"
   add_index "curriculums", ["user_primary_id"], :name => "index_curriculums_on_user_primary_id"
   add_index "curriculums", ["user_secondary_id"], :name => "index_curriculums_on_user_secondary_id"
+
+  create_table "documents", :force => true do |t|
+    t.integer  "person_id",                          :null => false
+    t.string   "name"
+    t.string   "category"
+    t.string   "status"
+    t.string   "uploaded_by"
+    t.string   "dept"
+    t.string   "public",            :default => "N"
+    t.text     "note"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml"
+    t.text     "xml"
+  end
+
+  add_index "documents", ["person_id"], :name => "index_documents_on_person_id"
 
   create_table "exam_scores", :force => true do |t|
     t.integer  "exam_id"
@@ -373,48 +257,6 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
 
   add_index "exams", ["person_id"], :name => "index_exams_on_person_id"
 
-  create_table "file_attachments", :force => true do |t|
-    t.integer  "person_id",                          :null => false
-    t.string   "name"
-    t.string   "category"
-    t.string   "status"
-    t.string   "uploaded_by"
-    t.string   "dept"
-    t.string   "public",            :default => "N"
-    t.text     "note"
-    t.string   "data_file_name"
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.datetime "data_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml"
-    t.text     "xml"
-  end
-
-  add_index "file_attachments", ["person_id"], :name => "index_documents_on_person_id"
-
-  create_table "form_templates", :force => true do |t|
-    t.string   "name"
-    t.string   "category"
-    t.string   "module"
-    t.string   "academic_period"
-    t.string   "path"
-    t.integer  "sequence"
-    t.boolean  "active",          :default => true
-    t.string   "dept"
-    t.text     "instruction"
-    t.datetime "due_at"
-    t.datetime "priority_due_at"
-    t.datetime "deactivate_at"
-    t.text     "yml"
-    t.text     "xml"
-    t.text     "note"
-    t.string   "instruction_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "forms", :force => true do |t|
     t.integer  "person_id"
     t.integer  "form_template_id"
@@ -436,34 +278,11 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
   add_index "forms", ["academic_period"], :name => "index_forms_on_academic_period"
   add_index "forms", ["type"], :name => "index_forms_on_type"
 
-  create_table "menus", :force => true do |t|
-    t.string  "name"
-    t.string  "category"
-    t.string  "module"
-    t.string  "controller"
-    t.string  "action"
-    t.text    "params"
-    t.integer "role_required", :default => 0
-    t.integer "sequence"
-    t.boolean "active"
-    t.string  "dept"
-    t.string  "context"
-  end
-
-  create_table "mercury_pages", :force => true do |t|
+  create_table "pages", :force => true do |t|
     t.string   "name",       :null => false
     t.text     "contents"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  add_index "mercury_pages", ["name"], :name => "index_mercury_pages_on_name", :unique => true
-
-  create_table "pages", :force => true do |t|
-    t.string   "name",       :null => false
-    t.text     "contents"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name", :unique => true
