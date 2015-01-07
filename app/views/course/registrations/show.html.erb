@@ -24,7 +24,7 @@
 
   <h4 class="section-header divider">
     <%=link_to "", main_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
-    Assessment Course/<%=@assessment_course.name%>
+    Assessment Course/<%=@course.name%>
   </h4>
 
   <div class="tabs">
@@ -35,20 +35,20 @@
 
     <div class="tab-content">
       <div id="course_tab" class="tab-pane active">
-        <%=bootstrap_form_for :course_registration, :url => course_registration_path(:id => @assessment_course_registration), :remote => true, :html => {:method => :put}  do |f| %>
+        <%=bootstrap_form_for :course_registration, :url => course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put}  do |f| %>
           <%=render :partial => "/course/registration_form" %>
         <% end %>
       </div>
 
       <div id="assessment_tab" class="tab-pane">
-        <%=bootstrap_form_for :filter, :url => course_registration_path(:id => @assessment_course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
+        <%=bootstrap_form_for :filter, :url => course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
           <div class="row">
             <div class="col-sm-6">
               <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => "600"}) %>
             </div>
           </div>
         <% end %>
-        <%=bootstrap_form_for :assessment_score, :url => course_registration_path(:id => @assessment_course_registration), :remote => true, :html => {:method => :put} do |f| %>
+        <%=bootstrap_form_for :assessment_score, :url => course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/course/assessment_form" %>
           <%=controls if @current_user.write?(:course) %>
         <% end %>
