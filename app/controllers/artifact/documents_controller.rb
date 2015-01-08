@@ -35,24 +35,26 @@ class Artifact::DocumentsController < Artifact::BaseController
     redirect_to artifact_document_path(:id => @document)
   end
 
+  # TODO: "Upload a document" not working, throws ActiveRecord::UnknownAttributeError (unknown attribute: data)
   def create
-    if params[:document].nil?
-      flash[:warning] = "No file was specified! Please select a file you are uploading."
-      redirect_to(error_path) and return false
+    if params[:document][:data].nil?
+      flash[:warning] = "No file was specified. Please select a file to upload."
+      redirect_to params[:return_url] and return false
     end
 
     @person = Person.find(params[:id])
     @document = @person.documents.build(params[:document])
 
-    @document.name = @document.data_file_name
+    doc_name = params[:document][:name]
+    @document.name = doc_name.blank? ? @document.data_file_name : doc_name
     @document.uploaded_by = @current_user.uid
     @document.dept = @current_user.primary_dept
     unless @document.save
       flash[:danger] = error_message_for(@document)
-      redirect_to(error_path) and return false
+      redirect_to params[:return_url] and return false
     end
 
-    flash[:success] = 'Document was created.'
+    flash[:success] = "Document was successfully uploaded. Please verify that it is legible."
     params[:return_url][:focus] = params[:focus]
     redirect_to params[:return_url]
   end

@@ -74,22 +74,27 @@ class Person < ApplicationModel
 
     filter = ApplicationFilter.new
     filter.append_depts_condition("public = 'Y' or dept like ?", obj.instance_variable_get(:@current_user).depts)
-    obj.instance_variable_set(:@documents, self.documents.find(:all, :conditions => filter.conditions))
+
+    docs_forms_list = []
+    docs_forms_list += self.documents
+    docs_forms_list += self.forms
+    obj.instance_variable_set(:@docs_forms_list, docs_forms_list)
+    # obj.instance_variable_set(:@documents, self.documents.find(:all, :conditions => filter.conditions))
 
     filter = ApplicationFilter.new
     filter.append_condition("module = 'form'")
     filter.append_depts_condition("dept like ?", obj.instance_variable_get(:@current_user).depts)
   end
-  
+
   def ethnicity_desc
     return ApplicationProperty.lookup_description("ethnicity", self.ethnicity)
   end
 
-  def verified? 
+  def verified?
     return self.status == "V"
   end
-  
-  def deleted? 
+
+  def deleted?
     return self.status == "D"
   end
 

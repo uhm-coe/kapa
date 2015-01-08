@@ -1,33 +1,47 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      $('#open_document_dialog').click(function() {jQuery('#document_dialog').dialog('open');})
-    });
-  </script>
-<% end %>
-
-<table class="table table-hover">
-  <tr>
-    <th>Date</th>
-    <th>Name</th>
-    <th>Share</th>
-    <th>Dept</th>
-  </tr>
-  <% for document in @documents %>
+<table class="table table-striped">
+  <thead>
     <tr>
-      <td><%=format_date document.data_updated_at %></td>
-      <td><%=link_to document.name, artifact_document_path(:id => document, :format => :file) %></td>
-      <td><%=h document.public %></td>
-      <td><%=h document.dept %></td>
-      <td class="right"><%=link_to "Show", artifact_document_path(:id => document), :target => :blank, :class => "btn btn-default btn-xs"  %></td>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Submitted</th>
+      <th></th>
     </tr>
-  <% end if @documents %>
+  </thead>
+  <tbody>
+    <% @docs_forms_list.sort_by {|d| d.created_at}.reverse_each do |d| %>
+      <tr>
+        <td>
+          <% if d.is_a? Document %>
+            File <!-- File icon -->
+          <% elsif d.is_a? Form %>
+            Form <!-- Form icon -->
+          <% end %>
+        </td>
+        <td><%=d.name%></td>
+        <td><%=format_date d.submitted_at if d.is_a? Form %></td>
+        <td class="right">
+          <% if d.is_a? Document %>
+            <%=link_to "Show", artifact_document_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs"  %>
+          <% elsif d.is_a? Form %>
+            <%=link_to "Show", artifact_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs"  %>
+          <% end %>
+        </td>
+      </tr>
+    <% end if @docs_forms_list %> <!-- @docs_forms_list loop -->
+  </tbody>
 </table>
-<p class="new right"><%=link_to_function "New document", nil, :id => "open_document_dialog" if @current_user.write? :artifact %></p>
+<div class="row">
+  <div class="col-sm-12">
+    <% if @current_user.write? :artifact %>
+      <button class="btn btn-default" data-toggle="modal" data-target="#document_dialog">Upload a document</button>
+    <% end %>
+  </div>
+</div>
 
-<div id="document_dialog" class="form-dialog" title="Document Upload">
-  <%=label_form_for :document, :url => artifact_documents_path(:id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => { :multipart => true , :id => "new_document_form"} do |f| %>
-    <%=f.file_field :data, :lable => "File" %>
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+    <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
+    <%=f.file_field :data %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
   <% end %>
-</div>
+<% end %>
