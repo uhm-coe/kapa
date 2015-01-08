@@ -1,20 +1,19 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.17'
+gem 'rails', '3.2.21'
 gem 'authlogic'
 gem 'fastercsv'
 gem 'net-ldap'
 gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
 gem 'paperclip', '~> 3.0'
-
+gem 'mysql2'
+gem 'rails-csv-fixtures'
 gem 'jquery-rails'
 gem 'libv8', '~> 3.11.8'
 gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
-gem 'mysql2'
-gem 'rails-csv-fixtures'
 gem 'bootstrap-datepicker-rails', '~> 1.3.1.1'
 gem 'bootstrap-multiselect-rails'
 

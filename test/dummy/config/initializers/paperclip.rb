@@ -1,0 +1,1 @@
+Paperclip::Attachment.default_options[:path] = "/tmp/class/:id_partition/:style.:extension"
