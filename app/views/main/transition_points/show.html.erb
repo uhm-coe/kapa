@@ -83,9 +83,8 @@
                   <%= label_form_for :transition_action, :url => main_transition_action_path(:id => @transition_action, :focus => :action), :remote => true, :html => {:method => :put} do %>
                     <%= render :partial => "/main/transition_action_form" %>
                     <%= controls do %>
-                      <%# TODO: link_to_button method is undefined %>
                       <%# TODO: delete method is undefined %>
-                      <%#= link_to_button "Delete", main_transition_action_path(:id => @transition_action, :focus => :action), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+                      <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
                     <% end if @current_user.write?(:main) %>
                   <% end %>
                 </div>

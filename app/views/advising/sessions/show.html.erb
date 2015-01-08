@@ -12,8 +12,7 @@
     <%=bootstrap_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put} do |f| %>
       <%=render :partial => "/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
       <%=controls do %>
-        <%# TODO: link_to_button method is undefined %>
-        <%#= link_to_button "Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?"} %>
+        <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
       <% end if @current_user.write? %>
     <% end %>
   </div>
