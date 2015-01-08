@@ -46,3 +46,24 @@
   background-color: #FFFFFF;
   opacity: 1;
 }
+
+/* Fix so that multiselect is not on the same line as label */
+label {
+  width: 100%;
+}
+
+/* Fix so that multiselect spans the width of the parent container */
+.btn-group, .multiselect {
+  width: 100%;
+}
+
+/* Aligns multiselect button text to the left */
+button.multiselect {
+  text-align: left;
+}
+
+/* Fix so that multiselect dropdown is not covered by tab boundaries (see admin/programs/show) */
+/* Note: Setting a positive z-index so the dropdown appears above the other tabs does not work */
+ul.multiselect-container.dropdown-menu {
+  position: relative;
+}
