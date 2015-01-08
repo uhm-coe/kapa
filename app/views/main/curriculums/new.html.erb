@@ -6,8 +6,12 @@
     New Program
   </h4>
 
-  <%=bootstrap_form_for :curriculum, :url => main_curriculums_path(:id => @person), :remote => true do |f| %>
-    <%=f.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"}, {:style => "width:300px"} %>
-    <%=controls if @current_user.write? %>
-  <% end %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=bootstrap_form_for :curriculum, :url => main_curriculums_path(:id => @person), :remote => true do |f| %>
+        <%=f.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"} %>
+        <%=controls if @current_user.write? %>
+      <% end %>
+    </div>
+  </div>
 <% end %>
