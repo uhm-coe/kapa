@@ -8,6 +8,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
+//= require bootstrap-multiselect
 //= require_tree .
 
 jQuery(document).ready(function($) {
@@ -33,6 +34,12 @@ jQuery(document).ready(function($) {
     format: 'yyyy-mm-dd'
   }).on('changeDate', function(event) {
     $(this).datepicker('hide');
+  });
+
+  $('.kapa-multiselect').multiselect({
+    numberDisplayed: 1,
+    enableCaseInsensitiveFiltering: true,
+    includeSelectAllOption: true
   });
 
 });

@@ -11,7 +11,7 @@ module ApplicationBaseHelper
 #    name = options[:name] ||= method
     if html_options[:multiple]
       html_options[:name] = "#{object_name}[#{method}][]"
-      html_options[:class] = "multi-select"
+      html_options[:class] = "kapa-multiselect"
       options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
     end
     current_value = nil if current_value.blank? or html_options[:multiple] or options[:exclude_current_value]

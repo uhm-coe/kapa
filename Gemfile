@@ -16,6 +16,7 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem 'mysql2'
 gem 'rails-csv-fixtures'
 gem 'bootstrap-datepicker-rails', '~> 1.3.1.1'
+gem 'bootstrap-multiselect-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
