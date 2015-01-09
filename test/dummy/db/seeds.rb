@@ -14,6 +14,7 @@ fixture_path = "#{Rails.root.parent}/fixtures"
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "properties")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "programs")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "program_offers")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "terms")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "persons")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "curriculums")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "advising_sessions")

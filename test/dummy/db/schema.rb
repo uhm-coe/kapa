@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150108234548) do
+ActiveRecord::Schema.define(:version => 20150109073920) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -87,11 +87,15 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
     t.string   "transition_point"
     t.string   "academic_period_start", :default => "200010"
     t.string   "academic_period_end",   :default => "999999"
+    t.integer  "start_term_id"
+    t.integer  "end_term_id"
   end
 
   add_index "assessment_rubrics", ["academic_period_end"], :name => "index_assessment_rubrics_on_academic_period_end"
   add_index "assessment_rubrics", ["academic_period_start"], :name => "index_assessment_rubrics_on_academic_period_start"
   add_index "assessment_rubrics", ["course"], :name => "index_assessment_rubrics_on_course"
+  add_index "assessment_rubrics", ["end_term_id"], :name => "index_assessment_rubrics_on_end_term_id"
+  add_index "assessment_rubrics", ["start_term_id"], :name => "index_assessment_rubrics_on_start_term_id"
 
   create_table "assessment_scores", :force => true do |t|
     t.integer  "assessment_scorable_id"
@@ -160,9 +164,11 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
     t.text     "yml"
     t.text     "xml"
     t.string   "final_grade"
+    t.integer  "term_id"
   end
 
   add_index "courses", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
+  add_index "courses", ["term_id"], :name => "index_courses_on_term_id"
 
   create_table "curriculums", :force => true do |t|
     t.integer  "person_id",                               :null => false
@@ -274,9 +280,11 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
     t.integer  "version"
     t.string   "academic_period"
     t.string   "dept"
+    t.integer  "term_id"
   end
 
   add_index "forms", ["academic_period"], :name => "index_forms_on_academic_period"
+  add_index "forms", ["term_id"], :name => "index_forms_on_term_id"
   add_index "forms", ["type"], :name => "index_forms_on_type"
 
   create_table "mercury_pages", :force => true do |t|
@@ -373,10 +381,12 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
     t.datetime "updated_at"
     t.integer  "user_primary_id"
     t.integer  "user_secondary_id"
+    t.integer  "term_id"
   end
 
   add_index "practicum_placements", ["academic_period"], :name => "index_practicum_placements_on_academic_period"
   add_index "practicum_placements", ["practicum_profile_id"], :name => "index_practicum_placements_on_practicum_profile_id"
+  add_index "practicum_placements", ["term_id"], :name => "index_practicum_placements_on_term_id"
   add_index "practicum_placements", ["user_primary_id"], :name => "index_practicum_placements_on_user_primary_id"
   add_index "practicum_placements", ["user_secondary_id"], :name => "index_practicum_placements_on_user_secondary_id"
 
@@ -441,6 +451,7 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "available_term_id"
   end
 
   create_table "programs", :force => true do |t|
@@ -495,6 +506,21 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
+  create_table "terms", :force => true do |t|
+    t.string   "code"
+    t.string   "description"
+    t.string   "description_short"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "sequence"
+    t.boolean  "active",            :default => true
+    t.string   "dept"
+    t.text     "yml"
+    t.text     "xml"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "timestamps", :force => true do |t|
     t.integer  "user_id"
     t.string   "remote_ip"
@@ -544,6 +570,7 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
     t.text     "yml"
     t.text     "xml"
     t.datetime "status_updated_at"
+    t.integer  "term_id"
   end
 
   add_index "transition_points", ["academic_period"], :name => "index_transition_points_on_academic_period"
@@ -552,6 +579,7 @@ ActiveRecord::Schema.define(:version => 20150108234548) do
   add_index "transition_points", ["form_id"], :name => "index_transition_points_on_form_id"
   add_index "transition_points", ["status"], :name => "index_transition_points_on_status"
   add_index "transition_points", ["status_updated_at"], :name => "index_transition_points_on_status_updated_at"
+  add_index "transition_points", ["term_id"], :name => "index_transition_points_on_term_id"
   add_index "transition_points", ["type"], :name => "index_transition_points_on_type"
 
   create_table "users", :force => true do |t|

@@ -1,5 +1,4 @@
 class Curriculum < ApplicationModel
-  attr_accessor :curriculum
   belongs_to :person
   belongs_to :program
   belongs_to :user_primary,

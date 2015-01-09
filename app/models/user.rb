@@ -1,6 +1,6 @@
 class User < ApplicationModel
   @available_keys = {}
-  attr_accessor :request, :email, :depts
+  attr_accessor :request, :email
 
   belongs_to :person
   has_many :user_timestamps

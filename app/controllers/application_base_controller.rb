@@ -3,7 +3,6 @@
 class ApplicationBaseController < ActionController::Base
   layout "kapa"
   protect_from_forgery
-#  before_filter :validate_authkey
   before_filter :validate_login, :except => [:welcome, :login, :logout, :error]
   before_filter :check_read_permission, :except => [:welcome, :login, :logout, :error]
   before_filter :check_write_permission, :only => [:new, :create, :update]
@@ -11,13 +10,6 @@ class ApplicationBaseController < ActionController::Base
   after_filter :put_timestamp
   helper :all
   helper_method :url_for, :module_name, :current_academic_period, :next_academic_period, :menu_items
-
-  def validate_authkey
-    if validate_authkey? and params[:authkey] != authkey(params[:id])
-      flash[:danger] = "URL you requested was invalid!"
-      redirect_to(error_path) and return false
-    end
-  end
 
   def validate_login
     @current_user_session = UserSession.find
@@ -104,14 +96,6 @@ class ApplicationBaseController < ActionController::Base
   end
 
   private
-  def authkey(string)
-    Digest::SHA1.hexdigest("#{current_academic_period}#{string}")
-  end
-
-  def validate_authkey?(action = params[:action])
-    Rails.configuration.validate_authkey.include? action.to_s
-  end
-
   def error_message_for(*args)
     options =  args.last.is_a?(Hash) ? args.last : {}
     errors = []
