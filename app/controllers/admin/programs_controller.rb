@@ -37,6 +37,24 @@ class Admin::ProgramsController < Admin::BaseController
     redirect_to admin_program_path(:id => @program, :focus => params[:focus])
   end
 
+  def destroy
+    @program = Program.find params[:id]
+
+    @program.program_offers.each do |program_offer|
+      unless program_offer.destroy
+        flash[:danger] = error_message_for(program_offer)
+        redirect_to admin_program_path(:id => @program) and return false
+      end
+    end
+
+    unless @program.destroy
+      flash[:danger] = error_message_for(@program)
+      redirect_to admin_program_path(:id => @program) and return false
+    end
+    flash[:success] = "Program was successfully deleted."
+    redirect_to admin_programs_path
+  end
+
   def index
     @filter = filter
     @filter.append_condition "dept like ?", :dept, :like => true

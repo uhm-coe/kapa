@@ -39,7 +39,9 @@ jQuery(document).ready(function($) {
   $('.kapa-multiselect').multiselect({
     numberDisplayed: 1,
     enableCaseInsensitiveFiltering: true,
-    includeSelectAllOption: true
+    includeSelectAllOption: true,
+    buttonContainer: '<div class="btn-group kapa-multiselect-btn-group"></div>',
+    buttonClass: 'btn btn-default kapa-multiselect-btn'
   });
 
 });

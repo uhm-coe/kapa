@@ -53,12 +53,12 @@ label {
 }
 
 /* Fix so that multiselect spans the width of the parent container */
-.btn-group, .multiselect {
+.kapa-multiselect-btn-group, .kapa-multiselect-btn {
   width: 100%;
 }
 
 /* Aligns multiselect button text to the left */
-button.multiselect {
+button.kapa-multiselect-btn {
   text-align: left;
 }
 
