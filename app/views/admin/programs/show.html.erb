@@ -17,7 +17,7 @@
           <%=render :partial => "/admin/program_form" %>
           <%=controls do%>
             <%# TODO: delete method is undefined %>
-            <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
+            <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_program_path(:id => @program), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
           <% end if @current_user.manage? %>
         <% end %>
       </div>
@@ -38,7 +38,7 @@
                     <%=render :partial => "/admin/program_offer_form" %>
                     <%=controls do %>
                       <%# TODO: delete method is undefined %>
-                      <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
+                      <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_program_offer_path(:id => @program_offer), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
                     <% end if @current_user.manage? %>
                   <% end %>
                 </div>

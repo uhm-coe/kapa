@@ -16,7 +16,7 @@
         <%=label_form_for :assessment_rubric, :url => admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
           <%=controls do %>
-            <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
+            <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_rubric_path(:id => @assessment_rubric), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
           <% end if @current_user.manage?  :admin, :delegate => :rubric %>
         <% end %>
       </div>
@@ -36,7 +36,7 @@
                   <%=label_form_for :assessment_criterion, :url => admin_criterion_path(:id => @assessment_criterion), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/admin/criterion_form" %>
                     <%=controls do %>
-                      <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
+                      <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_criterion_path(:id => @assessment_criterion), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
                     <% end if @current_user.manage?  :admin, :delegate => :rubric %>
                   <% end %>
                 </div>
