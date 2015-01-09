@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150107021411) do
+ActiveRecord::Schema.define(:version => 20150108234548) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
   create_table "documents", :force => true do |t|
     t.integer  "person_id",                          :null => false
     t.string   "name"
-    t.string   "category"
+    t.string   "type"
     t.string   "status"
     t.string   "uploaded_by"
     t.string   "dept"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "dept"
+    t.string   "type"
   end
 
   add_index "exams", ["person_id"], :name => "index_exams_on_person_id"
@@ -277,6 +278,15 @@ ActiveRecord::Schema.define(:version => 20150107021411) do
 
   add_index "forms", ["academic_period"], :name => "index_forms_on_academic_period"
   add_index "forms", ["type"], :name => "index_forms_on_type"
+
+  create_table "mercury_pages", :force => true do |t|
+    t.string   "name",       :null => false
+    t.text     "contents"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "mercury_pages", ["name"], :name => "index_mercury_pages_on_name", :unique => true
 
   create_table "pages", :force => true do |t|
     t.string   "name",       :null => false

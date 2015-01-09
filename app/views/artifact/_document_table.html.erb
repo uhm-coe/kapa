@@ -3,7 +3,7 @@
     <tr>
       <th>Type</th>
       <th>Name</th>
-      <th>Submitted</th>
+      <th>Date</th>
       <th></th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
           <% end %>
         </td>
         <td><%=d.name%></td>
-        <td><%=format_date d.submitted_at if d.is_a? Form %></td>
+        <td><%=format_date d.date %></td>
         <td class="right">
           <% if d.is_a? Document %>
             <%=link_to "Show", artifact_document_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs"  %>

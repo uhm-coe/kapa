@@ -15,10 +15,10 @@
     <% end %>
   <% end %>
 
-  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Praxis Data", :modal_form_id => "import_exam_form"} do %>
+  <%=render :layout => '/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Test Scores", :modal_form_id => "import_exam_form"} do %>
     <%=bootstrap_form_for(:data, :url => import_artifact_exams_path, :html => {:multipart => true, :id => "import_exam_form"}) do |f|%>
+      <%=f.select :type, [["Praxis", "praxis"]] %></p>
       <%=f.file_field :import_file %></p>
-      <%=f.hidden_field :type, :value => "Praxis" %></p>
     <% end %>
   <% end %>
 
@@ -26,7 +26,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Test Score Reports</h3>
+  <h3>Test Scores</h3>
 
   <div class="row">
     <div class="text-right">
@@ -43,6 +43,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Birth Date</th>
+        <th>Test</th>
         <th>Report Date</th>
         <th>Records</th>
         <th>Dept</th>
@@ -55,6 +56,7 @@
           <td><%=exam.person.id_number %></td>
           <td><%=link_to abbr(exam.person.full_name), main_person_path(:id => exam.person) %></td>
           <td><%=format_date exam.person.birth_date %></td>
+          <td><%=format_date exam.name %></td>
           <td><%=format_date exam.report_date %></td>
           <td><%=h exam.exam_scores.length %></td>
           <td><%=h exam.dept %></td>

@@ -1,4 +1,5 @@
 class Exam < ApplicationModel
+  self.inheritance_column = nil
   belongs_to :person
   has_many :exam_scores
   before_save :format_fields
@@ -13,6 +14,18 @@ class Exam < ApplicationModel
 
   def examinee_contact
     self.deserialize(:examinee_contact, :as => OpenStruct)
+  end
+
+  def type_desc
+    return ApplicationProperty.lookup_description(:exam, type)
+  end
+
+  def name
+    "#{type_desc} (#{self.report_number})"
+  end
+
+  def date
+    self.report_date
   end
 
   def parse
@@ -104,7 +117,7 @@ class Exam < ApplicationModel
 
       return true
     end
-    
+
     return false
   end
 

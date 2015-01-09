@@ -47,7 +47,7 @@ class Artifact::ExamsController < Artifact::BaseController
     end
 
     import_file.open.each do |line|
-      exam = Exam.new(:raw => line, :dept => @current_user.primary_dept)
+      exam = Exam.new(:raw => line, :dept => @current_user.primary_dept, :type => params[:data][:type])
 
       unless exam.check_format
         flash[:warning] = "Invalid file format!"

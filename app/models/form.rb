@@ -18,4 +18,8 @@ class Form < ApplicationModel
   def submit
     self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
   end
+
+  def date
+    self.submitted_at
+  end
 end
