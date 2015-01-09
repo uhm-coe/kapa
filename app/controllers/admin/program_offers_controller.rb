@@ -25,4 +25,15 @@ class Admin::ProgramOffersController < ApplicationController
     redirect_to admin_program_path(:id => @program)
   end
 
+  def destroy
+    @program_offer = ProgramOffer.find params[:id]
+
+    if @program_offer.destroy
+      flash[:success] = "Program offer was successfully deleted."
+    else
+      flash[:danger] = error_message_for(@program_offer)
+    end
+    redirect_to admin_program_path(:id => @program_offer.program_id)
+  end
+
 end

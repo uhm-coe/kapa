@@ -16,7 +16,6 @@
         <%=label_form_for :program, :url => admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/admin/program_form" %>
           <%=controls do%>
-            <%# TODO: delete method is undefined %>
             <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_program_path(:id => @program), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
           <% end if @current_user.manage? %>
         <% end %>
@@ -37,7 +36,6 @@
                   <%=label_form_for :program_offer, :url => admin_program_offer_path(:id => @program_offer), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/admin/program_offer_form" %>
                     <%=controls do %>
-                      <%# TODO: delete method is undefined %>
                       <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_program_offer_path(:id => @program_offer), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
                     <% end if @current_user.manage? %>
                   <% end %>
