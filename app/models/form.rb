@@ -22,4 +22,12 @@ class Form < ApplicationModel
   def date
     self.submitted_at
   end
+
+  def name
+    if self.academic_period.blank?
+      type_desc
+    else
+      "#{type_desc} (#{academic_period_desc})"
+    end
+  end
 end

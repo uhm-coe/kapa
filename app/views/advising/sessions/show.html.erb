@@ -12,8 +12,14 @@
     <%=bootstrap_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put} do |f| %>
       <%=render :partial => "/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
       <%=controls do %>
-        <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", advising_session_path(:id => @advising_session), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
       <% end if @current_user.write? %>
+    <% end %>
+    <!-- Delete button with popover confirmation -->
+    <% if @current_user.write? %>
+      <form method="post" action="<%=advising_session_path(:id => @advising_session) %>" class="btn-delete-form">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+      </form>
     <% end %>
   </div>
 <%end%>

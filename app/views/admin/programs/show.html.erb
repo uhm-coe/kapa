@@ -15,9 +15,15 @@
       <div id="program_profile_tab" class="tab-pane active">
         <%=label_form_for :program, :url => admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/admin/program_form" %>
-          <%=controls do%>
-            <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_program_path(:id => @program), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
+          <%=controls do %>
           <% end if @current_user.manage? %>
+        <% end %>
+        <!-- Delete button with popover confirmation -->
+        <% if @current_user.manage? %>
+          <form method="post" action="<%=admin_program_path(:id => @program) %>" class="btn-delete-form">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+          </form>
         <% end %>
       </div>
 
@@ -36,8 +42,14 @@
                   <%=label_form_for :program_offer, :url => admin_program_offer_path(:id => @program_offer), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/admin/program_offer_form" %>
                     <%=controls do %>
-                      <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", admin_program_offer_path(:id => @program_offer), {:method => :delete, "data-confirm" => "Are you sure?", :class => "btn btn-default"} %>
                     <% end if @current_user.manage? %>
+                  <% end %>
+                  <!-- Delete button with popover confirmation -->
+                  <% if @current_user.manage? %>
+                    <form method="post" action="<%=admin_program_offer_path(:id => @program_offer) %>" class="btn-delete-form">
+                      <input type="hidden" name="_method" value="delete">
+                      <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                    </form>
                   <% end %>
                 </div>
               </div>

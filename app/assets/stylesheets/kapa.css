@@ -77,3 +77,20 @@ ul.multiselect-container.dropdown-menu {
 .form-notice {
   font-style: italic;
 }
+
+/* Places a bit of space between Delete and Cancel buttons on delete popover confirmation */
+.confirm-dialog-btn-confirm {
+  margin-right: 4px;
+}
+
+/* Styles Cancel button on delete popover confirmation */
+button.confirm-dialog-btn-abord {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-color: #CCCCCC;
+}
+
+/* Styles Cancel button hover on delete popover confirmation */
+button.confirm-dialog-btn-abord:hover {
+  background-color: #EBEBEB;
+}
