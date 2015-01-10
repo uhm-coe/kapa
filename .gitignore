@@ -1,0 +1,7 @@
+# Mac-specific
+.DS_Store
+
+# Modified after running app
+.vagrant
+test/dummy/log
+test/dummy/tmp
