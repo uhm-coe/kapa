@@ -44,4 +44,13 @@ jQuery(document).ready(function($) {
     buttonClass: 'btn btn-default kapa-multiselect-btn'
   });
 
+  $(".btn-delete").popConfirm({
+    title: "Confirm", // The title of the confirm
+    content: "Are you sure you want to delete this?", // The message of the confirm
+    placement: "right", // The placement of the confirm (top, right, bottom, left)
+    container: "body", // The html container
+    yesBtn: "Delete",
+    noBtn: "Cancel"
+  });
+
 });
