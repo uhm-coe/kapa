@@ -1,6 +1,7 @@
 class Form < ApplicationModel
   self.inheritance_column = nil
   belongs_to :person
+  belongs_to :term
   has_one :transition_point
 
   def academic_period_desc

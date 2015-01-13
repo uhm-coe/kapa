@@ -1,5 +1,7 @@
 class Term < ActiveRecord::Base
-  has_many :terms
+  has_many :transition_points
+  has_many :forms
+  has_many :courses
 
   def self.selections(options = {})
     selections = []

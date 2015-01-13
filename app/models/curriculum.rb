@@ -1,7 +1,6 @@
 class Curriculum < ApplicationModel
   belongs_to :person
   belongs_to :program
-  belongs_to :term
   belongs_to :user_primary,
              :class_name => "User",
              :foreign_key => "user_primary_id"

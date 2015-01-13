@@ -2,7 +2,7 @@ class Program < ApplicationModel
   attr_accessor :available_majors, :available_distributions, :available_tracks
   has_many :program_offers
   has_many :curriculums
-  has_many :programs
+
   validates_uniqueness_of :code
   validates_presence_of :code
 
