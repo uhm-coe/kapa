@@ -45,10 +45,10 @@
         <%= label_form_for :transition_point, :url => main_transition_point_path(:id => @transition_point, :focus => "transition_point"), :remote => true, :html => {:method => :put} do %>
           <%= render :partial => "/main/transition_point_form" %>
           <%= controls do %>
-            <% if @current_user.manage? %>
-              <button class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
-            <% end %>
           <% end if @current_user.write?(:main) %>
+        <% end %>
+        <% if @current_user.write?(:main) && @current_user.manage? %>
+          <button class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
         <% end %>
       </div>
 
