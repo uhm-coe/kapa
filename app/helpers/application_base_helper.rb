@@ -35,6 +35,13 @@ module ApplicationBaseHelper
     model_select(object_name, method, options, html_options)
   end
 
+  def term_select(object_name, method, options = {}, html_options = {})
+    options[:name] ||= method
+    options[:model_name] = :term
+    options[:model_options] = options
+    model_select(object_name, method, options, html_options)
+  end
+
   def user_select(object_name, method, options = {}, html_options = {})
     options[:model_name] = :user
     options[:model_options] = options

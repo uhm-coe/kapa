@@ -12,7 +12,7 @@
     <%=bootstrap_form_for(:filter, :url => main_curriculums_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-xs-6">
-          <%= f.property_select :academic_period, :include_blank => "Any", :label => "Semester" %>
+          <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
           <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts %>
           <%= f.property_select :type, :name => :transition_point, :conditions => "category = 'entrance'" %></label>
           <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
@@ -31,7 +31,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Program Cohort/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%=ApplicationProperty.lookup_description(:academic_period, @filter.academic_period)%>)</h3>
+  <h3>Program Cohort/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%=Term.find(@filter.term_id).description%>)</h3>
 
   <div class="row">
     <div class="text-right">

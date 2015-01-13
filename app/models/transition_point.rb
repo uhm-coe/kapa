@@ -1,7 +1,6 @@
 class TransitionPoint < ApplicationModel
   self.inheritance_column = nil
   belongs_to :curriculum
-#  belongs_to :form
   belongs_to :user_primary,
              :class_name => "User",
              :foreign_key => "user_primary_id"

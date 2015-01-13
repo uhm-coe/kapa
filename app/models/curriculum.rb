@@ -1,6 +1,7 @@
 class Curriculum < ApplicationModel
   belongs_to :person
   belongs_to :program
+  belongs_to :term
   belongs_to :user_primary,
              :class_name => "User",
              :foreign_key => "user_primary_id"
@@ -19,7 +20,7 @@ class Curriculum < ApplicationModel
                              limit 1)"
 
 
-  validates_presence_of :academic_period, :program
+  validates_presence_of :person_id, :program_id
   before_create :set_default_options
 
   def set_default_options
@@ -32,10 +33,6 @@ class Curriculum < ApplicationModel
   def academic_period_desc
     return ApplicationProperty.lookup_description(:academic_period, academic_period)
   end
-
-#  def program_desc
-#    return Validation.lookup_description(:program, program)
-#  end
 
 #  def degree_desc
 #    return Validation.lookup_description(:degree, degree)
@@ -75,17 +72,5 @@ class Curriculum < ApplicationModel
     texts.push distribution_desc if distribution_desc.present?
     texts.push track_desc if track_desc.present?
     return texts.join("/")
-  end
-
-  def to_hash
-    c = {}
-    c[:program_id] = self.program_id
-    c[:second_degree] = self.second_degree
-    c[:distribution] = self.distribution
-    c[:major_primary] = self.major_primary
-    c[:major_secondary] = self.major_secondary
-    c[:track] = self.track
-    c[:location] = self.location
-    return c
   end
 end

@@ -62,7 +62,7 @@ class Main::CurriculumsController < Main::BaseController
   def export
     @filter = curriculums_filter
     order = "persons.last_name, persons.first_name"
-    transition_points = TransitionPoint.find(:all, :include => [{:curriculum => [:person, :program]}, :last_transition_action], :conditions => @filter.conditions, :order => order)
+    transition_points = TransitionPoint.find(:all, :include => [{:curriculum => [:person, :program, :term]}, :last_transition_action], :conditions => @filter.conditions, :order => order)
 
     csv_string = CSV.generate do |csv|
       csv << column_names
@@ -79,7 +79,7 @@ class Main::CurriculumsController < Main::BaseController
   private
   def curriculums_filter
     f = filter
-    f.append_condition "transition_points.academic_period = ?", :academic_period
+    f.append_condition "transition_points.term_id = ?", :term_id
     f.append_condition "transition_points.status = ?", :status
     f.append_condition "transition_points.type = ?", :type
     f.append_condition "transition_actions.action in ('1','2')"
@@ -114,7 +114,7 @@ class Main::CurriculumsController < Main::BaseController
      :cur_postal_code,
      :cur_phone,
      :curriculum_id,
-     :academic_period_desc,
+     :term_desc,
      :program_desc,
      :track_desc,
      :major_primary_desc,
@@ -137,7 +137,7 @@ class Main::CurriculumsController < Main::BaseController
      rsend(c, :curriculum, :person, :contact, :cur_postal_code),
      rsend(c, :curriculum, :person, :contact, :cur_phone),
      rsend(c, :curriculum, :id),
-     rsend(c, :curriculum, :academic_period_desc),
+     rsend(c, :term, :description),
      rsend(c, :curriculum, :program, :description),
      rsend(c, :curriculum, :track_desc),
      rsend(c, :curriculum, :major_primary_desc),

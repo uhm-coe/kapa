@@ -25,7 +25,7 @@ class Main::BaseController < ApplicationBaseController
   private
   def filter_defaults
     {:key => "",
-     :academic_period => current_academic_period,
+     :term_id => Term.current_term.id,
      :type => :admission}
   end
 end
