@@ -52,14 +52,14 @@
   <%= link_to @person.full_name, main_person_path(:action => :show, :id => @person) %>
 </h3>
 
-<%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile"} do %>
-  <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :focus => "profile", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put} do %>
-    <div id="person_form"><%= render :partial => "/main/person_form" %></div>
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
+  <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :focus => "profile", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
+    <%= render :partial => "/main/person_form" %>
   <% end %>
 <% end if @current_user.read? :main %>
 
-<%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts"} do %>
-  <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :focus => "contact", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put} do %>
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
+  <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :focus => "contact", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "contact_form"} do %>
     <%= render :partial => "/main/contact_form", :locals => {:object_name => :contact} %>
   <% end %>
 <% end if @current_user.read? :main %>
