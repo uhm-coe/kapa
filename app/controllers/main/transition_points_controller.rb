@@ -92,13 +92,13 @@ class Main::TransitionPointsController < Main::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "#{@filter.type}_#{@filter.academic_period_desc}.csv"
+      :filename     => "#{@filter.type}_#{@filter.term_desc}.csv"
   end
 
   private
   def transition_point_filter
     f = filter
-    f.append_condition "transition_points.academic_period = ?", :academic_period
+    f.append_condition "transition_points.term_id = ?", :term_id
     f.append_condition "transition_points.status = ?", :status
     f.append_condition "transition_points.type = ?", :type
     f.append_condition "programs.code = ?", :program
@@ -141,7 +141,7 @@ class Main::TransitionPointsController < Main::BaseController
      :distribution_desc,
      :location_desc,
      :second_degree,
-     :academic_period_desc,
+     :term_desc,
      :category_desc,
      :priority_desc,
      :status_desc,
@@ -174,7 +174,7 @@ class Main::TransitionPointsController < Main::BaseController
      rsend(c, :curriculum, :distribution_desc),
      rsend(c, :curriculum, :location_desc),
      rsend(c, :curriculum, :second_degree),
-     rsend(c, :academic_period_desc),
+     rsend(c, :term, :description),
      rsend(c, :category_desc),
      rsend(c, :priority_desc),
      rsend(c, :status_desc),

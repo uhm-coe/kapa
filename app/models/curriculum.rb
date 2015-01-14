@@ -29,6 +29,11 @@ class Curriculum < ApplicationModel
     self.location = self.program.location if self.location.blank?
   end
 
+  def term_desc
+    return Term.find(term_id).description
+  end
+
+  # TODO: Delete later
   def academic_period_desc
     return ApplicationProperty.lookup_description(:academic_period, academic_period)
   end
