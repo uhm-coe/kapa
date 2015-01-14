@@ -30,7 +30,9 @@ class Curriculum < ApplicationModel
   end
 
   def term_desc
-    return Term.find(term_id).description
+    # TODO: term_id column does not exist
+    # return Term.find(term_id).description
+    return "Term TBD"
   end
 
   # TODO: Delete later

@@ -45,8 +45,8 @@ class Admin::RestrictedReportsController < Admin::BaseController
   def transition_point_filter
     f = filter
     # TODO: May need to change Term Start and End to not use IDs
-    f.append_condition("transition_points.term_id >= ?", :term_start_id)
-    f.append_condition("transition_points.term_id <= ?", :term_end_id)
+    f.append_condition("transition_points.term_id >= ?", :start_term_id)
+    f.append_condition("transition_points.term_id <= ?", :end_term_id)
     f.append_condition "transition_points.status = ?", :status
     f.append_condition "transition_points.type = ?", :type
     f.append_condition "programs.code = ?", :program
