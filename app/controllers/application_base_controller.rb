@@ -122,6 +122,11 @@ class ApplicationBaseController < ActionController::Base
     {}
   end
 
+  # TODO: Implement this method using start date and end date, copy from Term model
+  def current_term
+    return Term.find_by_code("201530")
+  end
+
   # TODO: Delete later
   def current_academic_period
     today = Date.today

@@ -13,8 +13,8 @@
     <table>
       <tr class="bottom">
         <td>
-          <label>Semester:<br>
-          <%=property_select :filter, :academic_period, :name => :academic_period %></label>
+          <label>Term:<br>
+          <%=term_select :filter, :term_id, :name => :term_id %></label>
         </td>
         <td>
           <label>Program:</label><br>
@@ -79,7 +79,7 @@
   </p>
   <div id="dialog" class="form-dialog" title="Import Placement Data">
     <%=label_form_for(:filter, :url => import_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
-      <%=f.property_select :academic_period, {:name => :academic_period, :label => "Semester"}, :id => "filter_import_academic_period" %>
+      <%=f.term_select :term_id, {:name => :term_id, :label => "Term"}, :id => "filter_import_term" %>
         <%=label_fields_for :data do |d| %>
           <%=d.file_field :import_file %>
           <%=d.check_box :delete, {:label => "Delete all placement records in the specified semester before importing"}, "Y", "N" %>

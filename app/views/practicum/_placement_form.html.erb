@@ -2,7 +2,7 @@
 <table>
     <tr>
       <td width="50%">
-        <%=a.property_select :academic_period, {:label => "Semester"}, {:disabled => !@current_user.manage?(:practicum, :delegate => :maintain)} %>
+        <%=a.term_select :term_id, {:label => "Term"}, {:disabled => !@current_user.manage?(:practicum, :delegate => :maintain)} %>
         <%=a.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Coordinator Primary"}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
         <%=a.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Coordinator Secondary"}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
         <%=a.history_select :status, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>

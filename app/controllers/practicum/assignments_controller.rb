@@ -55,7 +55,7 @@ class Practicum::AssignmentsController < Practicum::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "mentor_assignments_#{@filter.academic_period_desc}_#{Date.today}.csv"
+      :filename     => "mentor_assignments_#{@filter.term_desc}_#{Date.today}.csv"
   end
 
   def get_mentor
@@ -107,7 +107,7 @@ class Practicum::AssignmentsController < Practicum::BaseController
       [:category, rsend(o, :practicum_placement, :category)],
       [:sequence, rsend(o, :practicum_placement, :sequence)],
       [:mentor_type, rsend(o, :practicum_placement, :mentor_type)],
-      [:semester, rsend(o, :practicum_placement, :academic_period_desc)],
+      [:term, rsend(o, :term, :description)],
       [:status, rsend(o, :practicum_placement, :status)],
       [:total_mentors, rsend(o, :practicum_placement, [:practicum_assignments_select, :mentor], :length)]
     ]
@@ -136,7 +136,7 @@ class Practicum::AssignmentsController < Practicum::BaseController
   def assignment_filter
     f = filter
     f.append_condition "practicum_assignments.assignment_type = 'mentor'"
-    f.append_condition "practicum_placements.academic_period = ?", :academic_period
+    f.append_condition "practicum_placements.term_id = ?", :term_id
     f.append_condition "practicum_assignments.practicum_school_id = ?", :practicum_school_id
     f.append_condition "#{@current_user.id} in (practicum_placements.user_primary_id, practicum_placements.user_secondary_id)" unless @current_user.manage?
     return f
