@@ -54,7 +54,7 @@ class Main::TransitionPointsController < Main::BaseController
     @person = @curriculum.person
     @person.details(self)
     @curriculums = @person.curriculums
-    @transition_point = @curriculum.transition_points.build(:academic_period => current_academic_period, :curriculum_id => params[:id])
+    @transition_point = @curriculum.transition_points.build(:term_id => Term.current_term.id, :curriculum_id => params[:id])
   end
 
   def create
