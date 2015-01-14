@@ -7,7 +7,7 @@ class Admin::BaseController < ApplicationBaseController
      :name => :academic_period,
      :date_start => Date.today,
      :date_end => Date.today,
-     :academic_period_first => current_academic_period,
-     :academic_period_last => current_academic_period}
+     :term_start_id => Term.current_term.id,
+     :term_end_id => Term.current_term.id}
   end
 end
