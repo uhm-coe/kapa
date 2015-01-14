@@ -96,7 +96,7 @@ class Artifact::FormsController < Artifact::BaseController
   private
   def form_filter
     f = filter
-    f.append_condition "forms.academic_period = ?", :academic_period
+    f.append_condition "forms.term_id = ?", :term_id
     f.append_condition "forms.type = ?", :type
     f.append_depts_condition("forms.public = 'Y' or forms.dept like ?", @current_user.depts) unless @current_user.manage? :artifact
     return f

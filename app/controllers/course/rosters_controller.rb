@@ -13,7 +13,7 @@ class Course::RostersController < Course::BaseController
       # TODO: Uncomment it later (temporarily commented out so course/rosters/show path won't throw an 'uninitialized constant Mime::FILE' error)
       # format.file {
       #   csv_string = CSV.generate do |csv|
-      #     title = [@course.name, @course.academic_period_desc, @course.instructor, @assessment_rubric.title]
+      #     title = [@course.name, @course.term_desc, @course.instructor, @assessment_rubric.title]
       #     csv << title
       #     header_row = [:id_number, :last_name, :first_name]
       #     @assessment_rubric.assessment_criterions.each {|c| header_row.push("#{c.criterion}:#{c.criterion_desc}")}
@@ -31,7 +31,7 @@ class Course::RostersController < Course::BaseController
       #   send_data csv_string,
       #     :type         => "application/csv",
       #     :disposition  => "inline",
-      #     :filename     => "#{@course.name}_#{@course.academic_period_desc}.csv"
+      #     :filename     => "#{@course.name}_#{@course.term_desc}.csv"
       # }
     end
   end
@@ -105,11 +105,12 @@ class Course::RostersController < Course::BaseController
               ) as assessment_score_results
               ON courses.id = assessment_score_results.course_id
             WHERE ?
-            ORDER BY academic_period, subject, number, section, crn"
+            ORDER BY term_id, subject, number, section, crn"
+            # TODO: May not make sense to order by term_id
     courses = Course.find_by_sql(@filter.query(sql))
     csv_string = CSV.generate do |csv|
-      csv << [:academic_period,
-              :academic_period_desc,
+      csv << [:term_id,
+              :term_desc,
               :subject,
               :number,
               :section,
@@ -125,8 +126,8 @@ class Course::RostersController < Course::BaseController
               :na,
               :registered]
       courses.each do |c|
-        csv << [c.academic_period,
-                c.academic_period_desc,
+        csv << [c.term_id,
+                c.term_desc,
                 c.subject,
                 c.number,
                 c.section,
@@ -147,7 +148,7 @@ class Course::RostersController < Course::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "courses_#{ApplicationProperty.lookup_description("academic_period", @filter.academic_period)}.csv"
+      :filename     => "courses_#{term_desc}.csv"
   end
 
   private
@@ -161,7 +162,7 @@ class Course::RostersController < Course::BaseController
   def course_filter
     f = filter
     f.append_condition "courses.status = 'A'"
-    f.append_condition "courses.academic_period = ?", :academic_period
+    f.append_condition "courses.term_id = ?", :term_id
     f.append_condition "courses.subject = ?", :subject
     f.append_condition "concat(courses.subject, courses.number, '-', courses.section) like ?", :course_name, :like => true
     if @current_user.access_scope >= 3

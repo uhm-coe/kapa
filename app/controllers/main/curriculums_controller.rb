@@ -73,7 +73,7 @@ class Main::CurriculumsController < Main::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "cohort_#{@filter.academic_period_desc}.csv"
+      :filename     => "cohort_#{@filter.term_desc}.csv"
   end
 
   private

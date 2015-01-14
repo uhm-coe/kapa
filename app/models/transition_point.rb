@@ -19,7 +19,7 @@ class TransitionPoint < ApplicationModel
                              limit 1)"
 
   has_many :assessment_scores, :as => :assessment_scorable
-  
+
   validates_presence_of :academic_period, :type
 
   before_save :update_status_timestamp
@@ -28,6 +28,11 @@ class TransitionPoint < ApplicationModel
     self.status_updated_at = DateTime.now if self.status_changed?
   end
 
+  def term_desc
+    return Term.find(term_id).description
+  end
+
+  # TODO: Delete later
   def academic_period_desc
     return ApplicationProperty.lookup_description(:academic_period, academic_period)
   end
