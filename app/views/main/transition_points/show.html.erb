@@ -1,7 +1,6 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
-      <% if @modal %>$('#change_program_dialog').modal({show : true});<% end %>
       $(".hidden-text-area a").click(function() {
         $(this).next().toggle();
       });
@@ -48,7 +47,7 @@
           <% end if @current_user.write?(:main) %>
         <% end %>
         <% if @current_user.write?(:main) && @current_user.manage? %>
-          <button class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
         <% end %>
       </div>
 

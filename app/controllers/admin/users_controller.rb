@@ -68,7 +68,7 @@ class Admin::UsersController < Admin::BaseController
       redirect_to new_admin_user_path and return false
     end
 
-    flash[:success] = 'User was successfully created...'
+    flash[:success] = 'User was successfully created.'
     redirect_to :action => :show, :id => @user
   end
 

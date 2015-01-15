@@ -33,10 +33,10 @@
     <div class="text-right">
       <%=link_to "New", {:action => :new}, :class => "btn btn-default" %>
       <% if @current_user.manage? :admin, :delegate => :import %>
-        <button class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
       <% end %>
       <%=link_to "Download", {:action => :export}, :class => "btn btn-default" %>
-      <button class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
 
