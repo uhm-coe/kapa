@@ -1,5 +1,5 @@
 class ProgramOffer < ActiveRecord::Base
-  attr_accessor :available_majors, :available_academic_periods
+  attr_accessor :available_majors, :available_term_ids
   belongs_to :program
 
   validates_uniqueness_of :distribution, :scope => :program_id
@@ -9,7 +9,8 @@ class ProgramOffer < ActiveRecord::Base
 
   def join_attributes
     self.available_major = @available_majors ? @available_majors.join(",") : "" if @available_majors
-    self.available_academic_period = @available_academic_periods ? @available_academic_periods.join(",") : "" if @available_academic_periods
+    # TODO: available_term_id is not being saved to the database
+    self.available_term_ids = @available_term_ids ? @available_term_ids.join(",") : "" if @available_term_ids
   end
 
   def self.selections(options = {})

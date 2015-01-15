@@ -4,7 +4,7 @@ class Course < ApplicationModel
 
   def assessment_rubrics
     logger.debug "----looking for rubrics"
-    rubrics = AssessmentRubric.find(:all, :include => :assessment_criterions, :conditions => "find_in_set('#{self.subject}#{self.number}', assessment_rubrics.course) > 0 and '#{self.academic_period}' between assessment_rubrics.academic_period_start and assessment_rubrics.academic_period_end", :order => "assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = AssessmentRubric.find(:all, :include => :assessment_criterions, :conditions => "find_in_set('#{self.subject}#{self.number}', assessment_rubrics.course) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id", :order => "assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else

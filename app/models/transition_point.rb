@@ -20,7 +20,7 @@ class TransitionPoint < ApplicationModel
 
   has_many :assessment_scores, :as => :assessment_scorable
 
-  validates_presence_of :academic_period, :type
+  validates_presence_of :term_id, :type
 
   before_save :update_status_timestamp
 
@@ -54,7 +54,7 @@ class TransitionPoint < ApplicationModel
   end
 
   def assessment_rubrics
-    rubrics = AssessmentRubric.includes(:assessment_criterions).where("find_in_set('#{self.type}', assessment_rubrics.transition_point) > 0 and find_in_set('#{self.curriculum.program.code}', assessment_rubrics.program) > 0 and '#{self.academic_period}' between assessment_rubrics.academic_period_start and assessment_rubrics.academic_period_end").order("assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = AssessmentRubric.includes(:assessment_criterions).where("find_in_set('#{self.type}', assessment_rubrics.transition_point) > 0 and find_in_set('#{self.curriculum.program.code}', assessment_rubrics.program) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id").order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else

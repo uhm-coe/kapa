@@ -4,7 +4,7 @@ class Admin::BaseController < ApplicationBaseController
   def filter_defaults
     {:type => :admission,
      :active => 1,
-     :name => :academic_period,
+     :name => :term_id,
      :date_start => Date.today,
      :date_end => Date.today,
      :start_term_id => Term.current_term.id,
