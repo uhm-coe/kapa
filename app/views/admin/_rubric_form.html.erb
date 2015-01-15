@@ -4,8 +4,8 @@
       <%=f.text_field :title %>
       <%=f.text_field :dept %>
       <%=f.text_field :reference_url %>
-      <%=f.property_select :academic_period_start, :name => :academic_period, :label => "Effective From" %>
-      <%=f.property_select :academic_period_end, :name => :academic_period, :label => "Effective To" %>
+      <%=f.term_select :start_term_id, :name => :term_id, :label => "Effective From" %>
+      <%=f.term_select :end_term_id, :name => :term_id, :label => "Effective To" %>
     </div>
 
     <div class="col-sm-6">

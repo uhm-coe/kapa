@@ -30,7 +30,7 @@
               </tr>
               <% for transition_point in curriculum.transition_points.includes(:last_transition_action).order("academic_period DESC, id DESC") %>
                 <tr>
-                  <td><%=h transition_point.academic_period_desc %></td>
+                  <td><%=h transition_point.term_desc %></td>
                   <td><%=h transition_point.type_desc %></td>
                   <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
                   <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
@@ -104,7 +104,7 @@
             </tr>
             <% for course_registration in course_registrations %>
               <tr>
-                <td><%=h "#{ApplicationProperty.lookup_description(:academic_period, course_registration.course.academic_period)}" %></td>
+                <td><%=h "#{Term.find(course_registration.course.term_id).description}" %></td>
                 <td><%=h "#{course_registration.course.name}" %></td>
                 <td><%=abbr "#{course_registration.course.title}", 50 %></td>
                 <td><%=abbr "#{course_registration.course.instructor}", 50 %></td>
@@ -134,7 +134,7 @@
             <% for practicum_profile in @practicum_profiles %>
               <tr>
                 <td colspan="5">
-                  <h5><%=h "#{practicum_profile.curriculum.code_desc} - #{practicum_profile.curriculum.academic_period_desc}" if practicum_profile.curriculum %></h5>
+                  <h5><%=h "#{practicum_profile.curriculum.code_desc} - #{practicum_profile.curriculum.term_desc}" if practicum_profile.curriculum %></h5>
                 </td>
               </tr>
               <tr>
@@ -146,7 +146,7 @@
               </tr>
               <% for practicum_placement in practicum_profile.practicum_placements %>
                 <tr>
-                  <td><%=h practicum_placement.academic_period_desc %></td>
+                  <td><%=h practicum_placement.term_desc %></td>
                   <td><%=h practicum_placement.category %></td>
                   <td><%=h practicum_placement.sequence %></td>
                   <td><%=h practicum_placement.status %></td>

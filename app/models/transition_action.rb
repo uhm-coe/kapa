@@ -16,6 +16,7 @@ class TransitionAction < ApplicationModel
     logger.debug "-----#{ApplicationProperty.lookup_category(:transition_point, self.transition_point.type)} : #{ApplicationProperty.lookup_category("#{self.transition_point.type}_action", self.action)}"
     logger.debug "-----#{entrance?} : #{admissible?}"
     if entrance?
+      # TODO: curriculums table does not have a term_id
       self.transition_point.curriculum.update_attributes(:academic_period => self.transition_point.academic_period, :active => admissible? ? 1 : 0)
     end
   end

@@ -5,6 +5,15 @@ class ApplicationFilter < OpenStruct
     @conditions = ["(1=1)"]
   end
 
+  def term_desc
+    if term_id
+      return Term.find(term_id).description
+    else
+      return "N/A"
+    end
+  end
+
+  # TODO: Delete later
   def academic_period_desc
     if academic_period
       return ApplicationProperty.lookup_description(:academic_period, academic_period)

@@ -4,7 +4,7 @@ class Course < ApplicationModel
 
   def assessment_rubrics
     logger.debug "----looking for rubrics"
-    rubrics = AssessmentRubric.find(:all, :include => :assessment_criterions, :conditions => "find_in_set('#{self.subject}#{self.number}', assessment_rubrics.course) > 0 and '#{self.academic_period}' between assessment_rubrics.academic_period_start and assessment_rubrics.academic_period_end", :order => "assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = AssessmentRubric.find(:all, :include => :assessment_criterions, :conditions => "find_in_set('#{self.subject}#{self.number}', assessment_rubrics.course) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id", :order => "assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else
@@ -16,19 +16,24 @@ class Course < ApplicationModel
     return "#{subject}#{number}-#{section}"
   end
 
+  def term_desc
+    return Term.find(term_id).description
+  end
+
+  # TODO: Delete later
   def academic_period_desc
     return ApplicationProperty.lookup_description("academic_period", academic_period)
   end
 
-  def table_for(assessment_rubric) 
+  def table_for(assessment_rubric)
     table = ActiveSupport::OrderedHash.new
     self.course_registrations.each do |r|
       table.update AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
     end
     return table
-  end  
-  
-#  def table_for(assessment_rubric) 
+  end
+
+#  def table_for(assessment_rubric)
 #    table = Hash.new
 #    for course_registration in self.course_registrations
 #      #initialize table first
@@ -44,7 +49,7 @@ class Course < ApplicationModel
 #    end
 #    return table
 #  end
-    
+
   def progress
     number_of_fields_total = 0
     number_of_fields_filled = 0

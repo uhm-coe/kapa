@@ -10,7 +10,7 @@ class AssessmentRubric < ApplicationModel
     self.transition_point = @transition_points ? @transition_points.join(",") : "" if @transition_points
   end
 
-  def effective_academic_period
-    "#{ApplicationProperty.lookup_description(:academic_period, self.academic_period_start)} - #{ApplicationProperty.lookup_description(:academic_period, self.academic_period_end)}"
+  def effective_term
+    "#{Term.find(self.start_term_id).description} - #{Term.find(self.end_term_id).description}"
   end
 end

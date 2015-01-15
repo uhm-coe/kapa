@@ -1,6 +1,6 @@
 <% content_for(:box1) do %>
 
-  <div style="text-align: right;"><h3><%=h @form.academic_period_desc %></h3></div>
+  <div style="text-align: right;"><h3><%=h @form.term_desc %></h3></div>
   <%=bootstrap_form_for :form, :url => artifact_form_path(:id => @form), :remote => true, :html => {:method => :put} do %>
     <%=render :partial => "/artifact/#{@form.type}_form" %>
     <%=hidden_field :form, :person_id%>

@@ -33,7 +33,7 @@
           <tbody>
             <% for transition_point in @transition_points %>
               <tr>
-                <td><%=h transition_point.academic_period_desc %></td>
+                <td><%=h transition_point.term_desc %></td>
                 <td><%=h transition_point.type.to_s.capitalize %></td>
                 <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
                 <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>

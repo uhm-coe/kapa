@@ -29,6 +29,13 @@ class Curriculum < ApplicationModel
     self.location = self.program.location if self.location.blank?
   end
 
+  def term_desc
+    # TODO: term_id column does not exist
+    # return Term.find(term_id).description
+    return "Term TBD"
+  end
+
+  # TODO: Delete later
   def academic_period_desc
     return ApplicationProperty.lookup_description(:academic_period, academic_period)
   end

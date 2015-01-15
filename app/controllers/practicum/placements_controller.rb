@@ -16,7 +16,8 @@ class Practicum::PlacementsController < Practicum::BaseController
     @person = Person.find(params[:id])
     @person.details(self)
     @practicum_profile = @person.practicum_profile ||= @person.create_practicum_profile
-    @practicum_placement = @practicum_profile.practicum_placements.build(:academic_period => current_academic_period)
+    # TODO: Change to term_id
+    @practicum_placement = @practicum_profile.practicum_placements.build(:term_id => current_term)
     @curriculums = @person.curriculums
   end
 
@@ -68,8 +69,8 @@ class Practicum::PlacementsController < Practicum::BaseController
     end
 
     if params[:data][:delete] == "Y"
-      PracticumAssignment.delete_all(["practicum_placement_id IN (SELECT id FROM practicum_placements WHERE academic_period = ?)",  params[:filter][:academic_period]])
-      PracticumPlacement.delete_all(["academic_period = ?",  params[:filter][:academic_period]])
+      PracticumAssignment.delete_all(["practicum_placement_id IN (SELECT id FROM practicum_placements WHERE term_id = ?)",  params[:filter][:term_id]])
+      PracticumPlacement.delete_all(["term_id = ?",  params[:filter][:term_id]])
     end
 
     CSV.new(import_file, :headers => true).each do |row|
@@ -99,13 +100,13 @@ class Practicum::PlacementsController < Practicum::BaseController
         practicum_profile.update_serialized_attributes(:_ext, practicum_profile_ext)
         practicum_profile.save
 
-        placement = practicum_profile.practicum_placements.find_by_academic_period(params[:filter][:academic_period])
+        placement = practicum_profile.practicum_placements.find_by_term_id(params[:filter][:term_id])
         if placement
           logger.debug "Record matched! #{placement.id}"
           placement.practicum_assignments.clear
         else
           logger.debug "No match! Creating a new one."
-          placement = practicum_profile.practicum_placements.build(:academic_period => params[:filter][:academic_period], :dept => @current_user.primary_dept)
+          placement = practicum_profile.practicum_placements.build(:term_id => params[:filter][:term_id], :dept => @current_user.primary_dept)
         end
 
         placement.status = row["status"]
@@ -155,7 +156,7 @@ class Practicum::PlacementsController < Practicum::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "placements_#{@filter.academic_period_desc}_#{Date.today}.csv"
+      :filename     => "placements_#{@filter.term_desc}_#{Date.today}.csv"
   end
 
   private
@@ -173,7 +174,7 @@ class Practicum::PlacementsController < Practicum::BaseController
     row += [
       [:curriculum_id, rsend(o, :practicum_profile, :curriculum, :id)],
       [:cohort, rsend(o, :practicum_profile, :cohort)],
-      [:semester_admitted, rsend(o, :practicum_profile, :curriculum, :academic_period_desc)],
+      [:term_admitted, rsend(o, :practicum_profile, :curriculum, :term_desc)],
       [:program_desc, rsend(o, :practicum_profile, :curriculum, :program, :description)],
       [:major_primary_desc, rsend(o, :practicum_profile, :curriculum, :major_primary_desc)],
       [:major_secondary_desc, rsend(o, :practicum_profile, :curriculum, :major_secondary_desc)],
@@ -206,7 +207,7 @@ class Practicum::PlacementsController < Practicum::BaseController
 
       [:created_at, rsend(o, :created_at)],
       [:updated_at, rsend(o, :updated_at)],
-      [:semester, rsend(o, :academic_period_desc)],
+      [:term, rsend(o, :term_desc)],
       [:status, rsend(o, :status)],
       [:total_mentors, rsend(o, [:practicum_assignments_select, :mentor], :length)]
     ] if @current_user.manage?
@@ -245,7 +246,7 @@ class Practicum::PlacementsController < Practicum::BaseController
 
   def placement_filter
     f = filter
-    f.append_condition "practicum_placements.academic_period = ?", :academic_period
+    f.append_condition "practicum_placements.term_id = ?", :term_id
     if f.program == "NA"
       f.append_condition "programs.code is NULL"
     else

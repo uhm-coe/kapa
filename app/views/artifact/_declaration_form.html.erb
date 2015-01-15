@@ -45,7 +45,7 @@
       </div>
       <div class="col-sm-6">
         <%= declaration_background.property_select :aa_degree, {:name => :cc_program, :include_blank => "No", :label => "Indicate if you have completed or are in progress of completing any of these UH system Community College programs."} %>
-        <%= declaration_background.property_select :aa_degree_when, :name => :academic_period, :conditions => "code >= '200510'", :include_blank => true, :label => "Please select the semester you completed or will complete the above program." %>
+        <%= declaration_background.term_select :aa_degree_when, :name => :term_id, :conditions => "code >= '200510'", :include_blank => true, :label => "Please select the semester you completed or will complete the above program." %>
       </div>
     </div>
   <% end %>

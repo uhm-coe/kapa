@@ -44,8 +44,9 @@ class Admin::RestrictedReportsController < Admin::BaseController
   private
   def transition_point_filter
     f = filter
-    f.append_condition("transition_points.academic_period >= ?", :academic_period_first)
-    f.append_condition("transition_points.academic_period <= ?", :academic_period_last)
+    # TODO: May need to change Term Start and End to not use IDs
+    f.append_condition("transition_points.term_id >= ?", :start_term_id)
+    f.append_condition("transition_points.term_id <= ?", :end_term_id)
     f.append_condition "transition_points.status = ?", :status
     f.append_condition "transition_points.type = ?", :type
     f.append_condition "programs.code = ?", :program
@@ -74,7 +75,7 @@ class Admin::RestrictedReportsController < Admin::BaseController
      :major_secondary_desc,
      :distribution_desc,
      :second_degree,
-     :academic_period_desc,
+     :term_desc,
      :status,
      :status_desc,
      :action,
@@ -101,7 +102,7 @@ class Admin::RestrictedReportsController < Admin::BaseController
      rsend(c, :curriculum, :major_secondary_desc),
      rsend(c, :curriculum, :distribution_desc),
      rsend(c, :curriculum, :second_degree),
-     rsend(c, :academic_period_desc),
+     rsend(c, :term, :description),
      rsend(c, :status),
      rsend(c, :status_desc),
      rsend(c, :last_transition_action, :action),

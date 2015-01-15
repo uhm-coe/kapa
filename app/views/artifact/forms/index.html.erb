@@ -10,7 +10,7 @@
 
   <%=render :layout => '/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => artifact_forms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.property_select :academic_period, :label => "Semester" %>
+      <%= f.term_select :term_id, :label => "Term" %>
       <%= f.property_select :type, :name => :form, :label => "Form Title" %>
       <%= f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => true, :label => "Lock" %>
     <% end %>
@@ -20,7 +20,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Forms/<%=ApplicationProperty.lookup_description(:form, @filter.type)%> (<%=ApplicationProperty.lookup_description(:academic_period, @filter.academic_period)%>)</h3>
+  <h3>Forms/<%=ApplicationProperty.lookup_description(:form, @filter.type)%> (<%=Term.find(@filter.term_id).description if @filter.term_id%>)</h3>
 
   <div class="row">
     <div class="text-right">

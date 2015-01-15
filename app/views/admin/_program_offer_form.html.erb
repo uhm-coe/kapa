@@ -13,7 +13,7 @@
       <%=f.property_select :available_majors, {:name => :major,:include_code => true, :selected => @program_offer.available_major, :label => "Available Majors", :conditions => "code in ('#{@available_majors.join("','")}')"}, {:multiple => true, :id => id_for_multiple(:program_offer, :available_majors)} %>
     </div>
     <div class="col-sm-6">
-      <%=f.property_select :available_academic_periods, {:name => :academic_period, :selected => @program_offer.available_academic_period, :label => "Accepting Semesters"}, {:multiple => true, :id => id_for_multiple(:program_offer, :available_academic_periods)} %>
+      <%=f.term_select :available_term_ids, {:name => :term_id, :selected => @program_offer.available_term_id, :label => "Accepting Terms"}, {:multiple => true, :id => id_for_multiple(:program_offer, :available_term_ids)} %>
     </div>
   </div>
 <% end %>

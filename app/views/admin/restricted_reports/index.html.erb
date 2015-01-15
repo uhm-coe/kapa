@@ -12,8 +12,8 @@
     <%=bootstrap_form_for(:filter, :url => admin_restricted_reports_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-xs-6">
-          <%= f.property_select :academic_period_first, :name => :academic_period, :label => "Semester Start" %>
-          <%= f.property_select :academic_period_last, :name => :academic_period, :label => "Semester End" %>
+          <%= f.term_select :start_term_id, :name => :term_id, :label => "Term Start" %>
+          <%= f.term_select :end_term_id, :name => :term_id, :label => "Term End" %>
           <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts %>
           <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
         </div>

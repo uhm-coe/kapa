@@ -1,7 +1,7 @@
 <%= bootstrap_fields_for :transition_point do |t| %>
   <div class="row">
     <div class="col-sm-6">
-      <%= t.property_select :academic_period, :label => "Semester" %>
+      <%= t.term_select :term_id, :label => "Term" %>
       <%= t.property_select :category, :name => "#{@transition_point.type}_category", :include_blank => true %>
       <%= t.property_select :priority, :name => "#{@transition_point.type}_priority", :include_blank => true %>
       <%= t.property_select :status, :name => "#{@transition_point.type}_status", :include_blank => true %>

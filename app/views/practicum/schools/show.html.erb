@@ -63,7 +63,7 @@
           <tbody>
             <% for practicum_assignment in @practicum_assignments %>
               <tr>
-                <td><%=h practicum_assignment.practicum_placement.academic_period_desc %></td>
+                <td><%=h practicum_assignment.practicum_placement.term_desc %></td>
                 <td><%=practicum_assignment.practicum_placement.practicum_profile.person.id_number %></td>
                 <td><%=abbr practicum_assignment.practicum_placement.practicum_profile.person.full_name%></td>
                 <td><%=h practicum_assignment.person.full_name %></td>

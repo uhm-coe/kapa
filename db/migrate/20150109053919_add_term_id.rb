@@ -8,6 +8,6 @@ class AddTermId < ActiveRecord::Migration
     add_index(:assessment_rubrics, :start_term_id)
     add_column(:assessment_rubrics, :end_term_id, :integer)
     add_index(:assessment_rubrics, :end_term_id)
-    add_column(:program_offers, :available_term_id, :integer)
+    add_column(:program_offers, :available_term_id, :string)
   end
 end

@@ -2,7 +2,7 @@
   <table>
     <tr>
       <td width="33%">
-        <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code} - #{c.academic_period_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
+        <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code} - #{c.term_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
         <%=p.history_select :cohort, :include_blank => true  %>
         <%=p.hidden_text_area :note, :size => "35x10" %>
       </td>
@@ -16,7 +16,7 @@
         <%= label_fields_for :practicum_profile_ext do |practicum_profile_ext| %>
           <%=practicum_profile_ext.select "off_sequence", [["Yes", "Y"]], :label => "Off Sequence" ,:include_blank => "No" %>
           <% ["ite401", "ite402", "ite404", "ite405"].each do |c| %>
-            <%=practicum_profile_ext.property_select "#{c}", :name => :academic_period, :label => "#{c} completed semester" ,:include_blank => true %>
+            <%=practicum_profile_ext.property_select "#{c}", :name => :term_id, :label => "#{c} completed term" ,:include_blank => true %>
           <% end %>
         <% end %>
       </td>

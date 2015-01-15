@@ -8,7 +8,7 @@
   <%=bootstrap_form_for :transition_point, :url => main_transition_points_path(:id => @person), :remote => true do |f| %>
     <div class="row">
       <div class="col-sm-6">
-        <%=f.property_select :academic_period, :label => "Semester" %>
+        <%=f.term_select :term_id, :label => "Term" %>
       </div>
       <div class="col-sm-6">
         <%=f.property_select :type, :name => :transition_point, :depts => @current_user.depts %>

@@ -12,7 +12,7 @@
 <% content_for(:dialog) do %>
   <%= render :layout => '/layouts/modal', :locals => {:modal_id => "move_transition_point_dialog", :modal_title => "Move Transition Point to Different Curriculum", :modal_form_id => "move_transition_point_form"} do %>
     <%= bootstrap_form_for(:transition_point, :url => main_transition_point_path(:id => @transition_point, :focus => :curriculum), :remote => true, :html => {:method => :put, :id => "move_transition_point_form"} ) do |t| %>
-      <%= t.select :curriculum_id, @curriculums.collect { |c| ["#{c.code_desc} - #{c.academic_period_desc}", c.id] }, :label => "Program" %>
+      <%= t.select :curriculum_id, @curriculums.collect { |c| ["#{c.code_desc} - #{c.term_desc}", c.id] }, :label => "Program" %>
     <% end %>
   <% end %>
 <% end %>

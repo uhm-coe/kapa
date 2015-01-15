@@ -14,13 +14,15 @@ class Practicum::ProfilesController < Practicum::BaseController
 
   def index
     @filter = profiles_filter
-    order = "curriculum_events.academic_period, persons.last_name, persons.first_name"
+    # TODO: Remove curriculum_events, doesn't exist anymore
+    order = "curriculum_events.term_id, persons.last_name, persons.first_name"
     @curriculum_enrollments = CurriculumEvent.paginate(:page => params[:page], :per_page => 20, :include => [{:person => [:contact, :practicum_profile]}], :conditions => @filter.conditions, :order => order)
   end
 
   def export
     @filter = profiles_filter
-    order = "curriculum_events.academic_period, persons.last_name, persons.first_name"
+    # TODO: Remove curriculum_events, doesn't exist anymore
+    order = "curriculum_events.term_id, persons.last_name, persons.first_name"
     @curriculum_enrollments = CurriculumEvent.find(:all, :include => [{:person => [:contact, :practicum_profile]}], :conditions => @filter.conditions, :order => order)
     csv_string = CSV.generate do |csv|
       csv << table_format.keys
@@ -29,7 +31,7 @@ class Practicum::ProfilesController < Practicum::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "placement_candidates_#{@filter.academic_period_desc}.csv"
+      :filename     => "placement_candidates_#{@filter.term_desc}.csv"
   end
 
   private
@@ -47,7 +49,7 @@ class Practicum::ProfilesController < Practicum::BaseController
       :cur_phone => rsend(o, :person, :contact, :cur_phone),
       :email => rsend(o, :person, :contact, :email),
       :curriculum_enrollment_id => rsend(o, :id),
-      :semester_admitted => rsend(o, :academic_period_desc),
+      :term_admitted => rsend(o, :term_desc),
       :program_desc => rsend(o, :program_desc),
       :major_primary_desc => rsend(o, :major_primary_desc),
       :major_secondary_desc => rsend(o, :major_secondary_desc),
@@ -66,9 +68,10 @@ class Practicum::ProfilesController < Practicum::BaseController
 
   def profiles_filter
     f = filter
+    # TODO: Remove curriculum_events, doesn't exist anymore
     f.append_condition "curriculum_events.status <> 'N'"
     f.append_condition "curriculum_events.context = 'enrollment'"
-    f.append_condition "curriculum_events.academic_period = ?", :academic_period
+    f.append_condition "curriculum_events.term_id = ?", :term_id
     f.append_condition "curriculum_events.program = ?", :program
     f.append_condition "curriculum_events.major_primary = ?", :major
     f.append_condition "curriculum_events.distribution = ?", :distribution
