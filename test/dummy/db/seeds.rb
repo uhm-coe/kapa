@@ -23,12 +23,12 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_actions")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "courses")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_registrations")
 
-[Curriculum, TransitionPoint, Course].each do |c|
-  c.update_all("academic_period = #{201610}")
+[TransitionPoint, Course].each do |c|
+  c.update_all(:term_id => Term.current_term.id)
 end
 
 [AdvisingSession].each do |c|
-  c.update_all("session_date = '#{Date.today}'")
+  c.update_all(:session_date => Date.today)
 end
 
 person = Person.create(:last_name => "Admin", :first_name => "User")
