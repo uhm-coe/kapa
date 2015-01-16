@@ -12,23 +12,26 @@ class Course::RegistrationsController < Course::BaseController
   end
 
   def update
-    params[:assessment_scores].each_pair do |k, v|
-      scorable_id = k.split("_").first
-      criterion_id = k.split("_").last
-#      logger.debug "--scorable_id: #{scorable_id}, criterion_id: #{criterion_id}"
-      score = AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id("CourseRegistration", scorable_id, criterion_id)
-#      logger.debug "--score: #{score.inspect}"
-      score.rating = v
-      score.rated_by = @current_user.uid
-      unless score.save
-        flash[:danger] = "There was an error updating scores. Please try again."
-        # TODO: Fix redirect_to path
-        redirect_to course_registration_path(:id => params[:id]) and return false
+    if params[:assessment_scores]
+      params[:assessment_scores].each_pair do |k, v|
+        scorable_id = k.split("_").first
+        criterion_id = k.split("_").last
+  #      logger.debug "--scorable_id: #{scorable_id}, criterion_id: #{criterion_id}"
+        score = AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id("CourseRegistration", scorable_id, criterion_id)
+  #      logger.debug "--score: #{score.inspect}"
+        score.rating = v
+        score.rated_by = @current_user.uid
+        unless score.save
+          flash[:danger] = "There was an error updating scores. Please try again."
+          redirect_to course_registration_path(:id => params[:id]) and return false
+        end
       end
+      flash[:success] = "Scores were successfully saved on #{DateTime.now.strftime("%H:%M:%S")}"
     end
 
-    flash[:success] = "Scores are successfully saved on #{DateTime.now.strftime("%H:%M:%S")}"
-    # TODO: Fix redirect_to path
+    if flash[:success].nil?
+      flash[:warning] = "There are no scores to save."
+    end
     redirect_to course_registration_path(:id => params[:id])
   end
 
