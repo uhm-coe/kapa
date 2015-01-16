@@ -11,7 +11,8 @@ class Artifact::FormsController < Artifact::BaseController
     @form = Form.find params[:id]
     @person = @form.person
     #attributes= was not used because I do not want to accidentally delete form.data
-    @form.note = params[:form][:note] if not params[:form][:note].blank?
+    @form.note = params[:form][:note] unless params[:form][:note].blank?
+    @form.lock = params[:form][:lock] unless params[:form][:lock].blank?
 
     if @form.save
       flash[:success] = "Form was updated."
