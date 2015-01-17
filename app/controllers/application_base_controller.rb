@@ -164,6 +164,7 @@ class ApplicationBaseController < ActionController::Base
       items.push ["Mentor Assignments", practicum_assignments_path]  if @current_user.read?(:practicum)
       items.push ["Schools", practicum_schools_path]  if @current_user.read?(:practicum)
     when "admin"
+      items.push ["Terms", admin_terms_path] if @current_user.manage?(:admin, :delegate => :term)
       items.push ["Programs", admin_programs_path]  if @current_user.manage?(:admin, :delegate => :program)
       items.push ["Assessments", admin_rubrics_path]  if @current_user.manage?(:admin, :delegate => :rubric)
       items.push ["SSN Reporting", admin_restricted_reports_path]  if @current_user.manage?(:admin, :delegate => :restricted_report)

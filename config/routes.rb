@@ -48,6 +48,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, &extra_actions
+    resources :terms, &extra_actions
     resources :programs, &extra_actions
     resources :program_offers, &extra_actions
     resources :properties, &extra_actions

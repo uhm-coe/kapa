@@ -1,0 +1,39 @@
+<% content_for(:box1) do %>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=h @term.description %>
+  </h4>
+
+  <div>
+    <%=bootstrap_form_for :term, :url => admin_term_path(:id => @term), :remote => true, :html => {:method => :put} do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%=f.text_field :code %>
+          <%=f.text_field :description %>
+          <%=f.text_field :description_short %>
+          <%=f.text_field :dept %>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%=label_tag "term_start_date", "Start Date" %>
+            <%=date_picker :term, :start_date %>
+          </div>
+          <div class="form-group">
+            <%=label_tag "term_end_date", "End Date" %>
+            <%=date_picker :term, :end_date %>
+          </div>
+          <%=f.text_field :sequence %>
+          <%=f.check_box :active, {}, 1, 0 %>
+        </div>
+      </div>
+      <%=controls if @current_user.manage? %>
+    <% end %>
+    <!-- Delete button with popover confirmation -->
+    <% if @current_user.manage? %>
+      <form method="post" action="<%=admin_term_path(:id => @term) %>" class="btn-delete-form">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+      </form>
+    <% end %>
+  </div>
+<%end%>
