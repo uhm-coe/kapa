@@ -32,11 +32,6 @@ class TransitionPoint < ApplicationModel
     return Term.find(term_id).description
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    return ApplicationProperty.lookup_description(:academic_period, academic_period)
-  end
-
   def category_desc
     return ApplicationProperty.lookup_description("#{type}_category", category)
   end

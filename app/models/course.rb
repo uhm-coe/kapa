@@ -20,11 +20,6 @@ class Course < ApplicationModel
     return Term.find(term_id).description
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    return ApplicationProperty.lookup_description("academic_period", academic_period)
-  end
-
   def table_for(assessment_rubric)
     table = ActiveSupport::OrderedHash.new
     self.course_registrations.each do |r|

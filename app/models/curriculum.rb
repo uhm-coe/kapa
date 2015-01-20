@@ -35,11 +35,6 @@ class Curriculum < ApplicationModel
     return "Term TBD"
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    return ApplicationProperty.lookup_description(:academic_period, academic_period)
-  end
-
 #  def degree_desc
 #    return Validation.lookup_description(:degree, degree)
 #  end

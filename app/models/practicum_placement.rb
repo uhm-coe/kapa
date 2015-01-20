@@ -30,11 +30,6 @@ class PracticumPlacement < ApplicationModel
     return Term.find(term_id).description
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    return ApplicationProperty.lookup_description("academic_period", academic_period)
-  end
-
   def assignment_desc(assignment_type)
     practicum_assignments_select(assignment_type).collect {|a| a.name}.join(", ")
   end

@@ -7,11 +7,6 @@ class CourseRegistration < ApplicationModel
     self.course.term_desc
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    self.course.academic_period_desc
-  end
-
   def subject
     self.course.subject
   end

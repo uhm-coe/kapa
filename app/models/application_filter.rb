@@ -13,15 +13,6 @@ class ApplicationFilter < OpenStruct
     end
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    if academic_period
-      return ApplicationProperty.lookup_description(:academic_period, academic_period)
-    else
-      return "N/A"
-    end
-  end
-
   def conditions
     if @conditions.length == 1
       @conditions[0]

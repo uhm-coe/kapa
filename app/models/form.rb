@@ -8,11 +8,6 @@ class Form < ApplicationModel
     return Term.find(term_id).description
   end
 
-  # TODO: Delete later
-  def academic_period_desc
-    return ApplicationProperty.lookup_description(:academic_period, academic_period)
-  end
-
   def type_desc
     return ApplicationProperty.lookup_description(:form, type)
   end
