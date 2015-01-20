@@ -30,10 +30,10 @@ class Form < ApplicationModel
   end
 
   def name
-    if self.academic_period.blank?
+    if self.term_id.blank?
       type_desc
     else
-      "#{type_desc} (#{academic_period_desc})"
+      "#{type_desc} (#{term_desc})"
     end
   end
 end

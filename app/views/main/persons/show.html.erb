@@ -28,7 +28,7 @@
                 <th>Latest Action</th>
                 <th></th>
               </tr>
-              <% for transition_point in curriculum.transition_points.includes(:last_transition_action).order("academic_period DESC, id DESC") %>
+              <% for transition_point in curriculum.transition_points.includes(:last_transition_action, :term).order("terms.sequence DESC, transition_points.id DESC") %>
                 <tr>
                   <td><%=h transition_point.term_desc %></td>
                   <td><%=h transition_point.type_desc %></td>

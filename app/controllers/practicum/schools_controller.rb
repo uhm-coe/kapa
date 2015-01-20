@@ -5,6 +5,7 @@ class Practicum::SchoolsController < Practicum::BaseController
     @school_contact = @practicum_school.school_contact
     #["id in (SELECT distinct person_id FROM practicum_assignments WHERE practicum_school_id = ?)", params[:id]]
     @mentors = Person.find(:all, :include => [:contact, :practicum_assignments], :conditions => ["practicum_assignments.id is not null and practicum_assignments.practicum_school_id = ?", params[:id]], :order => "persons.last_name, persons.first_name")
+    # TODO: Need to change academic_period to term_id
     @practicum_assignments = @practicum_school.practicum_assignments.find(:all, :include => :practicum_placement, :order => "practicum_placements.academic_period DESC")
   end
 

@@ -14,10 +14,10 @@ class Curriculum < ApplicationModel
     :conditions => "transition_points.id =
                             (select t.id
                              from transition_points t
+                             inner join terms tm on tm.id = t.term_id
                              where t.curriculum_id = transition_points.curriculum_id
-                             order by academic_period desc, id desc
+                             order by tm.sequence desc, t.id desc
                              limit 1)"
-
 
   validates_presence_of :person_id, :program_id
   before_create :set_default_options

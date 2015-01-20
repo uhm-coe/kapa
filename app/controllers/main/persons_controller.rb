@@ -6,8 +6,11 @@ class Main::PersonsController < Main::BaseController
     @person = Person.find(params[:id])
     @person.details(self)
     @advising_sessions = @person.advising_sessions.find(:all, :conditions => f.conditions, :order => "session_date DESC")
+
+    # TODO: Need to change academic_period to term_id
     @curriculums = @person.curriculums.find(:all, :include => :transition_points, :order => "academic_period DESC")
     @course_registrations = CourseRegistration.includes(:course).where(["person_id = ?", @person.id]).order("courses.academic_period DESC")
+
     @practicum_profiles = @person.practicum_profiles
   end
 
