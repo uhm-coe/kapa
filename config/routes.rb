@@ -52,7 +52,6 @@ Rails.application.routes.draw do
     resources :programs, &extra_actions
     resources :program_offers, &extra_actions
     resources :properties, &extra_actions
-    resources :restricted_reports, &extra_actions
     resources :rubrics, &extra_actions
     resources :criterions, &extra_actions
   end
