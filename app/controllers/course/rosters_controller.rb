@@ -10,29 +10,28 @@ class Course::RostersController < Course::BaseController
 
     respond_to do |format|
       format.html
-      # TODO: Uncomment it later (temporarily commented out so course/rosters/show path won't throw an 'uninitialized constant Mime::FILE' error)
-      # format.file {
-      #   csv_string = CSV.generate do |csv|
-      #     title = [@course.name, @course.term_desc, @course.instructor, @assessment_rubric.title]
-      #     csv << title
-      #     header_row = [:id_number, :last_name, :first_name]
-      #     @assessment_rubric.assessment_criterions.each {|c| header_row.push("#{c.criterion}:#{c.criterion_desc}")}
-      #     csv << header_row
+      format.file {
+        csv_string = CSV.generate do |csv|
+          title = [@course.name, @course.term_desc, @course.instructor, @assessment_rubric.title]
+          csv << title
+          header_row = [:id_number, :last_name, :first_name]
+          @assessment_rubric.assessment_criterions.each {|c| header_row.push("#{c.criterion}:#{c.criterion_desc}")}
+          csv << header_row
 
-      #     @course_registrations.each do |r|
-      #       row =  [rsend(r.person, :id_number),
-      #               rsend(r.person, :last_name),
-      #               rsend(r.person, :first_name)]
-      #       @assessment_rubric.assessment_criterions.each {|c| row.push(@table["#{r.id}_#{c.id}"]) }
-      #       csv << row
-      #     end
-      #   end
+          @course_registrations.each do |r|
+            row =  [rsend(r.person, :id_number),
+                    rsend(r.person, :last_name),
+                    rsend(r.person, :first_name)]
+            @assessment_rubric.assessment_criterions.each {|c| row.push(@table["#{r.id}_#{c.id}"]) }
+            csv << row
+          end
+        end
 
-      #   send_data csv_string,
-      #     :type         => "application/csv",
-      #     :disposition  => "inline",
-      #     :filename     => "#{@course.name}_#{@course.term_desc}.csv"
-      # }
+        send_data csv_string,
+          :type         => "application/csv",
+          :disposition  => "inline",
+          :filename     => "#{@course.name}_#{@course.term_desc}.csv"
+      }
     end
   end
 
@@ -104,9 +103,9 @@ class Course::RostersController < Course::BaseController
                 assessment_criterions.criterion_desc
               ) as assessment_score_results
               ON courses.id = assessment_score_results.course_id
+              INNER JOIN terms ON terms.id = courses.term_id
             WHERE ?
-            ORDER BY term_id, subject, number, section, crn"
-            # TODO: May not make sense to order by term_id
+            ORDER BY terms.sequence, subject, number, section, crn"
     courses = Course.find_by_sql(@filter.query(sql))
     csv_string = CSV.generate do |csv|
       csv << [:term_id,
