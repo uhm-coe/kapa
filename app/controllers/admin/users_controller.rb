@@ -7,8 +7,6 @@ class Admin::UsersController < Admin::BaseController
     @timestamps = @user.user_timestamps.find(:all, :include => {:user => :person}, :limit => 200, :order => "id desc")
     @users = @user.person.users
     @person = @user.person
-    # TODO: Uncomment it later (temporarily commented out so admin/users/show won't throw an "undefined local variable or method 'config'" error)
-    #@acknowledgements = @user.acknowledgements
     @person.details(self)
   end
 

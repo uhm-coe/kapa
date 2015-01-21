@@ -56,31 +56,12 @@ class User < ApplicationModel
                                 :agent => @request.env['HTTP_USER_AGENT'].downcase)
   end
 
-  def acknowledgements
-    acknowledgements = {}
-    unless Rails.configuration.ldap_attr_acknowledgement.blank? or self.person.id_number.blank?
-      Rails.configuration.ldap.search(:base => Rails.configuration.ldap_search_base, :filter => "#{Rails.configuration.ldap_attr_id_number}=#{self.person.id_number}") do |entry|
-        entry.each do |attribute, values|
-          case attribute.to_s
-            when Rails.configuration.ldap_attr_acknowledgement
-              acknowledgements = {}
-              values.each do |value|
-                v = value.split("=")
-                acknowledgements[v.first.to_sym] = Date.new(v.last[0..3].to_i, v.last[4..5].to_i, v.last[6..7].to_i)
-              end
-          end
-        end
-      end
-    end
-    return OpenStruct.new(acknowledgements)
-  end
-
   def depts
     dept.to_s.split(/,\s*/)
   end
 
   def primary_dept
-    depts.first  
+    depts.first
   end
 
   def status_desc
