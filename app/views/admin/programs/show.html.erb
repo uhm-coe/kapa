@@ -7,12 +7,12 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#offers_tab" data-toggle="tab">Offering Groups</a></li>
+      <li class="<%='active' if params[:focus] == 'program_profile' || params[:focus].nil? %>"><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
+      <li class="<%='active' if params[:focus] == 'offers' %>"><a href="#offers_tab" data-toggle="tab">Offering Groups</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="program_profile_tab" class="tab-pane active">
+      <div id="program_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'program_profile' || params[:focus].nil? %>">
         <%=label_form_for :program, :url => admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/admin/program_form" %>
           <%=controls do %>
@@ -27,7 +27,7 @@
         <% end %>
       </div>
 
-      <div id="offers_tab" class="tab-pane">
+      <div id="offers_tab" class="tab-pane<%=' active' if params[:focus] == 'offers' %>">
         <div class="panel-group" id="accordion">
           <%@program_offers.each_with_index do |program_offer, index| %>
             <%@program_offer = program_offer %>
@@ -37,7 +37,7 @@
                   <a data-toggle="collapse" data-parent="#accordion" href="#program_offer_<%=@program_offer.id %>"><span class="strong"><%=h "#{@program.code}/#{@program_offer.description}" %></span></a>
                 </h3>
               </div>
-              <div id="program_offer_<%=@program_offer.id %>" class="panel-collapse collapse<%=' in' if index == 0 %>">
+              <div id="program_offer_<%=@program_offer.id %>" class="panel-collapse collapse<%=' in' if params[:offer] == program_offer.distribution || (params[:offer].nil? && index == 0) %>">
                 <div class="panel-body">
                   <%=label_form_for :program_offer, :url => admin_program_offer_path(:id => @program_offer), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/admin/program_offer_form" %>

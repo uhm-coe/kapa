@@ -9,7 +9,7 @@ class Admin::ProgramOffersController < ApplicationController
     else
       flash[:danger] = @program_offer.errors.full_messages.join(", ")
     end
-    redirect_to admin_program_path(:id => @program_offer.program_id)
+    redirect_to admin_program_path(:id => @program_offer.program_id, :focus => :offers, :offer => @program_offer.distribution)
   end
 
   def create
@@ -22,7 +22,7 @@ class Admin::ProgramOffersController < ApplicationController
     else
       flash[:danger] = @program_offer.errors.full_messages.join(", ")
     end
-    redirect_to admin_program_path(:id => @program)
+    redirect_to admin_program_path(:id => @program, :focus => :offers, :offer => @program_offer.distribution)
   end
 
   def destroy
@@ -33,7 +33,7 @@ class Admin::ProgramOffersController < ApplicationController
     else
       flash[:danger] = error_message_for(@program_offer)
     end
-    redirect_to admin_program_path(:id => @program_offer.program_id)
+    redirect_to admin_program_path(:id => @program_offer.program_id, :focus => :offers)
   end
 
 end
