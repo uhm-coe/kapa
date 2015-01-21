@@ -16,8 +16,7 @@ class Practicum::PlacementsController < Practicum::BaseController
     @person = Person.find(params[:id])
     @person.details(self)
     @practicum_profile = @person.practicum_profile ||= @person.create_practicum_profile
-    # TODO: Change to term_id
-    @practicum_placement = @practicum_profile.practicum_placements.build(:term_id => current_term)
+    @practicum_placement = @practicum_profile.practicum_placements.build(:term_id => Term.current_term.id)
     @curriculums = @person.curriculums
   end
 

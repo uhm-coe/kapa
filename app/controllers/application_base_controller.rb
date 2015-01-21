@@ -9,8 +9,7 @@ class ApplicationBaseController < ActionController::Base
   before_filter :check_manage_permission, :only => [:destroy, :export, :import, :search]
   after_filter :put_timestamp
   helper :all
-  # TODO: Need to remove :current_academic_period and :next_academic_period later
-  helper_method :url_for, :module_name, :current_academic_period, :next_academic_period, :menu_items
+  helper_method :url_for, :module_name, :menu_items
 
   def validate_login
     @current_user_session = UserSession.find
@@ -120,29 +119,6 @@ class ApplicationBaseController < ActionController::Base
 
   def filter_defaults
     {}
-  end
-
-  # TODO: Implement this method using start date and end date, copy from Term model
-  def current_term
-    return Term.find_by_code("201530")
-  end
-
-  # TODO: Delete later
-  def current_academic_period
-    today = Date.today
-    if today.month >= 1 and today.month < 6
-      return "#{today.year}30"
-    elsif today.month >= 6 and today.month < 8
-      return "#{today.year}40"
-    elsif today.month >= 8 and today.month <= 12
-      return "#{today.year + 1}10"
-    end
-  end
-
-  # TODO: Delete later
-  def next_academic_period
-    value = ApplicationProperty.where("code > ?", current_academic_period).order("code").first
-    return value.code
   end
 
   def menu_items(name, options = {})
