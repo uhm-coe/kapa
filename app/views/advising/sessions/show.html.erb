@@ -4,7 +4,7 @@
   <%end%>
 
   <h4 class="section-header <%='divider' unless @advising_session.anonymous? %>">
-    <%=link_to_unless @advising_session.anonymous?, "", main_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to_unless @advising_session.anonymous?, "", main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
     Advising Session
   </h4>
 

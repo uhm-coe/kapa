@@ -23,7 +23,7 @@
   <%=render :partial => "/main/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", main_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", main_person_path(:id => @person, :focus => :course), :class => "glyphicon glyphicon-chevron-left" %>
     Assessment Course/<%=@course.name%>
   </h4>
 

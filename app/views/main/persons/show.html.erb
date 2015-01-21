@@ -11,7 +11,7 @@
           </a>
         </h4>
       </div>
-      <div id="curriculum_detail" class="panel-collapse collapse in">
+      <div id="curriculum_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Program".html_safe, new_main_curriculum_path(:id => @person),:class => "btn btn-default" %></p>
           <table class="table table-hover">
@@ -52,7 +52,7 @@
           </a>
         </h4>
       </div>
-      <div id="advising_detail" class="panel-collapse collapse">
+      <div id="advising_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'advising' %>">
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Advising Session".html_safe, new_advising_session_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
@@ -87,7 +87,7 @@
           </a>
         </h4>
       </div>
-      <div id="course_detail" class="panel-collapse collapse">
+      <div id="course_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'course' %>">
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
@@ -127,7 +127,7 @@
           </a>
         </h4>
       </div>
-      <div id="practicum_detail" class="panel-collapse collapse">
+      <div id="practicum_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'practicum' %>">
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
           <table class="table table-hover">
