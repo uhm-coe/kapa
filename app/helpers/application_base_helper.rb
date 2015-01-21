@@ -180,7 +180,7 @@ module ApplicationBaseHelper
       abbr_str = abbr_option
     end
 
-    content_tag :abbr, abbr_str, :title => str
+    content_tag :abbr, abbr_str, :title => str, "data-toggle" => "tooltip", "data-placement" => "right"
   end
 
   def render_content(key)
