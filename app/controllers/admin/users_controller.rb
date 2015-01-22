@@ -17,7 +17,7 @@ class Admin::UsersController < Admin::BaseController
 
   def update
     @user = User.find params[:id]
-    @user.attributes= params[:user]
+    @user.attributes = params[:user]
     @user.serialize(:role, params[:role]) if params[:role]
     if @user.save
       flash[:success] = "User was successfully updated."
