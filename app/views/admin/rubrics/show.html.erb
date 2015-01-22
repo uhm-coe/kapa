@@ -1,3 +1,13 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      $(".hidden-text-area a").click(function() {
+        $(this).next().toggle();
+      });
+    });
+  </script>
+<% end %>
+
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
