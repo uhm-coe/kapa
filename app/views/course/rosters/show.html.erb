@@ -48,11 +48,11 @@
   <%=bootstrap_form_for :filter, :url => course_roster_path(:id =>  @course), :html => {:method => :get}  do |f| %>
     <h4 class="section-header">
       <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-      <%=h @course.name %> Assessment
+      <%=h @course.name %> Roster
     </h4>
     <div class="row">
       <div class="col-sm-6">
-        <%=f.select :assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => 500}%>
+        <%=f.select :assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {:label => "Assessment"}, {:minWidth => 500}%>
         <%=link_to "Open Rubric", @assessment_rubric.reference_url, {:target => "_blank", :class => "btn btn-default"} unless @assessment_rubric.reference_url.blank? %>
       </div>
     </div>

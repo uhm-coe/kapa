@@ -87,7 +87,7 @@ class Admin::UsersController < Admin::BaseController
 
       if person
         if person.email.blank?
-          p = Person.find_by_ldap(:first, person.id_number)
+          p = DirectorySystem.person(:ldap_id_number_filter, person.id_number)
           person.email = p.email if p and p.email.present?
         end
 
