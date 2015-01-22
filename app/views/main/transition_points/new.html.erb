@@ -2,7 +2,7 @@
   <%=render :partial => "/main/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", main_curriculum_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", main_curriculum_path(:id => @curriculum), :class => "glyphicon glyphicon-chevron-left" %>
     New Transition Point
   </h4>
   <%=bootstrap_form_for :transition_point, :url => main_transition_points_path(:id => @person), :remote => true do |f| %>
