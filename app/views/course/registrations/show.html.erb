@@ -29,18 +29,18 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#course_tab" data-toggle="tab">Course</a></li>
-      <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
+      <li class="<%='active' if params[:focus] == 'course' || params[:focus].nil? %>"><a href="#course_tab" data-toggle="tab">Course</a></li>
+      <li class="<%='active' if params[:focus] == 'assessment' %>"><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="course_tab" class="tab-pane active">
+      <div id="course_tab" class="tab-pane<%=' active' if params[:focus] == 'course' || params[:focus].nil? %>">
         <%=bootstrap_form_for :course_registration, :url => course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put}  do |f| %>
           <%=render :partial => "/course/registration_form" %>
         <% end %>
       </div>
 
-      <div id="assessment_tab" class="tab-pane">
+      <div id="assessment_tab" class="tab-pane<%=' active' if params[:focus] == 'assessment' %>">
         <%=bootstrap_form_for :filter, :url => course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
           <div class="row">
             <div class="col-sm-6">
@@ -48,7 +48,7 @@
             </div>
           </div>
         <% end %>
-        <%=bootstrap_form_for :assessment_score, :url => course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put} do |f| %>
+        <%=bootstrap_form_for :assessment_score, :url => course_registration_path(:id => @course_registration, :focus => :assessment), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/course/assessment_form" %>
           <%=controls if @current_user.write?(:course) %>
         <% end %>

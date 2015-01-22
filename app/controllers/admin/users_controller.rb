@@ -24,7 +24,7 @@ class Admin::UsersController < Admin::BaseController
     else
       flash[:danger] = error_message_for(@user)
     end
-    redirect_to admin_user_path(:id => @user)
+    redirect_to admin_user_path(:id => @user, :focus => params[:focus])
   end
 
   def create

@@ -5,10 +5,20 @@
     New School
   </h4>
 
-  <%=bootstrap_form_for :practicum_school, :url => practicum_schools_path do |f| %>
-    <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
-    <%=controls if @current_user.write? %>
-  <% end %>
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#school_profile_tab" data-toggle="tab">Profile</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="school_profile_tab" class="tab-pane active">
+        <%=bootstrap_form_for :practicum_school, :url => practicum_schools_path do |f| %>
+          <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
+          <%=controls if @current_user.write? %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
 <% end %>
 

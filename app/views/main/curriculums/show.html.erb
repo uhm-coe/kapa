@@ -8,19 +8,19 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
-      <li><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
+      <li class="<%='active' if params[:focus] == 'curriculum' || params[:focus].nil? %>"><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
+      <li class="<%='active' if params[:focus] == 'transition_points' %>"><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="curriculum_tab" class="tab-pane active">
+      <div id="curriculum_tab" class="tab-pane<%=' active' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
         <%=label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
           <%=render :partial => "/main/curriculum_form" %>
           <%=controls if @current_user.write?(:main) %>
         <% end %>
       </div>
 
-      <div id="transition_points_tab" class="tab-pane">
+      <div id="transition_points_tab" class="tab-pane<%=' active' if params[:focus] == 'transition_points' %>">
         <table class="table table-striped">
           <thead>
             <tr>
