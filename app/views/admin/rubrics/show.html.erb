@@ -7,12 +7,12 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#criterions_tab" data-toggle="tab">Criteria</a></li>
+      <li class="<%='active' if params[:focus] == 'rubric_profile' || params[:focus].nil? %>"><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
+      <li class="<%='active' if params[:focus] == 'criterions' %>"><a href="#criterions_tab" data-toggle="tab">Criteria</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="rubric_profile_tab" class="tab-pane active">
+      <div id="rubric_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'rubric_profile' || params[:focus].nil? %>">
         <%=label_form_for :assessment_rubric, :url => admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/admin/rubric_form", :locals => {:f => f} %>
           <%=controls do %>
@@ -27,26 +27,26 @@
         <% end %>
       </div>
 
-      <div id="criterions_tab" class="tab-pane">
+      <div id="criterions_tab" class="tab-pane<%=' active' if params[:focus] == 'criterions' %>">
         <div id="accordion" class="panel-group">
-          <%@assessment_criterions.each_with_index do |assessment_criterion, index| %>
-            <%@assessment_criterion = assessment_criterion %>
+          <% @assessment_criterions.each_with_index do |assessment_criterion, index| %>
+            <% @assessment_criterion = assessment_criterion %>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#assessment_criterion_<%=@assessment_criterion.id %>"><span class="strong"><%=h @assessment_criterion.criterion %></span></a>
                 </h3>
               </div>
-              <div id="assessment_criterion_<%=@assessment_criterion.id %>" class="panel-collapse collapse<%=' in' if index == 0 %>">
+              <div id="assessment_criterion_<%=@assessment_criterion.id %>" class="panel-collapse collapse<%=' in' if params[:criterion_panel] == assessment_criterion.id.to_s || (params[:criterion_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <%=label_form_for :assessment_criterion, :url => admin_criterion_path(:id => @assessment_criterion), :remote => true, :html => {:method => :put} do |f| %>
+                  <%=label_form_for :assessment_criterion, :url => admin_criterion_path(:id => @assessment_criterion, :focus => :criterions, :criterion_panel => assessment_criterion.id), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/admin/criterion_form" %>
                     <%=controls do %>
                     <% end if @current_user.manage? :admin, :delegate => :rubric %>
                   <% end %>
                   <!-- Delete button with popover confirmation -->
                   <% if @current_user.manage? :admin, :delegate => :rubric %>
-                    <form method="post" action="<%=admin_criterion_path(:id => @assessment_criterion) %>" class="btn-delete-form">
+                    <form method="post" action="<%=admin_criterion_path(:id => @assessment_criterion, :focus => :criterions) %>" class="btn-delete-form">
                       <input type="hidden" name="_method" value="delete">
                       <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                     </form>
@@ -65,7 +65,7 @@
             <div id="new_assessment_criterion" class="panel-collapse collapse<%=' in' if @assessment_criterions.length == 0 %>">
               <div class="panel-body">
                 <% @assessment_criterion = AssessmentCriterion.new %>
-                <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:id => @assessment_rubric), :remote => true do |f| %>
+                <%=label_form_for :assessment_criterion, :url => admin_criterions_path(:id => @assessment_rubric, :focus => :criterions), :remote => true do |f| %>
                   <%=render :partial => "/admin/criterion_form" %>
                   <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
                 <% end %>

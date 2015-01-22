@@ -9,7 +9,7 @@ class Main::TransitionActionsController < Main::BaseController
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to main_transition_point_path(:id => @transition_point, :focus => params[:focus])
+    redirect_to main_transition_point_path(:id => @transition_point, :focus => params[:focus], :action_panel => @action.id)
   end
 
   def update
@@ -21,7 +21,7 @@ class Main::TransitionActionsController < Main::BaseController
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to main_transition_point_path(:id => @action.transition_point_id, :focus => params[:focus])
+    redirect_to main_transition_point_path(:id => @action.transition_point_id, :focus => params[:focus], :action_panel => params[:action_panel])
   end
 
   def destroy

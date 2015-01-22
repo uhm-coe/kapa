@@ -6,7 +6,6 @@ class Admin::ProgramsController < Admin::BaseController
     @available_majors = @program.available_major.to_s.split(/,\s*/)
     @available_distributions = @program.available_distribution.to_s.split(/,\s*/)
     @assessment_rubrics = AssessmentRubric.includes(:assessment_criterions).where("program like '%#{@program.code}%'")
-
   end
 
   def update

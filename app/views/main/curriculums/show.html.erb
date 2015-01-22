@@ -2,7 +2,7 @@
   <%=render :partial => "/main/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", main_person_path(:id => @curriculum.person_id, :focus => :curriculum, :focus => :curriculum), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", main_person_path(:id => @curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
     <%= @program.description %>
   </h4>
 

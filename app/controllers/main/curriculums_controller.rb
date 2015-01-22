@@ -23,14 +23,22 @@ class Main::CurriculumsController < Main::BaseController
 
     unless @curriculum.save
       flash[:danger] = @curriculum.errors.full_messages.join(", ")
-      redirect_to main_curriculum_path(:id => @curriculum) and return false
+      if params[:transition_point_id]
+        redirect_to main_transition_point_path(:id => params[:transition_point_id]) and return false
+      else
+        redirect_to main_curriculum_path(:id => @curriculum) and return false
+      end
     end
 
     flash[:success] = "Academic record was successfully updated."
     if params[:return_uri]
       redirect_to params[:return_uri]
     else
-      redirect_to main_curriculum_path(:id => @curriculum)
+      if params[:transition_point_id]
+        redirect_to main_transition_point_path(:id => params[:transition_point_id])
+      else
+        redirect_to main_curriculum_path(:id => @curriculum)
+      end
     end
   end
 
