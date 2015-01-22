@@ -1,4 +1,4 @@
-class Curriculum < ApplicationModel
+class Curriculum < ApplicationBaseModel
   belongs_to :person
   belongs_to :program
   belongs_to :user_primary,

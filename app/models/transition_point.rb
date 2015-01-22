@@ -1,4 +1,4 @@
-class TransitionPoint < ApplicationModel
+class TransitionPoint < ApplicationBaseModel
   self.inheritance_column = nil
   belongs_to :curriculum
   belongs_to :term

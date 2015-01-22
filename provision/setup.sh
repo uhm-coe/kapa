@@ -21,10 +21,15 @@ sudo rm /etc/apache2/sites-available/default
 sudo cp /vagrant/provision/default /etc/apache2/sites-available/
 sudo service apache2 restart
 
-echo "Installing MySQL..."
-echo "mysql-server-5.5 mysql-server/root_password password password" | sudo debconf-set-selections
-echo "mysql-server-5.5 mysql-server/root_password_again password password" | sudo debconf-set-selections
-sudo apt-get -y install mysql-server-5.5 libmysqlclient-dev
+echo "Installing MariaDB..."
+sudo apt-get install python-software-properties
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+sudo add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.0/ubuntu precise main'
+sudo apt-get update
+export DEBIAN_FRONTEND=noninteractive
+sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password password'
+sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password password'
+sudo apt-get -y install mariadb-server libmariadbd-dev
 sudo service mysql restart
 
 echo "Installing Rails..."

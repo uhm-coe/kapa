@@ -7,15 +7,14 @@ require "kapa/version"
 Gem::Specification.new do |s|
   s.name        = "kapa"
   s.version     = Kapa::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Kapa."
-  s.description = "TODO: Description of Kapa."
+  s.authors     = ["Genta T."]
+  s.email       = ["withhawaii@gmail.com"]
+  s.homepage    = "https://coe.hawaii.edu"
+  s.summary     = "Academic Records Applcation Engine"
+  s.description = "KAPA provides consolidated information tools to support academic program administration. "
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.21"
-  s.add_dependency "jquery-rails"
 end

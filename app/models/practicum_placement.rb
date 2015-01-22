@@ -1,4 +1,4 @@
-class PracticumPlacement < ApplicationModel
+class PracticumPlacement < ApplicationBaseModel
   belongs_to :practicum_profile
   has_many :practicum_assignments, :dependent => :destroy
   belongs_to :user_primary,

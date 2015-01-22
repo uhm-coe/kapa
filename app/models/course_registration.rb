@@ -1,4 +1,4 @@
-class CourseRegistration < ApplicationModel
+class CourseRegistration < ApplicationBaseModel
   belongs_to :person
   belongs_to :course
   has_many :assessment_scores, :as => :assessment_scorable

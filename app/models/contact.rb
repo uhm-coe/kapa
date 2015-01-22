@@ -1,4 +1,4 @@
-class Contact < ApplicationModel
+class Contact < ApplicationBaseModel
   belongs_to :entity, :polymorphic => true
   validates_uniqueness_of :entity_id, :scope => :entity_type, :on => :create, :message => "is already used."
   

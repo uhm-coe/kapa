@@ -1,4 +1,4 @@
-class ExamScore < ApplicationModel
+class ExamScore < ApplicationBaseModel
   belongs_to :person
   belongs_to :exam
 

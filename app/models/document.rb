@@ -1,4 +1,4 @@
-class Document < ApplicationModel
+class Document < ApplicationBaseModel
   self.inheritance_column = nil
   belongs_to :person
   has_attached_file :data

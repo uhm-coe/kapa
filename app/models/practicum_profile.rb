@@ -1,4 +1,4 @@
-class PracticumProfile < ApplicationModel
+class PracticumProfile < ApplicationBaseModel
   belongs_to :person
   belongs_to :curriculum
   has_many :practicum_placements

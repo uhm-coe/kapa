@@ -1,4 +1,4 @@
-class User < ApplicationModel
+class User < ApplicationBaseModel
   @available_keys = {}
   attr_accessor :request, :email
 

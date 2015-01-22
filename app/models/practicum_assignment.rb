@@ -1,4 +1,4 @@
-class PracticumAssignment < ApplicationModel
+class PracticumAssignment < ApplicationBaseModel
   belongs_to :practicum_placement
   belongs_to :practicum_school
   belongs_to :person

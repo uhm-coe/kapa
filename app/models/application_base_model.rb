@@ -1,4 +1,4 @@
-class ApplicationModel < ActiveRecord::Base
+class ApplicationBaseModel < ActiveRecord::Base
   self.abstract_class = true
   serialize :yml, Hash
 #  before_save :update_xml
@@ -63,7 +63,15 @@ class ApplicationModel < ActiveRecord::Base
     DateTime.new(value.year, value.month, value.day, 23, 59, 0, 0) if value.is_a? Date
   end
 
-  def checksum(string)
-    Digest::SHA1.hexdigest(string)
+  def self.encrypt(string)
+    public_key = OpenSSL::PKey::RSA.new(File.read(Rails.configuration.public_key))
+    return Base64.encode64(public_key.public_encrypt(string))
+  end
+
+  def self.decrypt(string, key)
+    unless string.blank?
+      private_key = OpenSSL::PKey::RSA.new(key, Rails.configuration.passphrase)
+      return private_key.private_decrypt(Base64.decode64(string))
+    end
   end
 end

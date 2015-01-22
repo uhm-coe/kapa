@@ -1,4 +1,4 @@
-class TransitionAction < ApplicationModel
+class TransitionAction < ApplicationBaseModel
   self.inheritance_column = nil
   belongs_to :transition_point
   validates_presence_of :action, :action_date

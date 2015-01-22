@@ -1,4 +1,4 @@
-class Person < ApplicationModel
+class Person < ApplicationBaseModel
 #class Person < ActiveRecord::Base
   self.table_name = :persons
   #Main module associations
@@ -222,18 +222,5 @@ class Person < ApplicationModel
 #      logger.debug "found person = #{results.inspect}"
     end
     return results
-  end
-
-  private
-  def self.encrypt(string)
-    public_key = OpenSSL::PKey::RSA.new(File.read("#{Rails.root}/config/#{Rails.configuration.public_key}"))
-    return Base64.encode64(public_key.public_encrypt(string))
-  end
-
-  def self.decrypt(string, key)
-    unless string.blank?
-      private_key = OpenSSL::PKey::RSA.new(key, Rails.configuration.passphrase)
-      return private_key.private_decrypt(Base64.decode64(string))
-    end
   end
 end

@@ -1,4 +1,4 @@
-class Course < ApplicationModel
+class Course < ApplicationBaseModel
   belongs_to :term
   has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
 

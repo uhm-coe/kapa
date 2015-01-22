@@ -1,4 +1,4 @@
-class AdvisingSession < ApplicationModel
+class AdvisingSession < ApplicationBaseModel
   belongs_to :person
   belongs_to :template
   has_one :contact, :as => :entity

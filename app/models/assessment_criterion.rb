@@ -1,4 +1,4 @@
-class AssessmentCriterion < ApplicationModel
+class AssessmentCriterion < ApplicationBaseModel
   self.inheritance_column = nil
   belongs_to :assessment_rubric
   has_many :assessment_scores

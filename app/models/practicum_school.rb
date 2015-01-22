@@ -1,4 +1,4 @@
-class PracticumSchool < ApplicationModel
+class PracticumSchool < ApplicationBaseModel
   has_one :contact, :as => :entity
   has_many :practicum_assignments
 
