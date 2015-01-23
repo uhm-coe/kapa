@@ -77,7 +77,6 @@ class ApplicationBaseModel < ActiveRecord::Base
 
   # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields
   def remove_values(array)
-    logger.debug("----mrb3 called here as well #{array}")
     array.delete_if {|x| x.blank? || x == "multiselect-all"} if array
   end
 end
