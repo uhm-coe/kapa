@@ -11,7 +11,7 @@ class User < ApplicationBaseModel
   validates_presence_of :uid
   validates_presence_of :password, :on => :create, :if => :local?
 
-  before_validation :use_email_as_uid
+  before_validation :use_email_as_uid, :remove_extra_values
   before_save :format_fields, :join_attributes
   after_save :update_contact
 
@@ -33,6 +33,10 @@ class User < ApplicationBaseModel
 
   def use_email_as_uid
     self.uid = self.email if self.email.present?
+  end
+
+  def remove_extra_values
+    remove_values(@depts)
   end
 
   def format_fields
