@@ -29,6 +29,25 @@
         $('#person_artifact_modal').modal('show');
       });
 
+      $('body').on('click', '#edit_form', function() {
+        var formId = $(this).data('id');
+        if (formId) {
+          // Send Ajax request to retrieve @form so that #edit_form_dialog can be populated
+          $.get('<%=main_person_path(:id => @person)%>', {
+              form_id: formId
+            }, function(data) {
+              $('#edit_form_dialog .modal-body').html(data);
+            }
+          );
+
+          $('#person_artifact_modal').modal('hide');
+        }
+      });
+
+      $('#edit_form_dialog #modal_close').click(function() {
+        $('#person_artifact_modal').modal('show');
+      });
+
       $('#person_id_number').keyup(function () {
         if ($(this).val().match(/[\d]{8}/i)) {
           $.get('<%=ajax_main_person_path(:id => @person, :command => :verify)%>',
@@ -105,5 +124,9 @@
 <% end %>
 
 <%=render :layout => '/layouts/modal', :locals => {:modal_id => "edit_document_dialog", :modal_title => "Edit file metadata", :modal_form_id => "edit_document_form"} do %>
+  <!-- Rendered dynamically after Edit button is clicked -->
+<% end %>
+
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form metadata", :modal_form_id => "edit_form_form"} do %>
   <!-- Rendered dynamically after Edit button is clicked -->
 <% end %>

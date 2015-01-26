@@ -14,6 +14,10 @@ class Main::PersonsController < Main::BaseController
       @document = Document.find(params[:doc_id])
       @title = @document.name
       render :partial => "/artifact/documents/edit", :layout => false
+    elsif (params[:form_id])
+      @form = Form.find(params[:form_id])
+      @title = @form.type_desc
+      render :partial => "/artifact/forms/edit", :layout => false
     end
   end
 

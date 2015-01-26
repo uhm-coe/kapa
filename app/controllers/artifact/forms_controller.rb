@@ -7,12 +7,6 @@ class Artifact::FormsController < Artifact::BaseController
     render :layout => "artifact"
   end
 
-  def edit
-    @form = Form.find params[:id]
-    @person = @form.person
-    @title = @form.type_desc
-  end
-
   def update
     @form = Form.find params[:id]
     @person = @form.person
@@ -21,11 +15,11 @@ class Artifact::FormsController < Artifact::BaseController
     @form.lock = params[:form][:lock] unless params[:form][:lock].blank?
 
     if @form.save
-      flash[:success] = "Form was updated."
+      flash[:success] = "Form was successfully updated."
     else
       flash[:danger] = error_message_for(@form)
     end
-    redirect_to edit_artifact_form_path(:id => @form)
+    redirect_to main_person_path(:id => @person)
   end
 
   def create
@@ -50,7 +44,7 @@ class Artifact::FormsController < Artifact::BaseController
       redirect_to artifact_form_path(:id => @form) and return false
     end
     flash[:success] = "Form was successfully deleted."
-    redirect_to main_persons_path(:action => :show, :id => @form.person_id)
+    redirect_to main_person_path(:id => @form.person_id)
   end
 
   def index
