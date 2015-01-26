@@ -5,9 +5,19 @@
     New System Property
   </h4>
 
-  <%=bootstrap_form_for :property, :url => admin_properties_path, :remote => true do |f| %>
-    <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
-    <%=controls %>
-  <% end %>
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#property_tab" data-toggle="tab">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="property_tab" class="tab-pane active">
+        <%=bootstrap_form_for :property, :url => admin_properties_path, :remote => true do |f| %>
+          <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
+          <%=controls %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
 <% end %>

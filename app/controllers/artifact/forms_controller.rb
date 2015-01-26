@@ -7,6 +7,12 @@ class Artifact::FormsController < Artifact::BaseController
     render :layout => "artifact"
   end
 
+  def edit
+    @form = Form.find params[:id]
+    @person = @form.person
+    @title = @form.type_desc
+  end
+
   def update
     @form = Form.find params[:id]
     @person = @form.person
@@ -19,7 +25,7 @@ class Artifact::FormsController < Artifact::BaseController
     else
       flash[:danger] = error_message_for(@form)
     end
-    redirect_to artifact_form_path(:id => @form)
+    redirect_to edit_artifact_form_path(:id => @form)
   end
 
   def create

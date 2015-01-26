@@ -6,7 +6,6 @@ class Artifact::DocumentsController < Artifact::BaseController
     @title = @document.name
 
     respond_to do |format|
-      format.html {render :layout => "artifact"}
       format.file {
         disposition = params[:inline] ? "inline" : "attachment"
           send_file @document.data.path,
@@ -15,6 +14,12 @@ class Artifact::DocumentsController < Artifact::BaseController
             :disposition  => disposition
       }
     end
+  end
+
+  def edit
+    @document = Document.find(params[:id])
+    @person = @document.person
+    @title = @document.name
   end
 
   def update
@@ -32,7 +37,7 @@ class Artifact::DocumentsController < Artifact::BaseController
     else
       flash[:danger] = error_message_for(@document)
     end
-    redirect_to artifact_document_path(:id => @document)
+    redirect_to edit_artifact_document_path(:id => @document)
   end
 
   def create

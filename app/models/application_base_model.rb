@@ -18,14 +18,14 @@ class ApplicationBaseModel < ActiveRecord::Base
 
   def serialize(name, value)
     self.yml = Hash.new if self.yml.blank?
-    self.yml[name] = value if value    
+    self.yml[name] = value if value
   end
 
   def serialize!(name, value)
     self.serialize(name, value)
     self.save!
   end
-  
+
   def update_serialized_attributes(name, hash)
     value = self.deserialize(name)
 #    value = {} if value.nil?
@@ -73,5 +73,10 @@ class ApplicationBaseModel < ActiveRecord::Base
       private_key = OpenSSL::PKey::RSA.new(key, Rails.configuration.passphrase)
       return private_key.private_decrypt(Base64.decode64(string))
     end
+  end
+
+  # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields
+  def remove_values(array)
+    array.delete_if {|x| x.blank? || x == "multiselect-all"} if array
   end
 end

@@ -2,6 +2,14 @@
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
 
+      $('#upload_document').click(function() {
+        $('#person_artifact_modal').modal('hide');
+      });
+
+      $('#document_dialog #modal_close').click(function() {
+        $('#person_artifact_modal').modal('show');
+      });
+
       $('#person_id_number').keyup(function () {
         if ($(this).val().match(/[\d]{8}/i)) {
           $.get('<%=ajax_main_person_path(:id => @person, :commnad => :verify)%>',
@@ -11,7 +19,7 @@
                   },
                   'html');
         }
-      })
+      });
 
       $('#person_email').keyup(function () {
         if ($(this).val().match(/\w+@hawaii.edu/i)) {
@@ -22,7 +30,7 @@
                   },
                   'html');
         }
-      })
+      });
 
       $('#person_sync_button').click(function () {
         $.get('<%=ajax_main_person_path(:id => @person, :command => :sync)%>',
@@ -31,7 +39,8 @@
                   $('#person_form').html(data);
                 },
                 'html');
-      })
+      });
+
     });
   </script>
 <% end %>
@@ -67,3 +76,11 @@
 <%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Artifacts"} do %>
   <%= render :partial => "/artifact/document_table" %>
 <% end if @current_user.read? :artifact %>
+
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+    <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
+    <%=f.file_field :data %>
+    <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
+  <% end %>
+<% end %>

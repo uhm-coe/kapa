@@ -36,15 +36,6 @@
     <%= javascript_include_tag "kapa" %>
     <%= yield :head %>
 
-    <% if params[:controller] == "artifact/documents" %>
-      <style TYPE="text/css">
-        <!--
-        html, body, div, iframe { margin:0; padding:0; height:100%; }
-        iframe { display:block; width:100%; border:none; }
-        -->
-      </style>
-    <% end %>
-
     <title><%=h "#{@person.full_name}/" if @person%><%=h @title %></title>
   </head>
 

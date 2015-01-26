@@ -20,7 +20,7 @@ class Practicum::SchoolsController < Practicum::BaseController
       redirect_to new_practicum_school_path and return false
     end
     flash[:success] = "School was sccessfully created."
-    redirect_to :action => :show, :id => @practicum_school
+    redirect_to practicum_school_path(:id => @practicum_school)
   end
 
   def update
@@ -33,7 +33,7 @@ class Practicum::SchoolsController < Practicum::BaseController
     else
       flash[:danger] = "Failed to update school profile."
     end
-    redirect_to practicum_school_path(:id => @practicum_school)
+    redirect_to practicum_school_path(:id => @practicum_school, :focus => params[:focus])
   end
 
   def import

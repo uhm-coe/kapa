@@ -6,7 +6,14 @@ class Program < ApplicationBaseModel
   validates_uniqueness_of :code
   validates_presence_of :code
 
+  before_validation :remove_extra_values
   before_save :join_attributes
+
+  def remove_extra_values
+    remove_values(self.available_majors)
+    remove_values(self.available_distributions)
+    remove_values(self.available_tracks)
+  end
 
   def join_attributes
     self.available_major = @available_majors ? @available_majors.join(",") : "" if @available_majors

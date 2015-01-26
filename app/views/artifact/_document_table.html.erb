@@ -21,9 +21,11 @@
         <td><%=format_date d.date %></td>
         <td class="right">
           <% if d.is_a? Document %>
-            <%=link_to "Show", artifact_document_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs"  %>
+            <%=link_to "Edit", edit_artifact_document_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
+            <%=link_to "Show", artifact_document_path(:id => d, :format => :file, :inline => true), :target => :blank, :class => "btn btn-default btn-xs" %>
           <% elsif d.is_a? Form %>
-            <%=link_to "Show", artifact_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs"  %>
+            <%=link_to "Edit", edit_artifact_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
+            <%=link_to "Show", artifact_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
           <% end %>
         </td>
       </tr>
@@ -33,15 +35,7 @@
 <div class="row">
   <div class="col-sm-12">
     <% if @current_user.write? :artifact %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#document_dialog">Upload a document</button>
+      <button type="button" id="upload_document" class="btn btn-default" data-toggle="modal" data-target="#document_dialog">Upload a document</button>
     <% end %>
   </div>
 </div>
-
-<%=render :layout => '/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
-    <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
-    <%=f.file_field :data %>
-    <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
-  <% end %>
-<% end %>
