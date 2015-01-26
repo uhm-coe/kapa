@@ -1,0 +1,21 @@
+<%=bootstrap_form_for :document, :url => artifact_document_path(:id => @document), :html => {:method => :put, :multipart => true, :id => "edit_document_form"}, :remote => true do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :name %>
+      <%=f.file_field :data, :text => "Replace file" if @current_user.write? :artifact, :dept => @document.dept %>
+      <%=f.text_field :dept if @current_user.manage? %>
+      <%=f.check_box :public, {:text => "Share document"}, "Y", "N" %>
+    </div>
+    <div class="col-sm-6">
+      <%=f.text_area :note, :size => "5x10" %>
+    </div>
+  </div>
+  <%=f.hidden_field :person_id, :value => @person.id %>
+<% end %>
+<!-- Delete button with popover confirmation -->
+<% if @current_user.write? :artifact, :dept => @document.dept %>
+  <form method="post" action="<%=artifact_document_path(:id => @document) %>" class="btn-delete-form">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+  </form>
+<% end %>

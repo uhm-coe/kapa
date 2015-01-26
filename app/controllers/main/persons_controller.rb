@@ -9,6 +9,12 @@ class Main::PersonsController < Main::BaseController
     @curriculums = @person.curriculums.find(:all, :include => {:transition_points => :term}, :order => "terms.sequence DESC")
     @course_registrations = CourseRegistration.includes(:course => :term).where(["person_id = ?", @person.id]).order("terms.sequence DESC")
     @practicum_profiles = @person.practicum_profiles
+
+    if (params[:doc_id])
+      @document = Document.find(params[:doc_id])
+      @title = @document.name
+      render :partial => "/artifact/documents/edit", :layout => false
+    end
   end
 
   def new

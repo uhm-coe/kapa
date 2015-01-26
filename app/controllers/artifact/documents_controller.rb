@@ -16,12 +16,6 @@ class Artifact::DocumentsController < Artifact::BaseController
     end
   end
 
-  def edit
-    @document = Document.find(params[:id])
-    @person = @document.person
-    @title = @document.name
-  end
-
   def update
     @document = Document.find(params[:id])
     @person = @document.person
@@ -37,7 +31,7 @@ class Artifact::DocumentsController < Artifact::BaseController
     else
       flash[:danger] = error_message_for(@document)
     end
-    redirect_to edit_artifact_document_path(:id => @document)
+    redirect_to main_person_path(:id => @person)
   end
 
   def create
