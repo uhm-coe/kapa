@@ -169,7 +169,7 @@ class Person < ApplicationBaseModel
     logger.debug "--local search found person = #{results.inspect}"
     if results.blank?
       logger.debug "---LDAP search initiated for #{key}"
-      results.push(DirectorySystem.person(:ldap_id_number_filter, key))
+      results.push(DirectoryService.person(key))
       logger.debug "---LDAP result #{results.inspect}"
 
       #Make sure the LDAP result does not have in local database.

@@ -128,7 +128,7 @@ class User < ApplicationBaseModel
   protected
   def valid_credential?(password)
     if category == "ldap"
-      DirectorySystem.authenticate(self.uid, password)
+      DirectoryService.authenticate(self.uid, password)
     else
       #Use Authlogic authentication for local users.
       valid_password?(password)

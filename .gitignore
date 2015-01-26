@@ -1,7 +1,21 @@
-# Mac-specific
-.DS_Store
-
-# Modified after running app
-.vagrant
+#rails temp files
+*.sqlite3
+log/*
+tmp/*
+db/backup/*
 test/dummy/log
 test/dummy/tmp
+
+#generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+#IDE files, etc...
+nbproject/*
+.idea/*
+.vagrant*
+.project
+.loadpath
