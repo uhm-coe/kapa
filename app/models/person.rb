@@ -133,45 +133,6 @@ class Person < ApplicationBaseModel
     end
   end
 
-  def self.find_by_ldap(first_or_all, key)
-
-    case key
-    when /[\d]{8}/
-      filter = "#{Rails.configuration.ldap_attr_id_number}=#{key}"
-    when /^[A-Z0-9_%+-]+@hawaii.edu$/i
-      filter = "#{Rails.configuration.ldap_attr_email}=#{key}"
-    else
-      filter = nil
-    end
-
-    persons = Array.new
-    Rails.configuration.ldap.search(:base => Rails.configuration.ldap_search_base, :filter => filter ) do |entry|
-      person = Person.new
-      logger.debug "----LDAP search entry #{entry.dn}"
-      entry.each do |attribute, values|
-        case attribute.to_s
-          when Rails.configuration.ldap_attr_id_number
-            person.id_number = values.first.to_s
-          when Rails.configuration.ldap_attr_last_name
-            person.last_name = values.first.to_s
-          when Rails.configuration.ldap_attr_first_name
-            person.first_name = values.first.to_s
-          when Rails.configuration.ldap_attr_email
-            person.email = values.first.to_s
-        end
-      end
-      person.source = "UH LDAP"
-      person.status = "V"
-      persons.push(person)
-    end if filter
-
-    if first_or_all == :first
-      return persons.first
-    else
-      return persons
-    end
-  end
-
   def self.search(first_or_all, key, options = {})
 #    logger.debug "key = '#{key}' length = #{key.length}"
     if key.blank?
@@ -208,7 +169,7 @@ class Person < ApplicationBaseModel
     logger.debug "--local search found person = #{results.inspect}"
     if results.blank?
       logger.debug "---LDAP search initiated for #{key}"
-      results = Person.find_by_ldap(first_or_all, key)
+      results.push(DirectoryService.person(key))
       logger.debug "---LDAP result #{results.inspect}"
 
       #Make sure the LDAP result does not have in local database.
@@ -219,7 +180,6 @@ class Person < ApplicationBaseModel
           results = existing_person
         end
       end
-#      logger.debug "found person = #{results.inspect}"
     end
     return results
   end

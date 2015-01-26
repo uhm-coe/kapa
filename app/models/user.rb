@@ -132,19 +132,7 @@ class User < ApplicationBaseModel
   protected
   def valid_credential?(password)
     if category == "ldap"
-      ldap = Rails.configuration.ldap
-      base = Rails.configuration.ldap_search_base
-      filter = "#{Rails.configuration.ldap_attr_uid}=#{self.uid}"
-      dn = nil
-      ldap.search(:base => base, :filter => filter) do |entry|
-        dn = entry.dn
-      end
-#      logger.debug "---:#{base}, filter:#{filter}, dn: #{dn}"
-      return false if dn.nil?
-
-      result = ldap.bind(:method => :simple, :dn => dn , :password => password)
-#      logger.debug "---bind?:#{result}"
-      return result
+      DirectoryService.authenticate(self.uid, password)
     else
       #Use Authlogic authentication for local users.
       valid_password?(password)

@@ -128,7 +128,7 @@ class Main::PersonsController < Main::BaseController
   def sync
     @person = Person.find(params[:id])
     key = params[:key]
-    @person_verified = Person.find_by_ldap :first, key
+    @person_verified = DirectoryService.person(key)
 
     if @person_verified
       @person.id_number = @person_verified.id_number

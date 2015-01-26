@@ -87,7 +87,7 @@ class Admin::UsersController < Admin::BaseController
 
       if person
         if person.email.blank?
-          p = Person.find_by_ldap(:first, person.id_number)
+          p = DirectoryService.person(person.id_number)
           person.email = p.email if p and p.email.present?
         end
 
@@ -100,7 +100,7 @@ class Admin::UsersController < Admin::BaseController
           user.department = [department(row["eac1"]), department(row["eac2"]), department(row["eac3"]), department(row["eac4"])].delete_if {|e| e.nil?}.first
           user.emp_status = 2
           unless user.save
-            logger.error "---Failed to save user: {#{user.errors.full_messages}}--"
+            logger.error "!!!!-- Failed to save user: {#{user.errors.full_messages}}"
           end
         end
       end
