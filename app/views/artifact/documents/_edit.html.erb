@@ -14,8 +14,5 @@
 <% end %>
 <!-- Delete button with popover confirmation -->
 <% if @current_user.write? :artifact, :dept => @document.dept %>
-  <form method="post" action="<%=artifact_document_path(:id => @document) %>" class="btn-delete-form">
-    <input type="hidden" name="_method" value="delete">
-    <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-  </form>
+  <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", artifact_document_path(:id => @document), {:method => :delete, "data-confirm" => "Are you sure you want to delete this?", :class => "btn btn-default"} %>
 <% end %>

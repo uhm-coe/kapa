@@ -105,13 +105,13 @@
 </h3>
 
 <%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
-  <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :focus => "profile", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
+  <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
     <%= render :partial => "/main/person_form" %>
   <% end %>
 <% end if @current_user.read? :main %>
 
 <%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
-  <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :focus => "contact", :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "contact_form"} do %>
+  <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "contact_form"} do %>
     <%= render :partial => "/main/contact_form", :locals => {:object_name => :contact} %>
   <% end %>
 <% end if @current_user.read? :main %>
@@ -121,17 +121,17 @@
 <% end if @current_user.read? :artifact %>
 
 <%=render :layout => '/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :focus => "document", :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
     <%=f.file_field :data %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
   <% end %>
 <% end %>
 
-<%=render :layout => '/layouts/modal', :locals => {:modal_id => "edit_document_dialog", :modal_title => "Edit file metadata", :modal_form_id => "edit_document_form"} do %>
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "edit_document_dialog", :modal_title => "Edit file data", :modal_form_id => "edit_document_form"} do %>
   <!-- Rendered dynamically after Edit button is clicked -->
 <% end %>
 
-<%=render :layout => '/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form metadata", :modal_form_id => "edit_form_form"} do %>
+<%=render :layout => '/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form data", :modal_form_id => "edit_form_form"} do %>
   <!-- Rendered dynamically after Edit button is clicked -->
 <% end %>

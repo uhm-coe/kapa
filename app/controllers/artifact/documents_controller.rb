@@ -37,6 +37,7 @@ class Artifact::DocumentsController < Artifact::BaseController
   def create
     if params[:document][:data].nil?
       flash[:warning] = "No file was specified. Please select a file to upload."
+      params[:return_url][:artifacts_modal] = "show"
       redirect_to params[:return_url] and return false
     end
 
@@ -49,21 +50,23 @@ class Artifact::DocumentsController < Artifact::BaseController
     @document.dept = @current_user.primary_dept
     unless @document.save
       flash[:danger] = error_message_for(@document)
+      params[:return_url][:artifacts_modal] = "show"
       redirect_to params[:return_url] and return false
     end
 
     flash[:success] = "Document was successfully uploaded. Please verify that it is legible."
-    params[:return_url][:focus] = params[:focus]
+    params[:return_url][:artifacts_modal] = "show"
     redirect_to params[:return_url]
   end
 
   def destroy
     @document = Document.find(params[:id])
-    unless @document.destroy
+
+    if @document.destroy
+      flash[:success] = "Document was successfully deleted."
+    else
       flash[:danger] = error_message_for(@document)
-      redirect_to artifact_document_path(:id => @document) and return false
     end
-    flash[:success] = "Document was successfully deleted."
-    redirect_to main_person_path(:id => @document.person_id)
+    redirect_to main_person_path(:id => @document.person_id, :artifacts_modal => "show")
   end
 end
