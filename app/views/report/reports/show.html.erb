@@ -1,0 +1,24 @@
+<% content_for(:head) do %>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart", "charteditor"]});
+    $(function(){
+        var derivers = $.pivotUtilities.derivers;
+        var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
+
+        $.getJSON('<%=feed_data_set_path(@data_set)%>', function(response) {
+            var data = response['data'];
+            data.unshift(response['data_columns']);
+            $("#output").pivotUI(data, {renderers: renderers});
+        });
+     });
+  </script>
+<% end %>
+
+<div class="page-header">
+  <h3><%=@data_set.name %></h3>
+</div>
+
+<div id="output" style="margin: 10px;"></div>
+
+<%= link_to t('.back', :default => t("helpers.links.back")), reports_path, :class => 'btn btn-default'  %>

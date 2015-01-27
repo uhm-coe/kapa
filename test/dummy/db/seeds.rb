@@ -34,5 +34,5 @@ end
 person = Person.create(:last_name => "Admin", :first_name => "User")
 user = person.users.create(:uid => "admin", :category => "local", :status => 3, :emp_status => 3)
 user.password = "admin"
-user.serialize(:role, {:main => '3', :main_list => '3', :artifact => '3', :artifact_list => '3', :advising => '3', :advising_list => '3', :course => '3', :course_list => '3', :practicum => '3', :practicum_list => '3', :admin => '3'})
+user.serialize(:role, {:main => '3', :main_list => '3', :artifact => '3', :artifact_list => '3', :advising => '3', :advising_list => '3', :course => '3', :course_list => '3', :practicum => '3', :practicum_list => '3', :report => '3', :report_list => '3', :admin => '3'})
 user.save!

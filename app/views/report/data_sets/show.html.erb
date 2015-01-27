@@ -1,0 +1,33 @@
+<%- model_class = DataSet -%>
+<div class="page-header">
+  <h3><%=t '.title', :default => model_class.model_name.human.titleize %></h3>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:type) %>:</strong></dt>
+  <dd><%= @data_set.type %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @data_set.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:data_source_id) %>:</strong></dt>
+  <dd><%= @data_set.data_source.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:query) %>:</strong></dt>
+  <dd><%= @data_set.query.to_s.gsub(/\n/, "<br/>").html_safe %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:loaded_at) %>:</strong></dt>
+  <dd><%= @data_set.loaded_at %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:record_count) %>:</strong></dt>
+  <dd><%= @data_set.record_count %></dd>
+  <dt><strong>JSON Feed:</strong></dt>
+  <dd><%= link_to feed_data_set_url(@data_set), feed_data_set_url(@data_set) %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              report_data_sets_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_data_set_path(@data_set), :class => 'btn btn-default' %>
+<%= link_to t('.load', :default => t("helpers.links.load")),
+              load_data_set_path(@data_set), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              data_set_path(@data_set),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

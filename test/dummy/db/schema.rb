@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150109073920) do
+ActiveRecord::Schema.define(:version => 20150126201400) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -199,6 +199,29 @@ ActiveRecord::Schema.define(:version => 20150109073920) do
   add_index "curriculums", ["program_id"], :name => "index_curriculums_on_program_id"
   add_index "curriculums", ["user_primary_id"], :name => "index_curriculums_on_user_primary_id"
   add_index "curriculums", ["user_secondary_id"], :name => "index_curriculums_on_user_secondary_id"
+
+  create_table "data_sets", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.integer  "datasource_id"
+    t.string   "url"
+    t.text     "query"
+    t.string   "attr"
+    t.integer  "record_count"
+    t.datetime "loaded_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "data_sources", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "url"
+    t.string   "user"
+    t.string   "password"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "documents", :force => true do |t|
     t.integer  "person_id",                          :null => false
@@ -451,7 +474,7 @@ ActiveRecord::Schema.define(:version => 20150109073920) do
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string  "available_term_id"
+    t.integer  "available_term_id"
   end
 
   create_table "programs", :force => true do |t|

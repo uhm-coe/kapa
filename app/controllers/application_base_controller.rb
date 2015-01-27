@@ -139,6 +139,10 @@ class ApplicationBaseController < ActionController::Base
       items.push ["Placement Audits", practicum_placements_path]  if @current_user.read?(:practicum)
       items.push ["Mentor Assignments", practicum_assignments_path]  if @current_user.read?(:practicum)
       items.push ["Schools", practicum_schools_path]  if @current_user.read?(:practicum)
+    when "report"
+      items.push ["Reports", report_reports_path]  if @current_user.read?(:report)
+      items.push ["Data Sets", report_data_sets_path]  if @current_user.manage?(:report)
+      items.push ["Data Sources", report_data_sources_path]  if @current_user.manage?(:report)
     when "admin"
       items.push ["Terms", admin_terms_path] if @current_user.manage?(:admin, :delegate => :term)
       items.push ["Programs", admin_programs_path]  if @current_user.manage?(:admin, :delegate => :program)

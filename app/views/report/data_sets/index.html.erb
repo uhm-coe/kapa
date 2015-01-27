@@ -1,0 +1,38 @@
+<% content_for(:box1) do %>
+<%- model_class = DataSet -%>
+<div class="page-header">
+  <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:type) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:data_source) %></th>
+      <th><%= model_class.human_attribute_name(:attr) %></th>
+      <th><%= model_class.human_attribute_name(:loaded_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @data_sets.each do |data_set| %>
+      <tr>
+        <td><%= data_set.id %></td>
+        <td><%= data_set.type %></td>
+        <td><%= data_set.name %></td>
+        <td><%= data_set.data_source.name %></td>
+        <td><%= data_set.attr %></td>
+        <td><%= data_set.loaded_at %></td>
+        <td>
+          <%= link_to "Show", data_set_path(data_set), :class => 'btn btn-default btn-xs' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_report_data_set_path,
+            :class => 'btn btn-primary' %>
+<%end%>

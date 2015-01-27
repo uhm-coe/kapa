@@ -3,6 +3,7 @@ module Kapa
   end
 end
 
-Gem.loaded_specs['kapa'].dependencies.each do |d|
- require d.name
-end
+#TODO: loaded_specs['kapa'] returns nil when it is running on test/dummy
+#Gem.loaded_specs['kapa'].runtime_dependencies.each do |d|
+# require d.name
+#end

@@ -1,0 +1,5 @@
+<%- model_class = DataSource -%>
+<div class="page-header">
+  <h3><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h3>
+</div>
+<%= render :partial => 'form' %>

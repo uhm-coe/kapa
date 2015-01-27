@@ -46,6 +46,12 @@ Rails.application.routes.draw do
     resources :assignments, &extra_actions
   end
 
+  namespace :report do
+    resources :reports, &extra_actions
+    resources :data_sources, &extra_actions
+    resources :data_sets, &extra_actions
+  end
+
   namespace :admin do
     resources :users, &extra_actions
     resources :terms, &extra_actions
