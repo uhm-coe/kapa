@@ -1,2 +1,2 @@
-module Main::BaseHelper
+module Report::BaseHelper
 end

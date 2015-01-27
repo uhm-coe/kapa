@@ -1,4 +1,5 @@
-<%= form_for @data_source, :html => { :class => 'form-horizontal' } do |f| %>
+<%=fields_for :data_source do |f|%>
+
   <div class="form-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
@@ -29,9 +30,5 @@
       <%= f.text_field :password, :class => 'form-control' %>
     </div>
   </div>
-  
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            data_sources_path, :class => 'btn btn-default' %>
- 
+
 <% end %>

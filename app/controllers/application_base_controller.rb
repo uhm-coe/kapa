@@ -154,7 +154,7 @@ class ApplicationBaseController < ActionController::Base
     items
   end
 
-  #This method returns nil if it encounter any nil object during reflection.
+  #This method returns nil if it encounters any nil object during reflection.
   def rsend(object, *args, &block)
     obj = object
     args.each do |a|

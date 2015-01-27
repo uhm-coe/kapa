@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(:version => 20150126201400) do
   create_table "data_sets", :force => true do |t|
     t.string   "type"
     t.string   "name"
-    t.integer  "datasource_id"
+    t.integer  "data_source_id"
     t.string   "url"
     t.text     "query"
     t.string   "attr"

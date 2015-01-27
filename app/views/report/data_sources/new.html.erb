@@ -1,5 +1,7 @@
-<%- model_class = DataSource -%>
-<div class="page-header">
-  <h3><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h3>
-</div>
-<%= render :partial => 'form' %>
+<% content_for(:box1) do %>
+
+  <%= form_for :data_source, :url => report_data_sources_path, :html => { :class => 'form-horizontal' } do |f| %>
+    <%= render :partial => 'report/data_source_form' %>
+  <% end %>
+
+<% end %>
