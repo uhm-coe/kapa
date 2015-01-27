@@ -1,0 +1,68 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_advising_sessions_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <div class="form-group">
+        <%=label_tag "filter_date_start", "Start Date" %>
+        <%=date_picker :filter, :date_start %>
+      </div>
+      <div class="form-group">
+        <%=label_tag "filter_date_end", "End Date" %>
+        <%=date_picker :filter, :date_end %>
+      </div>
+      <%= f.property_select :task, :include_blank => true, :name => :advising_task %>
+      <%= f.property_select :interest, :include_blank => true, :name => :advising_interest, :label => "Area of Interest" %>
+      <%= f.user_select :user_id, :include_blank => true, :depts => @current_user.depts %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Advising Sessions</h3>
+
+  <div class="row">
+    <div class="text-right">
+      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :advising, :delegate => :export %>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+    </div>
+  </div>
+
+  <table id="advising_list" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Task</th>
+        <th>Area of Interest</th>
+        <th>Adviser</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for advising_session in @advising_sessions %>
+        <tr>
+          <td><%=advising_session.person.id_number %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(advising_session.person.full_name), kapa_main_person_path(:id => advising_session.person_id) %></td>
+          <td><%=format_date advising_session.session_date %></td>
+          <td><%=abbr advising_session.task.to_s, 25 %></td>
+          <td><%=abbr advising_session.interest.to_s, 25 %></td>
+          <td><%=h advising_session.user_primary.person.last_name if advising_session.user_primary %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => advising_session}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%=will_paginate @advising_sessions, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>

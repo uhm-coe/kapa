@@ -55,7 +55,7 @@ module UniFormHelper
       f.date_select(method, options)
     end
   end
-  
+
   def uni_radio_button object_name, method, tag_value = "Y", options = {}
     uni_fields_for object_name do |f|
       f.radio_button(method, tag_value, options)
@@ -117,7 +117,7 @@ module UniFormHelper
     end
 
     private
-    def build_field(tag, method, options = {}) 
+    def build_field(tag, method, options = {})
       if options[:label].kind_of?(Hash)
         label_options = options[:label]
       elsif options[:label].kind_of?(String)
@@ -136,5 +136,5 @@ module UniFormHelper
 #      tags << @template.content_tag(:p, options[:hint], :class => "formHint") if options[:hint]
       @template.content_tag :div, tags.html_safe, :class => "ctrlHolder"
     end
-  end  
+  end
 end

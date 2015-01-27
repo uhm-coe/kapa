@@ -1,0 +1,142 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+      // Show artifacts modal, usually after document or form update
+      if ('<%=params[:artifacts_modal] %>' === 'show') {
+        $('#person_artifact_modal').modal('show');
+      }
+
+      $('#upload_document').click(function() {
+        $('#person_artifact_modal').modal('hide');
+      });
+
+      $('#document_dialog #modal_close').click(function() {
+        $('#person_artifact_modal').modal('show');
+      });
+
+      $('body').on('click', '#edit_document', function() {
+        var documentId = $(this).data('id');
+        if (documentId) {
+          // Send Ajax request to retrieve @document so that #edit_document_dialog can be populated
+          $.get('<%=main_person_path(:id => @person)%>', {
+              doc_id: documentId
+            }, function(data) {
+              $('#edit_document_dialog .modal-body').html(data);
+            }
+          );
+
+          $('#person_artifact_modal').modal('hide');
+        }
+      });
+
+      $('#edit_document_dialog #modal_close').click(function() {
+        $('#person_artifact_modal').modal('show');
+      });
+
+      $('body').on('click', '#edit_form', function() {
+        var formId = $(this).data('id');
+        if (formId) {
+          // Send Ajax request to retrieve @form so that #edit_form_dialog can be populated
+          $.get('<%=main_person_path(:id => @person)%>', {
+              form_id: formId
+            }, function(data) {
+              $('#edit_form_dialog .modal-body').html(data);
+            }
+          );
+
+          $('#person_artifact_modal').modal('hide');
+        }
+      });
+
+      $('#edit_form_dialog #modal_close').click(function() {
+        $('#person_artifact_modal').modal('show');
+      });
+
+      $('#person_id_number').keyup(function () {
+        if ($(this).val().match(/[\d]{8}/i)) {
+          $.get('<%=ajax_main_person_path(:id => @person, :command => :verify)%>',
+                  {key: $(this).val()},
+                  function (data) {
+                    $('#person_form').html(data);
+                  },
+                  'html');
+        }
+      });
+
+      $('#person_email').keyup(function () {
+        if ($(this).val().match(/\w+@hawaii.edu/i)) {
+          $.get('<%=ajax_main_person_path(:id => @person, :command => :verify)%>',
+                  {key: $(this).val()},
+                  function (data) {
+                    $('#person_form').html(data);
+                  },
+                  'html');
+        }
+      });
+
+      $('#person_sync_button').click(function () {
+        $.get('<%=ajax_main_person_path(:id => @person, :command => :sync)%>',
+                {key: $('#person_id_number').val()},
+                function (data) {
+                  $('#person_form').html(data);
+                },
+                'html');
+      });
+
+    });
+  </script>
+<% end %>
+
+<h3>
+  <div class="btn-group person-detail">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="glyphicon glyphicon-user"></span><span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Person Profile</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contact Information</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#person_artifact_modal">Show Artifacts</a></li>
+      <li><a href="#">Send E-mail</a></li>
+      <li><a href="#">Open External Site</a></li>
+    </ul>
+  </div>
+  <%= link_to @person.full_name, main_person_path(:action => :show, :id => @person) %>
+</h3>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
+  <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
+    <%= render :partial => "/main/person_form" %>
+  <% end %>
+<% end if @current_user.read? :main %>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
+  <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "contact_form"} do %>
+    <%= render :partial => "/main/contact_form", :locals => {:object_name => :contact} %>
+  <% end %>
+<% end if @current_user.read? :main %>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Artifacts"} do %>
+  <div class="row">
+    <div class="col-sm-12">
+      <%= bootstrap_flash unless params[:artifacts_modal].nil? %>
+    </div>
+  </div>
+  <%= render :partial => "/artifact/document_table" %>
+<% end if @current_user.read? :artifact %>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+    <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
+    <%=f.file_field :data %>
+    <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
+  <% end %>
+<% end %>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_document_dialog", :modal_title => "Edit file data", :modal_form_id => "edit_document_form"} do %>
+  <!-- Rendered dynamically after Edit button is clicked -->
+<% end %>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form data", :modal_form_id => "edit_form_form"} do %>
+  <!-- Rendered dynamically after Edit button is clicked -->
+<% end %>
