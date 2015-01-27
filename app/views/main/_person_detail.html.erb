@@ -2,6 +2,11 @@
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
 
+      // Show artifacts modal, usually after document or form update
+      if ('<%=params[:artifacts_modal] %>' === 'show') {
+        $('#person_artifact_modal').modal('show');
+      }
+
       $('#upload_document').click(function() {
         $('#person_artifact_modal').modal('hide');
       });

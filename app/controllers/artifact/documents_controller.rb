@@ -31,7 +31,7 @@ class Artifact::DocumentsController < Artifact::BaseController
     else
       flash[:danger] = error_message_for(@document)
     end
-    redirect_to main_person_path(:id => @person)
+    redirect_to main_person_path(:id => @person, :artifacts_modal => "show")
   end
 
   def create
