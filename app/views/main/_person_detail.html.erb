@@ -117,6 +117,11 @@
 <% end if @current_user.read? :main %>
 
 <%=render :layout => '/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Artifacts"} do %>
+  <div class="row">
+    <div class="col-sm-12">
+      <%= bootstrap_flash unless params[:artifacts_modal].nil? %>
+    </div>
+  </div>
   <%= render :partial => "/artifact/document_table" %>
 <% end if @current_user.read? :artifact %>
 
