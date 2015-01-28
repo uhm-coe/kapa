@@ -24,9 +24,9 @@ class Kapa::Main::CurriculumsController < Kapa::Main::BaseController
     unless @curriculum.save
       flash[:danger] = @curriculum.errors.full_messages.join(", ")
       if params[:transition_point_id]
-        redirect_to main_transition_point_path(:id => params[:transition_point_id]) and return false
+        redirect_to kapa_main_transition_point_path(:id => params[:transition_point_id]) and return false
       else
-        redirect_to main_curriculum_path(:id => @curriculum) and return false
+        redirect_to kapa_main_curriculum_path(:id => @curriculum) and return false
       end
     end
 
@@ -35,9 +35,9 @@ class Kapa::Main::CurriculumsController < Kapa::Main::BaseController
       redirect_to params[:return_uri]
     else
       if params[:transition_point_id]
-        redirect_to main_transition_point_path(:id => params[:transition_point_id])
+        redirect_to kapa_main_transition_point_path(:id => params[:transition_point_id])
       else
-        redirect_to main_curriculum_path(:id => @curriculum)
+        redirect_to kapa_main_curriculum_path(:id => @curriculum)
       end
     end
   end
@@ -55,10 +55,10 @@ class Kapa::Main::CurriculumsController < Kapa::Main::BaseController
 
     unless @curriculum.save
       flash[:danger] = @curriculum.errors.full_messages.join(", ")
-      redirect_to new_main_curriculum_path(:id => @person) and return false
+      redirect_to new_kapa_main_curriculum_path(:id => @person) and return false
     end
     @curriculum.update_serialized_attributes(:journey, :active => "Y")
-    redirect_to main_curriculum_path(:id => @curriculum)
+    redirect_to kapa_main_curriculum_path(:id => @curriculum)
   end
 
   def index
