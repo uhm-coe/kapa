@@ -78,7 +78,7 @@ class Kapa::Report::DataSetsController < Kapa::KapaBaseController
     @data_set.destroy
 
     respond_to do |format|
-      format.html { redirect_to kapa_data_sets_url }
+      format.html { redirect_to kapa_report_data_sets_url }
       format.json { head :no_content }
     end
   end

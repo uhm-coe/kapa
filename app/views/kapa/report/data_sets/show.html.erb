@@ -6,30 +6,30 @@
     <%=t '.title', :default => model_class.model_name.human.titleize %>
   </h4>
 
-  <dl class="dl-horizontal">
-    <dt><strong><%= model_class.human_attribute_name(:type) %>:</strong></dt>
-    <dd><%= @data_set.type %></dd>
-    <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-    <dd><%= @data_set.name %></dd>
-    <dt><strong><%= model_class.human_attribute_name(:data_source_id) %>:</strong></dt>
-    <dd><%= @data_set.data_source.name %></dd>
-    <dt><strong><%= model_class.human_attribute_name(:query) %>:</strong></dt>
-    <dd><%= @data_set.query.to_s.gsub(/\n/, "<br/>").html_safe %></dd>
-    <dt><strong><%= model_class.human_attribute_name(:loaded_at) %>:</strong></dt>
-    <dd><%= @data_set.loaded_at %></dd>
-    <dt><strong><%= model_class.human_attribute_name(:record_count) %>:</strong></dt>
-    <dd><%= @data_set.record_count %></dd>
-    <dt><strong>JSON Feed:</strong></dt>
-    <dd><%= link_to kapa_report_data_set_url(:id => @data_set, :action => :feed), kapa_report_data_set_url(:id => @data_set, :action => :feed) %></dd>
-  </dl>
+  <div class="right">
+    <%= link_to "Edit", edit_kapa_report_data_set_path(@data_set), :class => "btn btn-default" %>
+    <%= link_to "Load", kapa_report_data_set_path(:id => @data_set, :action => :load), :class => "btn btn-default" %>
+    <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", kapa_report_data_set_path(@data_set), {:method => :delete, "data-confirm" => "Are you sure you want to delete this?", :class => "btn btn-default"} %>
+  </div>
 
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_kapa_report_data_set_path(@data_set), :class => 'btn btn-default' %>
-  <%= link_to t('.load', :default => t("helpers.links.load")),
-                kapa_report_data_set_path(:id => @data_set, :action => :load), :class => 'btn btn-default' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                kapa_report_data_set_path(@data_set),
-                :method => 'delete',
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure you want to delete this?')) },
-                :class => 'btn btn-danger' %>
-<%end%>
+  <div class="row">
+    <div class="col-sm-12">
+      <dl class="dl-horizontal">
+        <dt><strong><%= model_class.human_attribute_name(:type) %>:</strong></dt>
+        <dd><%= @data_set.type %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+        <dd><%= @data_set.name %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:data_source_id) %>:</strong></dt>
+        <dd><%= @data_set.data_source.name %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:query) %>:</strong></dt>
+        <dd><%= @data_set.query.to_s.gsub(/\n/, "<br/>").html_safe %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:loaded_at) %>:</strong></dt>
+        <dd><%= @data_set.loaded_at %></dd>
+        <dt><strong><%= model_class.human_attribute_name(:record_count) %>:</strong></dt>
+        <dd><%= @data_set.record_count %></dd>
+        <dt><strong>JSON Feed:</strong></dt>
+        <dd><%= link_to kapa_report_data_set_url(:id => @data_set, :action => :feed), kapa_report_data_set_url(:id => @data_set, :action => :feed) %></dd>
+      </dl>
+    </div>
+  </div>
+<% end %>
