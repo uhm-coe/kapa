@@ -1,26 +1,14 @@
-<%=fields_for :data_set do |f|%>
-  <div class="form-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name, :class => 'form-control' %>
+<%= bootstrap_fields_for :data_set do |f| %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.text_field :name %>
+      <%= f.select :type, [["Internal","internal"], ["External","external"]] %>
+      <%= f.select :data_source_id, @data_sources.collect {|d| [d.name, d.id]} %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.text_area :query %>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :type, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select :type, [["Internal","internal"], ["External","external"]], :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_source_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select :data_source_id, @data_sources.collect {|d| [d.name, d.id]}, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :query, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :query, :class => 'form-control' %>
-    </div>
-  </div>
+
 <% end %>

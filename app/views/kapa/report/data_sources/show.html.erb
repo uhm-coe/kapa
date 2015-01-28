@@ -1,25 +1,27 @@
-<%- model_class = DataSource -%>
-<div class="page-header">
-  <h3><%=t '.title', :default => model_class.model_name.human.titleize %></h3>
-</div>
+<% content_for(:box1) do %>
+  <%- model_class = DataSource -%>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:type) %>:</strong></dt>
-  <dd><%= @data_source.type %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @data_source.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:url) %>:</strong></dt>
-  <dd><%= @data_source.url %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user) %>:</strong></dt>
-  <dd><%= @data_source.user %></dd>
-</dl>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=t '.title', :default => model_class.model_name.human.titleize %>
+  </h4>
 
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              kapa_data_sources_path, :class => 'btn btn-default'  %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_kapa_report_data_source_path(@data_source), :class => 'btn btn-default' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              kapa_report_data_source_path(@data_source),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+  <dl class="dl-horizontal">
+    <dt><strong><%= model_class.human_attribute_name(:type) %>:</strong></dt>
+    <dd><%= @data_source.type %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+    <dd><%= @data_source.name %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:url) %>:</strong></dt>
+    <dd><%= @data_source.url %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:user) %>:</strong></dt>
+    <dd><%= @data_source.user %></dd>
+  </dl>
+
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_kapa_report_data_source_path(@data_source), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                kapa_report_data_source_path(@data_source),
+                :method => 'delete',
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure you want to delete this?')) },
+                :class => 'btn btn-danger' %>
+<% end %>

@@ -44,7 +44,7 @@ class Kapa::Report::DataSourcesController < Kapa::KapaBaseController
 
     respond_to do |format|
       if @data_source.save
-        format.html { redirect_to @data_source, :notice => 'DataSource was successfully created.' }
+        format.html { redirect_to kapa_report_data_source_path(@data_source), :notice => 'Data Source was successfully created.' }
         format.json { render :json => @data_source, :status => :created, :location => @data_source }
       else
         format.html { render :action => "new" }

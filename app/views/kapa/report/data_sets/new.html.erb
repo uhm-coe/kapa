@@ -1,7 +1,13 @@
 <% content_for(:box1) do %>
 
-  <%= form_for :data_set, :url => kapa_report_data_sets_path, :html => { :class => 'form-horizontal' } do |f| %>
+  <h4 class="section-header">
+    <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Data Set
+  </h4>
+
+  <%= bootstrap_form_for :data_set, :url => kapa_report_data_sets_path do |f| %>
     <%= render :partial => '/kapa/report/data_set_form' %>
+    <%=controls if @current_user.manage? %>
   <% end %>
 
 <% end %>

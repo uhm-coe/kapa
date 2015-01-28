@@ -1,36 +1,40 @@
 <% content_for(:box1) do %>
-<%- model_class = DataSource -%>
-<div class="page-header">
-  <h3>DataSources</h3>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:type) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:url) %></th>
-      <th><%= model_class.human_attribute_name(:user) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @data_sources.each do |data_source| %>
-      <tr>
-        <td><%= link_to data_source.id, kapa_report_data_source_path(data_source) %></td>
-        <td><%= data_source.type %></td>
-        <td><%= data_source.name %></td>
-        <td><%= data_source.url %></td>
-        <td><%= data_source.user %></td>
-        <td>
-          <%= link_to "Show", kapa_report_data_source_path(data_source), :class => 'btn btn-default btn-xs' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_kapa_report_data_source_path,
-            :class => 'btn btn-primary' %>
+  <%- model_class = DataSource -%>
+
+  <h3>Data Sources</h3>
+
+  <div class="row">
+    <div class="text-right">
+      <%= link_to t('.new', :default => t("helpers.links.new")), new_kapa_report_data_source_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:id) %></th>
+        <th><%= model_class.human_attribute_name(:type) %></th>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:url) %></th>
+        <th><%= model_class.human_attribute_name(:user) %></th>
+        <th class="right"><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @data_sources.each do |data_source| %>
+        <tr>
+          <td><%= link_to data_source.id, kapa_report_data_source_path(data_source) %></td>
+          <td><%= data_source.type %></td>
+          <td><%= data_source.name %></td>
+          <td><%= data_source.url %></td>
+          <td><%= data_source.user %></td>
+          <td class="right">
+            <%= link_to "Show", kapa_report_data_source_path(data_source), :class => 'btn btn-default btn-xs' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
 <%end%>

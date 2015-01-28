@@ -46,7 +46,7 @@ class Kapa::Report::DataSetsController < Kapa::KapaBaseController
 
     respond_to do |format|
       if @data_set.save
-        format.html { redirect_to @data_set, :notice => 'DataSet was successfully created.' }
+        format.html { redirect_to kapa_report_data_set_path(@data_set), :notice => 'Data Set was successfully created.' }
         format.json { render :json => @data_set, :status => :created, :location => @data_set }
       else
         format.html { render :action => "new" }

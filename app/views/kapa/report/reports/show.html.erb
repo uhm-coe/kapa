@@ -1,24 +1,27 @@
 <% content_for(:head) do %>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript">
+  <script src="https://www.google.com/jsapi"></script>
+  <script>
     google.load("visualization", "1", {packages:["corechart", "charteditor"]});
-    $(function(){
-        var derivers = $.pivotUtilities.derivers;
-        var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
+    $(function() {
+      var derivers = $.pivotUtilities.derivers;
+      var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
 
-        $.getJSON('<%=feed_kapa_data_set_path(@data_set)%>', function(response) {
-            var data = response['data'];
-            data.unshift(response['data_columns']);
-            $("#output").pivotUI(data, {renderers: renderers});
-        });
-     });
+      $.getJSON('<%=kapa_report_data_set_path(:id => @data_set, :action => :feed)%>', function(response) {
+        var data = response['data'];
+        data.unshift(response['data_columns']);
+        $("#output").pivotUI(data, {renderers: renderers});
+      });
+    });
   </script>
 <% end %>
 
-<div class="page-header">
-  <h3><%=@data_set.name %></h3>
-</div>
+<% content_for(:box1) do %>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@data_set.name %>
+  </h4>
 
-<div id="output" style="margin: 10px;"></div>
-
-<%= link_to t('.back', :default => t("helpers.links.back")), kapa_reports_path, :class => 'btn btn-default'  %>
+  <div id="output">
+    <!-- Dynamically generated content -->
+  </div>
+<%end%>
