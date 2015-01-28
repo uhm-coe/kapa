@@ -1,2 +1,0 @@
-module Student::BaseHelper
-end

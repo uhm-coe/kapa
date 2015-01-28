@@ -7,7 +7,7 @@ class Kapa::Artifact::ExamsController < Kapa::Artifact::BaseController
     @exam_scores = @exam.exam_scores
     @person = @exam.person
     @title = "Praxis Score Report"
-    render :layout => "artifact"
+    render :layout => "/kapa/layouts/artifact"
   end
 
   def update

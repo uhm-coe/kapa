@@ -4,7 +4,7 @@ class Kapa::Artifact::FormsController < Kapa::Artifact::BaseController
     @form = Form.find params[:id]
     @person = @form.person
     @title = @form.type_desc
-    render :layout => "artifact"
+    render :layout => "/kapa/layouts/artifact"
   end
 
   def update
