@@ -33,10 +33,10 @@ class Kapa::Advising::SessionsController < Kapa::Advising::BaseController
 
     unless @advising_session.save
       flash[:danger] = error_message_for(@advising_session)
-      redirect_to new_advising_session_path(:id => @person) and return false
+      redirect_to new_kapa_advising_session_path(:id => @person) and return false
     end
     flash[:success] = "Advising record was successfully created."
-    redirect_to advising_session_path(:id => @advising_session)
+    redirect_to kapa_advising_session_path(:id => @advising_session)
   end
 
   def update
@@ -48,17 +48,17 @@ class Kapa::Advising::SessionsController < Kapa::Advising::BaseController
     else
       flash[:danger] = error_message_for(@advising_session)
     end
-    redirect_to advising_session_path(:id => @advising_session)
+    redirect_to kapa_advising_session_path(:id => @advising_session)
   end
 
   def destroy
     @advising_session = AdvisingSession.find(params[:id])
     unless @advising_session.destroy
       flash[:danger] = error_message_for(@advising_session)
-      redirect_to advising_session_path(:id => @advising_session) and return false
+      redirect_to kapa_advising_session_path(:id => @advising_session) and return false
     end
     flash[:success] = "Advising record was successfully deleted."
-    redirect_to main_person_path(:id => @advising_session.person_id)
+    redirect_to kapa_main_person_path(:id => @advising_session.person_id)
   end
 
   def index

@@ -31,7 +31,7 @@ class Kapa::Artifact::DocumentsController < Kapa::Artifact::BaseController
     else
       flash[:danger] = error_message_for(@document)
     end
-    redirect_to main_person_path(:id => @person, :artifacts_modal => "show")
+    redirect_to kapa_main_person_path(:id => @person, :artifacts_modal => "show")
   end
 
   def create
@@ -67,6 +67,6 @@ class Kapa::Artifact::DocumentsController < Kapa::Artifact::BaseController
     else
       flash[:danger] = error_message_for(@document)
     end
-    redirect_to main_person_path(:id => @document.person_id, :artifacts_modal => "show")
+    redirect_to kapa_main_person_path(:id => @document.person_id, :artifacts_modal => "show")
   end
 end

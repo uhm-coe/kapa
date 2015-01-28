@@ -9,7 +9,7 @@ class Kapa::Admin::CriterionsController < Kapa::Admin::BaseController
     else
       flash[:danger] = @assessment_criterion.errors.full_messages.join(", ")
     end
-    redirect_to admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus], :criterion_panel => params[:criterion_panel])
+    redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus], :criterion_panel => params[:criterion_panel])
   end
 
   def create
@@ -21,21 +21,21 @@ class Kapa::Admin::CriterionsController < Kapa::Admin::BaseController
     else
       flash[:danger] = @assessment_criterion.errors.full_messages.join(", ")
     end
-    redirect_to admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus], :criterion_panel => @assessment_criterion.id)
+    redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus], :criterion_panel => @assessment_criterion.id)
   end
 
   def destroy
     @assessment_criterion = AssessmentCriterion.find(params[:id])
     unless @assessment_criterion.assessment_scores.blank?
       flash[:warning] = "Criterion cannot be deleted since there are associated score entries."
-      redirect_to admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus]) and return false
+      redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus]) and return false
     end
     unless @assessment_criterion.destroy
       flash[:danger] = @assessment_criterion.errors.full_messages.join(", ")
-      redirect_to admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus]) and return false
+      redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus]) and return false
     end
     flash[:success] = "Criterion was successfully deleted."
-    redirect_to admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus])
+    redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus])
   end
 
 end

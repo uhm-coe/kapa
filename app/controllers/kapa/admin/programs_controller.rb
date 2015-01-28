@@ -17,7 +17,7 @@ class Kapa::Admin::ProgramsController < Kapa::Admin::BaseController
     else
       flash[:danger] = @program.errors.full_messages.join(", ")
     end
-    redirect_to admin_program_path(:id => @program)
+    redirect_to kapa_admin_program_path(:id => @program)
   end
 
   def new
@@ -30,10 +30,10 @@ class Kapa::Admin::ProgramsController < Kapa::Admin::BaseController
 
     unless @program.save
       flash[:danger] = @program.errors.full_messages.join(", ")
-      redirect_to new_admin_program_path and return false
+      redirect_to new_kapa_admin_program_path and return false
     end
     flash[:success] = "Program was successfully created."
-    redirect_to admin_program_path(:id => @program, :focus => params[:focus])
+    redirect_to kapa_admin_program_path(:id => @program, :focus => params[:focus])
   end
 
   def destroy
@@ -42,16 +42,16 @@ class Kapa::Admin::ProgramsController < Kapa::Admin::BaseController
     @program.program_offers.each do |program_offer|
       unless program_offer.destroy
         flash[:danger] = error_message_for(program_offer)
-        redirect_to admin_program_path(:id => @program) and return false
+        redirect_to kapa_admin_program_path(:id => @program) and return false
       end
     end
 
     unless @program.destroy
       flash[:danger] = error_message_for(@program)
-      redirect_to admin_program_path(:id => @program) and return false
+      redirect_to kapa_admin_program_path(:id => @program) and return false
     end
     flash[:success] = "Program was successfully deleted."
-    redirect_to admin_programs_path
+    redirect_to kapa_admin_programs_path
   end
 
   def index

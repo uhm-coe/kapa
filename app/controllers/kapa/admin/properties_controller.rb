@@ -1,5 +1,5 @@
 class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
-  # before_filter :check_manage_permission
+  before_filter :check_manage_permission
 
   def show
     @property = ApplicationProperty.find params[:id]
@@ -20,7 +20,7 @@ class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
     else
       flash[:danger] = error_message_for(@property)
     end
-    redirect_to admin_property_path(:id => @property)
+    redirect_to kapa_admin_property_path(:id => @property)
   end
 
   def create
@@ -29,10 +29,10 @@ class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
 
     unless @property.save
       flash[:danger] = error_message_for(@property)
-      redirect_to new_admin_property_path and return false
+      redirect_to new_kapa_admin_property_path and return false
     end
     flash[:success] = 'System property was successfully created.'
-    redirect_to admin_property_path(:id => @property, :focus => params[:focus])
+    redirect_to kapa_admin_property_path(:id => @property, :focus => params[:focus])
   end
 
   def index

@@ -22,7 +22,7 @@ class Kapa::Admin::TermsController < Kapa::Admin::BaseController
     else
       flash[:danger] = @term.errors.full_messages.join(", ")
     end
-    redirect_to admin_term_path(:id => @term)
+    redirect_to kapa_admin_term_path(:id => @term)
   end
 
   def new
@@ -35,10 +35,10 @@ class Kapa::Admin::TermsController < Kapa::Admin::BaseController
 
     unless @term.save
       flash[:danger] = @term.errors.full_messages.join(", ")
-      redirect_to new_admin_term_path and return false
+      redirect_to new_kapa_admin_term_path and return false
     end
     flash[:success] = "Term was successfully created."
-    redirect_to admin_term_path(:id => @term)
+    redirect_to kapa_admin_term_path(:id => @term)
   end
 
   def destroy
@@ -46,10 +46,10 @@ class Kapa::Admin::TermsController < Kapa::Admin::BaseController
 
     unless @term.destroy
       flash[:danger] = error_message_for(@term)
-      redirect_to admin_term_path(:id => @term) and return false
+      redirect_to kapa_admin_term_path(:id => @term) and return false
     end
     flash[:success] = "Term was successfully deleted."
-    redirect_to admin_terms_path
+    redirect_to kapa_admin_terms_path
   end
 
 end

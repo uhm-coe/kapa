@@ -19,7 +19,7 @@ class Kapa::Artifact::FormsController < Kapa::Artifact::BaseController
     else
       flash[:danger] = error_message_for(@form)
     end
-    redirect_to main_person_path(:id => @person, :artifacts_modal => "show")
+    redirect_to kapa_main_person_path(:id => @person, :artifacts_modal => "show")
   end
 
   def create
@@ -41,10 +41,10 @@ class Kapa::Artifact::FormsController < Kapa::Artifact::BaseController
     @form = Form.find params[:id]
     unless @form.destroy
       flash[:danger] = error_message_for(@form)
-      redirect_to artifact_form_path(:id => @form) and return false
+      redirect_to kapa_artifact_form_path(:id => @form) and return false
     end
     flash[:success] = "Form was successfully deleted."
-    redirect_to main_person_path(:id => @form.person_id)
+    redirect_to kapa_main_person_path(:id => @form.person_id)
   end
 
   def index

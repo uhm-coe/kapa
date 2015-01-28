@@ -27,10 +27,10 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     @practicum_placement = @practicum_profile.practicum_placements.build(params[:practicum_placement])
     unless @practicum_profile.save and @practicum_placement.save
       flash[:danger] = error_message_for(@practicum_profile, @practicum_placement)
-      redirect_to new_practicum_placement_path and return false
+      redirect_to new_kapa_practicum_placement_path and return false
     end
     flash[:success] = "Placement record was successfully created."
-    redirect_to practicum_placement_path(:id => @practicum_placement)
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement)
   end
 
   def update
@@ -45,17 +45,17 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     else
       flash[:danger] = error_message_for(@practicum_placement, @practicum_profile)
     end
-    redirect_to practicum_placement_path(:id => @practicum_placement)
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement)
   end
 
   def destroy
     @practicum_placement = PracticumPlacement.find(params[:id])
     unless @practicum_placement.destroy
       flash[:danger] = error_message_for(@practicum_placement)
-      redirect_to practicum_placement_path(:id => @practicum_placement) and return false
+      redirect_to kapa_practicum_placement_path(:id => @practicum_placement) and return false
     end
     flash[:success] = "Placement record successfully deleted."
-    redirect_to main_person_path(:id => @practicum_placement.person_id, :focus => :practicum)
+    redirect_to kapa_main_person_path(:id => @practicum_placement.person_id, :focus => :practicum)
   end
 
   def import

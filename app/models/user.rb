@@ -169,6 +169,6 @@ class User < ApplicationBaseModel
   end
 
   def module_name
-    @request.params[:controller].split("/").first
+    @request.params[:controller].split("/").second
   end
 end

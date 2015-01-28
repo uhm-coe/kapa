@@ -76,7 +76,7 @@ class Kapa::Report::DataSourcesController < Kapa::ApplicationBaseController
     @data_source.destroy
 
     respond_to do |format|
-      format.html { redirect_to data_sources_url }
+      format.html { redirect_to kapa_data_sources_url }
       format.json { head :no_content }
     end
   end

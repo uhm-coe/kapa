@@ -54,12 +54,12 @@
       <div id="assessment_tab" class="tab-pane<%=' active' if params[:focus] == 'assessment' %>">
         <div class="row">
           <div class="col-sm-6">
-            <%= bootstrap_form_for :filter, :url => kapa_main_transition_point_url(:id => @transition_point, :focus => :assessment), :html => {:method => :get} do |f| %>
+            <%= bootstrap_form_for :filter, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :assessment), :html => {:method => :get} do |f| %>
               <%= f.select(:assessment_rubric_id, @assessment_rubrics.collect { |r| [r.title, "0#{r.id}"] }, {}, {:minWidth => "600"}) %>
             <% end %>
           </div>
         </div>
-        <%= bootstrap_form_for :assessment_score, :url => kapa_main_transition_point_url(:id => @transition_point, :focus => :assessment), :remote => true, :html => {:method => :put} do |f| %>
+        <%= bootstrap_form_for :assessment_score, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :assessment), :remote => true, :html => {:method => :put} do |f| %>
           <%= render :partial => "/kapa/main/assessment_form" %>
           <%= controls if @current_user.write?(:main) %>
         <% end %>

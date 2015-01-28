@@ -17,10 +17,10 @@ class Kapa::Practicum::SchoolsController < Kapa::Practicum::BaseController
     @practicum_school = PracticumSchool.new params[:practicum_school]
     unless @practicum_school.save
       flash[:danger] = @practicum_school.errors.full_messages.join(", ")
-      redirect_to new_practicum_school_path and return false
+      redirect_to new_kapa_practicum_school_path and return false
     end
     flash[:success] = "School was sccessfully created."
-    redirect_to practicum_school_path(:id => @practicum_school)
+    redirect_to kapa_practicum_school_path(:id => @practicum_school)
   end
 
   def update
@@ -33,7 +33,7 @@ class Kapa::Practicum::SchoolsController < Kapa::Practicum::BaseController
     else
       flash[:danger] = "Failed to update school profile."
     end
-    redirect_to practicum_school_path(:id => @practicum_school, :focus => params[:focus])
+    redirect_to kapa_practicum_school_path(:id => @practicum_school, :focus => params[:focus])
   end
 
   def import

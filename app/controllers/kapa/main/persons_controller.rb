@@ -46,9 +46,9 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     unless @person.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@person)
-      redirect_to new_main_person_path and return false
+      redirect_to new_kapa_main_person_path and return false
     end
-    redirect_to main_person_path(:id => @person)
+    redirect_to kapa_main_person_path(:id => @person)
   end
 
   def update
@@ -59,7 +59,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
       @person.promote
       unless @person.save
         flash[:danger] = error_message_for(@person)
-        redirect_to main_person_path(:id => @person) and return false
+        redirect_to kapa_main_person_path(:id => @person) and return false
       end
       flash[:success] = "Person was successfully verified."
       params[:return_uri][:focus] = params[:focus]
@@ -71,7 +71,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
       @person = @person_verified
       unless @person.save
         flash[:danger] = error_message_for(@person)
-        redirect_to main_person_path(:id => @person) and return false
+        redirect_to kapa_main_person_path(:id => @person) and return false
       end
 
       flash[:success] = "Person was successfully consolidated."
@@ -83,10 +83,10 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
       @person.attributes = (params[:person])
       unless @person.save
         flash[:danger] = error_message_for(@person)
-        redirect_to main_person_path(:id => @person) and return false
+        redirect_to kapa_main_person_path(:id => @person) and return false
       end
       flash[:success] = "Person was successfully updated."
-      redirect_to main_person_path(:id => @person)
+      redirect_to kapa_main_person_path(:id => @person)
     end
   end
 

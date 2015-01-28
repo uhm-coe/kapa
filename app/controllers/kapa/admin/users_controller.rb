@@ -1,5 +1,5 @@
 class Kapa::Admin::UsersController < Kapa::Admin::BaseController
-  # before_filter :check_manage_permission
+  before_filter :check_manage_permission
 
   def show
     @user = User.find params[:id]
@@ -24,7 +24,7 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
     else
       flash[:danger] = error_message_for(@user)
     end
-    redirect_to admin_user_path(:id => @user, :focus => params[:focus])
+    redirect_to kapa_admin_user_path(:id => @user, :focus => params[:focus])
   end
 
   def create
@@ -48,7 +48,7 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
     unless @person.save
       flash[:success] = nil
       flash[:danger] = "Failed to save this record."
-      redirect_to new_admin_user_path and return false
+      redirect_to new_kapa_admin_user_path and return false
     end
 
     if not @person.email.blank?
@@ -63,7 +63,7 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
     unless @user.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@user)
-      redirect_to new_admin_user_path and return false
+      redirect_to new_kapa_admin_user_path and return false
     end
 
     flash[:success] = 'User was successfully created.'

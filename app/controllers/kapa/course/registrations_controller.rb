@@ -23,7 +23,7 @@ class Kapa::Course::RegistrationsController < Kapa::Course::BaseController
         score.rated_by = @current_user.uid
         unless score.save
           flash[:danger] = "There was an error updating scores. Please try again."
-          redirect_to course_registration_path(:id => params[:id], :focus => params[:focus]) and return false
+          redirect_to kapa_course_registration_path(:id => params[:id], :focus => params[:focus]) and return false
         end
       end
       flash[:success] = "Scores were successfully saved on #{DateTime.now.strftime("%H:%M:%S")}"
@@ -32,7 +32,7 @@ class Kapa::Course::RegistrationsController < Kapa::Course::BaseController
     if flash[:success].nil?
       flash[:warning] = "There are no scores to save."
     end
-    redirect_to course_registration_path(:id => params[:id], :focus => params[:focus])
+    redirect_to kapa_course_registration_path(:id => params[:id], :focus => params[:focus])
   end
 
 end

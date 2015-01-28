@@ -4,9 +4,9 @@ class Kapa::ApplicationBaseController < ActionController::Base
   layout "/kapa/layouts/kapa"
   protect_from_forgery
   before_filter :validate_login, :except => [:welcome, :login, :logout, :error]
-  # before_filter :check_read_permission, :except => [:welcome, :login, :logout, :error]
-  # before_filter :check_write_permission, :only => [:new, :create, :update]
-  # before_filter :check_manage_permission, :only => [:destroy, :export, :import, :search]
+  before_filter :check_read_permission, :except => [:welcome, :login, :logout, :error]
+  before_filter :check_write_permission, :only => [:new, :create, :update]
+  before_filter :check_manage_permission, :only => [:destroy, :export, :import, :search]
   after_filter :put_timestamp
   helper :all
   helper_method :url_for, :module_name, :menu_items
@@ -106,7 +106,7 @@ class Kapa::ApplicationBaseController < ActionController::Base
   end
 
   def module_name
-    params[:controller].split("/").first
+    params[:controller].split("/").second
   end
 
   def filter(options = {})

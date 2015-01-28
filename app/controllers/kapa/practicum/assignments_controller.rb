@@ -10,7 +10,7 @@ class Kapa::Practicum::AssignmentsController < Kapa::Practicum::BaseController
       @person = @practicum_placement.person
       flash[:danger] = "Failed to create new assignment record."
     end
-    redirect_to practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
   end
 
   def update
@@ -24,7 +24,7 @@ class Kapa::Practicum::AssignmentsController < Kapa::Practicum::BaseController
       @person = @practicum_placement.person
       flash[:danger] = "Failed to update assignment record."
     end
-    redirect_to practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
   end
 
   def destroy
@@ -36,7 +36,7 @@ class Kapa::Practicum::AssignmentsController < Kapa::Practicum::BaseController
     else
       flash[:danger] = error_message_for(@practicum_assignment)
     end
-    redirect_to practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
   end
 
   def index

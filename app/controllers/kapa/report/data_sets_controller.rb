@@ -78,7 +78,7 @@ class Kapa::Report::DataSetsController < Kapa::ApplicationBaseController
     @data_set.destroy
 
     respond_to do |format|
-      format.html { redirect_to data_sets_url }
+      format.html { redirect_to kapa_data_sets_url }
       format.json { head :no_content }
     end
   end
@@ -92,7 +92,7 @@ class Kapa::Report::DataSetsController < Kapa::ApplicationBaseController
       flash[:error] = e.message
     end
 
-    redirect_to data_set_path(@data_set)
+    redirect_to kapa_data_set_path(@data_set)
   end
 
   def feed
