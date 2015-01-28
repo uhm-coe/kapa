@@ -13,11 +13,11 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     if (params[:doc_id])
       @document = Document.find(params[:doc_id])
       @title = @document.name
-      render :partial => "/artifact/documents/edit", :layout => false
+      render :partial => "/kapa/artifact/documents/edit", :layout => false
     elsif (params[:form_id])
       @form = Form.find(params[:form_id])
       @title = @form.type_desc
-      render :partial => "/artifact/forms/edit", :layout => false
+      render :partial => "/kapa/artifact/forms/edit", :layout => false
     end
   end
 
@@ -126,7 +126,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     else
       flash[:warning] = "No record was found in UH Directory. Please check ID or UH Email"
     end
-    render :partial => "/main/person_form", :layout => false
+    render :partial => "/kapa/main/person_form", :layout => false
   end
 
   def sync
@@ -142,6 +142,6 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
       @person.last_name = @person_verified.last_name
       flash[:success] = "Record was updated from UH Directory.  Please check the name and click save to use the new record."
     end
-    render :partial => "/main/person_form", :layout => false
+    render :partial => "/kapa/main/person_form", :layout => false
   end
 end

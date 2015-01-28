@@ -63,7 +63,7 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
     @course = Course.find(params[:id])
     @assessment_rubric = AssessmentRubric.find(@filter.assessment_rubric_id)
     refresh_table
-    render :partial => "/course/table", :layout => false
+    render :partial => "/kapa/course/table", :layout => false
   end
 
   def index

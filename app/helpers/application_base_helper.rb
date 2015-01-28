@@ -164,7 +164,7 @@ module ApplicationBaseHelper
 
   def render_partial(name)
     path = Rails.root.join("app", "views", module_name, "_#{name}.html.erb")
-    render :partial => "/#{module_name}/#{name}" if FileTest.exists?(path)
+    render :partial => "/kapa/#{module_name}/#{name}" if FileTest.exists?(path)
   end
 
   def abbr(string, abbr_option = 20)
