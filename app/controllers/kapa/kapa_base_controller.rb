@@ -1,6 +1,6 @@
 # Filters added to this controller will be run for all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
-class Kapa::ApplicationBaseController < ActionController::Base
+class Kapa::KapaBaseController < ActionController::Base
   layout "/kapa/layouts/kapa"
   protect_from_forgery
   before_filter :validate_login, :except => [:welcome, :login, :logout, :error]

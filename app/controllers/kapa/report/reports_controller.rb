@@ -1,4 +1,4 @@
-class Kapa::Report::ReportsController < Kapa::ApplicationBaseController
+class Kapa::Report::ReportsController < Kapa::KapaBaseController
   def index
     @data_sets = DataSet.all
 

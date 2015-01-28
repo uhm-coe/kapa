@@ -1,4 +1,4 @@
-class Kapa::Report::DataSourcesController < Kapa::ApplicationBaseController
+class Kapa::Report::DataSourcesController < Kapa::KapaBaseController
   # GET /data_sources
   # GET /data_sources.json
   def index

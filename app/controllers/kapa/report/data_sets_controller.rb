@@ -1,4 +1,4 @@
-class Kapa::Report::DataSetsController < Kapa::ApplicationBaseController
+class Kapa::Report::DataSetsController < Kapa::KapaBaseController
   # GET /data_sets
   # GET /data_sets.json
   def index

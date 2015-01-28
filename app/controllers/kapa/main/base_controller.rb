@@ -1,4 +1,4 @@
-class Kapa::Main::BaseController < Kapa::ApplicationBaseController
+class Kapa::Main::BaseController < Kapa::KapaBaseController
 
   def welcome
     validate_login if UserSession.find

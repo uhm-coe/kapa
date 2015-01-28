@@ -1,4 +1,4 @@
-class Kapa::Admin::BaseController < Kapa::ApplicationBaseController
+class Kapa::Admin::BaseController < Kapa::KapaBaseController
 
   private
   def filter_defaults
