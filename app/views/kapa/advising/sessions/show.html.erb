@@ -1,22 +1,22 @@
 <% content_for(:box1) do %>
   <%unless @advising_session.anonymous?%>
-    <%=render :partial => "/main/person_detail" %>
+    <%=render :partial => "/kapa/main/person_detail" %>
   <%end%>
 
   <h4 class="section-header <%='divider' unless @advising_session.anonymous? %>">
-    <%=link_to_unless @advising_session.anonymous?, "", main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to_unless @advising_session.anonymous?, "", kapa_main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
     Advising Session
   </h4>
 
   <div>
-    <%=bootstrap_form_for :advising_session, :url => advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put} do |f| %>
-      <%=render :partial => "/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
+    <%=bootstrap_form_for :advising_session, :url => kapa_advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put} do |f| %>
+      <%=render :partial => "/kapa/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
       <%=controls do %>
       <% end if @current_user.write? %>
     <% end %>
     <!-- Delete button with popover confirmation -->
     <% if @current_user.write? %>
-      <form method="post" action="<%=advising_session_path(:id => @advising_session) %>" class="btn-delete-form">
+      <form method="post" action="<%=kapa_advising_session_path(:id => @advising_session) %>" class="btn-delete-form">
         <input type="hidden" name="_method" value="delete">
         <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
       </form>

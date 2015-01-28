@@ -24,12 +24,12 @@
             <% if @current_user.write? :artifact, :dept => d.dept %>
               <button type="button" id="edit_document" class="btn btn-default btn-xs" data-id="<%=d.id %>" data-toggle="modal" data-target="#edit_document_dialog">Edit</button>
             <% end %>
-            <%=link_to "Show", artifact_document_path(:id => d, :format => :file, :inline => true), :target => :blank, :class => "btn btn-default btn-xs" %>
+            <%=link_to "Show", kapa_artifact_document_path(:id => d, :format => :file, :inline => true), :target => :blank, :class => "btn btn-default btn-xs" %>
           <% elsif d.is_a? Form %>
             <% if @current_user.write? :artifact, :dept => d.dept %>
               <button type="button" id="edit_form" class="btn btn-default btn-xs" data-id="<%=d.id %>" data-toggle="modal" data-target="#edit_form_dialog">Edit</button>
             <% end %>
-            <%=link_to "Show", artifact_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
+            <%=link_to "Show", kapa_artifact_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
           <% end %>
         </td>
       </tr>

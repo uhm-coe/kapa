@@ -1,5 +1,5 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/main/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
+  <%=render :partial => "/kapa/main/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
     <% if @current_user.read?(:main) %>
@@ -13,13 +13,13 @@
       </div>
       <div id="curriculum_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Program".html_safe, new_main_curriculum_path(:id => @person),:class => "btn btn-default" %></p>
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Program".html_safe, new_kapa_main_curriculum_path(:id => @person),:class => "btn btn-default" %></p>
           <table class="table table-hover">
             <% for curriculum in @curriculums %>
               <% journey = curriculum.deserialize(:journey, :as => OpenStruct) %>
               <tr>
                 <td colspan="4">
-                  <%=content_tag :h5, link_to("#{curriculum.code_desc}#{journey.active == 'Y' ? "*" : ""}", main_curriculum_path(:id => curriculum)) %>
+                  <%=content_tag :h5, link_to("#{curriculum.code_desc}#{journey.active == 'Y' ? "*" : ""}", kapa_main_curriculum_path(:id => curriculum)) %>
                 </td>
               </tr>
               <tr>
@@ -33,7 +33,7 @@
                   <td><%=h transition_point.term_desc %></td>
                   <td><%=h transition_point.type_desc %></td>
                   <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-                  <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
+                  <td class="right"><%=link_to "Show", kapa_main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -54,7 +54,7 @@
       </div>
       <div id="advising_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'advising' %>">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Advising Session".html_safe, new_advising_session_path(:id => @person),:class => "btn btn-default"  %></p>
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Advising Session".html_safe, new_kapa_advising_session_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
             <tr>
               <th>Date</th>
@@ -69,7 +69,7 @@
                 <td><%=h advising_session.session_type.to_s.capitalize %></td>
                 <td><%=h advising_session.task.to_s.capitalize %></td>
                 <td><%=abbr advising_session.note, 30 %></td>
-                <td class="right"><%=link_to "Show", advising_session_path(:id => advising_session), :class => "btn btn-default btn-xs" %></td>
+                <td class="right"><%=link_to "Show", kapa_advising_session_path(:id => advising_session), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </table>
@@ -89,7 +89,7 @@
       </div>
       <div id="course_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'course' %>">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_kapa_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
           <% @course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
             <tr>
@@ -108,7 +108,7 @@
                 <td><%=h "#{course_registration.course.name}" %></td>
                 <td><%=abbr "#{course_registration.course.title}", 50 %></td>
                 <td><%=abbr "#{course_registration.course.instructor}", 50 %></td>
-                <td class="right"><%=link_to "Show", course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
+                <td class="right"><%=link_to "Show", kapa_course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           <% end %>
@@ -129,7 +129,7 @@
       </div>
       <div id="practicum_detail" class="panel-collapse collapse<%=' in' if params[:focus] == 'practicum' %>">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
+          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_kapa_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
           <table class="table table-hover">
             <% for practicum_profile in @practicum_profiles %>
               <tr>
@@ -150,7 +150,7 @@
                   <td><%=h practicum_placement.category %></td>
                   <td><%=h practicum_placement.sequence %></td>
                   <td><%=h practicum_placement.status %></td>
-                  <td class="right"><%=link_to "Show", practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>
+                  <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>
                 </tr>
               <% end %>
             <% end %>

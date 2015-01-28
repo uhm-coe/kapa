@@ -1,7 +1,7 @@
 <% content_for(:box1) do %>
 
-  <%= form_for :data_source, :url => report_data_sources_path, :html => { :class => 'form-horizontal' } do |f| %>
-    <%= render :partial => 'report/data_source_form' %>
+  <%= form_for :data_source, :url => kapa_report_data_sources_path, :html => { :class => 'form-horizontal' } do |f| %>
+    <%= render :partial => '/kapa/report/data_source_form' %>
   <% end %>
 
 <% end %>

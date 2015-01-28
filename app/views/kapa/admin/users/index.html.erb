@@ -9,7 +9,7 @@
 <% content_for(:dialog) do %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => admin_users_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+    <%=bootstrap_form_for(:filter, :url => kapa_admin_users_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%= f.text_field :key, :size => 20, :label => "Name or UID" %>
       <%= f.history_select :department, :model_name => :user, :model_method => :department, :include_blank => true %>
       <%= f.select :emp_status, [["0/Non-Employee", "0"],["1/Former Employee" , "1"],["2/Active Employee" , "2"],["3/Overridden" , "3"]], {:include_blank => true, :label => "Employment Status"} %>
@@ -18,7 +18,7 @@
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import User Data", :modal_form_id => "import_user_form"} do %>
-    <%=bootstrap_form_for(:data, :url => import_admin_users_path, :html => {:multipart => true, :id => "import_user_form"}) do |f|%>
+    <%=bootstrap_form_for(:data, :url => import_kapa_admin_users_path, :html => {:multipart => true, :id => "import_user_form"}) do |f|%>
       <%= f.file_field :import_file %>
     <% end %>
   <% end %>

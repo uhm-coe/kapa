@@ -1,11 +1,11 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/main/person_detail" %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", main_curriculum_path(:id => @curriculum), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_main_curriculum_path(:id => @curriculum), :class => "glyphicon glyphicon-chevron-left" %>
     New Transition Point
   </h4>
-  <%=bootstrap_form_for :transition_point, :url => main_transition_points_path(:id => @person), :remote => true do |f| %>
+  <%=bootstrap_form_for :transition_point, :url => kapa_main_transition_points_path(:id => @person), :remote => true do |f| %>
     <div class="row">
       <div class="col-sm-6">
         <%=f.term_select :term_id, :label => "Term" %>

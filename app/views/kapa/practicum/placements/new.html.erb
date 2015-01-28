@@ -1,5 +1,5 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/main/person_detail" %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
   <h4>New Placement</h4>
   <div class="tabs">
@@ -8,7 +8,7 @@
     </ul>
 
     <div id="practicum_profile_tab">
-      <%=label_form_for :practicum_placement, :url => practicum_placments_path(:id => @person), :remote => true do |f| %>
+      <%=label_form_for :practicum_placement, :url => kapa_practicum_placments_path(:id => @person), :remote => true do |f| %>
         <table>
           <tr>
             <td>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :practicum) %>
+  <%=link_to "Back", kapa_main_persons_path(:action => :show, :id => @person, :focus => :practicum) %>
 
 <% end %>
 

@@ -12,8 +12,8 @@
 
     <div class="tab-content">
       <div id="property_tab" class="tab-pane active">
-        <%=bootstrap_form_for :property, :url => admin_properties_path, :remote => true do |f| %>
-          <%=render :partial => "/admin/property_form", :locals => {:f => f} %>
+        <%=bootstrap_form_for :property, :url => kapa_admin_properties_path, :remote => true do |f| %>
+          <%=render :partial => "/kapa/admin/property_form", :locals => {:f => f} %>
           <%=controls %>
         <% end %>
       </div>

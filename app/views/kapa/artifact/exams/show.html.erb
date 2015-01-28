@@ -1,16 +1,16 @@
 <% content_for(:form) do %>
 
   <div style="text-align: right;"><h3>ID: <%=h @exam.report_number %></h3></div>
-  
+
   <%=uni_form_for(:exam) do %>
-    <%=render :partial => "/artifact/exam_detail"%>
+    <%=render :partial => "/kapa/artifact/exam_detail"%>
   <% end %>
 
 <%end%>
 
 <% content_for(:navigation) do %>
 
-  <%=label_form_for(:exam, :url => artifact_exam_path(:id => @exam), :remote => true, :html => {:method => :put}  ) do |f| %>
+  <%=label_form_for(:exam, :url => kapa_artifact_exam_path(:id => @exam), :remote => true, :html => {:method => :put}  ) do |f| %>
     <%=f.text_area :note, :text => "Note", :size => "25x30"%>
     <%=controls if @current_user.write? :artifact, :dept => @exam.dept %>
   <% end %>

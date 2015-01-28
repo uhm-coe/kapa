@@ -15,11 +15,11 @@
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
-              data_sources_path, :class => 'btn btn-default'  %>
+              kapa_data_sources_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_report_data_source_path(@data_source), :class => 'btn btn-default' %>
+              edit_kapa_report_data_source_path(@data_source), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              report_data_source_path(@data_source),
+              kapa_report_data_source_path(@data_source),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>

@@ -6,7 +6,7 @@
         var derivers = $.pivotUtilities.derivers;
         var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
 
-        $.getJSON('<%=feed_data_set_path(@data_set)%>', function(response) {
+        $.getJSON('<%=feed_kapa_data_set_path(@data_set)%>', function(response) {
             var data = response['data'];
             data.unshift(response['data_columns']);
             $("#output").pivotUI(data, {renderers: renderers});
@@ -21,4 +21,4 @@
 
 <div id="output" style="margin: 10px;"></div>
 
-<%= link_to t('.back', :default => t("helpers.links.back")), reports_path, :class => 'btn btn-default'  %>
+<%= link_to t('.back', :default => t("helpers.links.back")), kapa_reports_path, :class => 'btn btn-default'  %>

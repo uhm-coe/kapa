@@ -1,16 +1,16 @@
 <% content_for(:box1) do %>
   <%unless @advising_session.anonymous?%>
-    <%=render :partial => "/main/person_detail" %>
+    <%=render :partial => "/kapa/main/person_detail" %>
   <%end%>
 
   <h4 class="section-header <%='divider' unless @advising_session.anonymous? %>">
-    <%=link_to "", main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
     Advising Record
   </h4>
 
   <div>
-    <%=bootstrap_form_for :advising_session, :url => advising_sessions_path, :remote => true do |f| %>
-      <%=render :partial => "/advising/session_form", :locals => {:f => f} %>
+    <%=bootstrap_form_for :advising_session, :url => kapa_advising_sessions_path, :remote => true do |f| %>
+      <%=render :partial => "/kapa/advising/session_form", :locals => {:f => f} %>
       <%=controls if @current_user.write? %>
     <% end %>
   </div>

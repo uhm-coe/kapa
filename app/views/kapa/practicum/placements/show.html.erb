@@ -12,7 +12,7 @@
             $(this).dialog('close');
            },
           'Save' : function() {
-            $.getJSON('<%=practicum_assignments_path(:action => :update_mentor)%>',
+            $.getJSON('<%=kapa_practicum_assignments_path(:action => :update_mentor)%>',
                       $('#mentor_form').serialize(),
                       function(data) {
                         $(prefix + 'name').val(data['full_name']);
@@ -43,7 +43,7 @@
 
       $('#mentor_person_id').change(function() {
         if($(this).val() != '') {
-          $.getJSON('<%=practicum_assignments_path(:action => :get_mentor)%>',
+          $.getJSON('<%=kapa_practicum_assignments_path(:action => :get_mentor)%>',
                   { person_id: $(this).val()},
                   function(data) {
                     $('#id').val($(this).attr('practicum_assignment_id'));
@@ -64,7 +64,7 @@
 <% end %>
 
 <% content_for(:box1) do %>
-  <%=render :partial => "/main/person_detail" %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
   <h4>Placement</h4>
 
@@ -76,15 +76,15 @@
     </ul>
 
     <div id="practicum_profile_tab">
-      <%=label_form_for :practicum_profile, :url => practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
-        <%=render :partial => "/practicum/profile_form", :locals => {:f => f}%>
+      <%=label_form_for :practicum_profile, :url => kapa_practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
+        <%=render :partial => "/kapa/practicum/profile_form", :locals => {:f => f}%>
         <%=controls if @current_user.manage?(:practicum, :delegate => :maintain) %>
       <% end %>
     </div>
 
     <div id="practicum_placement_tab">
-      <%=label_form_for :practicum_placement, :url => practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
-        <%=render :partial => "/practicum/placement_form", :locals => {:f => f}%>
+      <%=label_form_for :practicum_placement, :url => kapa_practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
+        <%=render :partial => "/kapa/practicum/placement_form", :locals => {:f => f}%>
         <%=controls if @current_user.write? %>
       <% end %>
     </div>
@@ -97,14 +97,14 @@
             <a href="#"><span class="strong"><%="#{index + 1}."%> <%=h [@practicum_assignment.person ? @practicum_assignment.person.full_name : nil, @practicum_assignment.practicum_school ? @practicum_assignment.practicum_school.name_short : nil].join("/") %></span></a>
           </h3>
           <div>
-            <%=label_form_for :practicum_assignment, :url => practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
-              <%=render :partial => "/practicum/assignment_form" %><br/>
+            <%=label_form_for :practicum_assignment, :url => kapa_practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
+              <%=render :partial => "/kapa/practicum/assignment_form" %><br/>
               <%=controls do %>
               <% end if @current_user.write? %>
             <% end %>
             <!-- Delete button with popover confirmation -->
             <% if @current_user.write? %>
-              <form method="post" action="<%=practicum_assignment_path(:id => @practicum_assignment) %>" class="btn-delete-form">
+              <form method="post" action="<%=kapa_practicum_assignment_path(:id => @practicum_assignment) %>" class="btn-delete-form">
                 <input type="hidden" name="_method" value="delete">
                 <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
               </form>
@@ -116,8 +116,8 @@
         </h3>
         <div>
           <% @practicum_assignment = PracticumAssignment.new(:assignment_type => "mentor") %>
-          <%=label_form_for :practicum_assignment, :url => practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
-            <%=render :partial => "/practicum/assignment_form" %>
+          <%=label_form_for :practicum_assignment, :url => kapa_practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
+            <%=render :partial => "/kapa/practicum/assignment_form" %>
             <%=controls if @current_user.write? %>
           <% end %>
         </div>
@@ -146,6 +146,6 @@
     <% end %>
   </div>
 
-  <%=link_to "Back", main_persons_path(:action => :show, :id => @person, :focus => :practicum) if @current_user.read?(:main)%>
+  <%=link_to "Back", kapa_main_persons_path(:action => :show, :id => @person, :focus => :practicum) if @current_user.read?(:main)%>
 
 <% end %>

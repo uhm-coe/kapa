@@ -45,7 +45,7 @@
 
 <% content_for(:box1) do %>
 
-  <%=bootstrap_form_for :filter, :url => course_roster_path(:id =>  @course), :html => {:method => :get}  do |f| %>
+  <%=bootstrap_form_for :filter, :url => kapa_course_roster_path(:id =>  @course), :html => {:method => :get}  do |f| %>
     <h4 class="section-header">
       <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
       <%=h @course.name %> Roster
@@ -58,7 +58,7 @@
     </div>
   <% end %>
 
-  <%=label_form_for(:course, :url => course_roster_path(:id => @course), :html => {:method => :put, :id => "course_form", "data-changed" => false}) do %>
+  <%=label_form_for(:course, :url => kapa_course_roster_path(:id => @course), :html => {:method => :put, :id => "course_form", "data-changed" => false}) do %>
     <div class="right">
       <span id="save_notice"><%=flash[:save_notice] %></span>
       <%=button_to_function "Save", nil, {:id => "save_button", :class => "btn btn-default"} if @current_user.write? %>
@@ -66,7 +66,7 @@
     </div>
 
     <div id = "course_table">
-      <%=render :partial => "/course/table" %>
+      <%=render :partial => "/kapa/course/table" %>
     </div>
   <% end %>
   <p class="right"><%=button_to_function "All Green", nil, {:id => "all_green_button", :class => "btn btn-default"} if @current_user.write? %></p>

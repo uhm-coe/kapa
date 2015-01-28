@@ -63,7 +63,7 @@
     <% for placement in @practicum_placements %>
       <tr>
         <td><%=placement.practicum_profile.person.id_number %></td>
-        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(placement.practicum_profile.person.full_name), main_person_path(:id => placement.practicum_profile.person_id, :focus => "practicum")%></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(placement.practicum_profile.person.full_name), kapa_main_person_path(:id => placement.practicum_profile.person_id, :focus => "practicum")%></td>
         <td><%=h abbr(placement.practicum_profile.curriculum.code_desc, placement.practicum_profile.curriculum.code) if placement.practicum_profile.curriculum %></td>
         <td><%=h placement.category %></td>
         <td><%=h placement.uid %></td>
@@ -78,7 +78,7 @@
     <%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :practicum, :delegate => :import %>
   </p>
   <div id="dialog" class="form-dialog" title="Import Placement Data">
-    <%=label_form_for(:filter, :url => import_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
+    <%=label_form_for(:filter, :url => import_kapa_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
       <%=f.term_select :term_id, {:name => :term_id, :label => "Term"}, :id => "filter_import_term" %>
         <%=label_fields_for :data do |d| %>
           <%=d.file_field :import_file %>

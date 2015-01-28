@@ -1,5 +1,5 @@
 class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
-  before_filter :check_manage_permission
+  # before_filter :check_manage_permission
 
   def show
     @property = ApplicationProperty.find params[:id]

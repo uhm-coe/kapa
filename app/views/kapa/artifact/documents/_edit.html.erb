@@ -1,4 +1,4 @@
-<%=bootstrap_form_for :document, :url => artifact_document_path(:id => @document), :html => {:method => :put, :multipart => true, :id => "edit_document_form"}, :remote => true do |f| %>
+<%=bootstrap_form_for :document, :url => kapa_artifact_document_path(:id => @document), :html => {:method => :put, :multipart => true, :id => "edit_document_form"}, :remote => true do |f| %>
   <div class="row">
     <div class="col-sm-6">
       <%=f.text_field :name %>
@@ -14,5 +14,5 @@
 <% end %>
 <!-- Delete button with popover confirmation -->
 <% if @current_user.write? :artifact, :dept => @document.dept %>
-  <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", artifact_document_path(:id => @document), {:method => :delete, "data-confirm" => "Are you sure you want to delete this?", :class => "btn btn-default"} %>
+  <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", kapa_artifact_document_path(:id => @document), {:method => :delete, "data-confirm" => "Are you sure you want to delete this?", :class => "btn btn-default"} %>
 <% end %>

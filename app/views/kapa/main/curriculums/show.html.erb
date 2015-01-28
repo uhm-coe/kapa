@@ -1,8 +1,8 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/main/person_detail" %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", main_person_path(:id => @curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_main_person_path(:id => @curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
     <%= @program.description %>
   </h4>
 
@@ -14,8 +14,8 @@
 
     <div class="tab-content">
       <div id="curriculum_tab" class="tab-pane<%=' active' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
-        <%=label_form_for :curriculum, :url => main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
-          <%=render :partial => "/main/curriculum_form" %>
+        <%=label_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
+          <%=render :partial => "/kapa/main/curriculum_form" %>
           <%=controls if @current_user.write?(:main) %>
         <% end %>
       </div>
@@ -36,12 +36,12 @@
                 <td><%=h transition_point.term_desc %></td>
                 <td><%=h transition_point.type.to_s.capitalize %></td>
                 <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-                <td class="right"><%=link_to "Show", main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
+                <td class="right"><%=link_to "Show", kapa_main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
-        <p class="new right"><%=link_to "New Transition Point", new_main_transition_point_path(:id => @curriculum) %></p>
+        <p class="new right"><%=link_to "New Transition Point", new_kapa_main_transition_point_path(:id => @curriculum) %></p>
       </div>
     </div>
   </div>

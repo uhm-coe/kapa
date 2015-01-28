@@ -19,7 +19,7 @@
         var documentId = $(this).data('id');
         if (documentId) {
           // Send Ajax request to retrieve @document so that #edit_document_dialog can be populated
-          $.get('<%=main_person_path(:id => @person)%>', {
+          $.get('<%=kapa_main_person_path(:id => @person)%>', {
               doc_id: documentId
             }, function(data) {
               $('#edit_document_dialog .modal-body').html(data);
@@ -38,7 +38,7 @@
         var formId = $(this).data('id');
         if (formId) {
           // Send Ajax request to retrieve @form so that #edit_form_dialog can be populated
-          $.get('<%=main_person_path(:id => @person)%>', {
+          $.get('<%=kapa_main_person_path(:id => @person)%>', {
               form_id: formId
             }, function(data) {
               $('#edit_form_dialog .modal-body').html(data);
@@ -55,7 +55,7 @@
 
       $('#person_id_number').keyup(function () {
         if ($(this).val().match(/[\d]{8}/i)) {
-          $.get('<%=ajax_main_person_path(:id => @person, :command => :verify)%>',
+          $.get('<%=ajax_kapa_main_person_path(:id => @person, :command => :verify)%>',
                   {key: $(this).val()},
                   function (data) {
                     $('#person_form').html(data);
@@ -66,7 +66,7 @@
 
       $('#person_email').keyup(function () {
         if ($(this).val().match(/\w+@hawaii.edu/i)) {
-          $.get('<%=ajax_main_person_path(:id => @person, :command => :verify)%>',
+          $.get('<%=ajax_kapa_main_person_path(:id => @person, :command => :verify)%>',
                   {key: $(this).val()},
                   function (data) {
                     $('#person_form').html(data);
@@ -76,7 +76,7 @@
       });
 
       $('#person_sync_button').click(function () {
-        $.get('<%=ajax_main_person_path(:id => @person, :command => :sync)%>',
+        $.get('<%=ajax_kapa_main_person_path(:id => @person, :command => :sync)%>',
                 {key: $('#person_id_number').val()},
                 function (data) {
                   $('#person_form').html(data);
@@ -101,18 +101,18 @@
       <li><a href="#">Open External Site</a></li>
     </ul>
   </div>
-  <%= link_to @person.full_name, main_person_path(:action => :show, :id => @person) %>
+  <%= link_to @person.full_name, kapa_main_person_path(:action => :show, :id => @person) %>
 </h3>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
-  <%= bootstrap_form_for :person, :url => main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
-    <%= render :partial => "/main/person_form" %>
+  <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
+    <%= render :partial => "/kapa/main/person_form" %>
   <% end %>
 <% end if @current_user.read? :main %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
-  <%= bootstrap_form_for :contact, :url => main_contact_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "contact_form"} do %>
-    <%= render :partial => "/main/contact_form", :locals => {:object_name => :contact} %>
+  <%= bootstrap_form_for :contact, :url => kapa_main_contact_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "contact_form"} do %>
+    <%= render :partial => "/kapa/main/contact_form", :locals => {:object_name => :contact} %>
   <% end %>
 <% end if @current_user.read? :main %>
 
@@ -122,11 +122,11 @@
       <%= bootstrap_flash unless params[:artifacts_modal].nil? %>
     </div>
   </div>
-  <%= render :partial => "/artifact/document_table" %>
+  <%= render :partial => "/kapa/artifact/document_table" %>
 <% end if @current_user.read? :artifact %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%=bootstrap_form_for :document, :url => artifact_documents_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+  <%=bootstrap_form_for :document, :url => kapa_artifact_documents_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
     <%=f.file_field :data %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>

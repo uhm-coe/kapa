@@ -1,5 +1,5 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/main/person_detail" %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
   <h4 class="section-header divider">
     <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
@@ -16,25 +16,25 @@
 
     <div class="tab-content">
       <div id="user_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'user_profile' || params[:focus].nil? %>">
-        <%=bootstrap_form_for :user, :url => admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
-          <%=render :partial => "/admin/user_form", :locals => {:f => f} %>
+        <%=bootstrap_form_for :user, :url => kapa_admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
+          <%=render :partial => "/kapa/admin/user_form", :locals => {:f => f} %>
           <%=controls if @current_user.manage?  :admin, :delegate => :user %>
         <% end %>
       </div>
 
       <div id="role_tab" class="tab-pane<%=' active' if params[:focus] == 'role' %>">
-        <%=bootstrap_form_for :user_roles, :url => admin_user_path(:id => @user, :focus => :role), :remote => true, :html => {:method => :put}  do |f| %>
-          <%=render :partial => "/admin/role_form", :locals => {:f => f} %>
+        <%=bootstrap_form_for :user_roles, :url => kapa_admin_user_path(:id => @user, :focus => :role), :remote => true, :html => {:method => :put}  do |f| %>
+          <%=render :partial => "/kapa/admin/role_form", :locals => {:f => f} %>
           <%=controls if @current_user.manage?  :admin, :delegate => :user  %>
         <% end %>
       </div>
 
       <div id="activity_tab" class="tab-pane<%=' active' if params[:focus] == 'activity' %>">
-        <%=render :partial => "/admin/activity_table" %>
+        <%=render :partial => "/kapa/admin/activity_table" %>
       </div>
 
       <div id="other_accounts_tab" class="tab-pane<%=' active' if params[:focus] == 'other_accounts' %>">
-        <%=render :partial => "/admin/account_table" %>
+        <%=render :partial => "/kapa/admin/account_table" %>
       </div>
     </div>
   </div>

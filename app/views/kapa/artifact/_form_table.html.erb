@@ -5,7 +5,7 @@
     });
   </script>
 <% end %>
-  
+
 <table class="table table-hover">
   <tr>
     <th>Last Update</th>
@@ -19,10 +19,10 @@
     <tr>
       <td><%=format_date form.updated_at %></td>
       <td><%=format_date form.submitted_at %></td>
-      <td><%=link_to form.type_desc, artifact_form_path(:id => form), {:target => "_blank"} %></td>
+      <td><%=link_to form.type_desc, kapa_artifact_form_path(:id => form), {:target => "_blank"} %></td>
       <td><%=h form.lock %></td>
       <td><%=h form.dept %></td>
-      <td class="right"><%=link_to "Show", artifact_form_path(:id => form), {:target => "_blank", :class => "btn btn-default btn-xs" } %></td>
+      <td class="right"><%=link_to "Show", kapa_artifact_form_path(:id => form), {:target => "_blank", :class => "btn btn-default btn-xs" } %></td>
     </tr>
   <% end if @forms%>
 
@@ -30,7 +30,7 @@
 <p class="new right"><%=link_to_function "New form", nil, :id => "open_form_dialog" if @current_user.write? :artifact %></p>
 
 <div id="form_dialog" class="form-dialog" title="New Form">
-  <%=label_form_for :form, :url => artifact_forms_path(:id => @person, :focus => "form", :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
+  <%=label_form_for :form, :url => kapa_artifact_forms_path(:id => @person, :focus => "form", :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
   <% end %>
 </div>

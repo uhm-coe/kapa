@@ -12,8 +12,8 @@
 
     <div class="tab-content">
       <div id="school_profile_tab" class="tab-pane active">
-        <%=bootstrap_form_for :practicum_school, :url => practicum_schools_path do |f| %>
-          <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
+        <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_schools_path do |f| %>
+          <%=render :partial => "/kapa/practicum/school_form", :locals => {:f => f}%>
           <%=controls if @current_user.write? %>
         <% end %>
       </div>

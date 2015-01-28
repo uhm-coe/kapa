@@ -15,15 +15,15 @@
 
     <div class="tab-content">
       <div id="school_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'school_profile' || params[:focus].nil? %>">
-        <%=bootstrap_form_for :practicum_school, :url => practicum_school_path(:id => @practicum_school), :remote => true, :html => {:method => :put} do |f|%>
-          <%=render :partial => "/practicum/school_form", :locals => {:f => f}%>
+        <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_school_path(:id => @practicum_school), :remote => true, :html => {:method => :put} do |f|%>
+          <%=render :partial => "/kapa/practicum/school_form", :locals => {:f => f}%>
           <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
         <% end %>
       </div>
 
       <div id="school_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'school_contact' %>">
-        <%=bootstrap_form_for :practicum_school, :url => practicum_school_path(:id => @practicum_school, :focus => :school_contact), :remote => true, :html => {:method => :put}  do |f|%>
-          <%=render :partial => "/practicum/school_contact_form" %>
+        <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_school_path(:id => @practicum_school, :focus => :school_contact), :remote => true, :html => {:method => :put}  do |f|%>
+          <%=render :partial => "/kapa/practicum/school_contact_form" %>
           <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
         <% end %>
       </div>
@@ -67,7 +67,7 @@
                 <td><%=practicum_assignment.practicum_placement.practicum_profile.person.id_number %></td>
                 <td><%=abbr practicum_assignment.practicum_placement.practicum_profile.person.full_name%></td>
                 <td><%=h practicum_assignment.person.full_name %></td>
-                <td class="right"><%=link_to "Show", practicum_placement_path(:id => practicum_assignment.practicum_placement, :focus => :mentors) if practicum_assignment.practicum_placement.practicum_profile.coordinator?(@current_user) %></td>
+                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_assignment.practicum_placement, :focus => :mentors) if practicum_assignment.practicum_placement.practicum_profile.coordinator?(@current_user) %></td>
               </tr>
             <% end %>
           </tbody>

@@ -1,5 +1,5 @@
 class Kapa::Admin::UsersController < Kapa::Admin::BaseController
-  before_filter :check_manage_permission
+  # before_filter :check_manage_permission
 
   def show
     @user = User.find params[:id]

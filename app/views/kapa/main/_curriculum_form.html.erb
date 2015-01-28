@@ -8,7 +8,7 @@
 
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_program_dialog", :modal_title => "Change Program", :modal_form_id => "change_program_form"} do %>
-    <%=bootstrap_form_for(:curriculum, :url => main_curriculum_path(:id => @curriculum, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "change_program_form"}) do |t| %>
+    <%=bootstrap_form_for(:curriculum, :url => kapa_main_curriculum_path(:id => @curriculum, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "change_program_form"}) do |t| %>
       <%= t.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"} %>
     <% end %>
     <p>Changing academic program will reset major, distribution, location, and track options to default values.</p>

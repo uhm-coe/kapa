@@ -4,7 +4,7 @@
       // TODO: Uncomment out later, after undefined config issue is resolved
       // $('#person_id_number').keyup(function() {
       //   if($(this).val().match(/[\d]{8}/i)) {
-      //     $.get('<%=main_persons_verify_path(:id => @person) %>',
+      //     $.get('<%=kapa_main_persons_verify_path(:id => @person) %>',
       //     {key: $(this).val()},
       //     function(data) { $('#person_form').html(data);},
       //     'html');
@@ -13,7 +13,7 @@
 
       // $('#person_email').keyup(function() {
       //   if($(this).val().match(/\w+@hawaii.edu/i)) {
-      //     $.get('<%=main_persons_verify_path(:id => @person) %>',
+      //     $.get('<%=kapa_main_persons_verify_path(:id => @person) %>',
       //     {key: $(this).val()},
       //     function(data) { $('#person_form').html(data);},
       //     'html');
@@ -30,9 +30,9 @@
     New Person
   </h4>
 
-  <%=label_form_for :person, :url => main_persons_path, :remote => true do %>
+  <%=label_form_for :person, :url => kapa_main_persons_path, :remote => true do %>
     <div id="person_form">
-      <%=render :partial => "/main/person_form" %>
+      <%=render :partial => "/kapa/main/person_form" %>
     </div>
     <%=controls if @current_user.write? %>
   <% end %>
