@@ -120,6 +120,7 @@ GEM
     scrypt (1.2.1)
       ffi-compiler (>= 0.0.2)
       rake
+    sequel (4.18.0)
     sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -154,6 +155,7 @@ DEPENDENCIES
   paperclip (~> 3.0)
   rails (= 3.2.21)
   rails-csv-fixtures
+  sequel
   therubyracer
   twitter-bootstrap-rails!
   will_paginate (~> 3.0)

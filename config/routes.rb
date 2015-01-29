@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  root :to => 'kapa/main/base#welcome'
-  match '/login' => 'kapa/main/base#login', :as => :login
-  match '/logout' => 'kapa/main/base#logout', :as => :logout
-  match '/error' => 'kapa/main/base#error', :as => :error
-
   extra_actions = Proc.new do
     collection do
       get :export
@@ -17,6 +12,11 @@ Rails.application.routes.draw do
   end
 
   namespace :kapa do
+
+    root :to => 'main/base#welcome'
+    match '/login' => 'main/base#login', :as => :login
+    match '/logout' => 'main/base#logout', :as => :logout
+    match '/error' => 'main/base#error', :as => :error
 
     namespace :main do
       get 'persons/verify(/:id)' => 'persons#verify', :as => :persons_verify

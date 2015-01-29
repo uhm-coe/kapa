@@ -18,7 +18,7 @@ class Kapa::KapaBaseController < ActionController::Base
     unless @current_user_session and @current_user and @current_user.status >= 3 and @current_user.emp_status >= 1
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
-      redirect_to(root_url) and return
+      redirect_to(kapa_root_url) and return
     end
   end
 

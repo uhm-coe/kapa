@@ -15,7 +15,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
 
-        <%= bootstrap_form_for(:user_session, :url => login_path) do |f| %>
+        <%= bootstrap_form_for(:user_session, :url => kapa_login_path) do |f| %>
           <%= f.text_field :uid, :label => "Username" %>
           <%= f.password_field :password %>
           <%= f.submit "Login", :class => "btn btn-default" %>

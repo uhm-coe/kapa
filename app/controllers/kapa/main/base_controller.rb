@@ -11,12 +11,12 @@ class Kapa::Main::BaseController < Kapa::KapaBaseController
       flash[:danger] = "Invalid user/password combination!"
       redirect_to :action => :index and return false
     end
-    redirect_to root_path
+    redirect_to kapa_root_path
   end
 
   def logout
     UserSession.find.destroy if UserSession.find
-    redirect_to root_path
+    redirect_to kapa_root_path
   end
 
   def error
