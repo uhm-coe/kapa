@@ -43,7 +43,7 @@ class Kapa::Artifact::ExamsController < Kapa::Artifact::BaseController
     import_file = params[:data][:import_file]
     unless import_file
       flash[:warning] = "Please specify the file you are importing!"
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
 
     import_file.open.each do |line|

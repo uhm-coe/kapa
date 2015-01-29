@@ -29,7 +29,7 @@ class Kapa::Artifact::FormsController < Kapa::Artifact::BaseController
 
     unless @form.save
       flash[:danger] = error_message_for(@form)
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
 
     flash[:success] = "Form was successfully created."

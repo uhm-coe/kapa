@@ -41,13 +41,13 @@ class Kapa::Practicum::SchoolsController < Kapa::Practicum::BaseController
     #Do error checking of the file
     unless import_file
       flash[:warning] = "Please specify the file you are importing!"
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
 
     CSV.new(import_file, :headers => true).each do |row|
       if row["school_code"].blank?
         flash[:danger] = "No school code defined!"
-        redirect_to(error_path) and return false
+        redirect_to(kapa_error_path) and return false
       end
       school = PracticumSchool.find_or_create_by_code(row["school_code"])
       school.island = row["island"]
