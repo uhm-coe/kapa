@@ -33,7 +33,7 @@ class Kapa::Artifact::FormsController < Kapa::Artifact::BaseController
     end
 
     flash[:success] = "Form was successfully created."
-    params[:return_url][:focus] = params[:focus]
+    params[:return_url][:artifacts_modal] = "show"
     redirect_to params[:return_url]
   end
 

@@ -7,14 +7,17 @@
         $('#person_artifact_modal').modal('show');
       }
 
-      $('#upload_document').click(function() {
+      // When clicking "Upload a document" or "Add a form" buttons
+      $('#upload_document, #add_form').click(function() {
         $('#person_artifact_modal').modal('hide');
       });
 
-      $('#document_dialog #modal_close').click(function() {
+      // When closing "Select a document", "Select a form", "Edit file data", or "Edit form data" modals
+      $('#document_dialog #modal_close, #form_dialog #modal_close, #edit_document_dialog #modal_close, #edit_form_dialog #modal_close').click(function() {
         $('#person_artifact_modal').modal('show');
       });
 
+      // Dynamically generate "Edit file data" modal contents
       $('body').on('click', '#edit_document', function() {
         var documentId = $(this).data('id');
         if (documentId) {
@@ -30,10 +33,7 @@
         }
       });
 
-      $('#edit_document_dialog #modal_close').click(function() {
-        $('#person_artifact_modal').modal('show');
-      });
-
+      // Dynamically generate "Edit form data" modal contents
       $('body').on('click', '#edit_form', function() {
         var formId = $(this).data('id');
         if (formId) {
@@ -47,10 +47,6 @@
 
           $('#person_artifact_modal').modal('hide');
         }
-      });
-
-      $('#edit_form_dialog #modal_close').click(function() {
-        $('#person_artifact_modal').modal('show');
       });
 
       $('#person_id_number').keyup(function () {
@@ -130,6 +126,12 @@
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
     <%=f.file_field :data %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
+  <% end %>
+<% end %>
+
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
+  <%=bootstrap_form_for :form, :url => kapa_artifact_forms_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
+    <%=f.property_select :type, :name => :form %>
   <% end %>
 <% end %>
 
