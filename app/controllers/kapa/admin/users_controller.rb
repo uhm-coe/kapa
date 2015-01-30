@@ -31,13 +31,13 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
     @person = Person.new(params[:person])
     case params[:mode]
     when "promote"
-      @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
+      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Person was successfully imported."
 
     when "consolidate"
-      @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
+      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Records were successfully consolidated."
@@ -83,7 +83,7 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
   def import
     file = params[:import_file]
     CSV.new(file, :headers => true).each do |row|
-      person = Person.search(:first, row[0], :verified => true)
+      person = Person.lookup(row[0], :verified => true)
 
       if person
         if person.email.blank?

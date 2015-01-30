@@ -74,7 +74,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
 
     CSV.new(import_file, :headers => true).each do |row|
       id_number = row["id_number"] ? row["id_number"] : "00000000"
-      person = Person.search(:first, id_number, :verified => true)
+      person = Person.lookup(id_number, :verified => true)
 
       if person
         person.save if person.new_record?

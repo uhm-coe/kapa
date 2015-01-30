@@ -29,13 +29,13 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     @person = Person.new(params[:person])
     case params[:mode]
     when "promote"
-      @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
+      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Person was successfully created."
 
     when "consolidate"
-      @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
+      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Person was successfully consolidated."
@@ -66,7 +66,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
       redirect_to params[:return_uri]
 
     when "consolidate"
-      @person_verified = Person.search(:first, params[:person][:id_number], :verified => true)
+      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person, :include_associations => true)
       @person = @person_verified
       unless @person.save
@@ -92,11 +92,25 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
 
   def index
     @filter = filter
-    @persons = Person.search(:all, @filter.key)
+    @persons = Person.search(@filter.key)
     @modal = true if filter.key.blank?
     if @persons.blank?
       flash[:warning] = "No record was found."
     end
+  end
+
+  def lookup
+    person = Person.lookup(params[:key], :verified => true)
+    if person and person.new_record?
+      message = "Person was verified with the external directory.  Please check the name and save this record."
+    elsif person
+      message = "This person already exists in this system.  You will be redirect to the person record."
+      redirect_path = kapa_main_person_path(:id => person)
+    else
+      message = "No record was found in the external directory. Please check ID or Email"
+    end
+
+    render(:json => {:person => person, :message => message, :redirect_path => redirect_path})
   end
 
   def verify
@@ -107,7 +121,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     end
 
     key = params[:key]
-    @person_verified = Person.search :first, key, :verified => true
+    @person_verified = Person.lookup(key, :verified => true)
 
     if @person_verified
       @person.id_number = @person_verified.id_number

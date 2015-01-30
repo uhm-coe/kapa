@@ -1,10 +1,6 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      $('#filter_key').mouseover(function() {
-        if($(this).val() == 'Please enter key...') $(this).val('');
-      });
-
       <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
     });
   </script>
@@ -43,23 +39,13 @@
     </thead>
     <tbody>
       <% for person in @persons %>
-        <% if person.new_record? %>
-          <tr class="new">
-            <td><%=h person.id_number %></td>
-            <td><%=h person.full_name %></td>
-            <td></td>
-            <td><%=mail_to person.email %></td>
-            <td><%=link_to_unless person.id_number.blank?, "Add", :action => :create, :mode => :promote, "person[id_number]" => person.id_number %></td>
-          </tr>
-        <% else %>
-          <tr>
-            <td><%=person.id_number %></td>
-            <td><%=h person.full_name %></td>
-            <td><%=abbr person.other_name, 30 %></td>
-            <td><%=mail_to person.email %></td>
-            <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <td><%=person.id_number %></td>
+          <td><%=h person.full_name %></td>
+          <td><%=abbr person.other_name, 30 %></td>
+          <td><%=mail_to person.email %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>

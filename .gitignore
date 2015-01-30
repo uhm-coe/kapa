@@ -5,6 +5,7 @@ tmp/*
 db/backup/*
 test/dummy/log
 test/dummy/tmp
+test/dummy/config/initializers/ldap.rb
 
 #generic files to ignore
 *~

@@ -25,31 +25,31 @@ class DirectoryService
   def self.persons(key)
 
     case key
-    when /[\d]{8}/
-      filter = "#{AppConfig.ldap_attr_id_number}=#{key}"
-    when /^[A-Z0-9_%+-]+@hawaii.edu$/i
-      filter = "#{AppConfig.ldap_attr_email}=#{key}"
+    when Regexp.new(Rails.configuration.regex_id_number, true)
+      filter = "#{Rails.configuration.ldap_attr_id_number}=#{key}"
+    when Regexp.new(Rails.configuration.regex_email, true)
+      filter = "#{Rails.configuration.ldap_attr_email}=#{key}"
     else
       filter = nil
     end
 
     persons = Array.new
-    Rails.application.config.ldap.search(:base => AppConfig.ldap_search_base, :filter => filter ) do |entry|
+    Rails.application.config.ldap.search(:base => Rails.configuration.ldap_search_base, :filter => filter ) do |entry|
       person = Person.new
-      logger.debug "----LDAP search entry #{entry.dn}"
+      Rails.logger.debug "----LDAP search entry #{entry.dn}"
       entry.each do |attribute, values|
         case attribute.to_s
-          when AppConfig.ldap_attr_id_number
+          when Rails.configuration.ldap_attr_id_number
             person.id_number = values.first.to_s
-          when AppConfig.ldap_attr_last_name
+          when Rails.configuration.ldap_attr_last_name
             person.last_name = values.first.to_s
-          when AppConfig.ldap_attr_first_name
+          when Rails.configuration.ldap_attr_first_name
             person.first_name = values.first.to_s
-          when AppConfig.ldap_attr_email
+          when Rails.configuration.ldap_attr_email
             person.email = values.first.to_s
         end
       end
-      person.source = "UH LDAP"
+      person.source = "LDAP"
       person.status = "V"
       persons.push(person)
     end if filter

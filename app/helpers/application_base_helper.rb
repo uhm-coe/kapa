@@ -122,9 +122,9 @@ module ApplicationBaseHelper
 
   def controls(&block)
     tag = "<br>"
-    tag << submit_tag("Save", class: "btn btn-default")
+    tag << submit_tag("Save", :class => "btn btn-default")
     tag << " "
-    tag << button_to_reset("Reset", class: "btn btn-default")
+    tag << button_to_reset("Reset", :class => "btn btn-default")
     tag << capture(&block) if block_given?
     content_tag(:p, tag.html_safe, :class => "center")
   end
@@ -138,7 +138,6 @@ module ApplicationBaseHelper
   end
 
   def button_to_redirect(name, url, options = {})
-    logger.debug "-----btr:#{options.inspect}"
     button_to_function(name, nil, options.merge(:class => "redirect btn btn-default", "data-url" => url_for(url)))
   end
 

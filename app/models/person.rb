@@ -133,18 +133,15 @@ class Person < ApplicationBaseModel
     end
   end
 
-  def self.search(first_or_all, key, options = {})
-#    logger.debug "key = '#{key}' length = #{key.length}"
+  def self.search(key, options = {})
     if key.blank?
-      return first_or_all.to_s == "first" ? nil : {}
+      return []
     end
 
     filter = ApplicationFilter.new(:key => key)
     case key
     when /^[0-9]+/
-      if key.length == 9
-        filter.append_condition("ssn = ?", :key)
-      elsif key.length == 8
+      if key.length == 8
         filter.append_condition("id_number = ?", :key)
       else
         filter.append_condition("contacts.cur_phone like ? or contacts.per_phone like ? or contacts.mobile_phone like ?", :key, :like => true)
@@ -165,22 +162,30 @@ class Person < ApplicationBaseModel
 
     filter.append_condition("status <> 'D'")
     filter.append_condition("status = 'V'") if options[:verified]
-    results = Person.find(first_or_all, :include => :contact, :conditions => filter.conditions, :order => "status desc", :limit => 100)
-    logger.debug "--local search found person = #{results.inspect}"
-    if results.blank?
-      logger.debug "---LDAP search initiated for #{key}"
-      results.push(DirectoryService.person(key))
-      logger.debug "---LDAP result #{results.inspect}"
 
-      #Make sure the LDAP result does not have in local database.
-      if results and results.is_a? Person
-        existing_person = Person.find_by_id_number(results.id_number)
-        if existing_person
-          existing_person.merge(results)
-          results = existing_person
+    return Person.includes(:contact).where(filter.conditions).order("status desc").limit(100)
+  end
+
+  def self.lookup(key, options ={})
+    person_local = self.search(key, options).first
+
+    if person_local.blank? and DirectoryService.is_defined?
+      person_remote = DirectoryService.person(key)
+
+      #Make sure the person found in LDAP is not in the local database.
+      #This avoids the problem when email is missing in local record but exists in LDAP.
+      if person_remote
+        person_local = Person.find_by_id_number(person_remote.id_number)
+        if person_local
+          person_local.merge(person_remote)
+          return person_local
         end
       end
+
+      return person_remote
     end
-    return results
+
+    return person_local
   end
+
 end
