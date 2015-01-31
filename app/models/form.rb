@@ -5,7 +5,7 @@ class Form < ApplicationBaseModel
   has_one :transition_point
 
   def term_desc
-    return Term.find(term_id).description
+    return term_id.blank? ? "No term chosen" : Term.find(term_id).description
   end
 
   def type_desc

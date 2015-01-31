@@ -25,21 +25,21 @@ class Kapa::KapaBaseController < ActionController::Base
   def check_read_permission
     unless @current_user.read?(module_name)
       flash[:danger] = "You do not have a permission to read on the #{module_name} module."
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
   end
 
   def check_write_permission
     unless @current_user.write?(module_name, :delegate => params[:action])
       flash[:danger] = "You do not have a permission to write records on the #{module_name} module."
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
   end
 
   def check_manage_permission
     unless @current_user.write?(module_name, :delegate => params[:action])
       flash[:danger] = "You do not have a permission to manage records on the #{module_name} module."
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
   end
 
@@ -91,7 +91,7 @@ class Kapa::KapaBaseController < ActionController::Base
       render_notice and return false
     else
       flash[:danger] = "We are sorry, but something went wrong."
-      redirect_to(Rails.configuration.routing_mode == "student" ? student_error_path : error_path) and return false
+      redirect_to(Rails.configuration.routing_mode == "student" ? student_kapa_error_path : kapa_error_path) and return false
     end
   end
 

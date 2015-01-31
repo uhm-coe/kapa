@@ -64,7 +64,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     #Do error checking of the file
     unless import_file
       flash[:danger] = "Please specify the file you are importing!"
-      redirect_to(error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
 
     if params[:data][:delete] == "Y"
