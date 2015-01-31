@@ -105,6 +105,8 @@ GEM
       railties (= 3.2.21)
     rails-csv-fixtures (0.0.1)
       rails (~> 3.2.0)
+    rails-secrets (1.0.2)
+      rails (>= 3.2.0, <= 4.1.0)
     railties (3.2.21)
       actionpack (= 3.2.21)
       activesupport (= 3.2.21)
@@ -155,6 +157,7 @@ DEPENDENCIES
   paperclip (~> 3.0)
   rails (= 3.2.21)
   rails-csv-fixtures
+  rails-secrets
   sequel
   therubyracer
   twitter-bootstrap-rails!
