@@ -87,15 +87,17 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
   def lookup
     person = Person.lookup(params[:key], :verified => true)
     if person and person.new_record?
+      action = "promote"
       message = "Person was verified with the external directory.  Please check the name and save this record."
     elsif person
+      action = "merge"
       message = "This person already exists in this system.  You will be redirect to the person record."
       redirect_path = kapa_main_person_path(:id => person)
     else
       message = "No record was found in the external directory. Please check ID or Email"
     end
 
-    render(:json => {:person => person, :message => message, :redirect_path => redirect_path})
+    render(:json => {:person => person, :action => action, :message => message, :redirect_path => redirect_path})
   end
 
   #def verify
