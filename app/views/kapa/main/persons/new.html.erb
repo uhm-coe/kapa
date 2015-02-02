@@ -1,37 +1,29 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      var update_form = function(data) {
-        $('#person_id_number').val(data['person']['id_number']);
-        $('#person_email').val(data['person']['email']);
-        $('#person_last_name').val(data['person']['last_name']);
-        $('#person_first_name').val(data['person']['first_name']);
-        $('#person_status').val(data['person']['status']);
-        alert(data['message']);
-        if(data['redirect_path']) {
-          window.location.href = data['redirect_path']
+      var lookup_person = function(condition) {
+        if($(this).val().match(new RegExp(condition, "i"))) {
+          $.getJSON('<%=kapa_main_persons_lookup_path(:id => @person)%>',
+                    {key: $(this).val()},
+                    function(data) {
+                      var update_form = function(data) {
+                        alert(data['message']);
+                        if(data['redirect_path']) {
+                          window.location.href = data['redirect_path']
+                        }
+                        if(data['person']) {
+                          $('#person_id_number').val(data['person']['id_number']);
+                          $('#person_email').val(data['person']['email']);
+                          $('#person_last_name').val(data['person']['last_name']);
+                          $('#person_first_name').val(data['person']['first_name']);
+                          $('#person_status').val(data['person']['status']);
+                        }
+                    }
+                   );
         }
-      };
-
-      if(<%=DirectoryService.is_defined? %>) {
-        $('#person_id_number').keyup(function() {
-          if($(this).val().match(/<%=Rails.configuration.regex_id_number %>/i)) {
-            $.getJSON('<%=kapa_main_persons_lookup_path(:id => @person)%>',
-                      {key: $(this).val()},
-                      function(data) { update_form(data);}
-                     );
-          }
-        });
-
-        $('#person_email').keyup(function() {
-           if($(this).val().match(/<%=Rails.configuration.regex_email %>/i)) {
-             $.getJSON('<%=kapa_main_persons_lookup_path(:id => @person)%>',
-                       {key: $(this).val()},
-                       function(data) { update_form(data);}
-                      );
-           }
-        });
       }
+      $('#person_id_number').keyup(lookup_person("<%=Rails.configuration.regex_id_number %>"));
+      $('#person_email').keyup(lookup_person("<%=Rails.configuration.regex_email %>"));
     });
   </script>
 <%end%>
@@ -48,7 +40,6 @@
       <%=render :partial => "/kapa/main/person_form" %>
     </div>
     <%=controls if @current_user.write? %>
-    <%=button_to_function "Lookup", nil, :id => "lookup_button" %>
   <% end %>
 
 <% end %>

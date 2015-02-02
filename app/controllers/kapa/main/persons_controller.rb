@@ -27,27 +27,12 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
 
   def create
     @person = Person.new(params[:person])
-    case params[:mode]
-    when "promote"
-      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
-      @person_verified.merge(@person)
-      @person = @person_verified
-      flash[:success] = "Person was successfully created."
-
-    when "consolidate"
-      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
-      @person_verified.merge(@person)
-      @person = @person_verified
-      flash[:success] = "Person was successfully consolidated."
-    else
-      flash[:success] = "Person was successfully created."
-    end
-
     unless @person.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@person)
       redirect_to new_kapa_main_person_path and return false
     end
+    flash[:success] = "Person was successfully created."
     redirect_to kapa_main_person_path(:id => @person)
   end
 
@@ -113,35 +98,35 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     render(:json => {:person => person, :message => message, :redirect_path => redirect_path})
   end
 
-  def verify
-    if params[:id]
-      @person = Person.find(params[:id])
-    else
-      @person = Person.new
-    end
-
-    key = params[:key]
-    @person_verified = Person.lookup(key, :verified => true)
-
-    if @person_verified
-      @person.id_number = @person_verified.id_number
-      @person.email = @person_verified.email
-      @person.email_alt = @person_verified.email_alt
-      @person.first_name = @person_verified.first_name
-      @person.last_name = @person_verified.last_name
-
-      if @person_verified.new_record?
-        @mode = :promote
-        flash[:info] = "Person was verified with the UH Directory.  Please check the name and save this record."
-      else
-        @mode = :consolidate
-        flash[:warning] = "This person already exists in the system.  Please check the name and click save to use the exisiting record."
-      end
-    else
-      flash[:warning] = "No record was found in UH Directory. Please check ID or UH Email"
-    end
-    render :partial => "/kapa/main/person_form", :layout => false
-  end
+  #def verify
+  #  if params[:id]
+  #    @person = Person.find(params[:id])
+  #  else
+  #    @person = Person.new
+  #  end
+  #
+  #  key = params[:key]
+  #  @person_verified = Person.lookup(key, :verified => true)
+  #
+  #  if @person_verified
+  #    @person.id_number = @person_verified.id_number
+  #    @person.email = @person_verified.email
+  #    @person.email_alt = @person_verified.email_alt
+  #    @person.first_name = @person_verified.first_name
+  #    @person.last_name = @person_verified.last_name
+  #
+  #    if @person_verified.new_record?
+  #      @mode = :promote
+  #      flash[:info] = "Person was verified with the UH Directory.  Please check the name and save this record."
+  #    else
+  #      @mode = :consolidate
+  #      flash[:warning] = "This person already exists in the system.  Please check the name and click save to use the exisiting record."
+  #    end
+  #  else
+  #    flash[:warning] = "No record was found in UH Directory. Please check ID or UH Email"
+  #  end
+  #  render :partial => "/kapa/main/person_form", :layout => false
+  #end
 
   def sync
     @person = Person.find(params[:id])
