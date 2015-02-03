@@ -38,19 +38,9 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
 
   def update
     @person = Person.find(params[:id])
-    case params[:mode]
-    when "promote"
-      @person.attributes = (params[:person])
-      @person.promote
-      unless @person.save
-        flash[:danger] = error_message_for(@person)
-        redirect_to kapa_main_person_path(:id => @person) and return false
-      end
-      flash[:success] = "Person was successfully verified."
-      params[:return_uri][:focus] = params[:focus]
-      redirect_to params[:return_uri]
 
-    when "consolidate"
+    #TODO Review merge process
+    if params[:merge]
       @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person, :include_associations => true)
       @person = @person_verified
@@ -59,7 +49,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
         redirect_to kapa_main_person_path(:id => @person) and return false
       end
 
-      flash[:success] = "Person was successfully consolidated."
+      flash[:success] = "Person was successfully merged."
       params[:return_uri][:id] = @person.id if params[:return_uri][:controller] == "main/persons"  #This is needed for requests comes from outside of main
       params[:return_uri][:focus] = params[:focus]
       redirect_to params[:return_uri]
@@ -88,16 +78,11 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     person = Person.lookup(params[:key], :verified => true)
     if person and person.new_record?
       action = "promote"
-      message = "Person was verified with the external directory.  Please check the name and save this record."
     elsif person
       action = "merge"
-      message = "This person already exists in this system.  You will be redirect to the person record."
       redirect_path = kapa_main_person_path(:id => person)
-    else
-      message = "No record was found in the external directory. Please check ID or Email"
     end
-
-    render(:json => {:person => person, :action => action, :message => message, :redirect_path => redirect_path})
+    render(:json => {:person => person, :action => action, :redirect_path => redirect_path})
   end
 
   #def verify
