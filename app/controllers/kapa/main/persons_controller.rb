@@ -40,17 +40,11 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     @person = Person.find(params[:id])
 
     #TODO Review merge process
-    if params[:merge]
-      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
+    if params[:person_id_verified]
+      @person_verified = Person.find(params[:person_id_verified])
       @person_verified.merge(@person, :include_associations => true)
-      @person = @person_verified
-      unless @person.save
-        flash[:danger] = error_message_for(@person)
-        redirect_to kapa_main_person_path(:id => @person) and return false
-      end
-
       flash[:success] = "Person was successfully merged."
-      params[:return_uri][:id] = @person.id if params[:return_uri][:controller] == "main/persons"  #This is needed for requests comes from outside of main
+      params[:return_uri][:id] = @person_verified.id if params[:return_uri][:controller] == "kapa/main/persons"  #This is needed for requests comes from outside of main
       params[:return_uri][:focus] = params[:focus]
       redirect_to params[:return_uri]
 
@@ -76,44 +70,21 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
 
   def lookup
     person = Person.lookup(params[:key], :verified => true)
-    if person and person.new_record?
-      action = "promote"
-    elsif person
-      action = "merge"
-      redirect_path = kapa_main_person_path(:id => person)
+    if person
+      if person.new_record?
+        action = "promote"
+      elsif params[:id] != person.id.to_s
+        action = "merge"
+        person_id_verified = person.id
+        redirect_path = kapa_main_person_path(:id => person)
+      end
+    else
+      if DirectoryService.is_defined?
+        action = "alert"
+      end
     end
-    render(:json => {:person => person, :action => action, :redirect_path => redirect_path})
+    render(:json => {:person => person, :action => action, :person_id_verified => person_id_verified, :redirect_path => redirect_path})
   end
-
-  #def verify
-  #  if params[:id]
-  #    @person = Person.find(params[:id])
-  #  else
-  #    @person = Person.new
-  #  end
-  #
-  #  key = params[:key]
-  #  @person_verified = Person.lookup(key, :verified => true)
-  #
-  #  if @person_verified
-  #    @person.id_number = @person_verified.id_number
-  #    @person.email = @person_verified.email
-  #    @person.email_alt = @person_verified.email_alt
-  #    @person.first_name = @person_verified.first_name
-  #    @person.last_name = @person_verified.last_name
-  #
-  #    if @person_verified.new_record?
-  #      @mode = :promote
-  #      flash[:info] = "Person was verified with the UH Directory.  Please check the name and save this record."
-  #    else
-  #      @mode = :consolidate
-  #      flash[:warning] = "This person already exists in the system.  Please check the name and click save to use the exisiting record."
-  #    end
-  #  else
-  #    flash[:warning] = "No record was found in UH Directory. Please check ID or UH Email"
-  #  end
-  #  render :partial => "/kapa/main/person_form", :layout => false
-  #end
 
   def sync
     @person = Person.find(params[:id])

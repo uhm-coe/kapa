@@ -114,13 +114,11 @@ class Person < ApplicationBaseModel
       if options[:include_associations]
 
         Person.reflect_on_all_associations.each do |assoc|
-          logger.debug "association="
-          logger.debug assoc.inspect
           if assoc.macro == :has_many
-            assoc.klass.update_all("#{assoc.primary_key_name} = #{self.id}", "#{assoc.primary_key_name} = #{another_person.id}")
+            assoc.klass.update_all("#{assoc.foreign_key} = #{self.id}", "#{assoc.foreign_key} = #{another_person.id}")
           elsif assoc.macro == :has_one
             if self.send(assoc.name).nil?
-              assoc.klass.update_all("#{assoc.primary_key_name} = #{self.id}", "#{assoc.primary_key_name} = #{another_person.id}")
+              assoc.klass.update_all("#{assoc.foreign_key} = #{self.id}", "#{assoc.foreign_key} = #{another_person.id}")
             end
           end
         end
@@ -128,8 +126,9 @@ class Person < ApplicationBaseModel
         #Deactivate another person
         another_person.update_attributes(:status => "D",
                                          :id_number => nil,
-                                         :note => "Consolidated to #{self.id}")
+                                         :note => "Merged to #{self.id}")
       end
+      self.save!
     end
   end
 

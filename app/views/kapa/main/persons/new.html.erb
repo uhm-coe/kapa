@@ -2,29 +2,30 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
       var lookup_person = function(key) {
-        console.log("key:", key);
           $.getJSON('<%=kapa_main_persons_lookup_path(:id => @person)%>',
                     {key: key},
                     function(data) {
-                      if(data['action'] == 'merge') {
+                      if(data['person']) {
+                         $('#person_id_number').val(data['person']['id_number']);
+                         $('#person_email').val(data['person']['email']);
+                         $('#person_last_name').val(data['person']['last_name']);
+                         $('#person_first_name').val(data['person']['first_name']);
+                         $('#person_status').val(data['person']['status']);
+                      }
+
+                      if(data['action'] == 'promote') {
+                        alert('Person was verified with the external directory.  Please check the name and save this record.');
+                      }
+                      else if(data['action'] == 'merge') {
                         alert('This person already exists in this system.  You will be redirect to the person record.');
                         window.location.href = data['redirect_path']
                       }
-                      else if(data['person']) {
-                        alert('Person was verified with the external directory.  Please check the name and save this record.');
-                        $('#person_id_number').val(data['person']['id_number']);
-                        $('#person_email').val(data['person']['email']);
-                        $('#person_last_name').val(data['person']['last_name']);
-                        $('#person_first_name').val(data['person']['first_name']);
-                        $('#person_status').val(data['person']['status']);
-                      }
-                      else {
-                        alert('No record was found in the external directory. Please check ID or Email');
+                      else if(data['action'] == 'alert') {
                         $('#person_id_number').val('');
                         $('#person_email').val('');
+                        alert('No record was found in the external directory. Please check ID or Email');
                       }
-                    }
-                   );
+                     });
       }
 
       $('#person_id_number').keyup(function() {
