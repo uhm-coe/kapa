@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   namespace :kapa do
 
-    root :to => 'main/base#welcome'
+    root :to => 'main/base#welcome', :as => :root
     match '/login' => 'main/base#login', :as => :login
     match '/logout' => 'main/base#logout', :as => :logout
     match '/error' => 'main/base#error', :as => :error
