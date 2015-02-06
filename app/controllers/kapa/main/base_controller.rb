@@ -9,7 +9,7 @@ class Kapa::Main::BaseController < Kapa::KapaBaseController
     session = UserSession.new(params[:user_session])
     unless session.save
       flash[:danger] = "Invalid user/password combination!"
-      redirect_to :action => :index and return false
+      redirect_to kapa_root_path and return false
     end
     redirect_to kapa_root_path
   end
