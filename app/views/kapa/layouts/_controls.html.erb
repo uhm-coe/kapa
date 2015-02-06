@@ -16,10 +16,6 @@
 
         // Target the appropriate popover and its Delete (confirm) button
         $('body').on('click', '#confirm_<%= delete_id %> + .button-group > .confirm-dialog-btn-confirm', function() {
-          // TODO: Remove console.log once all controls are tested and working
-          // console.log('delete_id = <%= delete_id %>');
-          // console.log('delete_path = <%= delete_path %>');
-
           $.ajax({
             url: '<%= delete_path %>',
             type: 'DELETE',
@@ -42,4 +38,5 @@
       <i class="glyphicon glyphicon-trash"></i> Delete
     </button>
   <% end %>
+  <%= yield %>
 </p>

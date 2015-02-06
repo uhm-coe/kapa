@@ -43,10 +43,11 @@
       <div id="transition_point_tab" class="tab-pane<%=' active' if params[:focus] == 'transition_point' %>">
         <%= label_form_for :transition_point, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :transition_point), :remote => true, :html => {:method => :put} do %>
           <%= render :partial => "/kapa/main/transition_point_form" %>
-          <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:main) %>
-        <% end %>
-        <% if @current_user.write?(:main) && @current_user.manage? %>
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
+          <%= render :layout => "/kapa/layouts/controls" do %>
+            <% if @current_user.manage? %>
+              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
+            <% end %>
+          <% end if @current_user.write?(:main) %>
         <% end %>
       </div>
 
