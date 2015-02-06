@@ -18,14 +18,14 @@
       <div id="user_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'user_profile' || params[:focus].nil? %>">
         <%=bootstrap_form_for :user, :url => kapa_admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/user_form", :locals => {:f => f} %>
-          <%=controls if @current_user.manage?  :admin, :delegate => :user %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :user %>
         <% end %>
       </div>
 
       <div id="role_tab" class="tab-pane<%=' active' if params[:focus] == 'role' %>">
         <%=bootstrap_form_for :user_roles, :url => kapa_admin_user_path(:id => @user, :focus => :role), :remote => true, :html => {:method => :put}  do |f| %>
           <%=render :partial => "/kapa/admin/role_form", :locals => {:f => f} %>
-          <%=controls if @current_user.manage?  :admin, :delegate => :user  %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :user %>
         <% end %>
       </div>
 

@@ -26,14 +26,7 @@
           <%=f.check_box :active, {}, 1, 0 %>
         </div>
       </div>
-      <%=controls if @current_user.manage? %>
-    <% end %>
-    <!-- Delete button with popover confirmation -->
-    <% if @current_user.manage? %>
-      <form method="post" action="<%=kapa_admin_term_path(:id => @term) %>" class="btn-delete-form">
-        <input type="hidden" name="_method" value="delete">
-        <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-      </form>
+      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_term_path(:id => @term), :delete_id => "kapa_admin_terms_#{@term.id}"} if @current_user.manage? %>
     <% end %>
   </div>
 <%end%>
