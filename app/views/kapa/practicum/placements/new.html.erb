@@ -21,7 +21,7 @@
             </td>
           </tr>
         </table>
-        <%=controls if @current_user.write? %>
+        <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
       <% end %>
     </div>
   </div>

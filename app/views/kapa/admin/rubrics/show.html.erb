@@ -25,15 +25,7 @@
       <div id="rubric_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'rubric_profile' || params[:focus].nil? %>">
         <%=label_form_for :assessment_rubric, :url => kapa_admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/rubric_form", :locals => {:f => f} %>
-          <%=controls do %>
-          <% end if @current_user.manage? :admin, :delegate => :rubric %>
-        <% end %>
-        <!-- Delete button with popover confirmation -->
-        <% if @current_user.manage? :admin, :delegate => :rubric %>
-          <form method="post" action="<%=kapa_admin_rubric_path(:id => @assessment_rubric) %>" class="btn-delete-form">
-            <input type="hidden" name="_method" value="delete">
-            <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-          </form>
+          <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_rubric_path(:id => @assessment_rubric), :delete_id => "kapa_admin_rubrics_#{@assessment_rubric.id}"} if @current_user.manage? :admin, :delegate => :rubric %>
         <% end %>
       </div>
 
@@ -51,15 +43,7 @@
                 <div class="panel-body">
                   <%=label_form_for :assessment_criterion, :url => kapa_admin_criterion_path(:id => @assessment_criterion, :focus => :criterions, :criterion_panel => assessment_criterion.id), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/kapa/admin/criterion_form" %>
-                    <%=controls do %>
-                    <% end if @current_user.manage? :admin, :delegate => :rubric %>
-                  <% end %>
-                  <!-- Delete button with popover confirmation -->
-                  <% if @current_user.manage? :admin, :delegate => :rubric %>
-                    <form method="post" action="<%=kapa_admin_criterion_path(:id => @assessment_criterion, :focus => :criterions) %>" class="btn-delete-form">
-                      <input type="hidden" name="_method" value="delete">
-                      <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                    </form>
+                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_criterion_path(:id => @assessment_criterion, :focus => :criterions), :delete_id => "kapa_admin_criterions_#{@assessment_criterion.id}"} if @current_user.manage? :admin, :delegate => :rubric %>
                   <% end %>
                 </div>
               </div>
@@ -77,7 +61,7 @@
                 <% @assessment_criterion = AssessmentCriterion.new %>
                 <%=label_form_for :assessment_criterion, :url => kapa_admin_criterions_path(:id => @assessment_rubric, :focus => :criterions), :remote => true do |f| %>
                   <%=render :partial => "/kapa/admin/criterion_form" %>
-                  <%=controls if @current_user.manage? :admin, :delegate => :rubric %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :rubric %>
                 <% end %>
               </div>
             </div>

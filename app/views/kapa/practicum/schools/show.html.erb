@@ -17,14 +17,16 @@
       <div id="school_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'school_profile' || params[:focus].nil? %>">
         <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_school_path(:id => @practicum_school), :remote => true, :html => {:method => :put} do |f|%>
           <%=render :partial => "/kapa/practicum/school_form", :locals => {:f => f}%>
-          <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
+          <br/>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
         <% end %>
       </div>
 
       <div id="school_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'school_contact' %>">
         <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_school_path(:id => @practicum_school, :focus => :school_contact), :remote => true, :html => {:method => :put}  do |f|%>
           <%=render :partial => "/kapa/practicum/school_contact_form" %>
-          <br/><%=controls if @current_user.manage?(:practicum, :delegate => :maintain)   %>
+          <br/>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
         <% end %>
       </div>
 

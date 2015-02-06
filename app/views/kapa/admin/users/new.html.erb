@@ -54,7 +54,7 @@
   <div id="person_form">
     <%=render :partial => "/kapa/main/person_form" %>
   </div>
-  <%=controls if @current_user.manage? :admin, :delegate => :user %>
+  <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :user %>
 <% end %>
 
 <% end %>

@@ -15,15 +15,7 @@
       <div id="program_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'program_profile' || params[:focus].nil? %>">
         <%=label_form_for :program, :url => kapa_admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/program_form" %>
-          <%=controls do %>
-          <% end if @current_user.manage? %>
-        <% end %>
-        <!-- Delete button with popover confirmation -->
-        <% if @current_user.manage? %>
-          <form method="post" action="<%=kapa_admin_program_path(:id => @program) %>" class="btn-delete-form">
-            <input type="hidden" name="_method" value="delete">
-            <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-          </form>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_path(:id => @program), :delete_id => "kapa_admin_programs_#{@program.id}"} if @current_user.manage? %>
         <% end %>
       </div>
 
@@ -41,15 +33,7 @@
                 <div class="panel-body">
                   <%=label_form_for :program_offer, :url => kapa_admin_program_offer_path(:id => @program_offer, :focus => :offers, :offer_panel => program_offer.id), :remote => true, :html => {:method => :put} do |f| %>
                     <%=render :partial => "/kapa/admin/program_offer_form" %>
-                    <%=controls do %>
-                    <% end if @current_user.manage? %>
-                  <% end %>
-                  <!-- Delete button with popover confirmation -->
-                  <% if @current_user.manage? %>
-                    <form method="post" action="<%=kapa_admin_program_offer_path(:id => @program_offer, :focus => :offers) %>" class="btn-delete-form">
-                      <input type="hidden" name="_method" value="delete">
-                      <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                    </form>
+                    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_offer_path(:id => @program_offer, :focus => :offers), :delete_id => "kapa_admin_program_offers_#{@program_offer.id}"} if @current_user.manage? %>
                   <% end %>
                 </div>
               </div>
@@ -67,7 +51,7 @@
                 <% @program_offer = ProgramOffer.new %>
                 <%=label_form_for :program_offer, :url => kapa_admin_program_offers_path(:id => @program, :focus => :offers), :remote => true do |f| %>
                   <%=render :partial => "/kapa/admin/program_offer_form", :locals => {:f => f} %>
-                  <%=controls if @current_user.manage? %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
                 <% end %>
               </div>
             </div>

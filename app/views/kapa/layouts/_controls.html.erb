@@ -1,0 +1,42 @@
+<%# When including the Delete button using this partial, be sure to define both delete_path and delete_id as locals %>
+<% if defined? delete_path %>
+  <% content_for(:head) do %>
+    <script>
+      $(document).ready(function() {
+        // Need to include span in the popover because when there are multiple Delete buttons on a page,
+        //   the first item was getting deleted regardless of which popover Delete button was clicked
+        $('#delete_<%= delete_id %>').popConfirm({
+          title: 'Confirm', // The title of the confirm
+          content: 'Are you sure you want to delete this?<span id="confirm_<%= delete_id %>"></span>', // The message of the confirm
+          placement: 'right', // The placement of the confirm (top, right, bottom, left)
+          container: 'body', // The html container
+          yesBtn: 'Delete',
+          noBtn: 'Cancel'
+        });
+
+        // Target the appropriate popover and its Delete (confirm) button
+        $('body').on('click', '#confirm_<%= delete_id %> + .button-group > .confirm-dialog-btn-confirm', function() {
+          $.ajax({
+            url: '<%= delete_path %>',
+            type: 'DELETE',
+            success: function(result) {
+              console.log('Item successfully deleted.');
+            }
+          });
+        });
+      });
+    </script>
+  <% end %>
+<% end %>
+
+<p class="center">
+  <br>
+  <input class="btn btn-default" name="commit" type="submit" value="Save">
+  <input class="btn btn-default" name="commit" type="reset" value="Reset">
+  <% if defined? delete_path %>
+    <button type="button" class="btn btn-default" id="delete_<%= delete_id %>">
+      <i class="glyphicon glyphicon-trash"></i> Delete
+    </button>
+  <% end %>
+  <%= yield %>
+</p>

@@ -14,7 +14,7 @@
       <div id="program_profile_tab" class="tab-pane active">
         <%=label_form_for :program, :url => kapa_admin_programs_path, :remote => true do |f| %>
           <%=render :partial => "/kapa/admin/program_form" %>
-          <%=controls if @current_user.manage? %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
         <% end %>
       </div>
     </div>

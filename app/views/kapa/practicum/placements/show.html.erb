@@ -78,14 +78,14 @@
     <div id="practicum_profile_tab">
       <%=label_form_for :practicum_profile, :url => kapa_practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/kapa/practicum/profile_form", :locals => {:f => f}%>
-        <%=controls if @current_user.manage?(:practicum, :delegate => :maintain) %>
+        <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
       <% end %>
     </div>
 
     <div id="practicum_placement_tab">
       <%=label_form_for :practicum_placement, :url => kapa_practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/kapa/practicum/placement_form", :locals => {:f => f}%>
-        <%=controls if @current_user.write? %>
+        <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
       <% end %>
     </div>
 
@@ -99,8 +99,7 @@
           <div>
             <%=label_form_for :practicum_assignment, :url => kapa_practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
               <%=render :partial => "/kapa/practicum/assignment_form" %><br/>
-              <%=controls do %>
-              <% end if @current_user.write? %>
+              <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
             <% end %>
             <!-- Delete button with popover confirmation -->
             <% if @current_user.write? %>
@@ -118,7 +117,7 @@
           <% @practicum_assignment = PracticumAssignment.new(:assignment_type => "mentor") %>
           <%=label_form_for :practicum_assignment, :url => kapa_practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
             <%=render :partial => "/kapa/practicum/assignment_form" %>
-            <%=controls if @current_user.write? %>
+            <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
           <% end %>
         </div>
       </div>

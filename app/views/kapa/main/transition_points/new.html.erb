@@ -15,6 +15,6 @@
       </div>
     </div>
     <%=f.hidden_field :curriculum_id %>
-    <%=controls if @current_user.write? %>
+    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
   <% end %>
 <%end%>
