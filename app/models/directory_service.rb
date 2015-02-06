@@ -7,7 +7,8 @@ class DirectoryService
   def self.authenticate(uid, password)
     ldap = Rails.configuration.ldap
     base = Rails.configuration.ldap_search_base
-    filter = Rails.configuration.ldap_uid_filter.gsub("?", uid)
+    filter = Net::LDAP::Filter.eq(Rails.configuration.ldap_uid_filter, uid)
+    filter = filter & Rails.configuration.ldap_default_filter_auth if Rails.configuration.ldap_default_filter_auth
     dn = nil
     ldap.search(:base => base, :filter => filter) do |entry|
       dn = entry.dn
@@ -26,17 +27,16 @@ class DirectoryService
 
     case key
     when Regexp.new(Rails.configuration.regex_id_number, true)
-      filter = "#{Rails.configuration.ldap_attr_id_number}=#{key}"
+      filter = Net::LDAP::Filter.eq(Rails.configuration.ldap_attr_id_number, key)
     when Regexp.new(Rails.configuration.regex_email, true)
-      filter = "#{Rails.configuration.ldap_attr_email}=#{key}"
+      filter = Net::LDAP::Filter.eq(Rails.configuration.ldap_attr_email, key)
     else
       filter = nil
     end
-
+    filter = filter & Rails.configuration.ldap_default_filter_persons if Rails.configuration.ldap_default_filter_persons
     persons = Array.new
     Rails.application.config.ldap.search(:base => Rails.configuration.ldap_search_base, :filter => filter ) do |entry|
       person = Person.new
-      Rails.logger.debug "----LDAP search entry #{entry.dn}"
       entry.each do |attribute, values|
         case attribute.to_s
           when Rails.configuration.ldap_attr_id_number
@@ -49,11 +49,15 @@ class DirectoryService
             person.email = values.first.to_s
         end
       end
-      person.source = "LDAP"
+      person.source = self.source
       person.status = "V"
       persons.push(person)
     end if filter
 
     return persons
+  end
+
+  def self.source
+    "LDAP"
   end
 end
