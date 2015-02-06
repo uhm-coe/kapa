@@ -126,7 +126,7 @@ class Kapa::KapaBaseController < ActionController::Base
     case name.to_s
     when "main"
       items.push ["Search Person", kapa_main_persons_path]  if @current_user.manage?(:main, :delegate => :search)
-      items.push ["Program Cohorts", kapa_main_curriculums_path]  if @current_user.read? (:main)
+      items.push ["Cohorts", kapa_main_curriculums_path]  if @current_user.read? (:main)
       items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:main)
     when "artifact"
       items.push ["Forms", kapa_artifact_forms_path] if @current_user.manage?(:artifact, :delegate => :form)
