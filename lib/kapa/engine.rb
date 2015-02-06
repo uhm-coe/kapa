@@ -2,7 +2,7 @@ module Kapa
   class Engine < Rails::Engine
 
     initializer "kapa.assets.precompile" do |app|
-      app.config.assets.precompile += %w(kapa.css kapa.js *.png)
+      app.config.assets.precompile += %w(kapa.css kapa.js *.icon *.png)
     end
 
   end

@@ -1,3 +1,28 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if @current_user.nil? %>$('#login_dialog').modal({show : true});<% end %>
+    });
+  </script>
+<% end %>
+
+
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "login_dialog", :modal_title => "Please login to continue...", :modal_form_id => "login_form"} do %>
+    <div class="panel panel-default">
+      <div class="panel-body">
+
+        <%= bootstrap_form_for(:user_session, :url => kapa_login_path, :html => {:id => "login_form"}) do |f| %>
+          <%= f.text_field :uid, :label => "Username" %>
+          <%= f.password_field :password %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>
+
 <% content_for(:box1) do %>
 
   <h4>Welcome</h4>
@@ -7,21 +32,8 @@
     procedures including Advising, Admission, Graduation, Praxis, and Field Placement.
   </p>
 
-  <% if @current_user %>
-    <p>
-      Please select from the menu on the top...
-    </p>
-  <% else %>
-    <div class="panel panel-default">
-      <div class="panel-body">
-
-        <%= bootstrap_form_for(:user_session, :url => kapa_login_path) do |f| %>
-          <%= f.text_field :uid, :label => "Username" %>
-          <%= f.password_field :password %>
-          <%= f.submit "Login", :class => "btn btn-default" %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+  <p>
+    Please select from the menu on the top...
+  </p>
 
 <% end %>
