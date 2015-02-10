@@ -16,7 +16,7 @@ class Curriculum < ApplicationBaseModel
                              from transition_points t
                              inner join terms tm on tm.id = t.term_id
                              where t.curriculum_id = transition_points.curriculum_id
-                             order by tm.sequence desc, t.id desc
+                             order by tm.sequence desc
                              limit 1)"
 
   validates_presence_of :person_id, :program_id
@@ -34,10 +34,6 @@ class Curriculum < ApplicationBaseModel
     # return Term.find(term_id).description
     return "Term TBD"
   end
-
-#  def degree_desc
-#    return Validation.lookup_description(:degree, degree)
-#  end
 
   def track_desc
     return ApplicationProperty.lookup_description(:track, track)
@@ -73,5 +69,83 @@ class Curriculum < ApplicationBaseModel
     texts.push distribution_desc if distribution_desc.present?
     texts.push track_desc if track_desc.present?
     return texts.join("/")
+  end
+
+  def self.search(filter, options ={})
+    curriculums = Curriculum.includes([:transition_points, :program, :person])#.where("transition_actions.action" => ['1','2'])
+    curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
+    curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?
+    curriculums = curriculums.where("programs.code" => filter.program) if filter.program.present?
+    curriculums = curriculums.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
+    curriculums = curriculums.where("curriculums.major_primary" => filter.major) if filter.major.present?
+    curriculums = curriculums.where{(curriculum.user_primary_id == my{filter.user_id}) | (curriculum.user_secondary_id == my{filter.user_id})} if filter.user_id.present?
+
+    case filter.user.access_scope
+    when 3
+      # do nothing
+    when 2
+      curriculums = curriculums.where("programs.code" => filter.user.depts)
+    when 1
+      curriculums = curriculums.where{(curriculum.user_primary_id == my{filter.user.id}) | (curriculum.user_secondary_id == my{filter.user.id})}
+    else
+      curriculums = curriculums.where("1 = 2")  #Do not list any objects
+    end
+    return curriculums
+  end
+
+  def self.to_csv(filter, options ={})
+    transition_points = self.search(filter).order( "persons.last_name, persons.first_name")
+    CSV.generate do |csv|
+      csv << self.csv_columns
+      transition_points.each do |c|
+        csv << csv_row(c)
+      end
+    end
+  end
+
+  def self.csv_columns
+    [:id_number,
+     :last_name,
+     :first_name,
+     :email,
+     :email_alt,
+     :ssn,
+     :ssn_agreement,
+     :cur_street,
+     :cur_city,
+     :cur_state,
+     :cur_postal_code,
+     :cur_phone,
+     :curriculum_id,
+  #   :term_desc,
+     :program_desc,
+     :track_desc,
+     :major_primary_desc,
+     :major_secondary_desc,
+     :distribution_desc,
+     :second_degree]
+  end
+
+  def self.csv_row(c)
+    [c.rsend(:person, :id_number),
+     c.rsend(:person, :last_name),
+     c.rsend(:person, :first_name),
+     c.rsend(:person, :email),
+     c.rsend(:person, :contact, :email_alt),
+     c.rsend(:person, :ssn),
+     c.rsend(:person, :ssn_agreement),
+     c.rsend(:person, :contact, :cur_street),
+     c.rsend(:person, :contact, :cur_city),
+     c.rsend(:person, :contact, :cur_state),
+     c.rsend(:person, :contact, :cur_postal_code),
+     c.rsend(:person, :contact, :cur_phone),
+     c.rsend(:id),
+ #    c.rsend(:term, :description),
+     c.rsend(:program, :description),
+     c.rsend(:track_desc),
+     c.rsend(:major_primary_desc),
+     c.rsend(:major_secondary_desc),
+     c.rsend(:distribution_desc),
+     c.rsend(:second_degree)]
   end
 end

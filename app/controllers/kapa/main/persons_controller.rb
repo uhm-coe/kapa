@@ -61,7 +61,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
 
   def index
     @filter = filter
-    @persons = Person.search(@filter.key)
+    @persons = Person.search(@filter)
     @modal = true if filter.key.blank?
     if @persons.blank?
       flash[:warning] = "No record was found."

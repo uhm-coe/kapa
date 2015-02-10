@@ -132,42 +132,32 @@ class Person < ApplicationBaseModel
     end
   end
 
-  def self.search(key, options = {})
-    if key.blank?
+  def self.search(filter, options = {})
+    if filter.blank?
       return []
     end
 
-    filter = ApplicationFilter.new(:key => key)
-    case key
-    when /^[0-9]+/
-      if key.length == 8
-        filter.append_condition("id_number = ?", :key)
-      else
-        filter.append_condition("contacts.cur_phone like ? or contacts.per_phone like ? or contacts.mobile_phone like ?", :key, :like => true)
-      end
-    when /^[A-Z0-9_%+-]+@hawaii.edu$/i
-      filter.append_condition("persons.email like ? or persons.email_alt like ?", :key)
-    when /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-      filter.append_condition("contacts.email like ?", :key)
-    when /\w+,\s*\w+/
-      keys = key.split(/,\s*/)
-      filter.last_name = keys[0]
-      filter.first_name = keys[1]
-      filter.append_condition("last_name like ?", :last_name, :like => true)
-      filter.append_condition("first_name like ?", :first_name, :like => true)
+    persons = Person.includes(:contact).where("status <> 'D'")
+    persons = persons.where(:status => "V") if options[:verified]
+
+    if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)
+      persons = persons.where(:id_number => filter.key)
+    elsif filter.key =~  Regexp.new(Rails.configuration.regex_email, true)
+      persons = persons.where(:email => filter.key)
+    elsif filter.key =~  /\d+/
+      persons = persons.where("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
+    elsif filter.key =~  /\w+,\s*\w+/
+      keys = filter.key.split(/,\s*/)
+      persons = persons.where{(last_name =~ my{keys[0]}) | (first_name =~ my{keys[1]})}
     else
-      filter.append_condition("first_name like ? or last_name like ? or other_name like ?", :key, :like => true)
+      persons = persons.where{(first_name =~ my{filter.key}) | (last_name =~ my{filter.key}) | (other_name =~ my{filter.key})}
     end
 
-    filter.append_condition("status <> 'D'")
-    filter.append_condition("status = 'V'") if options[:verified]
-
-    return Person.includes(:contact).where(filter.conditions).order("status desc").limit(100)
+    return persons.order("status desc").limit(100)
   end
 
   def self.lookup(key, options ={})
-    person_local = self.search(key, options).first
-
+    person_local = self.search(filter.new(:key => key), options).first
     if person_local.blank? and DirectoryService.is_defined?
       person_remote = DirectoryService.person(key)
 
@@ -186,5 +176,4 @@ class Person < ApplicationBaseModel
 
     return person_local
   end
-
 end

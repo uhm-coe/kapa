@@ -111,10 +111,12 @@ class Kapa::KapaBaseController < ActionController::Base
 
   def filter(options = {})
     name = "filter_#{module_name}".to_sym
-    f_hash = session[name] ||= HashWithIndifferentAccess.new(filter_defaults)
-    f_hash.update(params[:filter]) if params[:filter].present?
-    f_hash.update(options) if options.present?
-    return ApplicationFilter.new(f_hash)
+    session[name] = filter_defaults if session[name].nil?
+    session[name].update(params[:filter]) if params[:filter].present?
+    session[name].update(options) if options.present?
+    filter = ApplicationFilter.new(session[name])
+    filter.user = @current_user
+    return filter
   end
 
   def filter_defaults

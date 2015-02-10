@@ -53,19 +53,19 @@
       </tr>
     </thead>
     <tbody>
-      <% for transition_point in @transition_points %>
+      <% for curriculum in @curriculums %>
         <tr>
-          <td><%=transition_point.curriculum.person.id_number %></td>
-          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), kapa_main_person_path(:id => transition_point.curriculum.person_id) %></td>
-          <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
-          <td><%=h transition_point.rsend(:curriculum, :last_transition_point, :type_desc)%></td>
-          <td><%=h transition_point.rsend(:curriculum, :last_transition_point, :last_transition_action, :action_desc) %></td>
-          <td><%=h transition_point.rsend(:curriculum, :user_primary, :person, :last_name) %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => transition_point.curriculum}, :class => "btn btn-default btn-xs" %></td>
+          <td><%=curriculum.person.id_number %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(curriculum.person.full_name), kapa_main_person_path(:id => curriculum.person_id) %></td>
+          <td><%=abbr curriculum.code_desc, curriculum.code %></td>
+          <td><%=h curriculum.rsend(:last_transition_point, :type_desc)%></td>
+          <td><%=h curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
+          <td><%=h curriculum.rsend(:user_primary, :person, :last_name) %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => curriculum}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%=will_paginate @transition_points, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @curriculums, :renderer => BootstrapPagination::Rails %></div>
 
 <%end%>

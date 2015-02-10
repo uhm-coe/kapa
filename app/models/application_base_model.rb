@@ -58,7 +58,6 @@ class ApplicationBaseModel < ActiveRecord::Base
     [["Not Defined!", "ND"]]
   end
 
-  private
   def to_end_of_day(value)
     DateTime.new(value.year, value.month, value.day, 23, 59, 0, 0) if value.is_a? Date
   end

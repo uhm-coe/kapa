@@ -19,6 +19,7 @@ gem 'bootstrap-datepicker-rails', '~> 1.3.1.1'
 gem 'bootstrap-multiselect-rails'
 gem 'rails-secrets'
 gem 'uglifier'
+gem 'squeel'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
