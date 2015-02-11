@@ -25,18 +25,16 @@ class Kapa::Admin::ProgramOffersController < ApplicationController
     redirect_to kapa_admin_program_path(:id => @program, :focus => params[:focus], :offer_panel => @program_offer.id)
   end
 
-  # TODO: This is behaving very strangely - instead of deleting the program_offer, it deletes the program
   def destroy
     @program_offer = ProgramOffer.find params[:id]
-    # logger.debug('---- calling program offers destroy')
 
-    # if @program_offer.destroy
-    #   flash[:success] = "Program offer was successfully deleted."
-    # else
-    #   flash[:danger] = error_message_for(@program_offer)
-    # end
-    # redirect_to kapa_admin_program_path(:id => @program_offer.program_id, :focus => params[:focus])
-    redirect_to kapa_admin_programs_path # Results in a 404 (Not Found)
+    if @program_offer.destroy
+      flash[:success] = "Program offer was successfully deleted."
+    else
+      flash[:danger] = error_message_for(@program_offer)
+    end
+    # Note: Leave status 303 in there, very important, or else it will delete the program as well
+    redirect_to :controller => :programs, :action => :show, :id => @program_offer.program_id, :status => 303
   end
 
 end
