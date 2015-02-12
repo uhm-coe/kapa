@@ -37,8 +37,6 @@ class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @filter.append_condition "name = ?", :name
-    @filter.append_condition "active = ?", :active
-    @properties = ApplicationProperty.find(:all, :order => "sequence DESC, code", :conditions => @filter.conditions)
+    @properties = ApplicationProperty.search(@filter).order("sequence DESC, code")
   end
 end

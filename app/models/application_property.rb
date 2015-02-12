@@ -70,4 +70,10 @@ class ApplicationProperty < ApplicationBaseModel
     return property
   end
 
+  def self.search(filter, options = {})
+    application_properties = ApplicationProperty.scoped
+    application_properties = application_properties.where("name" => filter.name) if filter.name.present?
+    application_properties = application_properties.where("active" => filter.active) if filter.active.present?
+    return application_properties
+  end
 end
