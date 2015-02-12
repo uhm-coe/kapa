@@ -78,7 +78,7 @@ class Curriculum < ApplicationBaseModel
     curriculums = curriculums.where("programs.code" => filter.program) if filter.program.present?
     curriculums = curriculums.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
     curriculums = curriculums.where("curriculums.major_primary" => filter.major) if filter.major.present?
-    curriculums = curriculums.where{(curriculum.user_primary_id == my{filter.user_id}) | (curriculum.user_secondary_id == my{filter.user_id})} if filter.user_id.present?
+    curriculums = curriculums.where{({curriculums => user_primary_id} == my{filter.user_id}) | ({curriculums => user_secondary_id} == my{filter.user_id})} if filter.user_id.present?
 
     case filter.user.access_scope
     when 3
@@ -86,7 +86,7 @@ class Curriculum < ApplicationBaseModel
     when 2
       curriculums = curriculums.where("programs.code" => filter.user.depts)
     when 1
-      curriculums = curriculums.where{(curriculum.user_primary_id == my{filter.user.id}) | (curriculum.user_secondary_id == my{filter.user.id})}
+      curriculums = curriculums.where{({curriculums => user_primary_id} == my{filter.user.id}) | ({curriculums => user_secondary_id} == my{filter.user.id})}
     else
       curriculums = curriculums.where("1 = 2")  #Do not list any objects
     end

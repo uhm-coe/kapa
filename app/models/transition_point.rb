@@ -65,7 +65,7 @@ class TransitionPoint < ApplicationBaseModel
     transition_points = transition_points.where("programs.code" => filter.program) if filter.program.present?
     transition_points = transition_points.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
     transition_points = transition_points.where("curriculums.major_primary" => filter.major) if filter.major.present?
-    transition_points = transition_points.where{(transition_point.user_primary_id == my{filter.user_id}) | (transition_point.user_secondary_id == my{filter.user_id})} if filter.user_id.present?
+    transition_points = transition_points.where{({transition_points => user_primary_id} == my{filter.user_id}) | ({transition_points => user_secondary_id} == my{filter.user_id})} if filter.user_id.present?
 
     case filter.user.access_scope
     when 3
@@ -73,7 +73,7 @@ class TransitionPoint < ApplicationBaseModel
     when 2
       transition_points = transition_points.where("programs.code" => filter.user.depts)
     when 1
-      transition_points = transition_points.where{(transition_point.user_primary_id == my{filter.user.id}) | (transition_point.user_secondary_id == my{filter.user.id})}
+      transition_points = transition_points.where{({transition_points => user_primary_id} == my{filter.user.id}) | ({transition_points => user_secondary_id} == my{filter.user.id})}
     else
       transition_points = transition_points.where("1 = 2") # Do not list any objects
     end
