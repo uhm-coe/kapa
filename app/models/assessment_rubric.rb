@@ -20,4 +20,13 @@ class AssessmentRubric < ApplicationBaseModel
   def effective_term
     "#{Term.find(self.start_term_id).description} - #{Term.find(self.end_term_id).description}"
   end
+
+  def self.search(filter, options = {})
+    assessment_rubrics = AssessmentRubric.includes([:assessment_criterions])
+    assessment_rubrics = assessment_rubrics.where{self.title =~ "%#{filter.title}%"} if filter.title.present?
+    assessment_rubrics = assessment_rubrics.where{self.program =~ "%#{filter.program}%"} if filter.program.present?
+    assessment_rubrics = assessment_rubrics.where{self.course =~ "%#{filter.course}%"} if filter.course.present?
+    assessment_rubrics = assessment_rubrics.where{self.transition_point =~ "%#{filter.transition_point}%"} if filter.transition_point.present?
+    return assessment_rubrics
+  end
 end
