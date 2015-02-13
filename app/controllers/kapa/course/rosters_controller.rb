@@ -67,87 +67,17 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
   end
 
   def index
-    @filter = course_filter
-    @courses = Course.paginate(:page => params[:page], :per_page => 20, :include => [[:course_registrations => :assessment_scores]], :conditions => @filter.conditions, :order => "subject, number, section")
+    @filter = filter
+    @courses = Course.search(@filter).order("subject, number, section").paginate(:page => params[:page])
   end
 
   def export
-    @filter = course_filter
-    sql =  "SELECT
-              courses.*,
-              assessment_score_results.*,
-              (select count(*) from course_registrations where status like 'R%' and course_id = courses.id) as registered
-              FROM
-              courses
-              LEFT OUTER JOIN (
-                SELECT
-                course_registrations.course_id,
-                assessment_rubrics.title as assessment,
-                assessment_criterions.criterion,
-                assessment_criterions.criterion_desc,
-                sum(if(assessment_scores.rating = '2', 1, 0)) as target,
-                sum(if(assessment_scores.rating = '1', 1, 0)) as acceptable,
-                sum(if(assessment_scores.rating = '0', 1, 0)) as unacceptable,
-                sum(if(assessment_scores.rating = 'N', 1, 0)) as na
-                FROM assessment_scores
-                INNER JOIN course_registrations on assessment_scores.assessment_scorable_type = 'CourseRegistration' and assessment_scores.assessment_scorable_id = course_registrations.id
-                INNER JOIN assessment_criterions on assessment_scores.assessment_criterion_id = assessment_criterions.id
-                INNER JOIN assessment_rubrics on assessment_criterions.assessment_rubric_id = assessment_rubrics.id
-                WHERE 1=1
-                and course_registrations.status like 'R%'
-                and assessment_scores.rating not in ('')
-                GROUP BY
-                course_registrations.course_id,
-                assessment_rubrics.title,
-                assessment_criterions.criterion,
-                assessment_criterions.criterion_desc
-              ) as assessment_score_results
-              ON courses.id = assessment_score_results.course_id
-              INNER JOIN terms ON terms.id = courses.term_id
-            WHERE ?
-            ORDER BY terms.sequence, subject, number, section, crn"
-    courses = Course.find_by_sql(@filter.query(sql))
-    csv_string = CSV.generate do |csv|
-      csv << [:term_id,
-              :term_desc,
-              :subject,
-              :number,
-              :section,
-              :crn,
-              :title,
-              :instructor,
-              :assessment,
-              :criterion,
-              :criterion_desc,
-              :target,
-              :acceptable,
-              :unacceptable,
-              :na,
-              :registered]
-      courses.each do |c|
-        csv << [c.term_id,
-                c.term_desc,
-                c.subject,
-                c.number,
-                c.section,
-                c.crn,
-                c.title,
-                c.instructor,
-                c.assessment,
-                c.criterion,
-                c.criterion_desc,
-                c.target,
-                c.acceptable,
-                c.unacceptable,
-                c.na,
-                c.registered]
-      end
-
-    end
-    send_data csv_string,
+    @filter = filter
+    logger.debug "----filter: #{@filter.inspect}"
+    send_data Course.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "courses_#{term_desc}.csv"
+      :filename     => "courses_#{@filter.term_desc}.csv"
   end
 
   private
@@ -158,22 +88,4 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
     session[:filter_course][:assessment_rubric_id] = @assessment_rubric.id
   end
 
-  def course_filter
-    f = filter
-    f.append_condition "courses.status = 'A'"
-    f.append_condition "courses.term_id = ?", :term_id
-    f.append_condition "courses.subject = ?", :subject
-    f.append_condition "concat(courses.subject, courses.number, '-', courses.section) like ?", :course_name, :like => true
-    if @current_user.access_scope >= 3
-      # do nothing
-    elsif @current_user.access_scope == 2
-      f.append_property_condition "concat(courses.subject, courses.number) in (?)", :course, :depts => @current_user.depts unless @current_user.manage? :course
-    elsif @current_user.access_scope == 1
-      # not implemented yet
-    else
-      f.append_condition "1=2"
-    end
-
-    return f
-  end
 end
