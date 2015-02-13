@@ -37,7 +37,7 @@ class AdvisingSession < ApplicationBaseModel
     when 3
       # Do nothing
     when 2
-      advising_sessions = advising_sessions.where{self.dept =~ "#{filter.user.depts}%"} unless filter.user.manage? :advising
+      advising_sessions = advising_sessions.where{self.dept.like_any filter.user.depts} unless filter.user.manage? :advising
     when 1
       advising_sessions = advising_sessions.where{({advising_sessions => user_primary_id} == my{filter.user.id}) | ({advising_sessions => user_secondary_id} == my{filter.user.id})}
     else
