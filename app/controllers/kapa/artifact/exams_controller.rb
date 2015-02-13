@@ -34,8 +34,8 @@ class Kapa::Artifact::ExamsController < Kapa::Artifact::BaseController
   end
 
   def index
-    @filter = exams_filter
-    @exams = Exam.paginate(:page => params[:page], :per_page => 20, :include => [:person, :exam_scores], :conditions => @filter.conditions, :order => "report_date DESC, persons.last_name, persons.first_name")
+    @filter = filter
+    @exams = Exam.search(@filter).order("report_date DESC, persons.last_name, persons.first_name").paginate(:page => params[:page])
   end
 
   def import
@@ -74,14 +74,4 @@ class Kapa::Artifact::ExamsController < Kapa::Artifact::BaseController
     redirect_to :action => :index
   end
 
-  private
-  def exams_filter
-    f = filter
-    f.append_condition "concat(persons.last_name, ', ', persons.first_name) like ?", :name
-    f.append_condition "persons.birth_date = ?", :birth_date
-    f.append_condition "report_date >= ?", :date_start
-    f.append_condition "report_date <= ?", :date_end
-    f.append_depts_condition("public = 'Y' or dept like ?", @current_user.depts) unless @current_user.manage? :artifact
-    return f
-  end
 end

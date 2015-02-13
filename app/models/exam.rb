@@ -61,7 +61,7 @@ class Exam < ApplicationBaseModel
           self.person = p
           self.status = 'M'
         else
-          
+
           self.create_person(:last_name =>  examinee_profile[:last_name].capitalize,
                              :first_name => examinee_profile[:first_name].capitalize,
                              :birth_date => examinee_profile[:birth_date])
@@ -131,5 +131,15 @@ class Exam < ApplicationBaseModel
 
   def extract_value(start_position, end_position, shift = 0)
     raw[(start_position - 1 + shift)..(end_position - 1 + shift)].to_s.strip
+  end
+
+  def self.search(filter, options = {})
+    exams = Exam.includes([:person, :exam_scores])
+    exams = exams.where("concat(persons.last_name, ', ', persons.first_name) like ?", "%#{filter.name}%") if filter.name.present?
+    exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
+    exams = exams.where{self.report_date >= filter.date_start} if filter.date_start.present?
+    exams = exams.where{self.report_date <= filter.date_end} if filter.date_end.present?
+    exams = exams.where{(self.public == "Y") | (self.dept.like_any filter.user.depts)} unless filter.user.manage? :artifact
+    return exams
   end
 end

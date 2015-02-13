@@ -36,8 +36,7 @@ class Form < ApplicationBaseModel
     forms = Form.includes([:person])
     forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
     forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
-    # TODO: Change below to use the new filter method
-    # f.append_depts_condition("forms.public = 'Y' or forms.dept like ?", @current_user.depts) unless @current_user.manage? :artifact
+    forms = forms.where{(self.public == "Y") | (self.dept.like_any filter.user.depts)} unless filter.user.manage? :artifact
     return forms
   end
 
