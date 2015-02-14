@@ -12,7 +12,4 @@
   </div>
   <%=f.hidden_field :person_id, :value => @person.id %>
 <% end %>
-<!-- Delete button with popover confirmation -->
-<% if @current_user.write? :artifact, :dept => @document.dept %>
-  <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", kapa_artifact_document_path(:id => @document), {:method => :delete, "data-confirm" => "Are you sure you want to delete this?", :class => "btn btn-default"} %>
-<% end %>
+<%= render :partial => "/kapa/layouts/controls", :locals => {:hide_update => true, :delete_path => kapa_artifact_document_path(:id => @document)} if @current_user.write? :artifact, :dept => @document.dept %>
