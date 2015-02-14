@@ -62,75 +62,17 @@ class Kapa::Advising::SessionsController < Kapa::Advising::BaseController
   end
 
   def index
-    @filter = sessions_filter
-    @advising_sessions = AdvisingSession.paginate(:page => params[:page], :per_page => 20, :include => :person, :order => "session_date DESC, id DESC", :conditions => @filter.conditions)
+    @filter = filter
+    @advising_sessions = AdvisingSession.search(@filter).order("session_date DESC, advising_sessions.id DESC").paginate(:page => params[:page])
   end
 
   def export
-    @filter = sessions_filter
-    advisings = AdvisingSession.find(:all, :include => [:person => :contact], :order => "session_date DESC, id DESC", :conditions => @filter.conditions)
-    csv_string = CSV.generate do |csv|
-      csv << [:id_number,
-              :last_name,
-              :first_name,
-              :cur_street,
-              :cur_city,
-              :cur_state,
-              :cur_postal_code,
-              :cur_phone,
-              :email,
-              :session_date,
-              :session_type,
-              :task,
-              :classification,
-              :interest,
-              :location,
-              :handled_by]
-      advisings.each do |c|
-        csv << [rsend(c, :person, :id_number),
-                rsend(c, :person, :last_name),
-                rsend(c, :person, :first_name),
-                rsend(c, :person, :contact, :cur_street),
-                rsend(c, :person, :contact, :cur_city),
-                rsend(c, :person, :contact, :cur_state),
-                rsend(c, :person, :contact, :cur_postal_code),
-                rsend(c, :person, :contact, :cur_phone),
-                rsend(c, :person, :contact, :email),
-                rsend(c, :session_date),
-                rsend(c, :session_type),
-                rsend(c, :task),
-                rsend(c, :classification),
-                rsend(c, :interest),
-                rsend(c, :location),
-                rsend(c, :handled_by)]
-      end
-
-    end
-    send_data csv_string,
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data AdvisingSession.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "advising_history #{@filter.date_start.to_s}.csv"
+      :filename     => "advising_history_#{@filter.date_start.to_s}.csv"
   end
 
-  private
-  def sessions_filter
-    f = filter
-    f.append_condition "handled_by = ?", :handled_by
-    f.append_condition "session_date >= ?", :date_start
-    f.append_condition "session_date <= ?", :date_end
-    f.append_condition "task = ?", :task
-    f.append_condition "interest = ?", :interest
-
-    if @current_user.access_scope >= 3
-      # do nothing
-    elsif @current_user.access_scope == 2
-      f.append_depts_condition("dept like ?", @current_user.depts) unless @current_user.manage? :advising
-    elsif @current_user.access_scope == 1
-      f.append_condition "#{@current_user.id} in (advising_sessions.user_primary_id, advising_sessions.user_secondary_id)"
-    else
-      f.append_condition "1=2"
-    end
-
-    return f
-  end
 end

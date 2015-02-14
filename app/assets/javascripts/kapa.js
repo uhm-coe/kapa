@@ -9,7 +9,6 @@
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-multiselect
-//= require jquery.popconfirm
 //= require_tree .
 
 jQuery(document).ready(function($) {

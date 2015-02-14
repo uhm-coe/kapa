@@ -33,8 +33,7 @@ class Kapa::Admin::ProgramOffersController < ApplicationController
     else
       flash[:danger] = error_message_for(@program_offer)
     end
-    # Note: Leave status 303 in there, very important, or else it will delete the program as well
-    redirect_to :controller => :programs, :action => :show, :id => @program_offer.program_id, :status => 303
+    redirect_to kapa_admin_program_path(:id => @program_offer.program_id, :focus => params[:focus])
   end
 
 end

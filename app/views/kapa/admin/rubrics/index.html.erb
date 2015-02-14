@@ -15,7 +15,7 @@
         <label for="filter_program">Program</label>
         <%= program_select :filter, :program, {:include_blank => true}, :class => "form-control" %>
       </div>
-      <%= f.property_select :course, :include_blank => true, :label => "Course" %>
+      <%= f.property_select :course, {:name => :assessment_course, :include_blank => true} %>
       <%= f.property_select :transition_point, :include_blank => true %>
     <% end %>
   <% end %>

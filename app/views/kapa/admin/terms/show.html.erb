@@ -26,7 +26,7 @@
           <%=f.check_box :active, {}, 1, 0 %>
         </div>
       </div>
-      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_term_path(:id => @term), :delete_id => "kapa_admin_terms_#{@term.id}"} if @current_user.manage? %>
+      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_term_path(:id => @term)} if @current_user.manage? %>
     <% end %>
   </div>
 <%end%>

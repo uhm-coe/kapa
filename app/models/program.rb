@@ -48,4 +48,10 @@ class Program < ApplicationBaseModel
     return selections
   end
 
+  def self.search(filter, options = {})
+    programs = Program.scoped
+    programs = programs.where{self.dept =~ "%#{filter.dept}%"} if filter.dept.present?
+    programs = programs.where("programs.active" => filter.active) if filter.active.present?
+    return programs
+  end
 end

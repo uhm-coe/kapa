@@ -8,7 +8,7 @@
 
   <div class="right">
     <%= link_to "Edit", edit_kapa_report_data_source_path(@data_source), :class => 'btn btn-default' %>
-    <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", kapa_report_data_source_path(@data_source), {:method => :delete, "data-confirm" => "Are you sure you want to delete this?", :class => "btn btn-default"} %>
+    <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", kapa_report_data_source_path(@data_source), {:method => :delete, "data-confirm" => "Proceed with deletion?", :class => "btn btn-default"} %>
   </div>
 
   <div class="row">

@@ -70,4 +70,20 @@ class ApplicationProperty < ApplicationBaseModel
     return property
   end
 
+  def self.search(filter, options = {})
+    application_properties = ApplicationProperty.scoped
+    if filter.name.present?
+      # TODO: A workaround until we remove :academic_period from properties entirely.  (Remove this later.)
+      #   Without this conversion to "academic_period", an error on admin/properties/index view would be thrown
+      #   if no filters are defined, since the default filter in Kapa::Admin::BaseController sets :name to :term_id.
+      if filter.name == "term_id".to_sym
+        property_name = "academic_period"
+      else
+        property_name = filter.name
+      end
+      application_properties = application_properties.where("name" => property_name)
+    end
+    application_properties = application_properties.where("active" => filter.active) if filter.active.present?
+    return application_properties
+  end
 end

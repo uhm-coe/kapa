@@ -81,7 +81,7 @@
                 <div class="panel-body">
                   <%= label_form_for :transition_action, :url => kapa_main_transition_action_path(:id => @transition_action, :focus => :actions, :action_panel => @transition_action.id), :remote => true, :html => {:method => :put} do %>
                     <%= render :partial => "/kapa/main/transition_action_form" %>
-                    <%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_main_transition_action_path(:id => @transition_action, :focus => :actions), :delete_id => "kapa_main_transition_actions_#{@transition_action.id}"} if @current_user.write?(:main) %>
+                    <%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_main_transition_action_path(:id => @transition_action, :focus => :actions)} if @current_user.write?(:main) %>
                   <% end %>
                 </div>
               </div>

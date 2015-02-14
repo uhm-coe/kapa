@@ -9,7 +9,7 @@ class ApplicationFilter < OpenStruct
     if term_id
       return Term.find(term_id).description
     else
-      return "N/A"
+      return "NA"
     end
   end
 

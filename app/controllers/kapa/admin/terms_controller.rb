@@ -2,11 +2,7 @@ class Kapa::Admin::TermsController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @filter.append_condition "id = ?", :term_id
-    @filter.append_condition "start_date = ?", :start_date
-    @filter.append_condition "end_date = ?", :end_date
-    @filter.append_condition "active = ?", :active
-    @terms = Term.paginate(:page => params[:page], :per_page => 20, :conditions => @filter.conditions, :order => "code")
+    @terms = Term.search(@filter).order("code").paginate(:page => params[:page])
   end
 
   def show

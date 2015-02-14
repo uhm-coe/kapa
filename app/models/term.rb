@@ -20,4 +20,16 @@ class Term < ApplicationBaseModel
     self.where("code > ?", self.current_term).order("code").first
   end
 
+  def self.search(filter, options = {})
+    # To return an ActiveRecord::Relation, use the following:
+    #   For Rails 4.1 and above: Term.all
+    #   For Rails 4.0: Term.where(nil)
+    #   For Rails 3.x: Term.scoped
+    terms = Term.scoped
+    terms = terms.where("id" => filter.term_id) if filter.term_id.present?
+    terms = terms.where{self.start_date >= filter.start_date} if filter.start_date.present?
+    terms = terms.where{self.end_date <= filter.end_date} if filter.end_date.present?
+    terms = terms.where("active" => filter.active) if filter.active.present?
+    return terms
+  end
 end

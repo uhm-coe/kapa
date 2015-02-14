@@ -129,6 +129,66 @@ class User < ApplicationBaseModel
     return users
   end
 
+  def self.search(filter, options = {})
+    users = User.includes([:person])
+    users = users.where("department" => filter.department) if filter.department.present?
+    users = users.where("users.status" => filter.status) if filter.status.present?
+    users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
+    if filter.key.present?
+      key = "%#{filter.key}%"
+      users = users.where{(self.uid =~ key) | (persons.last_name =~ key) | (persons.first_name =~ key)}
+    end
+    return users
+  end
+
+  def self.to_csv(filter, options = {})
+    users = User.search(filter).order("users.uid")
+    CSV.generate do |csv|
+      csv << self.csv_columns
+      users.each do |c|
+        csv << self.csv_row(c)
+      end
+    end
+  end
+
+  def self.csv_columns
+   [:uid,
+    :id_number,
+    :last_name,
+    :first_name,
+    :position,
+    :department,
+    :emp_status,
+    :status,
+    :role_main,
+    :role_artifact,
+    :role_advising,
+    :role_curriculum,
+    :role_assessment,
+    :role_practicum,
+    :dept,
+    :category]
+  end
+
+  def self.csv_row(c)
+   [c.rsend(:uid),
+    c.rsend(:person, :id_number),
+    c.rsend(:person, :last_name),
+    c.rsend(:person, :first_name),
+    c.rsend(:position),
+    c.rsend(:department),
+    c.rsend(:emp_status),
+    c.rsend(:status),
+    c.rsend(:role, :main),
+    c.rsend(:role, :artifact),
+    c.rsend(:role, :advising),
+    c.rsend(:role, :curriculum),
+    c.rsend(:role, :course),
+    c.rsend(:role, :practicum),
+    c.rsend(:dept),
+    c.rsend(:category)]
+  end
+
   protected
   def valid_credential?(password)
     if category == "ldap"

@@ -56,8 +56,7 @@ class Kapa::Admin::ProgramsController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @filter.append_condition "dept like ?", :dept, :like => true
-    @filter.append_condition "active = ?", :active
-    @programs = Program.paginate(:page => params[:page], :per_page => 20, :conditions => @filter.conditions, :order => "code")
+    @programs = Program.search(@filter).order("code").paginate(:page => params[:page])
   end
+
 end

@@ -71,13 +71,13 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
   end
 
   def index
-    @filter = users_filter
-    @users = User.paginate(:page => params[:page], :per_page => 20, :include => :person, :conditions => @filter.conditions, :order => "users.uid")
+    @filter = filter
+    @users = User.search(@filter).order("users.uid").paginate(:page => params[:page])
   end
 
   def logs
-    @filter = timestamps_filter
-    @timestamps = UserTimestamp.find(:all, :include => :user, :order => "timestamps.id DESC", :conditions => @filter.conditions)
+    @filter = filter
+    @timestamps = UserTimestamp.search(@filter).order("timestamps.id DESC")
   end
 
   def import
@@ -109,58 +109,15 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
   end
 
   def export
-    @filter = users_filter
-    @users = User.find(:all, :include => :person, :conditions => @filter.conditions, :order => "users.uid")
-    csv_string = CSV.generate do |csv|
-      csv << table_format.keys
-      @users.each {|c| csv << table_format(c).values}
-    end
-    send_data csv_string,
+    @filter = filter
+    logger.debug "----filter: #{@filter.inspect}"
+    send_data User.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"
   end
 
   private
-  def table_format(o = nil)
-    row = {
-      :uid => rsend(o, :uid),
-      :id_number => rsend(o, :person, :id_number),
-      :last_name => rsend(o, :person, :last_name),
-      :first_name => rsend(o, :person, :first_name),
-      :position => rsend(o, :position),
-      :department => rsend(o, :department),
-      :emp_status => rsend(o, :emp_status),
-      :status => rsend(o, :status),
-      :role_main => rsend(o, :role, :main),
-      :role_artifact => rsend(o, :role, :artifact),
-      :role_advising => rsend(o, :role, :advising),
-      :role_curriculum => rsend(o, :role, :curriculum),
-      :role_assessment => rsend(o, :role, :course),
-      :role_practicum => rsend(o, :role, :practicum),
-      :dept => rsend(o, :dept),
-      :category => rsend(o, :category)
-    }
-    row
-  end
-
-  def users_filter
-    f = filter
-    f.append_condition "department = ?", :department
-    f.append_condition "users.status = ?", :status
-    f.append_condition "emp_status = ?", :emp_status
-    f.append_condition "users.uid like ? or persons.last_name like ? or persons.first_name like ?", :key, :like => true
-    return f
-  end
-
-  def timestamps_filter
-    f = filter
-    f.append_condition "date(convert_tz(created_at, '+00:00', '-10:00')) >= ?", :date_start
-    f.append_condition "date(convert_tz(created_at, '+00:00', '-10:00')) <= ?", :date_end
-    f.append_condition "path like ?", :path, :like => true
-    return f
-  end
-
   def department(eac)
     if eac.blank?
       return nil
