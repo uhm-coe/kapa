@@ -48,6 +48,14 @@ class TransitionPoint < ApplicationBaseModel
     return ApplicationProperty.lookup_description(:transition_point, type)
   end
 
+  def entrance?
+    ApplicationProperty.lookup_category(:transition_point, self.transition_point.type) == "entrance"
+  end
+
+  def exit?
+    ApplicationProperty.lookup_category(:transition_point, self.transition_point.type) == "exit"
+  end
+
   def assessment_rubrics
     rubrics = AssessmentRubric.includes(:assessment_criterions).where("find_in_set('#{self.type}', assessment_rubrics.transition_point) > 0 and find_in_set('#{self.curriculum.program.code}', assessment_rubrics.program) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id").order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?

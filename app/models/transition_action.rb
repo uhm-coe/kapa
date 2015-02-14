@@ -31,10 +31,6 @@ class TransitionAction < ApplicationBaseModel
     return ApplicationProperty.lookup_description("#{self.type}_action", action)
   end
 
-  def entrance?
-    ApplicationProperty.lookup_category(:transition_point, self.transition_point.type) == "entrance"
-  end
-
   def admissible?
     ApplicationProperty.lookup_category("#{self.transition_point.type}_action", self.action) == "admissible"
   end
