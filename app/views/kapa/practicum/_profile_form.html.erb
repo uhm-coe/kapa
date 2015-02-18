@@ -2,7 +2,7 @@
   <table>
     <tr>
       <td width="33%">
-        <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code} - #{c.term_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
+        <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
         <%=p.history_select :cohort, :include_blank => true  %>
         <%=p.hidden_text_area :note, :size => "35x10" %>
       </td>
