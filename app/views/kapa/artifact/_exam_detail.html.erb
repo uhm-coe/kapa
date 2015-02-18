@@ -1,4 +1,3 @@
-
 <fieldset class="blockLabels">
   <legend>Praxis Scores Overview</legend>
   <table>
@@ -47,39 +46,50 @@
   <% end %>
 <% end %>
 
-<fieldset class="blockLabels">
-  <legend>Background Information</legend>
+<%=bootstrap_fields_for :examinee_profile do |f| %>
+  <fieldset class="blockLabels">
+    <legend>Background Information</legend>
+    <div class="row">
 
-  <div class="col">
-    <%=uni_text_field :examinee_profile, :last_name %>
-    <%=uni_text_field :examinee_profile, :birth_date %>
-    <%=uni_text_field :examinee_profile, :ets_id, :text => "ETS ID" %>
-    <%=uni_text_field :examinee_profile, :gender %>
-    <%=uni_text_field :examinee_profile, :ethnicity %>
-  </div>
+      <div class="col-sm-6">
+        <%=f.text_field :last_name %>
+        <%=f.text_field :birth_date %>
+        <%=f.text_field :ets_id, :text => "ETS ID" %>
+        <%=f.text_field :gender %>
+        <%=f.text_field :ethnicity %>
+      </div>
 
-  <div class="col">
-    <%=uni_text_field :examinee_profile, :first_name %>
-    <%=uni_text_field :examinee_contact, :street %>
-    <%=uni_text_field :examinee_contact, :city %>
-    <%=uni_text_field :examinee_contact, :state %>
-    <%=uni_text_field :examinee_contact, :postal_code %>
-  </div>
+      <div class="col-sm-6">
+        <%=f.text_field :first_name %>
+<% end %>
 
-</fieldset>
+        <%=bootstrap_fields_for :examinee_contact do |g| %>
+          <%=g.text_field :street %>
+          <%=g.text_field :city %>
+          <%=g.text_field :state %>
+          <%=g.text_field :postal_code %>
+        <% end %>
+      </div>
 
-<fieldset class="blockLabels">
-  <legend>Educational Information</legend>
+    </div>
+  </fieldset>
 
-  <div class="col">
-    <%=uni_text_field :examinee_profile, :attending_institution %>
-    <%=uni_text_field :examinee_profile, :educational_level %>
-  </div>
+<%=bootstrap_fields_for :examinee_profile do |j| %>
+  <fieldset class="blockLabels">
+    <legend>Educational Information</legend>
+    <div class="row">
 
-  <div class="col">
-    <%=uni_text_field :examinee_profile, :undergraduate_gpa %>
-    <%=uni_text_field :examinee_profile, :undergraduate_major %>
-    <%=uni_text_field :examinee_profile, :graduate_major %>
-  </div>
+      <div class="col-sm-6">
+        <%=j.text_field :attending_institution %>
+        <%=j.text_field :educational_level %>
+      </div>
 
-</fieldset>
+      <div class="col-sm-6">
+        <%=j.text_field :undergraduate_gpa %>
+        <%=j.text_field :undergraduate_major %>
+        <%=j.text_field :graduate_major %>
+      </div>
+
+    </div>
+  </fieldset>
+<% end %>
