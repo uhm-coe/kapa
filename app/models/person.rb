@@ -67,23 +67,12 @@ class Person < ApplicationBaseModel
 
   def details(obj)
     obj.instance_variable_set(:@contact, self.contact)
-    obj.instance_variable_set(:@forms, self.forms)
-    obj.instance_variable_set(:@exam, self.exams.find(:first, :order => "report_date DESC"))
-    obj.instance_variable_set(:@exams, self.exams)
-#    obj.instance_variable_set(:@practicum_profile, self.practicum_profile)
 
-    filter = ApplicationFilter.new
-    filter.append_depts_condition("public = 'Y' or dept like ?", obj.instance_variable_get(:@current_user).depts)
-
+    #TODO add public or dept conditions
     docs_forms_list = []
     docs_forms_list += self.documents
     docs_forms_list += self.forms
     obj.instance_variable_set(:@docs_forms_list, docs_forms_list)
-    # obj.instance_variable_set(:@documents, self.documents.find(:all, :conditions => filter.conditions))
-
-    filter = ApplicationFilter.new
-    filter.append_condition("module = 'form'")
-    filter.append_depts_condition("dept like ?", obj.instance_variable_get(:@current_user).depts)
   end
 
   def ethnicity_desc

@@ -5,7 +5,7 @@ class Term < ApplicationBaseModel
 
   def self.selections(options = {})
     selections = []
-    terms = Term.where(:active => 1).order("sequence DESC, code")
+    terms = Term.where(:active => true).order("sequence DESC, code")
     terms = temrs.where(options[:condition]) if options[:condition]
     terms.each {|v| selections.push [v.description, v.id]}
     return selections

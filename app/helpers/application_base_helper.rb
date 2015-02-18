@@ -6,26 +6,35 @@ module ApplicationBaseHelper
     object = instance_variable_get("@#{object_name}".delete("[]"))
     current_value = object.send("#{method}") if object
     options[:selected] = current_value if options[:selected].blank? and current_value.present?
-#    options[:include_current] = true if options[:include_current].nil?
     options[:model_options] = {} if options[:model_options].nil?
-#    name = options[:name] ||= method
     if html_options[:multiple]
       html_options[:name] = "#{object_name}[#{method}][]"
       html_options[:class] = "kapa-multiselect"
       options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
     end
+    selections = model_name.to_s.classify.constantize.selections(options[:model_options])
+
+    #This is needed to eliminate a blank field.
     current_value = nil if current_value.blank? or html_options[:multiple] or options[:exclude_current_value]
-    choices = model_name.to_s.classify.constantize.selections(options[:model_options].merge(:include_value => current_value))
+
+    #Check if the current value exist in the selection
+    selection = selections.select {|c| c[1] == current_value}.first
+    if selection.blank?
+      selections.push([current_value, current_value])
+    end
 
     if options[:locked]
-      choice = choices.select {|c| c[1] == current_value}.first
-      description =  choice[0] if choice
+      if selection
+        description = selection[0]
+      else
+        description = current_value
+      end
       tag = hidden_field(object_name, method, :value => current_value)
       tag << text_field(object_name, method, :value => description.to_s, :size => description.to_s.length + 5, :disabled => true)
       return tag.html_safe
     end
 
-    select(object_name, method, choices , options, html_options)
+    select(object_name, method, selections , options, html_options)
   end
 
   def property_select(object_name, method, options = {}, html_options = {})

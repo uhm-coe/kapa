@@ -19,7 +19,6 @@ class User < ApplicationBaseModel
     c.login_field = :uid
     c.merge_validates_length_of_login_field_options :within => 2..100
     c.crypted_password_field = :hashed_password
-    c.crypto_provider = ApplicationCryptoProvider
     c.merge_validates_length_of_password_field_options  :on => :create, :if => :local?
     c.require_password_confirmation = false
   end
@@ -106,27 +105,12 @@ class User < ApplicationBaseModel
   end
 
   def self.selections(options)
-    filter = ApplicationFilter.new
-    if options[:include].to_s == "employee"
-      filter.append_condition("length(users.department) > 0")
-      filter.append_condition("users.uid <> persons.id_number")
-    else
-      filter.append_condition("users.status = 3")
+    users = where(:status => 3)
+    users = users.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    users = users.where(options[:conditions]) if options[:conditions]
+    users.includes(:person).collect do |u|
+      ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
     end
-    filter.append_depts_condition("users.dept like ?", options[:depts])
-    filter.append_condition(options[:conditions]) if options[:conditions]
-    users = []
-    User.includes(:person).where(filter.conditions).each do |u|
-      users.push ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
-      current_value = nil if u.id == current_value
-    end
-
-    #This is needed to eliminate a blank field.
-    current_value = nil if current_value == "" and options[:include_blank]
-    #If the current value does not exist in the list, we have to add it manually.
-    users.push [current_value, current_value] if current_value
-
-    return users
   end
 
   def self.search(filter, options = {})

@@ -17,26 +17,15 @@ class ApplicationProperty < ApplicationBaseModel
   end
 
   def self.selections(options = {})
-    filter = ApplicationFilter.new(:name => options[:name].to_s)
-    filter.append_condition("active = 1")
-    filter.append_condition("name = ?", :name)
-    filter.append_depts_condition("dept like ?", options[:depts]) if options[:depts]
-    filter.append_availability_condition("code in (?)", options[:program], options[:name]) if options[:program]
-    filter.append_condition(options[:conditions]) if options[:conditions]
-    selections = []
-    ApplicationProperty.find(:all, :conditions => filter.conditions, :order => "sequence DESC, description").each do |v|
-      code = v.code
+    properties = where(:active => true, :name => options[:name].to_s)
+    properties = properties.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    properties = properties.where(options[:conditions]) if options[:conditions]
+    properties.order("sequence DESC, description").collect do |v|
       description = ""
       description << "#{v.code}/" if options[:include_code]
       description << v.description
-      selections.push [description, code]
-      options[:include_value] = nil if v.code == options[:include_value].to_s
+      [description, v.code]
     end
-    #This is needed to eliminate a blank field.
-    options[:include_value] = nil if options[:include_value] == "" and options[:include_blank]
-    #If the current value does not exist in the list, we have to add it manually.
-    selections = [[options[:include_value], options[:include_value]]] + selections if options[:include_value]
-    return selections
   end
 
   def self.lookup_description(name, code, default_value = code)
@@ -55,12 +44,10 @@ class ApplicationProperty < ApplicationBaseModel
   end
 
   def self.keys(name, options={})
-    filter = ApplicationFilter.new(:name => name.to_s)
-#    filter.append_condition("active = 1")
-    filter.append_condition("name = ?", :name)
-    filter.append_condition("category = '#{options[:category]}'") if options[:category]
-    filter.append_depts_condition("dept like ?", options[:depts]) if options[:depts]
-    return ApplicationProperty.find(:all, :conditions => filter.conditions, :order => "sequence DESC, code").collect {|v| v.code}
+    properties = where(:active => true, :name => options[:name].to_s)
+    properties = properties.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    properties = properties.where(options[:conditions]) if options[:conditions]
+    return properties.order("sequence DESC, code").collect {|v| v.code}
   end
 
   def self.append(name, code, options={})

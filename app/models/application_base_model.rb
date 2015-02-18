@@ -74,6 +74,10 @@ class ApplicationBaseModel < ActiveRecord::Base
     end
   end
 
+  def self.depts(depts)
+    where{dept.like_any my{depts.collect {|d| "%#{d}%"}}}
+  end
+
   # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields
   def remove_values(array)
     array.delete_if {|x| x.blank? || x == "multiselect-all"} if array

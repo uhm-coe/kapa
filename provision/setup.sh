@@ -32,6 +32,8 @@ sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_
 sudo apt-get -y install mariadb-server libmariadbd-dev
 sudo service mysql restart
 
+#sudo apt-get install -y postgresql postgresql-contrib libpq-dev
+
 echo "Installing Rails..."
 cd /vagrant/
 sudo gem update

@@ -20,25 +20,16 @@ class ProgramOffer < ActiveRecord::Base
 
   def self.selections(options = {})
     options[:value] = :distribution if options[:value].nil?
-    filter = ApplicationFilter.new(:program_id => options[:program].id)
-    filter.append_condition("active = 1")
-    filter.append_condition("program_id = ?", :program_id)
-    filter.append_condition(options[:conditions]) if options[:conditions]
-    selections = []
-
-    ProgramOffer.find(:all, :conditions => filter.conditions, :order => "sequence DESC, distribution").each do |v|
+    program_offers = where(:active => true, :name => options[:name].to_s)
+    program_offers = program_offers.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    program_offers = program_offers.where(options[:conditions]) if options[:conditions]
+    program_offers.order("sequence DESC, distribution").collect do |v|
       value = v.send(options[:value])
       description = ""
       description << "#{value}/" if options[:include_code]
       description << v.description
-      selections.push [description, value]
-      options[:include_value] = nil if value.to_s == options[:include_value].to_s
+      [description, value]
     end
-    #This is needed to eliminate a blank field.
-    options[:include_value] = nil if options[:include_value] == "" and options[:include_blank]
-    #If the current value does not exist in the list, we have to add it manually.
-    selections = [[options[:include_value], options[:include_value]]] + selections if options[:include_value]
-    return selections
   end
 
 end

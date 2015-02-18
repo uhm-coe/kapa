@@ -1,14 +1,13 @@
 class Kapa::Main::PersonsController < Kapa::Main::BaseController
 
   def show
-    f = ApplicationFilter.new
-    f.append_depts_condition("dept like ?", @current_user.depts)
     @person = Person.find(params[:id])
     @person.details(self)
-    @advising_sessions = @person.advising_sessions.find(:all, :conditions => f.conditions, :order => "session_date DESC")
-    @curriculums = @person.curriculums.find(:all, :include => {:transition_points => :term}, :order => "terms.sequence DESC")
-    @course_registrations = CourseRegistration.includes(:course => :term).where(["person_id = ?", @person.id]).order("terms.sequence DESC")
-    @practicum_profiles = @person.practicum_profiles
+    #TODO Add dept conditions
+    @curriculums = @person.curriculums.includes(:transition_points => :term).order("terms.sequence DESC")
+    @advising_sessions = @person.advising_sessions.order("session_date DESC")
+    @course_registrations = CourseRegistration.includes(:course => :term).where(:person_id  => @person).order("terms.sequence DESC")
+    @practicum_profiles = []
 
     if (params[:doc_id])
       @document = Document.find(params[:doc_id])
