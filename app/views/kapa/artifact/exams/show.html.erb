@@ -2,7 +2,7 @@
 
   <div style="text-align: right;"><h3>ID: <%=h @exam.report_number %></h3></div>
 
-  <%=uni_form_for(:exam) do %>
+  <%=bootstrap_form_for(:exam) do %>
     <%=render :partial => "/kapa/artifact/exam_detail"%>
   <% end %>
 

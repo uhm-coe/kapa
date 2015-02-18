@@ -72,7 +72,7 @@ class Kapa::Main::CurriculumsController < Kapa::Main::BaseController
     send_data Curriculum.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "cohort_#{@filter.term_desc}.csv"
+      :filename     => "cohort_#{Term.find(@filter.term_id).description if @filter.term_id}.csv"
   end
 
 end

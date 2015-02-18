@@ -55,7 +55,7 @@ class Kapa::Practicum::AssignmentsController < Kapa::Practicum::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "mentor_assignments_#{@filter.term_desc}_#{Date.today}.csv"
+      :filename     => "mentor_assignments_#{Term.find(@filter.term_id).description if @filter.term_id}_#{Date.today}.csv"
   end
 
   def get_mentor
