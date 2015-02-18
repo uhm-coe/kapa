@@ -11,7 +11,7 @@ class Kapa::Advising::SessionsController < Kapa::Advising::BaseController
     @person = Person.find(params[:id])
     @person.details(self)
     @curriculums = @person.curriculums
-    previous_advising = @person.advising_sessions.find(:first, :order => "session_date DESC, id DESC")
+    previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
     @advising_session = AdvisingSession.new
     @advising_session.person_id = params[:id]
     @advising_session.user_primary_id = @current_user.id

@@ -20,7 +20,7 @@ class ProgramOffer < KapaBaseModel
 
   def self.selections(options = {})
     options[:value] = :distribution if options[:value].nil?
-    program_offers = where(:active => true, :name => options[:name].to_s)
+    program_offers = where(:active => true)
     program_offers = program_offers.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
     program_offers = program_offers.where(options[:conditions]) if options[:conditions]
     program_offers.order("sequence DESC, distribution").collect do |v|

@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-sm-6">
       <%=bootstrap_form_for :curriculum, :url => kapa_main_curriculums_path(:id => @person), :remote => true do |f| %>
-        <%=f.model_select :program_id, {:model_name => :program, :model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"} %>
+        <%=f.program_select :program_id, {:model_options => {:value => :id, :depts => @current_user.depts}, :label => "Program"} %>
         <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
       <% end %>
     </div>

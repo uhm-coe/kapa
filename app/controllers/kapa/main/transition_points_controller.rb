@@ -8,7 +8,7 @@ class Kapa::Main::TransitionPointsController < Kapa::Main::BaseController
     @transition_point_ext = @transition_point.deserialize(:_ext, :as => OpenStruct)
     @curriculum = @transition_point.curriculum
     @program = @curriculum.program
-    @programs = Program.where("active = 1")
+    @programs = Program.where(:active => true)
     @transition_actions = @transition_point.transition_actions
     @person = @curriculum.person
     @person.details(self)
