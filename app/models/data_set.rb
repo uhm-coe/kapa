@@ -1,4 +1,4 @@
-class DataSet < ApplicationBaseModel
+class DataSet < KapaBaseModel
   attr_accessible :data_source_id, :loaded_at, :name, :query, :attr, :record_count, :type, :url
 
   self.inheritance_column = nil

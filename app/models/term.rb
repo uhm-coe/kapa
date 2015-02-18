@@ -1,4 +1,4 @@
-class Term < ApplicationBaseModel
+class Term < KapaBaseModel
   has_many :transition_points
   has_many :forms
   has_many :courses

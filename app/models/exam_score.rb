@@ -1,4 +1,4 @@
-class ExamScore < ApplicationBaseModel
+class ExamScore < KapaBaseModel
   belongs_to :person
   belongs_to :exam
 

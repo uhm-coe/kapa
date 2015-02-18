@@ -1,4 +1,4 @@
-class TransitionPoint < ApplicationBaseModel
+class TransitionPoint < KapaBaseModel
   self.inheritance_column = nil
   belongs_to :curriculum
   belongs_to :term

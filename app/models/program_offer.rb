@@ -1,4 +1,4 @@
-class ProgramOffer < ActiveRecord::Base
+class ProgramOffer < KapaBaseModel
   attr_accessor :available_majors, :available_term_ids
   belongs_to :program
 

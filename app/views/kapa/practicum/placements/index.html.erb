@@ -78,9 +78,9 @@
     <%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :practicum, :delegate => :import %>
   </p>
   <div id="dialog" class="form-dialog" title="Import Placement Data">
-    <%=label_form_for(:filter, :url => import_kapa_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
+    <%=bootstrap_form_for(:filter, :url => import_kapa_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
       <%=f.term_select :term_id, {:name => :term_id, :label => "Term"}, :id => "filter_import_term" %>
-        <%=label_fields_for :data do |d| %>
+        <%=bootstrap_fields_for :data do |d| %>
           <%=d.file_field :import_file %>
           <%=d.check_box :delete, {:label => "Delete all placement records in the specified semester before importing"}, "Y", "N" %>
         <% end %>

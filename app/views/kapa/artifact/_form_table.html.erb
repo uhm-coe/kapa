@@ -30,7 +30,7 @@
 <p class="new right"><%=link_to_function "New form", nil, :id => "open_form_dialog" if @current_user.write? :artifact %></p>
 
 <div id="form_dialog" class="form-dialog" title="New Form">
-  <%=label_form_for :form, :url => kapa_artifact_forms_path(:id => @person, :focus => "form", :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
+  <%=bootstrap_form_for :form, :url => kapa_artifact_forms_path(:id => @person, :focus => "form", :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
   <% end %>
 </div>

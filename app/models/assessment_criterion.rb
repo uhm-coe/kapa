@@ -1,4 +1,4 @@
-class AssessmentCriterion < ApplicationBaseModel
+class AssessmentCriterion < KapaBaseModel
   self.inheritance_column = nil
   belongs_to :assessment_rubric
   has_many :assessment_scores

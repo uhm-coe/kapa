@@ -1,4 +1,4 @@
-class ApplicationBaseModel < ActiveRecord::Base
+class KapaBaseModel < ActiveRecord::Base
   self.abstract_class = true
   serialize :yml, Hash
 #  before_save :update_xml

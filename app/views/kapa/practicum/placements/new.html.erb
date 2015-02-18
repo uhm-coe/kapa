@@ -8,14 +8,14 @@
     </ul>
 
     <div id="practicum_profile_tab">
-      <%=label_form_for :practicum_placement, :url => kapa_practicum_placments_path(:id => @person), :remote => true do |f| %>
+      <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placments_path(:id => @person), :remote => true do |f| %>
         <table>
           <tr>
             <td>
               <%=f.term_select :term_id, :label => "Term" %>
             </td>
             <td>
-              <%=label_fields_for :practicum_profile do |p| %>
+              <%=bootstrap_fields_for :practicum_profile do |p| %>
               <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code} - #{c.term_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
               <% end %>
             </td>

@@ -1,4 +1,4 @@
-class ApplicationProperty < ApplicationBaseModel
+class ApplicationProperty < KapaBaseModel
   self.table_name = :properties
   @@description_cache = HashWithIndifferentAccess.new
   @@description_detail_cache = HashWithIndifferentAccess.new

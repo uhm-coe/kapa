@@ -1,4 +1,4 @@
-class User < ApplicationBaseModel
+class User < KapaBaseModel
   @available_keys = {}
   attr_accessor :request, :email, :depts
 

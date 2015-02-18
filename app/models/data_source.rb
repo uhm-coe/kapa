@@ -1,4 +1,4 @@
-class DataSource < ApplicationBaseModel
+class DataSource < KapaBaseModel
   attr_accessible :name, :password, :type, :url, :user
   self.inheritance_column = nil
 

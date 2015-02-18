@@ -1,4 +1,4 @@
-class Form < ApplicationBaseModel
+class Form < KapaBaseModel
   self.inheritance_column = nil
   belongs_to :person
   belongs_to :term

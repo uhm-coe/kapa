@@ -10,7 +10,7 @@
 
 <% content_for(:navigation) do %>
 
-  <%=label_form_for(:exam, :url => kapa_artifact_exam_path(:id => @exam), :remote => true, :html => {:method => :put}  ) do |f| %>
+  <%=bootstrap_form_for(:exam, :url => kapa_artifact_exam_path(:id => @exam), :remote => true, :html => {:method => :put}  ) do |f| %>
     <%=f.text_area :note, :text => "Note", :size => "25x30"%>
     <%=render :partial => "/kapa/layouts/controls" if @current_user.write? :artifact, :dept => @exam.dept %>
   <% end %>

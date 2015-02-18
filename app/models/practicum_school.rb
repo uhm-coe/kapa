@@ -1,4 +1,4 @@
-class PracticumSchool < ApplicationBaseModel
+class PracticumSchool < KapaBaseModel
   has_one :contact, :as => :entity
   has_many :practicum_assignments
 

@@ -1,4 +1,4 @@
-class AssessmentScore < ApplicationBaseModel
+class AssessmentScore < KapaBaseModel
   belongs_to :assessment_criterion
   belongs_to :assessment_scorable, :polymorphic => true
     

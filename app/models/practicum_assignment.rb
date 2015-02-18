@@ -1,4 +1,4 @@
-class PracticumAssignment < ApplicationBaseModel
+class PracticumAssignment < KapaBaseModel
   belongs_to :practicum_placement
   belongs_to :practicum_school
   belongs_to :person

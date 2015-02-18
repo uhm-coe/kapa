@@ -14,7 +14,7 @@
   <% end %>
 </table>
 
-<%= label_fields_for :transition_point do |t| %>
+<%= bootstrap_fields_for :transition_point do |t| %>
   <div class="row">
     <div class="col-xs-12">
        <%= t.text_area :assessment_note, :style => "width:100%", :rows => 3 %>

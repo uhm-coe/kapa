@@ -1,5 +1,5 @@
 <% object_name = @practicum_assignment.new_record? ? "practicum_assignment" : "practicum_assignment[]"%>
-<%=label_fields_for object_name do |f| %>
+<%=bootstrap_fields_for object_name do |f| %>
   <table>
     <tr>
       <td>

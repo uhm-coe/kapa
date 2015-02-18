@@ -1,4 +1,4 @@
-class UserTimestamp < ActiveRecord::Base
+class UserTimestamp < KapaBaseModel
   self.table_name = :timestamps
   belongs_to :user
 

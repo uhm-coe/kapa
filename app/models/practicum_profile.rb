@@ -1,4 +1,4 @@
-class PracticumProfile < ApplicationBaseModel
+class PracticumProfile < KapaBaseModel
   belongs_to :person
   belongs_to :curriculum
   has_many :practicum_placements

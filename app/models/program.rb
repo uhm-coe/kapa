@@ -1,4 +1,4 @@
-class Program < ApplicationBaseModel
+class Program < KapaBaseModel
   attr_accessor :available_majors, :available_distributions, :available_tracks
   has_many :program_offers
   has_many :curriculums

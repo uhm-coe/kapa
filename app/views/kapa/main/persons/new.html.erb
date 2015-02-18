@@ -50,7 +50,7 @@
     New Person
   </h4>
 
-  <%=label_form_for :person, :url => kapa_main_persons_path, :remote => true do %>
+  <%=bootstrap_form_for :person, :url => kapa_main_persons_path, :remote => true do %>
     <div id="person_form">
       <%=render :partial => "/kapa/main/person_form" %>
     </div>

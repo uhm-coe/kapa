@@ -1,4 +1,4 @@
-class Exam < ApplicationBaseModel
+class Exam < KapaBaseModel
   self.inheritance_column = nil
   belongs_to :person
   has_many :exam_scores

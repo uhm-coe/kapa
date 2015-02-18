@@ -76,14 +76,14 @@
     </ul>
 
     <div id="practicum_profile_tab">
-      <%=label_form_for :practicum_profile, :url => kapa_practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
+      <%=bootstrap_form_for :practicum_profile, :url => kapa_practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/kapa/practicum/profile_form", :locals => {:f => f}%>
         <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
       <% end %>
     </div>
 
     <div id="practicum_placement_tab">
-      <%=label_form_for :practicum_placement, :url => kapa_practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
+      <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
         <%=render :partial => "/kapa/practicum/placement_form", :locals => {:f => f}%>
         <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
       <% end %>
@@ -97,7 +97,7 @@
             <a href="#"><span class="strong"><%="#{index + 1}."%> <%=h [@practicum_assignment.person ? @practicum_assignment.person.full_name : nil, @practicum_assignment.practicum_school ? @practicum_assignment.practicum_school.name_short : nil].join("/") %></span></a>
           </h3>
           <div>
-            <%=label_form_for :practicum_assignment, :url => kapa_practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
+            <%=bootstrap_form_for :practicum_assignment, :url => kapa_practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
               <%=render :partial => "/kapa/practicum/assignment_form" %><br/>
               <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
             <% end %>
@@ -115,7 +115,7 @@
         </h3>
         <div>
           <% @practicum_assignment = PracticumAssignment.new(:assignment_type => "mentor") %>
-          <%=label_form_for :practicum_assignment, :url => kapa_practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
+          <%=bootstrap_form_for :practicum_assignment, :url => kapa_practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
             <%=render :partial => "/kapa/practicum/assignment_form" %>
             <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
           <% end %>
@@ -125,7 +125,7 @@
   </div>
 
   <div id="mentor_dialog" title="Select/Create Mentor">
-    <%=label_form_for(:mentor, :html => {:id => "mentor_form"}) do |p| %>
+    <%=bootstrap_form_for(:mentor, :html => {:id => "mentor_form"}) do |p| %>
       <%=p.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"}, :class => "single-select", :label => "Mentor Teacher" %>
       <table>
         <tr>

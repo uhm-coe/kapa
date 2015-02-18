@@ -1,4 +1,4 @@
-class Person < ApplicationBaseModel
+class Person < KapaBaseModel
 #class Person < ActiveRecord::Base
   self.table_name = :persons
   #Main module associations

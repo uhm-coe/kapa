@@ -1,4 +1,4 @@
-class AssessmentRubric < ApplicationBaseModel
+class AssessmentRubric < KapaBaseModel
   attr_accessor :courses, :programs, :transition_points
   has_many :assessment_criterions, :order => "assessment_criterions.criterion", :dependent => :destroy
   validates_presence_of :title

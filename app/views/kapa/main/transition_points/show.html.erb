@@ -34,14 +34,14 @@
 
     <div class="tab-content">
       <div id="curriculum_tab" class="tab-pane<%=' active' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
-        <%= label_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum, :transition_point_id => @transition_point), :remote => true, :html => {:method => :put} do %>
+        <%= bootstrap_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum, :transition_point_id => @transition_point), :remote => true, :html => {:method => :put} do %>
           <%= render :partial => "/kapa/main/curriculum_form" %>
           <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:main) %>
         <% end %>
       </div>
 
       <div id="transition_point_tab" class="tab-pane<%=' active' if params[:focus] == 'transition_point' %>">
-        <%= label_form_for :transition_point, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :transition_point), :remote => true, :html => {:method => :put} do %>
+        <%= bootstrap_form_for :transition_point, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :transition_point), :remote => true, :html => {:method => :put} do %>
           <%= render :partial => "/kapa/main/transition_point_form" %>
           <%= render :layout => "/kapa/layouts/controls" do %>
             <% if @current_user.manage? %>
@@ -79,7 +79,7 @@
               </div>
               <div id="transition_action_<%=@transition_action.id %>" class="panel-collapse collapse<%=' in' if params[:action_panel] == @transition_action.id.to_s || (params[:action_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <%= label_form_for :transition_action, :url => kapa_main_transition_action_path(:id => @transition_action, :focus => :actions, :action_panel => @transition_action.id), :remote => true, :html => {:method => :put} do %>
+                  <%= bootstrap_form_for :transition_action, :url => kapa_main_transition_action_path(:id => @transition_action, :focus => :actions, :action_panel => @transition_action.id), :remote => true, :html => {:method => :put} do %>
                     <%= render :partial => "/kapa/main/transition_action_form" %>
                     <%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_main_transition_action_path(:id => @transition_action, :focus => :actions)} if @current_user.write?(:main) %>
                   <% end %>
@@ -98,7 +98,7 @@
             <div id="new_transition_action" class="panel-collapse collapse<%=' in' if @transition_actions.length == 0 %>">
               <div class="panel-body">
                 <% @transition_action = @transition_point.transition_actions.build(:user_id => @current_user.id, :action_date => Date.today) %>
-                <%= label_form_for :transition_action, :url => kapa_main_transition_actions_path(:id => @transition_point, :focus => :actions), :remote => true do %>
+                <%= bootstrap_form_for :transition_action, :url => kapa_main_transition_actions_path(:id => @transition_point, :focus => :actions), :remote => true do %>
                   <%= render :partial => "/kapa/main/transition_action_form" %>
                   <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:main) %>
                 <% end %>
