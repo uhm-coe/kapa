@@ -119,41 +119,6 @@ module ApplicationBaseHelper
     text_field(object_name, method, options)
   end
 
-  def mail_to_support(name, options = {})
-    subject = "SIS Support Request"
-    body = "---\n"
-    body << "User: #{session[:user_uid]}\n"
-    body << "Time: #{format_datetime Time.now}\n"
-    body << "Client: #{request.env['HTTP_USER_AGENT'].downcase}\n"
-    body << "Network Address: #{request.remote_ip}\n"
-    mail_to(Rails.configuration.mail_from, name, :subject => subject, :body => body)
-  end
-
-  def controls(&block)
-    tag = "<br>"
-    tag << submit_tag("Save", :class => "btn btn-default")
-    tag << " "
-    tag << button_to_reset("Reset", :class => "btn btn-default")
-    tag << capture(&block) if block_given?
-    content_tag(:p, tag.html_safe, :class => "center")
-  end
-
-  def link_to_id_number(person, options = {:width => 12, :height => 12})
-    if person.verified?
-      tags = link_to_function(image_tag("/images/icons/star.png", options), nil, {:class => "person_id_button", :data_id_number => person.id_number})
-      tags << person.id_number unless options[:icon_only]
-      return tags.html_safe
-    end
-  end
-
-  def button_to_redirect(name, url, options = {})
-    button_to_function(name, nil, options.merge(:class => "redirect btn btn-default", "data-url" => url_for(url)))
-  end
-
-  def button_to_reset(value = "Reset", options = {})
-    submit_tag(value, options.merge(:type => :reset))
-  end
-
   def format_date(date)
     if date.kind_of? Date or date.kind_of? Time
       date.strftime("%m/%d/%Y")
@@ -170,11 +135,6 @@ module ApplicationBaseHelper
     end
   end
 
-  def render_partial(name)
-    path = Rails.root.join("app", "views", module_name, "_#{name}.html.erb")
-    render :partial => "/kapa/#{module_name}/#{name}" if FileTest.exists?(path)
-  end
-
   def abbr(string, abbr_option = 20)
     str = string.to_s
     if abbr_option.kind_of? Integer
@@ -189,15 +149,6 @@ module ApplicationBaseHelper
     end
 
     content_tag :abbr, abbr_str, :title => str, "data-toggle" => "tooltip", "data-placement" => "right"
-  end
-
-  def render_content(key)
-    content = Content.find_by_key(key)
-    if content
-      content.value.html_safe
-    else
-      "Undefined!"
-    end
   end
 
   def id_for_multiple(object_name, method)
@@ -233,64 +184,4 @@ module ApplicationBaseHelper
       "blank"
     end
   end
-
-  #def isAccesible?(object)
-  #  if object.is_a? Curriculum or object.is_a? TransitionPoint
-  #    access_scope = @current_user.access_scope(:main)
-  #    if access_scope >= 3
-  #      return true
-  #    elsif access_scope == 2
-  #      #not implemented yet
-  #      return true
-  #    elsif access_scope == 1
-  #      return object.user_primary_id == @current_user.id || object.user_secondary_id == @current_user.id
-  #    else
-  #      return false
-  #    end
-  #
-  #  elsif object.is_a? AdvisingSession
-  #    access_scope = @current_user.access_scope(:advising)
-  #    if @current_user.access_scope(:advising) >= 3
-  #      return true
-  #    elsif access_scope == 2
-  #      return self.depts.include?(object.dept)
-  #    elsif access_scope == 1
-  #      return object.user_primary_id == @current_user.id || object.user_secondary_id == @current_user.id
-  #    else
-  #      return false
-  #    end
-  #
-  #  elsif object.is_a? Course
-  #    access_scope = @current_user.access_scope(:course)
-  #    if access_scope >= 3
-  #      return true
-  #    elsif access_scope == 2
-  #      #not implemented yet
-  #      return true
-  #    elsif access_scope == 1
-  #      #not implemented yet
-  #      return false
-  #    else
-  #      return false
-  #    end
-  #
-  #  elsif object.is_a? PracticumPlacement
-  #    access_scope = @current_user.access_scope(:practicum)
-  #    if access_scope >= 3
-  #      return true
-  #    elsif access_scope == 2
-  #      #not implemented yet
-  #      return true
-  #    elsif @access_scope == 1
-  #      return object.user_primary_id == @current_user.id || object.user_secondary_id == @current_user.id
-  #    else
-  #      return false
-  #    end
-  #
-  #  else
-  #    return false
-  #
-  #  end
-  #end
-
 end

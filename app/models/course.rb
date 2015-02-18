@@ -3,7 +3,6 @@ class Course < ApplicationBaseModel
   has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
 
   def assessment_rubrics
-    logger.debug "----looking for rubrics"
     rubrics = AssessmentRubric.find(:all, :include => :assessment_criterions, :conditions => "find_in_set('#{self.subject}#{self.number}', assessment_rubrics.course) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id", :order => "assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
@@ -27,23 +26,6 @@ class Course < ApplicationBaseModel
     end
     return table
   end
-
-#  def table_for(assessment_rubric)
-#    table = Hash.new
-#    for course_registration in self.course_registrations
-#      #initialize table first
-#      for assessment_criterion in assessment_rubric.assessment_criterions
-#        index = "#{course_registration.id}_#{assessment_criterion.id}"
-#        table[index] = ""
-#      end
-#      #then, fill in scores using ActiveRecord cache.  this is more efficient than filing everything one by one (save SQL execution)
-#      course_registration.assessment_scores.each do |s|
-#        index = "#{course_registration.id}_#{s.assessment_criterion_id}"
-#        table[index] = s.rating if table[index]
-#      end
-#    end
-#    return table
-#  end
 
   def progress
     number_of_fields_total = 0
@@ -83,11 +65,8 @@ class Course < ApplicationBaseModel
     return courses
   end
 
+  #TODO: Move complex query into reports module
   def self.to_csv(filter, options = {})
-    # These two filter conditions are required in order for the export to succeed
-    filter.append_condition "courses.status = 'A'"
-    filter.append_condition "courses.term_id = ?", :term_id
-
     sql =  "SELECT
               courses.*,
               assessment_score_results.*,
@@ -119,10 +98,11 @@ class Course < ApplicationBaseModel
               ) as assessment_score_results
               ON courses.id = assessment_score_results.course_id
               INNER JOIN terms ON terms.id = courses.term_id
-            WHERE ?
+            WHERE courses.status = 'A'
+              AND courses.term_id = ?
             ORDER BY terms.sequence, subject, number, section, crn"
 
-    courses = Course.find_by_sql(filter.query(sql))
+    courses = Course.find_by_sql([sql, filter.term_id])
     CSV.generate do |csv|
       csv << self.csv_columns
       courses.each do |c|
