@@ -44,6 +44,8 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
       if session[:score][k] != v
         registration_id = k.split("_").first
         criterion_id = k.split("_").last
+ #       score = AssessmentScore.find(:first, :conditions => "assessment_scorable_type = 'CourseRegistration' and assessment_scorable_id = #{registration_id} and assessment_criterion_id = #{criterion_id}")
+ #       score = AssessmentScore.new(:course_registration_id => registration_id, :assessment_criterion_id => criterion_id) if score.nil?
         score = AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id('CourseRegistration', registration_id, criterion_id)
         logger.debug "--score: #{score.inspect}"
         score.rating = v
