@@ -18,9 +18,9 @@
         <%=label_tag "filter_date_end", "End Date" %>
         <%=date_picker :filter, :date_end %>
       </div>
-      <%= f.property_select :task, :include_blank => true, :name => :advising_task %>
-      <%= f.property_select :interest, :include_blank => true, :name => :advising_interest, :label => "Area of Interest" %>
-      <%= f.user_select :user_id, :include_blank => true, :depts => @current_user.depts %>
+      <%= f.property_select :task, :include_blank => "Any", :name => :advising_task %>
+      <%= f.property_select :interest, :include_blank => "Any", :name => :advising_interest, :label => "Area of Interest" %>
+      <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
     <% end %>
   <% end %>
 

@@ -19,7 +19,7 @@
         <%=label_tag "filter_end_date", "End Date" %>
         <%=date_picker :filter, :end_date %>
       </div>
-      <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => true %>
+      <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => "Any" %>
     <% end %>
   <% end %>
 

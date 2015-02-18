@@ -36,6 +36,7 @@ class Form < ApplicationBaseModel
     forms = Form.includes([:person])
     forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
     forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
+    forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
     forms = forms.where{(self.public == "Y") | (self.dept.like_any filter.user.depts)} unless filter.user.manage? :artifact
     return forms
   end
