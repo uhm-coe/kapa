@@ -155,7 +155,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     send_data csv_string,
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "placements_#{@filter.term_desc}_#{Date.today}.csv"
+      :filename     => "placements_#{Term.find(@filter.term_id).description if @filter.term_id}_#{Date.today}.csv"
   end
 
   private

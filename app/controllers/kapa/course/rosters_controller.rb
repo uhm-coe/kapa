@@ -75,7 +75,7 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
     send_data Course.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "courses_#{@filter.term_desc}.csv"
+      :filename     => "courses_#{Term.find(@filter.term_id).description if @filter.term_id}.csv"
   end
 
   private
