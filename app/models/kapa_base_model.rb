@@ -74,8 +74,16 @@ class KapaBaseModel < ActiveRecord::Base
     end
   end
 
-  def self.depts(depts)
-    where{dept.like_any my{depts.collect {|d| "%#{d}%"}}}
+  #TODO This function uses MySQL specific function does not work in other platforms
+  def self.contains(array_string, key)
+    if key.is_a? Array
+      keys = key
+    else
+      keys = [key]
+    end
+    sql = "0=1"
+    keys.each {|k| sql << " or find_in_set(?, #{array_string}) > 0"}
+    where([sql].concat(keys))
   end
 
   # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields

@@ -79,7 +79,7 @@ class TransitionPoint < KapaBaseModel
     when 3
       # Do nothing
     when 2
-      transition_points = transition_points.where("programs.code" => filter.user.depts)
+      transition_points = transition_points.contains("programs.dept", filter.user.depts)
     when 1
       transition_points = transition_points.where{({transition_points => user_primary_id} == my{filter.user.id}) | ({transition_points => user_secondary_id} == my{filter.user.id})}
     else
