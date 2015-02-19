@@ -6,7 +6,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     #TODO Add dept conditions
     @curriculums = @person.curriculums.includes(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @course_registrations = CourseRegistration.includes(:course => :term).where(:person_id  => @person).order("terms.sequence DESC")
+    @course_registrations = CourseRegistration.includes(:course_offer => :term).where(:person_id  => @person).order("terms.sequence DESC")
     @practicum_profiles = []
 
     if (params[:doc_id])
