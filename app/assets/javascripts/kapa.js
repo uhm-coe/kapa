@@ -32,8 +32,14 @@ jQuery(document).ready(function($) {
 
   $('.kapa-datepicker').datepicker({
     format: 'yyyy-mm-dd'
-  }).on('changeDate', function(event) {
+  }).on('changeDate', function(e) {
     $(this).datepicker('hide');
+  }).on('keydown', function(e) {
+    if (e.keyCode === 8) { // If backspace key is pressed
+      e.preventDefault(); // Disable "back button" action; stay on the page
+      $(this).val(''); // Clear date in the input field
+      $(this).datepicker('hide'); // Dismiss the calendar
+    }
   });
 
   $('.kapa-multiselect').multiselect({
