@@ -31,7 +31,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Transition Points/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%=Term.find(@filter.term_id).description if @filter.term_id%>)</h3>
+  <h3>Transition Points/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%= @filter.term_id.present? ? Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">
     <div class="text-right">
