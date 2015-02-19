@@ -29,12 +29,6 @@ class Curriculum < KapaBaseModel
     self.location = self.program.location if self.location.blank?
   end
 
-  def term_desc
-    # TODO: term_id column does not exist
-    # return Term.find(term_id).description
-    return "Term TBD"
-  end
-
   def track_desc
     return ApplicationProperty.lookup_description(:track, track)
   end

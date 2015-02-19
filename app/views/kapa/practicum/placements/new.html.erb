@@ -16,7 +16,7 @@
             </td>
             <td>
               <%=bootstrap_fields_for :practicum_profile do |p| %>
-              <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code} - #{c.term_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
+              <%=p.select :curriculum_id, @curriculums.collect {|c| ["#{c.code}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
               <% end %>
             </td>
           </tr>
