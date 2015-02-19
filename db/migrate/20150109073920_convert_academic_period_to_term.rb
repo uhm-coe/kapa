@@ -1,6 +1,6 @@
 class ConvertAcademicPeriodToTerm < ActiveRecord::Migration
   def up
-    [Course, Form, PracticumPlacement, TransitionPoint].each do |t|
+    [CourseOffer, Form, PracticumPlacement, TransitionPoint].each do |t|
       t.update_all("term_id = (select id from terms where code = academic_period)")
     end
     AssessmentRubric.update_all("start_term_id = (select id from terms where code = academic_period_start), end_term_id = (select id from terms where code = academic_period_end)")

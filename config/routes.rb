@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     end
 
     namespace :course do
-      resources :rosters, &extra_actions
+      resources :offers, &extra_actions
       resources :registrations, &extra_actions
     end
 

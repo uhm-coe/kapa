@@ -138,19 +138,7 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
 
   add_index "contacts", ["entity_id"], :name => "index_contacts_on_entity_id"
 
-  create_table "course_registrations", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "person_id"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml"
-    t.text     "xml"
-  end
-
-  add_index "course_registrations", ["course_id", "person_id"], :name => "index_course_registrations_on_course_id_and_person_id", :unique => true
-
-  create_table "courses", :force => true do |t|
+  create_table "course_offers", :force => true do |t|
     t.string   "academic_period", :limit => 150
     t.string   "crn",             :limit => 150
     t.string   "subject"
@@ -167,8 +155,20 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
     t.integer  "term_id"
   end
 
-  add_index "courses", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
-  add_index "courses", ["term_id"], :name => "index_courses_on_term_id"
+  add_index "course_offers", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
+  add_index "course_offers", ["term_id"], :name => "index_courses_on_term_id"
+
+  create_table "course_registrations", :force => true do |t|
+    t.integer  "course_offer_id"
+    t.integer  "person_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml"
+    t.text     "xml"
+  end
+
+  add_index "course_registrations", ["course_offer_id", "person_id"], :name => "index_assessment_course_registrations_on_course_id_and_person_id", :unique => true
 
   create_table "curriculums", :force => true do |t|
     t.integer  "person_id",                               :null => false
@@ -214,6 +214,29 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
   end
 
   create_table "data_sources", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "url"
+    t.string   "user"
+    t.string   "password"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "datasets", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.integer  "datasource_id"
+    t.string   "url"
+    t.text     "query"
+    t.string   "attr"
+    t.integer  "record_count"
+    t.datetime "loaded_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "datasources", :force => true do |t|
     t.string   "type"
     t.string   "name"
     t.string   "url"

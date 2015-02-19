@@ -20,10 +20,10 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "curriculums")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "advising_sessions")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_points")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_actions")
-ActiveRecord::Fixtures.create_fixtures(fixture_path, "courses")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_offers")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_registrations")
 
-[TransitionPoint, Course].each do |c|
+[TransitionPoint, CourseOffer].each do |c|
   c.update_all(:term_id => Term.current_term.id)
 end
 

@@ -1,4 +1,4 @@
-class Course < KapaBaseModel
+class CourseOffer < KapaBaseModel
   belongs_to :term
   has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
 
@@ -44,25 +44,25 @@ class Course < KapaBaseModel
   end
 
   def self.search(filter, options = {})
-    courses = Course.includes([:course_registrations => :assessment_scores]).where("courses.status" => "A")
-    courses = courses.where("courses.term_id" => filter.term_id) if filter.term_id.present?
-    courses = courses.where("courses.subject" => filter.subject) if filter.subject.present?
-    courses = courses.where("concat(courses.subject, courses.number, '-', courses.section) like ?", "%#{filter.course_name}%") if filter.course_name.present?
+    course_offers = CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
+    course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
+    course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
+    course_offers = course_offers.where("concat(course_offers.subject, course_offers.number, '-', course_offers.section) like ?", "%#{filter.course_offer_name}%") if filter.course_offer_name.present?
 
     case filter.user.access_scope
     when 3
       # Do nothing
     when 2
       # This may not be correct:
-      courses = courses.where("concat(courses.subject, courses.number) in (?)", :course, :depts => filter.user.depts) unless filter.user.manage? :course
+      course_offers = course_offers.where("concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => filter.user.depts) unless filter.user.manage? :course_offer
       # TODO: Implement the following condition using the where clause
-      # f.append_property_condition "concat(courses.subject, courses.number) in (?)", :course, :depts => @current_user.depts unless @current_user.manage? :course
+      # f.append_property_condition "concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => @current_user.depts unless @current_user.manage? :course_offer
     when 1
       # TODO: Not implemented yet
     else
-      courses = courses.where("1 = 2")
+      course_offers = course_offers.where("1 = 2")
     end
-    return courses
+    return course_offers
   end
 
   #TODO: Move complex query into reports module
@@ -102,7 +102,7 @@ class Course < KapaBaseModel
               AND courses.term_id = ?
             ORDER BY terms.sequence, subject, number, section, crn"
 
-    courses = Course.find_by_sql([sql, filter.term_id])
+    courses = CourseOffer.find_by_sql([sql, filter.term_id])
     CSV.generate do |csv|
       csv << self.csv_columns
       courses.each do |c|

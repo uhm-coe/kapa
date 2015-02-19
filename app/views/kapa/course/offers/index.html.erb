@@ -9,7 +9,7 @@
 <% content_for(:dialog) do %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => kapa_course_rosters_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+    <%=bootstrap_form_for(:filter, :url => kapa_course_offers_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
       <%= f.text_field :course_name, :label => "Filter (e.g., ITE317 or ITE317-001)" %>
     <% end %>
@@ -41,19 +41,19 @@
       </tr>
     </thead>
     <tbody>
-      <% for course in @courses %>
+      <% for course_offer in @course_offers %>
         <tr>
-          <td><%=h course.name %></td>
-          <td><%=h course.crn %></td>
-          <td><%=h course.title %></td>
-          <td><%=h course.instructor %></td>
-          <td><%=h course.course_registrations.length.to_i %></td>
-          <% if @current_user.manage? :course, :delegate => :export %><td><%=number_to_percentage course.progress, :precision => 2 %></td><% end %>
-          <td class="right"><%=link_to "Show", kapa_course_roster_path(:id => course), :class => "btn btn-default btn-xs" %></td>
+          <td><%=h course_offer.name %></td>
+          <td><%=h course_offer.crn %></td>
+          <td><%=h course_offer.title %></td>
+          <td><%=h course_offer.instructor %></td>
+          <td><%=h course_offer.course_registrations.length.to_i %></td>
+          <% if @current_user.manage? :course, :delegate => :export %><td><%=number_to_percentage course_offer.progress, :precision => 2 %></td><% end %>
+          <td class="right"><%=link_to "Show", kapa_course_offer_path(:id => course_offer), :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%=will_paginate @courses, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @course_offers, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

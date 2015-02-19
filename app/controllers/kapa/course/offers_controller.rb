@@ -1,10 +1,10 @@
-class Kapa::Course::RostersController < Kapa::Course::BaseController
+class Kapa::Course::OffersController < Kapa::Course::BaseController
 
   def show
 #    session[:filter_course][:assessment_rubric_id] = nil if request.get? and params[:format] != "file"
     @filter = filter((request.get? and params[:format] != "file") ? {:assessment_rubric_id => nil} : {})
-    @course = Course.find(params[:id])
-    @assessment_rubrics = @course.assessment_rubrics
+    @course_offer = CourseOffer.find(params[:id])
+    @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     refresh_table
 
@@ -12,7 +12,7 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
       format.html
       format.file {
         csv_string = CSV.generate do |csv|
-          title = [@course.name, @course.term_desc, @course.instructor, @assessment_rubric.title]
+          title = [@course_offer.name, @course_offer.term_desc, @course_offer.instructor, @assessment_rubric.title]
           csv << title
           header_row = [:id_number, :last_name, :first_name]
           @assessment_rubric.assessment_criterions.each {|c| header_row.push("#{c.criterion}:#{c.criterion_desc}")}
@@ -30,7 +30,7 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
         send_data csv_string,
           :type         => "application/csv",
           :disposition  => "inline",
-          :filename     => "#{@course.name}_#{@course.term_desc}.csv"
+          :filename     => "#{@course_offer.name}_#{@course_offer.term_desc}.csv"
       }
     end
   end
@@ -60,7 +60,7 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
     session[:score] = params[:score]
 #    flash[:save_notice] = "Last saved on #{DateTime.now.strftime("%H:%M:%S")}"
     @filter = filter
-    @course = Course.find(params[:id])
+    @course_offer = CourseOffer.find(params[:id])
     @assessment_rubric = AssessmentRubric.find(@filter.assessment_rubric_id)
     refresh_table
     render :partial => "/kapa/course/table", :layout => false
@@ -68,13 +68,13 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
 
   def index
     @filter = filter
-    @courses = Course.search(@filter).order("subject, number, section").paginate(:page => params[:page])
+    @course_offers = CourseOffer.search(@filter).order("subject, number, section").paginate(:page => params[:page])
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data Course.to_csv(@filter),
+    send_data CourseOffer.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "courses_#{Term.find(@filter.term_id).description if @filter.term_id}.csv"
@@ -82,8 +82,8 @@ class Kapa::Course::RostersController < Kapa::Course::BaseController
 
   private
   def refresh_table
-    @course_registrations = @course.course_registrations
-    @table = @course.table_for(@assessment_rubric)
+    @course_registrations = @course_offer.course_registrations
+    @table = @course_offer.table_for(@assessment_rubric)
     session[:score] = @table
     session[:filter_course][:assessment_rubric_id] = @assessment_rubric.id
   end

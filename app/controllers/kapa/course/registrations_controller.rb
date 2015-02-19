@@ -3,10 +3,10 @@ class Kapa::Course::RegistrationsController < Kapa::Course::BaseController
   def show
     @filter = filter(request.get? ? {:assessment_rubric_id => nil} : {})
     @course_registration = CourseRegistration.find(params[:id])
-    @course = @course_registration.course
+    @course_offer = @course_registration.course
     @person = @course_registration.person
     @person.details(self)
-    @assessment_rubrics = @course.assessment_rubrics
+    @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @table = AssessmentScore.table_for(@assessment_rubric, "CourseRegistration", params[:id])
   end
