@@ -21,7 +21,7 @@
   <h3>Search Result for "<%=@filter.key%>"</h3>
 
   <div class="row">
-    <div class="text-right">
+    <div class="col-sm-12 text-right">
       <%=link_to "New", {:action => :new}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
