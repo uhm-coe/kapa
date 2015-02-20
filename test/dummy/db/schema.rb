@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150213010041) do
+ActiveRecord::Schema.define(:version => 20150220071531) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -268,31 +268,25 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
   add_index "documents", ["person_id"], :name => "index_documents_on_person_id"
 
   create_table "enrollments", :force => true do |t|
-    t.integer  "practicum_profile_id"
-    t.string   "academic_period"
-    t.string   "status"
-    t.string   "uid"
+    t.integer  "curriculum_id"
+    t.integer  "term_id"
     t.string   "sequence"
     t.string   "category"
-    t.string   "mentor_type"
+    t.string   "status"
     t.text     "note"
     t.string   "dept"
+    t.integer  "user_primary_id"
+    t.integer  "user_secondary_id"
     t.text     "yml"
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_primary_id"
-    t.integer  "user_secondary_id"
-    t.integer  "term_id"
-    t.integer  "curriculum_id"
   end
 
-  add_index "enrollments", ["academic_period"], :name => "index_practicum_placements_on_academic_period"
   add_index "enrollments", ["curriculum_id"], :name => "index_enrollments_on_curriculum_id"
-  add_index "enrollments", ["practicum_profile_id"], :name => "index_practicum_placements_on_practicum_profile_id"
-  add_index "enrollments", ["term_id"], :name => "index_practicum_placements_on_term_id"
-  add_index "enrollments", ["user_primary_id"], :name => "index_practicum_placements_on_user_primary_id"
-  add_index "enrollments", ["user_secondary_id"], :name => "index_practicum_placements_on_user_secondary_id"
+  add_index "enrollments", ["term_id"], :name => "index_enrollments_on_term_id"
+  add_index "enrollments", ["user_primary_id"], :name => "index_enrollments_on_user_primary_id"
+  add_index "enrollments", ["user_secondary_id"], :name => "index_enrollments_on_user_secondary_id"
 
   create_table "exam_scores", :force => true do |t|
     t.integer  "exam_id"
@@ -408,7 +402,7 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
   add_index "persons", ["id_number"], :name => "index_persons_on_id_number", :unique => true
   add_index "persons", ["status"], :name => "index_persons_on_status"
 
-  create_table "practicum_placements", :force => true do |t|
+  create_table "practicum_assignments_old", :force => true do |t|
     t.integer  "practicum_placement_id"
     t.integer  "practicum_school_id"
     t.string   "assignment_type"
@@ -426,21 +420,69 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
     t.text     "note"
     t.integer  "user_primary_id"
     t.integer  "user_secondary_id"
-    t.integer  "curriculum_id"
   end
 
-  add_index "practicum_placements", ["assignment_type"], :name => "index_practicum_assignments_on_assignment_type"
-  add_index "practicum_placements", ["curriculum_id"], :name => "index_practicum_placements_on_curriculum_id"
-  add_index "practicum_placements", ["name"], :name => "index_practicum_assignments_on_name"
-  add_index "practicum_placements", ["person_id"], :name => "index_practicum_assignments_on_person_id"
-  add_index "practicum_placements", ["practicum_placement_id"], :name => "index_practicum_assignments_on_practicum_placement_id"
-  add_index "practicum_placements", ["practicum_school_id"], :name => "index_practicum_assignments_on_practicum_school_id"
-  add_index "practicum_placements", ["supervisor_primary_uid"], :name => "index_practicum_assignments_on_supervisor_primary_uid"
-  add_index "practicum_placements", ["supervisor_secondary_uid"], :name => "index_practicum_assignments_on_supervisor_secondary_uid"
-  add_index "practicum_placements", ["user_primary_id"], :name => "index_practicum_assignments_on_user_primary_id"
-  add_index "practicum_placements", ["user_secondary_id"], :name => "index_practicum_assignments_on_user_secondary_id"
+  add_index "practicum_assignments_old", ["assignment_type"], :name => "index_practicum_assignments_on_assignment_type"
+  add_index "practicum_assignments_old", ["name"], :name => "index_practicum_assignments_on_name"
+  add_index "practicum_assignments_old", ["person_id"], :name => "index_practicum_assignments_on_person_id"
+  add_index "practicum_assignments_old", ["practicum_placement_id"], :name => "index_practicum_assignments_on_practicum_placement_id"
+  add_index "practicum_assignments_old", ["practicum_school_id"], :name => "index_practicum_assignments_on_practicum_school_id"
+  add_index "practicum_assignments_old", ["supervisor_primary_uid"], :name => "index_practicum_assignments_on_supervisor_primary_uid"
+  add_index "practicum_assignments_old", ["supervisor_secondary_uid"], :name => "index_practicum_assignments_on_supervisor_secondary_uid"
+  add_index "practicum_assignments_old", ["user_primary_id"], :name => "index_practicum_assignments_on_user_primary_id"
+  add_index "practicum_assignments_old", ["user_secondary_id"], :name => "index_practicum_assignments_on_user_secondary_id"
 
-  create_table "practicum_profiles", :force => true do |t|
+  create_table "practicum_placements", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "curriculum_id"
+    t.integer  "practicum_site_id"
+    t.integer  "mentor_id"
+    t.integer  "fee"
+    t.text     "note"
+    t.string   "category"
+    t.string   "status"
+    t.string   "dept"
+    t.integer  "user_primary_id"
+    t.integer  "user_secondary_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml"
+    t.text     "xml"
+  end
+
+  add_index "practicum_placements", ["curriculum_id"], :name => "index_practicum_placements_on_curriculum_id"
+  add_index "practicum_placements", ["mentor_id"], :name => "index_practicum_placements_on_mentor_id"
+  add_index "practicum_placements", ["person_id"], :name => "index_practicum_placements_on_person_id"
+  add_index "practicum_placements", ["practicum_site_id"], :name => "index_practicum_placements_on_practicum_site_id"
+  add_index "practicum_placements", ["user_primary_id"], :name => "index_practicum_placements_on_user_primary_id"
+  add_index "practicum_placements", ["user_secondary_id"], :name => "index_practicum_placements_on_user_secondary_id"
+
+  create_table "practicum_placements_old", :force => true do |t|
+    t.integer  "practicum_profile_id"
+    t.string   "academic_period"
+    t.string   "status"
+    t.string   "uid"
+    t.string   "sequence"
+    t.string   "category"
+    t.string   "mentor_type"
+    t.text     "note"
+    t.string   "dept"
+    t.text     "yml"
+    t.text     "xml"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_primary_id"
+    t.integer  "user_secondary_id"
+    t.integer  "term_id"
+  end
+
+  add_index "practicum_placements_old", ["academic_period"], :name => "index_practicum_placements_on_academic_period"
+  add_index "practicum_placements_old", ["practicum_profile_id"], :name => "index_practicum_placements_on_practicum_profile_id"
+  add_index "practicum_placements_old", ["term_id"], :name => "index_practicum_placements_on_term_id"
+  add_index "practicum_placements_old", ["user_primary_id"], :name => "index_practicum_placements_on_user_primary_id"
+  add_index "practicum_placements_old", ["user_secondary_id"], :name => "index_practicum_placements_on_user_secondary_id"
+
+  create_table "practicum_profiles_old", :force => true do |t|
     t.integer  "person_id"
     t.integer  "curriculum_id"
     t.string   "bgc"
@@ -459,13 +501,13 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
     t.string   "cohort"
   end
 
-  add_index "practicum_profiles", ["coordinator_primary_uid"], :name => "index_practicum_profiles_on_coordinator_primary_uid"
-  add_index "practicum_profiles", ["coordinator_secondary_uid"], :name => "index_practicum_profiles_on_coordinator_secondary_uid"
-  add_index "practicum_profiles", ["curriculum_id"], :name => "index_practicum_profiles_on_curriculum_id"
-  add_index "practicum_profiles", ["group"], :name => "index_practicum_profiles_on_group"
-  add_index "practicum_profiles", ["person_id"], :name => "index_practicum_profiles_on_person_id"
+  add_index "practicum_profiles_old", ["coordinator_primary_uid"], :name => "index_practicum_profiles_on_coordinator_primary_uid"
+  add_index "practicum_profiles_old", ["coordinator_secondary_uid"], :name => "index_practicum_profiles_on_coordinator_secondary_uid"
+  add_index "practicum_profiles_old", ["curriculum_id"], :name => "index_practicum_profiles_on_curriculum_id"
+  add_index "practicum_profiles_old", ["group"], :name => "index_practicum_profiles_on_group"
+  add_index "practicum_profiles_old", ["person_id"], :name => "index_practicum_profiles_on_person_id"
 
-  create_table "practicum_schools", :force => true do |t|
+  create_table "practicum_schools_old", :force => true do |t|
     t.string   "code"
     t.string   "island"
     t.string   "district"
@@ -484,7 +526,27 @@ ActiveRecord::Schema.define(:version => 20150213010041) do
     t.datetime "updated_at"
   end
 
-  add_index "practicum_schools", ["code"], :name => "index_practicum_schools_on_code"
+  add_index "practicum_schools_old", ["code"], :name => "index_practicum_schools_on_code"
+
+  create_table "practicum_sites", :force => true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "name_short"
+    t.string   "level_from"
+    t.string   "level_to"
+    t.string   "url"
+    t.string   "district"
+    t.string   "area"
+    t.string   "area_group"
+    t.string   "category"
+    t.string   "status"
+    t.text     "yml"
+    t.text     "xml"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "practicum_sites", ["code"], :name => "index_practicum_sites_on_code"
 
   create_table "program_offers", :force => true do |t|
     t.integer  "program_id",                                  :null => false
