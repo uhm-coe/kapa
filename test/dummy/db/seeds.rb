@@ -22,6 +22,9 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_points")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "transition_actions")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_offers")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_registrations")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "enrollments")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "practicum_placements")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "practicum_sites")
 
 [TransitionPoint, CourseOffer].each do |c|
   c.update_all(:term_id => Term.current_term.id)
@@ -36,3 +39,8 @@ user = person.users.create(:uid => "admin", :category => "local", :status => 3, 
 user.password = "admin"
 user.serialize(:role, {:main => '3', :main_list => '3', :artifact => '3', :artifact_list => '3', :advising => '3', :advising_list => '3', :course => '3', :course_list => '3', :practicum => '3', :practicum_list => '3', :report => '3', :report_list => '3', :admin => '3'})
 user.save!
+
+practicum_site = PracticumSite.create!(:code => "N/A", :name => "N/A")
+curriculum = person.curriculums.create!(:program => Program.find_by_code("EDEL-BED"))
+curriculum.enrollments.create!(:term => Term.current_term)
+person.practicum_placements.create!(:term => Term.current_term, :practicum_site => practicum_site)

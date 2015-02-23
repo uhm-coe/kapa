@@ -1,6 +1,5 @@
-class PracticumSchool < KapaBaseModel
-  has_one :contact, :as => :entity
-  has_many :practicum_assignments
+class PracticumSite < KapaBaseModel
+  has_many :practicum_placement
 
   validates_presence_of :name, :code
   validates_uniqueness_of :code

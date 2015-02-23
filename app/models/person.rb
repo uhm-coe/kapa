@@ -14,15 +14,10 @@ class Person < KapaBaseModel
   #Advising module associations
   has_many :advising_sessions
 
-  #Curriculum module associations
-  #has_many :curriculum_events
-  #has_many :curriculum_enrollments,
-  #         :class_name => "CurriculumEvent",
-  #         :conditions => "curriculum_events.context = 'enrollment' and curriculum_events.status = 'Y'"
 
   #Placement module associations
   has_one :practicum_profile
-  has_many :practicum_assignments
+  has_many :practicum_placements
 
   #Assessment module associations
   has_many :course_registrations

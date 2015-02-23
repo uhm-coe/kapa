@@ -8,6 +8,7 @@ class Curriculum < KapaBaseModel
              :class_name => "User",
              :foreign_key => "user_secondary_id"
   has_many   :transition_points
+  has_many   :enrollments
   has_one    :practicum_profile
   has_one    :last_transition_point,
     :class_name => "TransitionPoint",
