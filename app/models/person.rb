@@ -132,9 +132,9 @@ class Person < KapaBaseModel
       persons = persons.where("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
     elsif filter.key =~  /\w+,\s*\w+/
       keys = filter.key.split(/,\s*/)
-      persons = persons.where{(last_name =~ my{keys[0]}) | (first_name =~ my{keys[1]})}
+      persons = persons.where{(last_name =~ "%#{keys[0]}%") | (first_name =~ "%#{keys[1]}%")}
     else
-      persons = persons.where{(first_name =~ my{filter.key}) | (last_name =~ my{filter.key}) | (other_name =~ my{filter.key})}
+      persons = persons.where{(first_name =~ "%#{filter.key}%") | (last_name =~ "%#{filter.key}%") | (other_name =~ "%#{filter.key}%")}
     end
 
     return persons.order("status desc").limit(100)

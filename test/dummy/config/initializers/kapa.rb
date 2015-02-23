@@ -8,5 +8,5 @@ Rails.configuration.mail_from = "admin@localhost"
 Rails.configuration.public_key = "#{Rails.root}/config/kapa.pub"
 
 #Regular expression for campus ID and email.
-Rails.configuration.regex_id_number = '[\d]{8}'
+Rails.configuration.regex_id_number = '^[\d]{8}$' # Exactly 8 digits
 Rails.configuration.regex_email = '^[A-Z0-9_%+-]+@hawaii.edu$'
