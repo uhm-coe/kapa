@@ -138,9 +138,8 @@ class Kapa::KapaBaseController < ActionController::Base
     when "course"
       items.push ["Rosters", kapa_course_offers_path] if @current_user.read?(:course)
     when "practicum"
-      items.push ["Placement Audits", kapa_practicum_placements_path]  if @current_user.read?(:practicum)
-      items.push ["Mentor Assignments", kapa_practicum_assignments_path]  if @current_user.read?(:practicum)
-      items.push ["Schools", kapa_practicum_schools_path]  if @current_user.read?(:practicum)
+      items.push ["Placements", kapa_practicum_placements_path]  if @current_user.read?(:practicum)
+      items.push ["Sites", kapa_practicum_sites_path]  if @current_user.read?(:practicum)
     when "report"
       items.push ["Reports", kapa_report_reports_path]  if @current_user.read?(:report)
       items.push ["Data Sets", kapa_report_data_sets_path]  if @current_user.manage?(:report)

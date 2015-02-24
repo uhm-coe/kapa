@@ -1,19 +1,20 @@
-<%=bootstrap_fields_for :practicum_placement do |a| %>
-<table>
+<%=bootstrap_fields_for :practicum_placement do |f| %>
+  <table>
     <tr>
-      <td width="50%">
-        <%=a.term_select :term_id, {:label => "Term"}, {:disabled => !@current_user.manage?(:practicum, :delegate => :maintain)} %>
-        <%=a.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Coordinator Primary"}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
-        <%=a.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Coordinator Secondary"}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
-        <%=a.history_select :status, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
-        <%=a.text_field :uid, :label => "Group", :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
-      </td>
-      <td width="50%">
-        <%=a.history_select :category, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
-        <%=a.history_select :sequence, {:include_blank => true}, :disabled => !@current_user.manage?(:practicum, :delegate => :maintain) %>
-        <%=a.history_select :mentor_type, {:include_blank => true} %>
+      <td>
+        <%=f.text_field :term_id, :label => "Term" %>
+        <%=f.text_field :curriculum_id, :label => "Program" %>
+        <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, {:include_blank => true}, :class => "single-select", :label => "Placement Site" if @practicum_placement.person %>
+        <div>
+          <%=label :practicum_placement, :name, "Mentor Teacher" %><br>
+          <%=text_field :practicum_placement, :name, :readonly => true, :value => @practicum_placement.person ? @practicum_placement.person.full_name : "" %>
+          <%=link_to_function(image_tag("/images/icons/edit.png"), nil, :class => "edit-mentor")%>
+        </div>
+        <%=f.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Primary"} %>
+        <%=f.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Secondary"} %>
+        <%=f.text_area :note %>
       </td>
     </tr>
-</table>
-<%=a.hidden_field :practicum_profile_id %>
+  </table>
+  <%=f.hidden_field :person_id %>
 <% end %>

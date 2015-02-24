@@ -1,0 +1,90 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4>Placement Audits</h4>
+  <%=form_tag :action => "list" do %>
+    <table>
+      <tr class="bottom">
+        <td>
+          <label>Term:<br>
+          <%=term_select :filter, :term_id, :name => :term_id %></label>
+        </td>
+        <td>
+          <label>Program:</label><br>
+          <%=program_select :filter, :program, :depts => @current_user.depts, :include_blank => "Any", :include_code => true %>
+        </td>
+        <td>
+          <label>Group:</label><br/>
+           <%=history_select :filter, :uid, :model_name => :practicum_placement, :model_method => :uid, :include_blank => "Any" %>
+         </td>
+        <td>
+          <p class="center"><%=button_to_reset%></p>
+         </td>
+      </tr>
+      <tr class="bottom">
+        <td>
+          <label>Distribution:<br>
+          <%=property_select :filter, :distribution, :include_blank => "Any", :include_code => true %></label>
+        </td>
+        <td>
+          <label>Major/Concentration:<br>
+          <%=property_select :filter, :major, :include_blank => "Any", :include_code => true, :depts => @current_user.depts %></label>
+        </td>
+        <td>
+          <label>Category:</label><br>
+           <%=history_select :filter, :category, :model_name => :practicum_placement, :model_method => :category, :include_blank => "Any" %>
+         </td>
+        <td>
+          <p class="center"><%=submit_tag "Show" %></p>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box2) do %>
+  <table id="student_list">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Category</th>
+      <th>Group</th>
+    </tr>
+
+    <% for placement in @practicum_placements %>
+      <tr>
+        <td><%=placement.practicum_profile.person.id_number %></td>
+        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(placement.practicum_profile.person.full_name), kapa_main_person_path(:id => placement.practicum_profile.person_id, :focus => "practicum")%></td>
+        <td><%=h abbr(placement.practicum_profile.curriculum.code_desc, placement.practicum_profile.curriculum.code) if placement.practicum_profile.curriculum %></td>
+        <td><%=h placement.category %></td>
+        <td><%=h placement.uid %></td>
+        <td class="right"><%=link_to "Show", :action => :show, :id => placement %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <div class="center"><%=will_paginate @practicum_placements %></div>
+  <p class="right">
+    <%=link_to "Download", :action => :export, :action => :export if @current_user.manage? :practicum, :delegate => :export %>
+    <%=link_to_function "Import", nil, :id => "open_dialog" if @current_user.manage? :practicum, :delegate => :import %>
+  </p>
+  <div id="dialog" class="form-dialog" title="Import Placement Data">
+    <%=bootstrap_form_for(:filter, :url => import_kapa_practicum_placements_path, :html => {:multipart => true, :id => "import_placement_form"} ) do |f| %>
+      <%=f.term_select :term_id, {:name => :term_id, :label => "Term"}, :id => "filter_import_term" %>
+        <%=bootstrap_fields_for :data do |d| %>
+          <%=d.file_field :import_file %>
+          <%=d.check_box :delete, {:label => "Delete all placement records in the specified semester before importing"}, "Y", "N" %>
+        <% end %>
+    <% end %>
+  </div>
+
+<% end %>

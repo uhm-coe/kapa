@@ -1,4 +1,21 @@
-class Kapa::Practicum::AssignmentsController < Kapa::Practicum::BaseController
+class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
+
+  def show
+    @practicum_placement = PracticumPlacement.find(params[:id])
+    @person = @practicum_placement.person
+    @person.details(self)
+    @curriculums = @person.curriculums
+    @practicum_sites = PracticumSite.find(:all, :select => "id, name_short")
+    @mentors = Person.find(:all, :include => :contact, :conditions => "id in (SELECT distinct person_id FROM practicum_placements)", :order => "persons.last_name, persons.first_name")
+  end
+
+  def new
+    @person = Person.find(params[:id])
+    @person.details(self)
+    @practicum_placement = @person.practicum_placements.build(:term_id => Term.current_term.id)
+    @curriculums = @person.curriculums
+  end
+
 
   def create
     @practicum_placement = PracticumPlacement.find(params[:id])

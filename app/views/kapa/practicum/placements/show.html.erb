@@ -12,7 +12,7 @@
             $(this).dialog('close');
            },
           'Save' : function() {
-            $.getJSON('<%=kapa_practicum_assignments_path(:action => :update_mentor)%>',
+            $.getJSON('<%#=kapa_practicum_assignments_path(:action => :update_mentor)%>',
                       $('#mentor_form').serialize(),
                       function(data) {
                         $(prefix + 'name').val(data['full_name']);
@@ -63,86 +63,51 @@
   </script>
 <% end %>
 
+
+<% content_for(:dialog) do %>
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "move_transition_point_dialog", :modal_title => "Move Transition Point to Different Curriculum", :modal_form_id => "move_transition_point_form"} do %>
+    <div id="mentor_dialog" title="Select/Create Mentor">
+      <%=bootstrap_form_for(:mentor, :html => {:id => "mentor_form"}) do |p| %>
+        <%=p.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"}, :class => "single-select", :label => "Mentor Teacher" %>
+        <table>
+          <tr>
+            <td>
+              <%=p.text_field :last_name, :tabindex => 1 %>
+            </td>
+            <td>
+              <%=p.text_field :first_name, :tabindex => 2 %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <%=p.text_field :email, :tabindex => 3, :style => "width:100%" %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/main/person_detail" %>
 
   <h4>Placement</h4>
 
   <div class="tabs">
-    <ul>
-      <li><a href="#practicum_profile_tab">Profile</a></li>
-      <li><a href="#practicum_placement_tab">Placement</a></li>
-      <li><a href="#mentors_tab">Mentor/School Assignments</a></li>
+    <ul class="nav nav-tabs">
+      <li><a href="#practicum_placement_tab" data-toggle="tab">Placement</a></li>
     </ul>
 
-    <div id="practicum_profile_tab">
-      <%=bootstrap_form_for :practicum_profile, :url => kapa_practicum_profile_path(:id => @practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
-        <%=render :partial => "/kapa/practicum/profile_form", :locals => {:f => f}%>
-        <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
-      <% end %>
-    </div>
-
-    <div id="practicum_placement_tab">
+    <div class="tab-content">
+      <div id="practicum_placement_tab" class="tab-pane<%=' active' if params[:focus] == 'placement' || params[:focus].nil? %>">
       <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placement_path(:id => @practicum_placement, :focus => :practicum_placement), :remote => true, :html => {:method => :put}  do |f| %>
-        <%=render :partial => "/kapa/practicum/placement_form", :locals => {:f => f}%>
+        <%=render :partial => "/kapa/practicum/placement_form" %><br/>
         <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
       <% end %>
-    </div>
-
-    <div id="mentors_tab">
-      <div class="accordion">
-        <% @practicum_assignments.each_with_index do |practicum_assignment, index| %>
-          <% @practicum_assignment = practicum_assignment %>
-          <h3>
-            <a href="#"><span class="strong"><%="#{index + 1}."%> <%=h [@practicum_assignment.person ? @practicum_assignment.person.full_name : nil, @practicum_assignment.practicum_school ? @practicum_assignment.practicum_school.name_short : nil].join("/") %></span></a>
-          </h3>
-          <div>
-            <%=bootstrap_form_for :practicum_assignment, :url => kapa_practicum_assignment_path(:id => @practicum_assignment, :focus => "mentors"), :remote => true, :html => {:method => :put}   do %>
-              <%=render :partial => "/kapa/practicum/assignment_form" %><br/>
-              <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-            <% end %>
-            <!-- Delete button with popover confirmation -->
-            <% if @current_user.write? %>
-              <form method="post" action="<%=kapa_practicum_assignment_path(:id => @practicum_assignment) %>" class="btn-delete-form">
-                <input type="hidden" name="_method" value="delete">
-                <button type="submit" class="btn btn-default btn-delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-              </form>
-            <% end %>
-          </div>
-        <% end %>
-        <h3>
-          <a href="#"><span class="new">New Mentor/School Assignment</span></a>
-        </h3>
-        <div>
-          <% @practicum_assignment = PracticumAssignment.new(:assignment_type => "mentor") %>
-          <%=bootstrap_form_for :practicum_assignment, :url => kapa_practicum_assignments_path(:id => @practicum_placement, :focus => "mentors"), :remote => true  do %>
-            <%=render :partial => "/kapa/practicum/assignment_form" %>
-            <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-          <% end %>
-        </div>
       </div>
     </div>
-  </div>
-
-  <div id="mentor_dialog" title="Select/Create Mentor">
-    <%=bootstrap_form_for(:mentor, :html => {:id => "mentor_form"}) do |p| %>
-      <%=p.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"}, :class => "single-select", :label => "Mentor Teacher" %>
-      <table>
-        <tr>
-          <td>
-            <%=p.text_field :last_name, :tabindex => 1 %>
-          </td>
-          <td>
-            <%=p.text_field :first_name, :tabindex => 2 %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <%=p.text_field :email, :tabindex => 3, :style => "width:100%" %>
-          </td>
-        </tr>
-      </table>
-    <% end %>
   </div>
 
   <%=link_to "Back", kapa_main_persons_path(:action => :show, :id => @person, :focus => :practicum) if @current_user.read?(:main)%>
