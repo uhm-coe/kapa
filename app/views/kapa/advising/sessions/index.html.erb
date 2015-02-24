@@ -21,6 +21,7 @@
       <%= f.property_select :task, :include_blank => "Any", :name => :advising_task %>
       <%= f.property_select :interest, :include_blank => "Any", :name => :advising_interest, :label => "Area of Interest" %>
       <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+      <%= f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
     <% end %>
   <% end %>
 

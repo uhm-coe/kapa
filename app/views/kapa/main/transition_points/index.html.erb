@@ -21,7 +21,7 @@
           <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
           <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
           <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
-          <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+          <%= f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
         </div>
       </div>
     <% end %>

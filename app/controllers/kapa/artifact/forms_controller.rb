@@ -49,7 +49,8 @@ class Kapa::Artifact::FormsController < Kapa::Artifact::BaseController
 
   def index
     @filter = filter
-    @forms = Form.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page])
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    @forms = Form.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def export

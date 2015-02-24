@@ -47,7 +47,8 @@ class Kapa::Admin::RubricsController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @assessment_rubrics = AssessmentRubric.search(@filter).order("dept, title").paginate(:page => params[:page])
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    @assessment_rubrics = AssessmentRubric.search(@filter).order("dept, title").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
 end

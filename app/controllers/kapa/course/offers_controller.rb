@@ -68,7 +68,8 @@ class Kapa::Course::OffersController < Kapa::Course::BaseController
 
   def index
     @filter = filter
-    @course_offers = CourseOffer.search(@filter).order("subject, number, section").paginate(:page => params[:page])
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    @course_offers = CourseOffer.search(@filter).order("subject, number, section").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def export
