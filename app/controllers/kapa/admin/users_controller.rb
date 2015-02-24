@@ -72,7 +72,8 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @users = User.search(@filter).order("users.uid").paginate(:page => params[:page])
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    @users = User.search(@filter).order("users.uid").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def logs

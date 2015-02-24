@@ -37,6 +37,7 @@ class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @properties = ApplicationProperty.search(@filter).order("sequence DESC, code")
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    @properties = ApplicationProperty.search(@filter).order("sequence DESC, code").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 end
