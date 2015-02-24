@@ -1,4 +1,4 @@
-id,person_id,curriculum_id,practicum_site_id,mentor_id,fee,note,category,status,dept,user_primary_id,user_secondary_id,created_at,updated_at,yml,xml
+id,person_id,curriculum_id,practicum_site_id,person_mentor_id,fee,note,category,status,dept,user_primary_id,user_secondary_id,created_at,updated_at,yml,xml
 1,1,1,1,,,,,,,,,,,,
 2,2,2,1,,,,,,,,,,,,
 3,3,3,1,,,,,,,,,,,,

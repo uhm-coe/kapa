@@ -7,7 +7,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     @curriculums = @person.curriculums.includes(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
     @course_registrations = CourseRegistration.includes(:course_offer => :term).where(:person_id  => @person).order("terms.sequence DESC")
-    @practicum_profiles = []
+    @practicum_placements = @person.practicum_placements
 
     if (params[:doc_id])
       @document = Document.find(params[:doc_id])

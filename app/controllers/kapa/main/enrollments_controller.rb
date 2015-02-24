@@ -1,4 +1,4 @@
-class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
+class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
 
   def show
     @practicum_placement = PracticumPlacement.find(params[:id])

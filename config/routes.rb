@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
     namespace :practicum do
       resources :placements, &extra_actions
-      resources :schools, &extra_actions
+      resources :sites, &extra_actions
       resources :assignments, &extra_actions
     end
 

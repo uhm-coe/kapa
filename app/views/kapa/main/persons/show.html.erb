@@ -123,7 +123,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#practicum_detail">
-            Field Placements (<%=@practicum_profiles.length%>)
+            Field Placements (<%=@practicum_placements.length%>)
           </a>
         </h4>
       </div>
@@ -131,25 +131,25 @@
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_kapa_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
           <table class="table table-hover">
-            <% for practicum_profile in @practicum_profiles %>
+            <% @practicum_placements.group_by(&:curriculum).each do |curriculum, practicum_placements| %>
               <tr>
                 <td colspan="5">
-                  <h5><%=h "#{practicum_profile.curriculum.code_desc} - #{practicum_profile.curriculum.term_desc}" if practicum_profile.curriculum %></h5>
+                  <h5><%=curriculum.code_desc if curriculum %></h5>
                 </td>
               </tr>
               <tr>
                 <th>Semester</th>
-                <th>Category</th>
-                <th>Sequence</th>
-                <th>Classification</th>
+                <th>Site</th>
+                <th>Mentor</th>
+                <th>Status</th>
                 <th></th>
               </tr>
-              <% for practicum_placement in practicum_profile.practicum_placements %>
+              <% for practicum_placement in practicum_placements %>
                 <tr>
-                  <td><%=h practicum_placement.term_desc %></td>
-                  <td><%=h practicum_placement.category %></td>
-                  <td><%=h practicum_placement.sequence %></td>
-                  <td><%=h practicum_placement.status %></td>
+                  <td><%=practicum_placement.term_desc %></td>
+                  <td><%=practicum_placement.practicum_site.name %></td>
+                  <td><%=practicum_placement.person_mentor_id %></td>
+                  <td><%=practicum_placement.status %></td>
                   <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>
                 </tr>
               <% end %>

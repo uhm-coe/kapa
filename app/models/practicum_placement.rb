@@ -10,7 +10,7 @@ class PracticumPlacement < KapaBaseModel
              :class_name => "User",
              :foreign_key => "user_secondary_id"
 
-  def mentor?
-    self.assignment_type == "mentor"
+  def term_desc
+    return Term.find(term_id).description
   end
 end
