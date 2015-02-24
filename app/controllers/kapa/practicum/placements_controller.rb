@@ -58,13 +58,13 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
 
   def index
     @filter = assignment_filter
-    @practicum_schools = PracticumSchool.find(:all, :include => :practicum_assignments, :conditions => "practicum_assignments.id is not null", :order => "name_short")
-    @practicum_assignments = PracticumAssignment.paginate(:page => params[:page], :per_page => 20, :include => [:person, :practicum_school, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")
+    @practicum_sites = PracticumSite.find(:all, :include => :practicum_assignments, :conditions => "practicum_assignments.id is not null", :order => "name_short")
+    @practicum_assignments = PracticumAssignment.paginate(:page => params[:page], :per_page => 20, :include => [:person, :practicum_site, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")
   end
 
   def export
     @filter = assignment_filter
-    @practicum_assignments = PracticumAssignment.find(:all, :include => [:practicum_school, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")
+    @practicum_assignments = PracticumAssignment.find(:all, :include => [:practicum_site, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")
     csv_string = CSV.generate do |csv|
       csv << table_format.collect {|c| c[0]}
       @practicum_assignments.each {|o| csv << table_format(o).collect {|c| c[1]}}
@@ -106,7 +106,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     mentor[:person_id] = person.id
     mentor[:full_name] = person.full_name
     if last_assignment
-      mentor[:practicum_school_id] = last_assignment.practicum_school_id
+      mentor[:practicum_site_id] = last_assignment.practicum_site_id
       mentor[:content_area] = last_assignment.content_area
 #      mentor[:user_primary_id] = last_assignment.user_primary_id
 #      mentor[:user_secondary_id] = last_assignment.user_secondary_id
@@ -130,14 +130,14 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     ]
 
     row += [
-      [:school_name, rsend(o, :practicum_school, :name_short)],
+      [:school_name, rsend(o, :practicum_site, :name_short)],
       [:content_area, rsend(o, :content_area)],
       [:mentor_person_id, rsend(o, :person_id)],
       [:mentor_last_name, rsend(o, :person, :last_name)],
       [:mentor_first_name, rsend(o, :person, :first_name)],
       [:mentor_email, rsend(o, :person, :contact, :email)],
-      [:school_code, rsend(o, :practicum_school, :code)],
-      [:school_name, rsend(o, :practicum_school, :name_short)],
+      [:school_code, rsend(o, :practicum_site, :code)],
+      [:school_name, rsend(o, :practicum_site, :name_short)],
       [:content_area, rsend(o, :content_area)],
       [:supervisor_1_uid, rsend(o, :user_primary, :uid)],
       [:supervisor_1_last_name, rsend(o, :user_primary, :person, :last_name)],
@@ -154,7 +154,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     f = filter
     f.append_condition "practicum_assignments.assignment_type = 'mentor'"
     f.append_condition "practicum_placements.term_id = ?", :term_id
-    f.append_condition "practicum_assignments.practicum_school_id = ?", :practicum_school_id
+    f.append_condition "practicum_assignments.practicum_site_id = ?", :practicum_site_id
     f.append_condition "#{@current_user.id} in (practicum_placements.user_primary_id, practicum_placements.user_secondary_id)" unless @current_user.manage?
     return f
   end

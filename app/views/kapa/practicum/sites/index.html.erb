@@ -10,7 +10,7 @@
 <% content_for(:dialog) do %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => kapa_practicum_schools_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+    <%=bootstrap_form_for(:filter, :url => kapa_practicum_sites_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%=f.text_field :name %>
       <%=f.property_select :district, :include_blank => "Any" %>
       <%=f.property_select :area_group, :include_blank => "Any", :label => "Area" %>
@@ -18,7 +18,7 @@
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import School Data", :modal_form_id => "import_school_form"} do %>
-    <%=bootstrap_form_for(:data, :url => import_kapa_practicum_schools_path, :html => {:multipart => true, :id => "import_school_form"}) do |f|%>
+    <%=bootstrap_form_for(:data, :url => import_kapa_practicum_sites_path, :html => {:multipart => true, :id => "import_school_form"}) do |f|%>
       <%=f.file_field :import_file %>
     <% end %>
   <% end %>
@@ -54,20 +54,20 @@
       </tr>
     </thead>
     <tbody>
-      <% for practicum_school in @practicum_schools %>
+      <% for practicum_site in @practicum_sites %>
         <tr>
-          <td><%=h practicum_school.code %></td>
-          <td><%=abbr practicum_school.name, practicum_school.name_short %></td>
-          <td><%=h practicum_school.district %></td>
-          <td><%=h practicum_school.area %></td>
-          <td><%=h practicum_school.school_type %></td>
-          <td><%=h practicum_school.grades %></td>
-          <td><%=h practicum_school.practicum_assignments.length.to_i %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => practicum_school}, :class => "btn btn-default btn-xs" %></td>
+          <td><%=h practicum_site.code %></td>
+          <td><%=abbr practicum_site.name, practicum_site.name_short %></td>
+          <td><%=h practicum_site.district %></td>
+          <td><%=h practicum_site.area %></td>
+          <td><%=h practicum_site.school_type %></td>
+          <td><%=h practicum_site.grades %></td>
+          <td><%=h practicum_site.practicum_assignments.length.to_i %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => practicum_site}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%=will_paginate @practicum_schools, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @practicum_sites, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

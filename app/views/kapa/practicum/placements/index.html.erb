@@ -9,7 +9,7 @@
         </td>
         <td>
           <label>School:<br>
-            <%=select :filter, :practicum_school_id, @practicum_schools.collect {|c| [c.name_short, "0#{c.id}"]}, {:include_blank => "Any", :label => {:text => "School"}} %></label>
+            <%=select :filter, :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, "0#{c.id}"]}, {:include_blank => "Any", :label => {:text => "School"}} %></label>
         </td>
         <td>
           <p class="center"><%=submit_tag "Show" %></p>
@@ -32,7 +32,7 @@
         <td><%=practicum_assignment.practicum_placement.practicum_profile.person.id_number %></td>
         <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(practicum_assignment.practicum_placement.practicum_profile.person.full_name), kapa_main_person_path(:id => practicum_assignment.practicum_placement.practicum_profile.person, :focus => :practicum)%></td>
         <td><%=h practicum_assignment.person.full_name if practicum_assignment.person %></td>
-        <td><%=link_to practicum_assignment.practicum_school.name_short, kapa_practicum_schools_path(:action => :show, :id => practicum_assignment.practicum_school) if practicum_assignment.practicum_school %></td>
+        <td><%=link_to practicum_assignment.practicum_site.name_short, kapa_practicum_sites_path(:action => :show, :id => practicum_assignment.practicum_site) if practicum_assignment.practicum_site %></td>
         <td class="right"><%=link_to "Show", kapa_practicum_placements_path(:action => :show, :id => practicum_assignment.practicum_placement) %></td>
       </tr>
     <% end %>

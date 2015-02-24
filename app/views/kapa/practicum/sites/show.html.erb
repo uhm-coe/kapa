@@ -2,7 +2,7 @@
 
   <h4 class="section-header">
     <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%=h @practicum_school.name%>
+    <%=h @practicum_site.name%>
   </h4>
 
   <div class="tabs">
@@ -15,7 +15,7 @@
 
     <div class="tab-content">
       <div id="school_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'school_profile' || params[:focus].nil? %>">
-        <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_school_path(:id => @practicum_school), :remote => true, :html => {:method => :put} do |f|%>
+        <%=bootstrap_form_for :prpracticum_site:url => kapa_pracpracticum_siteh(:id => @practipracticum_sitemote => true, :html => {:method => :put} do |f|%>
           <%=render :partial => "/kapa/practicum/school_form", :locals => {:f => f}%>
           <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
@@ -23,7 +23,7 @@
       </div>
 
       <div id="school_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'school_contact' %>">
-        <%=bootstrap_form_for :practicum_school, :url => kapa_practicum_school_path(:id => @practicum_school, :focus => :school_contact), :remote => true, :html => {:method => :put}  do |f|%>
+        <%=bootstrap_form_for :practicupracticum_site> kapa_practicum_practicum_site=> @practicum_school, :focus => :school_contact), :remote => true, :html => {:method => :put}  do |f|%>
           <%=render :partial => "/kapa/practicum/school_contact_form" %>
           <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>

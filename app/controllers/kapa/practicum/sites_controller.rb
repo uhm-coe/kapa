@@ -1,39 +1,39 @@
 class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
 
   def show
-    @practicum_school = PracticumSchool.find(params[:id])
-    @school_contact = @practicum_school.school_contact
-    #["id in (SELECT distinct person_id FROM practicum_assignments WHERE practicum_school_id = ?)", params[:id]]
-    @mentors = Person.find(:all, :include => [:contact, :practicum_assignments], :conditions => ["practicum_assignments.id is not null and practicum_assignments.practicum_school_id = ?", params[:id]], :order => "persons.last_name, persons.first_name")
+    @practicum_site = PracticumSite.find(params[:id])
+    @school_contact = @practicum_site.school_contact
+    #["id in (SELECT distinct person_id FROM practicum_assignments WHERE practicum_site_id = ?)", params[:id]]
+    @mentors = Person.find(:all, :include => [:contact, :practicum_assignments], :conditions => ["practicum_assignments.id is not null and practicum_assignments.practicum_site_id = ?", params[:id]], :order => "persons.last_name, persons.first_name")
     # TODO: Need to change academic_period to term_id
-    @practicum_assignments = @practicum_school.practicum_assignments.find(:all, :include => :practicum_placement, :order => "practicum_placements.academic_period DESC")
+    @practicum_assignments = @practicum_site.practicum_assignments.find(:all, :include => :practicum_placement, :order => "practicum_placements.academic_period DESC")
   end
 
   def new
-    @practicum_school = PracticumSchool.new :district => "Private"
+    @practicum_site = PracticumSite.new :district => "Private"
   end
 
   def create
-    @practicum_school = PracticumSchool.new params[:practicum_school]
-    unless @practicum_school.save
-      flash[:danger] = @practicum_school.errors.full_messages.join(", ")
-      redirect_to new_kapa_practicum_school_path and return false
+    @practicum_site = PracticumSite.new params[:practicum_site]
+    unless @practicum_site.save
+      flash[:danger] = @practicum_site.errors.full_messages.join(", ")
+      redirect_to new_kapa_practicum_site_path and return false
     end
     flash[:success] = "School was sccessfully created."
-    redirect_to kapa_practicum_school_path(:id => @practicum_school)
+    redirect_to kapa_practicum_site_path(:id => @practicum_site)
   end
 
   def update
-    @practicum_school = PracticumSchool.find(params[:id])
-    @practicum_school.attributes= params[:practicum_school]
-    @practicum_school.serialize(:school_contact, params[:school_contact]) if not params[:school_contact].blank?
+    @practicum_site = PracticumSite.find(params[:id])
+    @practicum_site.attributes= params[:practicum_site]
+    @practicum_site.serialize(:school_contact, params[:school_contact]) if not params[:school_contact].blank?
 
-    if @practicum_school.save
+    if @practicum_site.save
       flash[:success] = "School info was successfully updated."
     else
       flash[:danger] = "Failed to update school profile."
     end
-    redirect_to kapa_practicum_school_path(:id => @practicum_school, :focus => params[:focus])
+    redirect_to kapa_practicum_site_path(:id => @practicum_site, :focus => params[:focus])
   end
 
   def import
@@ -49,7 +49,7 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
         flash[:danger] = "No school code defined!"
         redirect_to(kapa_error_path) and return false
       end
-      school = PracticumSchool.find_or_create_by_code(row["school_code"])
+      school = PracticumSite.find_or_create_by_code(row["school_code"])
       school.island = row["island"]
       school.district = row["district"]
       school.grade_from = row["grade_from"]
@@ -77,15 +77,15 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
 
   def index
     @filter = school_filter
-    @practicum_schools = PracticumSchool.paginate(:page => params[:page], :per_page => 20, :include => :practicum_assignments, :conditions => @filter.conditions, :order => "name_short")
+    @practicum_sites = PracticumSite.paginate(:page => params[:page], :per_page => 20, :include => :practicum_assignments, :conditions => @filter.conditions, :order => "name_short")
   end
 
   def export
     @filter = school_filter
-    @practicum_schools = PracticumSchool.find(:all, :conditions => @filter.conditions, :order => "name_short")
+    @practicum_sites = PracticumSite.find(:all, :conditions => @filter.conditions, :order => "name_short")
     csv_string = CSV.generate do |csv|
       csv << table_format.keys
-      @practicum_schools.each {|c| csv << table_format(c).values}
+      @practicum_sites.each {|c| csv << table_format(c).values}
     end
     send_data csv_string,
       :type         => "application/csv",
