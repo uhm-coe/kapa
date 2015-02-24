@@ -130,14 +130,14 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     ]
 
     row += [
-      [:school_name, rsend(o, :practicum_site, :name_short)],
+      [:site_name, rsend(o, :practicum_site, :name_short)],
       [:content_area, rsend(o, :content_area)],
       [:mentor_person_id, rsend(o, :person_id)],
       [:mentor_last_name, rsend(o, :person, :last_name)],
       [:mentor_first_name, rsend(o, :person, :first_name)],
       [:mentor_email, rsend(o, :person, :contact, :email)],
-      [:school_code, rsend(o, :practicum_site, :code)],
-      [:school_name, rsend(o, :practicum_site, :name_short)],
+      [:site_code, rsend(o, :practicum_site, :code)],
+      [:site_name, rsend(o, :practicum_site, :name_short)],
       [:content_area, rsend(o, :content_area)],
       [:supervisor_1_uid, rsend(o, :user_primary, :uid)],
       [:supervisor_1_last_name, rsend(o, :user_primary, :person, :last_name)],

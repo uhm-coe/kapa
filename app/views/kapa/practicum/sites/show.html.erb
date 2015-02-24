@@ -7,24 +7,24 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="<%='active' if params[:focus] == 'school_profile' || params[:focus].nil? %>"><a href="#school_profile_tab" data-toggle="tab">Profile</a></li>
-      <li class="<%='active' if params[:focus] == 'school_contact' %>"><a href="#school_contact_tab" data-toggle="tab">Contact</a></li>
+      <li class="<%='active' if params[:focus] == 'site_profile' || params[:focus].nil? %>"><a href="#site_profile_tab" data-toggle="tab">Profile</a></li>
+      <li class="<%='active' if params[:focus] == 'site_contact' %>"><a href="#site_contact_tab" data-toggle="tab">Contact</a></li>
       <li class="<%='active' if params[:focus] == 'mentors' %>"><a href="#mentors_tab" data-toggle="tab">Mentors</a></li>
       <li class="<%='active' if params[:focus] == 'placements' %>"><a href="#placements_tab" data-toggle="tab">Placements</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="school_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'school_profile' || params[:focus].nil? %>">
-        <%=bootstrap_form_for :prpracticum_site:url => kapa_pracpracticum_siteh(:id => @practipracticum_sitemote => true, :html => {:method => :put} do |f|%>
-          <%=render :partial => "/kapa/practicum/school_form", :locals => {:f => f}%>
+      <div id="site_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'site_profile' || params[:focus].nil? %>">
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(:id => @practipracticum_site), :html => {:method => :put} do |f|%>
+          <%=render :partial => "/kapa/practicum/site_form", :locals => {:f => f}%>
           <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
         <% end %>
       </div>
 
-      <div id="school_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'school_contact' %>">
-        <%=bootstrap_form_for :practicupracticum_site> kapa_practicum_practicum_site=> @practicum_school, :focus => :school_contact), :remote => true, :html => {:method => :put}  do |f|%>
-          <%=render :partial => "/kapa/practicum/school_contact_form" %>
+      <div id="site_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'site_contact' %>">
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_practicum_site_path(@practicum_site, :focus => :site_contact), :remote => true, :html => {:method => :put}  do |f|%>
+          <%=render :partial => "/kapa/practicum/site_contact_form" %>
           <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
         <% end %>
@@ -63,13 +63,13 @@
             </tr>
           </thead>
           <tbody>
-            <% for practicum_assignment in @practicum_assignments %>
+            <% for practicum_placement in @practicum_placements %>
               <tr>
-                <td><%=h practicum_assignment.practicum_placement.term_desc %></td>
-                <td><%=practicum_assignment.practicum_placement.practicum_profile.person.id_number %></td>
-                <td><%=abbr practicum_assignment.practicum_placement.practicum_profile.person.full_name%></td>
-                <td><%=h practicum_assignment.person.full_name %></td>
-                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_assignment.practicum_placement, :focus => :mentors) if practicum_assignment.practicum_placement.practicum_profile.coordinator?(@current_user) %></td>
+                <td><%=practicum_placement.term_desc %></td>
+                <td><%=practicum_placement.person.id_number %></td>
+                <td><%=abbr practicum_placement.person.full_name%></td>
+                <td><%=h practicum_placement.mentor.full_name %></td>
+                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement.practicum_placement, :focus => :mentors) if practicum_placement.practicum_placement.practicum_profile.coordinator?(@current_user) %></td>
               </tr>
             <% end %>
           </tbody>

@@ -7,13 +7,13 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#school_profile_tab" data-toggle="tab">Profile</a></li>
+      <li class="active"><a href="#site_profile_tab" data-toggle="tab">Profile</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="school_profile_tab" class="tab-pane active">
-        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_schools_path do |f| %>
-          <%=render :partial => "/kapa/practicum/school_form", :locals => {:f => f}%>
+      <div id="site_profile_tab" class="tab-pane active">
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_sites_path do |f| %>
+          <%=render :partial => "/kapa/practicum/site_form", :locals => {:f => f}%>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
