@@ -4,8 +4,8 @@ class PracticumSite < KapaBaseModel
   validates_presence_of :name, :code
   validates_uniqueness_of :code
 
-  def school_contact
-    self.deserialize(:school_contact, :as => OpenStruct)
+  def site_contact
+    self.deserialize(:site_contact, :as => OpenStruct)
   end
 
   def grades

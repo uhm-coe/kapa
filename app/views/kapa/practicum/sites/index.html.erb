@@ -17,8 +17,8 @@
     <% end %>
   <% end %>
 
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import School Data", :modal_form_id => "import_school_form"} do %>
-    <%=bootstrap_form_for(:data, :url => import_kapa_practicum_sites_path, :html => {:multipart => true, :id => "import_school_form"}) do |f|%>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import School Data", :modal_form_id => "import_site_form"} do %>
+    <%=bootstrap_form_for(:data, :url => import_kapa_practicum_sites_path, :html => {:multipart => true, :id => "import_site_form"}) do |f|%>
       <%=f.file_field :import_file %>
     <% end %>
   <% end %>
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <table id="school_list" class="table table-striped">
+  <table id="site_list" class="table table-striped">
     <thead>
       <tr>
         <th>Code</th>
@@ -60,7 +60,7 @@
           <td><%=abbr practicum_site.name, practicum_site.name_short %></td>
           <td><%=h practicum_site.district %></td>
           <td><%=h practicum_site.area %></td>
-          <td><%=h practicum_site.school_type %></td>
+          <td><%=h practicum_site.site_type %></td>
           <td><%=h practicum_site.grades %></td>
           <td><%=h practicum_site.practicum_assignments.length.to_i %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => practicum_site}, :class => "btn btn-default btn-xs" %></td>

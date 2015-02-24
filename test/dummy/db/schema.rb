@@ -437,7 +437,7 @@ ActiveRecord::Schema.define(:version => 20150220071531) do
     t.integer  "term_id"
     t.integer  "curriculum_id"
     t.integer  "practicum_site_id"
-    t.integer  "person_mentor_id"
+    t.integer  "mentor_person_id"
     t.integer  "fee"
     t.text     "note"
     t.string   "category"
@@ -452,8 +452,8 @@ ActiveRecord::Schema.define(:version => 20150220071531) do
   end
 
   add_index "practicum_placements", ["curriculum_id"], :name => "index_practicum_placements_on_curriculum_id"
+  add_index "practicum_placements", ["mentor_person_id"], :name => "index_practicum_placements_on_mentor_person_id"
   add_index "practicum_placements", ["person_id"], :name => "index_practicum_placements_on_person_id"
-  add_index "practicum_placements", ["person_mentor_id"], :name => "index_practicum_placements_on_person_mentor_id"
   add_index "practicum_placements", ["practicum_site_id"], :name => "index_practicum_placements_on_practicum_site_id"
   add_index "practicum_placements", ["term_id"], :name => "index_practicum_placements_on_term_id"
   add_index "practicum_placements", ["user_primary_id"], :name => "index_practicum_placements_on_user_primary_id"

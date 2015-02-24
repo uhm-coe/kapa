@@ -3,6 +3,9 @@ class PracticumPlacement < KapaBaseModel
   belongs_to :curriculum
   belongs_to :term
   belongs_to :practicum_site
+  belongs_to :mentor,
+             :class_name => "Person",
+             :foreign_key => "mentor_person_id"
   belongs_to :user_primary,
              :class_name => "User",
              :foreign_key => "user_primary_id"

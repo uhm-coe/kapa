@@ -119,11 +119,11 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
 
         3.times do |i|
           key = "a#{i + 1}"
-          unless row["#{key}_school_code"].blank?
+          unless row["#{key}_site_code"].blank?
             assignment = placement.practicum_assignments.build(:assignment_type => "mentor")
             assignment.content_area = row["#{key}_content_area"]
             assignment.payment = row["#{key}_payment"]
-            assignment.practicum_site = PracticumSite.find_by_code(row["#{key}_school_code"])
+            assignment.practicum_site = PracticumSite.find_by_code(row["#{key}_site_code"])
             assignment.person_id = row["#{key}_mentor_person_id"]
             assignment.user_primary = User.find_by_uid(row["#{key}_supervisor_1_uid"])
             assignment.user_secondary = User.find_by_uid(row["#{key}_supervisor_2_uid"])
@@ -218,8 +218,8 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
         ["#{key}_mentor_last_name", rsend(o, :practicum_assignments, [:at, i], :person, :last_name)],
         ["#{key}_mentor_first_name", rsend(o, :practicum_assignments, [:at, i], :person, :first_name)],
         ["#{key}_mentor_email", rsend(o, :practicum_assignments, [:at, i], :person, :contact, :email)],
-        ["#{key}_school_code", rsend(o, :practicum_assignments, [:at, i], :practicum_site, :code)],
-        ["#{key}_school_name", rsend(o, :practicum_assignments, [:at, i], :practicum_site, :name_short)],
+        ["#{key}_site_code", rsend(o, :practicum_assignments, [:at, i], :practicum_site, :code)],
+        ["#{key}_site_name", rsend(o, :practicum_assignments, [:at, i], :practicum_site, :name_short)],
         ["#{key}_content_area", rsend(o, :practicum_assignments, [:at, i], :content_area)],
         ["#{key}_payment", rsend(o, :practicum_assignments, [:at, i], :payment)],
         ["#{key}_supervisor_1_uid", rsend(o, :practicum_assignments, [:at, i], :user_primary, :uid)],

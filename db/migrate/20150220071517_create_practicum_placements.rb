@@ -5,7 +5,7 @@ class CreatePracticumPlacements < ActiveRecord::Migration
       t.integer  "term_id"
       t.integer  "curriculum_id"
       t.integer  "practicum_site_id"
-      t.integer  "person_mentor_id"
+      t.integer  "mentor_person_id"
       t.integer  "fee"
       t.text     "note"
       t.string   "category"
@@ -23,7 +23,7 @@ class CreatePracticumPlacements < ActiveRecord::Migration
     add_index "practicum_placements", ["term_id"]
     add_index "practicum_placements", ["curriculum_id"]
     add_index "practicum_placements", ["practicum_site_id"]
-    add_index "practicum_placements", ["person_mentor_id"]
+    add_index "practicum_placements", ["mentor_person_id"]
     add_index "practicum_placements", ["user_primary_id"]
     add_index "practicum_placements", ["user_secondary_id"]
   end
