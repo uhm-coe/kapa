@@ -4,7 +4,8 @@ class Kapa::Admin::UsersController < Kapa::Admin::BaseController
   def show
     @user = User.find params[:id]
     @role = @user.deserialize(:role, :as => OpenStruct)
-    @timestamps = @user.user_timestamps.find(:all, :include => {:user => :person}, :limit => 200, :order => "id desc")
+    params[:focus] = "activity" if params[:page].present?
+    @timestamps = @user.user_timestamps.includes(:user => :person).limit(200).order("id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
     @person = @user.person
     @person.details(self)
