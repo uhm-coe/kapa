@@ -14,6 +14,7 @@
       <%=f.text_field :name %>
       <%=f.property_select :district, :include_blank => "Any" %>
       <%=f.property_select :area_group, :include_blank => "Any", :label => "Area" %>
+      <%= f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
     <% end %>
   <% end %>
 

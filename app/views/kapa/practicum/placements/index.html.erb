@@ -10,8 +10,9 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_practicum_placements_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%=f.term_select :term_id, :name => :term_id %>
+      <%=f.term_select :term_id %>
       <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, "0#{c.id}"]}, {:include_blank => "Any", :label => {:text => "School"}} %>
+      <%= f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
     <% end %>
   <% end %>
 
