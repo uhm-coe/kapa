@@ -76,54 +76,18 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
   end
 
   def index
-    @filter = site_filter
-    @practicum_sites = PracticumSite.paginate(:page => params[:page], :per_page => 20, :include => :practicum_assignments, :conditions => @filter.conditions, :order => "name_short")
+    @filter = filter
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    @practicum_sites = PracticumSite.search(@filter).order("name_short").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def export
-    @filter = site_filter
-    @practicum_sites = PracticumSite.find(:all, :conditions => @filter.conditions, :order => "name_short")
-    csv_string = CSV.generate do |csv|
-      csv << table_format.keys
-      @practicum_sites.each {|c| csv << table_format(c).values}
-    end
-    send_data csv_string,
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data PracticumSite.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "sites.csv"
   end
 
-  private
-  def site_filter
-    f = filter
-    f.append_condition "name like ?", :name, :like => true
-#    f.append_condition "? between grade_from and grade_to", :grade
-    f.append_condition "district = ?", :district
-    f.append_condition "area_group = ?", :area_group
-    return f
-  end
-
-  def table_format(c = nil)
-    row = {
-      :site_code => rsend(c, :code),
-      :island => rsend(c, :island),
-      :district => rsend(c, :district),
-      :grade_from => rsend(c, :grade_from),
-      :grade_to => rsend(c, :grade_to),
-      :site_type => rsend(c, :site_type),
-      :name =>  rsend(c, :name),
-      :name_short => rsend(c, :name_short),
-      :area => rsend(c, :area),
-      :area_group => rsend(c, :area_group),
-      :principal_last_name => rsend(c, :site_contact, :principal_first_name),
-      :principal_first_name => rsend(c, :site_contact, :principal_last_name),
-      :street => rsend(c, :site_contact, :street),
-      :city => rsend(c, :site_contact, :city),
-      :state => rsend(c, :site_contact, :state),
-      :postal_code => rsend(c, :site_contact, :postal_code),
-      :phone => rsend(c, :site_contact, :phone),
-      :fax => rsend(c, :site_contact, :fax)
-    }
-    return row
-  end
 end

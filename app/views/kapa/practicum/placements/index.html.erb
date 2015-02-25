@@ -1,43 +1,54 @@
-<% content_for(:box1) do %>
-  <h4>Mentor/School Assignments</h4>
-  <%= form_tag :action => "list" do %>
-    <table>
-      <tr class="bottom">
-        <td>
-          <label>Semester:<br>
-          <%=term_select :filter, :term_id, :name => :term_id %></label>
-        </td>
-        <td>
-          <label>School:<br>
-            <%=select :filter, :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, "0#{c.id}"]}, {:include_blank => "Any", :label => {:text => "School"}} %></label>
-        </td>
-        <td>
-          <p class="center"><%=submit_tag "Show" %></p>
-        </td>
-      </tr>
-    </table>
-  <% end %>
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
+    });
+  </script>
 <% end %>
 
-<% content_for(:box2) do %>
-  <table id="student_list">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Mentor</th>
-      <th>School</th>
-    </tr>
-    <% for practicum_assignment in @practicum_assignments %>
-      <tr>
-        <td><%=practicum_assignment.practicum_placement.practicum_profile.person.id_number %></td>
-        <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(practicum_assignment.practicum_placement.practicum_profile.person.full_name), kapa_main_person_path(:id => practicum_assignment.practicum_placement.practicum_profile.person, :focus => :practicum)%></td>
-        <td><%=h practicum_assignment.person.full_name if practicum_assignment.person %></td>
-        <td><%=link_to practicum_assignment.practicum_site.name_short, kapa_practicum_sites_path(:action => :show, :id => practicum_assignment.practicum_site) if practicum_assignment.practicum_site %></td>
-        <td class="right"><%=link_to "Show", kapa_practicum_placements_path(:action => :show, :id => practicum_assignment.practicum_placement) %></td>
-      </tr>
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_practicum_placements_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.term_select :term_id, :name => :term_id %>
+      <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, "0#{c.id}"]}, {:include_blank => "Any", :label => {:text => "School"}} %>
     <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Mentor/School Assignments</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :practicum, :delegate => :export %>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+    </div>
+  </div>
+
+  <table id="student_list" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Mentor</th>
+        <th>School</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for practicum_placement in @practicum_placements %>
+        <tr>
+          <td><%=practicum_placement.person.id_number %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(practicum_placement.person.full_name), kapa_main_person_path(:id => practicum_placement.person, :focus => :practicum)%></td>
+          <td><%=h practicum_placement.mentor.full_name if practicum_placement.mentor %></td>
+          <td><%=link_to practicum_placement.practicum_site.name_short, kapa_practicum_sites_path(:action => :show, :id => practicum_placement.practicum_site) if practicum_placement.practicum_site %></td>
+          <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement), :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-  <br>
-  <div class="center"><%=will_paginate @practicum_assignments %></div>
-  <p class="right"><%=link_to "Download", :action => :export, :action => :export if @current_user.manage? :practicum, :delegate => :export %></p>
+  <div class="text-center"><%=will_paginate @practicum_placements, :renderer => BootstrapPagination::Rails %></div>
+
 <% end %>

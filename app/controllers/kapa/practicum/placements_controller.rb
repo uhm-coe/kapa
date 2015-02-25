@@ -57,19 +57,17 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
   end
 
   def index
-    @filter = assignment_filter
-    @practicum_sites = PracticumSite.find(:all, :include => :practicum_assignments, :conditions => "practicum_assignments.id is not null", :order => "name_short")
-    @practicum_assignments = PracticumAssignment.paginate(:page => params[:page], :per_page => 20, :include => [:person, :practicum_site, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")
+    @filter = filter
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    # TODO: Check @practicum_sites
+    @practicum_sites = PracticumSite.includes(:practicum_placement).where{practicum_placements.id != nil}.order("name_short")
+    @practicum_placements = PracticumPlacement.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def export
-    @filter = assignment_filter
-    @practicum_assignments = PracticumAssignment.find(:all, :include => [:practicum_site, {:practicum_placement => [:practicum_profile => :person]}], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name, practicum_assignments.name")
-    csv_string = CSV.generate do |csv|
-      csv << table_format.collect {|c| c[0]}
-      @practicum_assignments.each {|o| csv << table_format(o).collect {|c| c[1]}}
-    end
-    send_data csv_string,
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data PracticumPlacement.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "mentor_assignments_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
@@ -114,48 +112,4 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     render :json => mentor
   end
 
-  private
-  def table_format(o = nil)
-    row = [
-      [:id_number, rsend(o, :practicum_placement, :practicum_profile, :person, :id_number)],
-      [:last_name, rsend(o, :practicum_placement, :practicum_profile, :person, :last_name)],
-      [:first_name, rsend(o, :practicum_placement, :practicum_profile, :person, :first_name)],
-      [:email, rsend(o, :practicum_placement, :practicum_profile, :person, :email)],
-      [:category, rsend(o, :practicum_placement, :category)],
-      [:sequence, rsend(o, :practicum_placement, :sequence)],
-      [:mentor_type, rsend(o, :practicum_placement, :mentor_type)],
-      [:term, rsend(o, :term, :description)],
-      [:status, rsend(o, :practicum_placement, :status)],
-      [:total_mentors, rsend(o, :practicum_placement, [:practicum_assignments_select, :mentor], :length)]
-    ]
-
-    row += [
-      [:site_name, rsend(o, :practicum_site, :name_short)],
-      [:content_area, rsend(o, :content_area)],
-      [:mentor_person_id, rsend(o, :person_id)],
-      [:mentor_last_name, rsend(o, :person, :last_name)],
-      [:mentor_first_name, rsend(o, :person, :first_name)],
-      [:mentor_email, rsend(o, :person, :contact, :email)],
-      [:site_code, rsend(o, :practicum_site, :code)],
-      [:site_name, rsend(o, :practicum_site, :name_short)],
-      [:content_area, rsend(o, :content_area)],
-      [:supervisor_1_uid, rsend(o, :user_primary, :uid)],
-      [:supervisor_1_last_name, rsend(o, :user_primary, :person, :last_name)],
-      [:supervisor_1_first_name, rsend(o, :user_primary, :person, :first_name)],
-      [:supervisor_2_uid, rsend(o, :user_secondary, :uid)],
-      [:supervisor_2_last_name, rsend(o, :user_secondary, :person, :last_name)],
-      [:supervisor_2_first_name, rsend(o, :user_secondary, :person, :first_name)],
-      [:note, rsend(o, :note)]
-    ]
-    return row
-  end
-
-  def assignment_filter
-    f = filter
-    f.append_condition "practicum_assignments.assignment_type = 'mentor'"
-    f.append_condition "practicum_placements.term_id = ?", :term_id
-    f.append_condition "practicum_assignments.practicum_site_id = ?", :practicum_site_id
-    f.append_condition "#{@current_user.id} in (practicum_placements.user_primary_id, practicum_placements.user_secondary_id)" unless @current_user.manage?
-    return f
-  end
 end

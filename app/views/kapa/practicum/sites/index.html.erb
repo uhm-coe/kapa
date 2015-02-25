@@ -60,10 +60,10 @@
           <td><%=abbr practicum_site.name, practicum_site.name_short %></td>
           <td><%=h practicum_site.district %></td>
           <td><%=h practicum_site.area %></td>
-          <td><%=h practicum_site.site_type %></td>
+          <td><%=h practicum_site.category %></td>
           <td><%=h practicum_site.grades %></td>
-          <td><%=h practicum_site.practicum_assignments.length.to_i %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => practicum_site}, :class => "btn btn-default btn-xs" %></td>
+          <td><%#=h practicum_site.practicum_placements.length.to_i # TODO %></td>
+          <td class="right"><%=link_to "Show", kapa_practicum_site_path(:id => practicum_site), :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
