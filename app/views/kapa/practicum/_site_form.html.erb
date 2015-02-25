@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-sm-6">
-    <%=f.text_field :name, :text => "Name" %>
-    <%=f.text_field :name_short, :text => "Short Name" %>
-    <%=f.text_field :code  %>
-    <%=f.property_select :island, :name => :location %>
-    <%=f.property_select :district  %>
+    <%=f.text_field :name %>
+    <%=f.text_field :name_short, :label => "Short Name" %>
+    <%=f.text_field :code %>
+    <%=f.history_select :category %>
+    <%=f.property_select :district %>
   </div>
   <div class="col-sm-6">
-    <%=f.property_select :area  %>
-    <%=f.property_select :area_group  %>
-    <%=f.property_select :grade_from, :name => :grade  %>
-    <%=f.property_select :grade_to, :name => :grade  %>
+    <%=f.property_select :area %>
+    <%=f.property_select :area_group %>
+    <%=f.property_select :level_from, :name => :grade %>
+    <%=f.property_select :level_to, :name => :grade %>
   </div>
 </div>

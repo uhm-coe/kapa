@@ -5,8 +5,8 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     @person = @practicum_placement.person
     @person.details(self)
     @curriculums = @person.curriculums
-    @practicum_sites = PracticumSite.find(:all, :select => "id, name_short")
-    @mentors = Person.find(:all, :include => :contact, :conditions => "id in (SELECT distinct person_id FROM practicum_placements)", :order => "persons.last_name, persons.first_name")
+    @practicum_sites = PracticumSite.select("id, name_short")
+    @mentors = Person.includes(:contact).where("id in (SELECT distinct person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
   end
 
   def new
@@ -31,17 +31,16 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
   end
 
   def update
-    @practicum_assignment = PracticumAssignment.find(params[:id])
-    @practicum_placement = @practicum_assignment.practicum_placement
-    @practicum_assignment.attributes = params[:practicum_assignment][params[:id]]
+    @practicum_placement = PracticumPlacement.find(params[:id])
+    @practicum_placement.attributes = params[:practicum_placement]
 
-    if @practicum_assignment.save
-      flash[:success] = "Assignment record was successfully updated."
+    if @practicum_placement.save
+      flash[:success] = "Placement record was successfully updated."
     else
       @person = @practicum_placement.person
-      flash[:danger] = "Failed to update assignment record."
+      flash[:danger] = "Failed to update placement record."
     end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement)
   end
 
   def destroy

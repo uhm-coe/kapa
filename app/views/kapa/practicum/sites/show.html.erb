@@ -15,7 +15,7 @@
 
     <div class="tab-content">
       <div id="site_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'site_profile' || params[:focus].nil? %>">
-        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(:id => @practipracticum_site), :html => {:method => :put} do |f|%>
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(:id => @practicum_site), :html => {:method => :put} do |f|%>
           <%=render :partial => "/kapa/practicum/site_form", :locals => {:f => f}%>
           <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
@@ -23,7 +23,7 @@
       </div>
 
       <div id="site_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'site_contact' %>">
-        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_practicum_site_path(@practicum_site, :focus => :site_contact), :remote => true, :html => {:method => :put}  do |f|%>
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :focus => :site_contact), :remote => true, :html => {:method => :put}  do |f|%>
           <%=render :partial => "/kapa/practicum/site_contact_form" %>
           <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
@@ -35,7 +35,7 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>E-Mail</th>
+              <th>Email</th>
               <th>Placements</th>
             </tr>
           </thead>
@@ -43,8 +43,8 @@
             <% for mentor in @mentors %>
               <tr>
                 <td><%=h mentor.full_name %></td>
-                <td><%=mail_to mentor.contact.email if mentor.contact%></td>
-                <td><%=h mentor.practicum_assignments.length.to_i %></td>
+                <td><%=mail_to mentor.contact.email if mentor.contact %></td>
+                <td><%#=h mentor.practicum_assignments.length.to_i # TODO %></td>
               </tr>
             <% end %>
           </tbody>
@@ -68,8 +68,8 @@
                 <td><%=practicum_placement.term_desc %></td>
                 <td><%=practicum_placement.person.id_number %></td>
                 <td><%=abbr practicum_placement.person.full_name%></td>
-                <td><%=h practicum_placement.mentor.full_name %></td>
-                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement.practicum_placement, :focus => :mentors) if practicum_placement.practicum_placement.practicum_profile.coordinator?(@current_user) %></td>
+                <td><%=h practicum_placement.mentor.full_name if practicum_placement.mentor.present? %></td>
+                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </tbody>

@@ -1,20 +1,99 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if @modal %>$('#change_mentor_dialog').modal({show : true});<% end %>
+
+      // TODO
+      // var prefix;
+      // $('div#mentor_dialog').dialog(
+      //  {autoOpen: false,
+      //   width: 'auto',
+      //   height: 'auto',
+      //   buttons: {
+      //     'Cancel': function() {
+      //       $(this).dialog('close');
+      //      },
+      //     'Save' : function() {
+      //       $.getJSON('<%#=kapa_practicum_assignments_path(:action => :update_mentor)%>',
+      //                 $('#mentor_form').serialize(),
+      //                 function(data) {
+      //                   $(prefix + 'name').val(data['full_name']);
+      //                   $(prefix + 'person_id').val(data['person_id']);
+
+      //                   if(prefix  == '#practicum_assignment_') {
+      //                     $(prefix + 'practicum_site_id').val(data['practicum_site_id']);
+      //                     $(prefix + 'practicum_site_id').multiselect('refresh');
+      //                     $(prefix + 'user_primary_id').val(data['user_primary_id']);
+      //                     $(prefix + 'user_primary_id').multiselect('refresh');
+      //                     $(prefix + 'user_secondary_id').val(data['user_secondary_id']);
+      //                     $(prefix + 'user_secondary_id').multiselect('refresh');
+      //                     $(prefix + 'content_area').val(data['content_area']);
+      //                   }
+      //                   $('#mentor_dialog').dialog('close');
+      //                 });
+      //     }
+      //   }
+      // });
+
+      // $('a.edit-mentor').click(function() {
+      //   prefix = '#' + $(this).siblings('input').attr('id').replace('name', '');
+      //   $('#mentor_person_id').val($(prefix + 'person_id').val());
+      //   $('#mentor_person_id').multiselect('refresh');
+      //   $('#mentor_person_id').change();
+      //   $('#mentor_dialog').dialog('open');
+      // });
+
+      // $('#mentor_person_id').change(function() {
+      //   if($(this).val() != '') {
+      //     $.getJSON('<%=kapa_practicum_assignments_path(:action => :get_mentor)%>',
+      //             { person_id: $(this).val()},
+      //             function(data) {
+      //               $('#id').val($(this).attr('practicum_assignment_id'));
+      //               $('#mentor_last_name').val(data['last_name']);
+      //               $('#mentor_first_name').val(data['first_name']);
+      //               $('#mentor_email').val(data['email']);
+      //             }
+      //      );
+      //   }
+      //   else {
+      //     $('#mentor_last_name').val('');
+      //     $('#mentor_first_name').val('');
+      //     $('#mentor_email').val('');
+      //   }
+      // });
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_mentor_dialog", :modal_title => "Select/Create Mentor", :modal_form_id => "change_mentor_form"} do %>
+    <%=bootstrap_form_for(:mentor, :url => kapa_practicum_placement_path(:id => @practicum_placement, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "change_mentor_form"}) do |m| %>
+      <%=m.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"} %>
+      <%=m.text_field :last_name %>
+      <%=m.text_field :first_name %>
+      <%=m.text_field :email %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <%=bootstrap_fields_for :practicum_placement do |f| %>
-  <table>
-    <tr>
-      <td>
-        <%=f.text_field :term_id, :label => "Term" %>
-        <%=f.text_field :curriculum_id, :label => "Program" %>
-        <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, {:include_blank => true}, :class => "single-select", :label => "Placement Site" if @practicum_placement.person %>
-        <div>
-          <%=label :practicum_placement, :name, "Mentor Teacher" %><br>
-          <%=text_field :practicum_placement, :name, :readonly => true, :value => @practicum_placement.person ? @practicum_placement.person.full_name : "" %>
-          <%=link_to_function(image_tag("/images/icons/edit.png"), nil, :class => "edit-mentor")%>
-        </div>
-        <%=f.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Primary"} %>
-        <%=f.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Secondary"} %>
-        <%=f.text_area :note %>
-      </td>
-    </tr>
-  </table>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.term_select :term_id %>
+      <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
+      <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, {:include_blank => true}, :label => "Placement Site" if @practicum_placement.person %>
+      <div class="form-group"><%=label :practicum_placement, :name, "Mentor Teacher" %>
+        <p class="form-control-static">
+          <span><%=@practicum_placement.person ? @practicum_placement.person.full_name : ""%></span>
+          <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_mentor_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
+        </p>
+      </div>
+      <%=f.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Primary"} %>
+      <%=f.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Secondary"} %>
+    </div>
+    <div class="col-sm-6">
+      <%=f.text_area :note %>
+    </div>
+  </div>
   <%=f.hidden_field :person_id %>
 <% end %>

@@ -1,5 +1,5 @@
 class PracticumSite < KapaBaseModel
-  has_many :practicum_placement
+  has_many :practicum_placement # shouldn't this have an 's'
 
   validates_presence_of :name, :code
   validates_uniqueness_of :code

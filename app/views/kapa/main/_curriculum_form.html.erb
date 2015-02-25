@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group"><%=label :program, :description, "Program" %>
-        <p class="form-control-static"></span><%=@program.description%>
+        <p class="form-control-static"><span><%=@program.description %></span>
           <% if @current_user.manage? %>
             <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_program_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
           <% end %>

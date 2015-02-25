@@ -3,10 +3,8 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
   def show
     @practicum_site = PracticumSite.find(params[:id])
     @site_contact = @practicum_site.site_contact
-    #["id in (SELECT distinct person_id FROM practicum_assignments WHERE practicum_site_id = ?)", params[:id]]
-    @mentors = Person.find(:all, :include => [:contact, :practicum_assignments], :conditions => ["practicum_assignments.id is not null and practicum_assignments.practicum_site_id = ?", params[:id]], :order => "persons.last_name, persons.first_name")
-    # TODO: Need to change academic_period to term_id
-    @practicum_assignments = @practicum_site.practicum_assignments.find(:all, :include => :practicum_placement, :order => "practicum_placements.academic_period DESC")
+    @mentors = Person.includes(:contact).where("id in (SELECT distinct person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @practicum_placements = @practicum_site.practicum_placement.includes(:term).order("terms.sequence DESC")
   end
 
   def new
@@ -29,7 +27,7 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
     @practicum_site.serialize(:site_contact, params[:site_contact]) if not params[:site_contact].blank?
 
     if @practicum_site.save
-      flash[:success] = "School info was successfully updated."
+      flash[:success] = "Site info was successfully updated."
     else
       flash[:danger] = "Failed to update site profile."
     end

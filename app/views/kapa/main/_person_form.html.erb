@@ -14,7 +14,7 @@
     </div>
 
     <div class="col-sm-6">
-      <%= f.text_field :email, :size => 30, :readonly => @person.verified?, :label => "Campus E-Mail" %>
+      <%= f.text_field :email, :size => 30, :readonly => @person.verified?, :label => "Campus Email" %>
       <%= f.text_field :first_name, :size => 30 %>
       <%= f.text_field :other_name %>
       <%= f.select :title, [["Mr.", "MR"], ["Ms.", "MS"], ["Dr.", "DR"]], :include_blank => true %>
