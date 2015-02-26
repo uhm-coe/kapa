@@ -16,18 +16,17 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     @curriculums = @person.curriculums
   end
 
-
   def create
-    @practicum_placement = PracticumPlacement.find(params[:id])
-    @practicum_assignment = @practicum_placement.practicum_assignments.build(params[:practicum_assignment])
+    @practicum_placement = PracticumPlacement.new params[:practicum_placement]
+    @practicum_placement.person_id = params[:id]
 
-    if @practicum_assignment.save
-      flash[:success] = "Assignment record was successfully created."
+    if @practicum_placement.save
+      flash[:success] = "Placement record was successfully created."
     else
       @person = @practicum_placement.person
-      flash[:danger] = "Failed to create new assignment record."
+      flash[:danger] = "Failed to create new placement record."
     end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
+    redirect_to kapa_practicum_placement_path(:id => @practicum_placement)
   end
 
   def update

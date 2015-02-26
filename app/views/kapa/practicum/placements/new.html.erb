@@ -1,30 +1,30 @@
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/main/person_detail" %>
 
-  <h4>New Placement</h4>
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_main_person_path(:id => @person, :focus => :practicum), :class => "glyphicon glyphicon-chevron-left" %>
+    New Placement
+  </h4>
+
   <div class="tabs">
-    <ul>
-      <li><a href="#practicum_profile_tab">Profile</a></li>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#practicum_placement_tab" data-toggle="tab">Placement</a></li>
     </ul>
 
-    <div id="practicum_profile_tab">
-      <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placements_path(:id => @person) do |f| %>
-        <table>
-          <tr>
-            <td>
-              <%=f.term_select :term_id, :label => "Term" %>
-            </td>
-            <td>
-              <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code}", c.id]}, :include_blank => "N/A", :label => {:text => "Program"} %>
-            </td>
-          </tr>
-        </table>
-        <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-      <% end %>
+    <div class="tab-content">
+      <div id="practicum_placement_tab" class="tab-pane active">
+        <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placements_path(:id => @person) do |f| %>
+          <div class="row">
+            <div class="col-sm-6">
+              <%=f.term_select :term_id %>
+            </div>
+            <div class="col-sm-6">
+              <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code}", c.id]}, :include_blank => "N/A", :label => "Program" %>
+            </div>
+          </div>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
     </div>
   </div>
-
-  <%=link_to "Back", kapa_main_persons_path(:action => :show, :id => @person, :focus => :practicum) %>
-
 <% end %>
-
