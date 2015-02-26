@@ -1,5 +1,5 @@
 class PracticumSite < KapaBaseModel
-  has_many :practicum_placement # shouldn't this have an 's'
+  has_many :practicum_placements
 
   validates_presence_of :name, :code
   validates_uniqueness_of :code
@@ -17,7 +17,7 @@ class PracticumSite < KapaBaseModel
   end
 
   def self.search(filter, options = {})
-    sites = PracticumSite.includes([:practicum_placement])
+    sites = PracticumSite.includes([:practicum_placements])
     sites = sites.where{self.name =~ "%#{filter.name}%"} if filter.name.present?
     # f.append_condition "? between level_from and level_to", :grade # TODO: Is this still needed?
     sites = sites.where("district" => filter.district) if filter.district.present?

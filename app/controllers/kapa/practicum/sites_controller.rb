@@ -4,7 +4,7 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
     @practicum_site = PracticumSite.find(params[:id])
     @site_contact = @practicum_site.site_contact
     @mentors = Person.includes(:contact).where("id in (SELECT distinct person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
-    @practicum_placements = @practicum_site.practicum_placement.includes(:term).order("terms.sequence DESC")
+    @practicum_placements = @practicum_site.practicum_placements.includes(:term).order("terms.sequence DESC")
   end
 
   def new
@@ -17,7 +17,7 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
       flash[:danger] = @practicum_site.errors.full_messages.join(", ")
       redirect_to new_kapa_practicum_site_path and return false
     end
-    flash[:success] = "School was sccessfully created."
+    flash[:success] = "Site was sccessfully created."
     redirect_to kapa_practicum_site_path(:id => @practicum_site)
   end
 

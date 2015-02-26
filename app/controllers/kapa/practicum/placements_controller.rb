@@ -58,8 +58,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
   def index
     @filter = filter
     @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
-    # TODO: Check @practicum_sites
-    @practicum_sites = PracticumSite.includes(:practicum_placement).where{practicum_placements.id != nil}.order("name_short")
+    @practicum_sites = PracticumSite.includes(:practicum_placements).where{practicum_placements.id != nil}.order("name_short")
     @practicum_placements = PracticumPlacement.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
