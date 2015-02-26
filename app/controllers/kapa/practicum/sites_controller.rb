@@ -34,6 +34,17 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
     redirect_to kapa_practicum_site_path(:id => @practicum_site, :focus => params[:focus])
   end
 
+  def destroy
+    @practicum_site = PracticumSite.find(params[:id])
+
+    if @practicum_site.destroy
+      flash[:success] = "Site was successfully deleted."
+    else
+      flash[:danger] = "Failed to delete site."
+    end
+    redirect_to kapa_practicum_sites_path
+  end
+
   def import
     import_file = params[:filter][:import_file]
     #Do error checking of the file

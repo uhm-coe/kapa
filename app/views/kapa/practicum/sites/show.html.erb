@@ -16,16 +16,14 @@
     <div class="tab-content">
       <div id="site_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'site_profile' || params[:focus].nil? %>">
         <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(:id => @practicum_site), :html => {:method => :put} do |f|%>
-          <%=render :partial => "/kapa/practicum/site_form", :locals => {:f => f}%>
-          <br/>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
+          <%=render :partial => "/kapa/practicum/site_form", :locals => {:f => f} %>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_practicum_site_path(:id => @practicum_site)} if @current_user.manage?(:practicum, :delegate => :maintain) %>
         <% end %>
       </div>
 
       <div id="site_contact_tab" class="tab-pane<%=' active' if params[:focus] == 'site_contact' %>">
         <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :focus => :site_contact), :remote => true, :html => {:method => :put}  do |f|%>
           <%=render :partial => "/kapa/practicum/site_contact_form" %>
-          <br/>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage?(:practicum, :delegate => :maintain) %>
         <% end %>
       </div>

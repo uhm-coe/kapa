@@ -43,15 +43,14 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
   end
 
   def destroy
-    @practicum_assignment = PracticumAssignment.find(params[:id])
-    @practicum_placement = @practicum_assignment.practicum_placement
+    @practicum_placement = PracticumPlacement.find(params[:id])
 
-    if @practicum_assignment.destroy
-      flash[:success] = "Assignment record was successfully deleted."
+    if @practicum_placement.destroy
+      flash[:success] = "Placement record was successfully deleted."
     else
-      flash[:danger] = error_message_for(@practicum_assignment)
+      flash[:danger] = "Failed to delete placement record."
     end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :focus => params[:focus])
+    redirect_to kapa_main_person_path(:id => @practicum_placement.person)
   end
 
   def index

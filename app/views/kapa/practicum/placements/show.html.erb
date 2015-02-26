@@ -14,8 +14,8 @@
     <div class="tab-content">
       <div id="practicum_placement_tab" class="tab-pane active">
         <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placement_path(:id => @practicum_placement), :html => {:method => :put}  do |f| %>
-          <%=render :partial => "/kapa/practicum/placement_form" %><br/>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+          <%=render :partial => "/kapa/practicum/placement_form" %>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_practicum_placement_path(:id => @practicum_placement)} if @current_user.write? %>
         <% end %>
       </div>
     </div>
