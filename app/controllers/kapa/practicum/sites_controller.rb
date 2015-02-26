@@ -46,29 +46,28 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
   end
 
   def import
-    import_file = params[:filter][:import_file]
-    #Do error checking of the file
-    unless import_file
-      flash[:warning] = "Please specify the file you are importing!"
-      redirect_to(kapa_error_path) and return false
+    # Do error checking of the file
+    unless params[:data].present? && params[:data][:import_file].present?
+      flash[:warning] = "Please specify the file you are importing."
+      redirect_to(:action => :index) and return false
     end
+    import_file = params[:data][:import_file]
 
-    CSV.new(import_file, :headers => true).each do |row|
-      if row["site_code"].blank?
-        flash[:danger] = "No site code defined!"
-        redirect_to(kapa_error_path) and return false
+    CSV.new(import_file.tempfile, :headers => true).each do |row|
+      if row["code"].blank?
+        flash[:danger] = "No site code defined."
+        redirect_to(:action => :index) and return false
       end
-      site = PracticumSite.find_or_create_by_code(row["site_code"])
-      site.island = row["island"]
+      site = PracticumSite.find_or_create_by_code(row["code"])
       site.district = row["district"]
-      site.grade_from = row["grade_from"]
-      site.grade_to = row["grade_to"]
-      site.site_type = row["site_type"]
+      site.level_from = row["level_from"]
+      site.level_to = row["level_to"]
+      site.category = row["category"]
       site.name = row["name"]
       site.name_short = row["name_short"]
       site.area = row["area"]
-      site.area_group = row["area"]
-      site.url_home = row["url_home"]
+      site.area_group = row["area_group"]
+      site.url = row["url"]
       site_contact = {}
       site_contact[:street] = row["street"]
       site_contact[:city] = row["city"]
