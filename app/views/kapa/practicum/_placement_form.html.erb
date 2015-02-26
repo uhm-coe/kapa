@@ -3,71 +3,53 @@
     jQuery(document).ready(function($) {
       <% if @modal %>$('#change_mentor_dialog').modal({show : true});<% end %>
 
-      // TODO
-      // var prefix;
-      // $('div#mentor_dialog').dialog(
-      //  {autoOpen: false,
-      //   width: 'auto',
-      //   height: 'auto',
-      //   buttons: {
-      //     'Cancel': function() {
-      //       $(this).dialog('close');
-      //      },
-      //     'Save' : function() {
-      //       $.getJSON('<%#=kapa_practicum_assignments_path(:action => :update_mentor)%>',
-      //                 $('#mentor_form').serialize(),
-      //                 function(data) {
-      //                   $(prefix + 'name').val(data['full_name']);
-      //                   $(prefix + 'person_id').val(data['person_id']);
+      // When selecting a person from the change mentor dialog,
+      //   automatically set the values in last name, first name, and email fields
+      $('#mentor_person_id').change(function() {
+        if($(this).val() !== '') {
+          $.getJSON('<%=kapa_practicum_placements_get_mentor_path %>', {
+              person_id: $(this).val()
+            },
+            function(data) {
+              $('#mentor_last_name').val(data['last_name']);
+              $('#mentor_first_name').val(data['first_name']);
+              $('#mentor_email').val(data['email']);
+            });
+        }
+        else {
+          $('#mentor_last_name').val('');
+          $('#mentor_first_name').val('');
+          $('#mentor_email').val('');
+        }
+      });
 
-      //                   if(prefix  == '#practicum_assignment_') {
-      //                     $(prefix + 'practicum_site_id').val(data['practicum_site_id']);
-      //                     $(prefix + 'practicum_site_id').multiselect('refresh');
-      //                     $(prefix + 'user_primary_id').val(data['user_primary_id']);
-      //                     $(prefix + 'user_primary_id').multiselect('refresh');
-      //                     $(prefix + 'user_secondary_id').val(data['user_secondary_id']);
-      //                     $(prefix + 'user_secondary_id').multiselect('refresh');
-      //                     $(prefix + 'content_area').val(data['content_area']);
-      //                   }
-      //                   $('#mentor_dialog').dialog('close');
-      //                 });
-      //     }
-      //   }
-      // });
+      // Turn off the default call (located in kapa.js) to submit on the modal submit button
+      $('button[data-submit]#modal_submit').off('click');
 
-      // $('a.edit-mentor').click(function() {
-      //   prefix = '#' + $(this).siblings('input').attr('id').replace('name', '');
-      //   $('#mentor_person_id').val($(prefix + 'person_id').val());
-      //   $('#mentor_person_id').multiselect('refresh');
-      //   $('#mentor_person_id').change();
-      //   $('#mentor_dialog').dialog('open');
-      // });
+      // Add a new click event handler on the modal submit button
+      // Instead of performing an update, send a GET request
+      $('button[data-submit]#modal_submit').click(function(e) {
+        e.preventDefault();
+        // If user selects "New Mentor" and either last name or first name fields are blank upon submission
+        if ($('#mentor_person_id').val() === '' && ($('#mentor_last_name').val() === '' || $('#mentor_first_name').val() === '')) {
+          return alert('Please select an existing mentor or fill out the fields if a new mentor.');
+        }
+        $.getJSON('<%=kapa_practicum_placements_update_mentor_path %>',
+          $('#change_mentor_form').serialize(),
+          function(data) {
+            $('#practicum_placement_mentor_person_name').text(data['full_name']);
+            $('#practicum_placement_mentor_person_id').val(data['person_id']);
+            $('#change_mentor_dialog').modal('hide');
+          });
+      });
 
-      // $('#mentor_person_id').change(function() {
-      //   if($(this).val() != '') {
-      //     $.getJSON('<%=kapa_practicum_assignments_path(:action => :get_mentor)%>',
-      //             { person_id: $(this).val()},
-      //             function(data) {
-      //               $('#id').val($(this).attr('practicum_assignment_id'));
-      //               $('#mentor_last_name').val(data['last_name']);
-      //               $('#mentor_first_name').val(data['first_name']);
-      //               $('#mentor_email').val(data['email']);
-      //             }
-      //      );
-      //   }
-      //   else {
-      //     $('#mentor_last_name').val('');
-      //     $('#mentor_first_name').val('');
-      //     $('#mentor_email').val('');
-      //   }
-      // });
     });
   </script>
 <% end %>
 
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_mentor_dialog", :modal_title => "Select/Create Mentor", :modal_form_id => "change_mentor_form"} do %>
-    <%=bootstrap_form_for(:mentor, :url => kapa_practicum_placement_path(:id => @practicum_placement, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "change_mentor_form"}) do |m| %>
+    <%=bootstrap_form_for(:mentor, :url => nil, :html => {:method => :get, :id => "change_mentor_form"}) do |m| %>
       <%=m.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"} %>
       <%=m.text_field :last_name %>
       <%=m.text_field :first_name %>
@@ -82,9 +64,9 @@
       <%=f.term_select :term_id %>
       <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
       <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, {:include_blank => true}, :label => "Placement Site" if @practicum_placement.person %>
-      <div class="form-group"><%=label :practicum_placement, :name, "Mentor Teacher" %>
+      <div class="form-group"><%=label :practicum_placement, :mentor_person_name, "Mentor Teacher" %>
         <p class="form-control-static">
-          <span><%=@practicum_placement.person ? @practicum_placement.person.full_name : ""%></span>
+          <span id="practicum_placement_mentor_person_name"><%=@practicum_placement.mentor ? @practicum_placement.mentor.full_name : ""%></span>
           <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_mentor_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
         </p>
       </div>
@@ -96,4 +78,5 @@
     </div>
   </div>
   <%=f.hidden_field :person_id %>
+  <%=f.hidden_field :mentor_person_id %>
 <% end %>

@@ -6,7 +6,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     @person.details(self)
     @curriculums = @person.curriculums
     @practicum_sites = PracticumSite.select("id, name_short")
-    @mentors = Person.includes(:contact).where("id in (SELECT distinct person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @mentors = Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
   end
 
   def new
@@ -66,7 +66,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     send_data PracticumPlacement.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "mentor_assignments_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
+      :filename     => "placements_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
   end
 
   def get_mentor
@@ -94,17 +94,9 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
     contact = person.contact ||= person.build_contact
     contact.email = params[:mentor][:email].downcase
     contact.save
-    last_assignment = PracticumAssignment.first(:conditions => ["person_id = ?", person.id], :order => "id desc")
-
     mentor = {}
     mentor[:person_id] = person.id
     mentor[:full_name] = person.full_name
-    if last_assignment
-      mentor[:practicum_site_id] = last_assignment.practicum_site_id
-      mentor[:content_area] = last_assignment.content_area
-#      mentor[:user_primary_id] = last_assignment.user_primary_id
-#      mentor[:user_secondary_id] = last_assignment.user_secondary_id
-    end
     render :json => mentor
   end
 

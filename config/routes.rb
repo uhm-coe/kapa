@@ -43,6 +43,8 @@ Rails.application.routes.draw do
     end
 
     namespace :practicum do
+      get 'placements/get_mentor(/:id)' => 'placements#get_mentor', :as => :placements_get_mentor
+      get 'placements/update_mentor(/:id)' => 'placements#update_mentor', :as => :placements_update_mentor
       resources :placements, &extra_actions
       resources :sites, &extra_actions
       resources :assignments, &extra_actions
