@@ -2,14 +2,14 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
 
   def show
     @practicum_placement = PracticumPlacement.find(params[:id])
-    @practicum_assignments = @practicum_placement.practicum_assignments.find(:all, :conditions => "assignment_type = 'mentor'", :order => "practicum_assignments.id")
+    @practicum_assignments = @practicum_placement.practicum_assignments.where("assignment_type" => 'mentor').order("practicum_assignments.id")
     @practicum_profile = @practicum_placement.practicum_profile
     @practicum_profile_ext = @practicum_profile.ext
     @person = @practicum_profile.person
     @person.details(self)
     @curriculums = @person.curriculums
-    @practicum_sites = PracticumSite.find(:all, :select => "id, name_short")
-    @mentors = Person.find(:all, :include => :contact, :conditions => "id in (SELECT distinct person_id FROM practicum_assignments)", :order => "persons.last_name, persons.first_name")
+    @practicum_sites = PracticumSite.select("id, name_short")
+    @mentors = Person.includes(:contact).where("id in (SELECT distinct person_id FROM practicum_assignments)").order("persons.last_name, persons.first_name")
   end
 
   def new
@@ -147,7 +147,7 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
 
   def export
     @filter = placement_filter
-    @practicum_placements = PracticumPlacement.find(:all, :include => [{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, {:user_primary => :person}, {:user_secondary => :person}, [:practicum_assignments => [:practicum_site, {:person => :contact}, {:user_primary => :person}, {:user_secondary => :person}]]], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name")
+    @practicum_placements = PracticumPlacement.includes([{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, {:user_primary => :person}, {:user_secondary => :person}, [:practicum_assignments => [:practicum_site, {:person => :contact}, {:user_primary => :person}, {:user_secondary => :person}]]]).where(@filter.conditions).order("persons.last_name, persons.first_name")
     csv_string = CSV.generate do |csv|
       csv << table_format.collect {|c| c[0]}
       @practicum_placements.each {|o| csv << table_format(o).collect {|c| c[1]}}

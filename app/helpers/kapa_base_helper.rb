@@ -102,10 +102,7 @@ module KapaBaseHelper
     model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
     model_method = options[:model_method] ? options[:model_method] : method
     conditions = "#{model_method} is not NULL and #{model_method} <> ''"
-    selections = model_name.to_s.classify.constantize.find(:all,
-                                                           :select => "distinct #{model_method}",
-                                                           :conditions => conditions,
-                                                           :order => '1').collect {|l| l[model_method]}
+    selections = model_name.to_s.classify.constantize.select("distinct #{model_method}").where(conditions).order('1').collect {|l| l[model_method]}
     select(object_name, method, selections, options, html_options)
   end
 

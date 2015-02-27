@@ -9,11 +9,11 @@ class ApplicationProperty < KapaBaseModel
 
   def self.refresh_cache
     @@description_cache.clear
-    ApplicationProperty.find(:all).each {|v| @@description_cache["#{v.name}_#{v.code}"] = v.description}
+    ApplicationProperty.scoped.each {|v| @@description_cache["#{v.name}_#{v.code}"] = v.description}
     @@description_detail_cache.clear
-    ApplicationProperty.find(:all).each {|v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short}
+    ApplicationProperty.scoped.each {|v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short}
     @@category_cache.clear
-    ApplicationProperty.find(:all).each {|v| @@category_cache["#{v.name}_#{v.code}"] = v.category}
+    ApplicationProperty.scoped.each {|v| @@category_cache["#{v.name}_#{v.code}"] = v.category}
   end
 
   def self.selections(options = {})
