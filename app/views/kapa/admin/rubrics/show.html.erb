@@ -4,6 +4,11 @@
       $(".hidden-text-area a").click(function() {
         $(this).next().toggle();
       });
+
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'rubric_profile';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
     });
   </script>
 <% end %>
@@ -17,19 +22,19 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="<%='active' if params[:focus] == 'rubric_profile' || params[:focus].nil? %>"><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
-      <li class="<%='active' if params[:focus] == 'criterions' %>"><a href="#criterions_tab" data-toggle="tab">Criteria</a></li>
+      <li><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#criterions_tab" data-toggle="tab">Criteria</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="rubric_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'rubric_profile' || params[:focus].nil? %>">
+      <div id="rubric_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :assessment_rubric, :url => kapa_admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/rubric_form", :locals => {:f => f} %>
           <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_rubric_path(:id => @assessment_rubric)} if @current_user.manage? :admin, :delegate => :rubric %>
         <% end %>
       </div>
 
-      <div id="criterions_tab" class="tab-pane<%=' active' if params[:focus] == 'criterions' %>">
+      <div id="criterions_tab" class="tab-pane">
         <div id="accordion" class="panel-group">
           <% @assessment_criterions.each_with_index do |assessment_criterion, index| %>
             <% @assessment_criterion = assessment_criterion %>

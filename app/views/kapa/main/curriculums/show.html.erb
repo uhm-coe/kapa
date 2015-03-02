@@ -1,3 +1,14 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'curriculum';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/main/person_detail" %>
 
@@ -8,19 +19,19 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="<%='active' if params[:focus] == 'curriculum' || params[:focus].nil? %>"><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
-      <li class="<%='active' if params[:focus] == 'transition_points' %>"><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
+      <li><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
+      <li><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="curriculum_tab" class="tab-pane<%=' active' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
+      <div id="curriculum_tab" class="tab-pane">
         <%=bootstrap_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
           <%=render :partial => "/kapa/main/curriculum_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write?(:main) %>
         <% end %>
       </div>
 
-      <div id="transition_points_tab" class="tab-pane<%=' active' if params[:focus] == 'transition_points' %>">
+      <div id="transition_points_tab" class="tab-pane">
         <table class="table table-striped">
           <thead>
             <tr>

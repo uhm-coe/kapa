@@ -1,3 +1,14 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'program_profile';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
@@ -7,19 +18,19 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="<%='active' if params[:focus] == 'program_profile' || params[:focus].nil? %>"><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
-      <li class="<%='active' if params[:focus] == 'offers' %>"><a href="#offers_tab" data-toggle="tab">Offering Groups</a></li>
+      <li><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#offers_tab" data-toggle="tab">Offering Groups</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="program_profile_tab" class="tab-pane<%=' active' if params[:focus] == 'program_profile' || params[:focus].nil? %>">
+      <div id="program_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :program, :url => kapa_admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/program_form" %>
           <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_path(:id => @program)} if @current_user.manage? %>
         <% end %>
       </div>
 
-      <div id="offers_tab" class="tab-pane<%=' active' if params[:focus] == 'offers' %>">
+      <div id="offers_tab" class="tab-pane">
         <div class="panel-group" id="accordion">
           <%@program_offers.each_with_index do |program_offer, index| %>
             <%@program_offer = program_offer %>

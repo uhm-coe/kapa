@@ -4,6 +4,11 @@
       $(".hidden-text-area a").click(function() {
         $(this).next().toggle();
       });
+
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'curriculum';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
     });
   </script>
 <% end %>
@@ -26,21 +31,21 @@
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="<%='active' if params[:focus] == 'curriculum' || params[:focus].nil? %>"><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
-      <li class="<%='active' if params[:focus] == 'transition_point' %>"><a href="#transition_point_tab" data-toggle="tab">Application</a></li>
-      <li class="<%='active' if params[:focus] == 'assessment' %>"><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
-      <li class="<%='active' if params[:focus] == 'actions' %>"><a href="#actions_tab" data-toggle="tab">Actions</a></li>
+      <li><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
+      <li><a href="#transition_point_tab" data-toggle="tab">Application</a></li>
+      <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
+      <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="curriculum_tab" class="tab-pane<%=' active' if params[:focus] == 'curriculum' || params[:focus].nil? %>">
+      <div id="curriculum_tab" class="tab-pane">
         <%= bootstrap_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum, :transition_point_id => @transition_point), :remote => true, :html => {:method => :put} do %>
           <%= render :partial => "/kapa/main/curriculum_form" %>
           <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:main) %>
         <% end %>
       </div>
 
-      <div id="transition_point_tab" class="tab-pane<%=' active' if params[:focus] == 'transition_point' %>">
+      <div id="transition_point_tab" class="tab-pane">
         <%= bootstrap_form_for :transition_point, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :transition_point), :remote => true, :html => {:method => :put} do %>
           <%= render :partial => "/kapa/main/transition_point_form" %>
           <%= render :layout => "/kapa/layouts/controls" do %>
@@ -51,7 +56,7 @@
         <% end %>
       </div>
 
-      <div id="assessment_tab" class="tab-pane<%=' active' if params[:focus] == 'assessment' %>">
+      <div id="assessment_tab" class="tab-pane">
         <div class="row">
           <div class="col-sm-6">
             <%= bootstrap_form_for :filter, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :assessment), :html => {:method => :get} do |f| %>
@@ -65,7 +70,7 @@
         <% end %>
       </div>
 
-      <div id="actions_tab" class="tab-pane<%=' active' if params[:focus] == 'actions' %>">
+      <div id="actions_tab" class="tab-pane">
         <div class="panel-group" id="accordion">
 
           <%@transition_actions.each_with_index do |transition_action, index| %>
