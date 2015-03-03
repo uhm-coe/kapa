@@ -5,14 +5,11 @@ module KapaBaseHelper
     model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
     selections = model_name.to_s.classify.constantize.selections(options[:model_options])
 
-    #Check if the current value exist in the selection and add it if it's not.
+    # Check if the current value exists in the selections and add it if not
     object = instance_variable_get("@#{object_name}".delete("[]"))
     current_value = object.send("#{method}") if object
     current_value = nil if current_value.blank? or html_options[:multiple] or options[:exclude_current_value]
     selection = selections.select {|c| c[1] == current_value}.first
-    if selection.blank?
-      selections.push([current_value, current_value])
-    end
 
     if options[:selected].blank? and current_value.present?
       options[:selected] = current_value
@@ -35,7 +32,7 @@ module KapaBaseHelper
       return tag.html_safe
     end
 
-    select(object_name, method, selections , options, html_options)
+    select(object_name, method, selections, options, html_options)
   end
 
   def property_select(object_name, method, options = {}, html_options = {})
