@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :curriculums, &extra_actions
       resources :transition_points, &extra_actions
       resources :transition_actions, &extra_actions
+      resources :enrollments, &extra_actions
     end
 
     namespace :artifact do

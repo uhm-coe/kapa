@@ -141,8 +141,10 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
   end
 
   def index
-    @filter = placement_filter
-    @practicum_placements = PracticumPlacement.paginate(:page => params[:page], :per_page => 20, :include => [{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, :practicum_assignments], :conditions => @filter.conditions, :order => "persons.last_name, persons.first_name")
+    @filter = filter
+    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
+    # .order("persons.last_name, persons.first_name")
+    @enrollments = Enrollment.search(@filter).paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def export
@@ -243,29 +245,4 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
     return row
   end
 
-  def placement_filter
-    f = filter
-    f.append_condition "practicum_placements.term_id = ?", :term_id
-    if f.program == "NA"
-      f.append_condition "programs.code is NULL"
-    else
-      f.append_condition "programs.code = ?", :program
-    end
-    f.append_condition "curriculums.distribution = ?", :distribution
-    f.append_condition "curriculums.major_primary = ?", :major
-    f.append_condition "practicum_placements.status = ?", :status
-    f.append_condition "practicum_placements.category = ?", :category
-    f.append_condition "practicum_placements.uid = ?", :uid
-    if @current_user.access_scope >= 3
-      # do nothing
-    elsif @current_user.access_scope == 2
-      f.append_program_condition("programs.code in (?)", :depts => @current_user.depts)
-    elsif @current_user.access_scope == 1
-      f.append_condition "#{@current_user.id} in (practicum_placements.user_primary_id, practicum_placements.user_secondary_id)" unless @current_user.manage?
-    else
-      f.append_condition "1=2"
-    end
-
-    return f
-  end
 end
