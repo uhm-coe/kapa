@@ -12,9 +12,9 @@ class AssessmentRubric < KapaBaseModel
   end
 
   def join_attributes
-    self.course = @courses ? @courses.join(",") : "" if @courses
-    self.program = @programs ? @programs.join(",") : "" if @programs
-    self.transition_point = @transition_points ? @transition_points.join(",") : "" if @transition_points
+    self.course = @courses ? @courses.join(",") : ""
+    self.program = @programs ? @programs.join(",") : ""
+    self.transition_point = @transition_points ? @transition_points.join(",") : ""
   end
 
   def effective_term

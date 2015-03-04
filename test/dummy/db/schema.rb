@@ -565,7 +565,7 @@ ActiveRecord::Schema.define(:version => 20150220071531) do
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "available_term_id"
+    t.string  "available_term_id"
   end
 
   create_table "programs", :force => true do |t|

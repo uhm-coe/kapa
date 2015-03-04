@@ -16,9 +16,9 @@ class Program < KapaBaseModel
   end
 
   def join_attributes
-    self.available_major = @available_majors ? @available_majors.join(",") : "" if @available_majors
-    self.available_distribution = @available_distributions ? @available_distributions.join(",") : "" if @available_distributions
-    self.available_track = @available_tracks ? @available_tracks.join(",") : "" if @available_tracks
+    self.available_major = @available_majors ? @available_majors.join(",") : ""
+    self.available_distribution = @available_distributions ? @available_distributions.join(",") : ""
+    self.available_track = @available_tracks ? @available_tracks.join(",") : ""
   end
 
   def degree_desc
