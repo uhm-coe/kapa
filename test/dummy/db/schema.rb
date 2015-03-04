@@ -434,7 +434,6 @@ ActiveRecord::Schema.define(:version => 20150220071531) do
 
   create_table "practicum_placements", :force => true do |t|
     t.integer  "person_id"
-    t.integer  "term_id"
     t.integer  "curriculum_id"
     t.integer  "practicum_site_id"
     t.integer  "mentor_person_id"
@@ -449,6 +448,7 @@ ActiveRecord::Schema.define(:version => 20150220071531) do
     t.datetime "updated_at"
     t.text     "yml"
     t.text     "xml"
+    t.integer  "term_id"
   end
 
   add_index "practicum_placements", ["curriculum_id"], :name => "index_practicum_placements_on_curriculum_id"
@@ -565,8 +565,12 @@ ActiveRecord::Schema.define(:version => 20150220071531) do
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "available_term_id"
+    t.integer  "start_term_id"
+    t.integer  "end_term_id"
   end
+
+  add_index "program_offers", ["end_term_id"], :name => "index_program_offers_on_end_term_id"
+  add_index "program_offers", ["start_term_id"], :name => "index_program_offers_on_start_term_id"
 
   create_table "programs", :force => true do |t|
     t.string   "code",                                     :null => false
