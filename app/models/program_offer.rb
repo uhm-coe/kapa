@@ -14,8 +14,8 @@ class ProgramOffer < KapaBaseModel
   end
 
   def join_attributes
-    self.available_major = @available_majors ? @available_majors.join(",") : "" if @available_majors
-    self.available_term_id = @available_term_ids ? @available_term_ids.join(",") : "" if @available_term_ids
+    self.available_major = @available_majors ? @available_majors.join(",") : ""
+    self.available_term_id = @available_term_ids ? @available_term_ids.join(",") : ""
   end
 
   def self.selections(options = {})

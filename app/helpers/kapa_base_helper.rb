@@ -5,11 +5,16 @@ module KapaBaseHelper
     model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
     selections = model_name.to_s.classify.constantize.selections(options[:model_options])
 
-    # Check if the current value exists in the selections and add it if not
     object = instance_variable_get("@#{object_name}".delete("[]"))
     current_value = object.send("#{method}") if object
     current_value = nil if current_value.blank? or html_options[:multiple] or options[:exclude_current_value]
-    selection = selections.select {|c| c[1] == current_value}.first
+    selection = selections.select {|c| c[1].to_s == current_value.to_s}.first
+    # If the current value exists in the db but is not in the selections
+    #   (i.e., because an ApplicationProperty had been deactivated),
+    #   add it to the selections or else the first selection will be selected by default
+    if selection.blank? and current_value.present?
+      selections.push([current_value, current_value])
+    end
 
     if options[:selected].blank? and current_value.present?
       options[:selected] = current_value
