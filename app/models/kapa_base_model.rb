@@ -74,7 +74,7 @@ class KapaBaseModel < ActiveRecord::Base
     end
   end
 
-  #TODO This function uses MySQL specific function does not work in other platforms
+  #TODO This function uses MySQL specific function does not work in other platforms, make this Squeel sifter
   def self.contains(array_string, key)
     if key.is_a? Array
       keys = key

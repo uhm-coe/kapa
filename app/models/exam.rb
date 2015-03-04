@@ -137,8 +137,7 @@ class Exam < KapaBaseModel
     exams = Exam.includes([:person, :exam_scores])
     exams = exams.where("concat(persons.last_name, ', ', persons.first_name) like ?", "%#{filter.name}%") if filter.name.present?
     exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
-    exams = exams.where{self.report_date >= filter.date_start} if filter.date_start.present?
-    exams = exams.where{self.report_date <= filter.date_end} if filter.date_end.present?
+    exams = exams.where(:report_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
     exams = exams.where{(self.public == "Y") | (self.dept.like_any filter.user.depts)} unless filter.user.manage? :artifact
     return exams
   end

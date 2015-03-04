@@ -14,6 +14,7 @@ class Kapa::Report::DataSetsController < Kapa::KapaBaseController
   # GET /data_sets/1.json
   def show
     @data_set = DataSet.find(params[:id])
+    @data_sources = DataSource.all
 
     respond_to do |format|
       format.html # show.html.erb
