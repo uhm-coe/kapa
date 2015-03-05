@@ -32,11 +32,13 @@
     <div class="col-sm-4">
       <%= f.property_select :distribution, {:label =>"Program Distribution", :program => @program} %>
       <%= f.property_select :location, {:include_blank => true, :label =>"Program Location"} %>
+      <%= f.user_select :user_primary_id, :include_blank => true, :label => "Primary Reviewer", :depts => @current_user.depts %>
     </div>
 
     <div class="col-sm-4">
       <%= f.property_select :major_primary, {:name => :major, :label => "Primary Major/Concentration", :include_code => true, :program => @program} %>
       <%= f.property_select :major_secondary, {:name => :major, :label => "Secondary Major/Concentration", :include_code => true, :include_blank => true} %>
+      <%= f.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Reviewer" %>
     </div>
   </div>
   <%= f.hidden_field :person_id %>
