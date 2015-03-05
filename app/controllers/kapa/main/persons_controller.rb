@@ -38,24 +38,24 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
   def update
     @person = Person.find(params[:id])
 
-    #TODO Review merge process
-    if params[:person_id_verified]
-      @person_verified = Person.find(params[:person_id_verified])
-      @person_verified.merge(@person, :include_associations => true)
-      flash[:success] = "Person was successfully merged."
-      params[:return_uri][:id] = @person_verified.id if params[:return_uri][:controller] == "kapa/main/persons"  #This is needed for requests comes from outside of main
-      params[:return_uri][:focus] = params[:focus]
-      redirect_to params[:return_uri]
+    # TODO: Review merge process (commented out for now, until reviewed and working properly)
+    # if params[:person_id_verified]
+    #   @person_verified = Person.find(params[:person_id_verified])
+    #   @person_verified.merge(@person, :include_associations => true)
+    #   flash[:success] = "Person was successfully merged."
+    #   params[:return_uri][:id] = @person_verified.id if params[:return_uri][:controller] == "kapa/main/persons"  #This is needed for requests comes from outside of main
+    #   params[:return_uri][:focus] = params[:focus]
+    #   redirect_to params[:return_uri]
 
-    else
-      @person.attributes = (params[:person])
+    # else
+      @person.attributes = params[:person]
       unless @person.save
         flash[:danger] = error_message_for(@person)
         redirect_to kapa_main_person_path(:id => @person) and return false
       end
       flash[:success] = "Person was successfully updated."
       redirect_to kapa_main_person_path(:id => @person)
-    end
+    # end
   end
 
   def index

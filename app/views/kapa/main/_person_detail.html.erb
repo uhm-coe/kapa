@@ -109,7 +109,7 @@
 </h3>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
-  <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :remote => true, :html => {:method => :put, :id => "person_form"} do %>
+  <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "person_form"} do %>
     <%= render :partial => "/kapa/main/person_form" %>
   <% end %>
 <% end if @current_user.read? :main %>
