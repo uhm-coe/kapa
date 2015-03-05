@@ -1,5 +1,5 @@
 class Enrollment < KapaBaseModel
-  belongs_to :person
+  belongs_to :curriculum
   belongs_to :term
   belongs_to :user_primary,
              :class_name => "User",
@@ -26,9 +26,7 @@ class Enrollment < KapaBaseModel
   end
 
   def self.search(filter, options = {})
-    # :include => [{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, :practicum_assignments]
-    # enrollments = Enrollment.includes([:person, {:person => :contact}])
-    enrollments = Enrollment.scoped
+    enrollments = Enrollment.includes([{:curriculum => :person}, {:curriculum => :program}])
     enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
     if filter.program == "NA"
       enrollments = enrollments.where("programs.code is NULL")
@@ -37,9 +35,7 @@ class Enrollment < KapaBaseModel
     end
     enrollments = enrollments.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
     enrollments = enrollments.where("curriculums.major_primary" => filter.major) if filter.major.present?
-    enrollments = enrollments.where("enrollments.status" => filter.status) if filter.status.present?
     enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
-    enrollments = enrollments.where("enrollments.user_primary_id" => filter.uid) if filter.uid.present?
 
     case filter.user.access_scope
     when 3

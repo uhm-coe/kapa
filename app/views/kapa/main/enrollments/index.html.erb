@@ -11,26 +11,25 @@
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_main_enrollments_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
           <%=f.term_select :term_id, :include_blank => "Any" %>
-          <%=f.program_select :program, :include_blank => "Any", :depts => @current_user.depts, :include_code => true %>
-          <%#=f.history_select :uid, :model_name => :practicum_placement, :model_method => :uid, :include_blank => "Any", :label => "Group" %>
-          <%=f.property_select :distribution, :name => :distribution, :include_blank => "Any", :include_code => true %>
+          <%=f.property_select :program, :include_blank => "Any", :depts => @current_user.depts, :include_code => true %>
+          <%=f.property_select :distribution, :include_blank => "Any" %>
         </div>
-        <div class="col-xs-6">
-          <%=f.property_select :major_primary, :name => :major, :include_blank => "Any", :include_code => true, :depts => @current_user.depts, :label => "Major/Concentration" %>
-          <%=f.history_select :category, :model_name => :practicum_placement, :model_method => :category, :include_blank => "Any" %>
+        <div class="col-sm-6">
+          <%=f.property_select :major, :include_blank => "Any", :include_code => true, :depts => @current_user.depts, :label => "Major/Concentration" %>
+          <%=f.history_select :category, :model_name => :enrollment, :model_method => :category, :include_blank => "Any" %>
           <%=f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
         </div>
       </div>
     <% end %>
   <% end %>
 
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Enrollment Data", :modal_form_id => "import_site_form"} do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Enrollment Data", :modal_form_id => "import_enrollment_form"} do %>
     <%=bootstrap_form_for(:data, :url => import_kapa_main_enrollments_path, :html => {:multipart => true, :id => "import_enrollment_form"}) do |f|%>
       <%=f.term_select :term_id %>
       <%=f.file_field :import_file %>
-      <%=f.check_box :delete, {:label => "Delete all placement records in the specified semester before importing"}, "Y", "N" %>
+      <%=f.check_box :delete, {:label => "Delete all enrollment records in the specified semester before importing"}, "Y", "N" %>
     <% end %>
   <% end %>
 
@@ -57,18 +56,16 @@
         <th>Name</th>
         <th>Program</th>
         <th>Category</th>
-        <th>Group</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <% for enrollment in @enrollments %>
         <tr>
-          <td><%#=enrollment.person.id_number %></td>
-          <td><%#=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(enrollment.person.full_name), kapa_main_person_path(:id => enrollment.person_id, :focus => "practicum")%></td>
-          <td><%#=h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
+          <td><%=enrollment.curriculum.person.id_number %></td>
+          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(enrollment.curriculum.person.full_name), kapa_main_person_path(:id => enrollment.curriculum.person_id, :focus => "practicum") %></td>
+          <td><%=h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
           <td><%=h enrollment.category %></td>
-          <td><%#=h enrollment.uid %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => enrollment}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
