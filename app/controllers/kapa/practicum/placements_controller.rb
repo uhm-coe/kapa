@@ -62,7 +62,7 @@ class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
 
   def export
     @filter = filter
-    logger.debug "----filter: #{filter.inspect}"
+    logger.debug "----filter: #{@filter.inspect}"
     send_data PracticumPlacement.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",

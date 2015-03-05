@@ -58,6 +58,7 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
     redirect_to kapa_main_person_path(:id => @practicum_placement.person_id, :focus => :practicum)
   end
 
+  # TODO
   def import
     @filter = placement_filter
     import_file = params[:data][:import_file].read if params[:data]
@@ -143,106 +144,16 @@ class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
   def index
     @filter = filter
     @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
-    # .order("persons.last_name, persons.first_name")
-    @enrollments = Enrollment.search(@filter).paginate(:page => params[:page], :per_page => @per_page_selected)
+    @enrollments = Enrollment.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @per_page_selected)
   end
 
   def export
-    @filter = placement_filter
-    @practicum_placements = PracticumPlacement.includes([{:practicum_profile => [{:person => :contact}, {:curriculum => :program}]}, {:user_primary => :person}, {:user_secondary => :person}, [:practicum_assignments => [:practicum_site, {:person => :contact}, {:user_primary => :person}, {:user_secondary => :person}]]]).where(@filter.conditions).order("persons.last_name, persons.first_name")
-    csv_string = CSV.generate do |csv|
-      csv << table_format.collect {|c| c[0]}
-      @practicum_placements.each {|o| csv << table_format(o).collect {|c| c[1]}}
-    end
-    send_data csv_string,
+    @filter = filter
+    logger.debug "----filter: #{@filter.inspect}"
+    send_data Enrollment.to_csv(@filter),
       :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "placements_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
-  end
-
-  private
-  def table_format(o = nil)
-    row = [
-      [:id_number, rsend(o, :practicum_profile, :person, :id_number)],
-      [:last_name, rsend(o, :practicum_profile, :person, :last_name)],
-      [:first_name, rsend(o, :practicum_profile, :person, :first_name)],
-      [:email, rsend(o, :practicum_profile, :person, :email)],
-      [:category, rsend(o, :category)],
-      [:sequence, rsend(o, :sequence)],
-      [:mentor_type, rsend(o, :mentor_type)]
-    ]
-
-    row += [
-      [:curriculum_id, rsend(o, :practicum_profile, :curriculum, :id)],
-      [:cohort, rsend(o, :practicum_profile, :cohort)],
-      [:term_admitted, rsend(o, :practicum_profile, :curriculum, :term_desc)],
-      [:program_desc, rsend(o, :practicum_profile, :curriculum, :program, :description)],
-      [:major_primary_desc, rsend(o, :practicum_profile, :curriculum, :major_primary_desc)],
-      [:major_secondary_desc, rsend(o, :practicum_profile, :curriculum, :major_secondary_desc)],
-      [:distribution_desc, rsend(o, :practicum_profile, :curriculum, :distribution_desc)],
-      [:location, rsend(o, :practicum_profile, :curriculum, :location)],
-      [:second_degree, rsend(o, :practicum_profile, :curriculum, :second_degree)],
-
-      [:bgc, rsend(o, :practicum_profile, :bgc)],
-      [:bgc_date, rsend(o, :practicum_profile, :bgc_date, [:strftime, "%m/%d/%Y"])],
-      [:insurance, rsend(o, :practicum_profile, :insurance)],
-      [:insurance_effective_period, rsend(o, :practicum_profile, :insurance_effective_period)],
-      [:note, rsend(o, :practicum_profile, :note).to_s.gsub(/\n/, "")],
-      [:group, rsend(o, :uid)],
-      [:off_sequence, rsend(o, :practicum_profile, :ext, :off_sequence)],
-      [:ite401, rsend(o, :practicum_profile, :ext, :ite401)],
-#      [:ite401_grade, rsend(o, :practicum_profile, :ext, :ite401_grade)],
-      [:ite402, rsend(o, :practicum_profile, :ext, :ite402)],
-#      [:ite402_grade, rsend(o, :practicum_profile, :ext, :ite402_grade)],
-      [:ite404, rsend(o, :practicum_profile, :ext, :ite404)],
-#      [:ite404_grade, rsend(o, :practicum_profile, :ext, :ite404_grade)],
-      [:ite405, rsend(o, :practicum_profile, :ext, :ite405)],
-#      [:ite405_grade, rsend(o, :practicum_profile, :ext, :ite405_grade)],
-
-      [:coordinator_1_uid, rsend(o, :user_primary, :uid)],
-      [:coordinator_1_last_name, rsend(o, :user_primary, :person, :last_name)],
-      [:coordinator_1_first_name, rsend(o, :user_primary, :person, :first_name)],
-      [:coordinator_2_uid, rsend(o, :user_secondary, :uid)],
-      [:coordinator_2_last_name, rsend(o, :user_secondary, :person, :last_name)],
-      [:coordinator_2_first_name, rsend(o, :user_secondary, :person, :first_name)],
-
-      [:created_at, rsend(o, :created_at)],
-      [:updated_at, rsend(o, :updated_at)],
-      [:term, rsend(o, :term_desc)],
-      [:status, rsend(o, :status)],
-      [:total_mentors, rsend(o, [:practicum_assignments_select, :mentor], :length)]
-    ] if @current_user.manage?
-
-    3.times do |i|
-      key = "a#{i + 1}"
-      row += [
-        ["#{key}_mentor_person_id", rsend(o, :practicum_assignments, [:at, i], :person_id)],
-        ["#{key}_mentor_last_name", rsend(o, :practicum_assignments, [:at, i], :person, :last_name)],
-        ["#{key}_mentor_first_name", rsend(o, :practicum_assignments, [:at, i], :person, :first_name)],
-        ["#{key}_mentor_email", rsend(o, :practicum_assignments, [:at, i], :person, :contact, :email)],
-        ["#{key}_site_code", rsend(o, :practicum_assignments, [:at, i], :practicum_site, :code)],
-        ["#{key}_site_name", rsend(o, :practicum_assignments, [:at, i], :practicum_site, :name_short)],
-        ["#{key}_content_area", rsend(o, :practicum_assignments, [:at, i], :content_area)],
-        ["#{key}_payment", rsend(o, :practicum_assignments, [:at, i], :payment)],
-        ["#{key}_supervisor_1_uid", rsend(o, :practicum_assignments, [:at, i], :user_primary, :uid)],
-        ["#{key}_supervisor_1_last_name", rsend(o, :practicum_assignments, [:at, i], :user_primary, :person, :last_name)],
-        ["#{key}_supervisor_1_first_name", rsend(o, :practicum_assignments, [:at, i], :user_primary, :person, :first_name)],
-        ["#{key}_supervisor_2_uid", rsend(o, :practicum_assignments, [:at, i], :user_secondary, :uid)],
-        ["#{key}_supervisor_2_last_name", rsend(o, :practicum_assignments, [:at, i], :user_secondary, :person, :last_name)],
-        ["#{key}_supervisor_2_first_name", rsend(o, :practicum_assignments, [:at, i], :user_secondary, :person, :first_name)],
-        ["#{key}_note", rsend(o, :practicum_assignments, [:at, i], :note)]
-      ]
-    end
-
-    row += [
-      [:cur_street, rsend(o, :practicum_profile, :person, :contact, :cur_street)],
-      [:cur_city, rsend(o, :practicum_profile, :person, :contact, :cur_city)],
-      [:cur_state, rsend(o, :practicum_profile, :person, :contact, :cur_state)],
-      [:cur_postal_code, rsend(o, :practicum_profile, :person, :contact, :cur_postal_code)],
-      [:cur_phone, rsend(o, :practicum_profile, :person, :contact, :cur_phone)],
-    ]
-
-    return row
+      :filename     => "enrollments_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
   end
 
 end
