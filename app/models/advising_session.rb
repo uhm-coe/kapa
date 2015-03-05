@@ -27,8 +27,7 @@ class AdvisingSession < KapaBaseModel
 
   def self.search(filter, options = {})
     advising_sessions = AdvisingSession.includes([:person => :contact])
-    advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end)
-    advising_sessions = advising_sessions.where{self.session_date <= filter.date_end} if filter.date_end.present?
+    advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
     advising_sessions = advising_sessions.where(:task => filter.task) if filter.task.present?
     advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?
     advising_sessions = advising_sessions.where { ({advising_sessions => user_primary_id} == my { filter.user_id }) | ({advising_sessions => user_secondary_id} == my { filter.user_id }) } if filter.user_id.present?
@@ -37,8 +36,8 @@ class AdvisingSession < KapaBaseModel
     when 3
       # Do nothing
     when 2
-          advising_sessions = advising_sessions.where { self.dept.like_any filter.user.depts }
-      when 1
+      advising_sessions = advising_sessions.where { self.dept.like_any filter.user.depts }
+    when 1
       advising_sessions = advising_sessions.where{({advising_sessions => user_primary_id} == my{filter.user.id}) | ({advising_sessions => user_secondary_id} == my{filter.user.id})}
     else
       advising_sessions = advising_sessions.where("1 = 2")
