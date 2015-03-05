@@ -1,5 +1,5 @@
 class ProgramOffer < KapaBaseModel
-  attr_accessor :available_majors, :available_term_ids
+  attr_accessor :available_majors
   belongs_to :program
 
   validates_uniqueness_of :distribution, :scope => :program_id
@@ -10,12 +10,10 @@ class ProgramOffer < KapaBaseModel
 
   def remove_extra_values
     self.available_majors.delete_if {|x| x.blank? || x == "multiselect-all"} if self.available_majors
-    self.available_term_ids.delete_if {|x| x.blank? || x == "multiselect-all"} if self.available_term_ids
   end
 
   def join_attributes
     self.available_major = @available_majors ? @available_majors.join(",") : ""
-    self.available_term_id = @available_term_ids ? @available_term_ids.join(",") : ""
   end
 
   def self.selections(options = {})

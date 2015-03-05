@@ -18,7 +18,7 @@ class AssessmentRubric < KapaBaseModel
   end
 
   def effective_term
-    "#{Term.find(self.start_term_id).description} - #{Term.find(self.end_term_id).description}"
+    "#{Term.find(self.start_term_id).description} - #{Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
   end
 
   def self.search(filter, options = {})
