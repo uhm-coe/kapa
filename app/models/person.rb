@@ -129,12 +129,12 @@ class Person < KapaBaseModel
     elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
       persons = persons.where(:email => filter.key)
     elsif filter.key =~ /\d+/
-      persons = persons.where("(contacts.cur_phone like ?) or (contacts.per_phone like ? (contacts.mobile_phone like ?)", "%#{filter.key}%")
+      persons = persons.column_matches("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
     elsif filter.key =~ /\w+,\s*\w+/
       keys = filter.key.split(/,\s*/)
-      persons = persons.where("(last_name like ?) or (first_name like ?)", "#{keys[0]}", "#{keys[1]}")
+      persons = persons.column_matches(:last_name => keys[0], :first_name => keys[1])
     else
-      persons = persons.where("(first_name like ?) or (last_name like ?) or (other_name like ?)", "#{filter.key}", "#{filter.key}", "#{filter.key}")
+      persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
     end
 
     return persons.order("status desc").limit(100)

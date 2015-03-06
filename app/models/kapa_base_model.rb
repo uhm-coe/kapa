@@ -84,30 +84,30 @@ class KapaBaseModel < ActiveRecord::Base
     end
   end
 
-  def self.column_matches(column, key)
-    if key.is_a? Array
-      keys = key
-    else
-      keys = [key]
+  def self.column_matches(hash, pattern = "%?%")
+    conditions = ["0=1"]
+    hash.each_pair do |key, value|
+      values = value.is_a?(Array) ? value : [value]
+      values.each { |v| conditions[0] << " or #{key} like ?" }
+      conditions.concat(values.collect { |v| pattern.gsub("?", v) })
     end
-    where keys.flatten.map { |key| arel_table[column].matches("%#{key}%") }.inject(&:or)
+    where(conditions)
   end
 
-  #TODO This function uses MySQL specific function does not work in other platforms
-  def self.column_contains(column, key, exception = nil)
-    if key.is_a? Array
-      keys = key
-    else
-      keys = [key]
+  #TODO This uses MySQL specific function and does not work in other platforms
+  def self.column_contains(hash, exception = nil)
+    conditions = ["0=1"]
+    hash.each_pair do |key, value|
+      values = value.is_a?(Array) ? value : [value]
+      values.each { |v| conditions[0] << " or find_in_set(?, #{key}) > 0" }
+      conditions.concat(values)
     end
-    sql = "0=1"
-    keys.each { |k| sql << " or find_in_set(?, #{column}) > 0" }
-    sql << " or #{exception}" if exception
-    where([sql].concat(keys))
+    conditions[0] << " or #{exception}" if exception
+    where(conditions)
   end
 
   def self.depts_scope(depts, exception = nil)
-    self.column_contains(:dept, depts, exception)
+    self.column_contains({"#{self.table_name}.dept" => depts}, exception)
   end
 
   def self.assigned_scope(user_id)

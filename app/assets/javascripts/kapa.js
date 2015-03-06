@@ -6,7 +6,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require twitter/bootstrap
 //= require bootstrap-datepicker/core
 //= require bootstrap-multiselect
@@ -22,12 +21,6 @@ jQuery(document).ready(function ($) {
   $('button[data-reset]').click(function () {
     var form_id = $(this).attr('data-reset');
     $(form_id).trigger('reset');
-  });
-
-  $('.closable-tabs [data-toggle=tab]').click(function () {
-    if ($(this).parent().hasClass('active')) {
-      $($(this).attr('href')).toggleClass('active');
-    }
   });
 
   $('.kapa-datepicker').datepicker({
@@ -52,4 +45,6 @@ jQuery(document).ready(function ($) {
 
   $('[data-toggle="tooltip"]').tooltip();
 
+  $("a[rel~=popover], .has-popover").popover();
+  $("a[rel~=tooltip], .has-tooltip").tooltip();
 });

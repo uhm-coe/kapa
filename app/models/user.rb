@@ -118,7 +118,7 @@ class User < KapaBaseModel
     users = users.where("department" => filter.department) if filter.department.present?
     users = users.where("users.status" => filter.status) if filter.status.present?
     users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
-    users = users.where("users.uid like ? or persons.last_name like ? or persons.first_name like ?", "%#{filter.key}%", "%#{filter.key}%", "%#{filter.key}%") if filter.key.present?
+    users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
     return users
   end
 

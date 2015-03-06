@@ -23,10 +23,10 @@ class AssessmentRubric < KapaBaseModel
 
   def self.search(filter, options = {})
     assessment_rubrics = AssessmentRubric.includes([:assessment_criterions])
-    assessment_rubrics = assessment_rubrics.column_matches(:title, filter.title) if filter.title.present?
-    assessment_rubrics = assessment_rubrics.column_contains(:program, filter.program) if filter.program.present?
-    assessment_rubrics = assessment_rubrics.column_contains(:course, filter.course) if filter.course.present?
-    assessment_rubrics = assessment_rubrics.column_contains(:transition_point, filter.transition_point) if filter.transition_point.present?
+    assessment_rubrics = assessment_rubrics.column_matches(:title => filter.title) if filter.title.present?
+    assessment_rubrics = assessment_rubrics.column_contains(:program => filter.program) if filter.program.present?
+    assessment_rubrics = assessment_rubrics.column_contains(:course => filter.course) if filter.course.present?
+    assessment_rubrics = assessment_rubrics.column_contains(:transition_point => filter.transition_point) if filter.transition_point.present?
     return assessment_rubrics
   end
 end
