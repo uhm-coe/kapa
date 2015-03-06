@@ -73,15 +73,15 @@ class Curriculum < KapaBaseModel
     curriculums = curriculums.where("programs.code" => filter.program) if filter.program.present?
     curriculums = curriculums.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
     curriculums = curriculums.where("curriculums.major_primary" => filter.major) if filter.major.present?
-    curriculums = curriculums.where{({curriculums => user_primary_id} == my{filter.user_id}) | ({curriculums => user_secondary_id} == my{filter.user_id})} if filter.user_id.present?
+    curriculums = curriculums.where{(user_primary_id == filter.user_id) | (user_secondary_id == filter.user_id)} if filter.user_id.present?
 
     case filter.user.access_scope
     when 3
       # do nothing
     when 2
-      curriculums = curriculums.where("programs.code" => filter.user.depts)
+      curriculums = curriculums.where{self.dept.like_any filter.user.depts}
     when 1
-      curriculums = curriculums.where{({curriculums => user_primary_id} == my{filter.user.id}) | ({curriculums => user_secondary_id} == my{filter.user.id})}
+      curriculums = curriculums.where{(user_primary_id == filter.user.id) | (user_secondary_id == filter.user.id)}
     else
       curriculums = curriculums.where("1 = 2")  #Do not list any objects
     end
