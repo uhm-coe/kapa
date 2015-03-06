@@ -3,7 +3,7 @@ class CourseOffer < KapaBaseModel
   has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
 
   def assessment_rubrics
-    rubrics = AssessmentRubric.includes(:assessment_criterions).where("find_in_set('#{self.subject}#{self.number}', assessment_rubrics.course) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id").order("assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = AssessmentRubric.includes(:assessment_criterions).where(:term_id => term_ids_by_range(assessment_rubrics.start_term_id, assessment_rubrics.end_term_id)).column_contains("subject || number", assessment_rubrics.course).order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else
@@ -47,7 +47,7 @@ class CourseOffer < KapaBaseModel
     course_offers = CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
     course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
     course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
-    course_offers = course_offers.where("concat(course_offers.subject, course_offers.number, '-', course_offers.section) like ?", "%#{filter.name}%") if filter.name.present?
+    course_offers = course_offers.where("course_offers.subject || course_offers.number || '-' || course_offers.section like ?", "%#{filter.name}%") if filter.name.present?
 
     case filter.user.access_scope
       when 3

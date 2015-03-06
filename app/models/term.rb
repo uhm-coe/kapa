@@ -20,6 +20,10 @@ class Term < KapaBaseModel
     self.where("code > ?", self.current_term).order("code").first
   end
 
+  def self.terms_ids_by_range(start_term_id, end_term_id)
+    self.where(:code => Term.find(start_term_id).code..Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
+  end
+
   def self.search(filter, options = {})
     # To return an ActiveRecord::Relation, use the following:
     #   For Rails 4.1 and above: Term.all

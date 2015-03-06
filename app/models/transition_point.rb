@@ -57,7 +57,7 @@ class TransitionPoint < KapaBaseModel
   end
 
   def assessment_rubrics
-    rubrics = AssessmentRubric.includes(:assessment_criterions).where("find_in_set('#{self.type}', assessment_rubrics.transition_point) > 0 and find_in_set('#{self.curriculum.program.code}', assessment_rubrics.program) > 0 and '#{self.term_id}' between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id").order("assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = AssessmentRubric.includes(:assessment_criterions).where(:term_id => term_ids_by_range(assessment_rubrics.start_term_id, assessment_rubrics.end_term_id)).column_contains(:type, assessment_rubrics.transition_point).column_contains("assessment_rubrics.program", self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else
