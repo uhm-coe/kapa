@@ -50,7 +50,7 @@
       </div>
       <div class="col-sm-6">
         <%= admission_background.property_select :aa_degree, {:name => :cc_program, :include_blank => "No", :label => "Indicate if you have completed or are in progress of completing any of these UH system Community College programs."} %>
-        <%= admission_background.term_select :aa_degree_when, :name => :term_id, :conditions => "code >= '200510'", :include_blank => true, :label => "Please select the semester you completed or will complete the above program." %>
+        <%= admission_background.term_select :aa_degree_when, :name => :term_id, :conditions => "code >= '200510'", :include_blank => true, :label => "Please select the term you completed or will complete the above program." %>
       </div>
     </div>
   <% end %>
@@ -165,7 +165,7 @@
             <th>Attempt</th>
             <th>Course</th>
             <th>Institution</th>
-            <th>Semester</th>
+            <th>Term</th>
             <th>Credits</th>
             <th>Grade</th>
           </tr>
@@ -176,7 +176,7 @@
             <th>Initial</th>
             <td><%= admission_repeated_course_initial.text_field :course_1, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :insititution_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :semester_1, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_initial.text_field :term_1, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :credits_1, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_initial.text_field :grade_1, :label => :no, :size => 6 %></td>
           </tr>
@@ -184,7 +184,7 @@
             <th>Retake</th>
             <td><%= admission_repeated_course_retake.text_field :course_1, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :insititution_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :semester_1, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_retake.text_field :term_1, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :credits_1, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_retake.text_field :grade_1, :label => :no, :size => 6 %></td>
           </tr>
@@ -194,7 +194,7 @@
             <th>Initial</th>
             <td><%= admission_repeated_course_initial.text_field :course_2, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :insititution_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :semester_2, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_initial.text_field :term_2, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :credits_2, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_initial.text_field :grade_2, :label => :no, :size => 6 %></td>
           </tr>
@@ -202,7 +202,7 @@
             <th>Retake</th>
             <td><%= admission_repeated_course_retake.text_field :course_2, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :insititution_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :semester_2, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_retake.text_field :term_2, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :credits_2, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_retake.text_field :grade_2, :label => :no, :size => 6 %></td>
           </tr>
@@ -212,7 +212,7 @@
             <th>Initial</th>
             <td><%= admission_repeated_course_initial.text_field :course_3, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :insititution_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :semester_3, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_initial.text_field :term_3, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :credits_3, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_initial.text_field :grade_3, :label => :no, :size => 6 %></td>
           </tr>
@@ -220,7 +220,7 @@
             <th>Retake</th>
             <td><%= admission_repeated_course_retake.text_field :course_3, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :insititution_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :semester_3, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_retake.text_field :term_3, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :credits_3, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_retake.text_field :grade_3, :label => :no, :size => 6 %></td>
           </tr>
@@ -230,7 +230,7 @@
             <th>Initial</th>
             <td><%= admission_repeated_course_initial.text_field :course_4, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :insititution_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :semester_4, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_initial.text_field :term_4, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :credits_4, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_initial.text_field :grade_4, :label => :no, :size => 6 %></td>
           </tr>
@@ -238,7 +238,7 @@
             <th>Retake</th>
             <td><%= admission_repeated_course_retake.text_field :course_4, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :insititution_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :semester_4, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_retake.text_field :term_4, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :credits_4, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_retake.text_field :grade_4, :label => :no, :size => 6 %></td>
           </tr>
@@ -248,7 +248,7 @@
             <th>Initial</th>
             <td><%= admission_repeated_course_initial.text_field :course_5, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :insititution_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :semester_5, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_initial.text_field :term_5, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_initial.text_field :credits_5, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_initial.text_field :grade_5, :label => :no, :size => 6 %></td>
           </tr>
@@ -256,7 +256,7 @@
             <th>Retake</th>
             <td><%= admission_repeated_course_retake.text_field :course_5, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :insititution_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :semester_5, :label => :no, :size => 14 %></td>
+            <td><%= admission_repeated_course_retake.text_field :term_5, :label => :no, :size => 14 %></td>
             <td><%= admission_repeated_course_retake.text_field :credits_5, :label => :no, :size => 6 %></td>
             <td><%= admission_repeated_course_retake.text_field :grade_5, :label => :no, :size => 6 %></td>
           </tr>
