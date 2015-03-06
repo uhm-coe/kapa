@@ -41,11 +41,11 @@ class Enrollment < KapaBaseModel
     when 3
       # do nothing
     when 2
-      enrollments = enrollments.where{self.dept.like_any filter.user.depts}
-    when 1
-      enrollments = enrollments.where{(user_primary_id == filter.user.id) | (user_secondary_id == filter.user.id)}
-    else
-      enrollments = enrollments.where("1 = 2")  #Do not list any objects
+          enrollments = enrollments.depts_scope(filter.user.depts)
+      when 1
+        enrollments = enrollments.assigned_scope(filter.user.id)
+      else
+        enrollments = enrollments.where("1 = 2")  #Do not list any objects
     end
     return enrollments
   end

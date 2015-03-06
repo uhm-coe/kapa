@@ -3,6 +3,16 @@ class KapaBaseModel < ActiveRecord::Base
   serialize :yml, Hash
 #  before_save :update_xml
 
+#TODO This function uses MySQL specific function does not work in other platforms, make this Squeel sifter
+  sifter :list_contains do |column, key|
+    if key.is_a? Array
+      keys = key
+    else
+      keys = [key]
+    end
+    keys.map { |key| find_in_set(__send__(column), key) > 0 }.inject(&:|)
+  end
+
   def update_xml
     self.xml = self.yml.to_xml if self.yml.present?
   end
@@ -74,16 +84,34 @@ class KapaBaseModel < ActiveRecord::Base
     end
   end
 
-  #TODO This function uses MySQL specific function does not work in other platforms, make this Squeel sifter
-  def self.contains(array_string, key)
+  def self.column_matches(column, key)
+    if key.is_a? Array
+      keys = key
+    else
+      keys = [key]
+    end
+    where keys.flatten.map { |key| arel_table[column].matches("%#{key}%") }.inject(&:or)
+  end
+
+  #TODO This function uses MySQL specific function does not work in other platforms
+  def self.column_contains(column, key, exception = nil)
     if key.is_a? Array
       keys = key
     else
       keys = [key]
     end
     sql = "0=1"
-    keys.each {|k| sql << " or find_in_set(?, #{array_string}) > 0"}
+    keys.each { |k| sql << " or find_in_set(?, #{column}) > 0" }
+    sql << " or #{exception}" if exception
     where([sql].concat(keys))
+  end
+
+  def self.depts_scope(depts, exception = nil)
+    self.column_contains(:dept, depts, exception)
+  end
+
+  def self.assigned_scope(user_id)
+    where("? in (user_primary_id, user_secondary_id", user_id)
   end
 
   # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields

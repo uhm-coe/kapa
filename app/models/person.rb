@@ -2,7 +2,7 @@ class Person < KapaBaseModel
 #class Person < ActiveRecord::Base
   self.table_name = :persons
   #Main module associations
-  has_one  :contact, :as => :entity, :autosave => true
+  has_one :contact, :as => :entity, :autosave => true
   has_many :curriculums
   has_many :users
 
@@ -24,8 +24,8 @@ class Person < KapaBaseModel
 
   validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
   validates_presence_of :last_name, :first_name, :on => :create
-#  validates_length_of :ssn, :is => 9, :allow_blank => true
-#  validates_numericality_of :ssn, :allow_blank => true
+  #  validates_length_of :ssn, :is => 9, :allow_blank => true
+  #  validates_numericality_of :ssn, :allow_blank => true
 
   before_save :format_fields
 
@@ -126,15 +126,15 @@ class Person < KapaBaseModel
 
     if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)
       persons = persons.where(:id_number => filter.key)
-    elsif filter.key =~  Regexp.new(Rails.configuration.regex_email, true)
+    elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
       persons = persons.where(:email => filter.key)
-    elsif filter.key =~  /\d+/
-      persons = persons.where("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
-    elsif filter.key =~  /\w+,\s*\w+/
+    elsif filter.key =~ /\d+/
+      persons = persons.where("(contacts.cur_phone like ?) or (contacts.per_phone like ? (contacts.mobile_phone like ?)", "%#{filter.key}%")
+    elsif filter.key =~ /\w+,\s*\w+/
       keys = filter.key.split(/,\s*/)
-      persons = persons.where{(last_name =~ "%#{keys[0]}%") | (first_name =~ "%#{keys[1]}%")}
+      persons = persons.where("(last_name like ?) or (first_name like ?)", "#{keys[0]}", "#{keys[1]}")
     else
-      persons = persons.where{(first_name =~ "%#{filter.key}%") | (last_name =~ "%#{filter.key}%") | (other_name =~ "%#{filter.key}%")}
+      persons = persons.where("(first_name like ?) or (last_name like ?) or (other_name like ?)", "#{filter.key}", "#{filter.key}", "#{filter.key}")
     end
 
     return persons.order("status desc").limit(100)

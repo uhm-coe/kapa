@@ -9,16 +9,16 @@ class ApplicationProperty < KapaBaseModel
 
   def self.refresh_cache
     @@description_cache.clear
-    ApplicationProperty.scoped.each {|v| @@description_cache["#{v.name}_#{v.code}"] = v.description}
+    ApplicationProperty.scoped.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
     @@description_detail_cache.clear
-    ApplicationProperty.scoped.each {|v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short}
+    ApplicationProperty.scoped.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
     @@category_cache.clear
-    ApplicationProperty.scoped.each {|v| @@category_cache["#{v.name}_#{v.code}"] = v.category}
+    ApplicationProperty.scoped.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
   end
 
   def self.selections(options = {})
     properties = where(:active => true, :name => options[:name].to_s)
-    properties = properties.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    properties = properties.depts_scope(options[:depts]) if options[:depts]
     properties = properties.where(options[:conditions]) if options[:conditions]
     properties.order("sequence DESC, description").collect do |v|
       description = ""
@@ -45,9 +45,9 @@ class ApplicationProperty < KapaBaseModel
 
   def self.keys(name, options={})
     properties = where(:active => true, :name => options[:name].to_s)
-    properties = properties.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    properties = properties.depts_scope(options[:depts]) if options[:depts]
     properties = properties.where(options[:conditions]) if options[:conditions]
-    return properties.order("sequence DESC, code").collect {|v| v.code}
+    return properties.order("sequence DESC, code").collect { |v| v.code }
   end
 
   def self.append(name, code, options={})

@@ -19,12 +19,9 @@ class PracticumPlacement < KapaBaseModel
 
   def self.search(filter, options = {})
     placements = PracticumPlacement.includes([:person, :practicum_site])
-    # TODO: Not sure what this filter should be replaced with
-    # f.append_condition "practicum_assignments.assignment_type = 'mentor'"
     placements = placements.where("practicum_placements.term_id" => filter.term_id) if filter.term_id.present?
     placements = placements.where("practicum_placements.practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
-    placements = placements.where{({practicum_placements => user_primary_id} == my{filter.user.id}) | ({practicum_placements => user_secondary_id} == my{filter.user.id})} if filter.user.present? unless filter.user.manage?
-    return placements
+    placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
   end
 
   def self.to_csv(filter, options = {})

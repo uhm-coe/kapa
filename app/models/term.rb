@@ -7,7 +7,7 @@ class Term < KapaBaseModel
     selections = []
     terms = Term.where(:active => true).order("sequence DESC, code")
     terms = temrs.where(options[:condition]) if options[:condition]
-    terms.each {|v| selections.push [v.description, v.id]}
+    terms.each { |v| selections.push [v.description, v.id] }
     return selections
   end
 
@@ -27,8 +27,8 @@ class Term < KapaBaseModel
     #   For Rails 3.x: Term.scoped
     terms = Term.scoped
     terms = terms.where("id" => filter.term_id) if filter.term_id.present?
-    terms = terms.where{self.start_date >= filter.start_date} if filter.start_date.present?
-    terms = terms.where{self.end_date <= filter.end_date} if filter.end_date.present?
+#    terms = terms.where{self.start_date >= filter.start_date} if filter.start_date.present?
+#    terms = terms.where{self.end_date <= filter.end_date} if filter.end_date.present?
     terms = terms.where("active" => filter.active) if filter.active.present?
     return terms
   end

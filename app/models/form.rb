@@ -37,7 +37,7 @@ class Form < KapaBaseModel
     forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
     forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
     forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
-    forms = forms.where{(self.public == "Y") | (self.dept.like_any filter.user.depts)} unless filter.user.manage? :artifact
+    exams = forms.depts_scope(filter.user.depts, "public = 'Y'")
     return forms
   end
 
@@ -52,36 +52,36 @@ class Form < KapaBaseModel
   end
 
   def self.csv_columns
-   [:id_number,
-    :last_name,
-    :first_name,
-    :ssn,
-    :ssn_agreement,
-    :cur_street,
-    :cur_city,
-    :cur_state,
-    :cur_postal_code,
-    :cur_phone,
-    :email,
-    :updated,
-    :submitted,
-    :lock]
+    [:id_number,
+     :last_name,
+     :first_name,
+     :ssn,
+     :ssn_agreement,
+     :cur_street,
+     :cur_city,
+     :cur_state,
+     :cur_postal_code,
+     :cur_phone,
+     :email,
+     :updated,
+     :submitted,
+     :lock]
   end
 
   def self.csv_row(c)
-   [c.rsend(:person, :id_number),
-    c.rsend(:person, :last_name),
-    c.rsend(:person, :first_name),
-    c.rsend(:person, :ssn),
-    c.rsend(:person, :ssn_agreement),
-    c.rsend(:person, :contact, :cur_street),
-    c.rsend(:person, :contact, :cur_city),
-    c.rsend(:person, :contact, :cur_state),
-    c.rsend(:person, :contact, :cur_postal_code),
-    c.rsend(:person, :contact, :cur_phone),
-    c.rsend(:person, :contact, :email),
-    c.rsend(:updated_at),
-    c.rsend(:submitted_at),
-    c.rsend(:lock)]
+    [c.rsend(:person, :id_number),
+     c.rsend(:person, :last_name),
+     c.rsend(:person, :first_name),
+     c.rsend(:person, :ssn),
+     c.rsend(:person, :ssn_agreement),
+     c.rsend(:person, :contact, :cur_street),
+     c.rsend(:person, :contact, :cur_city),
+     c.rsend(:person, :contact, :cur_state),
+     c.rsend(:person, :contact, :cur_postal_code),
+     c.rsend(:person, :contact, :cur_phone),
+     c.rsend(:person, :contact, :email),
+     c.rsend(:updated_at),
+     c.rsend(:submitted_at),
+     c.rsend(:lock)]
   end
 end

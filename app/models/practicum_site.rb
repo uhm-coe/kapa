@@ -18,7 +18,7 @@ class PracticumSite < KapaBaseModel
 
   def self.search(filter, options = {})
     sites = PracticumSite.includes([:practicum_placements])
-    sites = sites.where{self.name =~ "%#{filter.name}%"} if filter.name.present?
+    sites = sites.column_matches(:name, filter.name) if filter.name.present?
     # f.append_condition "? between level_from and level_to", :grade # TODO: Is this still needed?
     sites = sites.where("district" => filter.district) if filter.district.present?
     sites = sites.where("area_group" => filter.area_group) if filter.area_group.present?

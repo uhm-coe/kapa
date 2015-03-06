@@ -33,7 +33,7 @@ class CourseOffer < KapaBaseModel
     self.assessment_rubrics.each do |ar|
       table = table_for(ar)
       number_of_fields_total += table.size
-      number_of_fields_filled += table.values.delete_if {|r| r.blank?}.size
+      number_of_fields_filled += table.values.delete_if { |r| r.blank? }.size
     end
 
     if number_of_fields_total == 0
@@ -47,27 +47,27 @@ class CourseOffer < KapaBaseModel
     course_offers = CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
     course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
     course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
-    course_offers = course_offers.where("concat(course_offers.subject, course_offers.number, '-', course_offers.section) like ?", "%#{filter.course_offer_name}%") if filter.course_offer_name.present?
+    course_offers = course_offers.where("concat(course_offers.subject, course_offers.number, '-', course_offers.section) like ?", "%#{filter.name}%") if filter.name.present?
 
     case filter.user.access_scope
-    when 3
-      # Do nothing
-    when 2
-      # This may not be correct:
-      course_offers = course_offers.where("concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => filter.user.depts) unless filter.user.manage? :course_offer
+      when 3
+        # Do nothing
+      when 2
+        # This may not be correct:
+        course_offers = course_offers.where("concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => filter.user.depts) unless filter.user.manage? :course_offer
       # TODO: Implement the following condition using the where clause
       # f.append_property_condition "concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => @current_user.depts unless @current_user.manage? :course_offer
-    when 1
-      # TODO: Not implemented yet
-    else
-      course_offers = course_offers.where("1 = 2")
+      when 1
+        # TODO: Not implemented yet
+      else
+        course_offers = course_offers.where("1 = 2")
     end
     return course_offers
   end
 
   #TODO: Move complex query into reports module
   def self.to_csv(filter, options = {})
-    sql =  "SELECT
+    sql = "SELECT
               courses.*,
               assessment_score_results.*,
               (select count(*) from course_registrations where status like 'R%' and course_id = courses.id) as registered
@@ -112,40 +112,40 @@ class CourseOffer < KapaBaseModel
   end
 
   def self.csv_columns
-   [:term_id,
-    :term_desc,
-    :subject,
-    :number,
-    :section,
-    :crn,
-    :title,
-    :instructor,
-    :assessment,
-    :criterion,
-    :criterion_desc,
-    :target,
-    :acceptable,
-    :unacceptable,
-    :na,
-    :registered]
+    [:term_id,
+     :term_desc,
+     :subject,
+     :number,
+     :section,
+     :crn,
+     :title,
+     :instructor,
+     :assessment,
+     :criterion,
+     :criterion_desc,
+     :target,
+     :acceptable,
+     :unacceptable,
+     :na,
+     :registered]
   end
 
   def self.csv_row(c)
-   [c.term_id,
-    c.term_desc,
-    c.subject,
-    c.number,
-    c.section,
-    c.crn,
-    c.title,
-    c.instructor,
-    c.assessment,
-    c.criterion,
-    c.criterion_desc,
-    c.target,
-    c.acceptable,
-    c.unacceptable,
-    c.na,
-    c.registered]
+    [c.term_id,
+     c.term_desc,
+     c.subject,
+     c.number,
+     c.section,
+     c.crn,
+     c.title,
+     c.instructor,
+     c.assessment,
+     c.criterion,
+     c.criterion_desc,
+     c.target,
+     c.acceptable,
+     c.unacceptable,
+     c.na,
+     c.registered]
   end
 end

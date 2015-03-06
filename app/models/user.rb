@@ -106,7 +106,7 @@ class User < KapaBaseModel
 
   def self.selections(options)
     users = where(:status => 3)
-    users = users.where{dept.like_any my{options[:depts].collect {|c| "%#{c}%"}}} if options[:depts]
+    users = users.depts_scope(options[:depts]) if options[:depts]
     users = users.where(options[:conditions]) if options[:conditions]
     users.includes(:person).collect do |u|
       ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
@@ -118,10 +118,7 @@ class User < KapaBaseModel
     users = users.where("department" => filter.department) if filter.department.present?
     users = users.where("users.status" => filter.status) if filter.status.present?
     users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
-    if filter.key.present?
-      key = "%#{filter.key}%"
-      users = users.where{(self.uid =~ key) | (persons.last_name =~ key) | (persons.first_name =~ key)}
-    end
+    users = users.where("users.uid like ? or persons.last_name like ? or persons.first_name like ?", "%#{filter.key}%", "%#{filter.key}%", "%#{filter.key}%") if filter.key.present?
     return users
   end
 

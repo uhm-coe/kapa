@@ -73,17 +73,17 @@ class TransitionPoint < KapaBaseModel
     transition_points = transition_points.where("programs.code" => filter.program) if filter.program.present?
     transition_points = transition_points.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
     transition_points = transition_points.where("curriculums.major_primary" => filter.major) if filter.major.present?
-    transition_points = transition_points.where{(user_primary_id == filter.user_id) | (user_secondary_id == filter.user_id)} if filter.user_id.present?
+    transition_points = transition_points.assigned_scope(filter.user_id) if filter.user_id.present?
 
     case filter.user.access_scope
     when 3
       # Do nothing
     when 2
-      transition_points = transition_points.where{self.dept.like_any filter.user.depts}
-    when 1
-      transition_points = transition_points.where{(user_primary_id == filter.user.id) | (user_secondary_id == filter.user.id)}
-    else
-      transition_points = transition_points.where("1 = 2") # Do not list any objects
+          transition_points = transition_points.depts_scope(:dept, filter.user.depts)
+      when 1
+        transition_points = transition_points.assigned_scope(filter.user.id)
+      else
+        transition_points = transition_points.where("1 = 2") # Do not list any objects
     end
     return transition_points
   end
@@ -163,5 +163,4 @@ class TransitionPoint < KapaBaseModel
      c.rsend(:last_transition_action, :action_desc),
      c.rsend(:last_transition_action, :action_date)]
   end
-
 end

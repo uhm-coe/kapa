@@ -30,17 +30,17 @@ class AdvisingSession < KapaBaseModel
     advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
     advising_sessions = advising_sessions.where(:task => filter.task) if filter.task.present?
     advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?
-    advising_sessions = advising_sessions.where{(user_primary_id == filter.user_id) | (user_secondary_id == filter.user_id)} if filter.user_id.present?
+    advising_sessions = advising_sessions.assigned_scope(filter.user_id) if filter.user_id.present?
 
     case filter.user.access_scope
-    when 3
-      # Do nothing
-    when 2
-      advising_sessions = advising_sessions.where{self.dept.like_any filter.user.depts}
-    when 1
-      advising_sessions = advising_sessions.where{(user_primary_id == filter.user.id) | (user_secondary_id == filter.user.id)}
-    else
-      advising_sessions = advising_sessions.where("1 = 2")
+      when 3
+        # Do nothing
+      when 2
+        advising_sessions = advising_sessions.depts_scope(filter.user.depts)
+      when 1
+        advising_sessions = advising_sessions.assigned_scope(filter.user.id)
+      else
+        advising_sessions = advising_sessions.where("0 = 1")
     end
     return advising_sessions
   end
@@ -56,40 +56,40 @@ class AdvisingSession < KapaBaseModel
   end
 
   def self.csv_columns
-   [:id_number,
-    :last_name,
-    :first_name,
-    :cur_street,
-    :cur_city,
-    :cur_state,
-    :cur_postal_code,
-    :cur_phone,
-    :email,
-    :session_date,
-    :session_type,
-    :task,
-    :classification,
-    :interest,
-    :location,
-    :handled_by]
+    [:id_number,
+     :last_name,
+     :first_name,
+     :cur_street,
+     :cur_city,
+     :cur_state,
+     :cur_postal_code,
+     :cur_phone,
+     :email,
+     :session_date,
+     :session_type,
+     :task,
+     :classification,
+     :interest,
+     :location,
+     :handled_by]
   end
 
   def self.csv_row(c)
-   [c.rsend(:person, :id_number),
-    c.rsend(:person, :last_name),
-    c.rsend(:person, :first_name),
-    c.rsend(:person, :contact, :cur_street),
-    c.rsend(:person, :contact, :cur_city),
-    c.rsend(:person, :contact, :cur_state),
-    c.rsend(:person, :contact, :cur_postal_code),
-    c.rsend(:person, :contact, :cur_phone),
-    c.rsend(:person, :contact, :email),
-    c.rsend(:session_date),
-    c.rsend(:session_type),
-    c.rsend(:task),
-    c.rsend(:classification),
-    c.rsend(:interest),
-    c.rsend(:location),
-    c.rsend(:handled_by)]
+    [c.rsend(:person, :id_number),
+     c.rsend(:person, :last_name),
+     c.rsend(:person, :first_name),
+     c.rsend(:person, :contact, :cur_street),
+     c.rsend(:person, :contact, :cur_city),
+     c.rsend(:person, :contact, :cur_state),
+     c.rsend(:person, :contact, :cur_postal_code),
+     c.rsend(:person, :contact, :cur_phone),
+     c.rsend(:person, :contact, :email),
+     c.rsend(:session_date),
+     c.rsend(:session_type),
+     c.rsend(:task),
+     c.rsend(:classification),
+     c.rsend(:interest),
+     c.rsend(:location),
+     c.rsend(:handled_by)]
   end
 end
