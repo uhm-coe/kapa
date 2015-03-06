@@ -20,8 +20,9 @@ class PracticumPlacement < KapaBaseModel
   def self.search(filter, options = {})
     placements = PracticumPlacement.includes([:person, :practicum_site])
     placements = placements.where("practicum_placements.term_id" => filter.term_id) if filter.term_id.present?
-    placements = placements.where("practicum_placements.practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
+    placements = placements.where("practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
     placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
+    return placements
   end
 
   def self.to_csv(filter, options = {})
