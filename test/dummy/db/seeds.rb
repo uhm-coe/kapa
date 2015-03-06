@@ -25,6 +25,7 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "course_registrations")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "enrollments")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "practicum_placements")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "practicum_sites")
+ActiveRecord::Fixtures.create_fixtures(fixture_path, "datasets")
 
 [TransitionPoint, Enrollment, CourseOffer, PracticumPlacement].each do |c|
   c.update_all(:term_id => Term.current_term.id)

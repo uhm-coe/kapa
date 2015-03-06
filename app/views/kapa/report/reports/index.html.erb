@@ -1,6 +1,6 @@
 <% content_for(:box1) do %>
 
-  <%- model_class = DataSet -%>
+  <%- model_class = Dataset -%>
 
   <h3>Reports</h3>
 
@@ -17,17 +17,17 @@
       </tr>
     </thead>
     <tbody>
-      <% @data_sets.each do |data_set| %>
-        <tr>
-          <td><%= link_to data_set.id, kapa_report_data_set_path(data_set) %></td>
-          <td><%= data_set.type %></td>
-          <td><%= data_set.name %></td>
-          <td><%= data_set.data_source.name %></td>
-          <td><%= data_set.loaded_at %></td>
-          <td><%= data_set.record_count %></td>
-          <td class="right">
-            <%= link_to "Show", kapa_report_report_path(data_set), :class => 'btn btn-default btn-xs' %>
-          </td>
+    <% @datasets.each do |dataset| %>
+      <tr>
+        <td><%= link_to dataset.id, kapa_report_dataset_path(dataset) %></td>
+        <td><%= dataset.type %></td>
+        <td><%= dataset.name %></td>
+        <td><%= dataset.data_source %></td>
+        <td><%= dataset.loaded_at %></td>
+        <td><%= dataset.record_count %></td>
+        <td class="right">
+          <%= link_to "Show", kapa_report_report_path(dataset), :class => 'btn btn-default btn-xs' %>
+        </td>
         </tr>
       <% end %>
     </tbody>

@@ -1,15 +1,21 @@
 <% content_for(:head) do %>
+
+  <%= stylesheet_link_tag "pivot", :media => "all" %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="https://www.google.com/jsapi"></script>
+  <%= javascript_include_tag "pivot" %>
+  <%= javascript_include_tag "pivot_gchart_renderers" %>
+
   <script>
     google.load("visualization", "1", {packages:["corechart", "charteditor"]});
-    $(function() {
+    jQuery(document).ready(function ($) {
       var derivers = $.pivotUtilities.derivers;
       var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
 
-      $.getJSON('<%=kapa_report_data_set_path(:id => @data_set, :action => :feed)%>', function(response) {
+      $.getJSON('<%=kapa_report_datasets_feed_path(:id => @dataset)%>', function (response) {
         var data = response['data'];
         data.unshift(response['data_columns']);
-        $("#output").pivotUI(data, {renderers: renderers});
+        $("#output").pivotUI(data);
       });
     });
   </script>
@@ -18,7 +24,7 @@
 <% content_for(:box1) do %>
   <h4 class="section-header">
     <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%=@data_set.name %>
+    <%= @dataset.name %>
   </h4>
 
   <div id="output">

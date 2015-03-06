@@ -66,7 +66,7 @@ class Kapa::KapaBaseController < ActionController::Base
 
   def redirect_to(options = {}, response_status = {})
     if request.xhr?
-       render(:js => "window.location.href = '#{url_for(options)}'")
+      render(:js => "window.location.href = '#{url_for(options)}'")
     else
       super(options, response_status)
     end
@@ -75,15 +75,15 @@ class Kapa::KapaBaseController < ActionController::Base
   def render_notice(options = {:effect => "highlight"})
     script = ""
     [:notice1, :notice2, :notice3].each do |i|
-        script << "jQuery('##{i}').html('#{flash[i].gsub("'", "\\\\'")} (#{DateTime.now.strftime("%H:%M:%S")})').effect('#{options[:effect]}');\n" if not flash[i].blank?
+      script << "jQuery('##{i}').html('#{flash[i].gsub("'", "\\\\'")} (#{DateTime.now.strftime("%H:%M:%S")})').effect('#{options[:effect]}');\n" if not flash[i].blank?
     end
     render(:js => script)
   end
 
   protected
-#  def local_request?
-#    false
-#  end
+  #  def local_request?
+  #    false
+  #  end
 
   def rescue_action_in_public(exception)
     if request.xhr?
@@ -97,9 +97,9 @@ class Kapa::KapaBaseController < ActionController::Base
 
   private
   def error_message_for(*args)
-    options =  args.last.is_a?(Hash) ? args.last : {}
+    options = args.last.is_a?(Hash) ? args.last : {}
     errors = []
-    args.each {|a| errors << a.errors.full_messages.join(", ") if a.is_a?(ActiveRecord::Base) and not a.errors.blank?}
+    args.each { |a| errors << a.errors.full_messages.join(", ") if a.is_a?(ActiveRecord::Base) and not a.errors.blank? }
     message = errors.join(", ")
     options[:sub].each_pair { |pattern, replacement| message.gsub!(pattern, replacement) } if options[:sub]
     return message
@@ -126,32 +126,31 @@ class Kapa::KapaBaseController < ActionController::Base
   def menu_items(name, options = {})
     items = []
     case name.to_s
-    when "main"
-      items.push ["Search Person", kapa_main_persons_path]  if @current_user.manage?(:main, :delegate => :search)
-      items.push ["Cohorts", kapa_main_curriculums_path]  if @current_user.read? (:main)
-      items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:main)
-      items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:main)
-    when "artifact"
-      items.push ["Forms", kapa_artifact_forms_path] if @current_user.manage?(:artifact, :delegate => :form)
-      items.push ["Test Scores", kapa_artifact_exams_path] if @current_user.manage?(:artifact, :delegate => :exam)
-    when "advising"
-      items.push ["Sessions", kapa_advising_sessions_path]  if @current_user.read?(:advising)
-    when "course"
-      items.push ["Rosters", kapa_course_offers_path] if @current_user.read?(:course)
-    when "practicum"
-      items.push ["Placements", kapa_practicum_placements_path]  if @current_user.read?(:practicum)
-      items.push ["Sites", kapa_practicum_sites_path]  if @current_user.read?(:practicum)
-    when "report"
-      items.push ["Reports", kapa_report_reports_path]  if @current_user.read?(:report)
-      items.push ["Data Sets", kapa_report_data_sets_path]  if @current_user.manage?(:report)
-      items.push ["Data Sources", kapa_report_data_sources_path]  if @current_user.manage?(:report)
-    when "admin"
-      items.push ["Terms", kapa_admin_terms_path] if @current_user.manage?(:admin, :delegate => :term)
-      items.push ["Programs", kapa_admin_programs_path]  if @current_user.manage?(:admin, :delegate => :program)
-      items.push ["Assessments", kapa_admin_rubrics_path]  if @current_user.manage?(:admin, :delegate => :rubric)
-      items.push ["User Accounts", kapa_admin_users_path]  if @current_user.manage?(:admin, :delegate => :user)
+      when "main"
+        items.push ["Search Person", kapa_main_persons_path] if @current_user.manage?(:main, :delegate => :search)
+        items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:main)
+        items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:main)
+        items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:main)
+      when "artifact"
+        items.push ["Forms", kapa_artifact_forms_path] if @current_user.manage?(:artifact, :delegate => :form)
+        items.push ["Test Scores", kapa_artifact_exams_path] if @current_user.manage?(:artifact, :delegate => :exam)
+      when "advising"
+        items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:advising)
+      when "course"
+        items.push ["Rosters", kapa_course_offers_path] if @current_user.read?(:course)
+      when "practicum"
+        items.push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:practicum)
+        items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:practicum)
+      when "report"
+        items.push ["Reports", kapa_report_reports_path] if @current_user.read?(:report)
+        items.push ["Datasets", kapa_report_datasets_path] if @current_user.manage?(:report)
+      when "admin"
+        items.push ["Terms", kapa_admin_terms_path] if @current_user.manage?(:admin, :delegate => :term)
+        items.push ["Programs", kapa_admin_programs_path] if @current_user.manage?(:admin, :delegate => :program)
+        items.push ["Assessments", kapa_admin_rubrics_path] if @current_user.manage?(:admin, :delegate => :rubric)
+        items.push ["User Accounts", kapa_admin_users_path] if @current_user.manage?(:admin, :delegate => :user)
 #      items.push ["User Activities", kapa_admin_users_path(:action => :logs)]   if @current_user.manage?(:admin, :delegate => :user)
-      items.push ["System Properties", kapa_admin_properties_path]   if @current_user.manage?(:admin)
+        items.push ["System Properties", kapa_admin_properties_path] if @current_user.manage?(:admin)
     end
     items
   end

@@ -53,8 +53,9 @@ Rails.application.routes.draw do
 
     namespace :report do
       resources :reports, &extra_actions
-      resources :data_sources, &extra_actions
-      resources :data_sets, &extra_actions
+      resources :datasets, &extra_actions
+      get 'datasets/load(/:id)' => 'datasets#load', :as => :datasets_load
+      get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
     end
 
     namespace :admin do

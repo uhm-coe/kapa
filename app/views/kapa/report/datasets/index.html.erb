@@ -1,0 +1,40 @@
+<% content_for(:box1) do %>
+
+  <h3>Datasets</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%= link_to t('.new', :default => t("helpers.links.new")), new_kapa_report_dataset_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Table Name</th>
+        <th>Attr</th>
+        <th>Loaded at</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @datasets.each do |dataset| %>
+      <tr>
+        <td><%= dataset.id %></td>
+        <td><%= dataset.type %></td>
+        <td><%= dataset.name %></td>
+        <td><%= dataset.table_name %></td>
+        <td><%= abbr dataset.attr %></td>
+        <td><%= dataset.loaded_at %></td>
+        <td class="right">
+          <%= link_to "Show", kapa_report_dataset_path(dataset), :class => 'btn btn-default btn-xs' %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<%end%>

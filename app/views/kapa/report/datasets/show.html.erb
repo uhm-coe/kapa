@@ -1,0 +1,9 @@
+<% content_for(:box1) do %>
+  <%= bootstrap_form_for :dataset, :url => kapa_report_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
+    <%= render :partial => '/kapa/report/dataset_form' %>
+    <%= render :layout => "/kapa/layouts/controls" do %>
+      <%= link_to "Load", kapa_report_datasets_load_path(:id => @dataset) %>
+      <%= link_to "Feed", kapa_report_datasets_feed_path(:id => @dataset) %>
+    <% end %>
+  <% end %>
+<% end %>

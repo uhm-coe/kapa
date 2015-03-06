@@ -1,19 +1,19 @@
 class Kapa::Report::ReportsController < Kapa::KapaBaseController
   def index
-    @data_sets = DataSet.all
+    @datasets = Dataset.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @data_sets }
+      format.json { render :json => @datasets }
     end
   end
 
   def show
-    @data_set = DataSet.find(params[:id])
-
+    @dataset = Dataset.find(params[:id])
+    @dataset.load if @dataset.loaded_at.blank?
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @data_set }
+      format.json { render :json => @dataset }
     end
   end
 end

@@ -6,41 +6,41 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require twitter/bootstrap
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
 //= require bootstrap-multiselect
-//= require_tree .
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
   // Submit a form if data-submit attribute is set
-  $('button[data-submit]').click(function() {
+  $('button[data-submit]').click(function () {
     $($(this).attr('data-submit')).submit();
   });
 
   // Reset a form if data-reset attribute is set
-  $('button[data-reset]').click(function() {
+  $('button[data-reset]').click(function () {
     var form_id = $(this).attr('data-reset');
     $(form_id).trigger('reset');
   });
 
-  $('.closable-tabs [data-toggle=tab]').click(function(){
-    if ($(this).parent().hasClass('active')){
+  $('.closable-tabs [data-toggle=tab]').click(function () {
+    if ($(this).parent().hasClass('active')) {
       $($(this).attr('href')).toggleClass('active');
     }
   });
 
   $('.kapa-datepicker').datepicker({
     format: 'yyyy-mm-dd'
-  }).on('changeDate', function(e) {
-    $(this).datepicker('hide');
-  }).on('keydown', function(e) {
-    if (e.keyCode === 8) { // If backspace key is pressed
-      e.preventDefault(); // Disable "back button" action; stay on the page
-      $(this).val(''); // Clear date in the input field
-      $(this).datepicker('hide'); // Dismiss the calendar
-    }
-  });
+  }).on('changeDate',function (e) {
+      $(this).datepicker('hide');
+    }).on('keydown', function (e) {
+      if (e.keyCode === 8) { // If backspace key is pressed
+        e.preventDefault(); // Disable "back button" action; stay on the page
+        $(this).val(''); // Clear date in the input field
+        $(this).datepicker('hide'); // Dismiss the calendar
+      }
+    });
 
   $('.kapa-multiselect').multiselect({
     numberDisplayed: 1,

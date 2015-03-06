@@ -1,0 +1,17 @@
+<%= bootstrap_fields_for :dataset do |f| %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.text_field :name %>
+      <%= f.select :type, [["Database", "database"], ["LDAP", "ldap"], ["CSV File", "file"]] %>
+      <%= f.select :data_source, [["Local Database", "local"]] %>
+      <%= f.text_field :record_count %>
+      <%= f.text_field :loaded_at %>
+      <%= f.text_field :attr %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.text_area :query %>
+    </div>
+  </div>
+
+<% end %>

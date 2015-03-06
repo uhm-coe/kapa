@@ -2,11 +2,11 @@
 
   <h4 class="section-header">
     <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    New Data Source
+    New Data Set
   </h4>
 
-  <%= bootstrap_form_for :data_source, :url => kapa_report_data_sources_path do |f| %>
-    <%= render :partial => '/kapa/report/data_source_form' %>
+  <%= bootstrap_form_for :dataset, :url => kapa_report_ddataset_path do |f| %>
+    <%= render :partial => '/kapa/report/dataset_form' %>
     <%= render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
   <% end %>
 
