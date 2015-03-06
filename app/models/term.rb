@@ -31,8 +31,8 @@ class Term < KapaBaseModel
     #   For Rails 3.x: Term.scoped
     terms = Term.scoped
     terms = terms.where("id" => filter.term_id) if filter.term_id.present?
-#    terms = terms.where{self.start_date >= filter.start_date} if filter.start_date.present?
-#    terms = terms.where{self.end_date <= filter.end_date} if filter.end_date.present?
+    terms = terms.where("start_date >= :start_date", {:start_date => filter.start_date}) if filter.start_date.present?
+    terms = terms.where("end_date <= :end_date", {:end_date => filter.end_date}) if filter.end_date.present?
     terms = terms.where("active" => filter.active) if filter.active.present?
     return terms
   end

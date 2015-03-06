@@ -111,7 +111,7 @@ class KapaBaseModel < ActiveRecord::Base
   end
 
   def self.assigned_scope(user_id)
-    where("? in (user_primary_id, user_secondary_id", user_id)
+    where("? in (user_primary_id, user_secondary_id)", user_id)
   end
 
   # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields
