@@ -21,6 +21,7 @@
     <ul class="nav nav-tabs">
       <li><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
       <li><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
+      <li><a href="#enrollments_tab" data-toggle="tab">Enrollments</a></li>
     </ul>
 
     <div class="tab-content">
@@ -35,7 +36,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Semester</th>
+              <th>Term</th>
               <th>Type</th>
               <th>Latest Action</th>
               <th></th>
@@ -53,6 +54,30 @@
           </tbody>
         </table>
         <p class="new right"><%=link_to "New Transition Point", new_kapa_main_transition_point_path(:id => @curriculum) %></p>
+      </div>
+
+      <div id="enrollments_tab" class="tab-pane">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for enrollment in @enrollments %>
+              <tr>
+                <td><%=h enrollment.term_desc %></td>
+                <td><%=h enrollment.category %></td>
+                <td><%=h enrollment.status %></td>
+                <td class="right"><%=link_to "Show", kapa_main_enrollment_path(:id => enrollment), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p class="new right"><%=link_to "New Enrollment", new_kapa_main_enrollment_path(:id => @curriculum) %></p>
       </div>
     </div>
   </div>

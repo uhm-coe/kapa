@@ -1,61 +1,43 @@
 class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
 
   def show
-    @practicum_placement = PracticumPlacement.find(params[:id])
-    @practicum_assignments = @practicum_placement.practicum_assignments.where("assignment_type" => 'mentor').order("practicum_assignments.id")
-    @practicum_profile = @practicum_placement.practicum_profile
-    @practicum_profile_ext = @practicum_profile.ext
-    @person = @practicum_profile.person
+    @enrollment = Enrollment.find(params[:id])
+    @curriculum = @enrollment.curriculum
+    @person = @curriculum.person
     @person.details(self)
-    @curriculums = @person.curriculums
-    @practicum_sites = PracticumSite.select("id, name_short")
-    @mentors = Person.includes(:contact).where("id in (SELECT distinct person_id FROM practicum_assignments)").order("persons.last_name, persons.first_name")
   end
 
   def new
-    @person = Person.find(params[:id])
+    @curriculum = Curriculum.find(params[:id])
+    @person = @curriculum.person
     @person.details(self)
-    @practicum_profile = @person.practicum_profile ||= @person.create_practicum_profile
-    @practicum_placement = @practicum_profile.practicum_placements.build(:term_id => Term.current_term.id)
-    @curriculums = @person.curriculums
+    @enrollment = @curriculum.enrollments.build(:term_id => Term.current_term.id, :curriculum_id => params[:id])
   end
 
   def create
     @person = Person.find(params[:id])
-    @practicum_profile = @person.practicum_profile
-    @practicum_profile.attributes = params[:practicum_profile]
-    @practicum_placement = @practicum_profile.practicum_placements.build(params[:practicum_placement])
-    unless @practicum_profile.save and @practicum_placement.save
-      flash[:danger] = error_message_for(@practicum_profile, @practicum_placement)
-      redirect_to new_kapa_practicum_placement_path and return false
+    @curriculum = @person.curriculums.find(params[:enrollment][:curriculum_id])
+
+    @enrollment = @curriculum.enrollments.build(params[:enrollment])
+    @enrollment.dept = @current_user.primary_dept
+    unless @enrollment.save
+      flash[:danger] = @enrollment.errors.full_messages.join(", ")
+      redirect_to new_kapa_main_enrollment_path(:id => @curriculum) and return false
     end
-    flash[:success] = "Placement record was successfully created."
-    redirect_to kapa_practicum_placement_path(:id => @practicum_placement)
+    flash[:success] = "Enrollment was successfully created."
+    redirect_to kapa_main_enrollment_path(:id => @enrollment)
   end
 
   def update
-    @practicum_placement = PracticumPlacement.find(params[:id])
-    @practicum_placement.attributes = params[:practicum_placement]
-    @practicum_profile = @practicum_placement.practicum_profile
-    @practicum_profile.attributes = params[:practicum_profile]
-    @practicum_profile.update_serialized_attributes(:_ext, params[:practicum_profile_ext])
+    @enrollment = Enrollment.find(params[:id])
+    @enrollment.attributes = params[:enrollment]
 
-    if @practicum_placement.save and @practicum_profile.save
-      flash[:success] = "Placement record was successfully updated."
+    if @enrollment.save
+      flash[:success] = "Enrollment was successfully updated."
     else
-      flash[:danger] = error_message_for(@practicum_placement, @practicum_profile)
+      flash[:danger] = @enrollment.errors.full_messages.join(", ")
     end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_placement)
-  end
-
-  def destroy
-    @practicum_placement = PracticumPlacement.find(params[:id])
-    unless @practicum_placement.destroy
-      flash[:danger] = error_message_for(@practicum_placement)
-      redirect_to kapa_practicum_placement_path(:id => @practicum_placement) and return false
-    end
-    flash[:success] = "Placement record successfully deleted."
-    redirect_to kapa_main_person_path(:id => @practicum_placement.person_id, :focus => :practicum)
+    redirect_to kapa_main_enrollment_path(:id => @enrollment)
   end
 
   # TODO

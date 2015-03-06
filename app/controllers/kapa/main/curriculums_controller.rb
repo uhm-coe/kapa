@@ -5,6 +5,7 @@ class Kapa::Main::CurriculumsController < Kapa::Main::BaseController
     @program = @curriculum.program
     @journey = @curriculum.deserialize(:journey, :as => OpenStruct)
     @transition_points = @curriculum.transition_points
+    @enrollments = @curriculum.enrollments
     @person = @curriculum.person
     @person.details(self)
   end

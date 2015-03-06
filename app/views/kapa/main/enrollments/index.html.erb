@@ -29,7 +29,7 @@
     <%=bootstrap_form_for(:data, :url => import_kapa_main_enrollments_path, :html => {:multipart => true, :id => "import_enrollment_form"}) do |f|%>
       <%=f.term_select :term_id %>
       <%=f.file_field :import_file %>
-      <%=f.check_box :delete, {:label => "Delete all enrollment records in the specified semester before importing"}, "Y", "N" %>
+      <%=f.check_box :delete, {:label => "Delete all enrollment records in the specified term before importing"}, "Y", "N" %>
     <% end %>
   <% end %>
 
