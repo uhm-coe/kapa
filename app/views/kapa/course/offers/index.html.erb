@@ -53,8 +53,8 @@
         <td><%= h course_offer.instructor %></td>
         <td><%= h course_offer.course_registrations.length.to_i %></td>
         <% if @current_user.manage? :course, :delegate => :export %>
-          <td><%= number_to_percentage course_offer.progress, :precision => 2 %></td>
-        <% end %>
+          <td><%#= number_to_percentage course_offer.progress, :precision => 2 %></td>
+      <% end %>
         <td class="right"><%= link_to "Show", kapa_course_offer_path(:id => course_offer), :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

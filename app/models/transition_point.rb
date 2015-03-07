@@ -79,7 +79,7 @@ class TransitionPoint < KapaBaseModel
     when 3
       # Do nothing
     when 2
-          transition_points = transition_points.depts_scope(:dept, filter.user.depts)
+          transition_points = transition_points.depts_scope(filter.user.depts)
       when 1
         transition_points = transition_points.assigned_scope(filter.user.id)
       else
