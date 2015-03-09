@@ -26,6 +26,7 @@ class Kapa::Main::BaseController < Kapa::KapaBaseController
   def filter_defaults
     {:key => "",
      :term_id => Term.current_term.id,
-     :type => :admission}
+     :type => :admission,
+     :per_page => Rails.configuration.items_per_page}
   end
 end

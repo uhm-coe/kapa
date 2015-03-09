@@ -63,8 +63,7 @@ class Kapa::Advising::SessionsController < Kapa::Advising::BaseController
 
   def index
     @filter = filter
-    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
-    @advising_sessions = AdvisingSession.search(@filter).order("session_date DESC, advising_sessions.id DESC").paginate(:page => params[:page], :per_page => @per_page_selected)
+    @advising_sessions = AdvisingSession.search(@filter).order("session_date DESC, advising_sessions.id DESC").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export

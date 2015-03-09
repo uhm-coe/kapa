@@ -8,6 +8,7 @@ class Kapa::Admin::BaseController < Kapa::KapaBaseController
      :date_start => Date.today,
      :date_end => Date.today,
      :start_term_id => Term.current_term.id,
-     :end_term_id => Term.current_term.id}
+     :end_term_id => Term.current_term.id,
+     :per_page => Rails.configuration.items_per_page}
   end
 end

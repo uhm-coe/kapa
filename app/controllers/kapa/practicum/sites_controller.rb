@@ -85,8 +85,7 @@ class Kapa::Practicum::SitesController < Kapa::Practicum::BaseController
 
   def index
     @filter = filter
-    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
-    @practicum_sites = PracticumSite.search(@filter).order("name_short").paginate(:page => params[:page], :per_page => @per_page_selected)
+    @practicum_sites = PracticumSite.search(@filter).order("name_short").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export

@@ -13,7 +13,7 @@
     <%= bootstrap_form_for(:filter, :url => kapa_course_offers_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
       <%= f.text_field :name, :label => "Filter (e.g., ITE317 or ITE317-001)" %>
-      <%= f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
+      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>
   <% end %>
 

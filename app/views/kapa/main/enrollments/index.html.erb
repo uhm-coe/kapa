@@ -19,7 +19,7 @@
         <div class="col-sm-6">
           <%=f.property_select :major, :include_blank => "Any", :include_code => true, :depts => @current_user.depts, :label => "Major/Concentration" %>
           <%=f.history_select :category, :model_name => :enrollment, :model_method => :category, :include_blank => "Any" %>
-          <%=f.select :per_page, [10, 20, 30, 40, 50], :selected => @per_page_selected %>
+          <%=f.select :per_page, [10, 20, 30, 40, 50] %>
         </div>
       </div>
     <% end %>

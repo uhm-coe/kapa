@@ -56,8 +56,7 @@ class Kapa::Admin::ProgramsController < Kapa::Admin::BaseController
 
   def index
     @filter = filter
-    @per_page_selected = @filter.per_page || Rails.configuration.items_per_page
-    @programs = Program.search(@filter).order("code").paginate(:page => params[:page], :per_page => @per_page_selected)
+    @programs = Program.search(@filter).order("code").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
 end
