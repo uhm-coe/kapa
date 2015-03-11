@@ -6,6 +6,7 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def show
     @dataset = Dataset.find(params[:id])
+    @parameters = @dataset.deserialize(:parameters, :as => OpenStruct)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,21 +22,24 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
   def create
     @dataset = Dataset.new(params[:dataset])
 
-    if @dataset.save
-      redirect_to kapa_report_dataset_path(@dataset), :notice => 'Data Set was successfully created.'
-    else
-      render :action => "new"
+    unless @dataset.save
+      flash[:danger] = @dataset.errors.full_messages.join(", ")
+      redirect_to new_kapa_report_dataset_path and return false
     end
+    flash[:success] = "Dataset was successfully created."
+    redirect_to kapa_report_dataset_path(:id => @dataset)
   end
 
   def update
     @dataset = Dataset.find(params[:id])
+    @dataset.serialize(:parameters, params[:parameters]) if params[:parameters]
 
     if @dataset.update_attributes(params[:dataset])
-      redirect_to kapa_report_dataset_path(@dataset), :notice => 'Dataset was successfully updated.'
+      flash[:success] = "Dataset was successfully updated."
     else
-      render :action => "show"
+      flash[:danger] = @dataset.errors.full_messages.join(", ")
     end
+    redirect_to kapa_report_dataset_path(:id => @dataset, :focus => params[:focus], :parameter_panel => params[:parameter_panel])
   end
 
   def destroy
@@ -49,9 +53,9 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
     begin
       @dataset = Dataset.find(params[:id])
       @dataset.load
-      flash[:notice] = "Dataset was successfully loaded."
+      flash[:success] = "Dataset was successfully loaded."
     rescue Sequel::Error => e
-      flash[:error] = e.message
+      flash[:danger] = e.message
     end
 
     redirect_to kapa_report_dataset_path(@dataset)

@@ -1,9 +1,80 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'dataset_profile';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
 <% content_for(:box1) do %>
-  <%= bootstrap_form_for :dataset, :url => kapa_report_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
-    <%= render :partial => '/kapa/report/dataset_form' %>
-    <%= render :layout => "/kapa/layouts/controls" do %>
-      <%= link_to "Load", kapa_report_datasets_load_path(:id => @dataset) %>
-      <%= link_to "Feed", kapa_report_datasets_feed_path(:id => @dataset) %>
-    <% end %>
-  <% end %>
+
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=h @dataset.name %>
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#dataset_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#parameters_tab" data-toggle="tab">Parameters</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="dataset_profile_tab" class="tab-pane">
+        <%= bootstrap_form_for :dataset, :url => kapa_report_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
+          <%= render :partial => '/kapa/report/dataset_form' %>
+          <%= render :layout => "/kapa/layouts/controls" do %>
+            <%= link_to "Load", kapa_report_datasets_load_path(:id => @dataset), :class => "btn btn-default" %>
+            <%= link_to "Feed", kapa_report_datasets_feed_path(:id => @dataset), :class => "btn btn-default" %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div id="parameters_tab" class="tab-pane">
+        <div id="accordion" class="panel-group">
+
+          <% @parameters.each_with_index do |parameter, index| %>
+            <% @parameter = parameter %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%=@parameter.id %>"><span class="strong"><%=h @parameter.name %></span></a>
+                </h3>
+              </div>
+              <div id="parameter_<%=@parameter.id %>" class="panel-collapse collapse<%=' in' if params[:parameter_panel] == parameter.id.to_s || (params[:parameter_panel].nil? && index == 0) %>">
+                <div class="panel-body">
+                  <%=bootstrap_form_for :parameters, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters, :parameter_panel => parameter.id), :html => {:method => :put} do |f| %>
+                    <%=render :partial => "/kapa/report/parameters_form" %>
+                    <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :report %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <%end%>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_parameter"><span class="new">New Parameter</span></a>
+              </h3>
+            </div>
+            <div id="new_parameter" class="panel-collapse collapse<%=' in' if @parameters.length == 0 %>">
+              <div class="panel-body">
+                <%# @parameter = Dataset.new %>
+                <%=bootstrap_form_for :parameters, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters), :html => {:method => :put} do |f| %>
+                  <%=render :partial => "/kapa/report/parameters_form" %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :report %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 <% end %>
