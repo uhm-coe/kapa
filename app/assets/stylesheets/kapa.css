@@ -10,87 +10,80 @@
 */
 
 .section-header {
-    padding-bottom: 9px;
-    border-bottom: 1px solid #EEEEEE;
-    margin-bottom: 30px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 30px;
 }
 
 .section-header.divider {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .section-header a.glyphicon {
-    color: #7C7C7C;
-    text-decoration: none;
-    margin-right: 12px;
+  color: #7C7C7C;
+  text-decoration: none;
+  margin-right: 12px;
 }
 
 .section-header a.glyphicon:hover {
-    color: #333333;
+  color: #333333;
 }
 
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 .tabs {
-    margin-top: -20px;
+  margin-top: -20px;
 }
 
 .tab-content {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .kapa-datepicker.form-control[readonly] {
-    cursor: default;
-    background-color: #FFFFFF;
-    opacity: 1;
+  cursor: default;
+  background-color: #FFFFFF;
+  opacity: 1;
 }
-
-/* TODO: Fix so that multiselect is not on the same line as label */
 
 /* Fix so that multiselect spans the width of the parent container */
 .kapa-multiselect-btn-group, .kapa-multiselect-btn {
-    width: 100%;
+  width: 100%;
 }
 
 /* Aligns multiselect button text to the left */
 button.kapa-multiselect-btn {
-    text-align: left;
+  text-align: left;
 }
 
 /* Fix so that multiselect dropdown is not covered by tab boundaries (see admin/programs/show) */
 /* Note: Setting a positive z-index so the dropdown appears above the other tabs does not work */
 ul.multiselect-container.dropdown-menu {
-    position: relative;
+  position: relative;
 }
 
 .form-block {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 /* Places form acknowledgement text inline with the checkbox */
 .form-agreement > div:first-of-type > label {
-    display: inline;
+  display: inline;
 }
 
 .form-notice {
-    font-style: italic;
+  font-style: italic;
 }
 
-/* Places a bit of space between Delete and Cancel buttons on delete popover confirmation */
-.confirm-dialog-btn-confirm {
-    margin-right: 4px;
-}
-
-/* Styles Cancel button on delete popover confirmation */
-button.confirm-dialog-btn-abord {
-    color: #333333;
-    background-color: #FFFFFF;
-    border-color: #CCCCCC;
-}
-
-/* Styles Cancel button hover on delete popover confirmation */
-button.confirm-dialog-btn-abord:hover {
-    background-color: #EBEBEB;
+/* Fix for report/reports/show filter due to interference of pivot styles */
+#filter_report_dialog .modal-dialog {
+  padding: 0;
+  position: relative;
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-clip: border-box;
+  outline: none;
 }

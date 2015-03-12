@@ -19,15 +19,69 @@
       });
     });
   </script>
+
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_report_datasets_feed_path(:id => @dataset), :html => {:method => :get, :id => "filter_form"}) do |f| %>
+
+      <% if @parameters.length.present? %>
+        <% (1..@parameters.length.to_i).each do |i| %>
+
+          <% if @parameters.send("active#{i}") == "Y" %>
+            <%
+              name = @parameters.send("name#{i}")
+              type = @parameters.send("type#{i}")
+              default = @parameters.send("default#{i}")
+              label = @parameters.send("label#{i}")
+              property_name = "major" # TODO: Implement later
+            %>
+
+            <% if type == "text_field" %>
+              <%=f.send(type, name, :label => label) %>
+            <%# elsif type == "select" # TODO %>
+              <%#=f.send(type, name, [["LDAP", "ldap"],["Local" , "local"]], :label => label, :include_blank => "Any") %>
+            <% elsif type == "property_select" %>
+              <%=f.send(type, name, :name => property_name, :label => label, :include_blank => "Any") %>
+            <% elsif type == "term_select" or type == "program_select"  %>
+              <%=f.send(type, name, :label => label, :include_blank => "Any") %>
+            <% elsif type == "user_select" %>
+              <%=f.send(type, name, :label => label, :include_blank => "Any", :depts => @current_user.depts) %>
+            <% elsif type == "date_picker" %>
+              <div class="form-group">
+                <%=label_tag "filter_#{name}", label %>
+                <%=send(type, :filter, name) %>
+              </div>
+            <% elsif type == "check_box" %>
+              <%=f.send(type, name, {:label => label}, "Y", "N") %>
+            <% end %>
+          <% end %>
+
+        <% end %>
+      <% end %>
+
+    <% end %>
+  <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
+
   <h4 class="section-header">
     <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
     <%= @dataset.name %>
   </h4>
 
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_report_dialog">Filter</button>
+    </div>
+  </div>
+
   <div id="output">
     <!-- Dynamically generated content -->
   </div>
+
 <%end%>
