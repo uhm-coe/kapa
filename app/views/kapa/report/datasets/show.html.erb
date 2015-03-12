@@ -34,45 +34,30 @@
       </div>
 
       <div id="parameters_tab" class="tab-pane">
-        <div id="accordion" class="panel-group">
 
-          <% @parameters.each_with_index do |parameter, index| %>
-            <% @parameter = parameter %>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%=@parameter.id %>"><span class="strong"><%=h @parameter.name %></span></a>
-                </h3>
-              </div>
-              <div id="parameter_<%=@parameter.id %>" class="panel-collapse collapse<%=' in' if params[:parameter_panel] == parameter.id.to_s || (params[:parameter_panel].nil? && index == 0) %>">
-                <div class="panel-body">
-                  <%=bootstrap_form_for :parameters, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters, :parameter_panel => parameter.id), :html => {:method => :put} do |f| %>
-                    <%=render :partial => "/kapa/report/parameters_form" %>
-                    <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :report %>
-                  <% end %>
+        <div id="accordion" class="panel-group">
+          <%=bootstrap_form_for :parameters, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters), :html => {:method => :put} do |f| %>
+            <% (1..@parameters.length.to_i).each do |i| %>
+              <% name = "name#{i}" %>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%=name %>"><span class="strong"><%=@parameters.send(name) %></span></a>
+                  </h3>
+                </div>
+                <div id="parameter_<%=name %>" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <%=render :partial => "/kapa/report/parameters_form", :locals => {:name => name, :type => "type#{i}", :default => "default#{i}", :label => "label#{i}", :active => "active#{i}"} %>
+                  </div>
                 </div>
               </div>
-            </div>
-          <%end%>
+            <% end %>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#new_parameter"><span class="new">New Parameter</span></a>
-              </h3>
-            </div>
-            <div id="new_parameter" class="panel-collapse collapse<%=' in' if @parameters.length == 0 %>">
-              <div class="panel-body">
-                <%# @parameter = Dataset.new %>
-                <%=bootstrap_form_for :parameters, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters), :html => {:method => :put} do |f| %>
-                  <%=render :partial => "/kapa/report/parameters_form" %>
-                  <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :report %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-
+            <%=f.hidden_field :length, :value => @parameters.length.to_i %>
+            <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :report %>
+          <% end %>
         </div>
+
       </div>
     </div>
   </div>
