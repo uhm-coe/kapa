@@ -8,27 +8,27 @@ inner join terms tr on t.term_id = tr.id","description,type,program,major_primar
   type1: text_field
   default1: description
   label1: description
-  active1: 0
+  active1: N
   name2: type
   type2: select
   default2: type
   label2: type
-  active2: 1
+  active2: Y
   name3: program
   type3: program_select
   default3: program
   label3: program
-  active3: 1
+  active3: Y
   name4: major_primary
   type4: text_field
   default4: major_primary
   label4: major_primary
-  active4: 1
+  active4: Y
   name5: major_secondary
   type5: text_field
   default5: major_secondary
   label5: major_secondary
-  active5: 0
+  active5: N
   length: 5
 "
 2,database,Advising Report,0,,"select session_type, session_date
@@ -39,11 +39,11 @@ from advising_sessions
   type1: select
   default1: session_type
   label1: session_type
-  active1: 1
+  active1: Y
   name2: session_date
   type2: datepicker
   default2: session_date
   label2: session_date
-  active2: 0
+  active2: N
   length: 2
 "
