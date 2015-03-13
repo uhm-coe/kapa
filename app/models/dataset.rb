@@ -25,8 +25,10 @@ class Dataset < KapaBaseModel
     dataset = local_connection[table_name]
 
     if filter.present?
-      # .filter works as well, but for both .where and .filter, must pass in a symbol
-      dataset = dataset.where(:name => filter["name"]) if filter["name"].present?
+      filter.each do |f|
+        # Don't filter the dataset if the value is empty
+        dataset = dataset.where("#{f[0]} LIKE ?", "%#{f[1]}%") if f[1].present?
+      end
     end
 
     json = {}
