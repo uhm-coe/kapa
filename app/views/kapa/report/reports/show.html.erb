@@ -27,11 +27,13 @@
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_report_datasets_feed_path(:id => @dataset), :html => {:method => :get, :id => "filter_form"}) do |f| %>
 
+      <% activeFiltersCount = 0 %>
       <% if @parameters.length.present? %>
         <% (1..@parameters.length.to_i).each do |i| %>
 
           <% if @parameters.send("active#{i}") == "Y" %>
             <%
+              activeFiltersCount = activeFiltersCount + 1
               name = @parameters.send("name#{i}")
               type = @parameters.send("type#{i}")
               default = @parameters.send("default#{i}")
@@ -41,7 +43,7 @@
 
             <% if type == "text_field" %>
               <%=f.send(type, name, :label => label) %>
-            <%# elsif type == "select" # TODO %>
+            <%# elsif type == "select" # TODO: Implement later %>
               <%#=f.send(type, name, [["LDAP", "ldap"],["Local" , "local"]], :label => label, :include_blank => "Any") %>
             <% elsif type == "property_select" %>
               <%=f.send(type, name, :name => property_name, :label => label, :include_blank => "Any") %>
@@ -60,6 +62,10 @@
           <% end %>
 
         <% end %>
+      <% end %>
+
+      <% if activeFiltersCount == 0 %>
+        <p>There are no filters set on this report.  Please contact a system admin to enable filters.</p>
       <% end %>
 
     <% end %>

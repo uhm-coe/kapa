@@ -21,23 +21,6 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def create
     @dataset = Dataset.new(params[:dataset])
-
-    # Create parameters based on attributes
-    if @dataset.attr.present?
-      params_hash = Hash.new
-      attributes = @dataset.attr.split(",")
-      attributes.each_with_index do |attribute, i|
-        i = i + 1
-        params_hash["name#{i}"] = attribute
-        params_hash["type#{i}"] = "text_field"
-        params_hash["default#{i}"] = attribute
-        params_hash["label#{i}"] = attribute
-        params_hash["active#{i}"] = "N"
-      end
-      params_hash["length"] = attributes.length
-      @dataset.serialize(:parameters, params_hash)
-    end
-
     unless @dataset.save
       flash[:danger] = @dataset.errors.full_messages.join(", ")
       redirect_to new_kapa_report_dataset_path and return false
@@ -70,6 +53,27 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
       @dataset = Dataset.find(params[:id])
       @dataset.load
       flash[:success] = "Dataset was successfully loaded."
+
+      # Create parameters based on attributes
+      if @dataset.attr.present?
+        params_hash = Hash.new
+        attributes = @dataset.attr.split(",")
+        attributes.each_with_index do |attribute, i|
+          i = i + 1
+          params_hash["name#{i}"] = attribute
+          params_hash["type#{i}"] = "text_field"
+          params_hash["default#{i}"] = attribute
+          params_hash["label#{i}"] = attribute
+          params_hash["active#{i}"] = "N"
+        end
+        params_hash["length"] = attributes.length
+        @dataset.serialize(:parameters, params_hash)
+
+        unless @dataset.save
+          flash[:success] = nil
+          flash[:warning] = "Dataset was successfully loaded but could not create parameters."
+        end
+      end
     rescue Sequel::Error => e
       flash[:danger] = e.message
     end
