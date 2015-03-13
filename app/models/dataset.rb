@@ -20,9 +20,14 @@ class Dataset < KapaBaseModel
     self.update_attributes(:attr => columns.join(","), :record_count => local_connection[table_name].count, :loaded_at => DateTime.now)
   end
 
-  def to_json
+  def to_json(filter)
     local_connection = db_connection(:local)
     dataset = local_connection[table_name]
+
+    if filter.present?
+      # .filter works as well, but for both .where and .filter, must pass in a symbol
+      dataset = dataset.where(:name => filter["name"]) if filter["name"].present?
+    end
 
     json = {}
     json[:data_columns] = dataset.columns

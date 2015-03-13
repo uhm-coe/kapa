@@ -83,6 +83,6 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def feed
     @dataset = Dataset.find(params[:id])
-    render :json => @dataset.to_json
+    render :json => @dataset.to_json(params[:filter])
   end
 end

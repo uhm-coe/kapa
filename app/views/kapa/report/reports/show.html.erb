@@ -8,15 +8,35 @@
 
   <script>
     google.load("visualization", "1", {packages:["corechart", "charteditor"]});
+
     jQuery(document).ready(function ($) {
       var derivers = $.pivotUtilities.derivers;
       var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.gchart_renderers);
 
+      // Load report on page load
       $.getJSON('<%=kapa_report_datasets_feed_path(:id => @dataset)%>', function (response) {
+        displayReport(response);
+      });
+
+      var form = $('#filter_form');
+      // Reload report on filter form submission
+      form.on('submit', function() {
+        $('#filter_report_dialog').modal('hide');
+        $.ajax({
+          type: 'GET',
+          url: '<%=kapa_report_datasets_feed_path(:id => @dataset)%>',
+          data: form.serialize(),
+          success: function(response) {
+            displayReport(response);
+          }
+        });
+      });
+
+      function displayReport(response) {
         var data = response['data'];
         data.unshift(response['data_columns']);
         $("#output").pivotUI(data);
-      });
+      }
     });
   </script>
 
@@ -25,7 +45,7 @@
 <% content_for(:dialog) do %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => kapa_report_datasets_feed_path(:id => @dataset), :html => {:method => :get, :id => "filter_form"}) do |f| %>
+    <%=bootstrap_form_for(:filter, :html => {:method => :get, :id => "filter_form"}, :remote => true) do |f| %>
 
       <% activeFiltersCount = 0 %>
       <% if @parameters.length.present? %>
