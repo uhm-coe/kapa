@@ -17,7 +17,7 @@ class Exam < KapaBaseModel
   end
 
   def type_desc
-    return ApplicationProperty.lookup_description(:exam, type)
+    return ApplicationProperty.lookup_description(:exam_subject, type)
   end
 
   def name
