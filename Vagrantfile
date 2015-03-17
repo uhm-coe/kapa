@@ -7,7 +7,7 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -29,8 +29,9 @@ Vagrant::Config.run do |config|
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
-  config.vm.forward_port 80, 8080, :auto_correct => true
-  config.vm.forward_port 3306, 33060, :auto_correct => true
+  config.vm.forward_port 80, 8000
+  config.vm.forward_port 3306, 33060
+  config.vm.forward_port 5432, 54320
 
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
@@ -38,7 +39,7 @@ Vagrant::Config.run do |config|
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
 
   # Enable provisioning with shell script
-  config.vm.provision :shell, :path => "provision/setup.sh"
+  config.vm.provision :shell, :path => "provision/setup.sh", :privileged => false
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.

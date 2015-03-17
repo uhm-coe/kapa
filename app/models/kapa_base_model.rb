@@ -1,17 +1,6 @@
 class KapaBaseModel < ActiveRecord::Base
   self.abstract_class = true
   serialize :yml, Hash
-#  before_save :update_xml
-
-#TODO This function uses MySQL specific function does not work in other platforms, make this Squeel sifter
-  sifter :list_contains do |column, key|
-    if key.is_a? Array
-      keys = key
-    else
-      keys = [key]
-    end
-    keys.map { |key| find_in_set(__send__(column), key) > 0 }.inject(&:|)
-  end
 
   def update_xml
     self.xml = self.yml.to_xml if self.yml.present?
@@ -38,8 +27,6 @@ class KapaBaseModel < ActiveRecord::Base
 
   def update_serialized_attributes(name, hash)
     value = self.deserialize(name)
-#    value = {} if value.nil?
-    logger.debug "----value: #{value.inspect}"
     hash.each_pair do |k, v|
       value[k.to_sym] = v
     end if hash.is_a?(Hash)
@@ -116,6 +103,6 @@ class KapaBaseModel < ActiveRecord::Base
 
   # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields
   def remove_values(array)
-    array.delete_if {|x| x.blank? || x == "multiselect-all"} if array
+    array.delete_if { |x| x.blank? || x == "multiselect-all" } if array
   end
 end

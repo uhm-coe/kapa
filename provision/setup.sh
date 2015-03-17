@@ -1,44 +1,44 @@
 #!/bin/bash -x
-#This script sets up Ruby 1.9, MySQL, and Apache/Passenger on Ubuntu 12.04LT
+#This script sets up Ruby, Apache/Passenger, and MariaDB on Ubuntu 14.04LT
 
-echo "Adding a Repository..."
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
-sudo cp /vagrant/provision/passenger.list /etc/apt/sources.list.d/
-sudo chown root: /etc/apt/sources.list.d/passenger.list
-sudo chmod 600 /etc/apt/sources.list.d/passenger.list
+echo "Updating repository..."
+echo "cd /vagrant" >> .bashrc
 sudo apt-get update
 
 echo "Installing Essential Tools..."
 sudo apt-get install -y build-essential apt-transport-https vim git-core
 
 echo "Installing Ruby..."
-sudo apt-get remove -y ruby1.8
-sudo apt-get install -y ruby1.9.3 ruby1.9.1-dev
+sudo apt-get install -y ruby2.0 ruby2.0-dev
+sudo rm /usr/bin/ruby && sudo ln -s /usr/bin/ruby2.0 /usr/bin/ruby
+sudo rm -fr /usr/bin/gem && sudo ln -s /usr/bin/gem2.0 /usr/bin/gem
 
 echo "Installing Apache/Passenger..."
-sudo apt-get install -y libapache2-mod-passenger
-sudo rm /etc/apache2/sites-available/default
-sudo cp /vagrant/provision/default /etc/apache2/sites-available/
+sudo apt-get install -y apache2 libapache2-mod-passenger
+sudo rm /etc/apache2/sites-available/000-default.conf
+sudo cp /vagrant/provision/000-default.conf /etc/apache2/sites-available/
 sudo service apache2 restart
 
 echo "Installing MariaDB..."
-sudo apt-get install python-software-properties
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.0/ubuntu precise main'
-sudo apt-get update
 export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password password'
 sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password password'
 sudo apt-get -y install mariadb-server libmariadbd-dev
+mysql --user=root --password=password -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'%' IDENTIFIED BY 'vagrant' WITH GRANT OPTION;"
+sudo sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 sudo service mysql restart
 
+#echo "Installing PostgresSQL..."
 #sudo apt-get install -y postgresql postgresql-contrib libpq-dev
+#sudo su postgres
+#psql -c "CREATE USER vagrant WITH PASSWORD 'vagrant';"
+#psql -c "GRANT ALL PRIVILEGES to vagrant;"
+#exit
+#sudo service postgres restart
 
 echo "Installing Rails..."
 cd /vagrant/
-sudo gem update
 sudo gem install bundler --no-rdoc --no-ri
 bundle install
 
 echo "Installation was completed."
-
