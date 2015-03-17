@@ -49,11 +49,11 @@ class TransitionPoint < KapaBaseModel
   end
 
   def entrance?
-    ApplicationProperty.lookup_category(:transition_point, self.transition_point.type) == "entrance"
+    ApplicationProperty.lookup_category(:transition_point, type) == "entrance"
   end
 
   def exit?
-    ApplicationProperty.lookup_category(:transition_point, self.transition_point.type) == "exit"
+    ApplicationProperty.lookup_category(:transition_point, type) == "exit"
   end
 
   def assessment_rubrics
