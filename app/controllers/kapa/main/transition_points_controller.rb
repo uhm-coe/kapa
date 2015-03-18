@@ -13,7 +13,6 @@ class Kapa::Main::TransitionPointsController < Kapa::Main::BaseController
     @person = @curriculum.person
     @person.details(self)
     @curriculums = @person.curriculums
-
     @assessment_rubrics = @transition_point.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @table = AssessmentScore.table_for(@assessment_rubric, "TransitionPoint", @transition_point.id)
@@ -81,9 +80,9 @@ class Kapa::Main::TransitionPointsController < Kapa::Main::BaseController
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
     send_data TransitionPoint.to_csv(@filter),
-      :type         => "application/csv",
-      :disposition  => "inline",
-      :filename     => "cohort_#{Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "cohort_#{Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
   end
 
 end
