@@ -16,7 +16,7 @@ class CourseOffer < KapaBaseModel
   end
 
   def term_desc
-    return Term.find(term_id).description
+    return Term.find(term_id).description if term_id.present?
   end
 
   def table_for(assessment_rubric)
