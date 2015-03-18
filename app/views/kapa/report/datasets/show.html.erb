@@ -36,26 +36,43 @@
       <div id="parameters_tab" class="tab-pane">
 
         <div id="accordion" class="panel-group">
-          <%=bootstrap_form_for :parameters, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters), :html => {:method => :put} do |f| %>
-            <% (1..@parameters.length.to_i).each do |i| %>
-              <% name = "name#{i}" %>
-              <div class="panel panel-default">
+          <% @dataset_params.each_pair do |dataset_param_id, p| %>
+            <% @dataset_param = OpenStruct.new(p) %>
+            <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%=name %>"><span class="strong"><%=@parameters.send(name) %></span></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%= dataset_param_id %>"><span class="strong"><%= dataset_param_id %>
+                      . <%= @dataset_param.name %></span></a>
                   </h3>
                 </div>
-                <div id="parameter_<%=name %>" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    <%=render :partial => "/kapa/report/parameters_form", :locals => {:name => name, :type => "type#{i}", :default => "default#{i}", :label => "label#{i}", :active => "active#{i}"} %>
-                  </div>
+              <div id="parameter_<%= dataset_param_id %>" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <%= bootstrap_form_for :dataset, :url => kapa_report_dataset_path(:id => @dataset, :dataset_param_id => dataset_param_id, :focus => :parameters), :html => {:method => :put} do |f| %>
+                    <%= render :partial => "/kapa/report/dataset_param_form" %>
+                    <%= render :partial => "/kapa/layouts/controls" if @current_user.manage?(:report) %>
+                  <% end %>
+                </div>
                 </div>
               </div>
             <% end %>
 
-            <%=f.hidden_field :length, :value => @parameters.length.to_i %>
-            <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :report %>
-          <% end %>
+          <% @dataset_param = OpenStruct.new %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_dataset_param"><span class="new">New Parameter</span></a>
+              </h3>
+            </div>
+
+            <div id="new_dataset_param" class="panel-collapse collapse">
+              <div class="panel-body">
+                <%= bootstrap_form_for :dataset, :url => kapa_report_dataset_path(:id => @dataset, :focus => :parameters), :html => {:method => :put} do |f| %>
+                  <%= render :partial => "/kapa/report/dataset_param_form" %>
+                  <%= render :partial => "/kapa/layouts/controls" if @current_user.manage?(:report) %>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>

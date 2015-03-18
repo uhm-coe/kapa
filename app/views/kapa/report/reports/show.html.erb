@@ -46,51 +46,32 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :html => {:method => :get, :id => "filter_form"}, :remote => true) do |f| %>
+      <% @dataset_params.each_value do |p| %>
+        <% @dataset_param = OpenStruct.new(p) %>
 
-      <% activeFiltersCount = 0 %>
-      <% if @parameters.length.present? %>
-        <% (1..@parameters.length.to_i).each do |i| %>
-
-          <% if @parameters.send("active#{i}") == "Y" %>
-            <%
-              activeFiltersCount = activeFiltersCount + 1
-              name = @parameters.send("name#{i}")
-              type = @parameters.send("type#{i}")
-              default = @parameters.send("default#{i}")
-              label = @parameters.send("label#{i}")
-              property_name = "major" # TODO: Implement later
-            %>
-
-            <% if type == "text_field" %>
-              <%=f.send(type, name, :label => label) %>
-            <%# elsif type == "select" # TODO: Implement later %>
-              <%#=f.send(type, name, [["LDAP", "ldap"],["Local" , "local"]], :label => label, :include_blank => "Any") %>
-            <% elsif type == "property_select" %>
-              <%=f.send(type, name, :name => property_name, :label => label, :include_blank => "Any") %>
-            <% elsif type == "term_select" or type == "program_select"  %>
-              <%=f.send(type, name, :label => label, :include_blank => "Any") %>
-            <% elsif type == "user_select" %>
-              <%=f.send(type, name, :label => label, :include_blank => "Any", :depts => @current_user.depts) %>
-            <% elsif type == "date_picker" %>
-              <div class="form-group">
-                <%=label_tag "filter_#{name}", label %>
-                <%=send(type, :filter, name) %>
-              </div>
-            <% elsif type == "check_box" %>
-              <%=f.send(type, name, {:label => label}, "Y", "N") %>
-            <% end %>
+        <% if @dataset_param.active == "Y" %>
+          <% case @dataset_param.type %>
+<% when "text_field" %>
+            <%= f.text_field(:test, :label => @dataset_param.label) %>
+          <% when "property_select" %>
+            <%= f.property_select(@dataset_param.name, :name => @dataset_param.property_name, :label => @dataset_param.label, :include_blank => "Any") %>
+          <% when "term_select", "program_select" %>
+            <%= f.term_select(@dataset_param.name, :label => @dataset_param.label, :include_blank => "Any") %>
+          <% when "user_select" %>
+            <%= f.user_select(@dataset_param.name, :label => @dataset_param.label, :include_blank => "Any", :depts => @current_user.depts) %>
+          <% when "date_picker" %>
+            <div class="form-group">
+              <%= label_tag "filter_#{@dataset_param.name}", @dataset_param.label %>
+              <%= date_picker(:filter, @dataset_param.name) %>
+            </div>
+          <% when "check_box" %>
+            <%= f.check_box(@dataset_param.name, {:label => @dataset_param.label}, "Y", "N") %>
           <% end %>
-
         <% end %>
-      <% end %>
 
-      <% if activeFiltersCount == 0 %>
-        <p>There are no filters set on this report.  Please contact a system admin to enable filters.</p>
       <% end %>
-
     <% end %>
   <% end %>
-
 <% end %>
 
 <% content_for(:box1) do %>

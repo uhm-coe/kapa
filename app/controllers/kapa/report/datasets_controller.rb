@@ -6,12 +6,8 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def show
     @dataset = Dataset.find(params[:id])
-    @parameters = @dataset.deserialize(:parameters, :as => OpenStruct)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @dataset }
-    end
+    @dataset_params = @dataset.deserialize(:dataset_params)
+    @attr_options = @dataset.attr.split(/,\s*/).collect { |a| [a, a] }
   end
 
   def new
@@ -31,7 +27,17 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def update
     @dataset = Dataset.find(params[:id])
-    @dataset.serialize(:parameters, params[:parameters]) if params[:parameters]
+    @dataset_params = @dataset.deserialize(:dataset_params)
+
+    if params[:dataset_param]
+      if params[:dataset_param_id]
+        @dataset_params[params[:dataset_param_id].to_sym] = params[:dataset_param]
+      else
+        new_id = @dataset_params.length + 1
+        @dataset_params[new_id.to_s.to_sym] = params[:dataset_param]
+      end
+      @dataset.serialize(:dataset_params, @dataset_params)
+    end
 
     if @dataset.update_attributes(params[:dataset])
       flash[:success] = "Dataset was successfully updated."
@@ -54,26 +60,26 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
       @dataset.load
       flash[:success] = "Dataset was successfully loaded."
 
-      # Create parameters based on attributes
-      if @dataset.attr.present?
-        params_hash = Hash.new
-        attributes = @dataset.attr.split(",")
-        attributes.each_with_index do |attribute, i|
-          i = i + 1
-          params_hash["name#{i}"] = attribute
-          params_hash["type#{i}"] = "text_field"
-          params_hash["default#{i}"] = attribute
-          params_hash["label#{i}"] = attribute
-          params_hash["active#{i}"] = "N"
-        end
-        params_hash["length"] = attributes.length
-        @dataset.serialize(:parameters, params_hash)
-
-        unless @dataset.save
-          flash[:success] = nil
-          flash[:warning] = "Dataset was successfully loaded but could not create parameters."
-        end
-      end
+        ## Create parameters based on attributes
+        #if @dataset.attr.present?
+        #  params_hash = Hash.new
+        #  attributes = @dataset.attr.split(",")
+        #  attributes.each_with_index do |attribute, i|
+        #    i = i + 1
+        #    params_hash["name#{i}"] = attribute
+        #    params_hash["type#{i}"] = "text_field"
+        #    params_hash["default#{i}"] = attribute
+        #    params_hash["label#{i}"] = attribute
+        #    params_hash["active#{i}"] = "N"
+        #  end
+        #  params_hash["length"] = attributes.length
+        #  @dataset.serialize(:parameters, params_hash)
+        #
+        #  unless @dataset.save
+        #    flash[:success] = nil
+        #    flash[:warning] = "Dataset was successfully loaded but could not create parameters."
+        #  end
+        #end
     rescue Sequel::Error => e
       flash[:danger] = e.message
     end

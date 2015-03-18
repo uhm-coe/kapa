@@ -25,11 +25,13 @@ class Dataset < KapaBaseModel
     dataset = local_connection[table_name]
 
     if filter.present?
-      filter.each do |f|
+      filter.each_pair do |key, value|
         # Don't filter the dataset if the value is empty
-        dataset = dataset.where("#{f[0]} LIKE ?", "%#{f[1]}%") if f[1].present?
+        #TODO: Check if we need to support LIKE statements
+        dataset = dataset.where(key.to_sym => value) if value.present?
       end
     end
+    logger.debug "Lading Sequel Dataset: #{dataset.sql}"
 
     json = {}
     json[:data_columns] = dataset.columns
