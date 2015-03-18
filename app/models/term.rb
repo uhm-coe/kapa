@@ -17,7 +17,7 @@ class Term < KapaBaseModel
   end
 
   def self.next_term
-    self.where("code > ?", self.current_term).order("code").first
+    self.where("code > ?", self.current_term.code).order("code").first
   end
 
   def self.terms_ids_by_range(start_term_id, end_term_id)
