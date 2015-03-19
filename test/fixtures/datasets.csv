@@ -2,48 +2,7 @@ id,type,name,data_source,url,query,attr,record_count,yml
 1,database,Transition point,0,,"SELECT tr.description, t.type, p.description as program, c.major_primary, c.major_secondary
 FROM transition_points t inner join curriculums c on t.curriculum_id = c.id
 inner join programs p on c.program_id = p.id
-inner join terms tr on t.term_id = tr.id","description,type,program,major_primary,major_secondary",50,"---
-:parameters: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
-  name1: description
-  type1: text_field
-  default1: description
-  label1: description
-  active1: N
-  name2: type
-  type2: select
-  default2: type
-  label2: type
-  active2: Y
-  name3: program
-  type3: program_select
-  default3: program
-  label3: program
-  active3: Y
-  name4: major_primary
-  type4: text_field
-  default4: major_primary
-  label4: major_primary
-  active4: Y
-  name5: major_secondary
-  type5: text_field
-  default5: major_secondary
-  label5: major_secondary
-  active5: N
-  length: 5
-"
+inner join terms tr on t.term_id = tr.id","description,type,program,major_primary,major_secondary",50
 2,database,Advising Report,0,,"select session_type, session_date
 from advising_sessions
-","session_type,session_date",50,"---
-:parameters: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
-  name1: session_type
-  type1: select
-  default1: session_type
-  label1: session_type
-  active1: Y
-  name2: session_date
-  type2: datepicker
-  default2: session_date
-  label2: session_date
-  active2: N
-  length: 2
-"
+","session_type,session_date",50

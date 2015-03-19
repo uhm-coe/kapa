@@ -8,10 +8,10 @@ class TransitionPoint < KapaBaseModel
   belongs_to :user_secondary,
              :class_name => "User",
              :foreign_key => "user_secondary_id"
-  has_many   :transition_actions
-  has_one    :last_transition_action,
-    :class_name => "TransitionAction",
-    :conditions => "transition_actions.id =
+  has_many :transition_actions
+  has_one :last_transition_action,
+          :class_name => "TransitionAction",
+          :conditions => "transition_actions.id =
                             (select a.id
                              from transition_actions a
                              where a.transition_point_id = transition_actions.transition_point_id
@@ -79,10 +79,10 @@ class TransitionPoint < KapaBaseModel
     transition_points = transition_points.assigned_scope(filter.user_id) if filter.user_id.present?
 
     case filter.user.access_scope
-    when 3
-      # Do nothing
-    when 2
-          transition_points = transition_points.depts_scope(filter.user.depts)
+      when 3
+        # Do nothing
+      when 2
+        transition_points = transition_points.depts_scope(filter.user.depts)
       when 1
         transition_points = transition_points.assigned_scope(filter.user.id)
       else

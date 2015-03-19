@@ -6,14 +6,17 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def show
     @dataset = Dataset.find(params[:id])
-    @dataset_params = @dataset.deserialize(:dataset_params)
-    @attr_options = @dataset.attr.split(/,\s*/).collect { |a| [a, a] }
+    @parameters = @dataset.deserialize(:parameters)
+    if @dataset.attr.present?
+      @attr_options = @dataset.attr.split(/,\s*/).collect { |a| [a, a] }
+    else
+      @attr_options = [["N/A", "Not Defined"]]
+    end
   end
 
   def new
     @dataset = Dataset.new
   end
-
 
   def create
     @dataset = Dataset.new(params[:dataset])
@@ -27,16 +30,16 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
 
   def update
     @dataset = Dataset.find(params[:id])
-    @dataset_params = @dataset.deserialize(:dataset_params)
+    @parameters = @dataset.deserialize(:parameters)
 
-    if params[:dataset_param]
-      if params[:dataset_param_id]
-        @dataset_params[params[:dataset_param_id].to_sym] = params[:dataset_param]
+    if params[:parameter]
+      if params[:parameter_id]
+        @parameters[params[:parameter_id].to_sym] = params[:parameter]
       else
-        new_id = @dataset_params.length + 1
-        @dataset_params[new_id.to_s.to_sym] = params[:dataset_param]
+        new_id = @parameters.length + 1
+        @parameters[new_id.to_s.to_sym] = params[:parameter]
       end
-      @dataset.serialize(:dataset_params, @dataset_params)
+      @dataset.serialize(:parameters, @parameters)
     end
 
     if @dataset.update_attributes(params[:dataset])

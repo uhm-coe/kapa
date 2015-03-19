@@ -6,7 +6,7 @@ class Kapa::Report::ReportsController < Kapa::KapaBaseController
   def show
     @dataset = Dataset.find(params[:id])
     @dataset.load if @dataset.loaded_at.blank?
-    @dataset_params = @dataset.deserialize(:dataset_params)
+    @parameters = @dataset.deserialize(:parameters)
 
     respond_to do |format|
       format.html # show.html.erb
