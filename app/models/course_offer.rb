@@ -3,7 +3,9 @@ class CourseOffer < KapaBaseModel
   has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
 
   def assessment_rubrics
-    rubrics = AssessmentRubric.includes(:assessment_criterions).where(:term_id => term_ids_by_range(assessment_rubrics.start_term_id, assessment_rubrics.end_term_id)).column_contains("subject || number" => assessment_rubrics.course).order("assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = AssessmentRubric.includes(:assessment_criterions)
+    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Term.find(self.term_id).code])
+    rubrics = rubrics.column_contains("assessment_rubrics.course" => "subject || number").order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else

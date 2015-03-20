@@ -58,7 +58,7 @@ class TransitionPoint < KapaBaseModel
 
   def assessment_rubrics
     rubrics = AssessmentRubric.includes(:assessment_criterions)
-    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = end_term_id)", Term.find(self.term_id).code])
+    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Term.find(self.term_id).code])
     rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
     rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
