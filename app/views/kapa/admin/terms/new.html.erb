@@ -5,27 +5,8 @@
   </h4>
 
   <div>
-    <%=bootstrap_form_for :term, :url => kapa_admin_terms_path, :remote => true do |f| %>
-      <div class="row">
-        <div class="col-sm-6">
-          <%=f.text_field :code %>
-          <%=f.text_field :description %>
-          <%=f.text_field :description_short %>
-          <%=f.text_field :dept %>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <%=label_tag "term_start_date", "Start Date" %>
-            <%=date_picker :term, :start_date %>
-          </div>
-          <div class="form-group">
-            <%=label_tag "term_end_date", "End Date" %>
-            <%=date_picker :term, :end_date %>
-          </div>
-          <%=f.text_field :sequence %>
-          <%=f.check_box :active, {}, 1, 0 %>
-        </div>
-      </div>
+    <%=bootstrap_form_for :term, :url => kapa_admin_terms_path, :remote => true do %>
+      <%=render :partial => "/kapa/admin/term_form" %>
       <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
     <% end %>
   </div>

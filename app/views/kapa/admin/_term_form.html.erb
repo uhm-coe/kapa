@@ -1,0 +1,26 @@
+<%=bootstrap_fields_for :term do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :code %>
+      <%=f.text_field :description %>
+      <%=f.text_field :description_short %>
+      <div class="form-group">
+        <%=label_tag "term_start_date", "Start Date" %>
+        <%=date_picker :term, :start_date %>
+      </div>
+      <div class="form-group">
+        <%=label_tag "term_end_date", "End Date" %>
+        <%=date_picker :term, :end_date %>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <%=f.text_field :dept %>
+      <%=f.text_field :sequence %>
+      <%=f.text_field :academic_year %>
+      <%=f.text_field :calendar_year %>
+      <%=f.text_field :fiscal_year %>
+      <%=f.check_box :regular_term, {}, 1, 0 %>
+      <%=f.check_box :active, {}, 1, 0 %>
+    </div>
+  </div>
+<% end %>

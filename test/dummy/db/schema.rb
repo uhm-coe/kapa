@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150320191841) do
+ActiveRecord::Schema.define(:version => 20150320213339) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -665,6 +665,10 @@ ActiveRecord::Schema.define(:version => 20150320191841) do
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "academic_year"
+    t.string   "calendar_year"
+    t.string   "fiscal_year"
+    t.boolean  "regular_term"
   end
 
   create_table "timestamps", :force => true do |t|
