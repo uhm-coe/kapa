@@ -20,7 +20,7 @@ class TransitionPoint < KapaBaseModel
 
   has_many :assessment_scores, :as => :assessment_scorable
 
-  validates_presence_of :term_id, :type
+  validates_presence_of :curriculum_id, :term_id, :type
 
   before_save :update_status_timestamp
 

@@ -10,8 +10,7 @@ class AdvisingSession < KapaBaseModel
              :class_name => "User",
              :foreign_key => "user_secondary_id"
 
-  validates_presence_of :session_date
-  validates_presence_of :session_type
+  validates_presence_of :person_id, :session_date, :session_type
 
   def name
     if anonymous?

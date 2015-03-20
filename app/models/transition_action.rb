@@ -1,14 +1,14 @@
 class TransitionAction < KapaBaseModel
   self.inheritance_column = nil
   belongs_to :transition_point
-  validates_presence_of :action, :action_date
+  validates_presence_of :transition_point_id, :action, :action_date
   before_save :copy_type
   # after_save :update_curriculum # TODO: Uncomment after changing its implementation
 
   #person must be verified before admitted.
   def validate
     if admissible? and not self.transition_point.person.verified?
-      errors.add_to_base("Please the verify ID Number before actioning.")
+      errors.add_to_base("Please verify the ID Number before actioning.")
     end
   end
 

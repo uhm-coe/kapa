@@ -2,6 +2,7 @@ class Document < KapaBaseModel
   self.inheritance_column = nil
   belongs_to :person
   has_attached_file :data
+  validates_presence_of :person_id
 
   def url(*args)
     data.url(*args)

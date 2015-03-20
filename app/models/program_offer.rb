@@ -2,8 +2,8 @@ class ProgramOffer < KapaBaseModel
   attr_accessor :available_majors
   belongs_to :program
 
+  validates_presence_of :distribution, :program_id
   validates_uniqueness_of :distribution, :scope => :program_id
-  validates_presence_of :distribution
 
   before_validation :remove_extra_values
   before_save :join_attributes

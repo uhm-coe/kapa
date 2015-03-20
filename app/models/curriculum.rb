@@ -25,7 +25,7 @@ class Curriculum < KapaBaseModel
 
   def set_default_options
     self.major_primary = self.program.major if self.major_primary.blank?
-    self.distribution = self.distribution if self.distribution.blank?
+    self.distribution = self.program.distribution if self.distribution.blank?
     self.track = self.program.track if self.track.blank?
     self.location = self.program.location if self.location.blank?
   end

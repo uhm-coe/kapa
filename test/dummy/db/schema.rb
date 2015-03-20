@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150311020653) do
+ActiveRecord::Schema.define(:version => 20150320032752) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -296,8 +296,8 @@ ActiveRecord::Schema.define(:version => 20150311020653) do
   add_index "documents", ["person_id"], :name => "index_documents_on_person_id"
 
   create_table "enrollments", :force => true do |t|
-    t.integer  "curriculum_id"
-    t.integer  "term_id"
+    t.integer  "curriculum_id",     :default => 0, :null => false
+    t.integer  "term_id",           :default => 0, :null => false
     t.string   "sequence"
     t.string   "category"
     t.string   "status"
@@ -680,7 +680,7 @@ ActiveRecord::Schema.define(:version => 20150311020653) do
   end
 
   create_table "transition_actions", :force => true do |t|
-    t.integer  "transition_point_id"
+    t.integer  "transition_point_id", :default => 0,  :null => false
     t.string   "type"
     t.string   "action"
     t.string   "action_specify"
@@ -716,7 +716,7 @@ ActiveRecord::Schema.define(:version => 20150311020653) do
     t.text     "yml"
     t.text     "xml"
     t.datetime "status_updated_at"
-    t.integer  "term_id"
+    t.integer  "term_id",           :default => 0,         :null => false
   end
 
   add_index "transition_points", ["academic_period"], :name => "index_transition_points_on_academic_period"
