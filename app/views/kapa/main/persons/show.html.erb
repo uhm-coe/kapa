@@ -157,7 +157,7 @@
               <% for practicum_placement in practicum_placements %>
                 <tr>
                   <td><%=practicum_placement.term_desc %></td>
-                  <td><%=practicum_placement.practicum_site.name %></td>
+                  <td><%=practicum_placement.practicum_site.name if practicum_placement.practicum_site.present? %></td>
                   <td><%=practicum_placement.mentor_person_id %></td>
                   <td><%=practicum_placement.status %></td>
                   <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>

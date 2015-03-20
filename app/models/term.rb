@@ -2,6 +2,7 @@ class Term < KapaBaseModel
   has_many :transition_points
   has_many :forms
   has_many :courses
+  validates_presence_of :code, :description
 
   def self.selections(options = {})
     selections = []

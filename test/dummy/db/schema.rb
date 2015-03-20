@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150320032752) do
+ActiveRecord::Schema.define(:version => 20150320191841) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20150320032752) do
     t.string   "standard"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "assessment_rubric_id"
+    t.integer  "assessment_rubric_id", :default => 0,         :null => false
     t.text     "yml"
     t.text     "xml"
     t.string   "type",                 :default => "default", :null => false
@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(:version => 20150320032752) do
     t.text     "yml"
     t.text     "xml"
     t.string   "final_grade"
-    t.integer  "term_id"
+    t.integer  "term_id",                        :default => 0, :null => false
   end
 
   add_index "course_offers", ["academic_period", "crn"], :name => "index_assessment_courses_on_academic_period_and_crn", :unique => true
@@ -342,7 +342,7 @@ ActiveRecord::Schema.define(:version => 20150320032752) do
   add_index "exam_scores", ["exam_id"], :name => "index_exam_scores_on_exam_id"
 
   create_table "exams", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "person_id",     :default => 0,   :null => false
     t.string   "report_number"
     t.date     "report_date"
     t.string   "status"
@@ -360,7 +360,7 @@ ActiveRecord::Schema.define(:version => 20150320032752) do
   add_index "exams", ["person_id"], :name => "index_exams_on_person_id"
 
   create_table "forms", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "person_id",        :default => 0,   :null => false
     t.integer  "form_template_id"
     t.datetime "submitted_at"
     t.string   "submit_ip"
@@ -461,8 +461,8 @@ ActiveRecord::Schema.define(:version => 20150320032752) do
   add_index "practicum_assignments_old", ["user_secondary_id"], :name => "index_practicum_assignments_on_user_secondary_id"
 
   create_table "practicum_placements", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "curriculum_id"
+    t.integer  "person_id",         :default => 0, :null => false
+    t.integer  "curriculum_id",     :default => 0, :null => false
     t.integer  "practicum_site_id"
     t.integer  "mentor_person_id"
     t.integer  "fee"
@@ -476,7 +476,7 @@ ActiveRecord::Schema.define(:version => 20150320032752) do
     t.datetime "updated_at"
     t.text     "yml"
     t.text     "xml"
-    t.integer  "term_id"
+    t.integer  "term_id",           :default => 0, :null => false
   end
 
   add_index "practicum_placements", ["curriculum_id"], :name => "index_practicum_placements_on_curriculum_id"

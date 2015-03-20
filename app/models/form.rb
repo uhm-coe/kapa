@@ -3,6 +3,7 @@ class Form < KapaBaseModel
   belongs_to :person
   belongs_to :term
   has_one :transition_point
+  validates_presence_of :person_id, :type
 
   def term_desc
     return term_id.blank? ? "No term chosen" : Term.find(term_id).description

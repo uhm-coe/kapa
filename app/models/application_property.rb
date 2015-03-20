@@ -5,7 +5,7 @@ class ApplicationProperty < KapaBaseModel
   @@category_cache = HashWithIndifferentAccess.new
 
   validates_uniqueness_of :code, :scope => :name
-  validates_presence_of :code
+  validates_presence_of :name, :code
 
   def self.refresh_cache
     @@description_cache.clear

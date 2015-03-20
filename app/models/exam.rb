@@ -3,6 +3,7 @@ class Exam < KapaBaseModel
   belongs_to :person
   has_many :exam_scores
   before_save :format_fields
+  validates_presence_of :person_id
 
   def format_fields
     self.raw[5..13] = "000000000" #Mask SSN
