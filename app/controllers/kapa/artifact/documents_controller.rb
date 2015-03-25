@@ -8,10 +8,10 @@ class Kapa::Artifact::DocumentsController < Kapa::Artifact::BaseController
     respond_to do |format|
       format.file {
         disposition = params[:inline] ? "inline" : "attachment"
-          send_file @document.data.path,
-            :filename => @document.name,
-            :type => @document.content_type,
-            :disposition  => disposition
+        send_file @document.data.path,
+                  :filename => @document.name,
+                  :type => @document.content_type,
+                  :disposition => disposition
       }
     end
   end
@@ -54,7 +54,7 @@ class Kapa::Artifact::DocumentsController < Kapa::Artifact::BaseController
       redirect_to params[:return_url] and return false
     end
 
-    flash[:success] = "Document was successfully uploaded. Please verify that it is legible."
+    flash[:success] = "Document was successfully uploaded."
     params[:return_url][:artifacts_modal] = "show"
     redirect_to params[:return_url]
   end

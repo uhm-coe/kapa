@@ -1,4 +1,4 @@
-id,academic_period,crn,subject,number,section,title,instructor,status
+id,term_id,crn,subject,number,section,title,instructor,status
 1,201610,85412,SPED,421,134,Foundations of Exceptionality,Sophia Calderon,A
 2,201610,43840,ETEC,323,134,Theory & Practice in Ed Tech,Christen Buchanan,A
 3,201610,66208,ITE,232,561,Field Experience,Sarah Nash,A

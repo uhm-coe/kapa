@@ -141,7 +141,9 @@ class Person < KapaBaseModel
   end
 
   def self.lookup(key, options ={})
-    person_local = self.search(filter.new(:key => key), options).first
+    filter = OpenStruct.new
+    filter.key = key
+    person_local = self.search(filter, options).first
     if person_local.blank? and DirectoryService.is_defined?
       person_remote = DirectoryService.person(key)
 

@@ -3,6 +3,11 @@ class Term < KapaBaseModel
   has_many :forms
   has_many :courses
   validates_presence_of :code, :description
+  before_create :set_id
+
+  def set_id
+    self.id = self.code.to_i if self.code =~ /\A[-+]?[0-9]+\z/
+  end
 
   def self.selections(options = {})
     selections = []

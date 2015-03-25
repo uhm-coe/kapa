@@ -1,8 +1,8 @@
 id,type,name,data_source,url,query,attr,record_count,yml
-1,database,Transition point,0,,"SELECT tr.description, t.type, p.description as program, c.major_primary, c.major_secondary
-FROM transition_points t inner join curriculums c on t.curriculum_id = c.id
-inner join programs p on c.program_id = p.id
-inner join terms tr on t.term_id = tr.id","description,type,program,major_primary,major_secondary",50
+1,database,Admission Report,0,,"SELECT tr.description as semester, left(tr.code, 4) as academic_year, p.degree, p.description as program, c.major_primary as major
+                                FROM transition_points t inner join curriculums c on t.curriculum_id = c.id
+                                inner join programs p on c.program_id = p.id
+                                inner join terms tr on t.term_id = tr.id
+                                where type = 'admission'",,
 2,database,Advising Report,0,,"select session_type, session_date
-from advising_sessions
-","session_type,session_date",50
+from advising_sessions",,

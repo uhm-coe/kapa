@@ -6,7 +6,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     #TODO Add dept conditions
     @curriculums = @person.curriculums.includes(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @course_registrations = CourseRegistration.includes(:course_offer => :term).where(:person_id  => @person).order("terms.sequence DESC")
+    @course_registrations = CourseRegistration.includes(:course_offer => :term).where(:person_id => @person).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
 
     if (params[:doc_id])
@@ -48,22 +48,34 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
     #   redirect_to params[:return_uri]
 
     # else
-      @person.attributes = params[:person]
-      unless @person.save
-        flash[:danger] = error_message_for(@person)
-        redirect_to kapa_main_person_path(:id => @person) and return false
-      end
-      flash[:success] = "Person was successfully updated."
-      redirect_to kapa_main_person_path(:id => @person)
+    @person.attributes = params[:person]
+    unless @person.save
+      flash[:danger] = error_message_for(@person)
+      redirect_to kapa_main_person_path(:id => @person) and return false
+    end
+    flash[:success] = "Person was successfully updated."
+    redirect_to kapa_main_person_path(:id => @person)
     # end
   end
 
   def index
     @filter = filter
-    @persons = Person.search(@filter)
-    @modal = true if filter.key.blank?
+    if @filter.key.blank?
+      @modal = true
+      @persons = Person.where("0=1")
+    else
+      @persons = Person.search(@filter)
+    end
+
     if @persons.blank?
-      flash[:warning] = "No record was found."
+      person = Person.lookup(@filter.key, :verified => true)
+      if person
+        person.save!
+        @persons.push(person)
+        flash.now[:success] = "The record was imported from the external system."
+      else
+        flash.now[:warning] = "No record was found."
+      end
     end
   end
 
