@@ -71,7 +71,7 @@ class Kapa::Main::PersonsController < Kapa::Main::BaseController
       person = Person.lookup(@filter.key, :verified => true)
       if person
         person.save!
-        @persons.push(person)
+        @persons = [person]
         flash.now[:success] = "The record was imported from the external system."
       else
         flash.now[:warning] = "No record was found."
