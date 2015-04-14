@@ -9,6 +9,15 @@
       var focus = '<%=params[:focus]%>' || 'curriculum';
       $('a[href="#' + focus + '_tab"]').parent().addClass('active');
       $('#' + focus + '_tab').addClass('active');
+
+      $('#filter_assessment_rubric_id').change(function() {
+        $('<input>', {
+          type: 'hidden',
+          name: 'focus',
+          value: 'assessment'
+        }).appendTo('#assessment_form');
+        $(this).parents('form').submit();
+      });
     });
   </script>
 <% end %>
@@ -59,7 +68,7 @@
       <div id="assessment_tab" class="tab-pane">
         <div class="row">
           <div class="col-sm-6">
-            <%= bootstrap_form_for :filter, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :assessment), :html => {:method => :get} do |f| %>
+            <%= bootstrap_form_for :filter, :url => kapa_main_transition_point_path(:id => @transition_point, :focus => :assessment), :html => {:method => :get, :id => "assessment_form"} do |f| %>
               <%= f.select(:assessment_rubric_id, @assessment_rubrics.collect { |r| [r.title, "0#{r.id}"] }, {}, {:minWidth => "600"}) %>
             <% end %>
           </div>
