@@ -30,7 +30,7 @@
       window.setInterval(function() {
         form = $('#course_form');
         // console.log('form updated?', form.attr('data-changed'));
-        if(form.attr('data-changed') == 'true') {
+        if (form.attr('data-changed') === 'true') {
           $.post(form.attr('action'), form.serialize(),
             function(data) {
               var now = new Date();
@@ -43,9 +43,9 @@
 
       function initAssessmentTable(selector) {
         $(selector).find('div.score').each(function(i, e) {
-          var score_select_items = $(e).find('div.score_select_item')
-          var score_select = $(e).find('div.score_select')
-          var score_field = $(e).find('input.score_field')
+          var score_select_items = $(e).find('div.score_select_item');
+          var score_select = $(e).find('div.score_select');
+          var score_field = $(e).find('input.score_field');
           // console.log('...int table', score_select_items, score_select, score_field);
 
           score_select_items.click(function() {
@@ -66,12 +66,13 @@
               return true;
             }
             // When delete is pressed
-            else if (event.which == 8) {
+            else if (event.which === 8) {
               setAssessmentScore(score_field, 'Clr');
               return true;
             }
-            else
+            else {
               return false;
+            }
           });
           score_field.keyup(function(event) {
             score_select.hide();
@@ -82,25 +83,25 @@
       }
 
       function setAssessmentScore(field, score) {
-        var field = $(field)
+        var field = $(field);
         field.removeClass('target');
         field.removeClass('acceptable');
         field.removeClass('unacceptable');
         field.removeClass('no_evidence');
 
-        if(score == '2') {
+        if (score === '2') {
           field.val('2');
           field.addClass('target');
         }
-        else if(score == '1') {
+        else if (score === '1') {
           field.val('1');
           field.addClass('acceptable');
         }
-        else if(score == '0') {
+        else if (score === '0') {
           field.val('0');
           field.addClass('unacceptable');
         }
-        else if(score == '3' || score == 'N') {
+        else if (score === '3' || score === 'N') {
           field.val('N');
           field.addClass('no_evidence');
         }
@@ -112,7 +113,9 @@
 
       function setAssessmentScores(score) {
         $('input.score_field').each(function(i, e) {
-          if($(e).val() == "") setAssessmentScore(e, score);
+          if ($(e).val() === "") {
+            setAssessmentScore(e, score);
+          }
         });
       }
 
