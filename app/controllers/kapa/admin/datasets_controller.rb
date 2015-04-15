@@ -1,4 +1,4 @@
-class Kapa::Report::DatasetsController < Kapa::KapaBaseController
+class Kapa::Admin::DatasetsController < Kapa::KapaBaseController
 
   def index
     @datasets = Dataset.all
@@ -22,10 +22,10 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
     @dataset = Dataset.new(params[:dataset])
     unless @dataset.save
       flash[:danger] = @dataset.errors.full_messages.join(", ")
-      redirect_to new_kapa_report_dataset_path and return false
+      redirect_to new_kapa_admin_dataset_path and return false
     end
     flash[:success] = "Dataset was successfully created."
-    redirect_to kapa_report_dataset_path(:id => @dataset)
+    redirect_to kapa_admin_dataset_path(:id => @dataset)
   end
 
   def update
@@ -47,7 +47,7 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
     else
       flash[:danger] = @dataset.errors.full_messages.join(", ")
     end
-    redirect_to kapa_report_dataset_path(:id => @dataset, :focus => params[:focus], :parameter_panel => params[:parameter_panel])
+    redirect_to kapa_admin_dataset_path(:id => @dataset, :focus => params[:focus], :parameter_panel => params[:parameter_panel])
   end
 
   def destroy
@@ -87,7 +87,7 @@ class Kapa::Report::DatasetsController < Kapa::KapaBaseController
       flash[:danger] = e.message
     end
 
-    redirect_to kapa_report_dataset_path(@dataset)
+    redirect_to kapa_admin_dataset_path(@dataset)
   end
 
   def feed

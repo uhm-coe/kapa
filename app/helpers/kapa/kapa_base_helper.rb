@@ -1,5 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
-module KapaBaseHelper
+module Kapa::KapaBaseHelper
 
   def model_select(object_name, method, options = {}, html_options = {})
     model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
@@ -8,7 +8,7 @@ module KapaBaseHelper
     object = instance_variable_get("@#{object_name}".delete("[]"))
     current_value = object.send("#{method}") if object
     current_value = nil if current_value.blank? or html_options[:multiple] or options[:exclude_current_value]
-    selection = selections.select {|c| c[1].to_s == current_value.to_s}.first
+    selection = selections.select { |c| c[1].to_s == current_value.to_s }.first
     # If the current value exists in the db but is not in the selections
     #   (i.e., because an ApplicationProperty had been deactivated),
     #   add it to the selections or else the first selection will be selected by default
@@ -67,10 +67,10 @@ module KapaBaseHelper
   end
 
   def score_select(object_name, index, options = {}, html_options = {})
-    if(options[:type] == "text")
+    if (options[:type] == "text")
       options[:size] = options[:type_option]
       text_field(object_name, index, options)
-    elsif(options[:type] == "select")
+    elsif (options[:type] == "select")
       options[:name] = options[:type_option]
       options[:include_blank] = true
       options[:selected] = options[:value]
@@ -104,7 +104,7 @@ module KapaBaseHelper
     model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
     model_method = options[:model_method] ? options[:model_method] : method
     conditions = "#{model_method} is not NULL and #{model_method} <> ''"
-    selections = model_name.to_s.classify.constantize.select("distinct #{model_method}").where(conditions).order('1').collect {|l| l[model_method]}
+    selections = model_name.to_s.classify.constantize.select("distinct #{model_method}").where(conditions).order('1').collect { |l| l[model_method] }
     select(object_name, method, selections, options, html_options)
   end
 
@@ -172,16 +172,16 @@ module KapaBaseHelper
 
   def score_class(score)
     case score
-    when "2"
-      "target"
-    when "1"
-      "acceptable"
-    when "0"
-      "unacceptable"
-    when "N"
-      "no_evidence"
-    when "Clr"
-      "blank"
+      when "2"
+        "target"
+      when "1"
+        "acceptable"
+      when "0"
+        "unacceptable"
+      when "N"
+        "no_evidence"
+      when "Clr"
+        "blank"
     end
   end
 end

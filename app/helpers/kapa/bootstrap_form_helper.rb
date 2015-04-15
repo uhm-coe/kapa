@@ -1,4 +1,4 @@
-module BootstrapFormHelper
+module Kapa::BootstrapFormHelper
 
   def bootstrap_form_for(record, options = {}, &proc)
     options[:builder] = BootstrapFormBuilder
@@ -26,7 +26,7 @@ module BootstrapFormHelper
             html_options = args.third.is_a?(Hash) ? args.third : {}
             tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control"))
 
-          when "model_select", "user_select", "property_select", "program_select", "term_select","history_select", "date_select"
+          when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select", "date_select"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
             tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control"))
@@ -50,7 +50,6 @@ module BootstrapFormHelper
           else
             tag = @template.send(name, @object_name, method, *args)
         end
-
 
 
         if options[:label].kind_of?(Hash)

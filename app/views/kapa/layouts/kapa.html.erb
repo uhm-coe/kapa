@@ -46,78 +46,71 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <%=link_to KAPA, kapa_root_path, :class => "navbar-brand" %>
+    <%= link_to KAPA, kapa_root_path, :class => "navbar-brand" %>
 
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <ul class="nav navbar-nav">
         <% if @current_user %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for menu_item in menu_items(:main) %>
-              <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-            <% end %>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artifact<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for menu_item in menu_items(:artifact) %>
-              <%= content_tag :li, link_to(menu_item[0], menu_item[1])%>
-            <% end %>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advising<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for menu_item in menu_items(:advising) %>
-              <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-            <% end %>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for menu_item in menu_items(:course) %>
-              <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-            <% end %>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Placements<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for menu_item in menu_items(:practicum) %>
-              <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-            <% end %>
-          </ul>
-        </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:report) %>
+              <% for menu_item in menu_items(:main) %>
                 <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
               <% end %>
             </ul>
           </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for menu_item in menu_items(:admin) %>
-              <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-            <% end %>
-          </ul>
-        </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artifact<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% for menu_item in menu_items(:artifact) %>
+                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
+              <% end %>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advising<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% for menu_item in menu_items(:advising) %>
+                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
+              <% end %>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% for menu_item in menu_items(:course) %>
+                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
+              <% end %>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Placements<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% for menu_item in menu_items(:practicum) %>
+                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
+              <% end %>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <% for menu_item in menu_items(:admin) %>
+                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
+              <% end %>
+            </ul>
+          </li>
         <% end %>
       </ul>
       <% if @current_user %>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <strong><%=h @current_user.uid%></strong><b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><%=link_to "Logout", kapa_logout_url %></li>
-          </ul>
-        </li>
-      </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as
+              <strong><%= h @current_user.uid %></strong><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Logout", kapa_logout_url %></li>
+            </ul>
+          </li>
+        </ul>
       <% end %>
     </div>
   </div>
