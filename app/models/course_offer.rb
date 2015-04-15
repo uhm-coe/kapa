@@ -6,7 +6,7 @@ class CourseOffer < KapaBaseModel
   def assessment_rubrics
     rubrics = AssessmentRubric.includes(:assessment_criterions)
     rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Term.find(self.term_id).code])
-    rubrics = rubrics.column_contains("assessment_rubrics.course" => "subject || number").order("assessment_rubrics.title, assessment_criterions.criterion")
+    rubrics = rubrics.column_contains("assessment_rubrics.course" => "#{self.subject}#{self.number}").order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
       return [AssessmentRubric.new(:title => "Not Defined")]
     else
