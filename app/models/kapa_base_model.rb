@@ -75,6 +75,7 @@ class KapaBaseModel < ActiveRecord::Base
     conditions = ["0=1"]
     hash.each_pair do |key, value|
       values = value.is_a?(Array) ? value : [value]
+      values = values.delete_if { |v| v.blank? }
       values.each { |v| conditions[0] << " or #{key} like ?" }
       conditions.concat(values.collect { |v| pattern.gsub("?", v) })
     end
@@ -86,7 +87,8 @@ class KapaBaseModel < ActiveRecord::Base
     conditions = ["0=1"]
     hash.each_pair do |key, value|
       values = value.is_a?(Array) ? value : [value]
-      values.each { |v| conditions[0] << " or find_in_set(?, #{key}) > 0" }
+      values = values.delete_if { |v| v.blank? }
+      values.each { |v| conditions[0] << " or find_in_set(?, #{key}) > 0" if v.present? }
       conditions.concat(values)
     end
     conditions[0] << " or #{exception}" if exception
