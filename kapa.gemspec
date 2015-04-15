@@ -7,7 +7,7 @@ require "kapa/version"
 Gem::Specification.new do |s|
   s.name        = "kapa"
   s.version     = Kapa::VERSION
-  s.authors     = ["Genta T."]
+  s.authors = ["College of Education, University of Hawaiʻi at Mānoa"]
   s.email       = ["withhawaii@gmail.com"]
   s.homepage    = "https://coe.hawaii.edu"
   s.summary     = "Academic Records Applcation Engine"
