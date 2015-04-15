@@ -4,32 +4,49 @@
       <% if @current_user.nil? %>$('#login_dialog').modal({show : true});<% end %>
     });
   </script>
-<% end %>
 
-
-<% content_for(:dialog) do %>
-
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "login_dialog", :modal_title => "Please login to continue...", :modal_form_id => "login_form"} do %>
-    <%= bootstrap_form_for(:user_session, :url => kapa_login_path, :html => {:id => "login_form"}) do |f| %>
-      <%= f.text_field :uid, :label => "Username" %>
-      <%= f.password_field :password %>
-      <%= f.submit "Login", :class => "hide"%>
-    <% end %>
-  <% end %>
-
+  <style>
+    .right-col {
+      padding: 120px 0 0 0;
+      float: none;
+      display: inline-block;
+    }
+  </style>
 <% end %>
 
 <% content_for(:box1) do %>
 
-  <h4>Welcome</h4>
 
-  <p>
-    KAPA provides consolidated information tools to support our student administrative
-    procedures including Advising, Admission, Graduation, Praxis, and Field Placement.
-  </p>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="jumbotron">
+        <h1>Welcome</h1>
 
-  <p>
-    Please select from the menu on the top...
-  </p>
+        <p>
+          KAPA Admin Console is an administrative UI to organize academic records including advising, courses,
+          transition points, electric documents, and field placement.
+        </p>
+
+        <p>
+          This highly customizable UI provides a set of tools to support your institutional needs.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4 right-col">
+      <% if @current_user %>
+        <h3>Hi <%= @current_user.person.first_name %> <%= @current_user.person.last_name %>,</h3>
+
+        <p>Your last login was <%= @current_user.updated_at %>.</p>
+      <% else %>
+        <%= bootstrap_form_for(:user_session, :url => kapa_login_path, :html => {:id => "login_form"}) do |f| %>
+          <%= f.text_field :uid, :label => "Username" %>
+          <%= f.password_field :password %>
+          <%= f.submit "Login", :class => "btn btn-primary btn-lg" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  </div>
 
 <% end %>
