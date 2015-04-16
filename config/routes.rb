@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :transition_points, &extra_actions
       resources :transition_actions, &extra_actions
       resources :enrollments, &extra_actions
+      resources :reports, &extra_actions
     end
 
     namespace :artifact do
@@ -51,13 +52,6 @@ Rails.application.routes.draw do
       resources :assignments, &extra_actions
     end
 
-    namespace :report do
-      resources :reports, &extra_actions
-      resources :datasets, &extra_actions
-      get 'datasets/load(/:id)' => 'datasets#load', :as => :datasets_load
-      get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
-    end
-
     namespace :admin do
       resources :users, &extra_actions
       resources :terms, &extra_actions
@@ -66,6 +60,9 @@ Rails.application.routes.draw do
       resources :properties, &extra_actions
       resources :rubrics, &extra_actions
       resources :criterions, &extra_actions
+      resources :datasets, &extra_actions
+      get 'datasets/load(/:id)' => 'datasets#load', :as => :datasets_load
+      get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
     end
 
   end
