@@ -24,11 +24,11 @@
       });
 
       // Turn off the default call (located in kapa.js) to submit on the modal submit button
-      $('button[data-submit]#modal_submit').off('click');
+      $('button[data-submit="#change_mentor_form"]#modal_submit').off('click');
 
       // Add a new click event handler on the modal submit button
       // Instead of performing an update, send a GET request
-      $('button[data-submit]#modal_submit').click(function(e) {
+      $('button[data-submit="#change_mentor_form"]#modal_submit').click(function(e) {
         e.preventDefault();
         // If user selects "New Mentor" and either last name or first name fields are blank upon submission
         if ($('#mentor_person_id').val() === '' && ($('#mentor_last_name').val() === '' || $('#mentor_first_name').val() === '')) {

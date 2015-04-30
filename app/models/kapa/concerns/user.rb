@@ -134,7 +134,7 @@ module Kapa::Concerns::User
   end
 
   def primary_dept
-    depts.first
+    depts.first if depts.present?
   end
 
   def status_desc
