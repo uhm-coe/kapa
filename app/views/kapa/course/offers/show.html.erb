@@ -3,12 +3,6 @@
     jQuery(document).ready(function($) {
       initAssessmentTable('#course_table');
 
-      $('#all_green_button').click(function() {
-        if(confirm('Would you like to fill in all empty cells in green?')) {
-          setAssessmentScores('2');
-        }
-      });
-
       $('#filter_assessment_rubric_id').change(function() {
         $(this).parents('form').submit();
       });
@@ -110,15 +104,6 @@
         }
         field.parents('form').attr('data-changed', true);
       }
-
-      function setAssessmentScores(score) {
-        $('input.score_field').each(function(i, e) {
-          if ($(e).val() === "") {
-            setAssessmentScore(e, score);
-          }
-        });
-      }
-
     });
   </script>
 <% end %>
@@ -149,5 +134,4 @@
       <%=render :partial => "/kapa/course/table" %>
     </div>
   <% end %>
-  <p class="right"><%=button_to_function "All Green", nil, {:id => "all_green_button", :class => "btn btn-default"} if @current_user.write? %></p>
 <% end %>
