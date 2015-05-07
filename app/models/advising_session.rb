@@ -1,3 +1,3 @@
 class AdvisingSession < KapaBaseModel
-  include Kapa::Kapa::Concerns::AdvisingSession
+  include Kapa::Concerns::AdvisingSession
 end

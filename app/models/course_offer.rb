@@ -1,3 +1,3 @@
 class CourseOffer < KapaBaseModel
-  include Kapa::Kapa::Concerns::CourseOffer
+  include Kapa::Concerns::CourseOffer
 end
