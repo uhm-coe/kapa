@@ -1,3 +1,3 @@
 class AssessmentCriterion < KapaBaseModel
-  include Kapa::Concerns::AssessmentCriterion
+  include Kapa::Kapa::Concerns::AssessmentCriterion
 end

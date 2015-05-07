@@ -1,12 +1,12 @@
 module Kapa::Concerns::DirectoryService
   extend ActiveSupport::Concern
 
-  included do
-    def self.is_defined?
+  module ClassMethods
+    def is_defined?
       Rails.configuration.ldap.present?
     end
 
-    def self.authenticate(uid, password)
+    def authenticate(uid, password)
       ldap = Rails.configuration.ldap
       base = Rails.configuration.ldap_search_base
       filter = Net::LDAP::Filter.eq(Rails.configuration.ldap_uid_filter, uid)
@@ -21,11 +21,11 @@ module Kapa::Concerns::DirectoryService
       return result
     end
 
-    def self.person(key)
+    def person(key)
       self.persons(key).first
     end
 
-    def self.persons(key)
+    def persons(key)
       Rails.logger.debug("Searching LDAP...  Key: #{key}")
       case key
         when Regexp.new(Rails.configuration.regex_id_number, true)
@@ -59,7 +59,7 @@ module Kapa::Concerns::DirectoryService
       return persons
     end
 
-    def self.source
+    def source
       "LDAP"
     end
   end # included

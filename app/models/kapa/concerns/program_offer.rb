@@ -10,8 +10,18 @@ module Kapa::Concerns::ProgramOffer
 
     before_validation :remove_extra_values
     before_save :join_attributes
+  end # included
 
-    def self.selections(options = {})
+  def remove_extra_values
+    self.available_majors.delete_if { |x| x.blank? || x == "multiselect-all" } if self.available_majors
+  end
+
+  def join_attributes
+    self.available_major = @available_majors ? @available_majors.join(",") : ""
+  end
+
+  module ClassMethods
+    def selections(options = {})
       options[:value] = :distribution if options[:value].nil?
       program_offers = where(:active => true)
       program_offers = program_offers.depts_scope(options[:depts]) if options[:depts]
@@ -24,13 +34,5 @@ module Kapa::Concerns::ProgramOffer
         [description, value]
       end
     end
-  end # included
-
-  def remove_extra_values
-    self.available_majors.delete_if { |x| x.blank? || x == "multiselect-all" } if self.available_majors
-  end
-
-  def join_attributes
-    self.available_major = @available_majors ? @available_majors.join(",") : ""
   end
 end

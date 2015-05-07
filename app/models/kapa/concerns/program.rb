@@ -11,27 +11,6 @@ module Kapa::Concerns::Program
 
     before_validation :remove_extra_values
     before_save :join_attributes
-
-    def self.selections(options = {})
-      options[:value] = :code if options[:value].nil?
-      programs = where(:active => true)
-      programs = programs.depts_scope(options[:depts]) if options[:depts]
-      programs = programs.where(options[:conditions]) if options[:conditions]
-      programs.order("sequence DESC, code").collect do |v|
-        value = v.send(options[:value])
-        description = ""
-        description << "#{value}/" if options[:include_code]
-        description << v.description
-        [description, value]
-      end
-    end
-
-    def self.search(filter, options = {})
-      programs = Program.scoped
-      programs = programs.depts_scope(filter.dept) if filter.dept.present?
-      programs = programs.where("programs.active" => filter.active) if filter.active.present?
-      return programs
-    end
   end # included
 
   def remove_extra_values
@@ -48,5 +27,28 @@ module Kapa::Concerns::Program
 
   def degree_desc
     return ApplicationProperty.lookup_description(:degree, degree)
+  end
+
+  module ClassMethods
+    def selections(options = {})
+      options[:value] = :code if options[:value].nil?
+      programs = where(:active => true)
+      programs = programs.depts_scope(options[:depts]) if options[:depts]
+      programs = programs.where(options[:conditions]) if options[:conditions]
+      programs.order("sequence DESC, code").collect do |v|
+        value = v.send(options[:value])
+        description = ""
+        description << "#{value}/" if options[:include_code]
+        description << v.description
+        [description, value]
+      end
+    end
+
+    def search(filter, options = {})
+      programs = Program.scoped
+      programs = programs.depts_scope(filter.dept) if filter.dept.present?
+      programs = programs.where("programs.active" => filter.active) if filter.active.present?
+      return programs
+    end
   end
 end

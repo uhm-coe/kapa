@@ -12,8 +12,27 @@ module Kapa::Concerns::Enrollment
                :foreign_key => "user_secondary_id"
 
     validates_presence_of :curriculum_id, :term_id
+  end # included
 
-    def self.search(filter, options = {})
+  def practicum_assignments_select(assignment_type, index = nil)
+    assignments = self.practicum_assignments.select { |a| a.assignment_type == assignment_type.to_s }
+    if index
+      return assignments[index]
+    else
+      return assignments
+    end
+  end
+
+  def term_desc
+    return Term.find(term_id).description
+  end
+
+  def assignment_desc(assignment_type)
+    practicum_assignments_select(assignment_type).collect { |a| a.name }.join(", ")
+  end
+
+  module ClassMethods
+    def search(filter, options = {})
       enrollments = Enrollment.includes([{:curriculum => :person}, {:curriculum => :program}])
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
       if filter.program == "NA"
@@ -26,19 +45,19 @@ module Kapa::Concerns::Enrollment
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
 
       case filter.user.access_scope
-      when 3
-        # do nothing
-      when 2
-            enrollments = enrollments.depts_scope(filter.user.depts)
+        when 3
+          # do nothing
+        when 2
+          enrollments = enrollments.depts_scope(filter.user.depts)
         when 1
           enrollments = enrollments.assigned_scope(filter.user.id)
         else
-          enrollments = enrollments.where("1 = 2")  #Do not list any objects
+          enrollments = enrollments.where("1 = 2") #Do not list any objects
       end
       return enrollments
     end
 
-    def self.to_csv(filter, options = {})
+    def to_csv(filter, options = {})
       # TODO: For reference, remove later
       # enrollments = Enrollment.includes([
       #   {:practicum_profile =>
@@ -59,53 +78,53 @@ module Kapa::Concerns::Enrollment
       end
     end
 
-    def self.csv_columns
-     [:id_number,
-      :last_name,
-      :first_name,
-      :email,
-      :category,
-      :sequence,
-      :curriculum_id,
-      # :cohort,
-      # :term_admitted,
-      :program_desc,
-      :major_primary_desc,
-      :major_secondary_desc,
-      :distribution_desc,
-      :location,
-      :second_degree,
-      # :bgc,
-      # :bgc_date,
-      # :insurance,
-      # :insurance_effective_period,
-      :note,
-      # :group,
-      # :off_sequence,
-      # :ite401,
-      # :ite402,
-      # :ite404,
-      # :ite405,
-      :coordinator_1_uid,
-      :coordinator_1_last_name,
-      :coordinator_1_first_name,
-      :coordinator_2_uid,
-      :coordinator_2_last_name,
-      :coordinator_2_first_name,
-      :created_at,
-      :updated_at,
-      :term,
-      :status,
-      # :total_mentors,
-      # TODO
-      :cur_street,
-      :cur_city,
-      :cur_state,
-      :cur_postal_code,
-      :cur_phone]
+    def csv_columns
+      [:id_number,
+       :last_name,
+       :first_name,
+       :email,
+       :category,
+       :sequence,
+       :curriculum_id,
+       # :cohort,
+       # :term_admitted,
+       :program_desc,
+       :major_primary_desc,
+       :major_secondary_desc,
+       :distribution_desc,
+       :location,
+       :second_degree,
+       # :bgc,
+       # :bgc_date,
+       # :insurance,
+       # :insurance_effective_period,
+       :note,
+       # :group,
+       # :off_sequence,
+       # :ite401,
+       # :ite402,
+       # :ite404,
+       # :ite405,
+       :coordinator_1_uid,
+       :coordinator_1_last_name,
+       :coordinator_1_first_name,
+       :coordinator_2_uid,
+       :coordinator_2_last_name,
+       :coordinator_2_first_name,
+       :created_at,
+       :updated_at,
+       :term,
+       :status,
+       # :total_mentors,
+       # TODO
+       :cur_street,
+       :cur_city,
+       :cur_state,
+       :cur_postal_code,
+       :cur_phone]
     end
 
-    def self.csv_row(c)
+    def csv_row(c)
       row = []
       row += [c.rsend(:curriculum, :person, :id_number),
               c.rsend(:curriculum, :person, :last_name),
@@ -143,7 +162,7 @@ module Kapa::Concerns::Enrollment
               c.rsend(:updated_at),
               c.rsend(:term_desc),
               c.rsend(:status)]
-              # c.rsend([:practicum_assignments_select, :mentor], :length)] # if @current_user.manage?
+      # c.rsend([:practicum_assignments_select, :mentor], :length)] # if @current_user.manage?
 
       # TODO
       # 3.times do |i|
@@ -168,31 +187,14 @@ module Kapa::Concerns::Enrollment
       # end
 
       row += [
-        c.rsend(:curriculum, :person, :contact, :cur_street),
-        c.rsend(:curriculum, :person, :contact, :cur_city),
-        c.rsend(:curriculum, :person, :contact, :cur_state),
-        c.rsend(:curriculum, :person, :contact, :cur_postal_code),
-        c.rsend(:curriculum, :person, :contact, :cur_phone)
+          c.rsend(:curriculum, :person, :contact, :cur_street),
+          c.rsend(:curriculum, :person, :contact, :cur_city),
+          c.rsend(:curriculum, :person, :contact, :cur_state),
+          c.rsend(:curriculum, :person, :contact, :cur_postal_code),
+          c.rsend(:curriculum, :person, :contact, :cur_phone)
       ]
 
       return row
     end
-  end # included
-
-  def practicum_assignments_select(assignment_type , index = nil)
-    assignments = self.practicum_assignments.select {|a| a.assignment_type == assignment_type.to_s}
-    if index
-      return assignments[index]
-    else
-      return assignments
-    end
-  end
-
-  def term_desc
-    return Term.find(term_id).description
-  end
-
-  def assignment_desc(assignment_type)
-    practicum_assignments_select(assignment_type).collect {|a| a.name}.join(", ")
   end
 end

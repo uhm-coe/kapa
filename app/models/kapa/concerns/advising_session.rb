@@ -14,8 +14,23 @@ module Kapa::Concerns::AdvisingSession
                :foreign_key => "user_secondary_id"
     validates_presence_of :person_id, :session_date, :session_type
 
-    def self.search(filter, options = {})
-      advising_sessions = AdvisingSession.includes([:person => :contact])
+  end # included
+
+  def name
+    if anonymous?
+      return "#{identity_note}*"
+    else
+      return self.person.full_name
+    end
+  end
+
+  def anonymous?
+    return person_id == 0
+  end
+
+  module ClassMethods
+    def search(filter, options = {})
+    advising_sessions = AdvisingSession.includes([:person => :contact])
       advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
       advising_sessions = advising_sessions.where(:task => filter.task) if filter.task.present?
       advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?
@@ -34,8 +49,8 @@ module Kapa::Concerns::AdvisingSession
       return advising_sessions
     end
 
-    def self.to_csv(filter, options = {})
-      advising_sessions = self.search(filter).order("session_date DESC, advising_sessions.id DESC")
+    def to_csv(filter, options = {})
+    advising_sessions = self.search(filter).order("session_date DESC, advising_sessions.id DESC")
       CSV.generate do |csv|
         csv << self.csv_columns
         advising_sessions.each do |c|
@@ -44,8 +59,8 @@ module Kapa::Concerns::AdvisingSession
       end
     end
 
-    def self.csv_columns
-      [:id_number,
+    def csv_columns
+    [:id_number,
        :last_name,
        :first_name,
        :cur_street,
@@ -63,8 +78,8 @@ module Kapa::Concerns::AdvisingSession
        :handled_by]
     end
 
-    def self.csv_row(c)
-      [c.rsend(:person, :id_number),
+    def csv_row(c)
+    [c.rsend(:person, :id_number),
        c.rsend(:person, :last_name),
        c.rsend(:person, :first_name),
        c.rsend(:person, :contact, :cur_street),
@@ -81,17 +96,6 @@ module Kapa::Concerns::AdvisingSession
        c.rsend(:location),
        c.rsend(:handled_by)]
     end
-  end # included
 
-  def name
-    if anonymous?
-      return "#{identity_note}*"
-    else
-      return self.person.full_name
-    end
-  end
-
-  def anonymous?
-    return person_id == 0
   end
 end

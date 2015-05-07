@@ -1,3 +1,3 @@
 class AssessmentRubric < KapaBaseModel
-  include Kapa::Concerns::AssessmentRubric
+  include Kapa::Kapa::Concerns::AssessmentRubric
 end

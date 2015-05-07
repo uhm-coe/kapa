@@ -3,14 +3,16 @@ module Kapa::Concerns::ApplicationProperty
 
   included do
     self.table_name = :properties
+    validates_uniqueness_of :code, :scope => :name
+    validates_presence_of :name, :code
+  end # included
+
+  module ClassMethods
     @@description_cache = HashWithIndifferentAccess.new
     @@description_detail_cache = HashWithIndifferentAccess.new
     @@category_cache = HashWithIndifferentAccess.new
 
-    validates_uniqueness_of :code, :scope => :name
-    validates_presence_of :name, :code
-
-    def self.refresh_cache
+    def refresh_cache
       @@description_cache.clear
       ApplicationProperty.scoped.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
       @@description_detail_cache.clear
@@ -19,7 +21,7 @@ module Kapa::Concerns::ApplicationProperty
       ApplicationProperty.scoped.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
     end
 
-    def self.selections(options = {})
+    def selections(options = {})
       properties = where(:active => true, :name => options[:name].to_s)
       properties = properties.depts_scope(options[:depts]) if options[:depts]
       properties = properties.where(options[:conditions]) if options[:conditions]
@@ -31,36 +33,36 @@ module Kapa::Concerns::ApplicationProperty
       end
     end
 
-    def self.lookup_description(name, code, default_value = code)
+    def lookup_description(name, code, default_value = code)
       refresh_cache if @@description_cache.empty?
       return @@description_cache["#{name}_#{code}"] ||= default_value
     end
 
-    def self.lookup_description_detail(name, code, default_value = code)
+    def lookup_description_detail(name, code, default_value = code)
       refresh_cache if @@description_detail_cache.empty?
       return @@description_detail_cache["#{name}_#{code}"] ||= default_value
     end
 
-    def self.lookup_category(name, code, default_value = code)
+    def lookup_category(name, code, default_value = code)
       refresh_cache if @@category_cache.empty?
       return @@category_cache["#{name}_#{code}"] ||= default_value
     end
 
-    def self.keys(name, options={})
+    def keys(name, options={})
       properties = where(:active => true, :name => options[:name].to_s)
       properties = properties.depts_scope(options[:depts]) if options[:depts]
       properties = properties.where(options[:conditions]) if options[:conditions]
       return properties.order("sequence DESC, code").collect { |v| v.code }
     end
 
-    def self.append(name, code, options={})
+    def append(name, code, options={})
       options[:description] = code if options[:description].blank?
       property = find_or_create_by_name_and_code(name, code)
       property.update_attributes(options)
       return property
     end
 
-    def self.search(filter, options = {})
+    def search(filter, options = {})
       application_properties = ApplicationProperty.scoped
       if filter.name.present?
         # TODO: A workaround until we remove :academic_period from properties entirely.  (Remove this later.)
@@ -76,5 +78,5 @@ module Kapa::Concerns::ApplicationProperty
       application_properties = application_properties.where("active" => filter.active) if filter.active.present?
       return application_properties
     end
-  end # included
+  end
 end

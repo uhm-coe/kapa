@@ -52,7 +52,6 @@ module Kapa::Concerns::Dataset
     "dataset_#{self.id.to_s.rjust(3, '0')}".to_sym
   end
 
-  private
   def db_connection(name)
     if (name.to_s == "local")
       Sequel.connect(Rails.configuration.database_configuration[Rails.env])

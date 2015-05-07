@@ -5,8 +5,53 @@ module Kapa::Concerns::CourseOffer
     belongs_to :term
     has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
     validates_presence_of :term_id
+  end # included
 
-    def self.search(filter, options = {})
+  def assessment_rubrics
+    rubrics = Kapa::AssessmentRubric.includes(:assessment_criterions)
+    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Kapa::Term.find(self.term_id).code])
+    rubrics = rubrics.column_contains("assessment_rubrics.course" => "#{self.subject}#{self.number}").order("assessment_rubrics.title, assessment_criterions.criterion")
+    if rubrics.blank?
+      return [Kapa::AssessmentRubric.new(:title => "Not Defined")]
+    else
+      return rubrics
+    end
+  end
+
+  def name
+    return "#{subject}#{number}-#{section}"
+  end
+
+  def term_desc
+    return Kapa::Term.find(term_id).description if term_id.present?
+  end
+
+  def table_for(assessment_rubric)
+    table = ActiveSupport::OrderedHash.new
+    self.course_registrations.each do |r|
+      table.update AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
+    end
+    return table
+  end
+
+  def progress
+    number_of_fields_total = 0
+    number_of_fields_filled = 0
+    self.assessment_rubrics.each do |ar|
+      table = table_for(ar)
+      number_of_fields_total += table.size
+      number_of_fields_filled += table.values.delete_if { |r| r.blank? }.size
+    end
+
+    if number_of_fields_total == 0
+      return 0
+    else
+      return number_of_fields_filled.to_f / number_of_fields_total.to_f * 100.to_f
+    end
+  end
+
+  module ClassMethods
+    def search(filter, options = {})
       course_offers = CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
       course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
@@ -29,7 +74,7 @@ module Kapa::Concerns::CourseOffer
     end
 
     #TODO: Move complex query into reports module
-    def self.to_csv(filter, options = {})
+    def to_csv(filter, options = {})
       sql = "SELECT
                 courses.*,
                 assessment_score_results.*,
@@ -74,7 +119,7 @@ module Kapa::Concerns::CourseOffer
       end
     end
 
-    def self.csv_columns
+    def csv_columns
       [:term_id,
        :term_desc,
        :subject,
@@ -93,7 +138,7 @@ module Kapa::Concerns::CourseOffer
        :registered]
     end
 
-    def self.csv_row(c)
+    def csv_row(c)
       [c.term_id,
        c.term_desc,
        c.subject,
@@ -110,49 +155,6 @@ module Kapa::Concerns::CourseOffer
        c.unacceptable,
        c.na,
        c.registered]
-    end
-  end # included
-
-  def assessment_rubrics
-    rubrics = AssessmentRubric.includes(:assessment_criterions)
-    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Term.find(self.term_id).code])
-    rubrics = rubrics.column_contains("assessment_rubrics.course" => "#{self.subject}#{self.number}").order("assessment_rubrics.title, assessment_criterions.criterion")
-    if rubrics.blank?
-      return [AssessmentRubric.new(:title => "Not Defined")]
-    else
-      return rubrics
-    end
-  end
-
-  def name
-    return "#{subject}#{number}-#{section}"
-  end
-
-  def term_desc
-    return Term.find(term_id).description if term_id.present?
-  end
-
-  def table_for(assessment_rubric)
-    table = ActiveSupport::OrderedHash.new
-    self.course_registrations.each do |r|
-      table.update AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
-    end
-    return table
-  end
-
-  def progress
-    number_of_fields_total = 0
-    number_of_fields_filled = 0
-    self.assessment_rubrics.each do |ar|
-      table = table_for(ar)
-      number_of_fields_total += table.size
-      number_of_fields_filled += table.values.delete_if { |r| r.blank? }.size
-    end
-
-    if number_of_fields_total == 0
-      return 0
-    else
-      return number_of_fields_filled.to_f / number_of_fields_total.to_f * 100.to_f
     end
   end
 end

@@ -1,3 +1,3 @@
 class ApplicationProperty < KapaBaseModel
-  include Kapa::Concerns::ApplicationProperty
+  include Kapa::Kapa::Concerns::ApplicationProperty
 end

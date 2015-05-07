@@ -7,59 +7,6 @@ module Kapa::Concerns::Form
     belongs_to :term
     has_one :transition_point
     validates_presence_of :person_id, :type
-
-    def self.search(filter, options = {})
-      forms = Form.includes([:person])
-      forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
-      forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
-      forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
-      exams = forms.depts_scope(filter.user.depts, "public = 'Y'")
-      return forms
-    end
-
-    def self.to_csv(filter, options = {})
-      forms = self.search(filter).order("submitted_at desc, persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        forms.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
-    end
-
-    def self.csv_columns
-      [:id_number,
-       :last_name,
-       :first_name,
-       :ssn,
-       :ssn_agreement,
-       :cur_street,
-       :cur_city,
-       :cur_state,
-       :cur_postal_code,
-       :cur_phone,
-       :email,
-       :updated,
-       :submitted,
-       :lock]
-    end
-
-    def self.csv_row(c)
-      [c.rsend(:person, :id_number),
-       c.rsend(:person, :last_name),
-       c.rsend(:person, :first_name),
-       c.rsend(:person, :ssn),
-       c.rsend(:person, :ssn_agreement),
-       c.rsend(:person, :contact, :cur_street),
-       c.rsend(:person, :contact, :cur_city),
-       c.rsend(:person, :contact, :cur_state),
-       c.rsend(:person, :contact, :cur_postal_code),
-       c.rsend(:person, :contact, :cur_phone),
-       c.rsend(:person, :contact, :email),
-       c.rsend(:updated_at),
-       c.rsend(:submitted_at),
-       c.rsend(:lock)]
-    end
   end # included
 
   def term_desc
@@ -87,6 +34,61 @@ module Kapa::Concerns::Form
       type_desc
     else
       "#{type_desc} (#{term_desc})"
+    end
+  end
+
+  module ClassMethods
+    def search(filter, options = {})
+      forms = Form.includes([:person])
+      forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
+      forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
+      forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
+      exams = forms.depts_scope(filter.user.depts, "public = 'Y'")
+      return forms
+    end
+
+    def to_csv(filter, options = {})
+      forms = self.search(filter).order("submitted_at desc, persons.last_name, persons.first_name")
+      CSV.generate do |csv|
+        csv << self.csv_columns
+        forms.each do |c|
+          csv << self.csv_row(c)
+        end
+      end
+    end
+
+    def csv_columns
+      [:id_number,
+       :last_name,
+       :first_name,
+       :ssn,
+       :ssn_agreement,
+       :cur_street,
+       :cur_city,
+       :cur_state,
+       :cur_postal_code,
+       :cur_phone,
+       :email,
+       :updated,
+       :submitted,
+       :lock]
+    end
+
+    def csv_row(c)
+      [c.rsend(:person, :id_number),
+       c.rsend(:person, :last_name),
+       c.rsend(:person, :first_name),
+       c.rsend(:person, :ssn),
+       c.rsend(:person, :ssn_agreement),
+       c.rsend(:person, :contact, :cur_street),
+       c.rsend(:person, :contact, :cur_city),
+       c.rsend(:person, :contact, :cur_state),
+       c.rsend(:person, :contact, :cur_postal_code),
+       c.rsend(:person, :contact, :cur_phone),
+       c.rsend(:person, :contact, :email),
+       c.rsend(:updated_at),
+       c.rsend(:submitted_at),
+       c.rsend(:lock)]
     end
   end
 end

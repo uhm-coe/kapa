@@ -10,7 +10,7 @@ module Kapa::Concerns::User
 
     validate :only_one_ldap_user_per_person
     validates_format_of :email, :with => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+(\.[A-Z]{2,4}$)?/i, :message => "is not a valid format", :allow_blank => true
-  #  validates_uniqueness_of :uid
+    #  validates_uniqueness_of :uid
     validates_presence_of :uid
     validates_presence_of :password, :on => :create, :if => :local?
 
@@ -22,74 +22,8 @@ module Kapa::Concerns::User
       c.login_field = :uid
       c.merge_validates_length_of_login_field_options :within => 2..100
       c.crypted_password_field = :hashed_password
-      c.merge_validates_length_of_password_field_options  :on => :create, :if => :local?
+      c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
-    end
-
-    def self.selections(options)
-      users = where(:status => 3)
-      users = users.depts_scope(options[:depts]) if options[:depts]
-      users = users.where(options[:conditions]) if options[:conditions]
-      users.includes(:person).collect do |u|
-        ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
-      end
-    end
-
-    def self.search(filter, options = {})
-      users = User.includes([:person])
-      users = users.where("department" => filter.department) if filter.department.present?
-      users = users.where("users.status" => filter.status) if filter.status.present?
-      users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
-      users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
-      return users
-    end
-
-    def self.to_csv(filter, options = {})
-      users = User.search(filter).order("users.uid")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        users.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
-    end
-
-    def self.csv_columns
-     [:uid,
-      :id_number,
-      :last_name,
-      :first_name,
-      :position,
-      :department,
-      :emp_status,
-      :status,
-      :role_main,
-      :role_artifact,
-      :role_advising,
-      :role_curriculum,
-      :role_assessment,
-      :role_practicum,
-      :dept,
-      :category]
-    end
-
-    def self.csv_row(c)
-     [c.rsend(:uid),
-      c.rsend(:person, :id_number),
-      c.rsend(:person, :last_name),
-      c.rsend(:person, :first_name),
-      c.rsend(:position),
-      c.rsend(:department),
-      c.rsend(:emp_status),
-      c.rsend(:status),
-      c.rsend(:role, :main),
-      c.rsend(:role, :artifact),
-      c.rsend(:role, :advising),
-      c.rsend(:role, :curriculum),
-      c.rsend(:role, :course),
-      c.rsend(:role, :practicum),
-      c.rsend(:dept),
-      c.rsend(:category)]
     end
   end # included
 
@@ -139,9 +73,12 @@ module Kapa::Concerns::User
 
   def status_desc
     case status
-    when 0 then "In-active"
-    when 1 then "Guest"
-    when 3 then "User"
+      when 0 then
+        "In-active"
+      when 1 then
+        "Guest"
+      when 3 then
+        "User"
     end
   end
 
@@ -174,7 +111,6 @@ module Kapa::Concerns::User
     roles.send("#{name}_list").to_i
   end
 
-  protected
   def valid_credential?(password)
     if category == "ldap"
       DirectoryService.authenticate(self.uid, password)
@@ -184,12 +120,11 @@ module Kapa::Concerns::User
     end
   end
 
-  private
   def check_role(level, name, options = {})
     roles = self.role
 
     #Check if user has access to the key
-    if(options[:property] and options[:property][:value] and not manage?(name))
+    if (options[:property] and options[:property][:value] and not manage?(name))
       property_name = options[:property][:name]
       property_value = options[:property][:value]
       #@available_keys is a cache to eliminate duplicate query on single page.
@@ -198,12 +133,12 @@ module Kapa::Concerns::User
     end
 
     #Check record ownership
-    if(options[:dept] and dept.present?)
+    if (options[:dept] and dept.present?)
       return false unless depts.include?(options[:dept])
     end
 
     #Check role delegation
-    if(options[:delegate])
+    if (options[:delegate])
       delegates = options[:delegate].kind_of?(Array) ? options[:delegate] : Array.[](options[:delegate])
       delegates.each do |d|
         return true if roles.send(name).to_i >= 1 and roles.send("#{name}_#{d}").to_s == "Y"
@@ -216,4 +151,73 @@ module Kapa::Concerns::User
   def module_name
     @request.params[:controller].split("/").second
   end
+
+  module ClassMethods
+    def selections(options)
+      users = where(:status => 3)
+      users = users.depts_scope(options[:depts]) if options[:depts]
+      users = users.where(options[:conditions]) if options[:conditions]
+      users.includes(:person).collect do |u|
+        ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
+      end
+    end
+
+    def search(filter, options = {})
+      users = User.includes([:person])
+      users = users.where("department" => filter.department) if filter.department.present?
+      users = users.where("users.status" => filter.status) if filter.status.present?
+      users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
+      users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
+      return users
+    end
+
+    def to_csv(filter, options = {})
+      users = User.search(filter).order("users.uid")
+      CSV.generate do |csv|
+        csv << self.csv_columns
+        users.each do |c|
+          csv << self.csv_row(c)
+        end
+      end
+    end
+
+    def csv_columns
+      [:uid,
+       :id_number,
+       :last_name,
+       :first_name,
+       :position,
+       :department,
+       :emp_status,
+       :status,
+       :role_main,
+       :role_artifact,
+       :role_advising,
+       :role_curriculum,
+       :role_assessment,
+       :role_practicum,
+       :dept,
+       :category]
+    end
+
+    def csv_row(c)
+      [c.rsend(:uid),
+       c.rsend(:person, :id_number),
+       c.rsend(:person, :last_name),
+       c.rsend(:person, :first_name),
+       c.rsend(:position),
+       c.rsend(:department),
+       c.rsend(:emp_status),
+       c.rsend(:status),
+       c.rsend(:role, :main),
+       c.rsend(:role, :artifact),
+       c.rsend(:role, :advising),
+       c.rsend(:role, :curriculum),
+       c.rsend(:role, :course),
+       c.rsend(:role, :practicum),
+       c.rsend(:dept),
+       c.rsend(:category)]
+    end
+  end
+
 end

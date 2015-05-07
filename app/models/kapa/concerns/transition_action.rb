@@ -28,7 +28,7 @@ module Kapa::Concerns::TransitionAction
 
   #This type field needs to be exist in this model due to query performance
   def copy_type
-     self.type = self.transition_point.type
+    self.type = self.transition_point.type
   end
 
   def action_desc

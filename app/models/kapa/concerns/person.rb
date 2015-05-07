@@ -30,53 +30,6 @@ module Kapa::Concerns::Person
     #  validates_numericality_of :ssn, :allow_blank => true
 
     before_save :format_fields
-
-    def self.search(filter, options = {})
-      if filter.blank?
-        return []
-      end
-
-      persons = Person.includes(:contact).where("status <> 'D'")
-      persons = persons.where(:status => "V") if options[:verified]
-
-      if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)
-        persons = persons.where(:id_number => filter.key)
-      elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
-        persons = persons.where(:email => filter.key)
-      elsif filter.key =~ /\d+/
-        persons = persons.column_matches("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
-      elsif filter.key =~ /\w+,\s*\w+/
-        keys = filter.key.split(/,\s*/)
-        persons = persons.column_matches(:last_name => keys[0], :first_name => keys[1])
-      else
-        persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
-      end
-
-      return persons.order("status desc").limit(100)
-    end
-
-    def self.lookup(key, options ={})
-      filter = OpenStruct.new
-      filter.key = key
-      person_local = self.search(filter, options).first
-      if person_local.blank? and DirectoryService.is_defined?
-        person_remote = DirectoryService.person(key)
-
-        #Make sure the person found in LDAP is not in the local database.
-        #This avoids the problem when email is missing in local record but exists in LDAP.
-        if person_remote
-          person_local = Person.find_by_id_number(person_remote.id_number)
-          if person_local
-            person_local.merge(person_remote)
-            return person_local
-          end
-        end
-
-        return person_remote
-      end
-
-      return person_local
-    end
   end # included
 
   def format_fields
@@ -165,4 +118,54 @@ module Kapa::Concerns::Person
       self.save!
     end
   end
+
+  module ClassMethods
+    def search(filter, options = {})
+      if filter.blank?
+        return []
+      end
+
+      persons = Person.includes(:contact).where("status <> 'D'")
+      persons = persons.where(:status => "V") if options[:verified]
+
+      if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)
+        persons = persons.where(:id_number => filter.key)
+      elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
+        persons = persons.where(:email => filter.key)
+      elsif filter.key =~ /\d+/
+        persons = persons.column_matches("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
+      elsif filter.key =~ /\w+,\s*\w+/
+        keys = filter.key.split(/,\s*/)
+        persons = persons.column_matches(:last_name => keys[0], :first_name => keys[1])
+      else
+        persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
+      end
+
+      return persons.order("status desc").limit(100)
+    end
+
+    def lookup(key, options ={})
+      filter = OpenStruct.new
+      filter.key = key
+      person_local = self.search(filter, options).first
+      if person_local.blank? and DirectoryService.is_defined?
+        person_remote = DirectoryService.person(key)
+
+        #Make sure the person found in LDAP is not in the local database.
+        #This avoids the problem when email is missing in local record but exists in LDAP.
+        if person_remote
+          person_local = Person.find_by_id_number(person_remote.id_number)
+          if person_local
+            person_local.merge(person_remote)
+            return person_local
+          end
+        end
+
+        return person_remote
+      end
+
+      return person_local
+    end
+  end
+
 end

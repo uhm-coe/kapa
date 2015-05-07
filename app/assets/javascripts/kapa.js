@@ -23,6 +23,7 @@ jQuery(document).ready(function ($) {
     $(form_id).trigger('reset');
   });
 
+
   $('.kapa-datepicker').datepicker({
     format: 'yyyy-mm-dd'
   }).on('changeDate',function (e) {

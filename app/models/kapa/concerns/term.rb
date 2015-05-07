@@ -7,8 +7,15 @@ module Kapa::Concerns::Term
     has_many :courses
     validates_presence_of :code, :description
     before_create :set_id
+  end # included
 
-    def self.selections(options = {})
+  def set_id
+    self.id = self.code.to_i if self.code =~ /\A[-+]?[0-9]+\z/
+  end
+
+  module ClassMethods
+
+    def selections(options = {})
       selections = []
       terms = Term.where(:active => true).order("sequence DESC, code")
       terms = temrs.where(options[:condition]) if options[:condition]
@@ -17,19 +24,19 @@ module Kapa::Concerns::Term
     end
 
     #TODO Implement this method using start date and end date.
-    def self.current_term
+    def current_term
       Term.find_by_code("201530")
     end
 
-    def self.next_term
+    def next_term
       self.where("code > ?", self.current_term.code).order("code").first
     end
 
-    def self.terms_ids_by_range(start_term_id, end_term_id)
+    def terms_ids_by_range(start_term_id, end_term_id)
       self.where(:code => Term.find(start_term_id).code..Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
     end
 
-    def self.search(filter, options = {})
+    def search(filter, options = {})
       # To return an ActiveRecord::Relation, use the following:
       #   For Rails 4.1 and above: Term.all
       #   For Rails 4.0: Term.where(nil)
@@ -41,9 +48,5 @@ module Kapa::Concerns::Term
       terms = terms.where("active" => filter.active) if filter.active.present?
       return terms
     end
-  end # included
-
-  def set_id
-    self.id = self.code.to_i if self.code =~ /\A[-+]?[0-9]+\z/
   end
 end

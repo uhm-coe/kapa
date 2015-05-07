@@ -4,8 +4,10 @@ module Kapa::Concerns::AssessmentScore
   included do
     belongs_to :assessment_criterion
     belongs_to :assessment_scorable, :polymorphic => true
+  end # included
 
-    def self.table_for(assessment_rubric, assessment_scorable_type, assessment_scorable_id)
+  module ClassMethods
+    def table_for(assessment_rubric, assessment_scorable_type, assessment_scorable_id)
       table = ActiveSupport::OrderedHash.new
       #initialize table first
       for assessment_criterion in assessment_rubric.assessment_criterions
@@ -19,5 +21,5 @@ module Kapa::Concerns::AssessmentScore
       end
       return table
     end
-  end # included
+  end
 end
