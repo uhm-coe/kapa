@@ -1,18 +1,16 @@
 <% content_for(:box1) do %>
 
-  <%- model_class = Dataset -%>
-
   <h3>Reports</h3>
 
   <table class="table table-striped">
     <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:type) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:data_source) %></th>
-      <th><%= model_class.human_attribute_name(:loaded_at) %></th>
-      <th><%= model_class.human_attribute_name(:record_count) %></th>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Datasource</th>
+      <th>Loaded at</th>
+      <th>Record Count</th>
       <th></th>
     </tr>
     </thead>
@@ -22,7 +20,7 @@
         <td><%= link_to dataset.id, kapa_admin_dataset_path(dataset) %></td>
         <td><%= dataset.type %></td>
         <td><%= dataset.name %></td>
-        <td><%= dataset.data_source %></td>
+        <td><%= dataset.datasource %></td>
         <td><%= dataset.loaded_at %></td>
         <td><%= dataset.record_count %></td>
         <td class="right">

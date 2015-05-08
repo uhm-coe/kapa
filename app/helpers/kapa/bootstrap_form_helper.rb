@@ -21,7 +21,6 @@ module Kapa::BootstrapFormHelper
             tag = @template.send(name, @object_name, method, options.merge(:class => "form-control"))
 
           when "select"
-            Rails.logger.debug "--select #{args.inspect}"
             options = args.second.is_a?(Hash) ? args.second : {}
             html_options = args.third.is_a?(Hash) ? args.third : {}
             tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control"))
@@ -47,6 +46,9 @@ module Kapa::BootstrapFormHelper
             args[0] = "Y" if args[0].nil?
             tag = @template.send(name, @object_name, method, *args)
 
+          when "static"
+            options = args.first.is_a?(Hash) ? args.first : {}
+            tag = @template.content_tag(:p, options[:content], :class => "form-control-static")
           else
             tag = @template.send(name, @object_name, method, *args)
         end
@@ -74,7 +76,7 @@ module Kapa::BootstrapFormHelper
       end
     end
 
-    helpers = %w{text_field password_field text_area file_field check_box radio_button select property_select term_select program_select history_select user_select hidden_text_area date_select}
+    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select hidden_text_area date_select}
     helpers.each do |name|
       build_label_field(name)
     end

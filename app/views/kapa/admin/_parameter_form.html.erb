@@ -2,7 +2,7 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.select :name, @attr_options, :label => "Name" %>
+      <%= f.select :name, @columns, :label => "Name" %>
       <%= f.select :type, [["Text Field", "text_field"], ["Select", "select"], ["Property Select", "property_select"], ["Term Select", "term_select"], ["Program Select", "program_select"], ["User Select", "user_select"], ["Datepicker", "date_picker"], ["Checkbox", "check_box"]], :label => "Type" %>
     </div>
     <div class="col-sm-6">

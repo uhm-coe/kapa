@@ -19,6 +19,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#dataset_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#query_tab" data-toggle="tab">Query</a></li>
       <li><a href="#parameters_tab" data-toggle="tab">Parameters</a></li>
     </ul>
 
@@ -27,10 +28,16 @@
         <%= bootstrap_form_for :dataset, :url => kapa_admin_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
           <%= render :partial => '/kapa/admin/dataset_form' %>
           <%= render :layout => "/kapa/layouts/controls" do %>
-            <%= link_to "Load", kapa_admin_datasets_load_path(:id => @dataset), :class => "btn btn-default" %>
-            <%= link_to "Feed", kapa_admin_datasets_feed_path(:id => @dataset), :class => "btn btn-default" %>
           <% end %>
         <% end %>
+      </div>
+
+      <div id="query_tab" class="tab-pane">
+        <%= bootstrap_form_for :dataset, :url => kapa_admin_datasets_load_path(:id => @dataset, :focus => :query), :html => {:method => :put} do |f| %>
+          <%= render :partial => '/kapa/admin/query_form' %>
+          <%= f.submit "Load", :class => "btn btn-default" %>
+          <%= link_to "Feed", kapa_admin_datasets_feed_path(:id => @dataset), :class => "btn btn-default" %>
+      <% end %>
       </div>
 
       <div id="parameters_tab" class="tab-pane">

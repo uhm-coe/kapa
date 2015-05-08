@@ -8,15 +8,13 @@ module Kapa::Admin::Concerns::DatasetsController
   def show
     @dataset = Kapa::Dataset.find(params[:id])
     @parameters = @dataset.deserialize(:parameters)
-    if @dataset.attr.present?
-      @attr_options = @dataset.attr.split(/,\s*/).collect { |a| [a, a] }
-    else
-      @attr_options = [["N/A", "Not Defined"]]
-    end
+    @columns = @dataset.deserialize(:columns)
+    @datasource_options = datasource_options
   end
 
   def new
     @dataset = Kapa::Dataset.new
+    @datasource_options = datasource_options
   end
 
   def create
@@ -58,41 +56,31 @@ module Kapa::Admin::Concerns::DatasetsController
     redirect_to kapa_report_datasets_url
   end
 
-  def load
+  def load2
+    @dataset = Kapa::Dataset.find(params[:id])
+    @dataset.update_attributes(params[:dataset])
+
     begin
-      @dataset = Kapa::Dataset.find(params[:id])
       @dataset.load
       flash[:success] = "Dataset was successfully loaded."
 
-        ## Create parameters based on attributes
-        #if @dataset.attr.present?
-        #  params_hash = Hash.new
-        #  attributes = @dataset.attr.split(",")
-        #  attributes.each_with_index do |attribute, i|
-        #    i = i + 1
-        #    params_hash["name#{i}"] = attribute
-        #    params_hash["type#{i}"] = "text_field"
-        #    params_hash["default#{i}"] = attribute
-        #    params_hash["label#{i}"] = attribute
-        #    params_hash["active#{i}"] = "N"
-        #  end
-        #  params_hash["length"] = attributes.length
-        #  @dataset.serialize(:parameters, params_hash)
-        #
-        #  unless @dataset.save
-        #    flash[:success] = nil
-        #    flash[:warning] = "Dataset was successfully loaded but could not create parameters."
-        #  end
-        #end
     rescue Sequel::Error => e
       flash[:danger] = e.message
     end
 
-    redirect_to kapa_admin_dataset_path(@dataset)
+    redirect_to kapa_admin_dataset_path(@dataset, :focus => params[:focus])
   end
 
   def feed
     @dataset = Kapa::Dataset.find(params[:id])
     render :json => @dataset.to_json(params[:filter])
+  end
+
+  def datasource_options
+    datasources = [["Local Database", "local"], ["CSV File", "file"]]
+    Rails.application.secrets.datasources.each_pair do |k, v|
+      datasources.push [v["name"], k]
+    end
+    return datasources
   end
 end

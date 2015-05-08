@@ -200,39 +200,21 @@ ActiveRecord::Schema.define(:version => 20150320213339) do
   add_index "curriculums", ["user_primary_id"], :name => "index_curriculums_on_user_primary_id"
   add_index "curriculums", ["user_secondary_id"], :name => "index_curriculums_on_user_secondary_id"
 
-  create_table "data_sources", :force => true do |t|
-    t.string "type"
-    t.string "name"
-    t.string "url"
-    t.string "user"
-    t.string "password"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "datasets", :force => true do |t|
-    t.string "type"
-    t.string "name"
-    t.integer "data_source"
-    t.string "url"
-    t.text "query"
-    t.string "attr"
-    t.integer "record_count"
-    t.datetime "loaded_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.text "yml"
-    t.text "xml"
-  end
-
-  create_table "datasources", :force => true do |t|
-    t.string "type"
-    t.string "name"
-    t.string "url"
-    t.string "user"
-    t.string "password"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string :name
+    t.string :description
+    t.string :type
+    t.string :category
+    t.string :datasource
+    t.text :query
+    t.string :ldap_base
+    t.string :ldap_filter
+    t.text :ldap_attr
+    t.integer :record_count
+    t.datetime :loaded_at
+    t.timestamps
+    t.text :yml
+    t.text :xml
   end
 
   create_table "documents", :force => true do |t|
