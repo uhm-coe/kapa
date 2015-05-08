@@ -134,6 +134,7 @@ module Kapa::Concerns::KapaBaseController
         items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:main)
         items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:main)
       when "document"
+        items.push ["Files", kapa_document_files_path] if @current_user.manage?(:document, :delegate => :file)
         items.push ["Forms", kapa_document_forms_path] if @current_user.manage?(:document, :delegate => :form)
         items.push ["Test Scores", kapa_document_exams_path] if @current_user.manage?(:document, :delegate => :exam)
         items.push ["Reports", kapa_document_reports_path] if @current_user.manage?(:document, :delegate => :reports)

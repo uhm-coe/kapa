@@ -1,6 +1,11 @@
 module Kapa::Document::Concerns::FilesController
   extend ActiveSupport::Concern
 
+  def index
+    @filter = filter
+    @files = Kapa::File.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+  end
+
   def show
     @file = Kapa::File.find(params[:id])
     @person = @file.person
@@ -55,7 +60,7 @@ module Kapa::Document::Concerns::FilesController
       redirect_to params[:return_url] and return false
     end
 
-    flash[:success] = "Document was successfully uploaded."
+    flash[:success] = "File was successfully uploaded."
     params[:return_url][:artifacts_modal] = "show"
     redirect_to params[:return_url]
   end
@@ -64,7 +69,7 @@ module Kapa::Document::Concerns::FilesController
     @file = Kapa::File.find(params[:id])
 
     if @file.destroy
-      flash[:success] = "Document was successfully deleted."
+      flash[:success] = "File was successfully deleted."
     else
       flash[:danger] = error_message_for(@file)
     end
