@@ -1,25 +1,25 @@
 <%
-  if @form.version.to_i >= 1 and @form.version.to_i <= 5
-    @program_code = @form.rsend([:deserialize, :curriculum_ext, :as => OpenStruct], :program, [:split, "/"], :first)
-    @admission_curriculum = @form.deserialize(:curriculum, :as => OpenStruct)
-    @admission_background = @form.deserialize(:curriculum_admission, :as => OpenStruct)
-  elsif @form.version.to_i == 6
-    codes = @form.rsend([:deserialize, :form_option, :as => OpenStruct], :curriculum, [:split, "/"])
-    @program_code = "#{codes[1]}-#{codes[0]}" if codes.is_a? Array
-    @admission_curriculum = @form.deserialize(:curriculum_profile, :as => OpenStruct)
-    @admission_background = @form.deserialize(:curriculum_admission, :as => OpenStruct)
-  else
-    @admission_curriculum = @form.deserialize(:admission_curriculum, :as => OpenStruct)
-    @admission_background = @form.deserialize(:admission_background, :as => OpenStruct)
-    program = Program.find_by_id(@admission_curriculum.program_id)
-    @program_code = program ? program.code : "NA"
-  end
+   if @form.version.to_i >= 1 and @form.version.to_i <= 5
+     @program_code = @form.rsend([:deserialize, :curriculum_ext, :as => OpenStruct], :program, [:split, "/"], :first)
+     @admission_curriculum = @form.deserialize(:curriculum, :as => OpenStruct)
+     @admission_background = @form.deserialize(:curriculum_admission, :as => OpenStruct)
+   elsif @form.version.to_i == 6
+     codes = @form.rsend([:deserialize, :form_option, :as => OpenStruct], :curriculum, [:split, "/"])
+     @program_code = "#{codes[1]}-#{codes[0]}" if codes.is_a? Array
+     @admission_curriculum = @form.deserialize(:curriculum_profile, :as => OpenStruct)
+     @admission_background = @form.deserialize(:curriculum_admission, :as => OpenStruct)
+   else
+     @admission_curriculum = @form.deserialize(:admission_curriculum, :as => OpenStruct)
+     @admission_background = @form.deserialize(:admission_background, :as => OpenStruct)
+     program = Kapa::Program.find_by_id(@admission_curriculum.program_id)
+     @program_code = program ? program.code : "NA"
+   end
 
-  @admission_reference = @form.deserialize(:admission_reference, :as => OpenStruct)
-  @admission_repeated_course_initial = @form.deserialize(:admission_repeated_course_initial, :as => OpenStruct)
-  @admission_repeated_course_retake = @form.deserialize(:admission_repeated_course_retake, :as => OpenStruct)
-  @admission_essay = @form.deserialize(:admission_essay, :as => OpenStruct)
-  @admission_agreement = OpenStruct.new(@form.deserialize(:admission_agreement).each_value { |v| v.replace("Y") if v == "1" })
+   @admission_reference = @form.deserialize(:admission_reference, :as => OpenStruct)
+   @admission_repeated_course_initial = @form.deserialize(:admission_repeated_course_initial, :as => OpenStruct)
+   @admission_repeated_course_retake = @form.deserialize(:admission_repeated_course_retake, :as => OpenStruct)
+   @admission_essay = @form.deserialize(:admission_essay, :as => OpenStruct)
+   @admission_agreement = OpenStruct.new(@form.deserialize(:admission_agreement).each_value { |v| v.replace("Y") if v == "1" })
 %>
 
 <fieldset class="form-block">
@@ -27,14 +27,14 @@
   <%= bootstrap_fields_for(:admission_curriculum) do |curriculum| %>
     <div class="row">
       <div class="col-sm-6">
-        <%=curriculum.program_select(:program_id, {:model_options => {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')"}, :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
-        <%=curriculum.property_select(:distribution, {:label => "Please select your program option."})%>
-        <%=curriculum.property_select(:major_primary,:name => :major, :label => "Please select your intended major.")%>
+        <%= curriculum.program_select(:program_id, {:model_options => {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')"}, :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
+        <%= curriculum.property_select(:distribution, {:label => "Please select your program option."}) %>
+        <%= curriculum.property_select(:major_primary, :name => :major, :label => "Please select your intended major.") %>
       </div>
       <div class="col-sm-6">
-        <%=curriculum.select( :major_secondary, [["Yes", "XHLI"]], :label => "Please indicate if you intend to pursue Hawaiian language immersion.", :include_blank => "No", :exclude_current_value => true) %>
-        <%=curriculum.select( :second_degree, [["No", "N"], ["Yes", "Y"]], :class => "required", :label => "Is this going to be your second baccalaureate degree?") %>
-        <%=curriculum.property_select( :location, :class => "required", :label => "Please select the location from where you will be participating.",:name => :location, :include_blank => true) %>
+        <%= curriculum.select(:major_secondary, [["Yes", "XHLI"]], :label => "Please indicate if you intend to pursue Hawaiian language immersion.", :include_blank => "No", :exclude_current_value => true) %>
+        <%= curriculum.select(:second_degree, [["No", "N"], ["Yes", "Y"]], :class => "required", :label => "Is this going to be your second baccalaureate degree?") %>
+        <%= curriculum.property_select(:location, :class => "required", :label => "Please select the location from where you will be participating.", :name => :location, :include_blank => true) %>
       </div>
     </div>
   <% end %>
@@ -61,37 +61,37 @@
   <p>I have met the following requirements:</p>
 
   <%= bootstrap_fields_for(:admission_agreement) do |admission_agreement| %>
-    <% if( ["EDEL-BED","EDSE-BED","EDSE-PCERT","KRS-BS","SPED-PCERT"].include? @program_code ) %>
+    <% if (["EDEL-BED", "EDSE-BED", "EDSE-PCERT", "KRS-BS", "SPED-PCERT"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_saf1, {:label => "I have completed and submitted the UHM System Application Form to the Manoa Admissions Office (required for new UHM undergraduate students and all PBCSE/PBSPED applicants)."} %>
     <% else %>
       <%= admission_agreement.check_box :agreement_saf2, :label => "I have completed and submitted Graduate Division Application Form (required for all MEdT applicants)*" %>
     <% end %>
     <%= admission_agreement.check_box :agreement_gpa, :label => "My cumulative GPA meets or exceeds the minimum required for my intended COE program." %>
-    <% if( ["EDSE-BED","EDSE-PCERT"].include? @program_code ) %>
+    <% if (["EDSE-BED", "EDSE-PCERT"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_major_cum_gpa, :label => "My major cumulative GPA meets or exceeds the minimum required for my intended COE program." %>
     <% end %>
-    <% if( ["EDEL-BED","EDSE-BED"].include? @program_code ) %>
+    <% if (["EDEL-BED", "EDSE-BED"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_credit, :label => " I have or will have completed 55 credits prior to beginning my intended COE Licensure Track program." %>
       <%= admission_agreement.check_box :agreement_education_core, :label => "I have completed my UHM general education core requirements." %>
     <% end %>
-    <% if( ["EDEL-BED","EDSE-BED","EDSE-PCERT","SPED-PCERT"].include? @program_code ) %>
+    <% if (["EDEL-BED", "EDSE-BED", "EDSE-PCERT", "SPED-PCERT"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_licensure_track_prerequisite, :label => "I have completed my licensure track prerequisite courses." %>
     <% end %>
-    <% if( ["EDSE-PCERT","SPED-PCERT","TCH-MEDT"].include? @program_code ) %>
+    <% if (["EDSE-PCERT", "SPED-PCERT", "TCH-MEDT"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_baccalaureate_degree, :label => " I have graduated from a UHM recognized, accredited, four-year institution of higher education." %>
     <% end %>
-    <% if( ["EDSE-BED"].include? @program_code ) %>
-     <%= admission_agreement.check_box :agreement_academic_major, :label => "I have completed at least 50% of my academic major requirements." %>
+    <% if (["EDSE-BED"].include? @program_code) %>
+      <%= admission_agreement.check_box :agreement_academic_major, :label => "I have completed at least 50% of my academic major requirements." %>
     <% end %>
-    <% if( ["EDEL-BED","EDSE-BED","EDSE-PCERT"].include? @program_code ) %>
+    <% if (["EDEL-BED", "EDSE-BED", "EDSE-PCERT"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_fe, :label => "I have fulfilled the minimum 40 hours of field experience and have submitted the appropriate documentation (required for all BED and PBCSE applicants)." %>
     <% end %>
     <%= admission_agreement.check_box :agreement_praxis_1, :label => "I have passed the Praxis I: Reading, Writing, and Math tests." %>
-    <% if( ["EDSE-PCERT","TCH-MEDT"].include? @program_code ) %>
+    <% if (["EDSE-PCERT", "TCH-MEDT"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_praxis_2, :label => "I have passed the Praxis II test." %>
     <% end %>
 
-    <% if( ["EDSE-BED","EDEL-BED"].include? @program_code ) %>
+    <% if (["EDSE-BED", "EDEL-BED"].include? @program_code) %>
       <%= admission_agreement.check_box :agreement_interview, :label => "I am aware of the procedures for scheduling my personal admissions interview." %>
     <% end %>
   <% end %>
@@ -101,12 +101,12 @@
   <legend>Essay</legend>
   <%= bootstrap_fields_for(:admission_essay) do |admission_essay| %>
     <%= admission_essay.text_area :essay_common, :cols => 75, :hint => "Word limit 500", :class => "required", :label => "COE Personal Essay" %>
-    <% if( ["TCH-MEDT"].include? @program_code ) %>
-      <%= admission_essay.text_area :essay_medt_1, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 1"%>
-      <%= admission_essay.text_area :essay_medt_2, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 2"%>
-      <%= admission_essay.text_area :essay_medt_3, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 3"%>
-      <%= admission_essay.text_area :essay_medt_4, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 4"%>
-      <%= admission_essay.text_area :essay_medt_5, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 5"%>
+    <% if (["TCH-MEDT"].include? @program_code) %>
+      <%= admission_essay.text_area :essay_medt_1, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 1" %>
+      <%= admission_essay.text_area :essay_medt_2, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 2" %>
+      <%= admission_essay.text_area :essay_medt_3, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 3" %>
+      <%= admission_essay.text_area :essay_medt_4, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 4" %>
+      <%= admission_essay.text_area :essay_medt_5, :cols => 75, :hint => "Word limit 200", :class => "required", :label => "MEDT Essay 5" %>
     <% end %>
   <% end %>
 </fieldset>
@@ -119,36 +119,36 @@
   <%= bootstrap_fields_for(:admission_reference) do |admission_reference| %>
     <table class="table">
       <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Relationship</th>
-        </tr>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Relationship</th>
+      </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1.</td>
-          <td><%= admission_reference.text_field :name_1, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.text_field :email_1, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.text_field :phone_1, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.select :relationship_1, ["Supervisor", "Instructor/Teacher", "Personal", "Other"], :class => "required", :label => :no, :include_blank => true %></td>
-        </tr>
-        <tr>
-          <td>2.</td>
-          <td><%= admission_reference.text_field :name_2, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.text_field :email_2, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.text_field :phone_2, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.select :relationship_2, ["Supervisor", "Instructor/Teacher", "Personal", "Other"], :class => "required", :label => :no, :include_blank => true %></td>
-        </tr>
-        <tr>
-          <td>3.</td>
-          <td><%= admission_reference.text_field :name_3, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.text_field :email_3, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.text_field :phone_3, :class => "required", :label => :no, :size => 14 %></td>
-          <td><%= admission_reference.select :relationship_3, ["Supervisor", "Instructor/Teacher", "Personal", "Other"], :class => "required", :label => :no, :include_blank => true %></td>
-        </tr>
+      <tr>
+        <td>1.</td>
+        <td><%= admission_reference.text_field :name_1, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.text_field :email_1, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.text_field :phone_1, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.select :relationship_1, ["Supervisor", "Instructor/Teacher", "Personal", "Other"], :class => "required", :label => :no, :include_blank => true %></td>
+      </tr>
+      <tr>
+        <td>2.</td>
+        <td><%= admission_reference.text_field :name_2, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.text_field :email_2, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.text_field :phone_2, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.select :relationship_2, ["Supervisor", "Instructor/Teacher", "Personal", "Other"], :class => "required", :label => :no, :include_blank => true %></td>
+      </tr>
+      <tr>
+        <td>3.</td>
+        <td><%= admission_reference.text_field :name_3, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.text_field :email_3, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.text_field :phone_3, :class => "required", :label => :no, :size => 14 %></td>
+        <td><%= admission_reference.select :relationship_3, ["Supervisor", "Instructor/Teacher", "Personal", "Other"], :class => "required", :label => :no, :include_blank => true %></td>
+      </tr>
       </tbody>
     </table>
   <% end %>
@@ -160,106 +160,106 @@
     <%= bootstrap_fields_for(:admission_repeated_course_retake) do |admission_repeated_course_retake| %>
       <table class="table">
         <thead>
-          <tr>
-            <th></th>
-            <th>Attempt</th>
-            <th>Course</th>
-            <th>Institution</th>
-            <th>Term</th>
-            <th>Credits</th>
-            <th>Grade</th>
-          </tr>
+        <tr>
+          <th></th>
+          <th>Attempt</th>
+          <th>Course</th>
+          <th>Institution</th>
+          <th>Term</th>
+          <th>Credits</th>
+          <th>Grade</th>
+        </tr>
         </thead>
         <tbody>
-          <tr>
-            <th rowspan="2">#1</th>
-            <th>Initial</th>
-            <td><%= admission_repeated_course_initial.text_field :course_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :insititution_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :term_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :credits_1, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_initial.text_field :grade_1, :label => :no, :size => 6 %></td>
-          </tr>
-          <tr>
-            <th>Retake</th>
-            <td><%= admission_repeated_course_retake.text_field :course_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :insititution_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :term_1, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :credits_1, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_retake.text_field :grade_1, :label => :no, :size => 6 %></td>
-          </tr>
+        <tr>
+          <th rowspan="2">#1</th>
+          <th>Initial</th>
+          <td><%= admission_repeated_course_initial.text_field :course_1, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :insititution_1, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :term_1, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :credits_1, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_initial.text_field :grade_1, :label => :no, :size => 6 %></td>
+        </tr>
+        <tr>
+          <th>Retake</th>
+          <td><%= admission_repeated_course_retake.text_field :course_1, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :insititution_1, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :term_1, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :credits_1, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_retake.text_field :grade_1, :label => :no, :size => 6 %></td>
+        </tr>
 
-          <tr>
-            <th rowspan="2">#2</th>
-            <th>Initial</th>
-            <td><%= admission_repeated_course_initial.text_field :course_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :insititution_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :term_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :credits_2, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_initial.text_field :grade_2, :label => :no, :size => 6 %></td>
-          </tr>
-          <tr>
-            <th>Retake</th>
-            <td><%= admission_repeated_course_retake.text_field :course_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :insititution_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :term_2, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :credits_2, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_retake.text_field :grade_2, :label => :no, :size => 6 %></td>
-          </tr>
+        <tr>
+          <th rowspan="2">#2</th>
+          <th>Initial</th>
+          <td><%= admission_repeated_course_initial.text_field :course_2, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :insititution_2, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :term_2, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :credits_2, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_initial.text_field :grade_2, :label => :no, :size => 6 %></td>
+        </tr>
+        <tr>
+          <th>Retake</th>
+          <td><%= admission_repeated_course_retake.text_field :course_2, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :insititution_2, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :term_2, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :credits_2, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_retake.text_field :grade_2, :label => :no, :size => 6 %></td>
+        </tr>
 
-          <tr>
-            <th rowspan="2">#3</th>
-            <th>Initial</th>
-            <td><%= admission_repeated_course_initial.text_field :course_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :insititution_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :term_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :credits_3, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_initial.text_field :grade_3, :label => :no, :size => 6 %></td>
-          </tr>
-          <tr>
-            <th>Retake</th>
-            <td><%= admission_repeated_course_retake.text_field :course_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :insititution_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :term_3, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :credits_3, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_retake.text_field :grade_3, :label => :no, :size => 6 %></td>
-          </tr>
+        <tr>
+          <th rowspan="2">#3</th>
+          <th>Initial</th>
+          <td><%= admission_repeated_course_initial.text_field :course_3, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :insititution_3, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :term_3, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :credits_3, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_initial.text_field :grade_3, :label => :no, :size => 6 %></td>
+        </tr>
+        <tr>
+          <th>Retake</th>
+          <td><%= admission_repeated_course_retake.text_field :course_3, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :insititution_3, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :term_3, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :credits_3, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_retake.text_field :grade_3, :label => :no, :size => 6 %></td>
+        </tr>
 
-          <tr>
-            <th rowspan="2">#4</th>
-            <th>Initial</th>
-            <td><%= admission_repeated_course_initial.text_field :course_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :insititution_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :term_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :credits_4, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_initial.text_field :grade_4, :label => :no, :size => 6 %></td>
-          </tr>
-          <tr>
-            <th>Retake</th>
-            <td><%= admission_repeated_course_retake.text_field :course_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :insititution_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :term_4, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :credits_4, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_retake.text_field :grade_4, :label => :no, :size => 6 %></td>
-          </tr>
+        <tr>
+          <th rowspan="2">#4</th>
+          <th>Initial</th>
+          <td><%= admission_repeated_course_initial.text_field :course_4, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :insititution_4, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :term_4, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :credits_4, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_initial.text_field :grade_4, :label => :no, :size => 6 %></td>
+        </tr>
+        <tr>
+          <th>Retake</th>
+          <td><%= admission_repeated_course_retake.text_field :course_4, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :insititution_4, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :term_4, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :credits_4, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_retake.text_field :grade_4, :label => :no, :size => 6 %></td>
+        </tr>
 
-          <tr>
-            <th rowspan="2">#5</th>
-            <th>Initial</th>
-            <td><%= admission_repeated_course_initial.text_field :course_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :insititution_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :term_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_initial.text_field :credits_5, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_initial.text_field :grade_5, :label => :no, :size => 6 %></td>
-          </tr>
-          <tr>
-            <th>Retake</th>
-            <td><%= admission_repeated_course_retake.text_field :course_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :insititution_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :term_5, :label => :no, :size => 14 %></td>
-            <td><%= admission_repeated_course_retake.text_field :credits_5, :label => :no, :size => 6 %></td>
-            <td><%= admission_repeated_course_retake.text_field :grade_5, :label => :no, :size => 6 %></td>
-          </tr>
+        <tr>
+          <th rowspan="2">#5</th>
+          <th>Initial</th>
+          <td><%= admission_repeated_course_initial.text_field :course_5, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :insititution_5, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :term_5, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_initial.text_field :credits_5, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_initial.text_field :grade_5, :label => :no, :size => 6 %></td>
+        </tr>
+        <tr>
+          <th>Retake</th>
+          <td><%= admission_repeated_course_retake.text_field :course_5, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :insititution_5, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :term_5, :label => :no, :size => 14 %></td>
+          <td><%= admission_repeated_course_retake.text_field :credits_5, :label => :no, :size => 6 %></td>
+          <td><%= admission_repeated_course_retake.text_field :grade_5, :label => :no, :size => 6 %></td>
+        </tr>
         </tbody>
       </table>
     <% end %>

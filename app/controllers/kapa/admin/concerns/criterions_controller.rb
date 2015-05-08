@@ -2,7 +2,7 @@ module Kapa::Admin::Concerns::CriterionsController
   extend ActiveSupport::Concern
 
   def update
-    @assessment_criterion = AssessmentCriterion.find(params[:id])
+    @assessment_criterion = Kapa::AssessmentCriterion.find(params[:id])
     @assessment_criterion.attributes = params[:assessment_criterion]
 
     if @assessment_criterion.save
@@ -14,7 +14,7 @@ module Kapa::Admin::Concerns::CriterionsController
   end
 
   def create
-    @assessment_criterion = AssessmentCriterion.new(:assessment_rubric_id => params[:id])
+    @assessment_criterion = Kapa::AssessmentCriterion.new(:assessment_rubric_id => params[:id])
     @assessment_criterion.attributes = params[:assessment_criterion]
 
     if @assessment_criterion.save
@@ -26,7 +26,7 @@ module Kapa::Admin::Concerns::CriterionsController
   end
 
   def destroy
-    @assessment_criterion = AssessmentCriterion.find(params[:id])
+    @assessment_criterion = Kapa::AssessmentCriterion.find(params[:id])
     unless @assessment_criterion.assessment_scores.blank?
       flash[:warning] = "Criterion cannot be deleted since there are associated score entries."
       redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus]) and return false

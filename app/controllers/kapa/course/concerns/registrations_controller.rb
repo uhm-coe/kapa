@@ -3,13 +3,13 @@ module Kapa::Course::Concerns::RegistrationsController
 
   def show
     @filter = filter(request.get? ? {:assessment_rubric_id => nil} : {})
-    @course_registration = CourseRegistration.find(params[:id])
+    @course_registration = Kapa::CourseRegistration.find(params[:id])
     @course_offer = @course_registration.course_offer
     @person = @course_registration.person
     @person.details(self)
     @assessment_rubrics = @course_offer.assessment_rubrics
-    @assessment_rubric = @filter.assessment_rubric_id ? AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
-    @table = AssessmentScore.table_for(@assessment_rubric, "CourseRegistration", params[:id])
+    @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
+    @table = Kapa::AssessmentScore.table_for(@assessment_rubric, "CourseRegistration", params[:id])
   end
 
   def update
@@ -17,9 +17,9 @@ module Kapa::Course::Concerns::RegistrationsController
       params[:assessment_scores].each_pair do |k, v|
         scorable_id = k.split("_").first
         criterion_id = k.split("_").last
-  #      logger.debug "--scorable_id: #{scorable_id}, criterion_id: #{criterion_id}"
-        score = AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id("CourseRegistration", scorable_id, criterion_id)
-  #      logger.debug "--score: #{score.inspect}"
+        #      logger.debug "--scorable_id: #{scorable_id}, criterion_id: #{criterion_id}"
+        score = Kapa::AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id("CourseRegistration", scorable_id, criterion_id)
+        #      logger.debug "--score: #{score.inspect}"
         score.rating = v
         score.rated_by = @current_user.uid
         unless score.save

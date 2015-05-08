@@ -113,7 +113,7 @@ module Kapa::Concerns::User
 
   def valid_credential?(password)
     if category == "ldap"
-      DirectoryService.authenticate(self.uid, password)
+      Kapa::DirectoryService.authenticate(self.uid, password)
     else
       #Use Authlogic authentication for local users.
       valid_password?(password)
@@ -128,7 +128,7 @@ module Kapa::Concerns::User
       property_name = options[:property][:name]
       property_value = options[:property][:value]
       #@available_keys is a cache to eliminate duplicate query on single page.
-      @available_keys[property_name] = ApplicationProperty.keys(property_name, :depts => self.depts) if @available_keys[property_name].nil?
+      @available_keys[property_name] = Kapa::ApplicationProperty.keys(property_name, :depts => self.depts) if @available_keys[property_name].nil?
       return false unless @available_keys[property_name].include?(property_value)
     end
 
@@ -163,7 +163,7 @@ module Kapa::Concerns::User
     end
 
     def search(filter, options = {})
-      users = User.includes([:person])
+      users = Kapa::User.includes([:person])
       users = users.where("department" => filter.department) if filter.department.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
       users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
@@ -172,7 +172,7 @@ module Kapa::Concerns::User
     end
 
     def to_csv(filter, options = {})
-      users = User.search(filter).order("users.uid")
+      users = Kapa::User.search(filter).order("users.uid")
       CSV.generate do |csv|
         csv << self.csv_columns
         users.each do |c|

@@ -6,7 +6,7 @@ module Kapa::Admin::Concerns::UsersController
   end
 
   def show
-    @user = User.find params[:id]
+    @user = Kapa::User.find params[:id]
     @role = @user.deserialize(:role, :as => OpenStruct)
     params[:focus] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.includes(:user => :person).limit(200).order("id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
@@ -16,12 +16,12 @@ module Kapa::Admin::Concerns::UsersController
   end
 
   def new
-    @person = Person.new
+    @person = Kapa::Person.new
     @user = @person.users.build
   end
 
   def update
-    @user = User.find params[:id]
+    @user = Kapa::User.find params[:id]
     @user.attributes = params[:user]
     @user.serialize(:role, params[:role]) if params[:role]
     if @user.save
@@ -33,16 +33,16 @@ module Kapa::Admin::Concerns::UsersController
   end
 
   def create
-    @person = Person.new(params[:person])
+    @person = Kapa::Person.new(params[:person])
     case params[:mode]
     when "promote"
-      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
+      @person_verified = Kapa::Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Person was successfully imported."
 
     when "consolidate"
-      @person_verified = Person.lookup(params[:person][:id_number], :verified => true)
+      @person_verified = Kapa::Person.lookup(params[:person][:id_number], :verified => true)
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Records were successfully consolidated."
@@ -77,30 +77,30 @@ module Kapa::Admin::Concerns::UsersController
 
   def index
     @filter = filter
-    @users = User.search(@filter).order("users.uid").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @users = Kapa::User.search(@filter).order("users.uid").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def logs
     @filter = filter
-    @timestamps = UserTimestamp.search(@filter).order("timestamps.id DESC")
+    @timestamps = Kapa::UserTimestamp.search(@filter).order("timestamps.id DESC")
   end
 
   def import
     file = params[:import_file]
     CSV.new(file, :headers => true).each do |row|
-      person = Person.lookup(row[0], :verified => true)
+      person = Kapa::Person.lookup(row[0], :verified => true)
 
       if person
         if person.email.blank?
-          p = DirectoryService.person(person.id_number)
+          p = Kapa::DirectoryService.person(person.id_number)
           person.email = p.email if p and p.email.present?
         end
 
         person.save
         if person.email.present?
           uid = person.email.split("@").first
-          user = User.find_by_uid(uid)
-          user = User.build(:uid => uid, :status => 0, :category => "ldap", :person_id => @person.id) if user.nil?
+          user = Kapa::User.find_by_uid(uid)
+          user = Kapa::User.build(:uid => uid, :status => 0, :category => "ldap", :person_id => @person.id) if user.nil?
           user.position = row["position"]
           user.department = [department(row["eac1"]), department(row["eac2"]), department(row["eac3"]), department(row["eac4"])].delete_if {|e| e.nil?}.first
           user.emp_status = 2
@@ -116,8 +116,8 @@ module Kapa::Admin::Concerns::UsersController
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data User.to_csv(@filter),
-      :type         => "application/csv",
+    send_data Kapa::User.to_csv(@filter),
+              :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"
   end

@@ -20,12 +20,12 @@ module Kapa::Concerns::PracticumPlacement
   end # included
 
   def term_desc
-    return Term.find(term_id).description
+    return Kapa::Term.find(term_id).description
   end
 
   module ClassMethods
     def search(filter, options = {})
-      placements = PracticumPlacement.includes([:person, :practicum_site])
+      placements = Kapa::PracticumPlacement.includes([:person, :practicum_site])
       placements = placements.where("practicum_placements.term_id" => filter.term_id) if filter.term_id.present?
       placements = placements.where("practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
       placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?

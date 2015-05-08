@@ -36,7 +36,7 @@ module Kapa::Concerns::Person
     self.id_number = nil if self.id_number.blank?
     ssn_formatted = self.ssn.gsub(/\D/, "") if self.ssn
     unless ssn_formatted.blank?
-      self.ssn_crypted = Person.encrypt(ssn_formatted)
+      self.ssn_crypted = Kapa::Person.encrypt(ssn_formatted)
       self.ssn = "X" * ssn_formatted.length
     end
   end
@@ -74,7 +74,7 @@ module Kapa::Concerns::Person
   end
 
   def ethnicity_desc
-    return ApplicationProperty.lookup_description("ethnicity", self.ethnicity)
+    return Kapa::ApplicationProperty.lookup_description("ethnicity", self.ethnicity)
   end
 
   def verified?
@@ -100,7 +100,7 @@ module Kapa::Concerns::Person
       #Include all depending objects and deactivate another person
       if options[:include_associations]
 
-        Person.reflect_on_all_associations.each do |assoc|
+        Kapa::Person.reflect_on_all_associations.each do |assoc|
           if assoc.macro == :has_many
             assoc.klass.update_all("#{assoc.foreign_key} = #{self.id}", "#{assoc.foreign_key} = #{another_person.id}")
           elsif assoc.macro == :has_one
@@ -125,7 +125,7 @@ module Kapa::Concerns::Person
         return []
       end
 
-      persons = Person.includes(:contact).where("status <> 'D'")
+      persons = Kapa::Person.includes(:contact).where("status <> 'D'")
       persons = persons.where(:status => "V") if options[:verified]
 
       if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)
@@ -148,13 +148,13 @@ module Kapa::Concerns::Person
       filter = OpenStruct.new
       filter.key = key
       person_local = self.search(filter, options).first
-      if person_local.blank? and DirectoryService.is_defined?
-        person_remote = DirectoryService.person(key)
+      if person_local.blank? and Kapa::DirectoryService.is_defined?
+        person_remote = Kapa::DirectoryService.person(key)
 
         #Make sure the person found in LDAP is not in the local database.
         #This avoids the problem when email is missing in local record but exists in LDAP.
         if person_remote
-          person_local = Person.find_by_id_number(person_remote.id_number)
+          person_local = Kapa::Person.find_by_id_number(person_remote.id_number)
           if person_local
             person_local.merge(person_remote)
             return person_local

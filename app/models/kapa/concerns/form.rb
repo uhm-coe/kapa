@@ -10,11 +10,11 @@ module Kapa::Concerns::Form
   end # included
 
   def term_desc
-    return term_id.blank? ? "No term chosen" : Term.find(term_id).description
+    return term_id.blank? ? "No term chosen" : Kapa::Term.find(term_id).description
   end
 
   def type_desc
-    return ApplicationProperty.lookup_description(:form, type)
+    return Kapa::ApplicationProperty.lookup_description(:form, type)
   end
 
   def lock?
@@ -39,7 +39,7 @@ module Kapa::Concerns::Form
 
   module ClassMethods
     def search(filter, options = {})
-      forms = Form.includes([:person])
+      forms = Kapa::Form.includes([:person])
       forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
       forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?

@@ -10,7 +10,7 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_admin_properties_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.history_select :name, :model_name => :application_property, :model_method => :name %>
+      <%= f.history_select :name, :model_class => kap::ApplicationProperty, :model_method => :name %>
       <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => "Any" %>
       <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>

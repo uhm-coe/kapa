@@ -22,12 +22,12 @@ module Kapa::Concerns::AssessmentRubric
   end
 
   def effective_term
-    "#{Term.find(self.start_term_id).description} - #{Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
+    "#{Kapa::Term.find(self.start_term_id).description} - #{Kapa::Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
   end
 
   module ClassMethods
     def search(filter, options = {})
-      assessment_rubrics = AssessmentRubric.includes([:assessment_criterions])
+      assessment_rubrics = Kapa::AssessmentRubric.includes([:assessment_criterions])
       assessment_rubrics = assessment_rubrics.column_matches(:title => filter.title) if filter.title.present?
       assessment_rubrics = assessment_rubrics.column_contains(:program => filter.program) if filter.program.present?
       assessment_rubrics = assessment_rubrics.column_contains(:course => filter.course) if filter.course.present?

@@ -22,7 +22,7 @@ module Kapa::Concerns::Exam
   end
 
   def type_desc
-    return ApplicationProperty.lookup_description(:exam_subject, type)
+    return Kapa::ApplicationProperty.lookup_description(:exam_subject, type)
   end
 
   def name
@@ -61,7 +61,7 @@ module Kapa::Concerns::Exam
            :contry => extract_value(113, 115)}
       self.serialize(:examinee_contact, examinee_contact)
       if self.person.nil?
-        p = Person.first(:conditions => ["last_name like ? and birth_date = ?", examinee_profile[:last_name], examinee_profile[:birth_date]])
+        p = Kapa::Person.first(:conditions => ["last_name like ? and birth_date = ?", examinee_profile[:last_name], examinee_profile[:birth_date]])
         if p
           self.person = p
           self.status = 'M'
@@ -140,7 +140,7 @@ module Kapa::Concerns::Exam
 
   module ClassMethods
     def search(filter, options = {})
-      exams = Exam.includes([:person, :exam_scores])
+      exams = Kapa::Exam.includes([:person, :exam_scores])
       exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
       exams = exams.where(:report_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?

@@ -2,31 +2,31 @@ module Kapa::Main::Concerns::PersonsController
   extend ActiveSupport::Concern
 
   def show
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     @person.details(self)
     #TODO Add dept conditions
     @curriculums = @person.curriculums.includes(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @course_registrations = CourseRegistration.includes(:course_offer => :term).where(:person_id => @person).order("terms.sequence DESC")
+    @course_registrations = Kapa::CourseRegistration.includes(:course_offer => :term).where(:person_id => @person).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
 
     if (params[:doc_id])
-      @document = Document.find(params[:doc_id])
+      @document = Kapa::Document.find(params[:doc_id])
       @title = @document.name
       render :partial => "/kapa/artifact/documents/edit", :layout => false
     elsif (params[:form_id])
-      @form = Form.find(params[:form_id])
+      @form = Kapa::Form.find(params[:form_id])
       @title = @form.type_desc
       render :partial => "/kapa/artifact/forms/edit", :layout => false
     end
   end
 
   def new
-    @person = Person.new :source => "Manual"
+    @person = Kapa::Person.new :source => "Manual"
   end
 
   def create
-    @person = Person.new(params[:person])
+    @person = Kapa::Person.new(params[:person])
     unless @person.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@person)
@@ -37,11 +37,11 @@ module Kapa::Main::Concerns::PersonsController
   end
 
   def update
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
 
     # TODO: Review merge process (commented out for now, until reviewed and working properly)
     # if params[:person_id_verified]
-    #   @person_verified = Person.find(params[:person_id_verified])
+    #   @person_verified = Kapa::Person.find(params[:person_id_verified])
     #   @person_verified.merge(@person, :include_associations => true)
     #   flash[:success] = "Person was successfully merged."
     #   params[:return_uri][:id] = @person_verified.id if params[:return_uri][:controller] == "kapa/main/persons"  #This is needed for requests comes from outside of main
@@ -63,13 +63,13 @@ module Kapa::Main::Concerns::PersonsController
     @filter = filter
     if @filter.key.blank?
       @modal = true
-      @persons = Person.where("0=1")
+      @persons = Kapa::Person.where("0=1")
     else
-      @persons = Person.search(@filter)
+      @persons = Kapa::Person.search(@filter)
     end
 
     if @persons.blank?
-      person = Person.lookup(@filter.key, :verified => true)
+      person = Kapa::Person.lookup(@filter.key, :verified => true)
       if person
         person.save!
         @persons = [person]
@@ -81,7 +81,7 @@ module Kapa::Main::Concerns::PersonsController
   end
 
   def lookup
-    person = Person.lookup(params[:key], :verified => true)
+    person = Kapa::Person.lookup(params[:key], :verified => true)
     if person
       if person.new_record?
         action = "promote"
@@ -91,7 +91,7 @@ module Kapa::Main::Concerns::PersonsController
         redirect_path = kapa_main_person_path(:id => person)
       end
     else
-      if DirectoryService.is_defined?
+      if Kapa::DirectoryService.is_defined?
         action = "alert"
       end
     end
@@ -99,9 +99,9 @@ module Kapa::Main::Concerns::PersonsController
   end
 
   def sync
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     key = params[:key]
-    @person_verified = DirectoryService.person(key)
+    @person_verified = Kapa::DirectoryService.person(key)
 
     if @person_verified
       @person.id_number = @person_verified.id_number

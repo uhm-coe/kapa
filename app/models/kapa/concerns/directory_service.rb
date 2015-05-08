@@ -38,7 +38,7 @@ module Kapa::Concerns::DirectoryService
       filter = filter & Rails.configuration.ldap_default_filter_persons if Rails.configuration.ldap_default_filter_persons
       persons = Array.new
       Rails.application.config.ldap.search(:base => Rails.configuration.ldap_search_base, :filter => filter) do |entry|
-        person = Person.new
+        person = Kapa::Person.new
         entry.each do |attribute, values|
           case attribute.to_s
             when Rails.configuration.ldap_attr_id_number

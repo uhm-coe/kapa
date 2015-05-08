@@ -3,6 +3,6 @@ module Kapa::Course::Concerns::BaseController
 
   private
   def filter_defaults
-    {:term_id => Term.current_term.id, :per_page => Rails.configuration.items_per_page}
+    {:term_id => Kapa::Term.current_term.id, :per_page => Rails.configuration.items_per_page}
   end
 end

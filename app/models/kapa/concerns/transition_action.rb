@@ -18,7 +18,7 @@ module Kapa::Concerns::TransitionAction
 
   # TODO: Change its implementation
   # def update_curriculum
-  #   logger.debug "-----#{ApplicationProperty.lookup_category(:transition_point, self.transition_point.type)} : #{ApplicationProperty.lookup_category("#{self.transition_point.type}_action", self.action)}"
+  #   logger.debug "-----#{Kapa::ApplicationProperty.lookup_category(:transition_point, self.transition_point.type)Kapa::ApplicationProperty.perty.lookup_category("#{self.transition_point.type}_action", self.action)}"
   #   logger.debug "-----#{entrance?} : #{admissible?}"
   #   if entrance?
   #     # TODO: curriculums table does not have a term_id
@@ -32,10 +32,10 @@ module Kapa::Concerns::TransitionAction
   end
 
   def action_desc
-    return ApplicationProperty.lookup_description("#{self.type}_action", action)
+    Kapa::ApplicationProperty.lookup_description("#{self.type}_action", action)
   end
 
   def admissible?
-    ApplicationProperty.lookup_category("#{self.transition_point.type}_action", self.action) == "admissible"
+    Kapa::ApplicationProperty.lookup_category("#{self.transition_point.type}_action", self.action) == "admissible"
   end
 end

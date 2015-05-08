@@ -19,7 +19,7 @@
         </div>
         <div class="col-sm-6">
           <%= f.property_select :major, :include_blank => "Any", :include_code => true, :depts => @current_user.depts, :label => "Major/Concentration" %>
-          <%= f.history_select :category, :model_name => :enrollment, :model_method => :category, :include_blank => "Any" %>
+          <%= f.property_select :category, :include_blank => "Any" %>
           <%= f.select :per_page, [10, 20, 30, 40, 50] %>
         </div>
       </div>
@@ -38,7 +38,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Enrollments (<%= @filter.term_id.present? ? Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+  <h3>Enrollments (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">

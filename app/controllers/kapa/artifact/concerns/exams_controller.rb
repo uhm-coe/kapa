@@ -2,7 +2,7 @@ module Kapa::Artifact::Concerns::ExamsController
   extend ActiveSupport::Concern
 
   def show
-    @exam = Exam.find(params[:id])
+    @exam = Kapa::Exam.find(params[:id])
     @examinee_profile = @exam.examinee_profile
     @examinee_contact = @exam.examinee_contact
     @exam_scores = @exam.exam_scores
@@ -12,7 +12,7 @@ module Kapa::Artifact::Concerns::ExamsController
   end
 
   def update
-    @exam = Exam.find params[:id]
+    @exam = Kapa::Exam.find params[:id]
     #attributes= was not used because I do not want to accidentally delete form.data
     @exam.note = params[:exam][:note] if not params[:exam][:note].blank?
 
@@ -25,7 +25,7 @@ module Kapa::Artifact::Concerns::ExamsController
   end
 
   def destroy
-    @exam = Exam.find params[:id]
+    @exam = Kapa::Exam.find params[:id]
     unless @exam.destroy and @exam.exam_scores.clear
       flash[:danger] = error_message_for(@exam)
       redirect_to kapa_artifact_exam_path(:id => @exam) and return false
@@ -36,7 +36,7 @@ module Kapa::Artifact::Concerns::ExamsController
 
   def index
     @filter = filter
-    @exams = Exam.search(@filter).order("report_date DESC, persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @exams = Kapa::Exam.search(@filter).order("report_date DESC, persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def import
@@ -48,14 +48,14 @@ module Kapa::Artifact::Concerns::ExamsController
     end
 
     import_file.open.each do |line|
-      exam = Exam.new(:raw => line, :dept => @current_user.primary_dept, :type => params[:data][:type])
+      exam = Kapa::Exam.new(:raw => line, :dept => @current_user.primary_dept, :type => params[:data][:type])
 
       unless exam.check_format
         flash[:warning] = "Invalid file format!"
         redirect_to :action => :index and return false
       end
 
-      existing_exam = Exam.find_by_report_number(exam.extract_report_number)
+      existing_exam = Kapa::Exam.find_by_report_number(exam.extract_report_number)
       if existing_exam
         exam = existing_exam
         exam.update_attribute(:raw, line)

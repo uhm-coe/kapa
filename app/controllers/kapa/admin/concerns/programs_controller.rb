@@ -2,15 +2,15 @@ module Kapa::Admin::Concerns::ProgramsController
   extend ActiveSupport::Concern
 
   def show
-    @program = Program.find params[:id]
+    @program = Kapa::Program.find params[:id]
     @program_offers = @program.program_offers
     @available_majors = @program.available_major.to_s.split(/,\s*/)
     @available_distributions = @program.available_distribution.to_s.split(/,\s*/)
-    @assessment_rubrics = AssessmentRubric.includes(:assessment_criterions).where("program like '%#{@program.code}%'")
+    @assessment_rubrics = Kapa::AssessmentRubric.includes(:assessment_criterions).where("program like '%#{@program.code}%'")
   end
 
   def update
-    @program = Program.find params[:id]
+    @program = Kapa::Program.find params[:id]
     @program.attributes = params[:program]
 
     if @program.save
@@ -22,11 +22,11 @@ module Kapa::Admin::Concerns::ProgramsController
   end
 
   def new
-    @program = Program.new
+    @program = Kapa::Program.new
   end
 
   def create
-    @program = Program.new
+    @program = Kapa::Program.new
     @program.attributes = params[:program]
 
     unless @program.save
@@ -38,7 +38,7 @@ module Kapa::Admin::Concerns::ProgramsController
   end
 
   def destroy
-    @program = Program.find params[:id]
+    @program = Kapa::Program.find params[:id]
 
     @program.program_offers.each do |program_offer|
       unless program_offer.destroy
@@ -57,6 +57,6 @@ module Kapa::Admin::Concerns::ProgramsController
 
   def index
     @filter = filter
-    @programs = Program.search(@filter).order("code").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @programs = Kapa::Program.search(@filter).order("code").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

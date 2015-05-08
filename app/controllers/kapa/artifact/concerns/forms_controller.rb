@@ -2,14 +2,14 @@ module Kapa::Artifact::Concerns::FormsController
   extend ActiveSupport::Concern
 
   def show
-    @form = Form.find params[:id]
+    @form = Kapa::Form.find params[:id]
     @person = @form.person
     @title = @form.type_desc
     render :layout => "/kapa/layouts/artifact"
   end
 
   def update
-    @form = Form.find params[:id]
+    @form = Kapa::Form.find params[:id]
     @person = @form.person
     #attributes= was not used because I do not want to accidentally delete form.data
     @form.note = params[:form][:note] unless params[:form][:note].blank?
@@ -24,7 +24,7 @@ module Kapa::Artifact::Concerns::FormsController
   end
 
   def create
-    @person = Person.find params[:id]
+    @person = Kapa::Person.find params[:id]
     @form = @person.forms.build(params[:form])
     @form.dept = @current_user.primary_dept
 
@@ -39,7 +39,7 @@ module Kapa::Artifact::Concerns::FormsController
   end
 
   def destroy
-    @form = Form.find params[:id]
+    @form = Kapa::Form.find params[:id]
     unless @form.destroy
       flash[:danger] = error_message_for(@form)
       redirect_to kapa_artifact_form_path(:id => @form) and return false
@@ -50,15 +50,15 @@ module Kapa::Artifact::Concerns::FormsController
 
   def index
     @filter = filter
-    @forms = Form.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @forms = Kapa::Form.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data Form.to_csv(@filter),
-      :type         => "application/csv",
-      :disposition  => "inline",
-      :filename     => "forms_#{filter.type}.csv"
+    send_data Kapa::Form.to_csv(@filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "forms_#{filter.type}.csv"
   end
 end

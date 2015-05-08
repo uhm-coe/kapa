@@ -14,7 +14,7 @@ module Kapa::Concerns::KapaBaseController
   end # included
 
   def validate_login
-    @current_user_session = UserSession.find
+    @current_user_session = Kapa::UserSession.find
     @current_user = @current_user_session.user if @current_user_session
     @current_user.request = request
     unless @current_user_session and @current_user and @current_user.status >= 3 and @current_user.emp_status >= 1

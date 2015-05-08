@@ -2,18 +2,18 @@ module Kapa::Advising::Concerns::SessionsController
   extend ActiveSupport::Concern
 
   def show
-    @advising_session = AdvisingSession.find(params[:id])
+    @advising_session = Kapa::AdvisingSession.find(params[:id])
     @person = @advising_session.person
     @person.details(self)
     @curriculums = @person.curriculums
   end
 
   def new
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     @person.details(self)
     @curriculums = @person.curriculums
     previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
-    @advising_session = AdvisingSession.new
+    @advising_session = Kapa::AdvisingSession.new
     @advising_session.person_id = params[:id]
     @advising_session.user_primary_id = @current_user.id
     @advising_session.session_date = Date.today
@@ -27,7 +27,7 @@ module Kapa::Advising::Concerns::SessionsController
   end
 
   def create
-    @advising_session = AdvisingSession.new(params[:advising_session])
+    @advising_session = Kapa::AdvisingSession.new(params[:advising_session])
     @advising_session.attributes = params[:advising_session]
     @advising_session.dept = @current_user.primary_dept
     @person = @advising_session.person
@@ -41,7 +41,7 @@ module Kapa::Advising::Concerns::SessionsController
   end
 
   def update
-    @advising_session = AdvisingSession.find(params[:id])
+    @advising_session = Kapa::AdvisingSession.find(params[:id])
     @advising_session.attributes = params[:advising_session]
 
     if @advising_session.save
@@ -53,7 +53,7 @@ module Kapa::Advising::Concerns::SessionsController
   end
 
   def destroy
-    @advising_session = AdvisingSession.find(params[:id])
+    @advising_session = Kapa::AdvisingSession.find(params[:id])
     unless @advising_session.destroy
       flash[:danger] = error_message_for(@advising_session)
       redirect_to kapa_advising_session_path(:id => @advising_session) and return false
@@ -64,15 +64,15 @@ module Kapa::Advising::Concerns::SessionsController
 
   def index
     @filter = filter
-    @advising_sessions = AdvisingSession.search(@filter).order("session_date DESC, advising_sessions.id DESC").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @advising_sessions = Kapa::AdvisingSession.search(@filter).order("session_date DESC, advising_sessions.id DESC").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data AdvisingSession.to_csv(@filter),
-      :type         => "application/csv",
-      :disposition  => "inline",
-      :filename     => "advising_history_#{@filter.date_start.to_s}.csv"
+    send_data Kapa::AdvisingSession.to_csv(@filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "advising_history_#{@filter.date_start.to_s}.csv"
   end
 end

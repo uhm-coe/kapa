@@ -2,8 +2,8 @@
 module Kapa::KapaBaseHelper
 
   def model_select(object_name, method, options = {}, html_options = {})
-    model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
-    selections = model_name.to_s.classify.constantize.selections(options[:model_options])
+    model_class = options[:model_class]
+    selections = model_class.selections(options[:model_options])
 
     object = instance_variable_get("@#{object_name}".delete("[]"))
     current_value = object.send("#{method}") if object
@@ -42,26 +42,26 @@ module Kapa::KapaBaseHelper
 
   def property_select(object_name, method, options = {}, html_options = {})
     options[:name] ||= method
-    options[:model_name] = :application_property
+    options[:model_class] = Kapa::ApplicationProperty
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end
 
   def term_select(object_name, method, options = {}, html_options = {})
     options[:name] ||= method
-    options[:model_name] = :term
+    options[:model_class] = Kapa::Term
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end
 
   def user_select(object_name, method, options = {}, html_options = {})
-    options[:model_name] = :user
+    options[:model_class] = Kapa::User
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end
 
   def program_select(object_name, method, options = {}, html_options = {})
-    options[:model_name] = :program
+    options[:model_class] = :program
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end
@@ -101,10 +101,10 @@ module Kapa::KapaBaseHelper
   end
 
   def history_select(object_name, method, options = {}, html_options = {})
-    model_name = options[:model_name] ? options[:model_name].to_s : object_name.to_s
+    model_class = options[:model_class]
     model_method = options[:model_method] ? options[:model_method] : method
     conditions = "#{model_method} is not NULL and #{model_method} <> ''"
-    selections = model_name.to_s.classify.constantize.select("distinct #{model_method}").where(conditions).order('1').collect { |l| l[model_method] }
+    selections = model_class.select("distinct #{model_method}").where(conditions).order('1').collect { |l| l[model_method] }
     select(object_name, method, selections, options, html_options)
   end
 

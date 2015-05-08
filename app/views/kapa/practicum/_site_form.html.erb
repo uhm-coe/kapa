@@ -3,7 +3,7 @@
     <%=f.text_field :name %>
     <%=f.text_field :name_short, :label => "Short Name" %>
     <%=f.text_field :code %>
-    <%=f.history_select :category %>
+    <%= f.property_select :category, :name => :site_category %>
     <%=f.property_select :district %>
   </div>
   <div class="col-sm-6">

@@ -2,7 +2,7 @@ module Kapa::Admin::Concerns::ProgramOffersController
   extend ActiveSupport::Concern
 
   def update
-    @program_offer = ProgramOffer.find params[:id]
+    @program_offer = Kapa::ProgramOffer.find params[:id]
     @program_offer.attributes = params[:program_offer]
 
     if @program_offer.save
@@ -14,7 +14,7 @@ module Kapa::Admin::Concerns::ProgramOffersController
   end
 
   def create
-    @program = Program.find(params[:id])
+    @program = Kapa::Program.find(params[:id])
     @program_offer = @program.program_offers.build
     @program_offer.attributes = params[:program_offer]
 
@@ -27,7 +27,7 @@ module Kapa::Admin::Concerns::ProgramOffersController
   end
 
   def destroy
-    @program_offer = ProgramOffer.find params[:id]
+    @program_offer = Kapa::ProgramOffer.find params[:id]
 
     if @program_offer.destroy
       flash[:success] = "Program offer was successfully deleted."

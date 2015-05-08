@@ -14,11 +14,11 @@ module Kapa::Concerns::ApplicationProperty
 
     def refresh_cache
       @@description_cache.clear
-      ApplicationProperty.scoped.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
+      Kapa::ApplicationProperty.scoped.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
       @@description_detail_cache.clear
-      ApplicationProperty.scoped.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
+      Kapa::ApplicationProperty.scoped.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
       @@category_cache.clear
-      ApplicationProperty.scoped.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
+      Kapa::ApplicationProperty.scoped.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
     end
 
     def selections(options = {})
@@ -63,7 +63,7 @@ module Kapa::Concerns::ApplicationProperty
     end
 
     def search(filter, options = {})
-      application_properties = ApplicationProperty.scoped
+      application_properties = Kapa::ApplicationProperty.scoped
       if filter.name.present?
         # TODO: A workaround until we remove :academic_period from properties entirely.  (Remove this later.)
         #   Without this conversion to "academic_period", an error on admin/properties/index view would be thrown

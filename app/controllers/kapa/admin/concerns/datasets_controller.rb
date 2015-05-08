@@ -2,11 +2,11 @@ module Kapa::Admin::Concerns::DatasetsController
   extend ActiveSupport::Concern
 
   def index
-    @datasets = Dataset.all
+    @datasets = Kapa::Dataset.all
   end
 
   def show
-    @dataset = Dataset.find(params[:id])
+    @dataset = Kapa::Dataset.find(params[:id])
     @parameters = @dataset.deserialize(:parameters)
     if @dataset.attr.present?
       @attr_options = @dataset.attr.split(/,\s*/).collect { |a| [a, a] }
@@ -16,11 +16,11 @@ module Kapa::Admin::Concerns::DatasetsController
   end
 
   def new
-    @dataset = Dataset.new
+    @dataset = Kapa::Dataset.new
   end
 
   def create
-    @dataset = Dataset.new(params[:dataset])
+    @dataset = Kapa::Dataset.new(params[:dataset])
     unless @dataset.save
       flash[:danger] = @dataset.errors.full_messages.join(", ")
       redirect_to new_kapa_admin_dataset_path and return false
@@ -30,7 +30,7 @@ module Kapa::Admin::Concerns::DatasetsController
   end
 
   def update
-    @dataset = Dataset.find(params[:id])
+    @dataset = Kapa::Dataset.find(params[:id])
     @parameters = @dataset.deserialize(:parameters)
 
     if params[:parameter]
@@ -52,7 +52,7 @@ module Kapa::Admin::Concerns::DatasetsController
   end
 
   def destroy
-    @dataset = Dataset.find(params[:id])
+    @dataset = Kapa::Dataset.find(params[:id])
     @dataset.destroy
 
     redirect_to kapa_report_datasets_url
@@ -60,7 +60,7 @@ module Kapa::Admin::Concerns::DatasetsController
 
   def load
     begin
-      @dataset = Dataset.find(params[:id])
+      @dataset = Kapa::Dataset.find(params[:id])
       @dataset.load
       flash[:success] = "Dataset was successfully loaded."
 
@@ -92,7 +92,7 @@ module Kapa::Admin::Concerns::DatasetsController
   end
 
   def feed
-    @dataset = Dataset.find(params[:id])
+    @dataset = Kapa::Dataset.find(params[:id])
     render :json => @dataset.to_json(params[:filter])
   end
 end

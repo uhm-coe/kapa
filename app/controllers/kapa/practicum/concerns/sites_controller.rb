@@ -2,18 +2,18 @@ module Kapa::Practicum::Concerns::SitesController
   extend ActiveSupport::Concern
 
   def show
-    @practicum_site = PracticumSite.find(params[:id])
+    @practicum_site = Kapa::PracticumSite.find(params[:id])
     @site_contact = @practicum_site.site_contact
-    @mentors = Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @mentors = Kapa::Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
     @practicum_placements = @practicum_site.practicum_placements.includes(:term).order("terms.sequence DESC")
   end
 
   def new
-    @practicum_site = PracticumSite.new :district => "Private"
+    @practicum_site = Kapa::PracticumSite.new :district => "Private"
   end
 
   def create
-    @practicum_site = PracticumSite.new params[:practicum_site]
+    @practicum_site = Kapa::PracticumSite.new params[:practicum_site]
     unless @practicum_site.save
       flash[:danger] = @practicum_site.errors.full_messages.join(", ")
       redirect_to new_kapa_practicum_site_path and return false
@@ -23,7 +23,7 @@ module Kapa::Practicum::Concerns::SitesController
   end
 
   def update
-    @practicum_site = PracticumSite.find(params[:id])
+    @practicum_site = Kapa::PracticumSite.find(params[:id])
     @practicum_site.attributes= params[:practicum_site]
     @practicum_site.serialize(:site_contact, params[:site_contact]) if not params[:site_contact].blank?
 
@@ -36,7 +36,7 @@ module Kapa::Practicum::Concerns::SitesController
   end
 
   def destroy
-    @practicum_site = PracticumSite.find(params[:id])
+    @practicum_site = Kapa::PracticumSite.find(params[:id])
 
     if @practicum_site.destroy
       flash[:success] = "Site was successfully deleted."
@@ -59,7 +59,7 @@ module Kapa::Practicum::Concerns::SitesController
         flash[:danger] = "No site code defined."
         redirect_to(:action => :index) and return false
       end
-      site = PracticumSite.find_or_create_by_code(row["code"])
+      site = Kapa::PracticumSite.find_or_create_by_code(row["code"])
       site.district = row["district"]
       site.level_from = row["level_from"]
       site.level_to = row["level_to"]
@@ -86,15 +86,15 @@ module Kapa::Practicum::Concerns::SitesController
 
   def index
     @filter = filter
-    @practicum_sites = PracticumSite.search(@filter).order("name_short").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @practicum_sites = Kapa::PracticumSite.search(@filter).order("name_short").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data PracticumSite.to_csv(@filter),
-      :type         => "application/csv",
-      :disposition  => "inline",
-      :filename     => "sites.csv"
+    send_data Kapa::PracticumSite.to_csv(@filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "sites.csv"
   end
 end

@@ -1,15 +1,16 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
+    jQuery(document).ready(function ($) {
+      <% if @modal %>$('#filter_dialog').modal({show: true});
+      <% end %>
     });
   </script>
 <% end %>
 
 <% content_for(:dialog) do %>
 
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => kapa_main_curriculums_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%= bootstrap_form_for(:filter, :url => kapa_main_curriculums_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
@@ -31,41 +32,41 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Cohort (<%= @filter.term_id.present? ? Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+  <h3>Cohort (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
+      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
 
   <table class="table table-striped">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Program</th>
-        <th>Last Transition Point</th>
-        <th>Last Action</th>
-        <th>User</th>
-        <th></th>
-      </tr>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Last Transition Point</th>
+      <th>Last Action</th>
+      <th>User</th>
+      <th></th>
+    </tr>
     </thead>
     <tbody>
-      <% for curriculum in @curriculums %>
-        <tr>
-          <td><%=curriculum.person.id_number %></td>
-          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(curriculum.person.full_name), kapa_main_person_path(:id => curriculum.person_id) %></td>
-          <td><%=abbr curriculum.code_desc, curriculum.code %></td>
-          <td><%=h curriculum.rsend(:last_transition_point, :type_desc)%></td>
-          <td><%=h curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
-          <td><%=h curriculum.rsend(:user_primary, :person, :last_name) %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => curriculum}, :class => "btn btn-default btn-xs" %></td>
-        </tr>
-      <% end %>
+    <% for curriculum in @curriculums %>
+      <tr>
+        <td><%= curriculum.person.id_number %></td>
+        <td><%= link_to_if @current_user.manage?(:main, :delegate => :search), abbr(curriculum.person.full_name), kapa_main_person_path(:id => curriculum.person_id) %></td>
+        <td><%= abbr curriculum.code_desc, curriculum.code %></td>
+        <td><%= h curriculum.rsend(:last_transition_point, :type_desc) %></td>
+        <td><%= h curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
+        <td><%= h curriculum.rsend(:user_primary, :person, :last_name) %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => curriculum}, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%=will_paginate @curriculums, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%= will_paginate @curriculums, :renderer => BootstrapPagination::Rails %></div>
 
-<%end%>
+<% end %>

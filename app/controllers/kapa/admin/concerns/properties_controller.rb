@@ -6,17 +6,17 @@ module Kapa::Admin::Concerns::PropertiesController
   end
 
   def show
-    @property = ApplicationProperty.find params[:id]
+    @property = Kapa::ApplicationProperty.find params[:id]
   end
 
   def new
     @filter = filter
-    @property = ApplicationProperty.new
+    @property = Kapa::ApplicationProperty.new
     @property.name = @filter.property_name
   end
 
   def update
-    @property = ApplicationProperty.find params[:id]
+    @property = Kapa::ApplicationProperty.find params[:id]
     @property.attributes= params[:property]
 
     if @property.save
@@ -28,7 +28,7 @@ module Kapa::Admin::Concerns::PropertiesController
   end
 
   def create
-    @property = ApplicationProperty.new
+    @property = Kapa::ApplicationProperty.new
     @property.attributes= params[:property]
 
     unless @property.save
@@ -41,6 +41,6 @@ module Kapa::Admin::Concerns::PropertiesController
 
   def index
     @filter = filter
-    @properties = ApplicationProperty.search(@filter).order("sequence DESC, code").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @properties = Kapa::ApplicationProperty.search(@filter).order("sequence DESC, code").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

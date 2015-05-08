@@ -24,7 +24,7 @@ module Kapa::Concerns::Enrollment
   end
 
   def term_desc
-    return Term.find(term_id).description
+    return Kapa::Term.find(term_id).description
   end
 
   def assignment_desc(assignment_type)
@@ -33,7 +33,7 @@ module Kapa::Concerns::Enrollment
 
   module ClassMethods
     def search(filter, options = {})
-      enrollments = Enrollment.includes([{:curriculum => :person}, {:curriculum => :program}])
+      enrollments = Kapa::Enrollment.includes([{:curriculum => :person}, {:curriculum => :program}])
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
       if filter.program == "NA"
         enrollments = enrollments.where("programs.code is NULL")
@@ -59,7 +59,7 @@ module Kapa::Concerns::Enrollment
 
     def to_csv(filter, options = {})
       # TODO: For reference, remove later
-      # enrollments = Enrollment.includes([
+      # enrollments = Kapa::Enrollment.includes([
       #   {:practicum_profile =>
       #     [{:person => :contact}, {:curriculum => :program}]
       #   },

@@ -29,7 +29,7 @@ module Kapa::Concerns::CourseOffer
   def table_for(assessment_rubric)
     table = ActiveSupport::OrderedHash.new
     self.course_registrations.each do |r|
-      table.update AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
+      table.update Kapa::AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
     end
     return table
   end
@@ -52,7 +52,7 @@ module Kapa::Concerns::CourseOffer
 
   module ClassMethods
     def search(filter, options = {})
-      course_offers = CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
+      course_offers = Kapa::CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
       course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
       course_offers = course_offers.where("course_offers.subject || course_offers.number || '-' || course_offers.section like ?", "%#{filter.name}%") if filter.name.present?
@@ -110,7 +110,7 @@ module Kapa::Concerns::CourseOffer
                 AND courses.term_id = ?
               ORDER BY terms.sequence, subject, number, section, crn"
 
-      courses = CourseOffer.find_by_sql([sql, filter.term_id])
+      courses = Kapa::CourseOffer.find_by_sql([sql, filter.term_id])
       CSV.generate do |csv|
         csv << self.csv_columns
         courses.each do |c|

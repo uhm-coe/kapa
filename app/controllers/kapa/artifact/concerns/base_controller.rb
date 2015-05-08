@@ -3,7 +3,7 @@ module Kapa::Artifact::Concerns::BaseController
 
   private
   def filter_defaults
-    {:term_id => Term.current_term.id,
+    {:term_id => Kapa::Term.current_term.id,
      :type => :admission,
      :per_page => Rails.configuration.items_per_page}
   end

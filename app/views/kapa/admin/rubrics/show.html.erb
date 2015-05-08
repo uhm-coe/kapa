@@ -1,7 +1,7 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
-      $(".hidden-text-area a").click(function() {
+      $(".hidden-text-area a").click(function () {
         $(this).next().toggle();
       });
 
@@ -16,8 +16,8 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
-    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%=h @assessment_rubric.title %>
+    <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%= h @assessment_rubric.title %>
   </h4>
 
   <div class="tabs">
@@ -28,8 +28,8 @@
 
     <div class="tab-content">
       <div id="rubric_profile_tab" class="tab-pane">
-        <%=bootstrap_form_for :assessment_rubric, :url => kapa_admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
-          <%=render :partial => "/kapa/admin/rubric_form", :locals => {:f => f} %>
+        <%= bootstrap_form_for :assessment_rubric, :url => kapa_admin_rubric_path(:id => @assessment_rubric), :remote => true, :html => {:method => :put} do |f| %>
+          <%= render :partial => "/kapa/admin/rubric_form", :locals => {:f => f} %>
           <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_rubric_path(:id => @assessment_rubric)} if @current_user.manage? :admin, :delegate => :rubric %>
         <% end %>
       </div>
@@ -41,19 +41,19 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#assessment_criterion_<%=@assessment_criterion.id %>"><span class="strong"><%=h @assessment_criterion.criterion %></span></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#assessment_criterion_<%= @assessment_criterion.id %>"><span class="strong"><%= h @assessment_criterion.criterion %></span></a>
                 </h3>
               </div>
-              <div id="assessment_criterion_<%=@assessment_criterion.id %>" class="panel-collapse collapse<%=' in' if params[:criterion_panel] == assessment_criterion.id.to_s || (params[:criterion_panel].nil? && index == 0) %>">
+              <div id="assessment_criterion_<%= @assessment_criterion.id %>" class="panel-collapse collapse<%= ' in' if params[:criterion_panel] == assessment_criterion.id.to_s || (params[:criterion_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <%=bootstrap_form_for :assessment_criterion, :url => kapa_admin_criterion_path(:id => @assessment_criterion, :focus => :criterions, :criterion_panel => assessment_criterion.id), :remote => true, :html => {:method => :put} do |f| %>
-                    <%=render :partial => "/kapa/admin/criterion_form" %>
+                  <%= bootstrap_form_for :assessment_criterion, :url => kapa_admin_criterion_path(:id => @assessment_criterion, :focus => :criterions, :criterion_panel => assessment_criterion.id), :remote => true, :html => {:method => :put} do |f| %>
+                    <%= render :partial => "/kapa/admin/criterion_form" %>
                     <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_criterion_path(:id => @assessment_criterion, :focus => :criterions)} if @current_user.manage? :admin, :delegate => :rubric %>
                   <% end %>
                 </div>
               </div>
             </div>
-          <%end%>
+          <% end %>
 
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -61,12 +61,12 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#new_assessment_criterion"><span class="new">New Criterion</span></a>
               </h3>
             </div>
-            <div id="new_assessment_criterion" class="panel-collapse collapse<%=' in' if @assessment_criterions.length == 0 %>">
+            <div id="new_assessment_criterion" class="panel-collapse collapse<%= ' in' if @assessment_criterions.length == 0 %>">
               <div class="panel-body">
-                <% @assessment_criterion = AssessmentCriterion.new %>
-                <%=bootstrap_form_for :assessment_criterion, :url => kapa_admin_criterions_path(:id => @assessment_rubric, :focus => :criterions), :remote => true do |f| %>
-                  <%=render :partial => "/kapa/admin/criterion_form" %>
-                  <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :rubric %>
+                <% @assessment_criterion = Kapa::AssessmentCriterion.new %>
+                <%= bootstrap_form_for :assessment_criterion, :url => kapa_admin_criterions_path(:id => @assessment_rubric, :focus => :criterions), :remote => true do |f| %>
+                  <%= render :partial => "/kapa/admin/criterion_form" %>
+                  <%= render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :rubric %>
                 <% end %>
               </div>
             </div>

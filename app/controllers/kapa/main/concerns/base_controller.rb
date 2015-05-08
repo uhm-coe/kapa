@@ -2,12 +2,12 @@ module Kapa::Main::Concerns::BaseController
   extend ActiveSupport::Concern
 
   def welcome
-    validate_login if UserSession.find
+    validate_login if Kapa::UserSession.find
   end
 
   def login
     reset_session
-    session = UserSession.new(params[:user_session])
+    session = Kapa::UserSession.new(params[:user_session])
     unless session.save
       flash[:danger] = "Invalid user/password combination!"
       redirect_to kapa_root_path and return false
@@ -16,7 +16,7 @@ module Kapa::Main::Concerns::BaseController
   end
 
   def logout
-    UserSession.find.destroy if UserSession.find
+    Kapa::UserSession.find.destroy if Kapa::UserSession.find
     redirect_to kapa_root_path
   end
 
@@ -26,7 +26,7 @@ module Kapa::Main::Concerns::BaseController
   private
   def filter_defaults
     {:key => "",
-     :term_id => Term.current_term.id,
+     :term_id => Kapa::Term.current_term.id,
      :type => :admission,
      :per_page => Rails.configuration.items_per_page}
   end

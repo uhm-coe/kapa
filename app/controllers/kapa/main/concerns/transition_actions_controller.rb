@@ -2,7 +2,7 @@ module Kapa::Main::Concerns::TransitionActionsController
   extend ActiveSupport::Concern
 
   def create
-    @transition_point = TransitionPoint.find(params[:id])
+    @transition_point = Kapa::TransitionPoint.find(params[:id])
     @action = @transition_point.transition_actions.build(params[:transition_action])
 
     if @action.save
@@ -14,7 +14,7 @@ module Kapa::Main::Concerns::TransitionActionsController
   end
 
   def update
-    @action = TransitionAction.find(params[:id])
+    @action = Kapa::TransitionAction.find(params[:id])
     @action.attributes = params[:transition_action][@action.id.to_s]
 
     if @action.save
@@ -26,7 +26,7 @@ module Kapa::Main::Concerns::TransitionActionsController
   end
 
   def destroy
-    @action = TransitionAction.find(params[:id])
+    @action = Kapa::TransitionAction.find(params[:id])
 
     if @action.destroy
       flash[:success] = "Action was successfully deleted."

@@ -2,7 +2,7 @@ module Kapa::Artifact::Concerns::DocumentsController
   extend ActiveSupport::Concern
 
   def show
-    @document = Document.find(params[:id])
+    @document = Kapa::Document.find(params[:id])
     @person = @document.person
     @title = @document.name
 
@@ -18,7 +18,7 @@ module Kapa::Artifact::Concerns::DocumentsController
   end
 
   def update
-    @document = Document.find(params[:id])
+    @document = Kapa::Document.find(params[:id])
     @person = @document.person
     @document.attributes=(params[:document])
     if params[:document][:data]
@@ -42,7 +42,7 @@ module Kapa::Artifact::Concerns::DocumentsController
       redirect_to params[:return_url] and return false
     end
 
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     @document = @person.documents.build(params[:document])
 
     doc_name = params[:document][:name]
@@ -61,7 +61,7 @@ module Kapa::Artifact::Concerns::DocumentsController
   end
 
   def destroy
-    @document = Document.find(params[:id])
+    @document = Kapa::Document.find(params[:id])
 
     if @document.destroy
       flash[:success] = "Document was successfully deleted."

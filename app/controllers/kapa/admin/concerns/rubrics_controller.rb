@@ -2,16 +2,16 @@ module Kapa::Admin::Concerns::RubricsController
   extend ActiveSupport::Concern
 
   def show
-    @assessment_rubric = AssessmentRubric.find(params[:id])
+    @assessment_rubric = Kapa::AssessmentRubric.find(params[:id])
     @assessment_criterions = @assessment_rubric.assessment_criterions
   end
 
   def new
-    @assessment_rubric = AssessmentRubric.new
+    @assessment_rubric = Kapa::AssessmentRubric.new
   end
 
   def update
-    @assessment_rubric = AssessmentRubric.find(params[:id])
+    @assessment_rubric = Kapa::AssessmentRubric.find(params[:id])
     @assessment_rubric.attributes = params[:assessment_rubric]
     if @assessment_rubric.save
       flash[:success] = "Rubric was successfully updated."
@@ -22,7 +22,7 @@ module Kapa::Admin::Concerns::RubricsController
   end
 
   def create
-    @assessment_rubric = AssessmentRubric.new
+    @assessment_rubric = Kapa::AssessmentRubric.new
     @assessment_rubric.attributes= params[:assessment_rubric]
     unless @assessment_rubric.save
       flash[:danger] = @assessment_rubric.errors.full_messages.join(", ")
@@ -33,7 +33,7 @@ module Kapa::Admin::Concerns::RubricsController
   end
 
   def destroy
-    @assessment_rubric = AssessmentRubric.find(params[:id])
+    @assessment_rubric = Kapa::AssessmentRubric.find(params[:id])
     unless @assessment_rubric.assessment_criterions.blank?
       flash[:danger] = "Rubric can not be deleted since it contains one or more criteria."
       redirect_to kapa_admin_rubric_path(:id => @assessment_rubric) and return false
@@ -48,6 +48,6 @@ module Kapa::Admin::Concerns::RubricsController
 
   def index
     @filter = filter
-    @assessment_rubrics = AssessmentRubric.search(@filter).order("dept, title").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @assessment_rubrics = Kapa::AssessmentRubric.search(@filter).order("dept, title").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

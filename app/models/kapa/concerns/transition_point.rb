@@ -33,40 +33,40 @@ module Kapa::Concerns::TransitionPoint
   end
 
   def term_desc
-    return Term.find(term_id).description
+    return Kapa::Term.find(term_id).description
   end
 
   def category_desc
-    return ApplicationProperty.lookup_description("#{type}_category", category)
+    return Kapa::ApplicationProperty.lookup_description("#{type}_category", category)
   end
 
   def priority_desc
-    return ApplicationProperty.lookup_description("#{type}_priority", priority)
+    return Kapa::ApplicationProperty.lookup_description("#{type}_priority", priority)
   end
 
   def status_desc
-    return ApplicationProperty.lookup_description("#{type}_status", status)
+    return Kapa::ApplicationProperty.lookup_description("#{type}_status", status)
   end
 
   def type_desc
-    return ApplicationProperty.lookup_description(:transition_point, type)
+    return Kapa::ApplicationProperty.lookup_description(:transition_point, type)
   end
 
   def entrance?
-    ApplicationProperty.lookup_category(:transition_point, type) == "entrance"
+    Kapa::ApplicationProperty.lookup_category(:transition_point, type) == "entrance"
   end
 
   def exit?
-    ApplicationProperty.lookup_category(:transition_point, type) == "exit"
+    Kapa::ApplicationProperty.lookup_category(:transition_point, type) == "exit"
   end
 
   def assessment_rubrics
-    rubrics = AssessmentRubric.includes(:assessment_criterions)
-    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Term.find(self.term_id).code])
+    rubrics = Kapa::AssessmentRubric.includes(:assessment_criterions)
+    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Kapa::Term.find(self.term_id).code])
     rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
     rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
-      return [AssessmentRubric.new(:title => "Not Defined")]
+      return [Kapa::AssessmentRubric.new(:title => "Not Defined")]
     else
       return rubrics
     end
@@ -74,7 +74,7 @@ module Kapa::Concerns::TransitionPoint
 
   module ClassMethods
     def search(filter, options = {})
-      transition_points = TransitionPoint.includes([:curriculum, {:curriculum => :program}, {:curriculum => :person}])
+      transition_points = Kapa::TransitionPoint.includes([:curriculum, {:curriculum => :program}, {:curriculum => :person}])
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
       transition_points = transition_points.where("transition_points.type" => filter.type.to_s) if filter.type.present?

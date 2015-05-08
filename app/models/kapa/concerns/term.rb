@@ -17,7 +17,7 @@ module Kapa::Concerns::Term
 
     def selections(options = {})
       selections = []
-      terms = Term.where(:active => true).order("sequence DESC, code")
+      terms = Kapa::Term.where(:active => true).order("sequence DESC, code")
       terms = temrs.where(options[:condition]) if options[:condition]
       terms.each { |v| selections.push [v.description, v.id] }
       return selections
@@ -25,7 +25,7 @@ module Kapa::Concerns::Term
 
     #TODO Implement this method using start date and end date.
     def current_term
-      Term.find_by_code("201530")
+      Kapa::Term.find_by_code("201530")
     end
 
     def next_term
@@ -33,15 +33,15 @@ module Kapa::Concerns::Term
     end
 
     def terms_ids_by_range(start_term_id, end_term_id)
-      self.where(:code => Term.find(start_term_id).code..Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
+      self.where(:code => Kapa::Term.find(start_term_id).code..Kapa::Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
     end
 
     def search(filter, options = {})
       # To return an ActiveRecord::Relation, use the following:
-      #   For Rails 4.1 and above: Term.all
-      #   For Rails 4.0: Term.where(nil)
-      #   For Rails 3.x: Term.scoped
-      terms = Term.scoped
+      #   For Rails 4.1 and above: Kapa::Term.all
+      #   For Rails 4.0: Kapa::Term.where(nil)
+      #   For Rails 3.x: Kapa::Term.scoped
+      terms = Kapa::Term.scoped
       terms = terms.where("id" => filter.term_id) if filter.term_id.present?
       terms = terms.where("start_date >= :start_date", {:start_date => filter.start_date}) if filter.start_date.present?
       terms = terms.where("end_date <= :end_date", {:end_date => filter.end_date}) if filter.end_date.present?

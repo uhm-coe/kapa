@@ -26,7 +26,7 @@ module Kapa::Concerns::Program
   end
 
   def degree_desc
-    return ApplicationProperty.lookup_description(:degree, degree)
+    return Kapa::ApplicationProperty.lookup_description(:degree, degree)
   end
 
   module ClassMethods
@@ -45,7 +45,7 @@ module Kapa::Concerns::Program
     end
 
     def search(filter, options = {})
-      programs = Program.scoped
+      programs = Kapa::Program.scoped
       programs = programs.depts_scope(filter.dept) if filter.dept.present?
       programs = programs.where("programs.active" => filter.active) if filter.active.present?
       return programs

@@ -2,23 +2,23 @@ module Kapa::Practicum::Concerns::PlacementsController
   extend ActiveSupport::Concern
 
   def show
-    @practicum_placement = PracticumPlacement.find(params[:id])
+    @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
     @person = @practicum_placement.person
     @person.details(self)
     @curriculums = @person.curriculums
-    @practicum_sites = PracticumSite.select("id, name_short")
-    @mentors = Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @practicum_sites = Kapa::PracticumSite.select("id, name_short")
+    @mentors = Kapa::Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
   end
 
   def new
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     @person.details(self)
-    @practicum_placement = @person.practicum_placements.build(:term_id => Term.current_term.id)
+    @practicum_placement = @person.practicum_placements.build(:term_id => Kapa::Term.current_term.id)
     @curriculums = @person.curriculums
   end
 
   def create
-    @practicum_placement = PracticumPlacement.new params[:practicum_placement]
+    @practicum_placement = Kapa::PracticumPlacement.new params[:practicum_placement]
     @practicum_placement.person_id = params[:id]
 
     if @practicum_placement.save
@@ -31,7 +31,7 @@ module Kapa::Practicum::Concerns::PlacementsController
   end
 
   def update
-    @practicum_placement = PracticumPlacement.find(params[:id])
+    @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
     @practicum_placement.attributes = params[:practicum_placement]
 
     if @practicum_placement.save
@@ -44,7 +44,7 @@ module Kapa::Practicum::Concerns::PlacementsController
   end
 
   def destroy
-    @practicum_placement = PracticumPlacement.find(params[:id])
+    @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
 
     if @practicum_placement.destroy
       flash[:success] = "Placement record was successfully deleted."
@@ -56,21 +56,21 @@ module Kapa::Practicum::Concerns::PlacementsController
 
   def index
     @filter = filter
-    @practicum_sites = PracticumSite.includes(:practicum_placements).order("name_short")
-    @practicum_placements = PracticumPlacement.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @practicum_sites = Kapa::PracticumSite.includes(:practicum_placements).order("name_short")
+    @practicum_placements = Kapa::PracticumPlacement.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data PracticumPlacement.to_csv(@filter),
+    send_data Kapa::PracticumPlacement.to_csv(@filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "placements_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
+              :filename => "placements_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
   end
 
   def get_mentor
-    person = Person.find(params[:person_id])
+    person = Kapa::Person.find(params[:person_id])
     mentor = {}
     mentor[:last_name] = person.last_name
     mentor[:first_name] = person.first_name
@@ -84,9 +84,9 @@ module Kapa::Practicum::Concerns::PlacementsController
 
   def update_mentor
     if params[:mentor][:person_id].blank?
-      person = Person.new(:source => "Placement")
+      person = Kapa::Person.new(:source => "Placement")
     else
-      person = Person.find(params[:mentor][:person_id])
+      person = Kapa::Person.find(params[:mentor][:person_id])
     end
     person.last_name = params[:mentor][:last_name]
     person.first_name = params[:mentor][:first_name]

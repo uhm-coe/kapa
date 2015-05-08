@@ -2,7 +2,7 @@ module Kapa::Main::Concerns::ContactsController
   extend ActiveSupport::Concern
 
   def update
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     @contact = @person.contact ||= @person.build_contact
     @contact.entity_type = "Person"
     @contact.attributes=(params[:contact])

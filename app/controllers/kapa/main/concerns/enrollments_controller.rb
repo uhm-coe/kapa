@@ -2,21 +2,21 @@ module Kapa::Main::Concerns::EnrollmentsController
   extend ActiveSupport::Concern
 
   def show
-    @enrollment = Enrollment.find(params[:id])
+    @enrollment = Kapa::Enrollment.find(params[:id])
     @curriculum = @enrollment.curriculum
     @person = @curriculum.person
     @person.details(self)
   end
 
   def new
-    @curriculum = Curriculum.find(params[:id])
+    @curriculum = Kapa::Curriculum.find(params[:id])
     @person = @curriculum.person
     @person.details(self)
-    @enrollment = @curriculum.enrollments.build(:term_id => Term.current_term.id, :curriculum_id => params[:id])
+    @enrollment = @curriculum.enrollments.build(:term_id => Kapa::Term.current_term.id, :curriculum_id => params[:id])
   end
 
   def create
-    @person = Person.find(params[:id])
+    @person = Kapa::Person.find(params[:id])
     @curriculum = @person.curriculums.find(params[:enrollment][:curriculum_id])
 
     @enrollment = @curriculum.enrollments.build(params[:enrollment])
@@ -30,7 +30,7 @@ module Kapa::Main::Concerns::EnrollmentsController
   end
 
   def update
-    @enrollment = Enrollment.find(params[:id])
+    @enrollment = Kapa::Enrollment.find(params[:id])
     @enrollment.attributes = params[:enrollment]
 
     if @enrollment.save
@@ -53,12 +53,12 @@ module Kapa::Main::Concerns::EnrollmentsController
 
     if params[:data][:delete] == "Y"
       PracticumAssignment.delete_all(["practicum_placement_id IN (SELECT id FROM practicum_placements WHERE term_id = ?)", params[:filter][:term_id]])
-      PracticumPlacement.delete_all(["term_id = ?", params[:filter][:term_id]])
+      Kapa::PracticumPlacement.delete_all(["term_id = ?", params[:filter][:term_id]])
     end
 
     CSV.new(import_file, :headers => true).each do |row|
       id_number = row["id_number"] ? row["id_number"] : "00000000"
-      person = Person.lookup(id_number, :verified => true)
+      person = Kapa::Person.lookup(id_number, :verified => true)
 
       if person
         person.save if person.new_record?
@@ -96,8 +96,8 @@ module Kapa::Main::Concerns::EnrollmentsController
         placement.category = row["category"]
         placement.sequence = row["sequence"]
         placement.mentor_type = row["mentor_type"]
-        placement.user_primary = User.find_by_uid(row["coordinator_1_uid"])
-        placement.user_secondary = User.find_by_uid(row["coordinator_2_uid"])
+        placement.user_primary = Kapa::User.find_by_uid(row["coordinator_1_uid"])
+        placement.user_secondary = Kapa::User.find_by_uid(row["coordinator_2_uid"])
         placement.uid = row["group"]
         placement.save
 
@@ -107,10 +107,10 @@ module Kapa::Main::Concerns::EnrollmentsController
             assignment = placement.practicum_assignments.build(:assignment_type => "mentor")
             assignment.content_area = row["#{key}_content_area"]
             assignment.payment = row["#{key}_payment"]
-            assignment.practicum_site = PracticumSite.find_by_code(row["#{key}_site_code"])
+            assignment.practicum_site = Kapa::PracticumSite.find_by_code(row["#{key}_site_code"])
             assignment.person_id = row["#{key}_mentor_person_id"]
-            assignment.user_primary = User.find_by_uid(row["#{key}_supervisor_1_uid"])
-            assignment.user_secondary = User.find_by_uid(row["#{key}_supervisor_2_uid"])
+            assignment.user_primary = Kapa::User.find_by_uid(row["#{key}_supervisor_1_uid"])
+            assignment.user_secondary = Kapa::User.find_by_uid(row["#{key}_supervisor_2_uid"])
             assignment.note = row["#{key}_note"]
             assignment.save
           end
@@ -126,16 +126,16 @@ module Kapa::Main::Concerns::EnrollmentsController
 
   def index
     @filter = filter
-    @enrollments = Enrollment.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @enrollments = Kapa::Enrollment.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data Enrollment.to_csv(@filter),
+    send_data Kapa::Enrollment.to_csv(@filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "enrollments_#{Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
+              :filename => "enrollments_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
   end
 
 end

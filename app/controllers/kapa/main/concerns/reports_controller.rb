@@ -2,11 +2,11 @@ module Kapa::Main::Concerns::ReportsController
   extend ActiveSupport::Concern
 
   def index
-    @datasets = Dataset.all
+    @datasets = Kapa::Dataset.all
   end
 
   def show
-    @dataset = Dataset.find(params[:id])
+    @dataset = Kapa::Dataset.find(params[:id])
     @dataset.load if @dataset.loaded_at.blank?
     @parameters = @dataset.deserialize(:parameters)
 

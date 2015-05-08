@@ -35,23 +35,23 @@ module Kapa::Concerns::Curriculum
   end
 
   def track_desc
-    return ApplicationProperty.lookup_description(:track, track)
+    return Kapa::ApplicationProperty.lookup_description(:track, track)
   end
 
   def major_primary_desc
-    return ApplicationProperty.lookup_description(:major, major_primary)
+    return Kapa::ApplicationProperty.lookup_description(:major, major_primary)
   end
 
   def major_secondary_desc
-    return ApplicationProperty.lookup_description(:major, major_secondary)
+    return Kapa::ApplicationProperty.lookup_description(:major, major_secondary)
   end
 
   def distribution_desc
-    return ApplicationProperty.lookup_description(:distribution, distribution)
+    return Kapa::ApplicationProperty.lookup_description(:distribution, distribution)
   end
 
   def location_desc
-    return ApplicationProperty.lookup_description(:location, location)
+    return Kapa::ApplicationProperty.lookup_description(:location, location)
   end
 
   def code
@@ -72,7 +72,7 @@ module Kapa::Concerns::Curriculum
 
   module ClassMethods
     def search(filter, options ={})
-      curriculums = Curriculum.includes([:transition_points, :program, :person]) #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
+      curriculums = Kapa::Curriculum.includes([:transition_points, :program, :person]) #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?
       curriculums = curriculums.where("programs.code" => filter.program) if filter.program.present?

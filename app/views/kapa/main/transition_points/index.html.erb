@@ -1,15 +1,16 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
+    jQuery(document).ready(function ($) {
+      <% if @modal %>$('#filter_dialog').modal({show: true});
+      <% end %>
     });
   </script>
 <% end %>
 
 <% content_for(:dialog) do %>
 
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => kapa_main_transition_points_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
+    <%= bootstrap_form_for(:filter, :url => kapa_main_transition_points_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
@@ -31,41 +32,42 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Transition Points/<%=ApplicationProperty.lookup_description(:transition_point, @filter.type)%> (<%= @filter.term_id.present? ? Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+  <h3>Transition Points/<%= Kapa::ApplicationProperty.lookup_description(:transition_point, @filter.type) %>
+    (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
+      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
 
   <table class="table table-striped">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Program</th>
-        <th>Latest Action</th>
-        <th>Status</th>
-        <th>User</th>
-        <th></th>
-      </tr>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Latest Action</th>
+      <th>Status</th>
+      <th>User</th>
+      <th></th>
+    </tr>
     </thead>
     <tbody>
-      <% for transition_point in @transition_points %>
-        <tr>
-          <td><%=transition_point.curriculum.person.id_number %></td>
-          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), kapa_main_person_path(:id => transition_point.curriculum.person_id) %></td>
-          <td><%=abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
-          <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-          <td><%=h transition_point.status_desc %></td>
-          <td><%=h transition_point.user_primary.person.last_name if transition_point.user_primary %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => transition_point}, :class => "btn btn-default btn-xs" %></td>
-        </tr>
-      <% end %>
+    <% for transition_point in @transition_points %>
+      <tr>
+        <td><%= transition_point.curriculum.person.id_number %></td>
+        <td><%= link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), kapa_main_person_path(:id => transition_point.curriculum.person_id) %></td>
+        <td><%= abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
+        <td><%= h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+        <td><%= h transition_point.status_desc %></td>
+        <td><%= h transition_point.user_primary.person.last_name if transition_point.user_primary %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => transition_point}, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%=will_paginate @transition_points, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%= will_paginate @transition_points, :renderer => BootstrapPagination::Rails %></div>
 
-<%end%>
+<% end %>
