@@ -1,52 +1,52 @@
 <% role_selections = [["No Access", "0"], ["Read", "1"], ["Write", "2"], ["Manage", "3"]] %>
-<% list_selections = [["Assigned records", "1"],["Departmental records", "2"],["All records", "3"]] %>
+<% list_selections = [["Assigned records", "1"], ["Departmental records", "2"], ["All records", "3"]] %>
 
-<%=bootstrap_fields_for :role do |f| %>
+<%= bootstrap_fields_for :role do |f| %>
   <div class="row">
     <div class="col-sm-4">
-      <%=f.select :main, role_selections, {:label => "Main"} %>
-      <%=f.select :main_list, list_selections, {:label => "Scope"}, {} %>
-      <%=f.check_box :main_export, {:label => "Export Records"}, "Y", "N"  %>
-      <%=f.check_box :main_import, {:label => "Import Records"}, "Y", "N" %>
-      <%=f.check_box :main_search, {:label => "Search Recrods"}, "Y", "N"  %>
-      <%=f.check_box :main_person, {:label => "Manage Personal Profiles"}, "Y", "N"  %>
+      <%= f.select :main, role_selections, {:label => "Main"} %>
+      <%= f.select :main_list, list_selections, {:label => "Scope"}, {} %>
+      <%= f.check_box :main_export, {:label => "Export Records"}, "Y", "N" %>
+      <%= f.check_box :main_import, {:label => "Import Records"}, "Y", "N" %>
+      <%= f.check_box :main_search, {:label => "Search Recrods"}, "Y", "N" %>
+      <%= f.check_box :main_person, {:label => "Manage Personal Profiles"}, "Y", "N" %>
     </div>
     <div class="col-sm-4">
-      <%=f.select :artifact, role_selections, {:label => "Artifacts"} %>
-      <%=f.select :artifact_list, list_selections, {:label => "Scope"}, {} %>
-      <%=f.check_box :artifact_export, {:label => "Export Records"}, "Y", "N" %>
-      <%=f.check_box :artifact_import, {:label => "Import Records"}, "Y", "N" %>
-      <%=f.check_box :artifact_form, {:label => "Manage Forms"}, "Y", "N" %>
-      <%=f.check_box :artifact_exam, {:label => "Manage Exams"}, "Y", "N" %>
+      <%= f.select :document, role_selections, {:label => "Artifacts"} %>
+      <%= f.select :artifact_list, list_selections, {:label => "Scope"}, {} %>
+      <%= f.check_box :artifact_export, {:label => "Export Records"}, "Y", "N" %>
+      <%= f.check_box :artifact_import, {:label => "Import Records"}, "Y", "N" %>
+      <%= f.check_box :artifact_form, {:label => "Manage Forms"}, "Y", "N" %>
+      <%= f.check_box :artifact_exam, {:label => "Manage Exams"}, "Y", "N" %>
     </div>
     <div class="col-sm-4">
-      <%=f.select :advising, role_selections, {} %>
-      <%=f.select :advising_list, list_selections, {:label => "Scope"}, {}  %>
-      <%=f.check_box :advising_export, {:label => "Export Records"}, "Y", "N" %>
-      <%=f.check_box :advising_import, {:label => "Import Records"}, "Y", "N" %>
+      <%= f.select :advising, role_selections, {} %>
+      <%= f.select :advising_list, list_selections, {:label => "Scope"}, {} %>
+      <%= f.check_box :advising_export, {:label => "Export Records"}, "Y", "N" %>
+      <%= f.check_box :advising_import, {:label => "Import Records"}, "Y", "N" %>
     </div>
   </div>
   <br>
   <div class="row">
     <div class="col-sm-4">
-      <%=f.select :course, role_selections, {:label => "Courses"} %>
-      <%=f.select :course_list, list_selections, {:label => "Scope"}, {}  %>
-      <%=f.check_box :course_export, {:label => "Export Records"}, "Y", "N" %>
-      <%=f.check_box :course_import, {:label => "Import Records"}, "Y", "N" %>
+      <%= f.select :course, role_selections, {:label => "Courses"} %>
+      <%= f.select :course_list, list_selections, {:label => "Scope"}, {} %>
+      <%= f.check_box :course_export, {:label => "Export Records"}, "Y", "N" %>
+      <%= f.check_box :course_import, {:label => "Import Records"}, "Y", "N" %>
     </div>
     <div class="col-sm-4">
-      <%=f.select :practicum, role_selections, {:label => "Placements"} %>
-      <%=f.select :practicum_list, list_selections, {:label => "Scope"}, {}  %>
-      <%=f.check_box :practicum_export, {:label => "Export Records"}, "Y", "N" %>
-      <%=f.check_box :practicum_import, {:label => "Import Records"}, "Y", "N" %>
+      <%= f.select :practicum, role_selections, {:label => "Placements"} %>
+      <%= f.select :practicum_list, list_selections, {:label => "Scope"}, {} %>
+      <%= f.check_box :practicum_export, {:label => "Export Records"}, "Y", "N" %>
+      <%= f.check_box :practicum_import, {:label => "Import Records"}, "Y", "N" %>
     </div>
     <div class="col-sm-4">
-      <%=f.select :admin, role_selections, {:label => "Administration"}%>
-      <%=f.check_box :admin_program, {:label => "Manage Program"}, "Y", "N" %>
-      <%=f.check_box :admin_user, {:label => "Manage User Accounts"}, "Y", "N" %>
-      <%=f.check_box :admin_rubric, {:label => "Manage Rubrics"}, "Y", "N" %>
-      <%=f.check_box :admin_restricted_report, {:label => "Manage SSN Reporting"}, "Y", "N" %>
-      <%=f.check_box :admin_content, {:label => "Manage Contents"}, "Y", "N" %>
+      <%= f.select :admin, role_selections, {:label => "Administration"} %>
+      <%= f.check_box :admin_program, {:label => "Manage Program"}, "Y", "N" %>
+      <%= f.check_box :admin_user, {:label => "Manage User Accounts"}, "Y", "N" %>
+      <%= f.check_box :admin_rubric, {:label => "Manage Rubrics"}, "Y", "N" %>
+      <%= f.check_box :admin_restricted_report, {:label => "Manage SSN Reporting"}, "Y", "N" %>
+      <%= f.check_box :admin_content, {:label => "Manage Contents"}, "Y", "N" %>
     </div>
   </div>
 <% end %>

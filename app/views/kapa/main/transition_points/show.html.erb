@@ -36,7 +36,7 @@
   <h4 class="section-header divider">
     <%= link_to "", kapa_main_person_path(:id => @transition_point.curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
     Transition
-    Point/<%= Kapa::ApplicationProperty.lookup_description(:transition_point, @transition_point.type) %> <%= link_to image_tag("/images/icons/form.png"), kapa_artifact_forms_path(:action => :show, :id => @transition_point.form_id), {:target => "_blank"} if @transition_point.form_id %>
+    Point/<%= Kapa::ApplicationProperty.lookup_description(:transition_point, @transition_point.type) %> <%= link_to image_tag("/images/icons/form.png"), kapa_document_forms_path(:action => :show, :id => @transition_point.form_id), {:target => "_blank"} if @transition_point.form_id %>
   </h4>
 
   <div class="tabs">

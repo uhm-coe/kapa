@@ -1,4 +1,4 @@
-module Kapa::Artifact::Concerns::BaseController
+module Kapa::Document::Concerns::BaseController
   extend ActiveSupport::Concern
 
   private

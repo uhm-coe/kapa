@@ -10,7 +10,7 @@ module Kapa::Concerns::Person
 
     #Artifact module associations
     has_many :forms
-    has_many :documents
+    has_many :files
     has_many :exams
 
     #Advising module associations
@@ -68,7 +68,7 @@ module Kapa::Concerns::Person
 
     #TODO add public or dept conditions
     docs_forms_list = []
-    docs_forms_list += self.documents
+    docs_forms_list += self.files
     docs_forms_list += self.forms
     obj.instance_variable_set(:@docs_forms_list, docs_forms_list)
   end

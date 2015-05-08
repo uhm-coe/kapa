@@ -1,4 +1,4 @@
-module Kapa::Main::Concerns::ReportsController
+module Kapa::Document::Concerns::ReportsController
   extend ActiveSupport::Concern
 
   def index

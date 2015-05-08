@@ -1,0 +1,48 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @docs_forms_list.sort_by {|d| d.created_at}.reverse_each do |d| %>
+      <tr>
+        <td>
+          <% if d.is_a? Kapa::File %>
+        File <!-- File icon -->
+          <% elsif d.is_a? Kapa::Form %>
+        Form <!-- Form icon -->
+          <% end %>
+        </td>
+        <td><%=d.name%></td>
+        <td><%=format_date d.date %></td>
+        <td class="right">
+          <% if d.is_a? Kapa::File %>
+            <% if @current_user.write? :document, :dept => d.dept %>
+        <button type="button" id="edit_document" class="btn btn-default btn-xs" data-id="<%=d.id %>" data-toggle="modal" data-target="#edit_document_dialog">Edit</button>
+            <% end %>
+            <%= link_to "Show", kapa_document_file_path(:id => d, :format => :file, :inline => true), :target => :blank, :class => "btn btn-default btn-xs" %>
+          <% elsif d.is_a? Kapa::Form %>
+            <% if @current_user.write? :document, :dept => d.dept %>
+        <button type="button" id="edit_form" class="btn btn-default btn-xs" data-id="<%=d.id %>" data-toggle="modal" data-target="#edit_form_dialog">Edit</button>
+            <% end %>
+            <%= link_to "Show", kapa_document_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
+        <% end %>
+        </td>
+      </tr>
+    <% end if @docs_forms_list %> <!-- @docs_forms_list loop -->
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-sm-12">
+    <% if @current_user.write? :document %>
+      <button type="button" id="upload_document" class="btn btn-default" data-toggle="modal" data-target="#document_dialog">Upload
+        a file
+      </button>
+      <button type="button" id="add_form" class="btn btn-default" data-toggle="modal" data-target="#form_dialog">Add a form</button>
+    <% end %>
+  </div>
+</div>

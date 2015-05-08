@@ -1,0 +1,10 @@
+<% content_for(:box1) do %>
+
+  <div style="text-align: right;"><h3><%= h @form.term_desc %></h3></div>
+  <%= bootstrap_form_for :form, :url => kapa_document_form_path(:id => @form), :remote => true, :html => {:method => :put} do %>
+    <%= render :partial => "/kapa/artifact/#{@form.type}_form" %>
+    <%= hidden_field :form, :person_id %>
+    <%= hidden_field :form, :type %>
+  <% end %>
+
+<% end %>

@@ -60,10 +60,10 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artifact<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documents<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:artifact) %>
-                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
+              <% for menu_item in menu_items(:document) %>
+            <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
               <% end %>
             </ul>
           </li>

@@ -26,13 +26,13 @@ Rails.application.routes.draw do
       resources :transition_points, &extra_actions
       resources :transition_actions, &extra_actions
       resources :enrollments, &extra_actions
-      resources :reports, &extra_actions
     end
 
-    namespace :artifact do
-      resources :documents, &extra_actions
+    namespace :document do
+      resources :files, &extra_actions
       resources :forms, &extra_actions
       resources :exams, &extra_actions
+      resources :reports, &extra_actions
     end
 
     namespace :advising do

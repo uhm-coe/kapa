@@ -10,7 +10,6 @@ class DropUnusedTables < ActiveRecord::Migration
   end
 
   def down
-    rename_table(:file_attachments, :documents)
   end
 
 end

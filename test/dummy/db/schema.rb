@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150320213339) do
+ActiveRecord::Schema.define(:version => 20150508032058) do
 
   create_table "advising_actions", :force => true do |t|
     t.integer "advising_id", :null => false
@@ -200,43 +200,89 @@ ActiveRecord::Schema.define(:version => 20150320213339) do
   add_index "curriculums", ["user_primary_id"], :name => "index_curriculums_on_user_primary_id"
   add_index "curriculums", ["user_secondary_id"], :name => "index_curriculums_on_user_secondary_id"
 
-  create_table "datasets", :force => true do |t|
-    t.string :name
-    t.string :description
-    t.string :type
-    t.string :category
-    t.string :datasource
-    t.text :query
-    t.string :ldap_base
-    t.string :ldap_filter
-    t.text :ldap_attr
-    t.integer :record_count
-    t.datetime :loaded_at
-    t.timestamps
-    t.text :yml
-    t.text :xml
+  create_table "data_sources", :force => true do |t|
+    t.string "type"
+    t.string "name"
+    t.string "url"
+    t.string "user"
+    t.string "password"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  create_table "documents", :force => true do |t|
-    t.integer "person_id", :null => false
+  create_table "dataset_001", :id => false, :force => true do |t|
+    t.string "semester"
+    t.string "academic_year"
+    t.string "degree"
+    t.string "program"
+    t.string "major"
+  end
+
+  create_table "dataset_002", :id => false, :force => true do |t|
+    t.string "session_type"
+    t.string "session_date"
+  end
+
+  create_table "dataset_003", :id => false, :force => true do |t|
+    t.string "dn"
+    t.string "pubabstract"
+    t.string "cn"
+    t.string "pubdate"
+    t.string "pubcontributor"
+    t.string "pubowner"
+    t.string "documentauthor"
+    t.string "objectclass"
+    t.string "pubcreator"
+    t.string "pubtype"
+    t.string "pubkeyword"
+    t.string "pubpages"
+    t.string "pubvol"
+    t.string "pubvenue"
+    t.string "pubtitle"
+    t.string "pubmonth"
+    t.string "pubyear"
+    t.string "documentidentifier"
+    t.string "publocation"
+    t.string "pubpublisher"
+    t.string "pubeditor"
+    t.string "pubbooktitle"
+    t.string "pubbookchapter"
+    t.string "pubisnotfeatured"
+    t.string "ou"
+    t.string "o"
+    t.string "l"
+    t.string "pubedition"
+    t.string "documentlocation"
+    t.string "puborganization"
+  end
+
+  create_table "datasets", :force => true do |t|
     t.string "name"
+    t.string "description"
     t.string "type"
-    t.string "status"
-    t.string "uploaded_by"
-    t.string "dept"
-    t.string "public", :default => "N"
-    t.text "note"
-    t.string "data_file_name"
-    t.string "data_content_type"
-    t.integer "data_file_size"
-    t.datetime "data_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "category"
+    t.string "datasource"
+    t.text "query"
+    t.string "ldap_base"
+    t.string "ldap_filter"
+    t.text "ldap_attr"
+    t.integer "record_count"
+    t.datetime "loaded_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.text "yml"
     t.text "xml"
   end
 
-  add_index "documents", ["person_id"], :name => "index_documents_on_person_id"
+  create_table "datasources", :force => true do |t|
+    t.string "type"
+    t.string "name"
+    t.string "url"
+    t.string "user"
+    t.string "password"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "enrollments", :force => true do |t|
     t.integer "curriculum_id", :default => 0, :null => false
@@ -301,6 +347,27 @@ ActiveRecord::Schema.define(:version => 20150320213339) do
   end
 
   add_index "exams", ["person_id"], :name => "index_exams_on_person_id"
+
+  create_table "files", :force => true do |t|
+    t.integer "person_id", :null => false
+    t.string "name"
+    t.string "type"
+    t.string "status"
+    t.string "uploaded_by"
+    t.string "dept"
+    t.string "public", :default => "N"
+    t.text "note"
+    t.string "data_file_name"
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.datetime "data_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text "yml"
+    t.text "xml"
+  end
+
+  add_index "files", ["person_id"], :name => "index_documents_on_person_id"
 
   create_table "forms", :force => true do |t|
     t.integer "person_id", :default => 0, :null => false

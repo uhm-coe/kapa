@@ -1,0 +1,39 @@
+<% content_for(:head) do %>
+  <script type="text/javascript" xmlns="http://www.w3.org/1999/html">
+    jQuery(document).ready(function ($) {
+      $('#open_form_dialog').click(function () {
+        jQuery('#form_dialog').dialog('open');
+      })
+    });
+  </script>
+<% end %>
+
+<table class="table table-hover">
+  <tr>
+    <th>Last Update</th>
+    <th>Submitted</th>
+    <th>Title</th>
+    <th>Lock</th>
+    <th>Dept</th>
+  </tr>
+
+  <% for form in @forms %>
+    <tr>
+      <td><%= format_date form.updated_at %></td>
+      <td><%= format_date form.submitted_at %></td>
+      <td><%= link_to form.type_desc, kapa_document_form_path(:id => form), {:target => "_blank"} %></td>
+      <td><%= h form.lock %></td>
+      <td><%= h form.dept %></td>
+      <td class="right"><%= link_to "Show", kapa_document_form_path(:id => form), {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+    </tr>
+  <% end if @forms %>
+
+</table>
+<p class="new right"><%= link_to_function "New form", nil, :id => "open_form_dialog" if @current_user.write? :document %></p>
+
+<div id="form_dialog" class="form-dialog" title="New Form">
+  <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :focus => "form", :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
+    <%= f.property_select :type, :name => :form %>
+  <% end %>
+</div>
+

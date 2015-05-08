@@ -1,0 +1,8 @@
+<%= bootstrap_form_for(:form, :url => kapa_document_form_path(:id => @form), :remote => true, :html => {:method => :put, :id => "edit_form_form"}) do |f| %>
+  <%= f.text_area :note, :text => "Note", :size => "5x7" %>
+  <div class="row form-block">
+    <div class="col-sm-4">
+      <%= f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :text => "Lock status" %>
+    </div>
+  </div>
+<% end %>

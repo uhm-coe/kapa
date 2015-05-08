@@ -1,0 +1,15 @@
+<%= bootstrap_form_for :file, :url => kapa_document_file_path(:id => @file), :html => {:method => :put, :multipart => true, :id => "edit_document_form"}, :remote => true do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.text_field :name %>
+      <%= f.file_field :data, :text => "Replace file" if @current_user.write? :document, :dept => @file.dept %>
+      <%= f.text_field :dept if @current_user.manage? %>
+      <%= f.check_box :public, {:text => "Share document"}, "Y", "N" %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.text_area :note, :size => "5x10" %>
+    </div>
+  </div>
+  <%= f.hidden_field :person_id, :value => @person.id %>
+<% end %>
+<%= render :partial => "/kapa/layouts/controls", :locals => {:hide_update => true, :delete_path => kapa_document_file_path(:id => @file)} if @current_user.write? :document, :dept => @file.dept %>

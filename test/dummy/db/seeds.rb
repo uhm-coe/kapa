@@ -7,8 +7,8 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 require 'active_record/fixtures'
 
-Person.delete_all
-User.delete_all
+Kapa::Person.delete_all
+Kapa::User.delete_all
 
 fixture_path = "#{Rails.root.parent}/fixtures"
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "properties")
@@ -27,17 +27,17 @@ ActiveRecord::Fixtures.create_fixtures(fixture_path, "practicum_placements")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "practicum_sites")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "datasets")
 
-[AdvisingSession].each do |c|
+[Kapa::AdvisingSession].each do |c|
   c.update_all(:session_date => Date.today)
 end
 
-person = Person.create(:last_name => "Admin", :first_name => "User")
+person = Kapa::Person.create(:last_name => "Admin", :first_name => "User")
 user = person.users.create(:uid => "admin", :category => "local", :status => 3, :emp_status => 3)
 user.password = "admin"
-user.serialize(:role, {:main => '3', :main_list => '3', :artifact => '3', :artifact_list => '3', :advising => '3', :advising_list => '3', :course => '3', :course_list => '3', :practicum => '3', :practicum_list => '3', :report => '3', :report_list => '3', :admin => '3'})
+user.serialize(:role, {:main => '3', :main_list => '3', :document => '3', :document_list => '3', :advising => '3', :advising_list => '3', :course => '3', :course_list => '3', :practicum => '3', :practicum_list => '3', :report => '3', :report_list => '3', :admin => '3'})
 user.save!
 
-practicum_site = PracticumSite.create!(:code => "N/A", :name => "N/A")
-curriculum = person.curriculums.create!(:program => Program.find_by_code("EDEL-BED"))
-curriculum.enrollments.create!(:term => Term.current_term)
-person.practicum_placements.create!(:term => Term.current_term, :practicum_site => practicum_site)
+practicum_site = Kapa::PracticumSite.create!(:code => "N/A", :name => "N/A")
+curriculum = person.curriculums.create!(:program => Kapa::Program.find_by_code("EDEL-BED"))
+curriculum.enrollments.create!(:term => Kapa::Term.current_term)
+person.practicum_placements.create!(:term => Kapa::Term.current_term, :practicum_site => practicum_site)

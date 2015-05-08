@@ -1,4 +1,4 @@
-module Kapa::Artifact::Concerns::ExamsController
+module Kapa::Document::Concerns::ExamsController
   extend ActiveSupport::Concern
 
   def show
@@ -21,14 +21,14 @@ module Kapa::Artifact::Concerns::ExamsController
     else
       flash[:danger] = error_message_for(@exam)
     end
-    redirect_to kapa_artifact_exam_path(:id => @exam)
+    redirect_to kapa_document_exam_path(:id => @exam)
   end
 
   def destroy
     @exam = Kapa::Exam.find params[:id]
     unless @exam.destroy and @exam.exam_scores.clear
       flash[:danger] = error_message_for(@exam)
-      redirect_to kapa_artifact_exam_path(:id => @exam) and return false
+      redirect_to kapa_document_exam_path(:id => @exam) and return false
     end
     flash[:success] = "Exam was successfully deleted."
     redirect_to kapa_main_persons_path(:action => :show, :id => @exam.person_id, :focus => :exam)

@@ -1,4 +1,4 @@
-module Kapa::Artifact::Concerns::FormsController
+module Kapa::Document::Concerns::FormsController
   extend ActiveSupport::Concern
 
   def show
@@ -42,7 +42,7 @@ module Kapa::Artifact::Concerns::FormsController
     @form = Kapa::Form.find params[:id]
     unless @form.destroy
       flash[:danger] = error_message_for(@form)
-      redirect_to kapa_artifact_form_path(:id => @form) and return false
+      redirect_to kapa_document_form_path(:id => @form) and return false
     end
     flash[:success] = "Form was successfully deleted."
     redirect_to kapa_main_person_path(:id => @form.person_id)

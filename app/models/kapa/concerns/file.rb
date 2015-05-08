@@ -1,4 +1,4 @@
-module Kapa::Concerns::Document
+module Kapa::Concerns::File
   extend ActiveSupport::Concern
 
   included do

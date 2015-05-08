@@ -210,7 +210,7 @@ module Kapa::Concerns::User
        c.rsend(:emp_status),
        c.rsend(:status),
        c.rsend(:role, :main),
-       c.rsend(:role, :artifact),
+       c.rsend(:role, :document),
        c.rsend(:role, :advising),
        c.rsend(:role, :curriculum),
        c.rsend(:role, :course),

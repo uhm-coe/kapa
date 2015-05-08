@@ -11,8 +11,8 @@ module Kapa::Main::Concerns::PersonsController
     @practicum_placements = @person.practicum_placements
 
     if (params[:doc_id])
-      @document = Kapa::Document.find(params[:doc_id])
-      @title = @document.name
+      @file = Kapa::File.find(params[:doc_id])
+      @title = @file.name
       render :partial => "/kapa/artifact/documents/edit", :layout => false
     elsif (params[:form_id])
       @form = Kapa::Form.find(params[:form_id])

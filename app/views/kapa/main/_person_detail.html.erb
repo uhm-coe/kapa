@@ -61,7 +61,7 @@
       $('body').on('click', '#edit_document', function() {
         var documentId = $(this).data('id');
         if (documentId) {
-          // Send Ajax request to retrieve @document so that #edit_document_dialog can be populated
+          // Send Ajax request to retrieve @file so that #edit_document_dialog can be populated
           $.get('<%=kapa_main_person_path(:id => @person)%>', {
               doc_id: documentId
             }, function(data) {
@@ -100,7 +100,7 @@
     <ul class="dropdown-menu" role="menu">
       <li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Person Profile</a></li>
       <li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contact Information</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#person_artifact_modal">Show Artifacts</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#person_artifact_modal">Show Documents</a></li>
       <li><a href="#">Send Email</a></li>
       <li><a href="#">Open External Site</a></li>
     </ul>
@@ -120,17 +120,17 @@
   <% end %>
 <% end if @current_user.read? :main %>
 
-<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Artifacts"} do %>
+<%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Documents"} do %>
   <div class="row">
     <div class="col-sm-12">
       <%= bootstrap_flash unless params[:artifacts_modal].nil? %>
     </div>
   </div>
-  <%= render :partial => "/kapa/artifact/document_table" %>
-<% end if @current_user.read? :artifact %>
+  <%= render :partial => "/kapa/document/document_table" %>
+<% end if @current_user.read? :document %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%=bootstrap_form_for :document, :url => kapa_artifact_documents_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+  <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
     <%=f.file_field :data %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
@@ -138,7 +138,7 @@
 <% end %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
-  <%=bootstrap_form_for :form, :url => kapa_artifact_forms_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
+  <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
   <% end %>
 <% end %>

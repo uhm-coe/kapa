@@ -133,10 +133,10 @@ module Kapa::Concerns::KapaBaseController
         items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:main)
         items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:main)
         items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:main)
-        items.push ["Reports", kapa_main_reports_path] if @current_user.manage?(:main, :delegate => :reports)
-      when "artifact"
-        items.push ["Forms", kapa_artifact_forms_path] if @current_user.manage?(:artifact, :delegate => :form)
-        items.push ["Test Scores", kapa_artifact_exams_path] if @current_user.manage?(:artifact, :delegate => :exam)
+      when "document"
+        items.push ["Forms", kapa_document_forms_path] if @current_user.manage?(:document, :delegate => :form)
+        items.push ["Test Scores", kapa_document_exams_path] if @current_user.manage?(:document, :delegate => :exam)
+        items.push ["Reports", kapa_document_reports_path] if @current_user.manage?(:document, :delegate => :reports)
       when "advising"
         items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:advising)
       when "course"
