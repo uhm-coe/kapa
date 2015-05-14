@@ -16,5 +16,6 @@ class CreateTerms < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
+    ActiveRecord::Fixtures.create_fixtures("#{Kapa :Engine.root}/test/fixtures", "terms")
   end
 end
