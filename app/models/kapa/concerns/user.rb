@@ -8,9 +8,8 @@ module Kapa::Concerns::User
     belongs_to :person
     has_many :user_timestamps
 
-    validate :only_one_ldap_user_per_person
-    validates_format_of :email, :with => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+(\.[A-Z]{2,4}$)?/i, :message => "is not a valid format", :allow_blank => true
-    #  validates_uniqueness_of :uid
+    validates_format_of :email, :with => /@/, :message => "is not a valid format", :allow_blank => true
+    validates_uniqueness_of :uid
     validates_presence_of :uid
     validates_presence_of :password, :on => :create, :if => :local?
 
@@ -26,13 +25,6 @@ module Kapa::Concerns::User
       c.require_password_confirmation = false
     end
   end # included
-
-  def only_one_ldap_user_per_person
-    ldap_user = self.person ? self.person.ldap_user : nil
-    if ldap_user and ldap_user.id != self.id and self.category == "ldap"
-      errors.add_to_base("Person cannot have multiple LDAP account")
-    end
-  end
 
   def use_email_as_uid
     self.uid = self.email if self.email.present?
@@ -113,7 +105,14 @@ module Kapa::Concerns::User
 
   def valid_credential?(password)
     if category == "ldap"
-      Kapa::DirectoryService.authenticate(self.uid, password)
+      ldap = Rails.configuration.ldap
+      base = Rails.configuration.ldap_search_base
+      filter = Net::LDAP::Filter.eq(Rails.configuration.ldap_uid_filter, uid)
+      dn = nil
+      ldap.search(:base => base, :filter => filter) do |entry|
+        dn = entry.dn
+      end
+      ldap.bind(:method => :simple, :dn => dn, :password => password)
     else
       #Use Authlogic authentication for local users.
       valid_password?(password)

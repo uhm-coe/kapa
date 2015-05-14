@@ -42,13 +42,7 @@ module Kapa::Concerns::Person
   end
 
   def full_name
-    if last_name.blank? and first_name.blank?
-      return "N/A"
-    else
-      name = "#{last_name}, #{first_name}"
-#      name << "*" if not verified?
-      return name
-    end
+    "#{last_name}, #{first_name}"
   end
 
   def ldap_user
@@ -165,6 +159,10 @@ module Kapa::Concerns::Person
       end
 
       return person_local
+    end
+
+    def import(options = {})
+      #Implement a way to import a person data from an external datasource in your application.
     end
   end
 
