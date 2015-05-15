@@ -6,9 +6,11 @@ class ConvertAcademicPeriodToTerm < ActiveRecord::Migration
     Kapa::AssessmentRubric.update_all("start_term_id = (select id from terms where code = academic_period_start)")
     Kapa::AssessmentRubric.update_all("end_term_id = (select id from terms where code = academic_period_end)")
     Kapa::ProgramOffer.all.each do |o|
-      term_ids = o.available_academic_period.split(/,\s*/).sort
-      o.update_attribute(:start_term_id, term_ids.first.to_i)
-      o.update_attribute(:end_term_id, term_ids.last.to_i)
+      if o.available_academic_period
+        term_ids = o.available_academic_period.split(/,\s*/).sort
+        o.update_attribute(:start_term_id, term_ids.first.to_i)
+        o.update_attribute(:end_term_id, term_ids.last.to_i)
+      end
     end
   end
 
