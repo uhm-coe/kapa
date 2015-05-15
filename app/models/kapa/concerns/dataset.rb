@@ -9,7 +9,7 @@ module Kapa::Concerns::Dataset
     if name.to_s == "local"
       Rails.configuration.database_configuration[Rails.env]
     else
-      Rails.application.secrets.datasources[name]
+      Rails.application.secrets.datasources[name].deep_symbolize_keys
     end
   end
 
