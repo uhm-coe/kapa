@@ -10,7 +10,7 @@ class ConvertAcademicPeriodToTerm < ActiveRecord::Migration
       o.available_academic_period.split(/,\s*/).each do |a|
         term_ids.push(term_id(a))
       end
-      o.update_attributes(:available_term_id => term_ids.join(","))
+      o.update_attribute(:available_term_id, term_ids.join(","))
     end
   end
 
