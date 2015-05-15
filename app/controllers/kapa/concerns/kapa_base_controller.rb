@@ -17,7 +17,7 @@ module Kapa::Concerns::KapaBaseController
     @current_user_session = Kapa::UserSession.find
     @current_user = @current_user_session.user if @current_user_session
     @current_user.request = request
-    unless @current_user_session and @current_user and @current_user.status >= 3 and @current_user.emp_status >= 1
+    unless @current_user_session and @current_user and @current_user.status >= 3
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(kapa_root_url) and return
