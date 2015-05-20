@@ -2,12 +2,12 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.text_field :name %>
+      <%= f.text_field :name%>
       <%= f.select :type, [["Database", "database"], ["LDAP", "ldap"], ["File", "file"]] %>
       <%= f.select :datasource, @datasource_options %>
     </div>
     <div class="col-sm-6">
-      <%= f.text_area :description %>
+      <%= f.text_area :description, :rows => 10 %>
     </div>
   </div>
 

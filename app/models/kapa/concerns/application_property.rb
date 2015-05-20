@@ -14,11 +14,11 @@ module Kapa::Concerns::ApplicationProperty
 
     def refresh_cache
       @@description_cache.clear
-      Kapa::ApplicationProperty.scoped.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
+      Kapa::ApplicationProperty.all.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
       @@description_detail_cache.clear
-      Kapa::ApplicationProperty.scoped.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
+      Kapa::ApplicationProperty.all.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
       @@category_cache.clear
-      Kapa::ApplicationProperty.scoped.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
+      Kapa::ApplicationProperty.all.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
     end
 
     def selections(options = {})

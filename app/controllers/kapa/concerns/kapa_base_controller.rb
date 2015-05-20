@@ -15,8 +15,10 @@ module Kapa::Concerns::KapaBaseController
 
   def validate_login
     @current_user_session = Kapa::UserSession.find
-    @current_user = @current_user_session.user if @current_user_session
-    @current_user.request = request
+    if @current_user_session
+      @current_user = @current_user_session.user
+      @current_user.request = request
+    end
     unless @current_user_session and @current_user and @current_user.status >= 3
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."

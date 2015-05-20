@@ -3,7 +3,7 @@ module Kapa::Concerns::AssessmentRubric
 
   included do
     attr_accessor :courses, :programs, :transition_points
-    has_many :assessment_criterions, :order => "assessment_criterions.criterion", :dependent => :destroy
+    has_many :assessment_criterions, -> {order("assessment_criterions.criterion")}, :dependent => :destroy
     validates_presence_of :title
     before_validation :remove_extra_values
     before_save :join_attributes

@@ -61,7 +61,7 @@ module Kapa::KapaBaseHelper
   end
 
   def program_select(object_name, method, options = {}, html_options = {})
-    options[:model_class] = :program
+    options[:model_class] = Kapa::Program
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end

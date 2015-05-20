@@ -14,9 +14,9 @@ Rails.application.routes.draw do
   namespace :kapa do
 
     root :to => 'main/base#welcome', :as => :root
-    match '/login' => 'main/base#login', :as => :login
-    match '/logout' => 'main/base#logout', :as => :logout
-    match '/error' => 'main/base#error', :as => :error
+    match '/login' => 'main/base#login', :as => :login, :via => [:get, :post]
+    match '/logout' => 'main/base#logout', :as => :logout, :via => [:get, :post]
+    match '/error' => 'main/base#error', :as => :error, :via => [:get, :post]
 
     namespace :main do
       get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       resources :rubrics, &extra_actions
       resources :criterions, &extra_actions
       resources :datasets, &extra_actions
-      get 'datasets/load(/:id)' => 'datasets#load', :as => :datasets_load
+      put 'datasets/load(/:id)' => 'datasets#load_data', :as => :datasets_load
       get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
     end
 

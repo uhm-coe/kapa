@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-6">
       <% if @dataset.type == "database" %>
-        <%= f.text_area :query %>
+        <%= f.text_area :query, :rows => 20 %>
       <% elsif @dataset.type == "ldap" %>
         <%= f.text_field :ldap_base, :label => "LDAP Base" %>
         <%= f.text_field :ldap_filter, :label => "LDAP Filter" %>

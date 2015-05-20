@@ -18,7 +18,7 @@ module Kapa::Admin::Concerns::DatasetsController
   end
 
   def create
-    @dataset = Kapa::Dataset.new(params[:dataset])
+    @dataset = Kapa::Dataset.new(dataset_params)
     unless @dataset.save
       flash[:danger] = @dataset.errors.full_messages.join(", ")
       redirect_to new_kapa_admin_dataset_path and return false
@@ -33,15 +33,17 @@ module Kapa::Admin::Concerns::DatasetsController
 
     if params[:parameter]
       if params[:parameter_id]
-        @parameters[params[:parameter_id].to_sym] = params[:parameter]
+        @parameters[params[:parameter_id].to_sym] = parameter_params
       else
         new_id = @parameters.length + 1
-        @parameters[new_id.to_s.to_sym] = params[:parameter]
+        @parameters[new_id.to_s.to_sym] = parameter_params
       end
       @dataset.serialize(:parameters, @parameters)
     end
 
-    if @dataset.update_attributes(params[:dataset])
+    @dataset.attributes = dataset_params if params[:dataset]
+
+    if @dataset.save
       flash[:success] = "Dataset was successfully updated."
     else
       flash[:danger] = @dataset.errors.full_messages.join(", ")
@@ -56,9 +58,9 @@ module Kapa::Admin::Concerns::DatasetsController
     redirect_to kapa_report_datasets_url
   end
 
-  def load2
+  def load_data
     @dataset = Kapa::Dataset.find(params[:id])
-    @dataset.update_attributes(params[:dataset])
+    @dataset.update_attributes(dataset_params)
 
     begin
       @dataset.load
@@ -82,5 +84,14 @@ module Kapa::Admin::Concerns::DatasetsController
       datasources.push [v["name"], k]
     end
     return datasources
+  end
+
+  private
+  def dataset_params
+    params.require(:dataset).permit(:name, :type, :datasource, :description, :query, :ldap_base, :ldap_filter, :ldap_attr)
+  end
+
+  def parameter_params
+    params.require(:parameter).permit(:name, :type, :label, :default, :active)
   end
 end

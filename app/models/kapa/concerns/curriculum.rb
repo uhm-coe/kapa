@@ -14,14 +14,14 @@ module Kapa::Concerns::Curriculum
     has_many :enrollments
     has_one :practicum_profile
     has_one :last_transition_point,
-            :class_name => "TransitionPoint",
-            :conditions => "transition_points.id =
-                              (select t.id
-                               from transition_points t
-                               inner join terms tm on tm.id = t.term_id
-                               where t.curriculum_id = transition_points.curriculum_id
-                               order by tm.sequence desc
-                               limit 1)"
+            -> { where("transition_points.id =
+                                          (select t.id
+                                           from transition_points t
+                                           inner join terms tm on tm.id = t.term_id
+                                           where t.curriculum_id = transition_points.curriculum_id
+                                           order by tm.sequence desc
+                                           limit 1)")},
+            :class_name => "TransitionPoint"
 
     validates_presence_of :person_id, :program_id
     before_create :set_default_options

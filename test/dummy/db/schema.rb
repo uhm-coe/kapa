@@ -210,52 +210,6 @@ ActiveRecord::Schema.define(:version => 20150508032058) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "dataset_001", :id => false, :force => true do |t|
-    t.string "semester"
-    t.string "academic_year"
-    t.string "degree"
-    t.string "program"
-    t.string "major"
-  end
-
-  create_table "dataset_002", :id => false, :force => true do |t|
-    t.string "session_type"
-    t.string "session_date"
-  end
-
-  create_table "dataset_003", :id => false, :force => true do |t|
-    t.string "dn"
-    t.string "pubabstract"
-    t.string "cn"
-    t.string "pubdate"
-    t.string "pubcontributor"
-    t.string "pubowner"
-    t.string "documentauthor"
-    t.string "objectclass"
-    t.string "pubcreator"
-    t.string "pubtype"
-    t.string "pubkeyword"
-    t.string "pubpages"
-    t.string "pubvol"
-    t.string "pubvenue"
-    t.string "pubtitle"
-    t.string "pubmonth"
-    t.string "pubyear"
-    t.string "documentidentifier"
-    t.string "publocation"
-    t.string "pubpublisher"
-    t.string "pubeditor"
-    t.string "pubbooktitle"
-    t.string "pubbookchapter"
-    t.string "pubisnotfeatured"
-    t.string "ou"
-    t.string "o"
-    t.string "l"
-    t.string "pubedition"
-    t.string "documentlocation"
-    t.string "puborganization"
-  end
-
   create_table "datasets", :force => true do |t|
     t.string "name"
     t.string "description"
@@ -268,20 +222,10 @@ ActiveRecord::Schema.define(:version => 20150508032058) do
     t.text "ldap_attr"
     t.integer "record_count"
     t.datetime "loaded_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text "yml"
     t.text "xml"
-  end
-
-  create_table "datasources", :force => true do |t|
-    t.string "type"
-    t.string "name"
-    t.string "url"
-    t.string "user"
-    t.string "password"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "enrollments", :force => true do |t|

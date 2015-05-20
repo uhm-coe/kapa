@@ -3,7 +3,7 @@ module Kapa::Concerns::CourseOffer
 
   included do
     belongs_to :term
-    has_many :course_registrations, :include => [:person, :assessment_scores], :conditions => "course_registrations.status like 'R%'", :order => "persons.last_name, persons.first_name"
+    has_many :course_registrations, -> {includes(:person, :assessment_scores).where("course_registrations.status like 'R%'").order("persons.last_name, persons.first_name")}
     validates_presence_of :term_id
   end # included
 

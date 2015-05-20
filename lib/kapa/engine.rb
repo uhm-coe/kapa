@@ -1,3 +1,5 @@
+Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require d.name}
+
 module Kapa
   class Engine < Rails::Engine
 
@@ -7,8 +9,9 @@ module Kapa
       end
     end
 
-    initializer "kapa.assets.precompile" do |app|
+    initializer "kapa.assets" do |app|
       app.config.assets.precompile += %w(kapa.css kapa.js reports.js reports.css *.icon *.png)
+      app.config.assets.precompile << /.(?:svg|eot|woff|ttf)$/
     end
 
     config.generators do |g|
@@ -18,23 +21,3 @@ module Kapa
 
   end
 end
-
-require 'rails'
-require 'rails-secrets'
-require 'authlogic'
-require 'paperclip'
-require 'fastercsv'
-require 'mysql2'
-require 'net-ldap'
-require 'rails-csv-fixtures'
-require 'sequel'
-require 'jquery-rails'
-require 'uglifier'
-require 'libv8'
-#require 'twitter-bootstrap-rails'
-#require 'therubyracer'
-require 'less-rails'
-require 'will_paginate'
-require 'will_paginate-bootstrap'
-require 'bootstrap-datepicker-rails'
-require 'bootstrap-multiselect-rails'
