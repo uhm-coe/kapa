@@ -3,9 +3,20 @@ module Kapa::Concerns::Dataset
 
   included do
     self.inheritance_column = nil
+    attr_accessor :file
   end # included
 
-  def datasource_config(name)
+  def datasource_type
+    if self.datasource == "file"
+      return "file"
+    elsif self.datasource_config[:adapter] == "ldap"
+      return "ldap"
+    else
+      return "database"
+    end
+  end
+
+  def datasource_config(name = self.datasource)
     if name.to_s == "local"
       Rails.configuration.database_configuration[Rails.env]
     else
@@ -34,7 +45,7 @@ module Kapa::Concerns::Dataset
   def load
 #    logger.debug "Datasource: #{datasource_config(self.datasource).inspect}"
 
-    case self.type
+    case self.datasource_type
       when "database"
         db = Sequel.connect(datasource_config(self.datasource))
         dataset = db.fetch(self.query)
@@ -47,28 +58,40 @@ module Kapa::Concerns::Dataset
 
       when "ldap"
         ldap = Net::LDAP.new(datasource_config(self.datasource))
-
+        search_options = {:base => self.ldap_base, :return_result => false}
+        search_options[:filter] = self.ldap_filter if self.ldap_filter.present?
         if self.ldap_attr.blank?
           columns_hash = {}
-          ldap.search(:base => self.ldap_base, :filter => self.ldap_filter, :return_result => false) do |entry|
+          ldap.search(search_options) do |entry|
             entry.each do |attr, values|
               columns_hash[attr] = nil
             end
           end
           self.update_attributes(:ldap_attr => columns_hash.keys.join(","))
         end
-        columns = self.ldap_attr.split(/,[[:space:]]*/)
-        build(columns)
-        ldap.search(:base => self.ldap_base, :filter => self.ldap_filter, :attributes => self.ldap_attr, :return_result => false) do |entry|
+        search_options[:attributes] = self.ldap_attr
+        build(self.ldap_attr.split(/,\s*/))
+
+        ldap.search(search_options) do |entry|
           row = {}
           entry.each do |attr, values|
-            row[attr] = values.first
+            row[attr] = values.first.force_encoding("utf-8")
           end
           logger.debug "----inserting row:#{row.inspect}"
           cache.insert(row)
         end
 
       when "file"
+        logger.debug "----importing:#{self.file.path}"
+        CSV.foreach(self.file.path, :headers => true) do |row|
+          logger.debug "----creating table:#{row.headers}"
+          build(row.headers)
+          break
+        end
+        CSV.foreach(self.file.path, :headers => true) do |row|
+          logger.debug "----inserting row:#{row.inspect}"
+          cache.insert(row.to_hash)
+        end
     end
 
     self.update_attributes(:record_count => cache.count, :loaded_at => DateTime.now)

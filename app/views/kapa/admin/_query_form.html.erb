@@ -1,15 +1,14 @@
 <%= bootstrap_fields_for :dataset do |f| %>
-
   <div class="row">
     <div class="col-sm-6">
-      <% if @dataset.type == "database" %>
-        <%= f.text_area :query, :rows => 20 %>
-      <% elsif @dataset.type == "ldap" %>
+      <% if @dataset.datasource_type == "file" %>
+        <%= f.file_field :file, :label => "CSV file" %>
+      <% elsif @dataset.datasource_type == "ldap" %>
         <%= f.text_field :ldap_base, :label => "LDAP Base" %>
         <%= f.text_field :ldap_filter, :label => "LDAP Filter" %>
-        <%= f.text_field :ldap_attr, :label => "LDAP Attributes Included" %>
-      <% elsif @dataset.type == "file" %>
-
+        <%= f.text_area :ldap_attr, :label => "LDAP Attributes Included" %>
+      <% else %>
+        <%= f.text_area :query, :rows => 20 %>
       <% end %>
     </div>
     <div class="col-sm-6">

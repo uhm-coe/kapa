@@ -33,7 +33,7 @@
       </div>
 
       <div id="query_tab" class="tab-pane">
-        <%= bootstrap_form_for :dataset, :url => kapa_admin_datasets_load_path(:id => @dataset, :focus => :query), :html => {:method => :put} do |f| %>
+        <%= bootstrap_form_for :dataset, :url => kapa_admin_datasets_load_path(:id => @dataset, :focus => :query), :html => {:multipart => true, :method => :put} do |f| %>
           <%= render :partial => '/kapa/admin/query_form' %>
           <%= f.submit "Load", :class => "btn btn-default" %>
           <%= link_to "Feed", kapa_admin_datasets_feed_path(:id => @dataset), :class => "btn btn-default" %>

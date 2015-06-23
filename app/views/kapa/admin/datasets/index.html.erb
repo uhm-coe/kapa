@@ -12,8 +12,8 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>Type</th>
       <th>Name</th>
+      <th>Source</th>
       <th>Category</th>
       <th>Table Name</th>
       <th>Record Count</th>
@@ -25,8 +25,8 @@
     <% @datasets.each do |dataset| %>
       <tr>
         <td><%= dataset.id %></td>
-        <td><%= dataset.type %></td>
         <td><%= dataset.name %></td>
+        <td><%= dataset.datasource %></td>
         <td><%= dataset.category %></td>
         <td><%= dataset.cache_id %></td>
         <td><%= dataset.record_count %></td>

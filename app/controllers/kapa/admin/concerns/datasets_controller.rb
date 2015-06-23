@@ -82,13 +82,13 @@ module Kapa::Admin::Concerns::DatasetsController
     datasources = [["Local Database", "local"], ["CSV File", "file"]]
     Rails.application.secrets.datasources.each_pair do |k, v|
       datasources.push [v["name"], k]
-    end
+    end if Rails.application.secrets.datasources
     return datasources
   end
 
   private
   def dataset_params
-    params.require(:dataset).permit(:name, :type, :datasource, :description, :query, :ldap_base, :ldap_filter, :ldap_attr)
+    params.require(:dataset).permit(:name, :type, :datasource, :description, :query, :ldap_base, :ldap_filter, :ldap_attr, :file)
   end
 
   def parameter_params

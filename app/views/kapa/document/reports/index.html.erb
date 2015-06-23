@@ -6,7 +6,6 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>Type</th>
       <th>Name</th>
       <th>Datasource</th>
       <th>Loaded at</th>
@@ -17,8 +16,7 @@
     <tbody>
     <% @datasets.each do |dataset| %>
       <tr>
-        <td><%= link_to dataset.id, kapa_admin_dataset_path(dataset) %></td>
-        <td><%= dataset.type %></td>
+        <td><%= dataset.id %></td>
         <td><%= dataset.name %></td>
         <td><%= dataset.datasource %></td>
         <td><%= dataset.loaded_at %></td>
