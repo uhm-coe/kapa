@@ -1,4 +1,4 @@
-Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require d.name}
+Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require d.name} if Gem.loaded_specs['kapa']
 
 module Kapa
   class Engine < Rails::Engine

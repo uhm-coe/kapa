@@ -1,0 +1,6 @@
+Description:
+    Installs required files for KAPA application
+
+Example:
+    rails generate install
+

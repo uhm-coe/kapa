@@ -10,7 +10,7 @@ require 'active_record/fixtures'
 Kapa::Person.delete_all
 Kapa::User.delete_all
 
-fixture_path = "#{Rails.root.parent}/fixtures"
+fixture_path = File.directory?("#{Rails.root}/test/fixtures") ? "#{Rails.root}/test/fixtures" : "#{Kapa::Engine.root}/test/fixtures"
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "properties")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "programs")
 ActiveRecord::Fixtures.create_fixtures(fixture_path, "program_offers")
