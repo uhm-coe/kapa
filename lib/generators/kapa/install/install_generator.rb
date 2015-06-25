@@ -3,14 +3,14 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
   desc "Installs required files for KAPA application"
 
-  def add_initializers
+  def install_initializers
+    puts "Installing initializers..."
     install_file("#{Rails.root}/config/initializers/kapa.rb")
-    install_file("#{Rails.root}/config/initializers/mime_types.rb")
+    inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
   end
 
-  def install_db
-    puts "Installing database files..."
-    install_file("#{Rails.root}/db/schema.rb")
+  def install_seeds
+    puts "Installing database seeds..."
     install_file("#{Rails.root}/db/seeds.rb")
   end
 
