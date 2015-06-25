@@ -59,30 +59,6 @@ ActiveRecord::Schema.define(version: 20150508032058) do
   add_index "advising_sessions", ["session_date"], name: "index_advisings_on_inquiry_date", using: :btree
   add_index "advising_sessions", ["task"], name: "index_advisings_on_task", using: :btree
 
-  create_table "advisings", force: :cascade do |t|
-    t.integer "person_id",       limit: 4,     null: false
-    t.date    "inquiry_date"
-    t.string  "inquiry_type",    limit: 255
-    t.string  "inquiry_subject", limit: 255
-    t.text    "inquiry_note",    limit: 65535
-    t.string  "task",            limit: 255
-    t.string  "action",          limit: 255
-    t.string  "specify",         limit: 255
-    t.string  "classification",  limit: 255
-    t.string  "current_field",   limit: 255
-    t.string  "interest",        limit: 255
-    t.string  "location",        limit: 255
-    t.string  "handled_by",      limit: 255
-    t.string  "first_name",      limit: 255
-    t.string  "last_name",       limit: 255
-    t.string  "email",           limit: 255
-    t.string  "mail_address",    limit: 255
-    t.string  "phone",           limit: 255
-    t.string  "identity_note",   limit: 255
-    t.string  "contact_note",    limit: 255
-    t.integer "form_id",         limit: 4
-  end
-
   create_table "assessment_criterions", force: :cascade do |t|
     t.string   "criterion",            limit: 255
     t.text     "criterion_desc",       limit: 65535
