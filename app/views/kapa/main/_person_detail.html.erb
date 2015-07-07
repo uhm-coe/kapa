@@ -109,13 +109,13 @@
 </h3>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
-  <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "person_form"} do %>
+  <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
     <%= render :partial => "/kapa/main/person_form" %>
   <% end %>
 <% end if @current_user.read? :main %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
-  <%= bootstrap_form_for :contact, :url => kapa_main_contact_path(:id => @person, :return_uri => request.symbolized_path_parameters), :html => {:method => :put, :id => "contact_form"} do %>
+  <%= bootstrap_form_for :contact, :url => kapa_main_contact_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
     <%= render :partial => "/kapa/main/contact_form", :locals => {:object_name => :contact} %>
   <% end %>
 <% end if @current_user.read? :main %>

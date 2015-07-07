@@ -4,6 +4,7 @@
       // Set active panel
       var focus = '<%=params[:focus]%>' || 'curriculum';
       $('#' + focus + '_detail').addClass('in');
+      $("#curriculum_list > dd").first().addClass('in');
     });
   </script>
 <% end %>
@@ -24,32 +25,32 @@
       <div id="curriculum_detail" class="panel-collapse collapse">
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Program".html_safe, new_kapa_main_curriculum_path(:id => @person),:class => "btn btn-default" %></p>
-          <table class="table table-hover">
+            <dl id="curriculum_list">
             <% for curriculum in @curriculums %>
               <% journey = curriculum.deserialize(:journey, :as => OpenStruct) %>
-              <tr>
-                <td colspan="4">
-                  <h5><%=link_to("#{curriculum.code_desc}#{journey.active == 'Y' ? "*" : ""}", "javascript:void(0);") %> <%=link_to "Show", kapa_main_curriculum_path(:id => curriculum), :class => "btn btn-default btn-xs" %></h5>
-                </td>
-              </tr>
-              <div class="transition_points">
-              <tr>
-                <th>Term</th>
-                <th>Transition Point</th>
-                <th>Latest Action</th>
-                <th></th>
-              </tr>
-              <% for transition_point in curriculum.transition_points.eager_load(:last_transition_action, :term).order("terms.sequence DESC, transition_points.id DESC") %>
+              <dt>
+                <h4><%=link_to("#{curriculum.code_desc}#{journey.active == 'Y' ? "*" : ""}", "#curriculum_detail_#{curriculum.id}", "data-toggle" => "collapse") %> <%=link_to "Show", kapa_main_curriculum_path(:id => curriculum), :class => "btn btn-default btn-xs" %></h4>
+              </dt>
+              <dd class="collapse" id="curriculum_detail_<%=curriculum.id%>">
+                <table class="table table-hover">
                 <tr>
-                  <td><%=h transition_point.term_desc %></td>
-                  <td><%=h transition_point.type_desc %></td>
-                  <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
-                  <td class="right"><%=link_to "Show", kapa_main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
+                  <th>Term</th>
+                  <th>Transition Point</th>
+                  <th>Latest Action</th>
+                  <th></th>
                 </tr>
-              <% end %>
-              </div>
+                <% for transition_point in curriculum.transition_points.eager_load(:last_transition_action, :term).order("terms.sequence DESC, transition_points.id DESC") %>
+                  <tr>
+                    <td><%=h transition_point.term_desc %></td>
+                    <td><%=h transition_point.type_desc %></td>
+                    <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+                    <td class="right"><%=link_to "Show", kapa_main_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
+                  </tr>
+                <% end %>
+                </table>
+              </dd>
             <% end %>
-          </table>
+            </dl>
         </div>
       </div>
     </div>
@@ -103,10 +104,6 @@
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_kapa_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
           <table class="table table-hover">
-          <% @course_registrations.group_by(&:subject).each do |subject, course_registrations| %>
-            <tr>
-              <td colspan="5"><h5><%=subject %></h5></td>
-            </tr>
             <tr>
               <th>Term</th>
               <th>Name</th>
@@ -114,7 +111,7 @@
               <th>Instructor</th>
               <th></th>
             </tr>
-            <% for course_registration in course_registrations %>
+            <% for course_registration in @course_registrations %>
               <tr>
                 <td><%=h "#{course_registration.term_desc}" %></td>
                 <td><%=h "#{course_registration.course_offer.name}" %></td>
@@ -123,7 +120,6 @@
                 <td class="right"><%=link_to "Show", kapa_course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
-          <% end %>
         </table>
         </div>
       </div>
@@ -143,28 +139,21 @@
         <div class="panel-body">
           <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_kapa_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
           <table class="table table-hover">
-            <% @practicum_placements.group_by(&:curriculum).each do |curriculum, practicum_placements| %>
+            <tr>
+              <th>Term</th>
+              <th>Site</th>
+              <th>Mentor</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+            <% for practicum_placement in @practicum_placements %>
               <tr>
-                <td colspan="5">
-                  <h5><%=curriculum.code_desc if curriculum %></h5>
-                </td>
+                <td><%=practicum_placement.term_desc %></td>
+                <td><%=practicum_placement.practicum_site.name if practicum_placement.practicum_site.present? %></td>
+                <td><%=practicum_placement.mentor_person_id %></td>
+                <td><%=practicum_placement.status %></td>
+                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>
               </tr>
-              <tr>
-                <th>Term</th>
-                <th>Site</th>
-                <th>Mentor</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-              <% for practicum_placement in practicum_placements %>
-                <tr>
-                  <td><%=practicum_placement.term_desc %></td>
-                  <td><%=practicum_placement.practicum_site.name if practicum_placement.practicum_site.present? %></td>
-                  <td><%=practicum_placement.mentor_person_id %></td>
-                  <td><%=practicum_placement.status %></td>
-                  <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id=> practicum_placement), :class => "btn btn-default btn-xs" %></td>
-                </tr>
-              <% end %>
             <% end %>
           </table>
         </div>

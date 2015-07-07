@@ -16,32 +16,13 @@ module Kapa::Main::Concerns::CurriculumsController
     @curriculum.attributes=(params[:curriculum])
     @curriculum.update_serialized_attributes(:journey, params[:journey]) if params[:journey].present?
 
-    if (params[:return_uri])
-      @program = @curriculum.program
-      @curriculum.major_primary = @program.major
-      @curriculum.distribution = @program.distribution
-      @curriculum.track = @program.track
-    end
-
     unless @curriculum.save
       flash[:danger] = @curriculum.errors.full_messages.join(", ")
-      if params[:transition_point_id]
-        redirect_to kapa_main_transition_point_path(:id => params[:transition_point_id]) and return false
-      else
-        redirect_to kapa_main_curriculum_path(:id => @curriculum) and return false
-      end
+      redirect_to kapa_main_curriculum_path(:id => @curriculum) and return false
     end
 
     flash[:success] = "Academic record was successfully updated."
-    if params[:return_uri]
-      redirect_to params[:return_uri]
-    else
-      if params[:transition_point_id]
-        redirect_to kapa_main_transition_point_path(:id => params[:transition_point_id])
-      else
-        redirect_to kapa_main_curriculum_path(:id => @curriculum)
-      end
-    end
+    redirect_to kapa_main_curriculum_path(:id => @curriculum)
   end
 
   def new

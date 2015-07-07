@@ -1,7 +1,13 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      var lookup_person = function(key) {
+      var lookup_person = function() {
+          if($('#person_id_number').length && $('#person_id_number').val().length) {
+            key = $('#person_id_number').val();
+          }
+          else {
+            key = $('#person_email').val();
+          }
           $.getJSON('<%=kapa_main_persons_lookup_path(:id => @person)%>',
                     {key: key},
                     function(data) {
@@ -12,7 +18,6 @@
                          $('#person_first_name').val(data['person']['first_name']);
                          $('#person_status').val(data['person']['status']);
                       }
-
                       if(data['action'] == 'promote') {
                         alert('Person was verified with the external directory.  Please check the name and save this record.');
                       }
@@ -28,16 +33,13 @@
                      });
       }
 
-      $('#person_id_number').keyup(function() {
-        if($(this).val().match(/<%=Rails.configuration.regex_id_number %>/i)) {
-          lookup_person($(this).val());
-        }
+      $('#lookup_btn').click(function() {
+        lookup_person();
       });
 
-      $('#person_email').keyup(function() {
-         if($(this).val().match(/<%=Rails.configuration.regex_email %>/i)) {
-          lookup_person($(this).val());
-         }
+      $('#submit_btn').click(function() {
+        lookup_person();
+        $('#person_form').submit();
       });
    });
   </script>
@@ -50,11 +52,12 @@
     New Person
   </h4>
 
-  <%=bootstrap_form_for :person, :url => kapa_main_persons_path, :remote => true do %>
-    <div id="person_form">
-      <%=render :partial => "/kapa/main/person_form" %>
-    </div>
-    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+  <%=bootstrap_form_for :person, :url => kapa_main_persons_path, :remote => true, :html => {:id => "person_form"} do %>
+    <%=render :partial => "/kapa/main/person_form" %>
+    <%=render :layout => "/kapa/layouts/controls"  do %>
+      <%=link_to "Save", "javascript:void(0)", :class => "btn btn-default", :id => "submit_btn" %>
+      <%=link_to "Lookup", "javascript:void(0)", :class => "btn btn-default", :id => "lookup_btn" %>
+    <% end if @current_user.write? %>
   <% end %>
 
 <% end %>
