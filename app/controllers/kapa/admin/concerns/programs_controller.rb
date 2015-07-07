@@ -6,7 +6,7 @@ module Kapa::Admin::Concerns::ProgramsController
     @program_offers = @program.program_offers
     @available_majors = @program.available_major.to_s.split(/,\s*/)
     @available_distributions = @program.available_distribution.to_s.split(/,\s*/)
-    @assessment_rubrics = Kapa::AssessmentRubric.includes(:assessment_criterions).where("program like '%#{@program.code}%'")
+    @assessment_rubrics = Kapa::AssessmentRubric.eager_load(:assessment_criterions).where("program like '%#{@program.code}%'")
   end
 
   def update

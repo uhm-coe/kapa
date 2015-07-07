@@ -21,7 +21,7 @@ module Kapa::Concerns::PracticumSite
 
   module ClassMethods
     def search(filter, options = {})
-      sites = Kapa::PracticumSite.includes([:practicum_placements])
+      sites = Kapa::PracticumSite.eager_load([:practicum_placements])
       sites = sites.column_matches(:name => filter.name) if filter.name.present?
       # f.append_condition "? between level_from and level_to", :grade # TODO: Is this still needed?
       sites = sites.where("district" => filter.district) if filter.district.present?

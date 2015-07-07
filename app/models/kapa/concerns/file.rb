@@ -30,7 +30,7 @@ module Kapa::Concerns::File
 
   module ClassMethods
     def search(filter, options = {})
-      files = Kapa::File.includes([:person])
+      files = Kapa::File.eager_load([:person])
       files = files.where("files.type" => filter.type.to_s) if filter.type.present?
       files = files.depts_scope(filter.user.depts, "public = 'Y'")
       return files

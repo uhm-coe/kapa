@@ -151,18 +151,18 @@ module Kapa::Concerns::User
     @request.params[:controller].split("/").second
   end
 
-  module ClassMethods
+  class_methods do
     def selections(options)
       users = where(:status => 3)
       users = users.depts_scope(options[:depts]) if options[:depts]
       users = users.where(options[:conditions]) if options[:conditions]
-      users.includes(:person).collect do |u|
+      users.eager_load(:person).collect do |u|
         ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
       end
     end
 
     def search(filter, options = {})
-      users = Kapa::User.includes([:person])
+      users = Kapa::User.eager_load(:person)
       users = users.where("department" => filter.department) if filter.department.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
       users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?

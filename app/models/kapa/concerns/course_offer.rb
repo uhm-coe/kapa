@@ -8,7 +8,7 @@ module Kapa::Concerns::CourseOffer
   end # included
 
   def assessment_rubrics
-    rubrics = Kapa::AssessmentRubric.includes(:assessment_criterions)
+    rubrics = Kapa::AssessmentRubric.eager_load(:assessment_criterions)
     rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Kapa::Term.find(self.term_id).code])
     rubrics = rubrics.column_contains("assessment_rubrics.course" => "#{self.subject}#{self.number}").order("assessment_rubrics.title, assessment_criterions.criterion")
     if rubrics.blank?
@@ -52,7 +52,7 @@ module Kapa::Concerns::CourseOffer
 
   module ClassMethods
     def search(filter, options = {})
-      course_offers = Kapa::CourseOffer.includes([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
+      course_offers = Kapa::CourseOff.eager_loades([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
       course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
       course_offers = course_offers.where("course_offers.subject || course_offers.number || '-' || course_offers.section like ?", "%#{filter.name}%") if filter.name.present?

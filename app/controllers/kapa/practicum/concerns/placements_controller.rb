@@ -7,7 +7,7 @@ module Kapa::Practicum::Concerns::PlacementsController
     @person.details(self)
     @curriculums = @person.curriculums
     @practicum_sites = Kapa::PracticumSite.select("id, name_short")
-    @mentors = Kapa::Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @mentors = Kapa::Person.eager_load(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
   end
 
   def new
@@ -56,7 +56,7 @@ module Kapa::Practicum::Concerns::PlacementsController
 
   def index
     @filter = filter
-    @practicum_sites = Kapa::PracticumSite.includes(:practicum_placements).order("name_short")
+    @practicum_sites = Kapa::PracticumSite.eager_load(:practicum_placements).order("name_short")
     @practicum_placements = Kapa::PracticumPlacement.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 

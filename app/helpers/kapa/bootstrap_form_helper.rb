@@ -76,7 +76,7 @@ module Kapa::BootstrapFormHelper
       end
     end
 
-    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select hidden_text_area date_select}
+    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_select}
     helpers.each do |name|
       build_label_field(name)
     end

@@ -33,7 +33,7 @@ module Kapa::Concerns::Enrollment
 
   module ClassMethods
     def search(filter, options = {})
-      enrollments = Kapa::Enrollment.includes([{:curriculum => :person}, {:curriculum => :program}])
+      enrollments = Kapa::Enrollment.eager_load([{:curriculum => :person}, {:curriculum => :program}])
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
       if filter.program == "NA"
         enrollments = enrollments.where("programs.code is NULL")
@@ -59,7 +59,7 @@ module Kapa::Concerns::Enrollment
 
     def to_csv(filter, options = {})
       # TODO: For reference, remove later
-      # enrollments = Kapa::Enrollment.includes([
+      # enrollments = Kapa::Enrollme.eager_loades([
       #   {:practicum_profile =>
       #     [{:person => :contact}, {:curriculum => :program}]
       #   },

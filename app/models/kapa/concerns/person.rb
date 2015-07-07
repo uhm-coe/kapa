@@ -119,7 +119,7 @@ module Kapa::Concerns::Person
         return []
       end
 
-      persons = Kapa::Person.includes(:contact).where("status <> 'D'")
+      persons = Kapa::Person.eager_load(:contact).where("status <> 'D'")
       persons = persons.where(:status => "V") if options[:verified]
 
       if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)

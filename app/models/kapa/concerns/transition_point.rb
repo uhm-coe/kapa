@@ -33,7 +33,7 @@ module Kapa::Concerns::TransitionPoint
   end
 
   def term_desc
-    return Kapa::Term.find(term_id).description
+    Kapa::Term.lookup_description(self.term_id)
   end
 
   def category_desc
@@ -61,7 +61,7 @@ module Kapa::Concerns::TransitionPoint
   end
 
   def assessment_rubrics
-    rubrics = Kapa::AssessmentRubric.includes(:assessment_criterions)
+    rubrics = Kapa::AssessmentRubric.eager_load(:assessment_criterions)
     rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Kapa::Term.find(self.term_id).code])
     rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
     rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
@@ -74,7 +74,7 @@ module Kapa::Concerns::TransitionPoint
 
   module ClassMethods
     def search(filter, options = {})
-      transition_points = Kapa::TransitionPoint.includes([:curriculum, {:curriculum => :program}, {:curriculum => :person}])
+      transition_points = Kapa::TransitionPoint.eager_load([:curriculum, {:curriculum => :program}, {:curriculum => :person}])
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
       transition_points = transition_points.where("transition_points.type" => filter.type.to_s) if filter.type.present?

@@ -14,5 +14,3 @@ Rails.configuration.regex_email = '^[A-Z0-9_%+-]+@hawaii.edu$'
 # Default items per page on list views
 Rails.configuration.items_per_page = 20
 
-# Default LDAP configuration
-Rails.configuration.ldap = nil

@@ -140,7 +140,7 @@ module Kapa::Concerns::Exam
 
   module ClassMethods
     def search(filter, options = {})
-      exams = Kapa::Exam.includes([:person, :exam_scores])
+      exams = Kapa::Exam.eager_load([:person, :exam_scores])
       exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
       exams = exams.where(:report_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?

@@ -90,16 +90,6 @@ module Kapa::KapaBaseHelper
     content_tag(:div, tag.html_safe, :class => "score")
   end
 
-  def hidden_text_area(object_name, method, options = {})
-    object = instance_variable_get("@#{object_name}".delete("[]"))
-    current_value = object.send("#{method}") if object
-    text = current_value.blank? ? "Add notes..." : current_value
-
-    tags = link_to_function(text, nil)
-    tags << content_tag(:div, text_area(object_name, method, options), :style => "display:none;")
-    content_tag(:div, tags.html_safe, :class => "hidden-text-area", :style => options[:style])
-  end
-
   def history_select(object_name, method, options = {}, html_options = {})
     model_class = options[:model_class]
     model_method = options[:model_method] ? options[:model_method] : method

@@ -14,13 +14,13 @@
       <%= a.text_field "action_specify" %>
     </div>
     <div class="col-sm-3">
-      <%= a.user_select "user_id", :include_blank => true, :locked => !@current_user.manage? %>
+      <%= a.user_select "user_id", :include_blank => true, :label => "Action by", :locked => !@current_user.manage? %>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <%= a.hidden_text_area "note", :style => "width:100%; height:100px" %>
+      <%= a.text_area "note", :style => "width:100%; height:100px" %>
     </div>
   </div>
 <% end %>

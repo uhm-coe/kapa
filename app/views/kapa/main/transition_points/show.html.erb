@@ -6,7 +6,7 @@
       });
 
       // Set active tab and pane
-      var focus = '<%=params[:focus]%>' || 'curriculum';
+      var focus = '<%=params[:focus]%>' || 'transition_point';
       $('a[href="#' + focus + '_tab"]').parent().addClass('active');
       $('#' + focus + '_tab').addClass('active');
 
@@ -35,14 +35,12 @@
 
   <h4 class="section-header divider">
     <%= link_to "", kapa_main_person_path(:id => @transition_point.curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
-    Transition
-    Point/<%= Kapa::ApplicationProperty.lookup_description(:transition_point, @transition_point.type) %> <%= link_to image_tag("/images/icons/form.png"), kapa_document_forms_path(:action => :show, :id => @transition_point.form_id), {:target => "_blank"} if @transition_point.form_id %>
+    <%=link_to @curriculum.code_desc, kapa_main_curriculum_path(:id => @curriculum) %> - <%= @transition_point.type_desc %> <%= link_to image_tag("/images/icons/form.png"), kapa_document_forms_path(:action => :show, :id => @transition_point.form_id), {:target => "_blank"} if @transition_point.form_id %>
   </h4>
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
-      <li><a href="#transition_point_tab" data-toggle="tab">Application</a></li>
+      <li><a href="#transition_point_tab" data-toggle="tab">Profile</a></li>
       <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
     </ul>
@@ -50,7 +48,6 @@
     <div class="tab-content">
       <div id="curriculum_tab" class="tab-pane">
         <%= bootstrap_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum, :transition_point_id => @transition_point), :remote => true, :html => {:method => :put} do %>
-          <%= render :partial => "/kapa/main/curriculum_form" %>
           <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:main) %>
         <% end %>
       </div>

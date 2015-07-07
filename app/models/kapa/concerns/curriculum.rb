@@ -72,7 +72,7 @@ module Kapa::Concerns::Curriculum
 
   module ClassMethods
     def search(filter, options ={})
-      curriculums = Kapa::Curriculum.includes([:transition_points, :program, :person]) #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
+      curriculums = Kapa::Curriculum.eager_load([:transition_points, :program, :person]) #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?
       curriculums = curriculums.where("programs.code" => filter.program) if filter.program.present?

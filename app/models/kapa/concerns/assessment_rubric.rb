@@ -27,7 +27,7 @@ module Kapa::Concerns::AssessmentRubric
 
   module ClassMethods
     def search(filter, options = {})
-      assessment_rubrics = Kapa::AssessmentRubric.includes([:assessment_criterions])
+      assessment_rubrics = Kapa::AssessmentRubric.eager_load([:assessment_criterions])
       assessment_rubrics = assessment_rubrics.column_matches(:title => filter.title) if filter.title.present?
       assessment_rubrics = assessment_rubrics.column_contains(:program => filter.program) if filter.program.present?
       assessment_rubrics = assessment_rubrics.column_contains(:course => filter.course) if filter.course.present?

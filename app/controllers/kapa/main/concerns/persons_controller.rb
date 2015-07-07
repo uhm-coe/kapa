@@ -5,9 +5,9 @@ module Kapa::Main::Concerns::PersonsController
     @person = Kapa::Person.find(params[:id])
     @person.details(self)
     #TODO Add dept conditions
-    @curriculums = @person.curriculums.includes(:transition_points => :term).order("terms.sequence DESC")
+    @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @course_registrations = Kapa::CourseRegistration.includes(:course_offer => :term).where(:person_id => @person).order("terms.sequence DESC")
+    @course_registrations = Kapa::CourseRegistration.eager_load(:course_offer => :term).where(:person_id => @person).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
 
     if (params[:doc_id])
@@ -66,17 +66,6 @@ module Kapa::Main::Concerns::PersonsController
       @persons = Kapa::Person.where("0=1")
     else
       @persons = Kapa::Person.search(@filter)
-    end
-
-    if @persons.blank?
-      person = Kapa::Person.lookup(@filter.key, :verified => true)
-      if person
-        person.save!
-        @persons = [person]
-        flash.now[:success] = "The record was imported from the external system."
-      else
-        flash.now[:warning] = "No record was found."
-      end
     end
   end
 

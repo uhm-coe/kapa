@@ -34,7 +34,7 @@
       </div>
 
       <div id="role_tab" class="tab-pane">
-        <%=bootstrap_form_for :user_roles, :url => kapa_admin_user_path(:id => @user, :focus => :role), :remote => true, :html => {:method => :put}  do |f| %>
+        <%=bootstrap_form_for :user_roles, :url => kapa_admin_user_path(:id => @user, :focus => :role), :html => {:method => :put}  do |f| %>
           <%=render :partial => "/kapa/admin/role_form", :locals => {:f => f} %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :user %>
         <% end %>

@@ -36,6 +36,15 @@ module Kapa::Concerns::Term
       self.where(:code => Kapa::Term.find(start_term_id).code..Kapa::Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
     end
 
+    def lookup_description(id)
+      term = Kapa::Term.find_by_id(id)
+      if term
+        return term.description
+      else
+        return "N/A"
+      end
+    end
+
     def search(filter, options = {})
       # To return an ActiveRecord::Relation, use the following:
       #   For Rails 4.1 and above: Kapa::Term.all

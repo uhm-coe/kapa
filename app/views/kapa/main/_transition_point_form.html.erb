@@ -5,54 +5,11 @@
       <%= t.property_select :category, :name => "#{@transition_point.type}_category", :include_blank => true %>
       <%= t.property_select :priority, :name => "#{@transition_point.type}_priority", :include_blank => true %>
       <%= t.property_select :status, :name => "#{@transition_point.type}_status", :include_blank => true %>
-      <%= t.user_select :user_primary_id, :include_blank => true, :label => "Primary Reviewer", :depts => @current_user.depts %>
-      <%= t.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Reviewer" %>
     </div>
 
     <div class="col-sm-6">
-      <%= bootstrap_fields_for :transition_point_ext do |t| %>
-        <% if @transition_point.type == "admission" %>
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_coe_received_date", "Coe Received Date" %>
-            <%= date_picker :transition_point_ext, :coe_received_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_caf_received_date", "Caf Received Date" %>
-            <%= date_picker :transition_point_ext, :caf_received_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_caf_returned_date", "Caf Returned Date" %>
-            <%= date_picker :transition_point_ext, :caf_returned_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_fe_received_date", "Fe Received Date" %>
-            <%= date_picker :transition_point_ext, :fe_received_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_praxis1_received_date", "Passing Praxis I Received Date" %>
-            <%= date_picker :transition_point_ext, :praxis1_received_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_praxis2_received_date", "Passing Praxis II Received Date" %>
-            <%= date_picker :transition_point_ext, :praxis2_received_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_lack_letter_sent_date", "Lack Letter Sent Date" %>
-            <%= date_picker :transition_point_ext, :lack_letter_sent_date %>
-          </div>
-
-          <div class="form-group">
-            <%= label_tag "transition_point_ext_rsvp_date", "RSVP Date" %>
-            <%= date_picker :transition_point_ext, :rsvp_date %>
-          </div>
-        <% end %>
-      <% end %>
+      <%= t.user_select :user_primary_id, :include_blank => true, :label => "Primary Reviewer", :depts => @current_user.depts %>
+      <%= t.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Reviewer" %>
     </div>
   </div>
 

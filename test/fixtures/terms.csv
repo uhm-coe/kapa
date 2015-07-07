@@ -60,4 +60,8 @@ id,code,description,description_short,sequence,active,dept
 201540,201540,Summer 2015,,57,1,
 201610,201610,Fall 2015,,59,1,
 201630,201630,Spring 2016,,60,1,
+201640,201640,Summer 2016,,61,1,
+201710,201710,Fall 2016,,62,1,
+201730,201730,Spring 2017,,63,1,
+201740,201740,Summer 2017,,64,1,
 999999,999999,The End of Time,,,1,

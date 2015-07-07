@@ -29,7 +29,7 @@ module Kapa::Concerns::AdvisingSession
 
   module ClassMethods
     def search(filter, options = {})
-      advising_sessions = Kapa::AdvisingSession.includes([:person => :contact])
+      advising_sessions = Kapa::AdvisingSession.eager_load([:person => :contact])
       advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
       advising_sessions = advising_sessions.where(:task => filter.task) if filter.task.present?
       advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?

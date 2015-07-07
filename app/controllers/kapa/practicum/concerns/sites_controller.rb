@@ -4,8 +4,8 @@ module Kapa::Practicum::Concerns::SitesController
   def show
     @practicum_site = Kapa::PracticumSite.find(params[:id])
     @site_contact = @practicum_site.site_contact
-    @mentors = Kapa::Person.includes(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
-    @practicum_placements = @practicum_site.practicum_placements.includes(:term).order("terms.sequence DESC")
+    @mentors = Kapa::Person.eager_load(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @practicum_placements = @practicum_site.practicum_placements.eager_load(:term).order("terms.sequence DESC")
   end
 
   def new
