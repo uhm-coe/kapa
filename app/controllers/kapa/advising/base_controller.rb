@@ -1,3 +1,3 @@
 class Kapa::Advising::BaseController < Kapa::KapaBaseController
-  include Kapa::Advising::Concerns::BaseController
+  include Kapa::Advising::BaseControllerBase
 end

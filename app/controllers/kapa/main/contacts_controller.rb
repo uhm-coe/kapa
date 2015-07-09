@@ -1,3 +1,3 @@
 class Kapa::Main::ContactsController < ApplicationController
-  include Kapa::Main::Concerns::ContactsController
+  include Kapa::Main::ContactsControllerBase
 end

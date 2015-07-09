@@ -1,3 +1,3 @@
 class Kapa::Main::TransitionPointsController < Kapa::Main::BaseController
-  include Kapa::Main::Concerns::TransitionPointsController
+  include Kapa::Main::TransitionPointsControllerBase
 end

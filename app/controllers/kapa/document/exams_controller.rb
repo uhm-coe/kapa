@@ -1,3 +1,3 @@
 class Kapa::Document::ExamsController < Kapa::Document::BaseController
-  include Kapa::Document::Concerns::ExamsController
+  include Kapa::Document::ExamsControllerBase
 end

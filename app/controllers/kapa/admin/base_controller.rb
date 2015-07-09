@@ -1,3 +1,3 @@
 class Kapa::Admin::BaseController < Kapa::KapaBaseController
-  include Kapa::Admin::Concerns::BaseController
+  include Kapa::Admin::BaseControllerBase
 end
