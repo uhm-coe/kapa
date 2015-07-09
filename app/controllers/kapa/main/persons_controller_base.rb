@@ -80,9 +80,7 @@ module Kapa::Main::PersonsControllerBase
         redirect_path = kapa_main_person_path(:id => person)
       end
     else
-      if Kapa::DirectoryService.is_defined?
         action = "alert"
-      end
     end
     render(:json => {:person => person, :action => action, :person_id_verified => person_id_verified, :redirect_path => redirect_path})
   end
@@ -90,7 +88,7 @@ module Kapa::Main::PersonsControllerBase
   def sync
     @person = Kapa::Person.find(params[:id])
     key = params[:key]
-    @person_verified = Kapa::DirectoryService.person(key)
+    @person_verified = Kapa::Person.import(key)
 
     if @person_verified
       @person.id_number = @person_verified.id_number

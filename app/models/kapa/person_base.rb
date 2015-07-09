@@ -142,8 +142,8 @@ module Kapa::PersonBase
       filter = OpenStruct.new
       filter.key = key
       person_local = self.search(filter, options).first
-      if person_local.blank? and Kapa::DirectoryService.is_defined?
-        person_remote = Kapa::DirectoryService.person(key)
+      if person_local.blank?
+        person_remote = Kapa::Person.import(key)
 
         #Make sure the person found in LDAP is not in the local database.
         #This avoids the problem when email is missing in local record but exists in LDAP.
@@ -161,9 +161,9 @@ module Kapa::PersonBase
       return person_local
     end
 
-    def import(options = {})
+    def import(*args)
       #Implement a way to import a person data from an external datasource in your application.
+      #The first argument should be a key string.
     end
   end
-
 end

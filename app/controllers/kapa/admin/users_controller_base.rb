@@ -86,31 +86,31 @@ module Kapa::Admin::UsersControllerBase
   end
 
   def import
+    errors = 0
     file = params[:import_file]
-    CSV.new(file, :headers => true).each do |row|
-      person = Kapa::Person.lookup(row[0], :verified => true)
-
-      if person
-        if person.email.blank?
-          p = Kapa::DirectoryService.person(person.id_number)
-          person.email = p.email if p and p.email.present?
-        end
-
-        person.save
-        if person.email.present?
-          uid = person.email.split("@").first
-          user = Kapa::User.find_by_uid(uid)
-          user = Kapa::User.build(:uid => uid, :status => 0, :category => "ldap", :person_id => @person.id) if user.nil?
-          user.position = row["position"]
-          user.department = [department(row["eac1"]), department(row["eac2"]), department(row["eac3"]), department(row["eac4"])].delete_if {|e| e.nil?}.first
-          user.emp_status = 2
-          unless user.save
-            logger.error "!!!!-- Failed to save user: {#{user.errors.full_messages}}"
-          end
-        end
+    CSV.foreach(file, :headers => true) do |row|
+      user = Kapa::User.find_by_uid(row["uid"])
+      user = Kapa::User.build(:uid => row["uid"], :status => 0) if user.blank?
+      user.status = row["status"]
+      user.category = row["category"]
+      user.position = row["position"]
+      user.emp_status = 2
+      user.department = row["department"]
+      unless user.save
+        errors = errors + 1
+        logger.error "!!!!-- Failed to save user: {#{user.errors.full_messages}}"
+      end
+      person = user.person
+      person = user.build_person(:id_number => row["id_number"]) if person.blank?
+      person.last_name = row["last_name"]
+      person.first_name = row["first_name"]
+      perdson.status = row["status"]
+      unless person.save
+        errors = errors + 1
+        logger.error "!!!!-- Failed to save person: {#{person.errors.full_messages}}"
       end
     end
-    flash[:info] = "#{@persons.length} found."
+    flash[:info] = "Users were imported. Errors: #{errors}"
   end
 
   def export
@@ -120,29 +120,5 @@ module Kapa::Admin::UsersControllerBase
               :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"
-  end
-
-  private
-  def department(eac)
-    if eac.blank?
-      return nil
-    else
-      case(eac.to_s[4..5])
-        when "01" then "DO"
-        when "11" then "ITE"
-        when "12" then "EDEA"
-        when "13" then "EDEP"
-        when "14" then "KRS"
-        when "15" then "EDEF"
-        when "16" then "EDTC"
-        when "17" then "SPED"
-        when "18" then "EDCS"
-        when "19" then "TDP"
-        when "31" then "CRDG"
-        when "41" then "CDS"
-        when "51" then "OSAS"
-        else nil
-      end
-    end
   end
 end
