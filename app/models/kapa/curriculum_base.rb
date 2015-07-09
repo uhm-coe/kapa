@@ -25,7 +25,7 @@ module Kapa::CurriculumBase
 
     validates_presence_of :person_id, :program_id
     before_create :set_default_options
-  end # included
+  end
 
   def set_default_options
     self.major_primary = self.program.major if self.major_primary.blank?

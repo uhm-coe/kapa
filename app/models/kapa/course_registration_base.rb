@@ -5,7 +5,7 @@ module Kapa::CourseRegistrationBase
     belongs_to :person
     belongs_to :course_offer
     has_many :assessment_scores, :as => :assessment_scorable
-  end # included
+  end
 
   def term_desc
     self.course_offer.term_desc

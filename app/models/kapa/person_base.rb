@@ -3,25 +3,14 @@ module Kapa::PersonBase
 
   included do
     self.table_name = :persons
-    #Main module associations
     has_one :contact, :as => :entity, :autosave => true
     has_many :curriculums
     has_many :users
-
-    #Artifact module associations
     has_many :forms
     has_many :files
     has_many :exams
-
-    #Advising module associations
     has_many :advising_sessions
-
-
-    #Placement module associations
-    has_one :practicum_profile
     has_many :practicum_placements
-
-    #Assessment module associations
     has_many :course_registrations
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
@@ -30,7 +19,7 @@ module Kapa::PersonBase
     #  validates_numericality_of :ssn, :allow_blank => true
 
     before_save :format_fields
-  end # included
+  end
 
   def format_fields
     self.id_number = nil if self.id_number.blank?
@@ -43,18 +32,6 @@ module Kapa::PersonBase
 
   def full_name
     "#{last_name}, #{first_name}"
-  end
-
-  def ldap_user
-    self.users.first(:conditions => "users.category = 'ldap'")
-  end
-
-  def practicum_profiles
-    if self.practicum_profile
-      [self.practicum_profile]
-    else
-      []
-    end
   end
 
   def details(obj)
@@ -77,11 +54,6 @@ module Kapa::PersonBase
 
   def deleted?
     return self.status == "D"
-  end
-
-  def promote
-    self.source = "UH LDAP"
-    self.status = "V"
   end
 
   def merge(another_person, options = {})

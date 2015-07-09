@@ -17,7 +17,7 @@ module Kapa::PracticumPlacementBase
                :foreign_key => "user_secondary_id"
 
     validates_presence_of :person_id, :curriculum_id, :term_id
-  end # included
+  end
 
   def term_desc
     return Kapa::Term.find(term_id).description

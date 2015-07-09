@@ -7,7 +7,7 @@ module Kapa::AssessmentRubricBase
     validates_presence_of :title
     before_validation :remove_extra_values
     before_save :join_attributes
-  end # included
+  end
 
   def remove_extra_values
     remove_values(self.courses)

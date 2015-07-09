@@ -12,7 +12,7 @@ module Kapa::EnrollmentBase
                :foreign_key => "user_secondary_id"
 
     validates_presence_of :curriculum_id, :term_id
-  end # included
+  end
 
   def practicum_assignments_select(assignment_type, index = nil)
     assignments = self.practicum_assignments.select { |a| a.assignment_type == assignment_type.to_s }

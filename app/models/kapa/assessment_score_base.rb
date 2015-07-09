@@ -4,7 +4,7 @@ module Kapa::AssessmentScoreBase
   included do
     belongs_to :assessment_criterion
     belongs_to :assessment_scorable, :polymorphic => true
-  end # included
+  end
 
   class_methods do
     def table_for(assessment_rubric, assessment_scorable_type, assessment_scorable_id)

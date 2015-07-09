@@ -24,7 +24,7 @@ module Kapa::UserBase
       c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
     end
-  end # included
+  end
 
   def use_email_as_uid
     self.uid = self.email if self.email.present?

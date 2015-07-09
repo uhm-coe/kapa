@@ -11,7 +11,7 @@ module Kapa::ProgramBase
 
     before_validation :remove_extra_values
     before_save :join_attributes
-  end # included
+  end
 
   def remove_extra_values
     remove_values(self.available_majors)

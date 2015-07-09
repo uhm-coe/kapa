@@ -26,7 +26,7 @@ module Kapa::TransitionPointBase
     validates_presence_of :curriculum_id, :term_id, :type
 
     before_save :update_status_timestamp
-  end # included
+  end
 
   def update_status_timestamp
     self.status_updated_at = DateTime.now if self.status_changed?

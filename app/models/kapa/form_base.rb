@@ -7,7 +7,7 @@ module Kapa::FormBase
     belongs_to :term
     has_one :transition_point
     validates_presence_of :person_id, :type
-  end # included
+  end
 
   def term_desc
     return term_id.blank? ? "No term chosen" : Kapa::Term.find(term_id).description

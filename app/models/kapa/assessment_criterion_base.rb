@@ -8,7 +8,7 @@ module Kapa::AssessmentCriterionBase
     validates_uniqueness_of :criterion, :scope => :assessment_rubric_id
     validates_presence_of :criterion
     before_save :format_fields
-  end # included
+  end
 
   def format_fields
     standard.to_s.strip!

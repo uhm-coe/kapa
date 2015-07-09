@@ -5,7 +5,7 @@ module Kapa::PracticumSiteBase
     has_many :practicum_placements
     validates_presence_of :name, :code
     validates_uniqueness_of :code
-  end # included
+  end
 
   def site_contact
     self.deserialize(:site_contact, :as => OpenStruct)

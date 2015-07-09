@@ -4,7 +4,7 @@ module Kapa::KapaModelBase
   included do
     self.abstract_class = true
     serialize :yml, Hash
-  end # included
+  end
 
   def update_xml
     self.xml = self.yml.to_xml if self.yml.present?

@@ -6,7 +6,7 @@ module Kapa::FileBase
     belongs_to :person
     has_attached_file :data
     validates_presence_of :person_id
-  end # included
+  end
 
   def url(*args)
     data.url(*args)

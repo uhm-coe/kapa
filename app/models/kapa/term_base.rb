@@ -7,7 +7,7 @@ module Kapa::TermBase
     has_many :courses
     validates_presence_of :code, :description
     before_create :set_id
-  end # included
+  end
 
   def set_id
     self.id = self.code.to_i if self.code =~ /\A[-+]?[0-9]+\z/

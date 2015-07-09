@@ -5,7 +5,7 @@ module Kapa::ContactBase
     belongs_to :entity, :polymorphic => true
     validates_presence_of :entity_id
     validates_uniqueness_of :entity_id, :scope => :entity_type, :on => :create, :message => "is already used"
-  end # included
+  end
 
   def format
     self.attributes().each_pair do |k, v|

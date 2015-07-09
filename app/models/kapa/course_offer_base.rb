@@ -5,7 +5,7 @@ module Kapa::CourseOfferBase
     belongs_to :term
     has_many :course_registrations, -> {includes(:person, :assessment_scores).where("course_registrations.status like 'R%'").order("persons.last_name, persons.first_name")}
     validates_presence_of :term_id
-  end # included
+  end
 
   def assessment_rubrics
     rubrics = Kapa::AssessmentRubric.eager_load(:assessment_criterions)

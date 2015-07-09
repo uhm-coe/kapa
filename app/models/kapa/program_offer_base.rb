@@ -10,7 +10,7 @@ module Kapa::ProgramOfferBase
 
     before_validation :remove_extra_values
     before_save :join_attributes
-  end # included
+  end
 
   def remove_extra_values
     self.available_majors.delete_if { |x| x.blank? || x == "multiselect-all" } if self.available_majors

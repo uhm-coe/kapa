@@ -4,7 +4,7 @@ module Kapa::UserTimestampBase
   included do
     self.table_name = :timestamps
     belongs_to :user
-  end # included
+  end
 
   class_methods do
     def search(filter, options = {})

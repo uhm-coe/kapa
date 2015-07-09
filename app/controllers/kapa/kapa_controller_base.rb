@@ -11,7 +11,7 @@ module Kapa::KapaControllerBase
     after_filter :put_timestamp
     helper :all
     helper_method :url_for, :module_name, :menu_items
-  end # included
+  end
 
   def validate_login
     @current_user_session = Kapa::UserSession.find
@@ -127,7 +127,7 @@ module Kapa::KapaControllerBase
     {:key => "",
      :type => :admission,
      :active => 1,
-     :name => :term_id,
+     :name => :major,
      :date_start => Date.today,
      :date_end => Date.today,
      :term_id => Kapa::Term.current_term.id,

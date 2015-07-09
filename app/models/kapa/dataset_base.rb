@@ -4,7 +4,7 @@ module Kapa::DatasetBase
   included do
     self.inheritance_column = nil
     attr_accessor :file
-  end # included
+  end
 
   def datasource_type
     if self.datasource == "file"

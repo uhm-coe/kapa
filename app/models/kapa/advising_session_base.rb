@@ -3,9 +3,6 @@ module Kapa::AdvisingSessionBase
 
   included do
     belongs_to :person
-    belongs_to :template
-    has_one :contact, :as => :entity
-    has_many :advising_actions
     belongs_to :user_primary,
                :class_name => "User",
                :foreign_key => "user_primary_id"
@@ -13,18 +10,6 @@ module Kapa::AdvisingSessionBase
                :class_name => "User",
                :foreign_key => "user_secondary_id"
     validates_presence_of :person_id, :session_date, :session_type
-  end # included
-
-  def name
-    if anonymous?
-      return "#{identity_note}*"
-    else
-      return self.person.full_name
-    end
-  end
-
-  def anonymous?
-    return person_id == 0
   end
 
   class_methods do
