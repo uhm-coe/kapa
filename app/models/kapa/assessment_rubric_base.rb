@@ -1,4 +1,4 @@
-module Kapa::Concerns::AssessmentRubric
+module Kapa::AssessmentRubricBase
   extend ActiveSupport::Concern
 
   included do

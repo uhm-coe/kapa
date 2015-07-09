@@ -1,4 +1,4 @@
-module Kapa::Concerns::PracticumSite
+module Kapa::PracticumSiteBase
   extend ActiveSupport::Concern
 
   included do

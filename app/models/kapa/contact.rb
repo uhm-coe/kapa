@@ -1,3 +1,3 @@
 class Kapa::Contact < Kapa::KapaBaseModel
-  include Kapa::Concerns::Contact
+  include Kapa::ContactBase
 end

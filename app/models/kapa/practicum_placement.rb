@@ -1,3 +1,3 @@
 class Kapa::PracticumPlacement < Kapa::KapaBaseModel
-  include Kapa::Concerns::PracticumPlacement
+  include Kapa::PracticumPlacementBase
 end

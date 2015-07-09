@@ -1,4 +1,4 @@
-module Kapa::Concerns::TransitionPoint
+module Kapa::TransitionPointBase
   extend ActiveSupport::Concern
 
   included do

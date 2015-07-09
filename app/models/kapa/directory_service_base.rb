@@ -1,4 +1,4 @@
-module Kapa::Concerns::DirectoryService
+module Kapa::DirectoryServiceBase
   extend ActiveSupport::Concern
 
   module ClassMethods

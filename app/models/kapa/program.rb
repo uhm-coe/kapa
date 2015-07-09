@@ -1,3 +1,3 @@
 class Kapa::Program < Kapa::KapaBaseModel
-  include Kapa::Concerns::Program
+  include Kapa::ProgramBase
 end

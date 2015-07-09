@@ -1,3 +1,3 @@
 class Kapa::Enrollment < Kapa::KapaBaseModel
-  include Kapa::Concerns::Enrollment
+  include Kapa::EnrollmentBase
 end

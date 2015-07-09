@@ -1,4 +1,4 @@
-module Kapa::Concerns::Enrollment
+module Kapa::EnrollmentBase
   extend ActiveSupport::Concern
 
   included do

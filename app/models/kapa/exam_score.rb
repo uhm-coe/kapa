@@ -1,3 +1,3 @@
 class Kapa::ExamScore < Kapa::KapaBaseModel
-  include Kapa::Concerns::ExamScore
+  include Kapa::ExamScoreBase
 end

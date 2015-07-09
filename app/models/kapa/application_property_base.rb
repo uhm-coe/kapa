@@ -1,4 +1,4 @@
-module Kapa::Concerns::ApplicationProperty
+module Kapa::ApplicationPropertyBase
   extend ActiveSupport::Concern
 
   included do

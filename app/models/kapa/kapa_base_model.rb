@@ -1,3 +1,3 @@
 class Kapa::KapaBaseModel < ActiveRecord::Base
-  include Kapa::Concerns::KapaBaseModel
+  include Kapa::KapaBaseModelBase
 end

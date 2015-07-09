@@ -1,4 +1,4 @@
-module Kapa::Concerns::Curriculum
+module Kapa::CurriculumBase
   extend ActiveSupport::Concern
 
   included do

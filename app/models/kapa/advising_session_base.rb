@@ -1,4 +1,4 @@
-module Kapa::Concerns::AdvisingSession
+module Kapa::AdvisingSessionBase
   extend ActiveSupport::Concern
 
   included do

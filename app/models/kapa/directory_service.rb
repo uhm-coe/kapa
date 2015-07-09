@@ -1,3 +1,3 @@
 class Kapa::DirectoryService
-  include Kapa::Concerns::DirectoryService
+  include Kapa::DirectoryServiceBase
 end

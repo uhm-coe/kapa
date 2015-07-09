@@ -1,3 +1,3 @@
 class Kapa::File < Kapa::KapaBaseModel
-  include Kapa::Concerns::File
+  include Kapa::FileBase
 end

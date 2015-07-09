@@ -1,4 +1,4 @@
-module Kapa::Concerns::AssessmentScore
+module Kapa::AssessmentScoreBase
   extend ActiveSupport::Concern
 
   included do

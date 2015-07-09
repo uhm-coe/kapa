@@ -1,3 +1,3 @@
 class Kapa::Exam < Kapa::KapaBaseModel
-  include Kapa::Concerns::Exam
+  include Kapa::ExamBase
 end

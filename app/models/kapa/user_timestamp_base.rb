@@ -1,4 +1,4 @@
-module Kapa::Concerns::UserTimestamp
+module Kapa::UserTimestampBase
   extend ActiveSupport::Concern
 
   included do

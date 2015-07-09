@@ -1,4 +1,4 @@
-module Kapa::Concerns::PracticumPlacement
+module Kapa::PracticumPlacementBase
   extend ActiveSupport::Concern
 
   included do

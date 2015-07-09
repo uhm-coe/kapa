@@ -1,4 +1,4 @@
-module Kapa::Concerns::Contact
+module Kapa::ContactBase
   extend ActiveSupport::Concern
 
   included do

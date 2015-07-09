@@ -1,4 +1,4 @@
-module Kapa::Concerns::Term
+module Kapa::TermBase
   extend ActiveSupport::Concern
 
   included do

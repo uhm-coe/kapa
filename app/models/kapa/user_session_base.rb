@@ -1,4 +1,4 @@
-module Kapa::Concerns::UserSession
+module Kapa::UserSessionBase
   extend ActiveSupport::Concern
 
   included do

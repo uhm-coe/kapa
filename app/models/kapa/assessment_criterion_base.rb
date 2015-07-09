@@ -1,4 +1,4 @@
-module Kapa::Concerns::AssessmentCriterion
+module Kapa::AssessmentCriterionBase
   extend ActiveSupport::Concern
 
   included do

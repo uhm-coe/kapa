@@ -1,4 +1,4 @@
-module Kapa::Concerns::CourseOffer
+module Kapa::CourseOfferBase
   extend ActiveSupport::Concern
 
   included do

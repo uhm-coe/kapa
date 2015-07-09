@@ -1,4 +1,4 @@
-module Kapa::Concerns::Person
+module Kapa::PersonBase
   extend ActiveSupport::Concern
 
   included do

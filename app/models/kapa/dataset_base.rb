@@ -1,4 +1,4 @@
-module Kapa::Concerns::Dataset
+module Kapa::DatasetBase
   extend ActiveSupport::Concern
 
   included do

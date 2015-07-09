@@ -1,3 +1,3 @@
 class Kapa::UserTimestamp < Kapa::KapaBaseModel
-  include Kapa::Concerns::UserTimestamp
+  include Kapa::UserTimestampBase
 end

@@ -1,4 +1,4 @@
-module Kapa::Concerns::Program
+module Kapa::ProgramBase
   extend ActiveSupport::Concern
 
   included do

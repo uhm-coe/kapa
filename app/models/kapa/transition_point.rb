@@ -1,3 +1,3 @@
 class Kapa::TransitionPoint < Kapa::KapaBaseModel
-  include Kapa::Concerns::TransitionPoint
+  include Kapa::TransitionPointBase
 end

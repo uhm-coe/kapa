@@ -1,3 +1,3 @@
 class Kapa::Person < Kapa::KapaBaseModel
-  include Kapa::Concerns::Person
+  include Kapa::PersonBase
 end

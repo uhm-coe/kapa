@@ -1,4 +1,4 @@
-module Kapa::Concerns::CourseRegistration
+module Kapa::CourseRegistrationBase
   extend ActiveSupport::Concern
 
   included do

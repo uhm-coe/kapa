@@ -1,4 +1,4 @@
-module Kapa::Concerns::Exam
+module Kapa::ExamBase
   extend ActiveSupport::Concern
 
   included do

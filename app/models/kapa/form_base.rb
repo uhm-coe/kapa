@@ -1,4 +1,4 @@
-module Kapa::Concerns::Form
+module Kapa::FormBase
   extend ActiveSupport::Concern
 
   included do
