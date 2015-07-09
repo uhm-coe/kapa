@@ -64,7 +64,7 @@ module Kapa::KapaModelBase
     array.delete_if { |x| x.blank? || x == "multiselect-all" } if array
   end
 
-  module ClassMethods
+  class_methods do
     def selections
       [["Not Defined!", "ND"]]
     end

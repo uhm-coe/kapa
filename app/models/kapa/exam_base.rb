@@ -138,7 +138,7 @@ module Kapa::ExamBase
     raw[(start_position - 1 + shift)..(end_position - 1 + shift)].to_s.strip
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       exams = Kapa::Exam.eager_load([:person, :exam_scores])
       exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?

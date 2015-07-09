@@ -27,7 +27,7 @@ module Kapa::AdvisingSessionBase
     return person_id == 0
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       advising_sessions = Kapa::AdvisingSession.eager_load([:person => :contact])
       advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?

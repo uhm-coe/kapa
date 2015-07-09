@@ -72,7 +72,7 @@ module Kapa::TransitionPointBase
     end
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       transition_points = Kapa::TransitionPoint.eager_load([:curriculum, {:curriculum => :program}, {:curriculum => :person}])
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?

@@ -31,7 +31,7 @@ module Kapa::EnrollmentBase
     practicum_assignments_select(assignment_type).collect { |a| a.name }.join(", ")
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       enrollments = Kapa::Enrollment.eager_load([{:curriculum => :person}, {:curriculum => :program}])
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?

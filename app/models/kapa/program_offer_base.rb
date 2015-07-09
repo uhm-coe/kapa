@@ -20,7 +20,7 @@ module Kapa::ProgramOfferBase
     self.available_major = @available_majors ? @available_majors.join(",") : ""
   end
 
-  module ClassMethods
+  class_methods do
     def selections(options = {})
       options[:value] = :distribution if options[:value].nil?
       program_offers = where(:active => true)

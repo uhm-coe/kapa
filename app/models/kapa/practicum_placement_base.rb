@@ -23,7 +23,7 @@ module Kapa::PracticumPlacementBase
     return Kapa::Term.find(term_id).description
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       placements = Kapa::PracticumPlacement.eager_load([:person, :practicum_site])
       placements = placements.where("practicum_placements.term_id" => filter.term_id) if filter.term_id.present?

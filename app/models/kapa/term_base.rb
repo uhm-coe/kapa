@@ -13,7 +13,7 @@ module Kapa::TermBase
     self.id = self.code.to_i if self.code =~ /\A[-+]?[0-9]+\z/
   end
 
-  module ClassMethods
+  class_methods do
 
     def selections(options = {})
       selections = []
@@ -46,11 +46,7 @@ module Kapa::TermBase
     end
 
     def search(filter, options = {})
-      # To return an ActiveRecord::Relation, use the following:
-      #   For Rails 4.1 and above: Kapa::Term.all
-      #   For Rails 4.0: Kapa::Term.where(nil)
-      #   For Rails 3.x: Kapa::Term.scoped
-      terms = Kapa::Term.scoped
+      terms = Kapa::Term.all
       terms = terms.where("id" => filter.term_id) if filter.term_id.present?
       terms = terms.where("start_date >= :start_date", {:start_date => filter.start_date}) if filter.start_date.present?
       terms = terms.where("end_date <= :end_date", {:end_date => filter.end_date}) if filter.end_date.present?

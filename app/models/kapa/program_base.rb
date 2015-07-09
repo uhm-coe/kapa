@@ -29,7 +29,7 @@ module Kapa::ProgramBase
     return Kapa::ApplicationProperty.lookup_description(:degree, degree)
   end
 
-  module ClassMethods
+  class_methods do
     def selections(options = {})
       options[:value] = :code if options[:value].nil?
       programs = where(:active => true)
@@ -45,7 +45,7 @@ module Kapa::ProgramBase
     end
 
     def search(filter, options = {})
-      programs = Kapa::Program.scoped
+      programs = Kapa::Program.all
       programs = programs.depts_scope(filter.dept) if filter.dept.present?
       programs = programs.where("programs.active" => filter.active) if filter.active.present?
       return programs

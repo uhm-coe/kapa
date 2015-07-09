@@ -1,7 +1,7 @@
 module Kapa::DirectoryServiceBase
   extend ActiveSupport::Concern
 
-  module ClassMethods
+  class_methods do
     def is_defined?
       Rails.configuration.ldap.present?
     end

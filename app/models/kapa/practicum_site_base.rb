@@ -19,7 +19,7 @@ module Kapa::PracticumSiteBase
     end
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       sites = Kapa::PracticumSite.eager_load([:practicum_placements])
       sites = sites.column_matches(:name => filter.name) if filter.name.present?

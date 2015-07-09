@@ -6,7 +6,7 @@ module Kapa::UserTimestampBase
     belongs_to :user
   end # included
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       user_timestamps = Kapa::UserTimestamp.eager_load([:user])
       user_timestamps = user_timestamps.where("date(convert_tz(created_at, '+00:00', '-10:00')) >= ?", filter.date_start) if filter.date_start.present?

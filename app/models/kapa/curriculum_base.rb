@@ -70,7 +70,7 @@ module Kapa::CurriculumBase
     return texts.join("/")
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options ={})
       curriculums = Kapa::Curriculum.eager_load([:transition_points, :program, :person]) #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?

@@ -113,7 +113,7 @@ module Kapa::PersonBase
     end
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       if filter.blank?
         return []

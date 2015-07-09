@@ -28,7 +28,7 @@ module Kapa::FileBase
     self.updated_at
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       files = Kapa::File.eager_load([:person])
       files = files.where("files.type" => filter.type.to_s) if filter.type.present?

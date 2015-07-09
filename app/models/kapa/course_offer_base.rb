@@ -50,7 +50,7 @@ module Kapa::CourseOfferBase
     end
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       course_offers = Kapa::CourseOff.eager_loades([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?

@@ -37,7 +37,7 @@ module Kapa::FormBase
     end
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       forms = Kapa::Form.eager_load([:person])
       forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?

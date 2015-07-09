@@ -7,7 +7,7 @@ module Kapa::ApplicationPropertyBase
     validates_presence_of :name, :code
   end # included
 
-  module ClassMethods
+  class_methods do
     @@description_cache = HashWithIndifferentAccess.new
     @@description_detail_cache = HashWithIndifferentAccess.new
     @@category_cache = HashWithIndifferentAccess.new
@@ -63,7 +63,7 @@ module Kapa::ApplicationPropertyBase
     end
 
     def search(filter, options = {})
-      application_properties = Kapa::ApplicationProperty.scoped
+      application_properties = Kapa::ApplicationProperty.all
       if filter.name.present?
         # TODO: A workaround until we remove :academic_period from properties entirely.  (Remove this later.)
         #   Without this conversion to "academic_period", an error on admin/properties/index view would be thrown

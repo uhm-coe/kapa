@@ -6,7 +6,7 @@ module Kapa::AssessmentScoreBase
     belongs_to :assessment_scorable, :polymorphic => true
   end # included
 
-  module ClassMethods
+  class_methods do
     def table_for(assessment_rubric, assessment_scorable_type, assessment_scorable_id)
       table = ActiveSupport::OrderedHash.new
       #initialize table first

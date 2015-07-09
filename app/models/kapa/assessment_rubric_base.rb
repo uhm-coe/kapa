@@ -25,7 +25,7 @@ module Kapa::AssessmentRubricBase
     "#{Kapa::Term.find(self.start_term_id).description} - #{Kapa::Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
   end
 
-  module ClassMethods
+  class_methods do
     def search(filter, options = {})
       assessment_rubrics = Kapa::AssessmentRubric.eager_load([:assessment_criterions])
       assessment_rubrics = assessment_rubrics.column_matches(:title => filter.title) if filter.title.present?
