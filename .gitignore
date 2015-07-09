@@ -7,6 +7,7 @@ test/dummy/public/assets/*
 
 #Do not commit the secret file!
 test/dummy/config/secrets.yml
+test/dummy/config/*.yml
 
 #Generic files to ignore
 *~
