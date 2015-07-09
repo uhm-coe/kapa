@@ -1,4 +1,4 @@
-module Kapa::Main::BaseControllerBase
+module Kapa::Main::SessionControllerBase
   extend ActiveSupport::Concern
 
   def welcome

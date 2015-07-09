@@ -1,3 +1,3 @@
-class Kapa::Admin::CriterionsController < Kapa::Admin::BaseController
+class Kapa::Admin::CriterionsController < Kapa::KapaController
   include Kapa::Admin::CriterionsControllerBase
 end

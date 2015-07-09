@@ -1,3 +1,3 @@
-class Kapa::Document::FormsController < Kapa::Document::BaseController
+class Kapa::Document::FormsController < Kapa::KapaController
   include Kapa::Document::FormsControllerBase
 end

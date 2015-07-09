@@ -1,3 +1,3 @@
-class Kapa::Admin::PropertiesController < Kapa::Admin::BaseController
+class Kapa::Admin::PropertiesController < Kapa::KapaController
   include Kapa::Admin::PropertiesControllerBase
 end

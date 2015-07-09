@@ -1,3 +1,3 @@
-class Kapa::User < Kapa::KapaBaseModel
+class Kapa::User < Kapa::KapaModel
   include Kapa::UserBase
 end

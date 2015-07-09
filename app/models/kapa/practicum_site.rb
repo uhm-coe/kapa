@@ -1,3 +1,3 @@
-class Kapa::PracticumSite < Kapa::KapaBaseModel
+class Kapa::PracticumSite < Kapa::KapaModel
   include Kapa::PracticumSiteBase
 end

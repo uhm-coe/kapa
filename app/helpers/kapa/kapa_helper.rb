@@ -1,5 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
-module Kapa::KapaBaseHelper
+module Kapa::KapaHelper
 
   def model_select(object_name, method, options = {}, html_options = {})
     model_class = options[:model_class]

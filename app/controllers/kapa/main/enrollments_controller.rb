@@ -1,3 +1,3 @@
-class Kapa::Main::EnrollmentsController < Kapa::Main::BaseController
+class Kapa::Main::EnrollmentsController < Kapa::KapaController
   include Kapa::Main::EnrollmentsControllerBase
 end

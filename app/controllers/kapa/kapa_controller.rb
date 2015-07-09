@@ -1,5 +1,5 @@
 # Filters added to this controller will be run for all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
-class Kapa::KapaBaseController < ActionController::Base
-  include Kapa::KapaBaseControllerBase
+class Kapa::KapaController < ActionController::Base
+  include Kapa::KapaControllerBase
 end

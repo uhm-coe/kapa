@@ -1,3 +1,3 @@
-class Kapa::Main::TransitionActionsController < Kapa::Main::BaseController
+class Kapa::Main::TransitionActionsController < Kapa::KapaController
   include Kapa::Main::TransitionActionsControllerBase
 end

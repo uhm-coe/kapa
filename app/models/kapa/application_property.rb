@@ -1,3 +1,3 @@
-class Kapa::ApplicationProperty < Kapa::KapaBaseModel
+class Kapa::ApplicationProperty < Kapa::KapaModel
   include Kapa::ApplicationPropertyBase
 end

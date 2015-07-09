@@ -1,3 +1,3 @@
-class Kapa::Main::PersonsController < Kapa::Main::BaseController
+class Kapa::Main::PersonsController < Kapa::KapaController
   include Kapa::Main::PersonsControllerBase
 end

@@ -13,10 +13,10 @@ Rails.application.routes.draw do
 
   namespace :kapa do
 
-    root :to => 'main/base#welcome', :as => :root
-    match '/login' => 'main/base#login', :as => :login, :via => [:get, :post]
-    match '/logout' => 'main/base#logout', :as => :logout, :via => [:get, :post]
-    match '/error' => 'main/base#error', :as => :error, :via => [:get, :post]
+    root :to => 'main/session#welcome', :as => :root
+    match '/login' => 'main/session#login', :as => :login, :via => [:get, :post]
+    match '/logout' => 'main/session#logout', :as => :logout, :via => [:get, :post]
+    match '/error' => 'main/session#error', :as => :error, :via => [:get, :post]
 
     namespace :main do
       get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup

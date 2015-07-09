@@ -1,3 +1,3 @@
-class Kapa::Course::RegistrationsController < Kapa::Course::BaseController
+class Kapa::Course::RegistrationsController < Kapa::KapaController
   include Kapa::Course::RegistrationsControllerBase
 end

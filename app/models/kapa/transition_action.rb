@@ -1,3 +1,3 @@
-class Kapa::TransitionAction < Kapa::KapaBaseModel
+class Kapa::TransitionAction < Kapa::KapaModel
   include Kapa::TransitionActionBase
 end

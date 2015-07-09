@@ -1,3 +1,3 @@
-class Kapa::AssessmentScore < Kapa::KapaBaseModel
+class Kapa::AssessmentScore < Kapa::KapaModel
   include Kapa::AssessmentScoreBase
 end

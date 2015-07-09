@@ -1,4 +1,4 @@
-module Kapa::KapaBaseModelBase
+module Kapa::KapaModelBase
   extend ActiveSupport::Concern
 
   included do

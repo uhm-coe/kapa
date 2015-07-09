@@ -1,3 +1,3 @@
-class Kapa::Form < Kapa::KapaBaseModel
+class Kapa::Form < Kapa::KapaModel
   include Kapa::FormBase
 end

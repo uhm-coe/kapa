@@ -1,3 +1,3 @@
-class Kapa::Admin::TermsController < Kapa::Admin::BaseController
+class Kapa::Admin::TermsController < Kapa::KapaController
   include Kapa::Admin::TermsControllerBase
 end

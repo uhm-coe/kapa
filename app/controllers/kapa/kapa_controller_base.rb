@@ -1,4 +1,4 @@
-module Kapa::KapaBaseControllerBase
+module Kapa::KapaControllerBase
   extend ActiveSupport::Concern
 
   included do
@@ -124,7 +124,16 @@ module Kapa::KapaBaseControllerBase
   end
 
   def filter_defaults
-    {}
+    {:key => "",
+     :type => :admission,
+     :active => 1,
+     :name => :term_id,
+     :date_start => Date.today,
+     :date_end => Date.today,
+     :term_id => Kapa::Term.current_term.id,
+     :start_term_id => Kapa::Term.current_term.id,
+     :end_term_id => Kapa::Term.current_term.id,
+     :per_page => Rails.configuration.items_per_page}
   end
 
   def menu_items(name, options = {})

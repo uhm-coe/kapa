@@ -1,3 +1,3 @@
-class Kapa::Admin::ProgramsController < Kapa::Admin::BaseController
+class Kapa::Admin::ProgramsController < Kapa::KapaController
   include Kapa::Admin::ProgramsControllerBase
 end

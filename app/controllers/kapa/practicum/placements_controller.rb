@@ -1,3 +1,3 @@
-class Kapa::Practicum::PlacementsController < Kapa::Practicum::BaseController
+class Kapa::Practicum::PlacementsController < Kapa::KapaController
   include Kapa::Practicum::PlacementsControllerBase
 end

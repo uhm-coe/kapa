@@ -1,3 +1,3 @@
-class Kapa::Dataset < Kapa::KapaBaseModel
+class Kapa::Dataset < Kapa::KapaModel
   include Kapa::DatasetBase
 end

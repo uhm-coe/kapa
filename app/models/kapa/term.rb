@@ -1,3 +1,3 @@
-class Kapa::Term < Kapa::KapaBaseModel
+class Kapa::Term < Kapa::KapaModel
   include Kapa::TermBase
 end
