@@ -32,7 +32,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Transition Points/<%= Kapa::ApplicationProperty.lookup_description(:transition_point, @filter.type) %>
+  <h3>Transition Points/<%= Kapa::Property.lookup_description(:transition_point, @filter.type) %>
     (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">

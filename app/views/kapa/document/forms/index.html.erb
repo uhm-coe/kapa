@@ -22,7 +22,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Forms/<%= Kapa::ApplicationProperty.lookup_description(:form, @filter.type) %>
+  <h3>Forms/<%= Kapa::Property.lookup_description(:form, @filter.type) %>
     (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">

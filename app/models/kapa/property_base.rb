@@ -1,4 +1,4 @@
-module Kapa::ApplicationPropertyBase
+module Kapa::PropertyBase
   extend ActiveSupport::Concern
 
   included do
@@ -8,17 +8,17 @@ module Kapa::ApplicationPropertyBase
   end
 
   class_methods do
-    @@description_cache = HashWithIndifferentAccess.new
-    @@description_detail_cache = HashWithIndifferentAccess.new
-    @@category_cache = HashWithIndifferentAccess.new
+    @@description_cache = ActiveSupport::OrderedHash.new
+    @@description_detail_cache = ActiveSupport::OrderedHash.new
+    @@category_cache = ActiveSupport::OrderedHash.new
 
     def refresh_cache
       @@description_cache.clear
-      Kapa::ApplicationProperty.all.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
+      Kapa::Property.all.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
       @@description_detail_cache.clear
-      Kapa::ApplicationProperty.all.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
+      Kapa::Property.all.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
       @@category_cache.clear
-      Kapa::ApplicationProperty.all.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
+      Kapa::Property.all.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
     end
 
     def selections(options = {})
@@ -63,7 +63,7 @@ module Kapa::ApplicationPropertyBase
     end
 
     def search(filter, options = {})
-      application_properties = Kapa::ApplicationProperty.all
+      application_properties = Kapa::Property.all
       application_properties = application_properties.where("name" => filter.name)  if filter.name.present?
       application_properties = application_properties.where("active" => filter.active) if filter.active.present?
       return application_properties

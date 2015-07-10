@@ -127,7 +127,7 @@ module Kapa::UserBase
       property_name = options[:property][:name]
       property_value = options[:property][:value]
       #@available_keys is a cache to eliminate duplicate query on single page.
-      @available_keys[property_name] = Kapa::ApplicationProperty.keys(property_name, :depts => self.depts) if @available_keys[property_name].nil?
+      @available_keys[property_name] = Kapa::Property.keys(property_name, :depts => self.depts) if @available_keys[property_name].nil?
       return false unless @available_keys[property_name].include?(property_value)
     end
 

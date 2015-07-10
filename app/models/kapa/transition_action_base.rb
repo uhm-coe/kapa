@@ -15,10 +15,10 @@ module Kapa::TransitionActionBase
   end
 
   def action_desc
-    Kapa::ApplicationProperty.lookup_description("#{self.type}_action", action)
+    Kapa::Property.lookup_description("#{self.type}_action", action)
   end
 
   def admissible?
-    Kapa::ApplicationProperty.lookup_category("#{self.transition_point.type}_action", self.action) == "admissible"
+    Kapa::Property.lookup_category("#{self.transition_point.type}_action", self.action) == "admissible"
   end
 end

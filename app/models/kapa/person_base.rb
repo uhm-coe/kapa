@@ -45,7 +45,7 @@ module Kapa::PersonBase
   end
 
   def ethnicity_desc
-    return Kapa::ApplicationProperty.lookup_description("ethnicity", self.ethnicity)
+    return Kapa::Property.lookup_description("ethnicity", self.ethnicity)
   end
 
   def verified?

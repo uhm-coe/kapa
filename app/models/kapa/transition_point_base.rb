@@ -37,27 +37,27 @@ module Kapa::TransitionPointBase
   end
 
   def category_desc
-    return Kapa::ApplicationProperty.lookup_description("#{type}_category", category)
+    return Kapa::Property.lookup_description("#{type}_category", category)
   end
 
   def priority_desc
-    return Kapa::ApplicationProperty.lookup_description("#{type}_priority", priority)
+    return Kapa::Property.lookup_description("#{type}_priority", priority)
   end
 
   def status_desc
-    return Kapa::ApplicationProperty.lookup_description("#{type}_status", status)
+    return Kapa::Property.lookup_description("#{type}_status", status)
   end
 
   def type_desc
-    return Kapa::ApplicationProperty.lookup_description(:transition_point, type)
+    return Kapa::Property.lookup_description(:transition_point, type)
   end
 
   def entrance?
-    Kapa::ApplicationProperty.lookup_category(:transition_point, type) == "entrance"
+    Kapa::Property.lookup_category(:transition_point, type) == "entrance"
   end
 
   def exit?
-    Kapa::ApplicationProperty.lookup_category(:transition_point, type) == "exit"
+    Kapa::Property.lookup_category(:transition_point, type) == "exit"
   end
 
   def assessment_rubrics

@@ -14,7 +14,7 @@ module Kapa::FormBase
   end
 
   def type_desc
-    return Kapa::ApplicationProperty.lookup_description(:form, type)
+    return Kapa::Property.lookup_description(:form, type)
   end
 
   def lock?

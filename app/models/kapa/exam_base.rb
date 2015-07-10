@@ -22,7 +22,7 @@ module Kapa::ExamBase
   end
 
   def type_desc
-    return Kapa::ApplicationProperty.lookup_description(:exam_subject, type)
+    return Kapa::Property.lookup_description(:exam_subject, type)
   end
 
   def name

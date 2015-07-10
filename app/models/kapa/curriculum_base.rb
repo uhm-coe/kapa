@@ -35,23 +35,23 @@ module Kapa::CurriculumBase
   end
 
   def track_desc
-    return Kapa::ApplicationProperty.lookup_description(:track, track)
+    return Kapa::Property.lookup_description(:track, track)
   end
 
   def major_primary_desc
-    return Kapa::ApplicationProperty.lookup_description(:major, major_primary)
+    return Kapa::Property.lookup_description(:major, major_primary)
   end
 
   def major_secondary_desc
-    return Kapa::ApplicationProperty.lookup_description(:major, major_secondary)
+    return Kapa::Property.lookup_description(:major, major_secondary)
   end
 
   def distribution_desc
-    return Kapa::ApplicationProperty.lookup_description(:distribution, distribution)
+    return Kapa::Property.lookup_description(:distribution, distribution)
   end
 
   def location_desc
-    return Kapa::ApplicationProperty.lookup_description(:location, location)
+    return Kapa::Property.lookup_description(:location, location)
   end
 
   def code

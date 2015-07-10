@@ -26,7 +26,7 @@ module Kapa::ProgramBase
   end
 
   def degree_desc
-    return Kapa::ApplicationProperty.lookup_description(:degree, degree)
+    return Kapa::Property.lookup_description(:degree, degree)
   end
 
   class_methods do

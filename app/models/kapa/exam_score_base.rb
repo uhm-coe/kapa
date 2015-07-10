@@ -7,7 +7,7 @@ module Kapa::ExamScoreBase
   end
 
   def subject_desc
-    return Kapa::ApplicationProperty.lookup_description("exam_subject", subject)
+    return Kapa::Property.lookup_description("exam_subject", subject)
   end
 
   def subscores
