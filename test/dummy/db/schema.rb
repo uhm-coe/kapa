@@ -11,16 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508032058) do
-
-  create_table "advising_actions", force: :cascade do |t|
-    t.integer "advising_id", limit: 4,     null: false
-    t.date    "action_date"
-    t.string  "action",      limit: 255
-    t.string  "specify",     limit: 255
-    t.text    "comment",     limit: 65535
-    t.string  "handled_by",  limit: 255
-  end
+ActiveRecord::Schema.define(version: 20150705000000) do
 
   create_table "advising_sessions", force: :cascade do |t|
     t.integer  "person_id",                limit: 4,     null: false
@@ -326,24 +317,6 @@ ActiveRecord::Schema.define(version: 20150508032058) do
   add_index "forms", ["term_id"], name: "index_forms_on_term_id", using: :btree
   add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
-  create_table "mercury_pages", force: :cascade do |t|
-    t.string   "name",       limit: 255,   null: false
-    t.text     "contents",   limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "mercury_pages", ["name"], name: "index_mercury_pages_on_name", unique: true, using: :btree
-
-  create_table "pages", force: :cascade do |t|
-    t.string   "name",       limit: 255,   null: false
-    t.text     "contents",   limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pages", ["name"], name: "index_pages_on_name", unique: true, using: :btree
-
   create_table "persons", force: :cascade do |t|
     t.string   "ssn",            limit: 255
     t.string   "id_number",      limit: 255
@@ -374,37 +347,6 @@ ActiveRecord::Schema.define(version: 20150508032058) do
   add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
   add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
-  create_table "practicum_assignments_old", force: :cascade do |t|
-    t.integer  "practicum_placement_id",   limit: 4
-    t.integer  "practicum_school_id",      limit: 4
-    t.string   "assignment_type",          limit: 255
-    t.integer  "person_id",                limit: 4
-    t.string   "name",                     limit: 255
-    t.string   "content_area",             limit: 255
-    t.string   "courses",                  limit: 255
-    t.integer  "payment",                  limit: 4
-    t.text     "yml",                      limit: 65535
-    t.text     "xml",                      limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "supervisor_primary_uid",   limit: 255
-    t.string   "supervisor_secondary_uid", limit: 255
-    t.text     "note",                     limit: 65535
-    t.integer  "user_primary_id",          limit: 4
-    t.integer  "user_secondary_id",        limit: 4
-    t.string   "grade",                    limit: 255
-  end
-
-  add_index "practicum_assignments_old", ["assignment_type"], name: "index_practicum_assignments_old_on_assignment_type", using: :btree
-  add_index "practicum_assignments_old", ["name"], name: "index_practicum_assignments_old_on_name", using: :btree
-  add_index "practicum_assignments_old", ["person_id"], name: "index_practicum_assignments_old_on_person_id", using: :btree
-  add_index "practicum_assignments_old", ["practicum_placement_id"], name: "index_practicum_assignments_old_on_practicum_placement_id", using: :btree
-  add_index "practicum_assignments_old", ["practicum_school_id"], name: "index_practicum_assignments_old_on_practicum_school_id", using: :btree
-  add_index "practicum_assignments_old", ["supervisor_primary_uid"], name: "index_practicum_assignments_old_on_supervisor_primary_uid", using: :btree
-  add_index "practicum_assignments_old", ["supervisor_secondary_uid"], name: "index_practicum_assignments_old_on_supervisor_secondary_uid", using: :btree
-  add_index "practicum_assignments_old", ["user_primary_id"], name: "index_practicum_assignments_old_on_user_primary_id", using: :btree
-  add_index "practicum_assignments_old", ["user_secondary_id"], name: "index_practicum_assignments_old_on_user_secondary_id", using: :btree
-
   create_table "practicum_placements", force: :cascade do |t|
     t.integer  "person_id",         limit: 4,     default: 0, null: false
     t.integer  "term_id",           limit: 4,     default: 0, null: false
@@ -431,77 +373,6 @@ ActiveRecord::Schema.define(version: 20150508032058) do
   add_index "practicum_placements", ["term_id"], name: "index_practicum_placements_on_term_id", using: :btree
   add_index "practicum_placements", ["user_primary_id"], name: "index_practicum_placements_on_user_primary_id", using: :btree
   add_index "practicum_placements", ["user_secondary_id"], name: "index_practicum_placements_on_user_secondary_id", using: :btree
-
-  create_table "practicum_placements_old", force: :cascade do |t|
-    t.integer  "practicum_profile_id", limit: 4
-    t.string   "academic_period",      limit: 255
-    t.string   "status",               limit: 255
-    t.string   "uid",                  limit: 255
-    t.string   "sequence",             limit: 255
-    t.string   "category",             limit: 255
-    t.string   "mentor_type",          limit: 255
-    t.text     "note",                 limit: 65535
-    t.string   "dept",                 limit: 255
-    t.text     "yml",                  limit: 65535
-    t.text     "xml",                  limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_primary_id",      limit: 4
-    t.integer  "user_secondary_id",    limit: 4
-    t.integer  "term_id",              limit: 4
-  end
-
-  add_index "practicum_placements_old", ["academic_period"], name: "index_practicum_placements_old_on_academic_period", using: :btree
-  add_index "practicum_placements_old", ["practicum_profile_id"], name: "index_practicum_placements_old_on_practicum_profile_id", using: :btree
-  add_index "practicum_placements_old", ["term_id"], name: "index_practicum_placements_old_on_term_id", using: :btree
-  add_index "practicum_placements_old", ["user_primary_id"], name: "index_practicum_placements_old_on_user_primary_id", using: :btree
-  add_index "practicum_placements_old", ["user_secondary_id"], name: "index_practicum_placements_old_on_user_secondary_id", using: :btree
-
-  create_table "practicum_profiles_old", force: :cascade do |t|
-    t.integer  "person_id",                  limit: 4
-    t.integer  "curriculum_id",              limit: 4
-    t.string   "bgc",                        limit: 255
-    t.date     "bgc_date"
-    t.string   "insurance",                  limit: 255
-    t.string   "insurance_effective_period", limit: 255
-    t.text     "note",                       limit: 65535
-    t.string   "dept",                       limit: 255
-    t.text     "yml",                        limit: 65535
-    t.text     "xml",                        limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "coordinator_primary_uid",    limit: 255
-    t.string   "coordinator_secondary_uid",  limit: 255
-    t.string   "group",                      limit: 255
-    t.string   "cohort",                     limit: 255
-  end
-
-  add_index "practicum_profiles_old", ["coordinator_primary_uid"], name: "index_practicum_profiles_old_on_coordinator_primary_uid", using: :btree
-  add_index "practicum_profiles_old", ["coordinator_secondary_uid"], name: "index_practicum_profiles_old_on_coordinator_secondary_uid", using: :btree
-  add_index "practicum_profiles_old", ["curriculum_id"], name: "index_practicum_profiles_old_on_curriculum_id", using: :btree
-  add_index "practicum_profiles_old", ["group"], name: "index_practicum_profiles_old_on_group", using: :btree
-  add_index "practicum_profiles_old", ["person_id"], name: "index_practicum_profiles_old_on_person_id", using: :btree
-
-  create_table "practicum_schools_old", force: :cascade do |t|
-    t.string   "code",        limit: 255
-    t.string   "island",      limit: 255
-    t.string   "district",    limit: 255
-    t.string   "grade_from",  limit: 255
-    t.string   "grade_to",    limit: 255
-    t.string   "school_type", limit: 255
-    t.string   "name",        limit: 255
-    t.string   "name_short",  limit: 255
-    t.string   "area",        limit: 255
-    t.string   "area_group",  limit: 255
-    t.string   "url_home",    limit: 255
-    t.string   "status",      limit: 255
-    t.text     "yml",         limit: 65535
-    t.text     "xml",         limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "practicum_schools_old", ["code"], name: "index_practicum_schools_old_on_code", using: :btree
 
   create_table "practicum_sites", force: :cascade do |t|
     t.string   "code",       limit: 255
@@ -587,70 +458,6 @@ ActiveRecord::Schema.define(version: 20150508032058) do
     t.text     "xml",               limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "scholarship_applications", force: :cascade do |t|
-    t.integer "person_id",                 limit: 4,                           null: false
-    t.string  "academic_period",           limit: 255,                         null: false
-    t.string  "ethnicity",                 limit: 255
-    t.string  "ethnicity_other",           limit: 255
-    t.string  "citizenship_status",        limit: 255
-    t.string  "citizenship_country",       limit: 255
-    t.string  "residency",                 limit: 255
-    t.string  "highschool_graduated",      limit: 255
-    t.string  "previous_college",          limit: 255
-    t.string  "attending_status",          limit: 255
-    t.decimal "cum_gpa",                               precision: 6, scale: 3
-    t.decimal "credits_coe",                           precision: 6, scale: 3
-    t.string  "level",                     limit: 255
-    t.string  "degree",                    limit: 255
-    t.string  "major_primary",             limit: 255
-    t.string  "major_secondary",           limit: 255
-    t.string  "previous_major",            limit: 255
-    t.string  "cohort",                    limit: 255
-    t.string  "expected_graduation",       limit: 255
-    t.string  "expected_graduation_other", limit: 255
-    t.string  "subject_area",              limit: 255
-    t.string  "scholarship_agreeement",    limit: 255
-    t.string  "review_agreeement",         limit: 255
-    t.string  "final_aggreement",          limit: 255
-    t.date    "submit_date"
-    t.date    "rec_letter_recieved1"
-    t.date    "rec_letter_recieved2"
-    t.decimal "evaluation_score",                      precision: 6, scale: 3
-    t.string  "application_status",        limit: 255
-    t.string  "other_objective",           limit: 255
-  end
-
-  create_table "scholarship_offers", force: :cascade do |t|
-    t.integer "scholarship_id",       limit: 4,   null: false
-    t.string  "academic_period",      limit: 255
-    t.integer "amount",               limit: 4
-    t.integer "default_award_amount", limit: 4
-  end
-
-  create_table "scholarship_qualifications", force: :cascade do |t|
-    t.integer "scholarship_offer_id",       limit: 4,   null: false
-    t.integer "scholarship_application_id", limit: 4,   null: false
-    t.string  "verified",                   limit: 255
-    t.date    "award_date"
-    t.integer "award_amount",               limit: 4
-  end
-
-  create_table "scholarships", force: :cascade do |t|
-    t.string  "code",                 limit: 255
-    t.string  "name",                 limit: 255
-    t.text    "purpose",              limit: 65535
-    t.text    "eligibility",          limit: 65535
-    t.text    "eligibility_short",    limit: 65535
-    t.text    "criteria",             limit: 65535
-    t.decimal "cum_gpa",                            precision: 6, scale: 3,                null: false
-    t.string  "attending_status",     limit: 255,                                          null: false
-    t.string  "level",                limit: 255,                                          null: false
-    t.string  "highschool_graduated", limit: 255,                                          null: false
-    t.string  "major",                limit: 255,                                          null: false
-    t.string  "residency",            limit: 255,                                          null: false
-    t.boolean "active",               limit: 1,                             default: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -766,17 +573,5 @@ ActiveRecord::Schema.define(version: 20150508032058) do
 
   add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
-
-  create_table "validations", force: :cascade do |t|
-    t.string  "name",              limit: 255
-    t.string  "code",              limit: 255
-    t.string  "description",       limit: 255
-    t.string  "description_short", limit: 255
-    t.string  "category",          limit: 255
-    t.string  "module",            limit: 255
-    t.integer "sequence",          limit: 4
-    t.boolean "active",            limit: 1,   default: true
-    t.string  "dept",              limit: 255
-  end
 
 end
