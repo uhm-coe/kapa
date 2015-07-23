@@ -24,7 +24,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :practicum, :delegate => :export %>
+      <%=link_to "Download", {:action => :export}, :class => "btn btn-default" %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
@@ -42,7 +42,7 @@
       <% for practicum_placement in @practicum_placements %>
         <tr>
           <td><%=practicum_placement.person.id_number %></td>
-          <td><%=link_to_if @current_user.manage?(:main, :delegate => :search), abbr(practicum_placement.person.full_name), kapa_main_person_path(:id => practicum_placement.person, :focus => :practicum)%></td>
+          <td><%=link_to_if @current_user.read?(:kapa_main_persons), abbr(practicum_placement.person.full_name), kapa_main_person_path(:id => practicum_placement.person, :focus => :practicum)%></td>
           <td><%=h practicum_placement.mentor.full_name if practicum_placement.mentor %></td>
           <td><%=link_to practicum_placement.practicum_site.name_short, kapa_practicum_site_path(:id => practicum_placement.practicum_site) if practicum_placement.practicum_site %></td>
           <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement), :class => "btn btn-default btn-xs" %></td>

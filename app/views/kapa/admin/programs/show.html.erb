@@ -26,7 +26,7 @@
       <div id="program_profile_tab" class="tab-pane">
         <%= bootstrap_form_for :program, :url => kapa_admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
           <%= render :partial => "/kapa/admin/program_form" %>
-          <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_path(:id => @program)} if @current_user.manage? %>
+          <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_path(:id => @program)} if @current_user.write? %>
         <% end %>
       </div>
 
@@ -44,7 +44,7 @@
                 <div class="panel-body">
                   <%= bootstrap_form_for :program_offer, :url => kapa_admin_program_offer_path(:id => @program_offer, :focus => :offers, :offer_panel => program_offer.id), :html => {:method => :put} do |f| %>
                     <%= render :partial => "/kapa/admin/program_offer_form" %>
-                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_offer_path(:id => @program_offer, :focus => :offers)} if @current_user.manage? %>
+                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_offer_path(:id => @program_offer, :focus => :offers)} if @current_user.write? %>
                   <% end %>
                 </div>
               </div>
@@ -62,7 +62,7 @@
                 <% @program_offer = Kapa::ProgramOffer.new %>
                 <%= bootstrap_form_for :program_offer, :url => kapa_admin_program_offers_path(:id => @program, :focus => :offers) do |f| %>
                   <%= render :partial => "/kapa/admin/program_offer_form", :locals => {:f => f} %>
-                  <%= render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
+                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
                 <% end %>
               </div>
             </div>

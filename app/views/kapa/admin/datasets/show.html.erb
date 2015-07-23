@@ -56,7 +56,7 @@
                 <div class="panel-body">
                   <%= bootstrap_form_for :dataset, :url => kapa_admin_dataset_path(:id => @dataset, :parameter_id => parameter_id, :focus => :parameters), :html => {:method => :put} do |f| %>
                     <%= render :partial => "/kapa/admin/parameter_form" %>
-                    <%= render :partial => "/kapa/layouts/controls" if @current_user.manage?(:report) %>
+                    <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
                   <% end %>
                 </div>
               </div>
@@ -75,7 +75,7 @@
               <div class="panel-body">
                 <%= bootstrap_form_for :dataset, :url => kapa_admin_dataset_path(:id => @dataset, :focus => :parameters), :html => {:method => :put} do |f| %>
                   <%= render :partial => "/kapa/admin/parameter_form" %>
-                  <%= render :partial => "/kapa/layouts/controls" if @current_user.manage?(:report) %>
+                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
                 <% end %>
               </div>
             </div>

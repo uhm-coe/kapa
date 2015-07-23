@@ -13,7 +13,7 @@
   <%=render :partial => "/kapa/main/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-    <% if @current_user.read?(:main) %>
+    <% if @current_user.read?(:kapa_main_curriculums) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -56,7 +56,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:advising) %>
+    <% if @current_user.read?(:kapa_advising_sessions) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -91,7 +91,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:course) %>
+    <% if @current_user.read?(:kapa_course_registrations) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -126,7 +126,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:practicum) %>
+    <% if @current_user.read?(:kapa_practicum_placements) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">

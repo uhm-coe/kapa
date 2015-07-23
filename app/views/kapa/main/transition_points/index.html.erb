@@ -37,7 +37,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :main, :delegate => :export %>
+      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
@@ -58,7 +58,7 @@
     <% for transition_point in @transition_points %>
       <tr>
         <td><%= transition_point.curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.manage?(:main, :delegate => :search), abbr(transition_point.curriculum.person.full_name), kapa_main_person_path(:id => transition_point.curriculum.person_id) %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_main_persons), abbr(transition_point.curriculum.person.full_name), kapa_main_person_path(:id => transition_point.curriculum.person_id) %></td>
         <td><%= abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
         <td><%= h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
         <td><%= h transition_point.status_desc %></td>

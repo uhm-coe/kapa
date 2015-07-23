@@ -112,13 +112,13 @@
   <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
     <%= render :partial => "/kapa/main/person_form" %>
   <% end %>
-<% end if @current_user.read? :main %>
+<% end if @current_user.read? :kapa_main_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
   <%= bootstrap_form_for :contact, :url => kapa_main_contact_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
     <%= render :partial => "/kapa/main/contact_form", :locals => {:object_name => :contact} %>
   <% end %>
-<% end if @current_user.read? :main %>
+<% end if @current_user.read? :kapa_main_contacts %>
 
 <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Documents"} do %>
   <div class="row">
@@ -127,7 +127,7 @@
     </div>
   </div>
   <%= render :partial => "/kapa/document/document_table" %>
-<% end if @current_user.read? :document %>
+<% end if @current_user.read? :kapa_document_files or @current_user.read? :kapa_document_forms or @current_user.read? :kapa_document_exams %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
   <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>

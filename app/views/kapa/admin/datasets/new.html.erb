@@ -7,7 +7,7 @@
 
   <%= bootstrap_form_for :dataset, :url => kapa_admin_datasets_path do |f| %>
     <%= render :partial => '/kapa/admin/dataset_form' %>
-    <%= render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
+    <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
   <% end %>
 
 <% end %>

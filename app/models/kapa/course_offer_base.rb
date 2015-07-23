@@ -62,7 +62,7 @@ module Kapa::CourseOfferBase
           # Do nothing
         when 2
           # This may not be correct:
-          course_offers = course_offers.where("concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => filter.user.depts) unless filter.user.manage? :course_offer
+          course_offers = course_offers.where("concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => filter.user.depts)
         # TODO: Implement the following condition using the where clause
         # f.append_property_condition "concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => @current_user.depts unless @current_user.manage? :course_offer
         when 1

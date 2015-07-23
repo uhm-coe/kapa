@@ -7,7 +7,7 @@ module Kapa::Admin::UsersControllerBase
 
   def show
     @user = Kapa::User.find params[:id]
-    @role = @user.deserialize(:role, :as => OpenStruct)
+    @permission = @user.deserialize(:permission, :as => OpenStruct)
     params[:focus] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
@@ -23,7 +23,7 @@ module Kapa::Admin::UsersControllerBase
   def update
     @user = Kapa::User.find params[:id]
     @user.attributes = params[:user] if params[:user]
-    @user.serialize(:role, params[:role]) if params[:role]
+    @user.serialize(:permission, params[:permission]) if params[:permission]
     if @user.save
       flash[:success] = "User was successfully updated."
     else

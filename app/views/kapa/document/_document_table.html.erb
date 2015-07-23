@@ -26,7 +26,7 @@
             <% end %>
             <%= link_to "Show", kapa_document_file_path(:id => d, :format => :file, :inline => true), :target => :blank, :class => "btn btn-default btn-xs" %>
           <% elsif d.is_a? Kapa::Form %>
-            <% if @current_user.write? :document, :dept => d.dept %>
+            <% if @current_user.write? :kapa_document_files %>
         <button type="button" id="edit_form" class="btn btn-default btn-xs" data-id="<%=d.id %>" data-toggle="modal" data-target="#edit_form_dialog">Edit</button>
             <% end %>
             <%= link_to "Show", kapa_document_form_path(:id => d), :target => :blank, :class => "btn btn-default btn-xs" %>
@@ -38,7 +38,7 @@
 </table>
 <div class="row">
   <div class="col-sm-12">
-    <% if @current_user.write? :document %>
+    <% if @current_user.write? :kapa_document_files %>
       <button type="button" id="upload_document" class="btn btn-default" data-toggle="modal" data-target="#document_dialog">Upload
         a file
       </button>

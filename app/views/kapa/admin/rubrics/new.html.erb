@@ -14,7 +14,7 @@
       <div id="rubric_profile_tab" class="tab-pane active">
         <%=bootstrap_form_for :assessment_rubric, :url => kapa_admin_rubrics_path, :remote => true do |f| %>
           <%=render :partial => "/kapa/admin/rubric_form", :locals => {:f => f} %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :rubric %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
     </div>

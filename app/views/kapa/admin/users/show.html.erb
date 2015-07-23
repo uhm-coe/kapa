@@ -9,6 +9,15 @@
   </script>
 <% end %>
 
+<% content_for(:dialog) do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
+    <%=bootstrap_form_for :permission, :url => kapa_admin_user_path(:id => @user, :focus => :role), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
+      <%=f.select "Role", [["All", "all"], ["Staff", "staff"], ["Faculty", "faculty"], ["Adviser", "adviser"]] %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/main/person_detail" %>
 
@@ -20,23 +29,25 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#role_tab" data-toggle="tab">Roles</a></li>
+      <li><a href="#role_tab" data-toggle="tab">Permissions</a></li>
       <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
-      <li><a href="#other_accounts_tab" data-toggle="tab">Associated Accounts</a></li>
+      <li><a href="#other_accounts_tab" data-toggle="tab">Other Accounts</a></li>
     </ul>
 
     <div class="tab-content">
       <div id="user_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :user, :url => kapa_admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/user_form", :locals => {:f => f} %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :user %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
 
       <div id="role_tab" class="tab-pane">
-        <%=bootstrap_form_for :user_roles, :url => kapa_admin_user_path(:id => @user, :focus => :role), :html => {:method => :put}  do |f| %>
+        <%=bootstrap_form_for :permission, :url => kapa_admin_user_path(:id => @user, :focus => :role), :html => {:method => :put}  do |f| %>
           <%=render :partial => "/kapa/admin/role_form", :locals => {:f => f} %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? :admin, :delegate => :user %>
+          <%= render :layout => "/kapa/layouts/controls" do %>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#apply_role_dialog">Role</button>
+          <% end if @current_user.write? %>
         <% end %>
       </div>
 

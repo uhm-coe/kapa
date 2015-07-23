@@ -29,7 +29,7 @@
   <% end if @forms %>
 
 </table>
-<p class="new right"><%= link_to "New form", "javascript:void(0);", :id => "open_form_dialog" if @current_user.write? :document %></p>
+<p class="new right"><%= link_to "New form", "javascript:void(0);", :id => "open_form_dialog" if @current_user.write? :kapa_document_forms %></p>
 
 <div id="form_dialog" class="form-dialog" title="New Form">
   <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :focus => "form", :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>

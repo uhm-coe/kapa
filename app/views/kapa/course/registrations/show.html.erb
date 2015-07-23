@@ -54,7 +54,7 @@
         <% end %>
         <%=bootstrap_form_for :assessment_score, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :remote => true, :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/course/assessment_form" %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.write?(:course) %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
     </div>

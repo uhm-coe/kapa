@@ -25,7 +25,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :course, :delegate => :export %>
+      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
@@ -38,9 +38,7 @@
       <th>Title</th>
       <th>Instructor</th>
       <th>Registration</th>
-      <% if @current_user.manage? :course, :delegate => :export %>
-        <th>Progress</th>
-      <% end %>
+      <th>Progress</th>
       <th></th>
     </tr>
     </thead>
@@ -52,9 +50,7 @@
         <td><%= h course_offer.title %></td>
         <td><%= h course_offer.instructor %></td>
         <td><%= h course_offer.course_registrations.length.to_i %></td>
-        <% if @current_user.manage? :course, :delegate => :export %>
-          <td><%#= number_to_percentage course_offer.progress, :precision => 2 %></td>
-        <% end %>
+        <td><%#= number_to_percentage course_offer.progress, :precision => 2 %></td>
         <td class="right"><%= link_to "Show", kapa_course_offer_path(:id => course_offer), :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

@@ -42,10 +42,10 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <% if @current_user.manage? :practicum, :delegate => :import %>
+      <% if @current_user.manage? %>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
       <% end %>
-      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" if @current_user.manage? :practicum, :delegate => :export %>
+      <%= link_to "Download", {:action => :export}, :class => "btn btn-default" %>
       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
     </div>
   </div>
@@ -66,7 +66,7 @@
     <% for enrollment in @enrollments %>
       <tr>
         <td><%= enrollment.curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.manage?(:main, :delegate => :search), abbr(enrollment.curriculum.person.full_name), kapa_main_person_path(:id => enrollment.curriculum.person_id, :focus => "practicum") %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_main_persons), abbr(enrollment.curriculum.person.full_name), kapa_main_person_path(:id => enrollment.curriculum.person_id, :focus => "practicum") %></td>
         <td><%= h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
         <td><%= h enrollment.curriculum.rsend(:last_transition_point, :type_desc) %></td>
         <td><%= h enrollment.curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>

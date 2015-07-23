@@ -13,4 +13,4 @@
     </tr>
   <% end %>
 </table>
-<p class="right new"><%= link_to "Lookup by name", kapa_document_exams_path(:action => :index, :filter => {:name => "#{@person.full_name}"}), :confirm => "Searching '#{@person.full_name}' on received score reports.\nPlease verify name and birth date before matching records." if @current_user.read?(:document) %></p>
+<p class="right new"><%= link_to "Lookup by name", kapa_document_exams_path(:action => :index, :filter => {:name => "#{@person.full_name}"}), :confirm => "Searching '#{@person.full_name}' on received score reports.\nPlease verify name and birth date before matching records." if @current_user.read?(:kapa_document_exams) %></p>

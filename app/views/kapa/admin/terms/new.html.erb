@@ -7,7 +7,7 @@
   <div>
     <%=bootstrap_form_for :term, :url => kapa_admin_terms_path, :remote => true do %>
       <%=render :partial => "/kapa/admin/term_form" %>
-      <%=render :partial => "/kapa/layouts/controls" if @current_user.manage? %>
+      <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
     <% end %>
   </div>
 <%end%>

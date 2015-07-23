@@ -6,11 +6,11 @@ module Kapa::KapaControllerBase
     protect_from_forgery
     before_filter :validate_login, :except => [:welcome, :login, :logout, :error]
     before_filter :check_read_permission, :except => [:welcome, :login, :logout, :error]
-    before_filter :check_write_permission, :only => [:new, :create, :update]
-    before_filter :check_manage_permission, :only => [:destroy, :export, :import, :search]
+    before_filter :check_write_permission, :only => [:new, :create, :update, :destroy]
+    before_filter :check_manage_permission, :only => [:export, :import]
     after_filter :put_timestamp
     helper :all
-    helper_method :url_for, :module_name, :menu_items
+    helper_method :url_for, :menu_items
   end
 
   def validate_login
@@ -27,22 +27,22 @@ module Kapa::KapaControllerBase
   end
 
   def check_read_permission
-    unless @current_user.read?(module_name)
-      flash[:danger] = "You do not have a permission to read on the #{module_name} module."
+    unless @current_user.read?(controller_name)
+      flash[:danger] = "You do not have a read permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
   end
 
   def check_write_permission
-    unless @current_user.write?(module_name, :delegate => params[:action])
-      flash[:danger] = "You do not have a permission to write records on the #{module_name} module."
+    unless @current_user.write?(controller_name)
+      flash[:danger] = "You do not have a write permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
   end
 
   def check_manage_permission
-    unless @current_user.write?(module_name, :delegate => params[:action])
-      flash[:danger] = "You do not have a permission to manage records on the #{module_name} module."
+    unless @current_user.write?(controller_name, :delegate => params[:action])
+      flash[:danger] = "You do not have a manage permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -109,12 +109,13 @@ module Kapa::KapaControllerBase
     return message
   end
 
-  def module_name
-    params[:controller].split("/").second
+  def controller_name
+    params[:controller].split("/").join("_")
   end
 
+
   def filter(options = {})
-    name = "filter_#{module_name}".to_sym
+    name = "filter_#{controller_name}".to_sym
     session[name] = filter_defaults if session[name].nil?
     session[name].update(params[:filter]) if params[:filter].present?
     session[name].update(options) if options.present?
@@ -140,30 +141,29 @@ module Kapa::KapaControllerBase
     items = []
     case name.to_s
       when "main"
-        items.push ["Search Person", kapa_main_persons_path] if @current_user.manage?(:main, :delegate => :search)
-        items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:main)
-        items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:main)
-        items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:main)
+        items.push ["Search Person", kapa_main_persons_path] if @current_user.read?(:kapa_main_persons)
+        items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:kapa_main_curriculums)
+        items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:kapa_main_transition_points)
+        items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:kapa_main_enrollments)
       when "document"
-        items.push ["Files", kapa_document_files_path] if @current_user.manage?(:document, :delegate => :file)
-        items.push ["Forms", kapa_document_forms_path] if @current_user.manage?(:document, :delegate => :form)
-        items.push ["Test Scores", kapa_document_exams_path] if @current_user.manage?(:document, :delegate => :exam)
-        items.push ["Reports", kapa_document_reports_path] if @current_user.manage?(:document, :delegate => :reports)
+        items.push ["Files", kapa_document_files_path] if @current_user.read?(:kapa_document_files)
+        items.push ["Forms", kapa_document_forms_path] if @current_user.read?(:kapa_document_forms)
+        items.push ["Test Scores", kapa_document_exams_path] if @current_user.read?(:kapa_document_exams)
+        items.push ["Reports", kapa_document_reports_path] if @current_user.read?(:kapa_document_reports)
       when "advising"
-        items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:advising)
+        items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
       when "course"
-        items.push ["Rosters", kapa_course_offers_path] if @current_user.read?(:course)
+        items.push ["Rosters", kapa_course_offers_path] if @current_user.read?(:kapa_course_offers)
       when "practicum"
-        items.push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:practicum)
-        items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:practicum)
+        items.push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
+        items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
       when "admin"
-        items.push ["Terms", kapa_admin_terms_path] if @current_user.manage?(:admin, :delegate => :term)
-        items.push ["Programs", kapa_admin_programs_path] if @current_user.manage?(:admin, :delegate => :program)
-        items.push ["Assessments", kapa_admin_rubrics_path] if @current_user.manage?(:admin, :delegate => :rubric)
-        items.push ["Datasets", kapa_admin_datasets_path] if @current_user.manage?(:admin)
-        items.push ["User Accounts", kapa_admin_users_path] if @current_user.manage?(:admin, :delegate => :user)
-#      items.push ["User Activities", kapa_admin_users_path(:action => :logs)]   if @current_user.manage?(:admin, :delegate => :user)
-        items.push ["System Properties", kapa_admin_properties_path] if @current_user.manage?(:admin)
+        items.push ["Terms", kapa_admin_terms_path] if @current_user.manage?(:kapa_admin_terms)
+        items.push ["Programs", kapa_admin_programs_path] if @current_user.manage?(:kapa_admin_programs)
+        items.push ["Assessments", kapa_admin_rubrics_path] if @current_user.manage?(:kapa_admin_rubrics)
+        items.push ["Datasets", kapa_admin_datasets_path] if @current_user.manage?(:kapa_admin_datasets)
+        items.push ["User Accounts", kapa_admin_users_path] if @current_user.manage?(:kapa_admin_users)
+        items.push ["System Properties", kapa_admin_properties_path] if @current_user.manage?(:kapa_admin_properties)
     end
     items
   end

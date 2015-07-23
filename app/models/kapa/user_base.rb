@@ -82,25 +82,25 @@ module Kapa::UserBase
     category == "local"
   end
 
-  def role
-    self.deserialize(:role, :as => OpenStruct)
+  def permission
+    self.deserialize(:permission, :as => OpenStruct)
   end
 
-  def read?(name = module_name, options = {})
-    check_role(1, name, options)
+  def read?(name = controller_name, options = {})
+    check_permission(1, name, options)
   end
 
-  def write?(name = module_name, options = {})
-    check_role(2, name, options)
+  def write?(name = controller_name, options = {})
+    check_permission(2, name, options)
   end
 
-  def manage?(name = module_name, options = {})
-    check_role(3, name, options)
+  def manage?(name = controller_name, options = {})
+    check_permission(3, name, options)
   end
 
-  def access_scope(name = module_name, condition = nil)
-    roles = self.role
-    roles.send("#{name}_list").to_i
+  def access_scope(name = controller_name, condition = nil)
+    permission = self.permission
+    permission.send("#{name}_scope").to_i
   end
 
   def valid_credential?(password)
@@ -119,8 +119,8 @@ module Kapa::UserBase
     end
   end
 
-  def check_role(level, name, options = {})
-    roles = self.role
+  def check_permission(level, name, options = {})
+    permission = self.permission
 
     #Check if user has access to the key
     if (options[:property] and options[:property][:value] and not manage?(name))
@@ -136,19 +136,19 @@ module Kapa::UserBase
       return false unless depts.include?(options[:dept])
     end
 
-    #Check role delegation
+    #Check permission delegation
     if (options[:delegate])
       delegates = options[:delegate].kind_of?(Array) ? options[:delegate] : Array.[](options[:delegate])
       delegates.each do |d|
-        return true if roles.send(name).to_i >= 1 and roles.send("#{name}_#{d}").to_s == "Y"
+        return true if permission.send(name).to_i >= 1 and permission.send("#{name}_#{d}").to_s == "Y"
       end
     end
 
-    return roles.send(name).to_i >= level
+    return permission.send(name).to_i >= level
   end
 
-  def module_name
-    @request.params[:controller].split("/").second
+  def controller_name
+    @request.params[:controller].split("/").join("_")
   end
 
   class_methods do
@@ -189,12 +189,6 @@ module Kapa::UserBase
        :department,
        :emp_status,
        :status,
-       :role_main,
-       :role_artifact,
-       :role_advising,
-       :role_curriculum,
-       :role_assessment,
-       :role_practicum,
        :dept,
        :category]
     end
@@ -208,12 +202,6 @@ module Kapa::UserBase
        c.rsend(:department),
        c.rsend(:emp_status),
        c.rsend(:status),
-       c.rsend(:role, :main),
-       c.rsend(:role, :document),
-       c.rsend(:role, :advising),
-       c.rsend(:role, :curriculum),
-       c.rsend(:role, :course),
-       c.rsend(:role, :practicum),
        c.rsend(:dept),
        c.rsend(:category)]
     end
