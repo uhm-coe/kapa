@@ -4,6 +4,7 @@ module Kapa::KapaControllerBase
   included do
     layout "/kapa/layouts/kapa"
     protect_from_forgery
+    before_filter :check_if_route_is_enabled, :except => [:welcome, :login, :logout, :error]
     before_filter :validate_login, :except => [:welcome, :login, :logout, :error]
     before_filter :check_read_permission, :except => [:welcome, :login, :logout, :error]
     before_filter :check_write_permission, :only => [:new, :create, :update, :destroy]
@@ -11,6 +12,13 @@ module Kapa::KapaControllerBase
     after_filter :put_timestamp
     helper :all
     helper_method :url_for, :menu_items
+  end
+
+  def check_if_route_is_enabled
+    unless Rails.configuration.available_routes.include?(controller_name)
+      flash[:danger] = "#{controller_name} is not available."
+      redirect_to(kapa_error_path) and return false
+    end
   end
 
   def validate_login
@@ -110,9 +118,8 @@ module Kapa::KapaControllerBase
   end
 
   def controller_name
-    params[:controller].split("/").join("_")
+    params[:controller].gsub("/", "_")
   end
-
 
   def filter(options = {})
     name = "filter_#{controller_name}".to_sym

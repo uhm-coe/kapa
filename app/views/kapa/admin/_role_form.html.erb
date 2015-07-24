@@ -5,33 +5,13 @@
   <table id="user_list" class="table table-striped">
     <thead>
       <tr>
-        <th>Record</th>
+        <th>Route</th>
         <th>Access Level</th>
         <th>Data Scope</th>
       </tr>
     </thead>
     <tbody>
-      <% [:kapa_main_persons,
-          :kapa_main_contacts,
-          :kapa_main_curriculums,
-          :kapa_main_transition_points,
-          :kapa_main_transition_actions,
-          :kapa_main_enrollments,
-          :kapa_document_files,
-          :kapa_document_forms,
-          :kapa_document_exams,
-          :kapa_advising_sessions,
-          :kapa_course_offers,
-          :kapa_course_registrations,
-          :kapa_practicum_placements,
-          :kapa_practicum_sites,
-          :kapa_admin_criterions,
-          :kapa_admin_datasets,
-          :kapa_admin_programs,
-          :kapa_admin_properties,
-          :kapa_admin_rubrics,
-          :kapa_admin_terms,
-          :kapa_admin_users].each do |o| %>
+      <% Rails.configuration.available_routes.each do |o| %>
         <tr>
           <td><h5><%=o %></h5></td>
           <% if o =~ /^kapa_admin/%>

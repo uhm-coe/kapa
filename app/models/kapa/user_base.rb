@@ -151,6 +151,18 @@ module Kapa::UserBase
     @request.params[:controller].split("/").join("_")
   end
 
+  def apply_role(name)
+    permission = {}
+    case name.to_s
+    when "admin"
+      Rails.configuration.available_routes.each do |o|
+        permission["#{o}"] = '3'
+        permission["#{o}_scope"] = '3'
+      end
+    end
+    self.serialize(:permission, permission)
+  end
+
   class_methods do
     def selections(options)
       users = where(:status => 3)

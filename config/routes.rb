@@ -5,10 +5,6 @@ Rails.application.routes.draw do
       get :export
       post :import
     end
-
-    member do
-      get :ajax
-    end
   end
 
   namespace :kapa do
