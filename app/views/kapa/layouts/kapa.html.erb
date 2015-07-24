@@ -51,54 +51,19 @@
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <ul class="nav navbar-nav">
         <% if @current_user %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:main) %>
-                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-              <% end %>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documents<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:document) %>
-            <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-              <% end %>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advising<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:advising) %>
-                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-              <% end %>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:course) %>
-                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-              <% end %>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Placements<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:practicum) %>
-                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-              <% end %>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <% for menu_item in menu_items(:admin) %>
-                <%= content_tag :li, link_to(menu_item[0], menu_item[1]) %>
-              <% end %>
-            </ul>
-          </li>
+          <% {:main => "Main", :document => "Document", :advising => "Advising", :course => "Course", :practicum => "Placement", :admin => "Admin"}.each_pair do |k, v| %>
+            <% items = menu_items(k) %>
+            <% if items.present? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=v %><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <% for item in items %>
+                  <%= content_tag :li, link_to(item[0], item[1]) %>
+                <% end %>
+              </ul>
+            </li>
+            <% end %>
+          <% end %>
         <% end %>
       </ul>
       <% if @current_user %>

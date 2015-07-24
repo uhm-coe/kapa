@@ -11,8 +11,8 @@
 
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
-    <%=bootstrap_form_for :permission, :url => kapa_admin_user_path(:id => @user, :focus => :role), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
-      <%=f.select "Role", [["All", "all"], ["Staff", "staff"], ["Faculty", "faculty"], ["Adviser", "adviser"]] %>
+    <%=bootstrap_form_for :role, :url => kapa_admin_user_path(:id => @user, :focus => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
+      <%=f.select "Role", [["Admin", "admin"], ["Adviser", "adviser"], ["Faculty", "faculty"]] %>
     <% end %>
   <% end %>
 <% end %>
@@ -29,7 +29,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#role_tab" data-toggle="tab">Permissions</a></li>
+      <li><a href="#permission_tab" data-toggle="tab">Permissions</a></li>
       <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
       <li><a href="#other_accounts_tab" data-toggle="tab">Other Accounts</a></li>
     </ul>
@@ -42,7 +42,7 @@
         <% end %>
       </div>
 
-      <div id="role_tab" class="tab-pane">
+      <div id="permission_tab" class="tab-pane">
         <%=bootstrap_form_for :permission, :url => kapa_admin_user_path(:id => @user, :focus => :role), :html => {:method => :put}  do |f| %>
           <%=render :partial => "/kapa/admin/role_form", :locals => {:f => f} %>
           <%= render :layout => "/kapa/layouts/controls" do %>

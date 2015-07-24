@@ -52,19 +52,15 @@ module Kapa::CourseOfferBase
 
   class_methods do
     def search(filter, options = {})
-      course_offers = Kapa::CourseOff.eager_loades([:course_registrations => :assessment_scores]).where("course_offers.status" => "A")
+      course_offers = Kapa::CourseOffer.where("course_offers.status" => "A")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
       course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
       course_offers = course_offers.where("course_offers.subject || course_offers.number || '-' || course_offers.section like ?", "%#{filter.name}%") if filter.name.present?
-
       case filter.user.access_scope
         when 3
           # Do nothing
         when 2
-          # This may not be correct:
-          course_offers = course_offers.where("concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => filter.user.depts)
-        # TODO: Implement the following condition using the where clause
-        # f.append_property_condition "concat(course_offers.subject, course_offers.number) in (?)", :course_offer, :depts => @current_user.depts unless @current_user.manage? :course_offer
+          course_offers = course_offers.depts_scope(filter.user.depts)
         when 1
           # TODO: Not implemented yet
         else
@@ -73,44 +69,8 @@ module Kapa::CourseOfferBase
       return course_offers
     end
 
-    #TODO: Move complex query into reports module
     def to_csv(filter, options = {})
-      sql = "SELECT
-                courses.*,
-                assessment_score_results.*,
-                (select count(*) from course_registrations where status like 'R%' and course_id = courses.id) as registered
-                FROM
-                courses
-                LEFT OUTER JOIN (
-                  SELECT
-                  course_registrations.course_id,
-                  assessment_rubrics.title as assessment,
-                  assessment_criterions.criterion,
-                  assessment_criterions.criterion_desc,
-                  sum(if(assessment_scores.rating = '2', 1, 0)) as target,
-                  sum(if(assessment_scores.rating = '1', 1, 0)) as acceptable,
-                  sum(if(assessment_scores.rating = '0', 1, 0)) as unacceptable,
-                  sum(if(assessment_scores.rating = 'N', 1, 0)) as na
-                  FROM assessment_scores
-                  INNER JOIN course_registrations on assessment_scores.assessment_scorable_type = 'CourseRegistration' and assessment_scores.assessment_scorable_id = course_registrations.id
-                  INNER JOIN assessment_criterions on assessment_scores.assessment_criterion_id = assessment_criterions.id
-                  INNER JOIN assessment_rubrics on assessment_criterions.assessment_rubric_id = assessment_rubrics.id
-                  WHERE 1=1
-                  and course_registrations.status like 'R%'
-                  and assessment_scores.rating not in ('')
-                  GROUP BY
-                  course_registrations.course_id,
-                  assessment_rubrics.title,
-                  assessment_criterions.criterion,
-                  assessment_criterions.criterion_desc
-                ) as assessment_score_results
-                ON courses.id = assessment_score_results.course_id
-                INNER JOIN terms ON terms.id = courses.term_id
-              WHERE courses.status = 'A'
-                AND courses.term_id = ?
-              ORDER BY terms.sequence, subject, number, section, crn"
-
-      courses = Kapa::CourseOffer.find_by_sql([sql, filter.term_id])
+      courses = Kapa::CourseOffer.search(filter)
       CSV.generate do |csv|
         csv << self.csv_columns
         courses.each do |c|
@@ -128,14 +88,7 @@ module Kapa::CourseOfferBase
        :crn,
        :title,
        :instructor,
-       :assessment,
-       :criterion,
-       :criterion_desc,
-       :target,
-       :acceptable,
-       :unacceptable,
-       :na,
-       :registered]
+       :status]
     end
 
     def csv_row(c)
@@ -147,14 +100,7 @@ module Kapa::CourseOfferBase
        c.crn,
        c.title,
        c.instructor,
-       c.assessment,
-       c.criterion,
-       c.criterion_desc,
-       c.target,
-       c.acceptable,
-       c.unacceptable,
-       c.na,
-       c.registered]
+       c.status]
     end
   end
 end

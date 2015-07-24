@@ -59,7 +59,7 @@ module Kapa::EnrollmentBase
 
     def to_csv(filter, options = {})
       # TODO: For reference, remove later
-      # enrollments = Kapa::Enrollme.eager_loades([
+      # enrollments = Kapa::Enrollme.eager_load([
       #   {:practicum_profile =>
       #     [{:person => :contact}, {:curriculum => :program}]
       #   },

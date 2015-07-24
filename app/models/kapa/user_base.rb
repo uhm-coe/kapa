@@ -3,7 +3,8 @@ module Kapa::UserBase
 
   included do
     @available_keys = {}
-    attr_accessor :request, :email, :depts
+    attr_accessor :request, :email
+    attr_writer :depts
 
     belongs_to :person
     has_many :user_timestamps
@@ -56,7 +57,7 @@ module Kapa::UserBase
   end
 
   def depts
-    dept.to_s.split(/,\s*/)
+    self.dept.split(/,\s*/)
   end
 
   def primary_dept
@@ -159,6 +160,32 @@ module Kapa::UserBase
         permission["#{o}"] = '3'
         permission["#{o}_scope"] = '3'
       end
+      when "adviser"
+        permission["kapa_main_persons"] = '2'
+        permission["kapa_main_persons_scope"] = '2'
+        permission["kapa_main_contacts"] = '2'
+        permission["kapa_main_contacts_scope"] = '2'
+        permission["kapa_main_curriculums"] = '2'
+        permission["kapa_main_curriculums_scope"] = '2'
+        permission["kapa_main_transition_points"] = '2'
+        permission["kapa_main_transition_points_scope"] = '2'
+        permission["kapa_main_transition_actions"] = '2'
+        permission["kapa_main_transition_actions_scope"] = '2'
+        permission["kapa_main_enrollments"] = '2'
+        permission["kapa_main_enrollments_scope"] = '2'
+        permission["kapa_document_files"] = '2'
+        permission["kapa_document_files_scope"] = '2'
+        permission["kapa_document_forms"] = '2'
+        permission["kapa_document_forms_scope"] = '2'
+        permission["kapa_document_exams"] = '2'
+        permission["kapa_document_exams_scope"] = '2'
+        permission["kapa_advising_sessions"] = '2'
+        permission["kapa_advising_sessions_scope"] = '2'
+      when "instructor"
+        permission["kapa_course_offers"] = '2'
+        permission["kapa_course_offers_scope"] = '2'
+        permission["kapa_course_registrations"] = '2'
+        permission["kapa_course_registrations_scope"] = '2'
     end
     self.serialize(:permission, permission)
   end

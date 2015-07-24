@@ -131,6 +131,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text "xml", limit: 65535
       t.string "final_grade", limit: 255
       t.integer "term_id", limit: 4, default: 0, null: false
+      t.string "dept", limit: 255
     end
 
     add_index "course_offers", ["academic_period", "crn"], name: "index_course_offers_on_academic_period_and_crn", unique: true, using: :btree

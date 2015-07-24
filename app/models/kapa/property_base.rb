@@ -49,7 +49,7 @@ module Kapa::PropertyBase
     end
 
     def keys(name, options={})
-      properties = where(:active => true, :name => options[:name].to_s)
+      properties = where(:active => true, :name => name)
       properties = properties.depts_scope(options[:depts]) if options[:depts]
       properties = properties.where(options[:conditions]) if options[:conditions]
       return properties.order("sequence DESC, code").collect { |v| v.code }
