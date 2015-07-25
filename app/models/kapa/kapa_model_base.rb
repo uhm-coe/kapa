@@ -59,11 +59,6 @@ module Kapa::KapaModelBase
     DateTime.new(value.year, value.month, value.day, 23, 59, 0, 0) if value.is_a? Date
   end
 
-  # Fix for removing extra blank values and the "multiselect-all" text in multiselect fields
-  def remove_values(array)
-    array.delete_if { |x| x.blank? || x == "multiselect-all" } if array
-  end
-
   class_methods do
     def selections
       [["Not Defined!", "ND"]]

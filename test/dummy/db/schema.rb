@@ -551,6 +551,12 @@ ActiveRecord::Schema.define(version: 20150705000000) do
   add_index "transition_points", ["term_id"], name: "index_transition_points_on_term_id", using: :btree
   add_index "transition_points", ["type"], name: "index_transition_points_on_type", using: :btree
 
+  create_table "user_assignments", force: :cascade do |t|
+    t.integer "user_id",         limit: 4
+    t.integer "assignable_id",   limit: 4
+    t.string  "assignable_type", limit: 255
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "uid",                 limit: 255
     t.string   "hashed_password",     limit: 255

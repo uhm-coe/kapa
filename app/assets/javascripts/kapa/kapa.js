@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
       }
     });
 
-  $('.kapa-multiselect').multiselect({
+  $('[multiple="multiple"]').multiselect({
     numberDisplayed: 1,
     enableCaseInsensitiveFiltering: true,
     includeSelectAllOption: true,

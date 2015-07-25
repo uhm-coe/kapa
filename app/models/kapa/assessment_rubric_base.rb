@@ -2,23 +2,10 @@ module Kapa::AssessmentRubricBase
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :courses, :programs, :transition_points
-    has_many :assessment_criterions, -> {order("assessment_criterions.criterion")}, :dependent => :destroy
+    serialize :course, Kapa::CsvSerializer
+    serialize :program, Kapa::CsvSerializer
+    serialize :transition_point, Kapa::CsvSerializer
     validates_presence_of :title
-    before_validation :remove_extra_values
-    before_save :join_attributes
-  end
-
-  def remove_extra_values
-    remove_values(self.courses)
-    remove_values(self.programs)
-    remove_values(self.transition_points)
-  end
-
-  def join_attributes
-    self.course = @courses ? @courses.join(",") : ""
-    self.program = @programs ? @programs.join(",") : ""
-    self.transition_point = @transition_points ? @transition_points.join(",") : ""
   end
 
   def effective_term

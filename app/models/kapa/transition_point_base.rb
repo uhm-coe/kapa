@@ -22,6 +22,8 @@ module Kapa::TransitionPointBase
             :class_name => "TransitionAction"
 
     has_many :assessment_scores, :as => :assessment_scorable
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
 
     validates_presence_of :curriculum_id, :term_id, :type
 

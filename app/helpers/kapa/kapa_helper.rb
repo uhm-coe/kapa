@@ -20,11 +20,11 @@ module Kapa::KapaHelper
       options[:selected] = current_value
     end
 
-    if html_options[:multiple]
-      html_options[:name] = "#{object_name}[#{method}][]"
-      html_options[:class] = "kapa-multiselect"
-      options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
-    end
+    #if html_options[:multiple]
+    #  html_options[:name] = "#{object_name}[#{method}][]"
+    #  html_options[:class] = "kapa-multiselect"
+    #  options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
+    #end
 
     if options[:locked]
       if selection

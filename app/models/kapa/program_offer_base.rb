@@ -2,22 +2,11 @@ module Kapa::ProgramOfferBase
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :available_majors
+    serialize :available_major, Kapa::CsvSerializer
     belongs_to :program
 
     validates_presence_of :distribution, :program_id
     validates_uniqueness_of :distribution, :scope => :program_id
-
-    before_validation :remove_extra_values
-    before_save :join_attributes
-  end
-
-  def remove_extra_values
-    self.available_majors.delete_if { |x| x.blank? || x == "multiselect-all" } if self.available_majors
-  end
-
-  def join_attributes
-    self.available_major = @available_majors ? @available_majors.join(",") : ""
   end
 
   class_methods do

@@ -561,5 +561,11 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree
     add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
+
+    create_table "user_assignments", force: :cascade do |t|
+      t.integer "user_id", limit: 4
+      t.integer "assignable_id", limit: 4
+      t.string "assignable_type", limit: 255
+    end
   end
 end

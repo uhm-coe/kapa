@@ -2,27 +2,14 @@ module Kapa::ProgramBase
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :available_majors, :available_distributions, :available_tracks
+    serialize :available_major, Kapa::CsvSerializer
+    serialize :available_distribution, Kapa::CsvSerializer
+    serialize :available_track, Kapa::CsvSerializer
     has_many :program_offers
     has_many :curriculums
 
     validates_uniqueness_of :code
     validates_presence_of :code
-
-    before_validation :remove_extra_values
-    before_save :join_attributes
-  end
-
-  def remove_extra_values
-    remove_values(self.available_majors)
-    remove_values(self.available_distributions)
-    remove_values(self.available_tracks)
-  end
-
-  def join_attributes
-    self.available_major = @available_majors ? @available_majors.join(",") : ""
-    self.available_distribution = @available_distributions ? @available_distributions.join(",") : ""
-    self.available_track = @available_tracks ? @available_tracks.join(",") : ""
   end
 
   def degree_desc
@@ -51,4 +38,6 @@ module Kapa::ProgramBase
       return programs
     end
   end
+
+
 end

@@ -9,9 +9,9 @@
     </div>
 
     <div class="col-sm-6">
-      <%=f.program_select :programs, {:selected => @assessment_rubric.program}, {:multiple => true, :size => "10", :class => "multi-select", :selectedlist => 1} %>
-      <%=f.property_select :courses, {:name => :assessment_course, :selected => @assessment_rubric.course}, {:multiple => true, :size => "10", :class => "multi-select"} %>
-      <%=f.property_select :transition_points, {:name => :transition_point, :selected => @assessment_rubric.transition_point}, {:multiple => true, :size => "10", :class => "multi-select"} %>
+      <%=f.program_select :program, {}, {:multiple => true, :size => "10", :selectedlist => 1} %>
+      <%=f.property_select :course, {:name => :assessment_course}, {:multiple => true, :size => "10"} %>
+      <%=f.property_select :transition_point, {:name => :transition_point}, {:multiple => true, :size => "10"} %>
     </div>
   </div>
 <% end %>

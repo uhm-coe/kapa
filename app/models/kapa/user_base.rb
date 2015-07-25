@@ -4,7 +4,7 @@ module Kapa::UserBase
   included do
     @available_keys = {}
     attr_accessor :request, :email
-    attr_writer :depts
+    serialize :dept, Kapa::CsvSerializer
 
     belongs_to :person
     has_many :user_timestamps
@@ -14,8 +14,8 @@ module Kapa::UserBase
     validates_presence_of :uid
     validates_presence_of :password, :on => :create, :if => :local?
 
-    before_validation :use_email_as_uid, :remove_extra_values
-    before_save :format_fields, :join_attributes
+    before_validation :use_email_as_uid
+    before_save :format_fields
     after_save :update_contact
 
     acts_as_authentic do |c|
@@ -31,16 +31,8 @@ module Kapa::UserBase
     self.uid = self.email if self.email.present?
   end
 
-  def remove_extra_values
-    remove_values(@depts)
-  end
-
   def format_fields
     self.uid = self.uid.to_s.downcase
-  end
-
-  def join_attributes
-    self.dept = @depts.join(",") if @depts
   end
 
   def update_contact
@@ -191,7 +183,7 @@ module Kapa::UserBase
   end
 
   class_methods do
-    def selections(options)
+    def selections(options = {})
       users = where(:status => 3)
       users = users.depts_scope(options[:depts]) if options[:depts]
       users = users.where(options[:conditions]) if options[:conditions]

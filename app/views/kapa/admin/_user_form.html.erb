@@ -7,7 +7,7 @@
   </div>
   <div class="col-sm-6">
     <%=f.select :status, [["0/No Access", 0],["1/AS User" , 1],["3/SIS User" , 3]], :label => "User Status" %>
-    <%=f.property_select :depts, {:name => :dept, :label => "Data Access"}, {:multiple => true, :selected => @user.dept} %>
+    <%=f.property_select :dept, {:name => :dept, :label => "Data Access"}, {:multiple => true} %>
     <%=f.property_select :department, :name => :dept, :include_blank => true %>
     <%=f.text_field :position %>
   </div>
