@@ -7,7 +7,7 @@
 
     <div class="col-sm-6">
       <%=f.text_field :standard %>
-      <%=f.select :type, [["Select", "select"], ["Text Field", "text"]], {:label => "Score Type"}, {:id => id_for_multiple(:assessment_criterion, :score_type)} %>
+      <%=f.select :type, [["Select", "select"], ["Text Field", "text"]], {:label => "Score Type"} %>
       <%=f.text_field :type_option, :label => "Score Type Option" %>
     </div>
   </div>

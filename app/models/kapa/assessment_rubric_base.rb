@@ -5,6 +5,7 @@ module Kapa::AssessmentRubricBase
     serialize :course, Kapa::CsvSerializer
     serialize :program, Kapa::CsvSerializer
     serialize :transition_point, Kapa::CsvSerializer
+    has_many :assessment_criterions, -> {order("assessment_criterions.criterion")}, :dependent => :destroy
     validates_presence_of :title
   end
 

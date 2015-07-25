@@ -6,10 +6,6 @@ module Kapa::KapaModelBase
     serialize :yml, Hash
   end
 
-  def update_xml
-    self.xml = self.yml.to_xml if self.yml.present?
-  end
-
   def deserialize(name, options = {})
     if self.yml.blank? or self.yml[name].blank?
       obj = Hash.new
@@ -53,10 +49,6 @@ module Kapa::KapaModelBase
 
   def ext
     self.deserialize(:_ext, :as => OpenStruct)
-  end
-
-  def to_end_of_day(value)
-    DateTime.new(value.year, value.month, value.day, 23, 59, 0, 0) if value.is_a? Date
   end
 
   class_methods do

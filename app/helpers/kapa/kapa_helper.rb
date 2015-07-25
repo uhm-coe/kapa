@@ -141,15 +141,6 @@ module Kapa::KapaHelper
     content_tag :abbr, abbr_str, :title => str, "data-toggle" => "tooltip", "data-placement" => "right"
   end
 
-  def id_for_multiple(object_name, method)
-    object = instance_variable_get("@#{object_name}")
-    if object.nil? or object.new_record?
-      "#{object_name}_#{method}"
-    else
-      "#{object_name}_#{object.id}_#{method}"
-    end
-  end
-
   private
   def next_id(prefix, index)
     i = @table.keys.index(index)

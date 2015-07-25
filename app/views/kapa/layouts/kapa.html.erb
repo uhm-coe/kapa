@@ -51,7 +51,7 @@
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <ul class="nav navbar-nav">
         <% if @current_user %>
-          <% {:main => "Main", :document => "Document", :advising => "Advising", :course => "Course", :practicum => "Placement", :admin => "Admin"}.each_pair do |k, v| %>
+          <% {:main => "Main", :document => "Document", :advising => "Advising", :course => "Course", :practicum => "Placement", :admin => "Administration"}.each_pair do |k, v| %>
             <% items = menu_items(k) %>
             <% if items.present? %>
             <li class="dropdown">
