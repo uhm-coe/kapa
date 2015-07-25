@@ -20,8 +20,8 @@ module Kapa::ProgramBase
     def selections(options = {})
       options[:value] = :code if options[:value].nil?
       programs = where(:active => true)
-      programs = programs.depts_scope(options[:depts]) if options[:depts]
-      programs = programs.where(options[:conditions]) if options[:conditions]
+      programs = programs.depts_scope(options[:depts]) if options[:depts].present?
+      programs = programs.where(options[:conditions]) if options[:conditions].present?
       programs.order("sequence DESC, code").collect do |v|
         value = v.send(options[:value])
         description = ""

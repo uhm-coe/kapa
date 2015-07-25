@@ -13,8 +13,8 @@ module Kapa::ProgramOfferBase
     def selections(options = {})
       options[:value] = :distribution if options[:value].nil?
       program_offers = where(:active => true)
-      program_offers = program_offers.depts_scope(options[:depts]) if options[:depts]
-      program_offers = program_offers.where(options[:conditions]) if options[:conditions]
+      program_offers = program_offers.depts_scope(options[:depts]) if options[:depts].present?
+      program_offers = program_offers.where(options[:conditions]) if options[:conditions].present?
       program_offers.order("sequence DESC, distribution").collect do |v|
         value = v.send(options[:value])
         description = ""

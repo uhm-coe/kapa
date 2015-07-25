@@ -23,8 +23,8 @@ module Kapa::PropertyBase
 
     def selections(options = {})
       properties = where(:active => true, :name => options[:name].to_s)
-      properties = properties.depts_scope(options[:depts]) if options[:depts]
-      properties = properties.where(options[:conditions]) if options[:conditions]
+      properties = properties.depts_scope(options[:depts]) if options[:depts].present?
+      properties = properties.where(options[:conditions]) if options[:conditions].present?
       properties.order("sequence DESC, description").collect do |v|
         description = ""
         description << "#{v.code}/" if options[:include_code]
