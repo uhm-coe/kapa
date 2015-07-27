@@ -74,7 +74,7 @@ module Kapa::KapaModelBase
         values = value.is_a?(Array) ? value : [value]
         values = values.delete_if { |v| v.blank? }
         values.each { |v| conditions[0] << " or #{key} like ?" }
-        conditions.concat(values.collect { |v| pattern.gsub("?", v) })
+        conditions.concat(values.collect { |v| pattern.gsub("?", v.to_s) })
       end
       where(conditions)
     end
