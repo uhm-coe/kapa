@@ -36,7 +36,7 @@ module Kapa::Document::ExamsControllerBase
 
   def index
     @filter = filter
-    @exams = Kapa::Exam.search(@filter).order("report_date DESC, persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @exams = Kapa::Exam.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def import

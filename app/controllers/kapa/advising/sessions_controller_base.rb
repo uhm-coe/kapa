@@ -64,13 +64,13 @@ module Kapa::Advising::SessionsControllerBase
 
   def index
     @filter = filter
-    @advising_sessions = Kapa::AdvisingSession.search(@filter).order("session_date DESC, advising_sessions.id DESC").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @advising_sessions = Kapa::AdvisingSession.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data Kapa::AdvisingSession.to_csv(@filter),
+    send_data Kapa::AdvisingSession.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "advising_history_#{@filter.date_start.to_s}.csv"

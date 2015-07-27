@@ -41,6 +41,6 @@ module Kapa::Admin::PropertiesControllerBase
 
   def index
     @filter = filter
-    @properties = Kapa::Property.search(@filter).order("sequence DESC, code").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @properties = Kapa::Property.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

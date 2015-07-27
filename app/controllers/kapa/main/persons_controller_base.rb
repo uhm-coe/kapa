@@ -65,7 +65,7 @@ module Kapa::Main::PersonsControllerBase
       @modal = true
       @persons = Kapa::Person.where("0=1")
     else
-      @persons = Kapa::Person.search(@filter)
+      @persons = Kapa::Person.search(:filter => @filter)
     end
   end
 

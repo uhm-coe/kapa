@@ -24,22 +24,13 @@ module Kapa::PracticumPlacementBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      placements = Kapa::PracticumPlacement.eager_load([:person, :practicum_site])
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      placements = Kapa::PracticumPlacement.eager_load([:person, :practicum_site]).order("persons.last_name, persons.first_name")
       placements = placements.where("practicum_placements.term_id" => filter.term_id) if filter.term_id.present?
       placements = placements.where("practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
       placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
       return placements
-    end
-
-    def to_csv(filter, options = {})
-      placements = self.search(filter).order("persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        placements.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

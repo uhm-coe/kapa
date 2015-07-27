@@ -48,6 +48,6 @@ module Kapa::Admin::RubricsControllerBase
 
   def index
     @filter = filter
-    @assessment_rubrics = Kapa::AssessmentRubric.search(@filter).order("dept, title").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @assessment_rubrics = Kapa::AssessmentRubric.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

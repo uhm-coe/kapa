@@ -29,21 +29,12 @@ module Kapa::FileBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      files = Kapa::File.eager_load([:person])
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      files = Kapa::File.eager_load([:person]).order("persons.last_name, persons.first_name")
       files = files.where("files.type" => filter.type.to_s) if filter.type.present?
       files = files.depts_scope(filter.user.depts, "public = 'Y'")
       return files
-    end
-
-    def to_csv(filter, options = {})
-      files = self.search(filter).order("submitted_at desc, persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        files.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

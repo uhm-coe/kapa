@@ -20,23 +20,14 @@ module Kapa::PracticumSiteBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      sites = Kapa::PracticumSite.eager_load([:practicum_placements])
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      sites = Kapa::PracticumSite.eager_load([:practicum_placements]).order("name_short")
       sites = sites.column_matches(:name => filter.name) if filter.name.present?
       # f.append_condition "? between level_from and level_to", :grade # TODO: Is this still needed?
       sites = sites.where("district" => filter.district) if filter.district.present?
       sites = sites.where("area_group" => filter.area_group) if filter.area_group.present?
       return sites;
-    end
-
-    def to_csv(filter, options = {})
-      sites = self.search(filter).order("name_short")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        sites.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

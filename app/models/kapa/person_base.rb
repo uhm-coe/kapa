@@ -86,7 +86,9 @@ module Kapa::PersonBase
   end
 
   class_methods do
-    def search(filter, options = {})
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+
       if filter.blank?
         return []
       end

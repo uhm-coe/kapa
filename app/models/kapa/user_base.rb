@@ -192,23 +192,14 @@ module Kapa::UserBase
       end
     end
 
-    def search(filter, options = {})
-      users = Kapa::User.eager_load(:person)
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      users = Kapa::User.eager_load(:person).order("users.uid")
       users = users.where("department" => filter.department) if filter.department.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
       users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
       users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
       return users
-    end
-
-    def to_csv(filter, options = {})
-      users = Kapa::User.search(filter).order("users.uid")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        users.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

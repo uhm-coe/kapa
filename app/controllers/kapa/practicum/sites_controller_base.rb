@@ -86,13 +86,13 @@ module Kapa::Practicum::SitesControllerBase
 
   def index
     @filter = filter
-    @practicum_sites = Kapa::PracticumSite.search(@filter).order("name_short").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @practicum_sites = Kapa::PracticumSite.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data Kapa::PracticumSite.to_csv(@filter),
+    send_data Kapa::PracticumSite.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "sites.csv"

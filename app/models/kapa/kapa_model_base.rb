@@ -99,5 +99,32 @@ module Kapa::KapaModelBase
     def assigned_scope(user_id)
       where("? in (user_primary_id, user_secondary_id)", user_id)
     end
+
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      objects = self.all
+      objects = objects.order(options[:order]) if options[:order].present?
+      return objects
+    end
+
+    def to_csv(options = {})
+      objects = self.search(options)
+      CSV.generate do |csv|
+        csv << self.csv_columns
+        objects.each do |o|
+          csv << self.csv_row(o)
+        end
+      end
+    end
+
+    def csv_columns
+      #This method should be implemented in subclasses to define csv data.
+      []
+    end
+
+    def csv_row(object)
+      #This method should be implemented in subclasses to define csv data.
+      []
+    end
   end
 end

@@ -69,13 +69,13 @@ module Kapa::Course::OffersControllerBase
 
   def index
     @filter = filter
-    @course_offers = Kapa::CourseOffer.search(@filter).order("subject, number, section").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @course_offers = Kapa::CourseOffer.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data Kapa::CourseOffer.to_csv(@filter),
+    send_data Kapa::CourseOffer.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "courses_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"

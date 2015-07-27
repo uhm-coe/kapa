@@ -32,8 +32,9 @@ module Kapa::EnrollmentBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      enrollments = Kapa::Enrollment.eager_load([{:curriculum => :person}, {:curriculum => :program}])
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      enrollments = Kapa::Enrollment.eager_load([{:curriculum => :person}, {:curriculum => :program}]).order("persons.last_name, persons.first_name")
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
       if filter.program == "NA"
         enrollments = enrollments.where("programs.code is NULL")
@@ -55,27 +56,6 @@ module Kapa::EnrollmentBase
           enrollments = enrollments.where("1 = 2") #Do not list any objects
       end
       return enrollments
-    end
-
-    def to_csv(filter, options = {})
-      # TODO: For reference, remove later
-      # enrollments = Kapa::Enrollme.eager_load([
-      #   {:practicum_profile =>
-      #     [{:person => :contact}, {:curriculum => :program}]
-      #   },
-      #   {:user_primary => :person},
-      #   {:user_secondary => :person},
-      #   [:practicum_assignments =>
-      #     [:practicum_site, {:person => :contact}, {:user_primary => :person}, {:user_secondary => :person}]
-      #   ]
-      # ])
-      enrollments = self.search(filter).order("persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        enrollments.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

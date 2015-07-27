@@ -75,8 +75,9 @@ module Kapa::TransitionPointBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      transition_points = Kapa::TransitionPoint.eager_load([:curriculum, {:curriculum => :program}, {:curriculum => :person}])
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      transition_points = Kapa::TransitionPoint.eager_load([:curriculum, {:curriculum => :program}, {:curriculum => :person}]).order("persons.last_name, persons.first_name")
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
       transition_points = transition_points.where("transition_points.type" => filter.type.to_s) if filter.type.present?
@@ -96,16 +97,6 @@ module Kapa::TransitionPointBase
           transition_points = transition_points.where("1 = 2") # Do not list any objects
       end
       return transition_points
-    end
-
-    def to_csv(filter, options = {})
-      transition_points = self.search(filter).order("persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        transition_points.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

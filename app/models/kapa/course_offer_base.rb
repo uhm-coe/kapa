@@ -51,8 +51,9 @@ module Kapa::CourseOfferBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      course_offers = Kapa::CourseOffer.where("course_offers.status" => "A")
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      course_offers = Kapa::CourseOffer.where("course_offers.status" => "A").order("subject, number, section")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
       course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
       course_offers = course_offers.where("course_offers.subject || course_offers.number || '-' || course_offers.section like ?", "%#{filter.name}%") if filter.name.present?
@@ -67,16 +68,6 @@ module Kapa::CourseOfferBase
           course_offers = course_offers.where("1 = 2")
       end
       return course_offers
-    end
-
-    def to_csv(filter, options = {})
-      courses = Kapa::CourseOffer.search(filter)
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        courses.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

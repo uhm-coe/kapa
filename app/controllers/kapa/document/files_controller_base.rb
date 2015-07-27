@@ -3,7 +3,7 @@ module Kapa::Document::FilesControllerBase
 
   def index
     @filter = filter
-    @files = Kapa::File.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @files = Kapa::File.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def show

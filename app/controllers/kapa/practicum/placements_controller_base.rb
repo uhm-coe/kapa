@@ -57,13 +57,13 @@ module Kapa::Practicum::PlacementsControllerBase
   def index
     @filter = filter
     @practicum_sites = Kapa::PracticumSite.eager_load(:practicum_placements).order("name_short")
-    @practicum_placements = Kapa::PracticumPlacement.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @practicum_placements = Kapa::PracticumPlacement.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data Kapa::PracticumPlacement.to_csv(@filter),
+    send_data Kapa::PracticumPlacement.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "placements_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"

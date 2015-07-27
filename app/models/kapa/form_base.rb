@@ -38,23 +38,14 @@ module Kapa::FormBase
   end
 
   class_methods do
-    def search(filter, options = {})
-      forms = Kapa::Form.eager_load([:person])
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      forms = Kapa::Form.eager_load([:person]).order("persons.last_name, persons.first_name")
       forms = forms.where("forms.term_id" => filter.term_id) if filter.term_id.present?
       forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
       exams = forms.depts_scope(filter.user.depts, "public = 'Y'")
       return forms
-    end
-
-    def to_csv(filter, options = {})
-      forms = self.search(filter).order("submitted_at desc, persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        forms.each do |c|
-          csv << self.csv_row(c)
-        end
-      end
     end
 
     def csv_columns

@@ -71,8 +71,10 @@ module Kapa::CurriculumBase
   end
 
   class_methods do
-    def search(filter, options ={})
-      curriculums = Kapa::Curriculum.eager_load([:transition_points, :program, :person]) #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
+    def search(options ={})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      curriculums = Kapa::Curriculum.eager_load([:transition_points, :program, :person]).order("persons.last_name, persons.first_name")
+      #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?
       curriculums = curriculums.where("programs.code" => filter.program) if filter.program.present?
@@ -91,16 +93,6 @@ module Kapa::CurriculumBase
           curriculums = curriculums.where("1 = 2") #Do not list any objects
       end
       return curriculums
-    end
-
-    def to_csv(filter, options ={})
-      transition_points = self.search(filter).order("persons.last_name, persons.first_name")
-      CSV.generate do |csv|
-        csv << self.csv_columns
-        transition_points.each do |c|
-          csv << csv_row(c)
-        end
-      end
     end
 
     def csv_columns

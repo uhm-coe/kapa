@@ -46,13 +46,13 @@ module Kapa::Main::CurriculumsControllerBase
 
   def index
     @filter = filter
-    @curriculums = Kapa::Curriculum.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @curriculums = Kapa::Curriculum.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data Kapa::Curriculum.to_csv(@filter),
+    send_data Kapa::Curriculum.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "cohort_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"

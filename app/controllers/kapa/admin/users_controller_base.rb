@@ -77,12 +77,7 @@ module Kapa::Admin::UsersControllerBase
 
   def index
     @filter = filter
-    @users = Kapa::User.search(@filter).order("users.uid").paginate(:page => params[:page], :per_page => @filter.per_page)
-  end
-
-  def logs
-    @filter = filter
-    @timestamps = Kapa::UserTimestamp.search(@filter).order("timestamps.id DESC")
+    @users = Kapa::User.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def import
@@ -116,7 +111,7 @@ module Kapa::Admin::UsersControllerBase
   def export
     @filter = filter
     logger.debug "----filter: #{@filter.inspect}"
-    send_data Kapa::User.to_csv(@filter),
+    send_data Kapa::User.to_csv(:filter => @filter),
               :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"

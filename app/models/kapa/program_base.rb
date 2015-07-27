@@ -31,13 +31,12 @@ module Kapa::ProgramBase
       end
     end
 
-    def search(filter, options = {})
-      programs = Kapa::Program.all
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      programs = Kapa::Program.all.order("code")
       programs = programs.depts_scope(filter.dept) if filter.dept.present?
       programs = programs.where("programs.active" => filter.active) if filter.active.present?
       return programs
     end
   end
-
-
 end

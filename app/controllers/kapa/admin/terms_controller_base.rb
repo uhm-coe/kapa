@@ -3,7 +3,7 @@ module Kapa::Admin::TermsControllerBase
 
   def index
     @filter = filter
-    @terms = Kapa::Term.search(@filter).order("code").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @terms = Kapa::Term.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def show

@@ -57,6 +57,6 @@ module Kapa::Admin::ProgramsControllerBase
 
   def index
     @filter = filter
-    @programs = Kapa::Program.search(@filter).order("code").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @programs = Kapa::Program.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

@@ -50,13 +50,13 @@ module Kapa::Document::FormsControllerBase
 
   def index
     @filter = filter
-    @forms = Kapa::Form.search(@filter).order("persons.last_name, persons.first_name").paginate(:page => params[:page], :per_page => @filter.per_page)
+    @forms = Kapa::Form.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
     logger.debug "----filter: #{filter.inspect}"
-    send_data Kapa::Form.to_csv(@filter),
+    send_data Kapa::Form.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "forms_#{filter.type}.csv"
