@@ -62,7 +62,7 @@
           <td><%=h user.emp_status %></td>
           <td><%=h user.status %></td>
           <td><%=h user.department %></td>
-          <td><%=h user.dept %></td>
+          <td><%=h user.dept.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

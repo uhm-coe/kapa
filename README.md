@@ -49,7 +49,7 @@ transition points, field placements, electronic documents, etc....  Tools are di
 
   When Rails renders a view, it will first look in the app/views directory of your application. If it cannot find the view there, it will check in the app/views directories of KAPA engine.  Therefore, to customize views, you simply need to copy a view file from the engine to your app and start editing from there.  
 
-  For example, the following command will copy the main layout file from the engine and place in the corresponding directory.
+  To simplify this process, we implemented kapa::cp generator, which copies a file from the engine and place in the corresponding directory in your app. For example, the following command will copy the main layout file from the engine and place in app/views/kapa/layouts/.
   ```
   rails g kapa:cp views/kapa/layouts/kapa.rb
   ``` 

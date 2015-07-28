@@ -122,8 +122,12 @@ module Kapa::KapaControllerBase
     params[:controller].gsub("/", "_")
   end
 
+  def controller_module_name
+    params[:controller].split("/").second
+  end
+
   def filter(options = {})
-    name = "filter_#{controller_name}".to_sym
+    name = "filter_#{controller_module_name}".to_sym
     session[name] = filter_defaults if session[name].nil?
     session[name].update(params[:filter]) if params[:filter].present?
     session[name].update(options) if options.present?
