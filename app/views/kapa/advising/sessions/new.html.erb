@@ -9,7 +9,7 @@
   </h4>
 
   <div>
-    <%=bootstrap_form_for :advising_session, :url => kapa_advising_sessions_path, :remote => true do |f| %>
+    <%=bootstrap_form_for :advising_session, :url => kapa_advising_sessions_path do |f| %>
       <%=render :partial => "/kapa/advising/session_form", :locals => {:f => f} %>
       <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
     <% end %>

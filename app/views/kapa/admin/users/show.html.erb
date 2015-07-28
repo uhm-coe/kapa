@@ -36,7 +36,7 @@
 
     <div class="tab-content">
       <div id="user_profile_tab" class="tab-pane">
-        <%=bootstrap_form_for :user, :url => kapa_admin_user_path(:id => @user), :remote => true, :html => {:method => :put} do |f| %>
+        <%=bootstrap_form_for :user, :url => kapa_admin_user_path(:id => @user), :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/admin/user_form", :locals => {:f => f} %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>

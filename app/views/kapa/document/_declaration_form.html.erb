@@ -19,7 +19,7 @@
   <%= bootstrap_fields_for(:declaration_curriculum) do |curriculum| %>
     <div class="row">
       <div class="col-sm-6">
-        <%= curriculum.program_select(:program_id, {:model_options => {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')"}, :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
+        <%= curriculum.program_select(:program_id, {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')", :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
         <%#=curriculum.property_select :degree, :locked => true, :label => "Degree" %>
         <%#=curriculum.property_select :distribution, :locked => true, :label => "Program Distribution" %>
         <%#=curriculum.property_select :track, :locked => true , :label => "Track"  %>

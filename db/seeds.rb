@@ -31,7 +31,7 @@ fixtures = %w(
   ActiveRecord::Fixtures.create_fixtures("#{Kapa::Engine.root}/test/fixtures", f)
 end
 
-#Create user on each role
+#Create a sample user on each role
 [[:admin, ""], [:adviser, "OSAS"], [:instructor, "ITE"]].each do |role|
   person = Kapa::Person.create(:last_name => role[0].capitalize, :first_name => "User")
   user = person.users.create(:uid => role[0], :category => "local", :dept => role[1], :status => 3, :emp_status => 3)

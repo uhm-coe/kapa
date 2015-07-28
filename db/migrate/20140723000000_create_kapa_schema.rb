@@ -567,5 +567,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer "assignable_id", limit: 4
       t.string "assignable_type", limit: 255
     end
+
+    add_index "user_assignments", ["user_id","assignable_id","assignable_type"], unique: true, using: :btree
   end
 end

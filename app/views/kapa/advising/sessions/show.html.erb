@@ -9,7 +9,7 @@
   </h4>
 
   <div>
-    <%=bootstrap_form_for :advising_session, :url => kapa_advising_session_path(:id => @advising_session), :remote => true, :html => {:method => :put} do |f| %>
+    <%=bootstrap_form_for :advising_session, :url => kapa_advising_session_path(:id => @advising_session), :html => {:method => :put} do |f| %>
       <%=render :partial => "/kapa/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
       <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_advising_session_path(:id => @advising_session)} if @current_user.write? %>
     <% end %>

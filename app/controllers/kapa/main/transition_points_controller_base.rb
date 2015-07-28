@@ -82,7 +82,7 @@ module Kapa::Main::TransitionPointsControllerBase
     send_data Kapa::TransitionPoint.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "cohort_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
+              :filename => "#{@filter.name}_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
   end
 
 end

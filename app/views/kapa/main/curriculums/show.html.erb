@@ -26,7 +26,7 @@
 
     <div class="tab-content">
       <div id="curriculum_tab" class="tab-pane">
-        <%=bootstrap_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum), :remote => true, :html => {:method => :put}  do %>
+        <%=bootstrap_form_for :curriculum, :url => kapa_main_curriculum_path(:id => @curriculum), :html => {:method => :put}  do %>
           <%=render :partial => "/kapa/main/curriculum_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>

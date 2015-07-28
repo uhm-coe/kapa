@@ -24,7 +24,7 @@
 
     <div class="tab-content">
       <div id="program_profile_tab" class="tab-pane">
-        <%= bootstrap_form_for :program, :url => kapa_admin_program_path(:id => @program), :remote => true, :html => {:method => :put} do |f| %>
+        <%= bootstrap_form_for :program, :url => kapa_admin_program_path(:id => @program), :html => {:method => :put} do |f| %>
           <%= render :partial => "/kapa/admin/program_form" %>
           <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_admin_program_path(:id => @program)} if @current_user.write? %>
         <% end %>

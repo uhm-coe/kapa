@@ -33,7 +33,7 @@
       </div>
 
       <div id="site_contact_tab" class="tab-pane">
-        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :focus => :site_contact), :remote => true, :html => {:method => :put}  do |f|%>
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :focus => :site_contact), :html => {:method => :put}  do |f|%>
           <%=render :partial => "/kapa/practicum/site_contact_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>

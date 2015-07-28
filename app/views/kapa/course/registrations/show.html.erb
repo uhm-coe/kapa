@@ -39,7 +39,7 @@
 
     <div class="tab-content">
       <div id="course_tab" class="tab-pane">
-        <%=bootstrap_form_for :course_registration, :url => kapa_course_registration_path(:id => @course_registration), :remote => true, :html => {:method => :put}  do |f| %>
+        <%=bootstrap_form_for :course_registration, :url => kapa_course_registration_path(:id => @course_registration), :html => {:method => :put}  do |f| %>
           <%=render :partial => "/kapa/course/registration_form" %>
         <% end %>
       </div>
@@ -52,7 +52,7 @@
             </div>
           </div>
         <% end %>
-        <%=bootstrap_form_for :assessment_score, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :remote => true, :html => {:method => :put} do |f| %>
+        <%=bootstrap_form_for :assessment_score, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :put} do |f| %>
           <%=render :partial => "/kapa/course/assessment_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>

@@ -44,7 +44,7 @@
 <% content_for(:dialog) do %>
 
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :html => {:method => :get, :id => "filter_form"}, :remote => true) do |f| %>
+    <%= bootstrap_form_for(:filter, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <% @parameters.each_value do |p| %>
         <% @parameter = OpenStruct.new(p) %>
 

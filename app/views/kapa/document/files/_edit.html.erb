@@ -1,4 +1,4 @@
-<%= bootstrap_form_for :file, :url => kapa_document_file_path(:id => @file), :html => {:method => :put, :multipart => true, :id => "edit_document_form"}, :remote => true do |f| %>
+<%= bootstrap_form_for :file, :url => kapa_document_file_path(:id => @file), :html => {:method => :put, :multipart => true, :id => "edit_document_form"} do |f| %>
   <div class="row">
     <div class="col-sm-6">
       <%= f.text_field :name %>

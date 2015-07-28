@@ -27,7 +27,7 @@
   <%= bootstrap_fields_for(:admission_curriculum) do |curriculum| %>
     <div class="row">
       <div class="col-sm-6">
-        <%= curriculum.program_select(:program_id, {:model_options => {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')"}, :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
+        <%= curriculum.program_select(:program_id, {:value => :id, :conditions => "code in ('EDEL-BED', 'EDSE-BED', 'KRS-BS', 'EDSE-PCERT', 'SPED-PCERT', 'TCH-MEDT')", :label => "I want to pursue this program:", :exclude_current_value => true, :include_blank => true}) %>
         <%= curriculum.property_select(:distribution, {:label => "Please select your program option."}) %>
         <%= curriculum.property_select(:major_primary, :name => :major, :label => "Please select your intended major.") %>
       </div>
