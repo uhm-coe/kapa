@@ -95,48 +95,23 @@ module Kapa::CurriculumBase
       return curriculums
     end
 
-    def csv_columns
-      [:id_number,
-       :last_name,
-       :first_name,
-       :email,
-       :email_alt,
-       :ssn,
-       :ssn_agreement,
-       :cur_street,
-       :cur_city,
-       :cur_state,
-       :cur_postal_code,
-       :cur_phone,
-       :curriculum_id,
-       :program_desc,
-       :track_desc,
-       :major_primary_desc,
-       :major_secondary_desc,
-       :distribution_desc,
-       :second_degree]
-    end
-
-    def csv_row(c)
-      [c.rsend(:person, :id_number),
-       c.rsend(:person, :last_name),
-       c.rsend(:person, :first_name),
-       c.rsend(:person, :email),
-       c.rsend(:person, :contact, :email_alt),
-       c.rsend(:person, :ssn),
-       c.rsend(:person, :ssn_agreement),
-       c.rsend(:person, :contact, :cur_street),
-       c.rsend(:person, :contact, :cur_city),
-       c.rsend(:person, :contact, :cur_state),
-       c.rsend(:person, :contact, :cur_postal_code),
-       c.rsend(:person, :contact, :cur_phone),
-       c.rsend(:id),
-       c.rsend(:program, :description),
-       c.rsend(:track_desc),
-       c.rsend(:major_primary_desc),
-       c.rsend(:major_secondary_desc),
-       c.rsend(:distribution_desc),
-       c.rsend(:second_degree)]
+    def csv_formats
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :cur_street => [:person, :contact, :cur_street],
+       :cur_city => [:person, :contact, :cur_city],
+       :cur_state => [:person, :contact, :cur_state],
+       :cur_postal_code => [:person, :contact, :cur_postal_code],
+       :cur_phone => [:person, :contact, :cur_phone],
+       :email => [:person, :contact, :email],
+       :curriculum_id => [:id],
+       :program_desc => [:program, :description],
+       :track_desc => [:track_desc],
+       :major_primary_desc => [:major_primary_desc],
+       :major_secondary_desc => [:major_secondary_desc],
+       :distribution_desc => [:distribution_desc],
+       :second_degree => [:second_degree]}
     end
   end
 end

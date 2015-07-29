@@ -34,43 +34,23 @@ module Kapa::AdvisingSessionBase
       return advising_sessions
     end
 
-    def csv_columns
-      [:id_number,
-       :last_name,
-       :first_name,
-       :cur_street,
-       :cur_city,
-       :cur_state,
-       :cur_postal_code,
-       :cur_phone,
-       :email,
-       :session_date,
-       :session_type,
-       :task,
-       :classification,
-       :interest,
-       :location,
-       :handled_by]
+    def csv_format
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :cur_street => [:person, :contact, :cur_street],
+       :cur_city => [:person, :contact, :cur_city],
+       :cur_state => [:person, :contact, :cur_state],
+       :cur_postal_code => [:person, :contact, :cur_postal_code],
+       :cur_phone => [:person, :contact, :cur_phone],
+       :email => [:person, :contact, :email],
+       :session_date => [:classification],
+       :session_type => [:session_type],
+       :task => [:task],
+       :classification => [:classification],
+       :interest => [:interest],
+       :location => [:location],
+       :handled_by => [:handled_by]}
     end
-
-    def csv_row(c)
-      [c.rsend(:person, :id_number),
-       c.rsend(:person, :last_name),
-       c.rsend(:person, :first_name),
-       c.rsend(:person, :contact, :cur_street),
-       c.rsend(:person, :contact, :cur_city),
-       c.rsend(:person, :contact, :cur_state),
-       c.rsend(:person, :contact, :cur_postal_code),
-       c.rsend(:person, :contact, :cur_phone),
-       c.rsend(:person, :contact, :email),
-       c.rsend(:session_date),
-       c.rsend(:session_type),
-       c.rsend(:task),
-       c.rsend(:classification),
-       c.rsend(:interest),
-       c.rsend(:location),
-       c.rsend(:handled_by)]
-    end
-
   end
 end

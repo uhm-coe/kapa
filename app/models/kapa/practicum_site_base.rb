@@ -30,46 +30,25 @@ module Kapa::PracticumSiteBase
       return sites;
     end
 
-    def csv_columns
-      [:site_code,
-       :area_group,
-       :district,
-       :level_from,
-       :level_to,
-       :category,
-       :name,
-       :name_short,
-       :area,
-       :area_group,
-       :principal_last_name,
-       :principal_first_name,
-       :street,
-       :city,
-       :state,
-       :postal_code,
-       :phone,
-       :fax]
-    end
-
-    def csv_row(c)
-      [c.rsend(:code),
-       c.rsend(:area_group),
-       c.rsend(:district),
-       c.rsend(:level_from),
-       c.rsend(:level_to),
-       c.rsend(:category),
-       c.rsend(:name),
-       c.rsend(:name_short),
-       c.rsend(:area),
-       c.rsend(:area_group),
-       c.rsend(:site_contact, :principal_first_name),
-       c.rsend(:site_contact, :principal_last_name),
-       c.rsend(:site_contact, :street),
-       c.rsend(:site_contact, :city),
-       c.rsend(:site_contact, :state),
-       c.rsend(:site_contact, :postal_code),
-       c.rsend(:site_contact, :phone),
-       c.rsend(:site_contact, :fax)]
+    def csv_format
+      {:site_code => [:code],
+       :area_group => [:area_group],
+       :district => [:district],
+       :level_from => [:level_fro],
+       :level_to => [:level_to],
+       :category => [:category],
+       :name => [:name],
+       :name_short => [:name_short],
+       :area => [:area],
+       :area_group => [:area_group],
+       :principal_last_name => [:site_contact, :principal_first_name],
+       :principal_first_name => [:site_contact, :principal_last_name],
+       :street => [:site_contact, :street],
+       :city => [:site_contact, :city],
+       :state => [:site_contact, :state],
+       :postal_code => [:site_contact, :postal_code],
+       :phone => [:site_contact, :phone],
+       :fax => [:site_contact, :fax]}
     end
   end
 end

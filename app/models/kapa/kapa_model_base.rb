@@ -109,20 +109,16 @@ module Kapa::KapaModelBase
 
     def to_csv(options = {})
       objects = self.search(options)
+      keys = self.csv_format.keys
       CSV.generate do |csv|
-        csv << self.csv_columns
+        csv << keys
         objects.each do |o|
-          csv << self.csv_row(o)
+          csv << keys.collect {|k| o.rsend(*csv_format[k]) }
         end
       end
     end
 
-    def csv_columns
-      #This method should be implemented in subclasses to define csv data.
-      []
-    end
-
-    def csv_row(object)
+    def csv_format
       #This method should be implemented in subclasses to define csv data.
       []
     end

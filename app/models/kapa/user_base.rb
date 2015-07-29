@@ -202,31 +202,17 @@ module Kapa::UserBase
       return users
     end
 
-    def csv_columns
-      [:uid,
-       :id_number,
-       :last_name,
-       :first_name,
-       :position,
-       :department,
-       :emp_status,
-       :status,
-       :dept,
-       :category]
-    end
-
-    def csv_row(c)
-      [c.rsend(:uid),
-       c.rsend(:person, :id_number),
-       c.rsend(:person, :last_name),
-       c.rsend(:person, :first_name),
-       c.rsend(:position),
-       c.rsend(:department),
-       c.rsend(:emp_status),
-       c.rsend(:status),
-       c.rsend(:dept),
-       c.rsend(:category)]
+    def csv_format
+      {:uid => [:uid],
+       :id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :position => [:position],
+       :department => [:department],
+       :emp_status => [:emp_status],
+       :status => [:status],
+       :dept => [:dept],
+       :category => [:category]}
     end
   end
-
 end

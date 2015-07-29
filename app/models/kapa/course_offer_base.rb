@@ -70,28 +70,16 @@ module Kapa::CourseOfferBase
       return course_offers
     end
 
-    def csv_columns
-      [:term_id,
-       :term_desc,
-       :subject,
-       :number,
-       :section,
-       :crn,
-       :title,
-       :instructor,
-       :status]
-    end
-
-    def csv_row(c)
-      [c.term_id,
-       c.term_desc,
-       c.subject,
-       c.number,
-       c.section,
-       c.crn,
-       c.title,
-       c.instructor,
-       c.status]
+    def csv_format
+      {:term_id => [:term_id],
+       :term_desc => [:term_desc],
+       :subject => [:subject],
+       :number => [:number],
+       :section => [:section],
+       :crn => [:crn],
+       :title => [:title],
+       :instructor => [:instructor],
+       :status => [:status]}
     end
   end
 end

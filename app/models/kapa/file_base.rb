@@ -37,34 +37,17 @@ module Kapa::FileBase
       return files
     end
 
-    def csv_columns
-      [:id_number,
-       :last_name,
-       :first_name,
-       :ssn,
-       :ssn_agreement,
-       :cur_street,
-       :cur_city,
-       :cur_state,
-       :cur_postal_code,
-       :cur_phone,
-       :email,
-       :updated]
-    end
-
-    def csv_row(c)
-      [c.rsend(:person, :id_number),
-       c.rsend(:person, :last_name),
-       c.rsend(:person, :first_name),
-       c.rsend(:person, :ssn),
-       c.rsend(:person, :ssn_agreement),
-       c.rsend(:person, :contact, :cur_street),
-       c.rsend(:person, :contact, :cur_city),
-       c.rsend(:person, :contact, :cur_state),
-       c.rsend(:person, :contact, :cur_postal_code),
-       c.rsend(:person, :contact, :cur_phone),
-       c.rsend(:person, :contact, :email),
-       c.rsend(:updated_at)]
+    def csv_format
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :cur_street => [:person, :contact, :cur_street],
+       :cur_city => [:person, :contact, :cur_city],
+       :cur_state => [:person, :contact, :cur_stateperson, :contact, :cur_state],
+       :cur_postal_code => [:person, :contact, :cur_postal_code],
+       :cur_phone => [:person, :contact, :cur_phone],
+       :email => [:person, :contact, :email],
+       :updated => [:updated_at]}
     end
   end
 end
