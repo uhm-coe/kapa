@@ -1,11 +1,22 @@
-module Kapa::Main::SessionControllerBase
+module Kapa::Main::SessionsControllerBase
   extend ActiveSupport::Concern
 
-  def welcome
-    validate_login if Kapa::UserSession.find
+  included do
+    skip_before_filter :check_if_route_is_enabled
+    skip_before_filter :validate_login
+    skip_before_filter :check_read_permission
+    skip_before_filter :check_write_permission
+    skip_before_filter :check_manage_permission
+    before_filter :validate_login, :only => :show
   end
 
-  def login
+  def new
+  end
+
+  def show
+  end
+
+  def create
     reset_session
     session = Kapa::UserSession.new(params[:user_session])
     unless session.save
@@ -15,19 +26,11 @@ module Kapa::Main::SessionControllerBase
     redirect_to kapa_root_path
   end
 
-  def logout
+  def destroy
     Kapa::UserSession.find.destroy if Kapa::UserSession.find
     redirect_to kapa_root_path
   end
 
   def error
-  end
-
-  private
-  def filter_defaults
-    {:key => "",
-     :term_id => Kapa::Term.current_term.id,
-     :type => :admission,
-     :per_page => Rails.configuration.items_per_page}
   end
 end

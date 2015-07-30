@@ -8,11 +8,11 @@ module Kapa::KapaModelBase
 
   def deserialize(name, options = {})
     if self.yml.blank? or self.yml[name].blank?
-      obj = Hash.new
+      object = Hash.new
     else
-      obj = self.yml[name]
+      object = self.yml[name]
     end
-    options[:as] ? options[:as].new(obj) : obj.clone
+    options[:as] ? options[:as].new(object) : object.clone
   end
 
   def serialize(name, value)
@@ -39,12 +39,12 @@ module Kapa::KapaModelBase
   end
 
   def rsend(*args, &block)
-    obj = self
-    args.each do |a|
-      b = (a.is_a?(Array) && a.last.is_a?(Proc) ? a.pop : block)
-      obj = obj.__send__(*a, &b) if obj
+    value = self
+    args.each do |arg|
+      #Recursive send will continue unless it gets nil value.
+      value = value.__send__(*arg) unless value.nil?
     end
-    obj
+    value
   end
 
   def ext

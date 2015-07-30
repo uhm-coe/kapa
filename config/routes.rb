@@ -9,19 +9,18 @@ Rails.application.routes.draw do
 
   namespace :kapa do
 
-    root :to => 'main/session#welcome', :as => :root
-    match '/login' => 'main/session#login', :as => :login, :via => [:get, :post]
-    match '/logout' => 'main/session#logout', :as => :logout, :via => [:get, :post]
-    match '/error' => 'main/session#error', :as => :error, :via => [:get, :post]
+    root :to => 'main/sessions#show', :as => :root
+    match '/error' => 'main/sessions#error', :as => :error, :via => [:get, :post]
 
     namespace :main do
-      get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
+      resource :session
       resources :persons, &extra_actions
       resources :contacts, &extra_actions
       resources :curriculums, &extra_actions
       resources :transition_points, &extra_actions
       resources :transition_actions, &extra_actions
       resources :enrollments, &extra_actions
+      get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
     end
 
     namespace :document do
@@ -41,11 +40,11 @@ Rails.application.routes.draw do
     end
 
     namespace :practicum do
-      get 'placements/get_mentor(/:id)' => 'placements#get_mentor', :as => :placements_get_mentor
-      get 'placements/update_mentor(/:id)' => 'placements#update_mentor', :as => :placements_update_mentor
       resources :placements, &extra_actions
       resources :sites, &extra_actions
       resources :assignments, &extra_actions
+      get 'placements/get_mentor(/:id)' => 'placements#get_mentor', :as => :placements_get_mentor
+      get 'placements/update_mentor(/:id)' => 'placements#update_mentor', :as => :placements_update_mentor
     end
 
     namespace :admin do

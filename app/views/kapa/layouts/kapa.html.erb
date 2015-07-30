@@ -72,7 +72,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as
               <strong><%= h @current_user.uid %></strong><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Logout", kapa_logout_url %></li>
+              <li><%= link_to "Logout", kapa_main_session_path, {:method => :delete} %></li>
             </ul>
           </li>
         </ul>

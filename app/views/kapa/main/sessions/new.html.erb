@@ -1,11 +1,4 @@
 <% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-      <% if @current_user.nil? %>$('#login_dialog').modal({show: true});
-      <% end %>
-    });
-  </script>
-
   <style>
     .jumbotron {
       background-color: #eeeeee;
@@ -23,8 +16,6 @@
 <% end %>
 
 <% content_for(:box1) do %>
-
-
   <div class="row">
     <div class="col-md-8">
       <div class="jumbotron">
@@ -43,19 +34,11 @@
     </div>
 
     <div class="col-md-4 right-col">
-      <% if @current_user %>
-        <h3>Hi <%= @current_user.person.first_name %> <%= @current_user.person.last_name %>,</h3>
-
-        <p>Your last login was <%= @current_user.updated_at %>.</p>
-      <% else %>
-        <%= bootstrap_form_for(:user_session, :url => kapa_login_path, :html => {:id => "login_form"}) do |f| %>
-          <%= f.text_field :uid, :label => "Username" %>
-          <%= f.password_field :password %>
-          <%= f.submit "Login", :class => "btn btn-primary btn-lg" %>
-        <% end %>
+      <%= bootstrap_form_for(:user_session, :url => kapa_main_session_path, :html => {:method => :post}) do |f| %>
+        <%= f.text_field :uid, :label => "Username" %>
+        <%= f.password_field :password %>
+        <%= f.submit "Login", :class => "btn btn-primary btn-lg" %>
       <% end %>
     </div>
   </div>
-  </div>
-
 <% end %>

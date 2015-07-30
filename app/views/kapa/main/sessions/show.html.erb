@@ -1,0 +1,49 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      <% if @current_user.nil? %>$('#login_dialog').modal({show: true});
+      <% end %>
+    });
+  </script>
+
+  <style>
+    .jumbotron {
+      background-color: #eeeeee;
+      color: inherit;
+      margin-bottom: 0px;
+      padding: 30px;
+    }
+
+    .right-col {
+      padding: 120px 0 0 0;
+      float: none;
+      display: inline-block;
+    }
+  </style>
+<% end %>
+
+<% content_for(:box1) do %>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="jumbotron">
+        <h1>Welcome</h1>
+
+        <p>
+          KAPA Admin Console is an administrative UI to organize student academic records including advising, courses,
+          transition points, field placements, electronic documents, etc...
+        </p>
+
+        <p>
+          This highly customizable UI provides a set of tools to support various needs for higher education
+          institutions.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4 right-col">
+      <h3>Hi <%= @current_user.person.first_name %> <%= @current_user.person.last_name %>,</h3>
+
+      <p>Your last login was <%= @current_user.updated_at %>.</p>
+    </div>
+  </div>
+<% end %>

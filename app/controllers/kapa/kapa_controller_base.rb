@@ -4,9 +4,9 @@ module Kapa::KapaControllerBase
   included do
     layout "/kapa/layouts/kapa"
     protect_from_forgery
-    before_filter :check_if_route_is_enabled, :except => [:welcome, :login, :logout, :error]
-    before_filter :validate_login, :except => [:welcome, :login, :logout, :error]
-    before_filter :check_read_permission, :except => [:welcome, :login, :logout, :error]
+    before_filter :check_if_route_is_enabled
+    before_filter :validate_login
+    before_filter :check_read_permission
     before_filter :check_write_permission, :only => [:new, :create, :update, :destroy]
     before_filter :check_manage_permission, :only => [:export, :import]
     after_filter :put_timestamp
@@ -27,11 +27,14 @@ module Kapa::KapaControllerBase
     if @current_user_session
       @current_user = @current_user_session.user
       @current_user.request = request
+    else
+      flash[:info] = "Please log in to continue."
+      redirect_to(new_kapa_main_session_path) and return
     end
     unless @current_user_session and @current_user and @current_user.status >= 3
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
-      redirect_to(kapa_root_url) and return
+      redirect_to(new_kapa_main_session_path) and return
     end
   end
 
@@ -178,15 +181,5 @@ module Kapa::KapaControllerBase
         items.push ["System Properties", kapa_admin_properties_path] if @current_user.manage?(:kapa_admin_properties)
     end
     items
-  end
-
-  #This method returns nil if it encounters any nil object during reflection.
-  def rsend(object, *args, &block)
-    obj = object
-    args.each do |a|
-      b = (a.is_a?(Array) && a.last.is_a?(Proc) ? a.pop : block)
-      obj = obj.__send__(*a, &b) if obj
-    end
-    obj
   end
 end
