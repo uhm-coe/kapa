@@ -1,4 +1,6 @@
-<div class="row">
+<%= bootstrap_fields_for :advising_session do |f| %>
+
+  <div class="row">
   <div class="col-sm-6">
     <div class="form-group">
       <%=label_tag "advising_session_session_date", "Date" %>
@@ -18,3 +20,5 @@
     <%=f.hidden_field :person_id  %>
   </div>
 </div>
+
+<% end %>

@@ -1,17 +1,15 @@
 <% content_for(:box1) do %>
-  <%unless @advising_session.anonymous?%>
-    <%=render :partial => "/kapa/main/person_detail" %>
-  <% end %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
-  <h4 class="section-header <%='divider' unless @advising_session.anonymous? %>">
-    <%=link_to_unless @advising_session.anonymous?, "", kapa_main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
     Advising Session
   </h4>
 
   <div>
     <%=bootstrap_form_for :advising_session, :url => kapa_advising_session_path(:id => @advising_session), :html => {:method => :put} do |f| %>
-      <%=render :partial => "/kapa/advising/session_form", :locals => { :f => f, :anonymous => @advising_session.anonymous? } %>
-      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_advising_session_path(:id => @advising_session)} if @current_user.write? %>
+      <%=render :partial => "/kapa/advising/session_form" %>
+      <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_advising_session_path(:id => @advising_session)} if @current_user.write? %>
     <% end %>
   </div>
 <% end %>

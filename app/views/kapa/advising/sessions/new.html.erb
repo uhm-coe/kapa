@@ -1,9 +1,7 @@
 <% content_for(:box1) do %>
-  <%unless @advising_session.anonymous?%>
-    <%=render :partial => "/kapa/main/person_detail" %>
-  <% end %>
+  <%=render :partial => "/kapa/main/person_detail" %>
 
-  <h4 class="section-header <%='divider' unless @advising_session.anonymous? %>">
+  <h4 class="section-header divider">
     <%=link_to "", kapa_main_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
     Advising Record
   </h4>
