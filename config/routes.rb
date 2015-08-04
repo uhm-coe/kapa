@@ -10,15 +10,15 @@ Rails.application.routes.draw do
   namespace :kapa do
 
     root :to => 'main/sessions#show', :as => :root
-    match '/error' => 'main/sessions#error', :as => :error, :via => [:get, :post]
+    get '/error' => 'main/sessions/#error', :as => :error
 
     namespace :main do
       resource :session
       resources :persons, &extra_actions
-      resources :contacts, &extra_actions
+      resources :contacts
       resources :curriculums, &extra_actions
       resources :transition_points, &extra_actions
-      resources :transition_actions, &extra_actions
+      resources :transition_actions
       resources :enrollments, &extra_actions
       get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
     end
@@ -42,7 +42,6 @@ Rails.application.routes.draw do
     namespace :practicum do
       resources :placements, &extra_actions
       resources :sites, &extra_actions
-      resources :assignments, &extra_actions
       get 'placements/get_mentor(/:id)' => 'placements#get_mentor', :as => :placements_get_mentor
       get 'placements/update_mentor(/:id)' => 'placements#update_mentor', :as => :placements_update_mentor
     end
@@ -51,7 +50,7 @@ Rails.application.routes.draw do
       resources :users, &extra_actions
       resources :terms, &extra_actions
       resources :programs, &extra_actions
-      resources :program_offers, &extra_actions
+      resources :program_offers
       resources :properties, &extra_actions
       resources :rubrics, &extra_actions
       resources :criterions, &extra_actions

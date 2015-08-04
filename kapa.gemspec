@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '4.2.2'
+  s.add_dependency 'rails', '~> 4.2.0'
   s.add_dependency 'authlogic'
   s.add_dependency 'paperclip', '~> 3.0'
   s.add_dependency 'fastercsv'
@@ -32,5 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'twitter-bootstrap-rails'
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.3.1.1'
   s.add_dependency 'bootstrap-multiselect-rails'
-#  s.add_dependency 'rails-csv-fixtures'
+  #Current Gem version of 'rails-csv-fixtures' does not work with Rails4.
+  #Include Github version in Gemfile.
+  #s.add_dependency 'rails-csv-fixtures'
 end

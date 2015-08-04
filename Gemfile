@@ -13,4 +13,5 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem 'rails', '~> 4.2.3'
 gem 'rails-csv-fixtures', :git => 'https://github.com/bfolkens/rails-csv-fixtures.git'
