@@ -41,5 +41,3 @@ Rails.configuration.available_routes = %w{
   kapa_admin_terms
   kapa_admin_users
 }
-
-

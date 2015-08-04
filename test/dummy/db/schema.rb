@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150705000000) do
+ActiveRecord::Schema.define(version: 20140723000000) do
 
   create_table "advising_sessions", force: :cascade do |t|
     t.integer  "person_id",                limit: 4,     null: false
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.string   "dept",              limit: 255
     t.integer  "user_primary_id",   limit: 4
     t.integer  "user_secondary_id", limit: 4
-    t.boolean  "active",            limit: 1,     default: false
+    t.boolean  "active",                          default: false
     t.text     "note",              limit: 65535
     t.text     "yml",               limit: 65535
     t.text     "xml",               limit: 65535
@@ -405,7 +405,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.string   "available_major",           limit: 255
     t.string   "available_academic_period", limit: 255
     t.integer  "sequence",                  limit: 4
-    t.boolean  "active",                    limit: 1,     default: true
+    t.boolean  "active",                                  default: true
     t.text     "yml",                       limit: 65535
     t.text     "xml",                       limit: 65535
     t.datetime "created_at"
@@ -432,7 +432,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.string   "available_location",     limit: 255
     t.string   "category",               limit: 255
     t.integer  "sequence",               limit: 4
-    t.boolean  "active",                 limit: 1,     default: true
+    t.boolean  "active",                               default: true
     t.string   "dept",                   limit: 255
     t.text     "yml",                    limit: 65535
     t.text     "xml",                    limit: 65535
@@ -453,7 +453,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.string   "category",          limit: 255
     t.string   "regexp",            limit: 255
     t.integer  "sequence",          limit: 4
-    t.boolean  "active",            limit: 1,     default: true
+    t.boolean  "active",                          default: true
     t.string   "dept",              limit: 255
     t.text     "yml",               limit: 65535
     t.text     "xml",               limit: 65535
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "sequence",          limit: 4
-    t.boolean  "active",            limit: 1,     default: true
+    t.boolean  "active",                          default: true
     t.string   "dept",              limit: 255
     t.text     "yml",               limit: 65535
     t.text     "xml",               limit: 65535
@@ -487,7 +487,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.string   "academic_year",     limit: 255
     t.string   "calendar_year",     limit: 255
     t.string   "fiscal_year",       limit: 255
-    t.boolean  "regular_term",      limit: 1
+    t.boolean  "regular_term"
   end
 
   create_table "timestamps", force: :cascade do |t|
@@ -531,7 +531,7 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.integer  "user_primary_id",   limit: 4
     t.integer  "user_secondary_id", limit: 4
     t.string   "dept",              limit: 255
-    t.boolean  "active",            limit: 1,     default: false
+    t.boolean  "active",                          default: false
     t.text     "note",              limit: 65535
     t.text     "assessment_note",   limit: 65535
     t.datetime "created_at"
@@ -556,6 +556,8 @@ ActiveRecord::Schema.define(version: 20150705000000) do
     t.integer "assignable_id",   limit: 4
     t.string  "assignable_type", limit: 255
   end
+
+  add_index "user_assignments", ["user_id", "assignable_id", "assignable_type"], name: "index_user_assignments_on_user_id_and_assignable_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "uid",                 limit: 255

@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-require 'active_record/fixtures'
+#require 'active_record/fixtures'
 
 Kapa::Person.delete_all
 Kapa::User.delete_all
@@ -34,7 +34,7 @@ end
 #Create a sample user on each role
 [[:admin, ""], [:adviser, "OSAS"], [:instructor, "ITE"]].each do |role|
   person = Kapa::Person.create(:last_name => role[0].capitalize, :first_name => "User")
-  user = person.users.create(:uid => role[0], :category => "local", :dept => role[1], :status => 3, :emp_status => 3)
+  user = person.users.create(:uid => role[0], :category => "local", :dept => [role[1]], :status => 3, :emp_status => 3)
   user.password = role[0]
   user.apply_role(role[0])
   user.save!
