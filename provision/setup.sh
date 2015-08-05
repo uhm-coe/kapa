@@ -9,5 +9,5 @@ if ! [ `which ansible` ]; then
     echo "cd /vagrant" >> .bashrc
 fi
 
-ansible-playbook -i "localhost," -c local /vagrant/provision/setup.yml
+ansible-playbook -i "localhost," -c local /vagrant/provision/rails-devserver.yml
 

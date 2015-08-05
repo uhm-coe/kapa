@@ -1,3 +1,4 @@
+#Ansible Playbook to setup Ruby, Apache/Passenger, and MySQL on Ubuntu 14.04LT
 ---
 - hosts: all
   vars:
