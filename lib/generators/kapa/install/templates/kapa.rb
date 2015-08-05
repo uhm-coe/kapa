@@ -27,6 +27,7 @@ Rails.configuration.available_routes = %w{
       kapa_document_files
       kapa_document_forms
       kapa_document_exams
+      kapa_document_reports
       kapa_advising_sessions
       kapa_course_offers
       kapa_course_registrations

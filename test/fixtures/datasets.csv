@@ -4,5 +4,5 @@ id,type,name,datasource,query,record_count
                                 inner join programs p on c.program_id = p.id
                                 inner join terms tr on t.term_id = tr.id
                                 where type = 'admission'"
-2,database,Advising Report,local,"select session_type, session_date
-from advising_sessions"
+2,database,Advising Report,local,"select session_type, session_date, p.gender, TIMESTAMPDIFF(YEAR,p.birth_date,CURDATE()) AS age
+                                  from advising_sessions a inner join persons p on a.person_id = p.id"
