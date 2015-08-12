@@ -35,4 +35,8 @@ Gem::Specification.new do |s|
   #Current Gem version of 'rails-csv-fixtures' does not work with Rails4.
   #Include Github version in Gemfile.
   #s.add_dependency 'rails-csv-fixtures'
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'faker'
+  s.add_development_dependency 'factory_girl_rails'
 end
