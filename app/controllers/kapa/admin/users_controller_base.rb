@@ -36,13 +36,13 @@ module Kapa::Admin::UsersControllerBase
     @person = Kapa::Person.new(params[:person])
     case params[:mode]
     when "promote"
-      @person_verified = Kapa::Person.lookup(params[:person][:id_number], :verified => true)
+      @person_verified = Kapa::Person.lookup(params[:person][:id_number])
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Person was successfully imported."
 
     when "consolidate"
-      @person_verified = Kapa::Person.lookup(params[:person][:id_number], :verified => true)
+      @person_verified = Kapa::Person.lookup(params[:person][:id_number])
       @person_verified.merge(@person)
       @person = @person_verified
       flash[:success] = "Records were successfully consolidated."

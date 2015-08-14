@@ -8,7 +8,7 @@
 
   <div class="col-sm-6">
     <%=f.text_field :category %>
-    <%=f.text_field :dept %>
+    <%=f.property_select :dept, {:name => :dept}, {:multiple => true} %>
     <%=f.text_field :sequence %>
     <%=f.check_box :active, {}, 1, 0 %>
   </div>

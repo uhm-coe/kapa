@@ -384,12 +384,15 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "program_offers", force: :cascade do |t|
       t.integer "program_id", limit: 4, null: false
-      t.string "distribution", limit: 255, null: false
+      t.integer "start_term_id", limit: 4
+      t.integer "end_term_id", limit: 4
       t.string "description", limit: 255
       t.string "description_short", limit: 255
       t.string "major", limit: 255
-      t.string "academic_period", limit: 255
       t.string "available_major", limit: 255
+      t.string "distribution", limit: 255
+#      t.string "available_distribution", limit: 255
+      t.string "academic_period", limit: 255
       t.string "available_academic_period", limit: 255
       t.integer "sequence", limit: 4
       t.boolean "active", limit: 1, default: true
@@ -397,8 +400,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text "xml", limit: 65535
       t.datetime "created_at"
       t.datetime "updated_at"
-      t.integer "start_term_id", limit: 4
-      t.integer "end_term_id", limit: 4
     end
 
     add_index "program_offers", ["end_term_id"], name: "index_program_offers_on_end_term_id", using: :btree

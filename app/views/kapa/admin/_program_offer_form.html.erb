@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-sm-6">
       <%=f.text_field :description %>
-      <%=f.property_select :available_major, {:name => :major,:include_code => true, :label => "Available Majors", :conditions => {:code => @program.available_major}}, {:multiple => true} %>
+      <%=f.term_select :start_term_id, :include_blank => true, :label => "Effective From" %>
+      <%=f.term_select :end_term_id, :include_blank => true, :label => "Effective To" %>
     </div>
     <div class="col-sm-6">
       <%=f.property_select :distribution, {:conditions => {:code => @program.available_distribution}}, {} %>
-      <%=f.term_select :start_term_id, :include_blank => true, :label => "Effective From" %>
-      <%=f.term_select :end_term_id, :include_blank => true, :label => "Effective To" %>
+      <%=f.property_select :available_major, {:name => :major,:include_code => true, :label => "Available Majors", :conditions => {:code => @program.available_major}}, {:multiple => true} %>
     </div>
   </div>
 <% end %>

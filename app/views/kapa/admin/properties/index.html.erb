@@ -21,12 +21,12 @@
 
 <% content_for(:box1) do %>
 
-  <h3>System Properties</h3>
+  <h3>Properties</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
       <%= link_to "New", {:action => :new}, :class => "btn btn-default" %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Search</button>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
         <td><%= h property.code %></td>
         <td><%= h property.description %></td>
         <td><%= abbr property.category, 20 %></td>
-        <td><%= h property.dept %></td>
+        <td><%= h property.dept.join(", ") %></td>
         <td><%= h property.sequence %></td>
         <td><%= h property.active %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>

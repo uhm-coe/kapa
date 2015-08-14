@@ -41,6 +41,7 @@ module Kapa::Admin::PropertiesControllerBase
 
   def index
     @filter = filter
+    @modal = true if @filter.name.blank?
     @properties = Kapa::Property.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 end

@@ -58,7 +58,7 @@ module Kapa::Main::EnrollmentsControllerBase
 
     CSV.new(import_file, :headers => true).each do |row|
       id_number = row["id_number"] ? row["id_number"] : "00000000"
-      person = Kapa::Person.lookup(id_number, :verified => true)
+      person = Kapa::Person.lookup(id_number)
 
       if person
         person.save if person.new_record?

@@ -30,7 +30,7 @@
   <div class="row">
     <div class="col-sm-12 text-right">
       <%=link_to "New", {:action => :new}, :class => "btn btn-default" %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Search</button>
     </div>
   </div>
 
@@ -38,7 +38,7 @@
     <thead>
       <tr>
         <th>Title</th>
-        <th>Program(s)</th>
+        <th>Program</th>
         <th>Effective</th>
         <th>Criteria</th>
         <th>Dept</th>
@@ -49,10 +49,10 @@
       <% for assessment_rubric in @assessment_rubrics %>
         <tr>
           <td><%=abbr assessment_rubric.title, 50 %></td>
-          <td><%=abbr assessment_rubric.program, 23 %></td>
+          <td><%=abbr assessment_rubric.program.join(", "), 23 %></td>
           <td><%=h assessment_rubric.effective_term %></td>
           <td><%=h assessment_rubric.assessment_criterions.length.to_i %></td>
-          <td><%=h assessment_rubric.dept %></td>
+          <td><%=h assessment_rubric.dept.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => assessment_rubric}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

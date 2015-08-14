@@ -20,12 +20,12 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Academic Programs</h3>
+  <h3>Programs</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
       <%=link_to "New", {:action => :new}, :class => "btn btn-default" %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Search</button>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
           <td><%=h program.code %></td>
           <td><%=h program.description %></td>
           <td><%=abbr program.category, 20 %></td>
-          <td><%=h program.dept %></td>
+          <td><%=h program.dept.join(", ") %></td>
           <td><%=h program.sequence %></td>
           <td><%=h program.active %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => program}, :class => "btn btn-default btn-xs" %></td>

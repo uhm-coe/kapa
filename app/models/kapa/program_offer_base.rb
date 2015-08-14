@@ -2,10 +2,11 @@ module Kapa::ProgramOfferBase
   extend ActiveSupport::Concern
 
   included do
+    serialize :dept, Kapa::CsvSerializer
     serialize :available_major, Kapa::CsvSerializer
     belongs_to :program
 
-    validates_presence_of :distribution, :program_id
+    validates_presence_of :program_id
     validates_uniqueness_of :distribution, :scope => :program_id
   end
 

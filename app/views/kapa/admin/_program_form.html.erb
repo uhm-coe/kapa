@@ -5,7 +5,7 @@
       <%=f.text_field :description  %>
       <%=f.text_field :description_short %>
       <%=f.text_field :category %>
-      <%=f.text_field :dept %>
+      <%=f.property_select :dept, {:name => :dept}, {:multiple => true} %>
       <%=f.check_box :active, {}, 1, 0 %>
     </div>
 

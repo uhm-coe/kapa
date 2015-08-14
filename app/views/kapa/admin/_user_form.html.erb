@@ -3,10 +3,10 @@
     <%=f.text_field :uid, :label => "UID" %>
     <%=f.text_field :password %>
     <%=f.select :category, [["LDAP", "ldap"],["Local" , "local"]], :label => {:text => "Auth Method"} %>
-    <%=f.select :emp_status, [["0/Non-Employee", 0],["1/Former Employee" , 1],["2/Active Employee" , 2],["3/Overridden" , 3]] %>
+    <%=f.select :emp_status, [["Non-Employee", 0],["Former Employee" , 1],["Active Employee" , 2],["Overridden" , 3]] %>
   </div>
   <div class="col-sm-6">
-    <%=f.select :status, [["0/No Access", 0],["1/AS User" , 1],["3/SIS User" , 3]], :label => "User Status" %>
+    <%=f.select :status, [["No Access", 0],["Guest" , 1],["User" , 3]], :label => "User Status" %>
     <%=f.property_select :dept, {:name => :dept, :label => "Data Access"}, {:multiple => true} %>
     <%=f.property_select :department, :name => :dept, :include_blank => true %>
     <%=f.text_field :position %>

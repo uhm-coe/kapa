@@ -10,7 +10,6 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Filter Criteria", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_admin_terms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%=f.term_select :term_id, :include_blank => "Any" %>
       <div class="form-group">
         <%=label_tag "filter_start_date", "Start Date" %>
         <%=date_picker :filter, :start_date %>
@@ -28,12 +27,12 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Academic Terms</h3>
+  <h3>Terms</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
       <%=link_to "New", {:action => :new}, :class => "btn btn-default" %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Filter</button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog">Search</button>
     </div>
   </div>
 

@@ -2,6 +2,7 @@ module Kapa::AssessmentRubricBase
   extend ActiveSupport::Concern
 
   included do
+    serialize :dept, Kapa::CsvSerializer
     serialize :course, Kapa::CsvSerializer
     serialize :program, Kapa::CsvSerializer
     serialize :transition_point, Kapa::CsvSerializer

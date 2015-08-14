@@ -67,10 +67,21 @@ module Kapa::Main::PersonsControllerBase
     else
       @persons = Kapa::Person.search(:filter => @filter)
     end
+
+    if @persons.blank?
+      person = Kapa::Person.lookup(@filter.key)
+      if person
+        person.save!
+        @persons = [person]
+        flash.now[:success] = "The record was imported from #{person.source}."
+      else
+        flash.now[:warning] = "No record was found."
+      end
+    end
   end
 
   def lookup
-    person = Kapa::Person.lookup(params[:key], :verified => true)
+    person = Kapa::Person.lookup(params[:key])
     if person
       if person.new_record?
         action = "promote"

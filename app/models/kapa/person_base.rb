@@ -112,15 +112,18 @@ module Kapa::PersonBase
       return persons.order("status desc").limit(100)
     end
 
-    def lookup(key, options ={})
-      filter = OpenStruct.new
-      filter.key = key
-      person_local = self.search(filter, options).first
+    def lookup(key)
+      filter = OpenStruct.new(:key => key)
+      #Key must be unique attribute
+      unless filter.key =~ Regexp.new(Rails.configuration.regex_id_number) or filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
+        return false
+      end
+      person_local = self.search(:filter => filter).first
       if person_local.blank?
-        person_remote = Kapa::Person.import(key)
+        person_remote = Kapa::Person.search_remote(:filter => filter).first
 
         #Make sure the person found in LDAP is not in the local database.
-        #This avoids the problem when email is missing in local record but exists in LDAP.
+        #This avoids the problem when email is missing in local record but exists in external data source.
         if person_remote
           person_local = Kapa::Person.find_by_id_number(person_remote.id_number)
           if person_local
@@ -135,9 +138,9 @@ module Kapa::PersonBase
       return person_local
     end
 
-    def import(*args)
-      #Implement a way to import a person data from an external datasource in your application.
-      #The first argument should be a key string.
+    def search_remote(options = {})
+      #Implement a way to load a person data from a remote datasource in your application.
+      return []
     end
   end
 end

@@ -2,6 +2,7 @@ module Kapa::ProgramBase
   extend ActiveSupport::Concern
 
   included do
+    serialize :dept, Kapa::CsvSerializer
     serialize :available_major, Kapa::CsvSerializer
     serialize :available_distribution, Kapa::CsvSerializer
     serialize :available_track, Kapa::CsvSerializer

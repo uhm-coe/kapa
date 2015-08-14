@@ -143,7 +143,7 @@ module Kapa::KapaControllerBase
     {:key => "",
      :type => :admission,
      :active => 1,
-     :name => :major,
+     :property => :major,
      :date_start => Date.today,
      :date_end => Date.today,
      :term_id => Kapa::Term.current_term.id,
@@ -175,10 +175,10 @@ module Kapa::KapaControllerBase
       when "admin"
         items.push ["Terms", kapa_admin_terms_path] if @current_user.manage?(:kapa_admin_terms)
         items.push ["Programs", kapa_admin_programs_path] if @current_user.manage?(:kapa_admin_programs)
+        items.push ["Properties", kapa_admin_properties_path] if @current_user.manage?(:kapa_admin_properties)
         items.push ["Assessments", kapa_admin_rubrics_path] if @current_user.manage?(:kapa_admin_rubrics)
         items.push ["Datasets", kapa_admin_datasets_path] if @current_user.manage?(:kapa_admin_datasets)
-        items.push ["User Accounts", kapa_admin_users_path] if @current_user.manage?(:kapa_admin_users)
-        items.push ["System Properties", kapa_admin_properties_path] if @current_user.manage?(:kapa_admin_properties)
+        items.push ["Users", kapa_admin_users_path] if @current_user.manage?(:kapa_admin_users)
     end
     items
   end
