@@ -12,7 +12,7 @@ module Kapa::Admin::RubricsControllerBase
 
   def update
     @assessment_rubric = Kapa::AssessmentRubric.find(params[:id])
-    @assessment_rubric.attributes = params[:assessment_rubric]
+    @assessment_rubric.attributes = assessment_rubric_params
     if @assessment_rubric.save
       flash[:success] = "Rubric was successfully updated."
     else
@@ -23,7 +23,7 @@ module Kapa::Admin::RubricsControllerBase
 
   def create
     @assessment_rubric = Kapa::AssessmentRubric.new
-    @assessment_rubric.attributes= params[:assessment_rubric]
+    @assessment_rubric.attributes= assessment_rubric_params
     unless @assessment_rubric.save
       flash[:danger] = @assessment_rubric.errors.full_messages.join(", ")
       redirect_to new_kapa_admin_rubric_path and return false
@@ -49,5 +49,11 @@ module Kapa::Admin::RubricsControllerBase
   def index
     @filter = filter
     @assessment_rubrics = Kapa::AssessmentRubric.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+  end
+
+  private
+  def assessment_rubric_params
+    params.require(:assessment_rubric).permit(:title, :dept, :reference_url, :start_term_id, :end_term_id,
+                                              :program=>[], :course=>[], :transition_point=>[])
   end
 end
