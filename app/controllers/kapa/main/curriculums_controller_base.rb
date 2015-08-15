@@ -13,7 +13,7 @@ module Kapa::Main::CurriculumsControllerBase
 
   def update
     @curriculum = Kapa::Curriculum.find(params[:id])
-    @curriculum.attributes=(params[:curriculum])
+    @curriculum.attributes = curriculum_params
     @curriculum.update_serialized_attributes(:journey, params[:journey]) if params[:journey].present?
 
     unless @curriculum.save
@@ -32,7 +32,7 @@ module Kapa::Main::CurriculumsControllerBase
 
   def create
     @person = Kapa::Person.find(params[:id])
-    @curriculum = @person.curriculums.build(params[:curriculum])
+    @curriculum = @person.curriculums.build(curriculum_params)
     @curriculum.set_default_options
     @curriculum.update_serialized_attributes(:journey, :active => "Y")
 
@@ -56,6 +56,12 @@ module Kapa::Main::CurriculumsControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "cohort_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
+  end
+
+  private
+  def curriculum_params
+    params.require(:curriculum).permit(:second_degree, :track, :distribution, :location, :major_primary,
+                                       :major_secondary, :user_primary_id, :user_secondary_id, :person_id)
   end
 
 end
