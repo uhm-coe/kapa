@@ -62,9 +62,9 @@
 
   <%= bootstrap_fields_for(:admission_agreement) do |admission_agreement| %>
     <% if (["EDEL-BED", "EDSE-BED", "EDSE-PCERT", "KRS-BS", "SPED-PCERT"].include? @program_code) %>
-      <%= admission_agreement.check_box :agreement_saf1, {:label => "I have completed and submitted the UHM System Application Form to the Manoa Admissions Office (required for new UHM undergraduate students and all PBCSE/PBSPED applicants)."} %>
+      <%= admission_agreement.check_box :agreement_saf1, {:label => "I have completed and submitted the UHM System Application Form to the Manoa Admissions Office."} %>
     <% else %>
-      <%= admission_agreement.check_box :agreement_saf2, :label => "I have completed and submitted Graduate Division Application Form (required for all MEdT applicants)*" %>
+      <%= admission_agreement.check_box :agreement_saf2, :label => "I have completed and submitted Graduate Division Application Form." %>
     <% end %>
     <%= admission_agreement.check_box :agreement_gpa, :label => "My cumulative GPA meets or exceeds the minimum required for my intended COE program." %>
     <% if (["EDSE-BED", "EDSE-PCERT"].include? @program_code) %>
@@ -84,7 +84,7 @@
       <%= admission_agreement.check_box :agreement_academic_major, :label => "I have completed at least 50% of my academic major requirements." %>
     <% end %>
     <% if (["EDEL-BED", "EDSE-BED", "EDSE-PCERT"].include? @program_code) %>
-      <%= admission_agreement.check_box :agreement_fe, :label => "I have fulfilled the minimum 40 hours of field experience and have submitted the appropriate documentation (required for all BED and PBCSE applicants)." %>
+      <%= admission_agreement.check_box :agreement_fe, :label => "I have fulfilled the minimum 40 hours of field experience and have submitted the appropriate documentation." %>
     <% end %>
     <%= admission_agreement.check_box :agreement_praxis_1, :label => "I have passed the Praxis I: Reading, Writing, and Math tests." %>
     <% if (["EDSE-PCERT", "TCH-MEDT"].include? @program_code) %>

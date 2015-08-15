@@ -141,6 +141,26 @@ module Kapa::KapaHelper
     content_tag :abbr, abbr_str, :title => str, "data-toggle" => "tooltip", "data-placement" => "right"
   end
 
+  def document_icon(document)
+     if document.is_a? Kapa::File
+      return "File"
+     elsif document.is_a? Kapa::Form
+      return "Form"
+     elsif document.is_a? Kapa::Exam
+      return "Test"
+     end
+  end
+
+  def document_path(document)
+     if document.is_a? Kapa::File
+      return kapa_document_file_path(:id => document, :format => :file, :inline => true)
+     elsif document.is_a? Kapa::Form
+      return kapa_document_form_path(:id => document)
+     elsif document.is_a? Kapa::Exam
+      return kapa_document_exam_path(:id => document)
+     end
+  end
+
   private
   def next_id(prefix, index)
     i = @table.keys.index(index)

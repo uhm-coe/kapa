@@ -35,13 +35,6 @@ module Kapa::PersonBase
   end
 
   def details(obj)
-    obj.instance_variable_set(:@contact, self.contact)
-
-    #TODO add public or dept conditions
-    docs_forms_list = []
-    docs_forms_list += self.files
-    docs_forms_list += self.forms
-    obj.instance_variable_set(:@docs_forms_list, docs_forms_list)
   end
 
   def ethnicity_desc
@@ -114,32 +107,33 @@ module Kapa::PersonBase
 
     def lookup(key)
       filter = OpenStruct.new(:key => key)
-      #Key must be unique attribute
+      #Key must be unique attribute.
       unless filter.key =~ Regexp.new(Rails.configuration.regex_id_number) or filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
         return false
       end
-      person_local = self.search(:filter => filter).first
-      if person_local.blank?
-        person_remote = Kapa::Person.search_remote(:filter => filter).first
+      person = self.search(:filter => filter).first
+      if person.blank?
+        person_remote = Kapa::Person.lookup_remote(key).first
 
-        #Make sure the person found in LDAP is not in the local database.
+        #Make sure the person found in the remote database is not in the local database.
         #This avoids the problem when email is missing in local record but exists in external data source.
         if person_remote
-          person_local = Kapa::Person.find_by_id_number(person_remote.id_number)
-          if person_local
-            person_local.merge(person_remote)
-            return person_local
+          person = Kapa::Person.find_by_id_number(person_remote.id_number)
+          if person
+            person.merge(person_remote)
+            return person
           end
         end
 
         return person_remote
       end
 
-      return person_local
+      return person
     end
 
-    def search_remote(options = {})
-      #Implement a way to load a person data from a remote datasource in your application.
+    def lookup_remote(key)
+      #Implement a way to load single person data from a remote datasource in main application.
+      #This method is called from lookup method if the system cannot find a person in the local database.
       return []
     end
   end

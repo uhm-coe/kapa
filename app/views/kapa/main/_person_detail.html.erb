@@ -42,52 +42,6 @@
          }
       });
 
-      // Show artifacts modal, usually after document or form update
-      if ('<%=params[:artifacts_modal] %>' === 'show') {
-        $('#person_artifact_modal').modal('show');
-      }
-
-      // When clicking "Upload a document" or "Add a form" buttons
-      $('#upload_document, #add_form').click(function() {
-        $('#person_artifact_modal').modal('hide');
-      });
-
-      // When closing "Select a document", "Select a form", "Edit file data", or "Edit form data" modals
-      $('#document_dialog #modal_close, #form_dialog #modal_close, #edit_document_dialog #modal_close, #edit_form_dialog #modal_close').click(function() {
-        $('#person_artifact_modal').modal('show');
-      });
-
-      // Dynamically generate "Edit file data" modal contents
-      $('body').on('click', '#edit_document', function() {
-        var documentId = $(this).data('id');
-        if (documentId) {
-          // Send Ajax request to retrieve @file so that #edit_document_dialog can be populated
-          $.get('<%=kapa_main_person_path(:id => @person)%>', {
-              doc_id: documentId
-            }, function(data) {
-              $('#edit_document_dialog .modal-body').html(data);
-            }
-          );
-
-          $('#person_artifact_modal').modal('hide');
-        }
-      });
-
-      // Dynamically generate "Edit form data" modal contents
-      $('body').on('click', '#edit_form', function() {
-        var formId = $(this).data('id');
-        if (formId) {
-          // Send Ajax request to retrieve @form so that #edit_form_dialog can be populated
-          $.get('<%=kapa_main_person_path(:id => @person)%>', {
-              form_id: formId
-            }, function(data) {
-              $('#edit_form_dialog .modal-body').html(data);
-            }
-          );
-
-          $('#person_artifact_modal').modal('hide');
-        }
-      });
     });
   </script>
 <% end %>
@@ -100,7 +54,6 @@
     <ul class="dropdown-menu" role="menu">
       <li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Person Profile</a></li>
       <li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contact Information</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#person_artifact_modal">Show Documents</a></li>
       <li><a href="#">Send Email</a></li>
       <li><a href="#">Open External Site</a></li>
     </ul>
@@ -130,23 +83,15 @@
 <% end if @current_user.read? :kapa_document_files or @current_user.read? :kapa_document_forms or @current_user.read? :kapa_document_exams %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+  <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => request.path), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+    <%=f.file_field :data, :label => "File to upload" %>
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
-    <%=f.file_field :data %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
   <% end %>
 <% end %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
-  <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :return_url => request.symbolized_path_parameters), :html => {:id => "new_form_form"} do |f| %>
+  <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :return_url => request.path), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
   <% end %>
-<% end %>
-
-<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_document_dialog", :modal_title => "Edit file data", :modal_form_id => "edit_document_form"} do %>
-  <!-- Rendered dynamically after Edit button is clicked -->
-<% end %>
-
-<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form data", :modal_form_id => "edit_form_form"} do %>
-  <!-- Rendered dynamically after Edit button is clicked -->
 <% end %>

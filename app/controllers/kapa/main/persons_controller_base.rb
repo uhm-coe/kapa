@@ -3,7 +3,12 @@ module Kapa::Main::PersonsControllerBase
 
   def show
     @person = Kapa::Person.find(params[:id])
-    @person.details(self)
+    @contact = @person.contact
+    #TODO add public or dept conditions
+    @documents = []
+    @documents += @person.files
+    @documents += @person.forms
+    @documents += @person.exams
     #TODO Add dept conditions
     @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")

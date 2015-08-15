@@ -8,7 +8,7 @@ module Kapa::Document::ExamsControllerBase
     @exam_scores = @exam.exam_scores
     @person = @exam.person
     @title = "Praxis Score Report"
-    render :layout => "/kapa/layouts/artifact"
+    render :layout => "/kapa/layouts/document"
   end
 
   def update

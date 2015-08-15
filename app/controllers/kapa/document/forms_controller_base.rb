@@ -5,7 +5,7 @@ module Kapa::Document::FormsControllerBase
     @form = Kapa::Form.find params[:id]
     @person = @form.person
     @title = @form.type_desc
-    render :layout => "/kapa/layouts/artifact"
+    render :layout => "/kapa/layouts/document"
   end
 
   def update

@@ -163,7 +163,7 @@ module Kapa::KapaControllerBase
       when "document"
         items.push ["Files", kapa_document_files_path] if @current_user.read?(:kapa_document_files)
         items.push ["Forms", kapa_document_forms_path] if @current_user.read?(:kapa_document_forms)
-        items.push ["Test Scores", kapa_document_exams_path] if @current_user.read?(:kapa_document_exams)
+        items.push ["Standardized Tests", kapa_document_exams_path] if @current_user.read?(:kapa_document_exams)
         items.push ["Reports", kapa_document_reports_path] if @current_user.read?(:kapa_document_reports)
       when "advising"
         items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)

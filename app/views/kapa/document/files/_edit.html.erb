@@ -7,7 +7,7 @@
       <%= f.check_box :public, {:text => "Share document"}, "Y", "N" %>
     </div>
     <div class="col-sm-6">
-      <%= f.text_area :note, :size => "5x10" %>
+      <%= f.text_area :note, :rows => 30 %>
     </div>
   </div>
   <%= f.hidden_field :person_id, :value => @person.id %>

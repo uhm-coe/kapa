@@ -56,6 +56,42 @@
     </div>
     <% end %>
 
+    <% if @current_user.read?(:kapa_document_files) %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#document_detail">
+            Documents (<%=@documents.length%>)
+          </a>
+        </h4>
+      </div>
+      <div id="document_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right">
+            <button type="button" id="upload_document" class="btn btn-default" data-toggle="modal" data-target="#document_dialog"><span class='glyphicon glyphicon-plus'></span>New File</button>
+            <button type="button" id="add_form" class="btn btn-default" data-toggle="modal" data-target="#form_dialog"><span class='glyphicon glyphicon-plus'></span>New Form</button>
+          </p>
+          <table class="table table-hover">
+           <tr>
+             <th>Type</th>
+             <th>Name</th>
+             <th>Date</th>
+             <th></th>
+           </tr>
+           <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
+             <tr>
+               <td><%=document_icon d%></td>
+               <td><%=d.name%></td>
+               <td><%=format_date d.date %></td>
+               <td class="right"><%= link_to "Show", document_path(d), :target => :blank, :class => "btn btn-default btn-xs" %></td>
+             </tr>
+           <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
     <% if @current_user.read?(:kapa_advising_sessions) %>
     <div class="panel panel-default">
       <div class="panel-heading">
