@@ -83,7 +83,7 @@
 <% end if @current_user.read? :kapa_document_files or @current_user.read? :kapa_document_forms or @current_user.read? :kapa_document_exams %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => request.path), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+  <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => url_for(params.merge(:focus => "document"))), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.file_field :data, :label => "File to upload" %>
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
@@ -91,7 +91,7 @@
 <% end %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
-  <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :return_url => request.path), :html => {:id => "new_form_form"} do |f| %>
+  <%= bootstrap_form_for :form, :url => kapa_document_forms_path(:id => @person, :return_url => url_for(params.merge(:focus => "document"))), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
   <% end %>
 <% end %>

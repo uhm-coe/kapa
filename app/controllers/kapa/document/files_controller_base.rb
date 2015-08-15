@@ -43,7 +43,6 @@ module Kapa::Document::FilesControllerBase
   def create
     if params[:file][:data].nil?
       flash[:warning] = "No file was specified. Please select a file to upload."
-      params[:return_url][:artifacts_modal] = "show"
       redirect_to params[:return_url] and return false
     end
 
@@ -56,12 +55,10 @@ module Kapa::Document::FilesControllerBase
     @file.dept = @current_user.primary_dept
     unless @file.save
       flash[:danger] = error_message_for(@file)
-#      params[:return_url][:artifacts_modal] = "show"
       redirect_to params[:return_url] and return false
     end
 
     flash[:success] = "File was successfully uploaded."
-#    params[:return_url][:artifacts_modal] = "show"
     redirect_to params[:return_url]
   end
 

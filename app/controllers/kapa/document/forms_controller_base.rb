@@ -34,7 +34,6 @@ module Kapa::Document::FormsControllerBase
     end
 
     flash[:success] = "Form was successfully created."
-    params[:return_url][:artifacts_modal] = "show"
     redirect_to params[:return_url]
   end
 
