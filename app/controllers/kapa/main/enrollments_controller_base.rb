@@ -19,7 +19,7 @@ module Kapa::Main::EnrollmentsControllerBase
     @person = Kapa::Person.find(params[:id])
     @curriculum = @person.curriculums.find(params[:enrollment][:curriculum_id])
 
-    @enrollment = @curriculum.enrollments.build(params[:enrollment])
+    @enrollment = @curriculum.enrollments.build(enrollment_params)
     @enrollment.dept = @current_user.primary_dept
     unless @enrollment.save
       flash[:danger] = @enrollment.errors.full_messages.join(", ")
@@ -31,7 +31,7 @@ module Kapa::Main::EnrollmentsControllerBase
 
   def update
     @enrollment = Kapa::Enrollment.find(params[:id])
-    @enrollment.attributes = params[:enrollment]
+    @enrollment.attributes = enrollment_params
 
     if @enrollment.save
       flash[:success] = "Enrollment was successfully updated."
@@ -136,6 +136,12 @@ module Kapa::Main::EnrollmentsControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "enrollments_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
+  end
+
+  private
+  def enrollment_params
+    params.require(:enrollment).permit(:term_id, :sequence, :category, :status, :dept, :user_primary_id,
+                                       :user_secondary_id, :note, :curriculum_id)
   end
 
 end
