@@ -17,7 +17,7 @@ module Kapa::Admin::PropertiesControllerBase
 
   def update
     @property = Kapa::Property.find params[:id]
-    @property.attributes= params[:property]
+    @property.attributes= property_params
 
     if @property.save
       flash[:success] = "System property was successfully updated."
@@ -29,7 +29,7 @@ module Kapa::Admin::PropertiesControllerBase
 
   def create
     @property = Kapa::Property.new
-    @property.attributes= params[:property]
+    @property.attributes= property_params
 
     unless @property.save
       flash[:danger] = error_message_for(@property)
@@ -42,5 +42,9 @@ module Kapa::Admin::PropertiesControllerBase
   def index
     @filter = filter
     @properties = Kapa::Property.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+  end
+
+  def property_params
+    params.require(:property).permit(:name, :code, :description, :description_short, :category, :dept, :sequence, :active)
   end
 end

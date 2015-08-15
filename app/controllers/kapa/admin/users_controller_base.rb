@@ -22,7 +22,7 @@ module Kapa::Admin::UsersControllerBase
 
   def update
     @user = Kapa::User.find params[:id]
-    @user.attributes = params[:user] if params[:user]
+    @user.attributes = user_params if params[:user]
     @user.serialize(:permission, params[:permission]) if params[:permission]
     if @user.save
       flash[:success] = "User was successfully updated."
@@ -33,7 +33,7 @@ module Kapa::Admin::UsersControllerBase
   end
 
   def create
-    @person = Kapa::Person.new(params[:person])
+    @person = Kapa::Person.new(person_params)
     case params[:mode]
     when "promote"
       @person_verified = Kapa::Person.lookup(params[:person][:id_number], :verified => true)
@@ -116,4 +116,14 @@ module Kapa::Admin::UsersControllerBase
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"
   end
+
+  def user_params
+    params.require(:user).permit(:uid, :password, :category, :emp_status, :status, :department, :position, :person_id, :dept=>[])
+  end
+
+  def person_params
+    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
+                                   :email, :first_name, :other_name, :title, :gender, :status)
+  end
+
 end

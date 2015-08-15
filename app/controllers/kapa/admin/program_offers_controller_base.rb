@@ -3,7 +3,7 @@ module Kapa::Admin::ProgramOffersControllerBase
 
   def update
     @program_offer = Kapa::ProgramOffer.find params[:id]
-    @program_offer.attributes = params[:program_offer]
+    @program_offer.attributes = program_offer_params
 
     if @program_offer.save
       flash[:success] = "Offering record was successfully updated."
@@ -16,7 +16,7 @@ module Kapa::Admin::ProgramOffersControllerBase
   def create
     @program = Kapa::Program.find(params[:id])
     @program_offer = @program.program_offers.build
-    @program_offer.attributes = params[:program_offer]
+    @program_offer.attributes = program_offer_params
 
     if @program_offer.save
       flash[:success] = "Offering record was successfully created."
@@ -35,5 +35,9 @@ module Kapa::Admin::ProgramOffersControllerBase
       flash[:danger] = error_message_for(@program_offer)
     end
     redirect_to kapa_admin_program_path(:id => @program_offer.program_id, :focus => params[:focus])
+  end
+
+  def program_offer_params
+    params.require(:program_offer).permit(:description, :distribution, :start_term_id, :end_term_id, :available_major=>[])
   end
 end
