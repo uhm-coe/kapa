@@ -13,7 +13,7 @@ module Kapa::Practicum::SitesControllerBase
   end
 
   def create
-    @practicum_site = Kapa::PracticumSite.new params[:practicum_site]
+    @practicum_site = Kapa::PracticumSite.new practicum_site_params
     unless @practicum_site.save
       flash[:danger] = @practicum_site.errors.full_messages.join(", ")
       redirect_to new_kapa_practicum_site_path and return false
@@ -24,7 +24,7 @@ module Kapa::Practicum::SitesControllerBase
 
   def update
     @practicum_site = Kapa::PracticumSite.find(params[:id])
-    @practicum_site.attributes= params[:practicum_site]
+    @practicum_site.attributes= practicum_site_params
     @practicum_site.serialize(:site_contact, params[:site_contact]) if not params[:site_contact].blank?
 
     if @practicum_site.save
@@ -96,5 +96,10 @@ module Kapa::Practicum::SitesControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "sites.csv"
+  end
+
+  private
+  def practicum_site_params
+    params.require(:practicum_site).permit(:name, :name_short, :code, :district, :area, :area_group, :level_from, :level_to)
   end
 end

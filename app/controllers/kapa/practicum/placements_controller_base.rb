@@ -18,7 +18,7 @@ module Kapa::Practicum::PlacementsControllerBase
   end
 
   def create
-    @practicum_placement = Kapa::PracticumPlacement.new params[:practicum_placement]
+    @practicum_placement = Kapa::PracticumPlacement.new practicum_placement_params
     @practicum_placement.person_id = params[:id]
 
     if @practicum_placement.save
@@ -32,7 +32,7 @@ module Kapa::Practicum::PlacementsControllerBase
 
   def update
     @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
-    @practicum_placement.attributes = params[:practicum_placement]
+    @practicum_placement.attributes = practicum_placement_params
 
     if @practicum_placement.save
       flash[:success] = "Placement record was successfully updated."
@@ -98,5 +98,10 @@ module Kapa::Practicum::PlacementsControllerBase
     mentor[:person_id] = person.id
     mentor[:full_name] = person.full_name
     render :json => mentor
+  end
+
+  private
+  def practicum_placement_params
+    params.require(:practicum_placement).permit(:term_id, :curriculum_id)
   end
 end
