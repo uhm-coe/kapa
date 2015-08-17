@@ -9,21 +9,10 @@ module Kapa::Main::PersonsControllerBase
     @documents += @person.files
     @documents += @person.forms
     @documents += @person.exams
-    #TODO Add dept conditions
     @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @course_registrations = Kapa::CourseRegistration.eager_load(:course_offer => :term).where(:person_id => @person).order("terms.sequence DESC")
+    @course_registrations = @person.course_registrations.eager_load(:course_offer => :term).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
-
-    if (params[:doc_id])
-      @file = Kapa::File.find(params[:doc_id])
-      @title = @file.name
-      render :partial => "/kapa/artifact/documents/edit", :layout => false
-    elsif (params[:form_id])
-      @form = Kapa::Form.find(params[:form_id])
-      @title = @form.type_desc
-      render :partial => "/kapa/artifact/forms/edit", :layout => false
-    end
   end
 
   def new
