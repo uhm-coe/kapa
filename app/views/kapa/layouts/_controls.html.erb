@@ -1,11 +1,10 @@
 <p class="text-center">
-  <br>
   <% unless defined? hide_update %>
-    <input class="btn btn-default" name="commit" type="submit" value="Save">
-    <input class="btn btn-default" name="commit" type="reset" value="Reset">
+    <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>
+    <button class="btn btn-default" name="commit" type="reset"><span class="glyphicon glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset</button>
   <% end %>
   <% if defined? delete_path %>
-    <%=link_to content_tag(:i, "", :class => "glyphicon glyphicon-trash") + " Delete", delete_path, {:method => :delete, "data-confirm" => "Proceed with deletion?", :class => "btn btn-default"} %>
+    <%=link_to content_tag(:span, "", :class => "glyphicon glyphicon-trash") + " Delete", delete_path, {:method => :delete, "data-confirm" => "Proceed with deletion?", :class => "btn btn-default"} %>
   <% end %>
   <%= yield %>
 </p>

@@ -3,21 +3,17 @@ module Kapa::Document::ExamsControllerBase
 
   def show
     @exam = Kapa::Exam.find(params[:id])
-    @examinee_profile = @exam.examinee_profile
-    @examinee_contact = @exam.examinee_contact
     @exam_scores = @exam.exam_scores
     @person = @exam.person
-    @title = "Praxis Score Report"
+    @title = @exam.type_desc
     render :layout => "/kapa/layouts/document"
   end
 
   def update
     @exam = Kapa::Exam.find params[:id]
-    #attributes= was not used because I do not want to accidentally delete form.data
-    @exam.note = params[:exam][:note] if not params[:exam][:note].blank?
-
+    @exam.attributes = params[:exam]
     if @exam.save
-      flash[:success] = "Exam was updated."
+      flash[:success] = "Test record was updated."
     else
       flash[:danger] = error_message_for(@exam)
     end
@@ -30,7 +26,7 @@ module Kapa::Document::ExamsControllerBase
       flash[:danger] = error_message_for(@exam)
       redirect_to kapa_document_exam_path(:id => @exam) and return false
     end
-    flash[:success] = "Exam was successfully deleted."
+    flash[:success] = "Test record was successfully deleted."
     redirect_to kapa_main_persons_path(:action => :show, :id => @exam.person_id, :focus => :exam)
   end
 

@@ -3,6 +3,7 @@ module Kapa::KapaModelBase
 
   included do
     self.abstract_class = true
+    self.inheritance_column = nil
     serialize :yml, Hash
   end
 

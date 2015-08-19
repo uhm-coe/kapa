@@ -13,14 +13,6 @@ module Kapa::ExamBase
     self.raw[5..13] = "000000000" #Mask SSN
   end
 
-  def examinee_profile
-    self.deserialize(:examinee_profile, :as => OpenStruct)
-  end
-
-  def examinee_contact
-    self.deserialize(:examinee_contact, :as => OpenStruct)
-  end
-
   def type_desc
     return Kapa::Property.lookup_description(:exam, type)
   end

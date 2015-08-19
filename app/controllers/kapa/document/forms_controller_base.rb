@@ -11,16 +11,18 @@ module Kapa::Document::FormsControllerBase
   def update
     @form = Kapa::Form.find params[:id]
     @person = @form.person
-    #attributes= was not used because I do not want to accidentally delete form.data
-    @form.note = params[:form][:note] unless params[:form][:note].blank?
-    @form.lock = params[:form][:lock] unless params[:form][:lock].blank?
+
+    @form.attributes = form_param
+    form_data_params(@form.type).each_pair do |k, v|
+      @form.serialize(k, v)
+    end
 
     if @form.save
       flash[:success] = "Form was successfully updated."
     else
       flash[:danger] = error_message_for(@form)
     end
-    redirect_to kapa_main_person_path(:id => @person, :artifacts_modal => "show")
+    redirect_to kapa_document_form_path(:id => @form)
   end
 
   def create
@@ -44,7 +46,7 @@ module Kapa::Document::FormsControllerBase
       redirect_to kapa_document_form_path(:id => @form) and return false
     end
     flash[:success] = "Form was successfully deleted."
-    redirect_to kapa_main_person_path(:id => @form.person_id)
+    redirect_to kapa_main_person_path(:id => @form.person_id, :focus => :document)
   end
 
   def index
@@ -54,10 +56,29 @@ module Kapa::Document::FormsControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{filter.inspect}"
     send_data Kapa::Form.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "forms_#{filter.type}.csv"
+  end
+
+  private
+  def form_param
+    params.require(:form).permit(:form_id, :person_id, :lock, :note)
+  end
+
+  def form_data_params(type)
+    case type
+      when "declaration"
+        permitted_params = {:declaration_curriculum => [:program_id, :second_degree, :major_primary, :major_secondary, :location],
+                            :declaration_background => [:current, :current_college, :aa_degree, :aa_degree_when],
+                            :declaration_agreement => [:agreement_saf1, :agreement, :question]}
+      when "admission"
+        #Define permitted params for admission_form
+        permitted_params = {}
+    end
+    form_data_params = {}
+    permitted_params.each_pair {|k, v| form_data_params[k] = params.require(k).permit(v) if params[k]}
+    return form_data_params
   end
 end

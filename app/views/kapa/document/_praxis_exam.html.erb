@@ -1,6 +1,10 @@
-<fieldset class="blockLabels">
+<%
+   @examinee_profile = @exam.deserialize(:examinee_profile, :as => OpenStruct)
+   @examinee_contact = @exam.deserialize(:examinee_contact, :as => OpenStruct)
+%>
+<fieldset class="form-block">
   <legend>Praxis Scores Overview</legend>
-  <table>
+  <table class="table table-striped">
     <tr>
       <th>Test date</th>
       <th>Code</th>
@@ -25,9 +29,9 @@
 
 <% for exam_score in @exam_scores %>
   <% if exam_score.subscores.length > 0 %>
-    <fieldset class="blockLabels">
+    <fieldset class="form-block">
       <legend><%= h exam_score.subject %>/<%= abbr exam_score.subject_desc, 80 %></legend>
-      <table>
+      <table class="table table-striped">
         <tr>
           <th width="5%">#</th>
           <th width="70%">Title</th>
@@ -47,7 +51,7 @@
 <% end %>
 
 <%= bootstrap_fields_for :examinee_profile do |f| %>
-  <fieldset class="blockLabels">
+  <fieldset class="form-block">
     <legend>Background Information</legend>
     <div class="row">
 
@@ -75,7 +79,7 @@
 </fieldset>
 
 <%= bootstrap_fields_for :examinee_profile do |j| %>
-  <fieldset class="blockLabels">
+  <fieldset class="form-block">
     <legend>Educational Information</legend>
     <div class="row">
 

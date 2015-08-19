@@ -5,6 +5,19 @@
     <%= render :partial => "/kapa/document/#{@form.type}_form" %>
     <%= hidden_field :form, :person_id %>
     <%= hidden_field :form, :type %>
+    <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_document_form_path(:id => @form)} do %>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#edit_form_dialog">Property</button>
+    <% end if @current_user.write? %>
   <% end %>
 
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form property", :modal_form_id => "edit_form_form"} do %>
+    <%= bootstrap_form_for(:form, :url => kapa_document_form_path(:id => @form), :html => {:method => :put, :id => "edit_form_form"}) do |f| %>
+      <%= f.text_area :note, :text => "Note", :size => "5x7" %>
+      <div class="row form-block">
+        <div class="col-sm-4">
+          <%= f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :text => "Lock status" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
