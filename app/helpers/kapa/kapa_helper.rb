@@ -153,7 +153,7 @@ module Kapa::KapaHelper
 
   def document_path(document)
      if document.is_a? Kapa::File
-      return kapa_document_file_path(:id => document, :format => :file, :inline => true)
+      return kapa_document_file_path(:id => document)
      elsif document.is_a? Kapa::Form
       return kapa_document_form_path(:id => document)
      elsif document.is_a? Kapa::Exam

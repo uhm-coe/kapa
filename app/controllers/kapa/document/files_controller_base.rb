@@ -9,9 +9,10 @@ module Kapa::Document::FilesControllerBase
   def show
     @file = Kapa::File.find(params[:id])
     @person = @file.person
-    @title = @file.name
+    @title = "File Uploaded"
 
     respond_to do |format|
+      format.html {render :layout => "/kapa/layouts/document"}
       format.file {
         disposition = params[:inline] ? "inline" : "attachment"
         send_file @file.data.path,

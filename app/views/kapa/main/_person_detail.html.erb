@@ -73,15 +73,6 @@
   <% end %>
 <% end if @current_user.read? :kapa_main_contacts %>
 
-<%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_artifact_modal", :modal_title => "Documents"} do %>
-  <div class="row">
-    <div class="col-sm-12">
-      <%= bootstrap_flash unless params[:artifacts_modal].nil? %>
-    </div>
-  </div>
-  <%= render :partial => "/kapa/document/document_table" %>
-<% end if @current_user.read? :kapa_document_files or @current_user.read? :kapa_document_forms or @current_user.read? :kapa_document_exams %>
-
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
   <%= bootstrap_form_for :file, :url => kapa_document_files_path(:id => @person, :return_url => url_for(:focus => "document", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.file_field :data, :label => "File to upload" %>
