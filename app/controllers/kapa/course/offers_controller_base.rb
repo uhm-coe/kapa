@@ -7,7 +7,9 @@ module Kapa::Course::OffersControllerBase
     @course_offer = Kapa::CourseOffer.find(params[:id])
     @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
-    refresh_table
+    @course_registrations = @course_offer.course_registrations
+    @table = Kapa::AssessmentScore.scores(@course_registrations, @assessment_rubric)
+#    session[:score] = @table
 
     respond_to do |format|
       format.html
@@ -37,34 +39,28 @@ module Kapa::Course::OffersControllerBase
   end
 
   def update
-    #      logger.debug "-------update called-----"
-    #      logger.debug "session=#{session[:score].inspect}"
-    #      logger.debug " params=#{params[:score].inspect}"
-
-    params[:score].each_pair do |k, v|
-      if session[:score][k] != v
-        registration_id = k.split("_").first
-        criterion_id = k.split("_").last
-        #       score = Kapa::AssessmentScore.find(:first, :conditions => "assessment_scorable_type = 'CourseRegistration' and assessment_scorable_id = #{registration_id} and assessment_criterion_id = #{criterion_id}")
-        #       score = Kapa::AssessmentScore.new(:course_registration_id => registration_id, :assessment_criterion_id => criterion_id) if score.nil?
-        score = Kapa::AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id('CourseRegistration', registration_id, criterion_id)
-        logger.debug "--score: #{score.inspect}"
-        score.rating = v
-        score.rated_by = @current_user.uid
-        unless score.save
-          flash[:save_notice] = "There was an error! Please try again."
-          render :partial => "save", :layout => false
-          return false
+    @filter = filter
+    if params[:assessment_scores]
+      ActiveRecord::Base.transaction do
+        begin
+#          params[:assessment_scores].each_pair do |k, v|
+            #Skip update if score is the same as previous one
+            if session[:score][k] != v
+              scorable_id = k.split("_").first
+              criterion_id = k.split("_").last
+              score = Kapa::AssessmentScore.find_or_initialize_by(:assessment_scorable_type => "Kapa::CourseRegistration", :assessment_scorable_id => scorable_id, :assessment_criterion_id => criterion_id)
+              score.rating = v
+              score.rated_by = @current_user.uid
+              score.save!
+            end
+#          end
+        rescue ActiveRecord::StatementInvalid
+          flash[:danger] = "There was an error updating scores. Please try again."
+          redirect_to kapa_course_offer_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id) and return false
         end
       end
     end
-    session[:score] = params[:score]
-#    flash[:save_notice] = "Last saved on #{DateTime.now.strftime("%H:%M:%S")}"
-    @filter = filter
-    @course_offer = Kapa::CourseOffer.find(params[:id])
-    @assessment_rubric = Kapa::AssessmentRubric.find(@filter.assessment_rubric_id)
-    refresh_table
-    render :partial => "/kapa/course/table", :layout => false
+    redirect_to  kapa_course_offer_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id)
   end
 
   def index
@@ -79,13 +75,5 @@ module Kapa::Course::OffersControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "courses_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
-  end
-
-  private
-  def refresh_table
-    @course_registrations = @course_offer.course_registrations
-    @table = @course_offer.table_for(@assessment_rubric)
-    session[:score] = @table
-    session[:filter_course][:assessment_rubric_id] = @assessment_rubric.id
   end
 end

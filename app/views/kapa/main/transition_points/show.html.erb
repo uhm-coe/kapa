@@ -34,8 +34,8 @@
   <%= render :partial => "/kapa/main/person_detail" %>
 
   <h4 class="section-header divider">
-    <%= link_to "", kapa_main_person_path(:id => @transition_point.curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
-    <%=link_to @curriculum.code_desc, kapa_main_curriculum_path(:id => @curriculum) %> - <%= @transition_point.type_desc %> <%= link_to image_tag("/images/icons/form.png"), kapa_document_forms_path(:action => :show, :id => @transition_point.form_id), {:target => "_blank"} if @transition_point.form_id %>
+    <%=link_to "", kapa_main_person_path(:id => @transition_point.curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to @curriculum.code_desc, kapa_main_curriculum_path(:id => @curriculum) %> - <%= @transition_point.type_desc %>
   </h4>
 
   <div class="tabs">

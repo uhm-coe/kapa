@@ -26,14 +26,6 @@ module Kapa::CourseOfferBase
     return Kapa::Term.find(term_id).description if term_id.present?
   end
 
-  def table_for(assessment_rubric)
-    table = ActiveSupport::OrderedHash.new
-    self.course_registrations.each do |r|
-      table.update Kapa::AssessmentScore.table_for(assessment_rubric, "CourseRegistration", r.id)
-    end
-    return table
-  end
-
   def progress
     number_of_fields_total = 0
     number_of_fields_filled = 0
@@ -53,10 +45,10 @@ module Kapa::CourseOfferBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      course_offers = Kapa::CourseOffer.where("course_offers.status" => "A").order("subject, number, section")
+      course_offers = Kapa::CourseOffer.eager_load(:course_registrations).where("course_offers.status" => "A").order("subject, number, section")
       course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
       course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
-      course_offers = course_offers.where("course_offers.subject || course_offers.number || '-' || course_offers.section like ?", "%#{filter.name}%") if filter.name.present?
+      course_offers = course_offers.where("concat(course_offers.subject, course_offers.number, '-', course_offers.section) like ?", "%#{filter.name}%") #if filter.name.present?
       case filter.user.access_scope
         when 3
           # Do nothing

@@ -28,7 +28,7 @@
 
   <h4 class="section-header divider">
     <%=link_to "", kapa_main_person_path(:id => @person, :focus => :course), :class => "glyphicon glyphicon-chevron-left" %>
-    Assessment Course/<%=@course_offer.name%>
+    <%=@course_offer.name%> - <%=h @course_offer.term_desc %>
   </h4>
 
   <div class="tabs">

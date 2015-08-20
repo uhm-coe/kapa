@@ -9,25 +9,27 @@ module Kapa::Course::RegistrationsControllerBase
     @person.details(self)
     @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
-    @table = Kapa::AssessmentScore.table_for(@assessment_rubric, "CourseRegistration", params[:id])
+    @table = Kapa::AssessmentScore.scores([@course_registration], @assessment_rubric)
   end
 
   def update
     if params[:assessment_scores]
-      params[:assessment_scores].each_pair do |k, v|
-        scorable_id = k.split("_").first
-        criterion_id = k.split("_").last
-        #      logger.debug "--scorable_id: #{scorable_id}, criterion_id: #{criterion_id}"
-        score = Kapa::AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id("CourseRegistration", scorable_id, criterion_id)
-        #      logger.debug "--score: #{score.inspect}"
-        score.rating = v
-        score.rated_by = @current_user.uid
-        unless score.save
+      ActiveRecord::Base.transaction do
+        begin
+          params[:assessment_scores].each_pair do |k, v|
+            scorable_id = k.split("_").first
+            criterion_id = k.split("_").last
+            score = Kapa::AssessmentScore.find_or_initialize_by(:assessment_scorable_type => "Kapa::CourseRegistration", :assessment_scorable_id => scorable_id, :assessment_criterion_id => criterion_id)
+            score.rating = v
+            score.rated_by = @current_user.uid
+            score.save!
+          end
+        rescue ActiveRecord::StatementInvalid
           flash[:danger] = "There was an error updating scores. Please try again."
           redirect_to kapa_course_registration_path(:id => params[:id], :focus => params[:focus]) and return false
         end
+        flash[:success] = "Scores were successfully saved."
       end
-      flash[:success] = "Scores were successfully saved on #{DateTime.now.strftime("%H:%M:%S")}"
     end
 
     if flash[:success].nil?

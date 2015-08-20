@@ -7,19 +7,21 @@ module Kapa::AssessmentScoreBase
   end
 
   class_methods do
-    def table_for(assessment_rubric, assessment_scorable_type, assessment_scorable_id)
-      table = ActiveSupport::OrderedHash.new
+    def scores(assessment_scorables, assessment_rubric)
       #initialize table first
-      for assessment_criterion in assessment_rubric.assessment_criterions
-        index = "#{assessment_scorable_id}_#{assessment_criterion.id}"
-        table[index] = ""
+      scores = ActiveSupport::OrderedHash.new
+      assessment_scorables.each do |s|
+        assessment_rubric.assessment_criterions.each do |c|
+          index = "#{s.id}_#{c.id}"
+          scores[index] = ""
+        end
       end
       #then, fill in scores using ActiveRecord cache.  this is more efficient than filing everything one by one (save SQL execution)
-      self.where(["assessment_scorable_type = ? and assessment_scorable_id = ?", assessment_scorable_type, assessment_scorable_id]).each do |s|
-        index = "#{s.assessment_scorable_id}_#{s.assessment_criterion_id}"
-        table[index] = s.rating if table[index]
+      self.where(:assessment_scorable_type => assessment_scorables.first.class, :assessment_scorable_id => assessment_scorables.collect {|s| s.id}).each do |score|
+        index = "#{score.assessment_scorable_id}_#{score.assessment_criterion_id}"
+        scores[index] = score.rating if scores[index]
       end
-      return table
+      return scores
     end
   end
 end
