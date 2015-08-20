@@ -12,7 +12,7 @@ module Kapa::Admin::TermsControllerBase
 
   def update
     @term = Kapa::Term.find params[:id]
-    @term.attributes = params[:term]
+    @term.attributes = term_params
 
     if @term.save
       flash[:success] = "Term was successfully updated."
@@ -28,7 +28,7 @@ module Kapa::Admin::TermsControllerBase
 
   def create
     @term = Kapa::Term.new
-    @term.attributes = params[:term]
+    @term.attributes = term_params
 
     unless @term.save
       flash[:danger] = @term.errors.full_messages.join(", ")
@@ -47,5 +47,10 @@ module Kapa::Admin::TermsControllerBase
     end
     flash[:success] = "Term was successfully deleted."
     redirect_to kapa_admin_terms_path
+  end
+
+  def term_params
+    params.require(:term).permit(:code, :description, :description_short, :start_date, :end_date, :dept, :sequence,
+                                 :academic_year, :calendar_year, :fiscal_year, :regular_term, :active)
   end
 end

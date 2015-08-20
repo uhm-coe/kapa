@@ -3,7 +3,7 @@ module Kapa::Main::TransitionActionsControllerBase
 
   def create
     @transition_point = Kapa::TransitionPoint.find(params[:id])
-    @action = @transition_point.transition_actions.build(params[:transition_action])
+    @action = @transition_point.transition_actions.build(create_transition_action_params)
 
     if @action.save
       flash[:success] = "Action was successfully created."
@@ -15,7 +15,7 @@ module Kapa::Main::TransitionActionsControllerBase
 
   def update
     @action = Kapa::TransitionAction.find(params[:id])
-    @action.attributes = params[:transition_action][@action.id.to_s]
+    @action.attributes = update_transition_action_params(@action.id.to_s)
 
     if @action.save
       flash[:success] = "Action was successfully updated."
@@ -34,5 +34,16 @@ module Kapa::Main::TransitionActionsControllerBase
       flash[:danger] = error_message_for @action
     end
     redirect_to kapa_main_transition_point_path(:id => @action.transition_point, :focus => params[:focus])
+  end
+
+  private
+  def transition_action_fields
+    [:action_date, :action, :action_specify, :user_id, :note]
+  end
+  def create_transition_action_params
+    params.require(:transition_action).permit(*transition_action_fields)
+  end
+  def update_transition_action_params(action_id)
+    params.require(:transition_action)[action_id].permit(*transition_action_fields)
   end
 end

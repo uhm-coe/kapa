@@ -9,6 +9,14 @@ test/dummy/public/assets/*
 test/dummy/config/secrets.yml
 test/dummy/config/*.yml
 
+spec/dummy/log
+spec/dummy/tmp
+spec/dummy/public/assets/*
+
+#Do not commit the secret file!
+spec/dummy/config/secrets.yml
+spec/dummy/config/*.yml
+
 #Generic files to ignore
 *~
 *.lock

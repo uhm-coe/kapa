@@ -20,7 +20,7 @@ module Kapa::Main::PersonsControllerBase
   end
 
   def create
-    @person = Kapa::Person.new(params[:person])
+    @person = Kapa::Person.new(person_params)
     unless @person.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@person)
@@ -43,7 +43,7 @@ module Kapa::Main::PersonsControllerBase
     #   redirect_to params[:return_uri]
 
     # else
-    @person.attributes = params[:person]
+    @person.attributes = person_params
     unless @person.save
       flash[:danger] = error_message_for(@person)
       redirect_to kapa_main_person_path(:id => @person) and return false
@@ -104,5 +104,11 @@ module Kapa::Main::PersonsControllerBase
       flash[:success] = "Record was updated from UH Directory.  Please check the name and click save to use the new record."
     end
     render :partial => "/kapa/main/person_form", :layout => false
+  end
+
+  private
+  def person_params
+    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
+                                    :email, :first_name, :other_name, :title, :gender, :status)
   end
 end

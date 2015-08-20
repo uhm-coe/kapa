@@ -11,7 +11,7 @@ module Kapa::Admin::ProgramsControllerBase
 
   def update
     @program = Kapa::Program.find params[:id]
-    @program.attributes = params[:program]
+    @program.attributes = program_params
 
     if @program.save
       flash[:success] = "Program was successfully updated."
@@ -27,7 +27,7 @@ module Kapa::Admin::ProgramsControllerBase
 
   def create
     @program = Kapa::Program.new
-    @program.attributes = params[:program]
+    @program.attributes = program_params
 
     unless @program.save
       flash[:danger] = @program.errors.full_messages.join(", ")
@@ -58,5 +58,11 @@ module Kapa::Admin::ProgramsControllerBase
   def index
     @filter = filter
     @programs = Kapa::Program.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+  end
+
+  private
+  def program_params
+    params.require(:program).permit(:code, :description, :description_short, :category, :dept, :active, :degree,
+                                    :major, :distribution, :track, :available_major => [], :available_distribution => [], :available_track => [])
   end
 end

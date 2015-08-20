@@ -3,7 +3,7 @@ module Kapa::Admin::CriterionsControllerBase
 
   def update
     @assessment_criterion = Kapa::AssessmentCriterion.find(params[:id])
-    @assessment_criterion.attributes = params[:assessment_criterion]
+    @assessment_criterion.attributes = assessment_criterion_params
 
     if @assessment_criterion.save
       flash[:success] = "Criterion was successfully updated."
@@ -15,7 +15,7 @@ module Kapa::Admin::CriterionsControllerBase
 
   def create
     @assessment_criterion = Kapa::AssessmentCriterion.new(:assessment_rubric_id => params[:id])
-    @assessment_criterion.attributes = params[:assessment_criterion]
+    @assessment_criterion.attributes = assessment_criterion_params
 
     if @assessment_criterion.save
       flash[:success] = "Criterion was successfully created."
@@ -37,5 +37,10 @@ module Kapa::Admin::CriterionsControllerBase
     end
     flash[:success] = "Criterion was successfully deleted."
     redirect_to kapa_admin_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :focus => params[:focus])
+  end
+
+  private
+  def assessment_criterion_params
+    params.require(:assessment_criterion).permit(:criterion, :criterion_desc, :standard, :type, :type_option)
   end
 end

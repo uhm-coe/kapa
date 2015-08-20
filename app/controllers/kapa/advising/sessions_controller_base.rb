@@ -27,8 +27,8 @@ module Kapa::Advising::SessionsControllerBase
   end
 
   def create
-    @advising_session = Kapa::AdvisingSession.new(params[:advising_session])
-    @advising_session.attributes = params[:advising_session]
+    @advising_session = Kapa::AdvisingSession.new(advising_session_params)
+    @advising_session.attributes = advising_session_params
     @advising_session.dept = @current_user.primary_dept
     @person = @advising_session.person
 
@@ -42,7 +42,7 @@ module Kapa::Advising::SessionsControllerBase
 
   def update
     @advising_session = Kapa::AdvisingSession.find(params[:id])
-    @advising_session.attributes = params[:advising_session]
+    @advising_session.attributes = advising_session_params
 
     if @advising_session.save
       flash[:success] = "Advising record was successfully updated."
@@ -74,5 +74,11 @@ module Kapa::Advising::SessionsControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "advising_history_#{@filter.date_start.to_s}.csv"
+  end
+
+  private
+  def advising_session_params
+    params.require(:advising_session).permit(:session_date, :session_type, :task, :curriculum_id, :interest,
+                                             :classification, :location, :user_primary_id, :note, :person_id)
   end
 end

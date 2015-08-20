@@ -22,7 +22,7 @@ module Kapa::Main::TransitionPointsControllerBase
   def update
     if params[:transition_point]
       @transition_point = Kapa::TransitionPoint.find(params[:id])
-      @transition_point.attributes = params[:transition_point]
+      @transition_point.attributes = transition_point_params
       @transition_point.update_serialized_attributes(:_ext, params[:transition_point_ext])
 
       unless @transition_point.save
@@ -61,7 +61,7 @@ module Kapa::Main::TransitionPointsControllerBase
     @person = Kapa::Person.find(params[:id])
     @curriculum = @person.curriculums.find(params[:transition_point][:curriculum_id])
 
-    @transition_point = @curriculum.transition_points.build(params[:transition_point])
+    @transition_point = @curriculum.transition_points.build(transition_point_params)
     @transition_point.dept = @current_user.primary_dept
     @transition_point.active = true
     unless @transition_point.save
@@ -83,6 +83,12 @@ module Kapa::Main::TransitionPointsControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "#{@filter.name}_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
+  end
+
+  private
+  def transition_point_params
+    params.require(:transition_point).permit(:term_id, :category, :priority, :status, :user_primary_id,
+                                             :user_secondary_id, :note, :curriculum_id, :user_ids=>[])
   end
 
 end
