@@ -22,9 +22,9 @@ module Kapa::Course::OffersControllerBase
           csv << header_row
 
           @course_registrations.each do |r|
-            row = [rsend(r.person, :id_number),
-                   rsend(r.person, :last_name),
-                   rsend(r.person, :first_name)]
+            row = [r.rsend(:person, :id_number),
+                   r.rsend(:person, :last_name),
+                   r.rsend(:person, :first_name)]
             @assessment_rubric.assessment_criterions.each { |c| row.push(@table["#{r.id}_#{c.id}"]) }
             csv << row
           end
