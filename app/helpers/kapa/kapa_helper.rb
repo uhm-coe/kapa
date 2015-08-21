@@ -155,11 +155,11 @@ module Kapa::KapaHelper
 
   private
   def next_id(prefix, index)
-    i = @table.keys.index(index)
-    if i == @table.keys.length - 1
-      return "#{prefix}_#{@table.keys.first}"
+    i = @scores.keys.index(index)
+    if i == @scores.keys.length - 1
+      return "#{prefix}_#{@scores.keys.first}"
     else
-      return "#{prefix}_#{@table.keys[i + 1]}"
+      return "#{prefix}_#{@scores.keys[i + 1]}"
     end
   end
 end

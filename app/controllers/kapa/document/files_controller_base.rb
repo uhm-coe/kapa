@@ -9,7 +9,7 @@ module Kapa::Document::FilesControllerBase
   def show
     @file = Kapa::File.find(params[:id])
     @person = @file.person
-    @title = "File Uploaded"
+    @title = @file.name
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}

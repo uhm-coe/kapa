@@ -8,8 +8,8 @@ module Kapa::Course::OffersControllerBase
     @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @course_registrations = @course_offer.course_registrations
-    @table = Kapa::AssessmentScore.scores(@course_registrations, @assessment_rubric)
-#    session[:score] = @table
+    @scores = Kapa::AssessmentScore.scores(@course_registrations, @assessment_rubric)
+    session[:scores] = @scores
 
     respond_to do |format|
       format.html
@@ -25,7 +25,7 @@ module Kapa::Course::OffersControllerBase
             row = [r.rsend(:person, :id_number),
                    r.rsend(:person, :last_name),
                    r.rsend(:person, :first_name)]
-            @assessment_rubric.assessment_criterions.each { |c| row.push(@table["#{r.id}_#{c.id}"]) }
+            @assessment_rubric.assessment_criterions.each { |c| row.push(@scores["#{r.id}_#{c.id}"]) }
             csv << row
           end
         end
@@ -43,9 +43,9 @@ module Kapa::Course::OffersControllerBase
     if params[:assessment_scores]
       ActiveRecord::Base.transaction do
         begin
-#          params[:assessment_scores].each_pair do |k, v|
+          params[:assessment_scores].each_pair do |k, v|
             #Skip update if score is the same as previous one
-            if session[:score][k] != v
+            if session[:scores][k] != v
               scorable_id = k.split("_").first
               criterion_id = k.split("_").last
               score = Kapa::AssessmentScore.find_or_initialize_by(:assessment_scorable_type => "Kapa::CourseRegistration", :assessment_scorable_id => scorable_id, :assessment_criterion_id => criterion_id)
@@ -53,7 +53,7 @@ module Kapa::Course::OffersControllerBase
               score.rated_by = @current_user.uid
               score.save!
             end
-#          end
+          end
         rescue ActiveRecord::StatementInvalid
           flash[:danger] = "There was an error updating scores. Please try again."
           redirect_to kapa_course_offer_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id) and return false
@@ -70,7 +70,6 @@ module Kapa::Course::OffersControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{@filter.inspect}"
     send_data Kapa::CourseOffer.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",

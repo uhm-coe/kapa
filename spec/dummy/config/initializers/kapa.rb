@@ -1,5 +1,5 @@
 # Location of storing attachment files
-Paperclip::Attachment.default_options[:path] = "/tmp/class/:id_partition/:style.:extension"
+Paperclip::Attachment.default_options[:path] = "/home/vagrant/files/class/:id_partition/:style.:extension"
 
 # Mailer setting
 Rails.configuration.mail_from = "admin@localhost"

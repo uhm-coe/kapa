@@ -32,9 +32,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'twitter-bootstrap-rails'
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.3.1.1'
   s.add_dependency 'bootstrap-multiselect-rails'
-  #Current Gem version of 'rails-csv-fixtures' does not work with Rails4.
-  #Include Github version in Gemfile.
+  #include github version in Gemfile
   #s.add_dependency 'rails-csv-fixtures'
+  #s.add_dependency 'activerecord-session_store'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'faker'

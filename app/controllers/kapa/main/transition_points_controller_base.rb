@@ -16,7 +16,7 @@ module Kapa::Main::TransitionPointsControllerBase
     @curriculums = @person.curriculums
     @assessment_rubrics = @transition_point.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
-    @table = Kapa::AssessmentScore.scores([@transition_point], @assessment_rubric)
+    @scores = Kapa::AssessmentScore.scores([@transition_point], @assessment_rubric)
   end
 
   def update

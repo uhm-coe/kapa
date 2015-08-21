@@ -9,7 +9,7 @@ module Kapa::Course::RegistrationsControllerBase
     @person.details(self)
     @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
-    @table = Kapa::AssessmentScore.scores([@course_registration], @assessment_rubric)
+    @scores = Kapa::AssessmentScore.scores([@course_registration], @assessment_rubric)
   end
 
   def update
