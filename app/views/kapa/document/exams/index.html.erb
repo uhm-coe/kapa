@@ -46,7 +46,7 @@
       <% if @current_user.manage? %>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
       <% end %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog"><span class="glyphicon glyphicon-search"></span> Search</button>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
 

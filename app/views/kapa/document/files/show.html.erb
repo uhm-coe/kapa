@@ -8,10 +8,10 @@
      via a link though.]
   <% end %>
   <p class="text-center">
-    <%=link_to content_tag(:span, "", :class => "glyphicon glyphicon-download") + " Download", kapa_document_file_path(:id => @file, :format => :file), :class => "btn btn-primary" %>
+    <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
     <% if @current_user.write? %>
-      <%=link_to content_tag(:span, "", :class => "glyphicon glyphicon-trash") + " Delete", kapa_document_file_path(:id => @file), {:method => :delete, "data-confirm" => "Proceed with deletion?", :class => "btn btn-default"} %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#edit_file_dialog">Property</button>
+      <%=bootstrap_button "Delete", kapa_document_file_path(:id => @file), :method => :delete, "data-confirm" => "Proceed with deletion?", :icon => "glyphicon-trash" %>
+      <%=bootstrap_button "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_file_dialog", :icon => "glyphicon-wrench" %>
     <% end %>
   </p>
 

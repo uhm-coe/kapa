@@ -110,7 +110,7 @@
   <%=bootstrap_form_for(:course, :url => kapa_course_offer_path(:id => @course_offer), :html => {:method => :put}) do %>
     <%=render :partial => "/kapa/course/table" %>
     <%= render :layout => "/kapa/layouts/controls" do %>
-      <%=link_to content_tag(:span, "", :class => "glyphicon glyphicon-download") + " Download", {:action => :show, :id => @course_offer, :format => :file}, {:class => "btn btn-default"} %>
+      <%=bootstrap_button "Download", {:action => :show, :id => @course_offer, :format => :file}, :icon => "glyphicon-download" %>
     <% end if @current_user.write? %>
   <% end %>
 <% end %>

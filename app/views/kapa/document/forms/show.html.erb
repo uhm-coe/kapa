@@ -6,7 +6,7 @@
     <%= hidden_field :form, :person_id %>
     <%= hidden_field :form, :type %>
     <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_document_form_path(:id => @form)} do %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#edit_form_dialog">Property</button>
+      <%=bootstrap_button "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_form_dialog", :icon => "glyphicon-wrench" %>
     <% end if @current_user.write? %>
   <% end %>
 

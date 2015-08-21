@@ -24,7 +24,7 @@
       </div>
       <div id="curriculum_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Program".html_safe, new_kapa_main_curriculum_path(:id => @person),:class => "btn btn-default" %></p>
+          <p class="text-right"><%=bootstrap_button "New Program", new_kapa_main_curriculum_path(:id => @person), :icon => "glyphicon-plus" %></p>
             <dl id="curriculum_list">
             <% for curriculum in @curriculums %>
               <% journey = curriculum.deserialize(:journey, :as => OpenStruct) %>
@@ -68,8 +68,8 @@
       <div id="document_detail" class="panel-collapse collapse">
         <div class="panel-body">
           <p class="text-right">
-            <button type="button" id="upload_document" class="btn btn-default" data-toggle="modal" data-target="#document_dialog"><span class='glyphicon glyphicon-plus'></span>New File</button>
-            <button type="button" id="add_form" class="btn btn-default" data-toggle="modal" data-target="#form_dialog"><span class='glyphicon glyphicon-plus'></span>New Form</button>
+            <%=bootstrap_button "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+            <%=bootstrap_button "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
           </p>
           <table class="table table-hover">
            <tr>
@@ -103,7 +103,7 @@
       </div>
       <div id="advising_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Advising Session".html_safe, new_kapa_advising_session_path(:id => @person),:class => "btn btn-default"  %></p>
+          <p class="text-right"><%=bootstrap_button "New Advising Session", new_kapa_advising_session_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Date</th>
@@ -138,7 +138,7 @@
       </div>
       <div id="course_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Course Registration".html_safe, new_kapa_course_registration_path(:id => @person),:class => "btn btn-default"  %></p>
+          <p class="text-right"><%=bootstrap_button "New Course", new_kapa_course_registration_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Term</th>
@@ -173,7 +173,7 @@
       </div>
       <div id="practicum_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=link_to "<span class='glyphicon glyphicon-plus'></span> New Placement".html_safe, new_kapa_practicum_placement_path(:id => @person), :class => "btn btn-default"  %></p>
+          <p class="text-right"><%=bootstrap_button "New Placement", new_kapa_practicum_placement_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Term</th>

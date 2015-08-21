@@ -52,8 +52,8 @@
       <span class="glyphicon glyphicon-user"></span><span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-      <li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Person Profile</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contact Information</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Profile</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contacts</a></li>
       <li><a href="#">Send Email</a></li>
       <li><a href="#">Open External Site</a></li>
     </ul>
@@ -61,7 +61,7 @@
   <%= link_to @person.full_name, kapa_main_person_path(:action => :show, :id => @person) %>
 </h3>
 
-<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Person Profile", :modal_form_id => "person_form"} do %>
+<%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Profile", :modal_form_id => "person_form"} do %>
   <%= bootstrap_form_for :person, :url => kapa_main_person_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
     <%= render :partial => "/kapa/main/person_form" %>
   <% end %>

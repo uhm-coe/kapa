@@ -55,7 +55,7 @@ module Kapa::Main::PersonsControllerBase
 
   def index
     @filter = filter
-    if @filter.key.blank?
+    if params[:modal]
       @modal = true
       @persons = Kapa::Person.where("0=1")
     else

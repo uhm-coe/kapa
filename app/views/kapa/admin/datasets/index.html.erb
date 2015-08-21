@@ -4,7 +4,8 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%= link_to t('.new', :default => t("helpers.links.new")), new_kapa_admin_dataset_path, :class => 'btn btn-default' %>
+      <%=bootstrap_button "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
 

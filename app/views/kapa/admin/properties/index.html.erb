@@ -25,8 +25,8 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%= link_to content_tag(:span, "", :class => "glyphicon glyphicon-plus") + " New", {:action => :new}, :class => "btn btn-default" %>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter_dialog"><span class="glyphicon glyphicon-search"></span> Search</button>
+      <%= bootstrap_button "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
 
