@@ -28,7 +28,7 @@ fixtures = %w(
   practicum_sites
   datasets
 ).each do |f|
-  ActiveRecord::Fixtures.create_fixtures("#{Kapa::Engine.root}/test/fixtures", f)
+  ActiveRecord::Fixtures.create_fixtures("#{Kapa::Engine.root}/db/fixtures", f)
 end
 
 #Create a sample user on each role

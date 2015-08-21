@@ -1,1 +1,0 @@
-Kapa::Engine.load_seed

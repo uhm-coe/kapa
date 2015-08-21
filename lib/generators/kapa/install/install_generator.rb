@@ -16,6 +16,6 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
   def install_fixtures
     puts "Installing fixtures..."
-    directory("#{Kapa::Engine.root}/test/fixtures", "#{Rails.root}/test/fixtures")
+    directory("#{Kapa::Engine.root}/db/fixtures", "#{Rails.root}/db/fixtures")
   end
 end
