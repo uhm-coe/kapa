@@ -1,0 +1,81 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      <% if @modal %>$('#filter_dialog').modal({show: true});
+      <% end %>
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%= bootstrap_form_for(:filter, :url => kapa_enrollments_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= f.term_select :term_id, :include_blank => "Any" %>
+          <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts, :include_code => true %>
+          <%= f.property_select :distribution, :include_blank => "Any" %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.property_select :major, :include_blank => "Any", :include_code => true, :depts => @current_user.depts, :label => "Major/Concentration" %>
+          <%= f.property_select :category, :include_blank => "Any" %>
+          <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Enrollment Data", :modal_form_id => "import_enrollment_form"} do %>
+    <%= bootstrap_form_for(:data, :url => import_kapa_enrollments_path, :html => {:multipart => true, :id => "import_enrollment_form"}) do |f| %>
+      <%= f.term_select :term_id %>
+      <%= f.file_field :import_file %>
+      <%= f.check_box :delete, {:label => "Delete all enrollment records in the specified term before importing"}, "Y", "N" %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Enrollments (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <% if @current_user.manage? %>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
+      <% end %>
+      <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Last Transition Point</th>
+      <th>Last Action</th>
+      <th>Assignee</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for enrollment in @enrollments %>
+      <tr>
+        <td><%= enrollment.curriculum.person.id_number %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(enrollment.curriculum.person.full_name), kapa_person_path(:id => enrollment.curriculum.person_id, :focus => "practicum") %></td>
+        <td><%= h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
+        <td><%= h enrollment.curriculum.rsend(:last_transition_point, :type_desc) %></td>
+        <td><%= h enrollment.curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
+        <td><%= h enrollment.curriculum.rsend(:user_primary, :person, :last_name) %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => enrollment}, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%= will_paginate @enrollments, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>

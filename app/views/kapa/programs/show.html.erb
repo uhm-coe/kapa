@@ -1,0 +1,77 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'program_profile';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%= h @program.description %>
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#offers_tab" data-toggle="tab">Offering Groups</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="program_profile_tab" class="tab-pane">
+        <%= bootstrap_form_for :program, :url => kapa_program_path(:id => @program), :html => {:method => :put} do |f| %>
+          <%= render :partial => "program_form" %>
+          <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_program_path(:id => @program)} if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="offers_tab" class="tab-pane">
+        <div class="panel-group" id="accordion">
+          <% @program_offers.each_with_index do |program_offer, index| %>
+            <% @program_offer = program_offer %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#program_offer_<%= @program_offer.id %>"><span class="strong"><%= h "#{@program.code}/#{@program_offer.description}" %></span></a>
+                </h3>
+              </div>
+              <div id="program_offer_<%= @program_offer.id %>" class="panel-collapse collapse<%= ' in' if params[:offer_panel] == @program_offer.id.to_s || (params[:offer_panel].nil? && index == 0) %>">
+                <div class="panel-body">
+                  <%= bootstrap_form_for :program_offer, :url => kapa_program_offer_path(:id => @program_offer, :focus => :offers, :offer_panel => program_offer.id), :html => {:method => :put} do |f| %>
+                    <%= render :partial => "program_offer_form" %>
+                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_program_offer_path(:id => @program_offer, :focus => :offers)} if @current_user.write? %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_program_offer"><span class="new">New Availability</span></a>
+              </h3>
+            </div>
+            <div id="new_program_offer" class="panel-collapse collapse<%= ' in' if @program_offers.length == 0 %>">
+              <div class="panel-body">
+                <% @program_offer = Kapa::ProgramOffer.new %>
+                <%= bootstrap_form_for :program_offer, :url => kapa_program_offers_path(:id => @program, :focus => :offers) do |f| %>
+                  <%= render :partial => "program_offer_form", :locals => {:f => f} %>
+                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>

@@ -29,12 +29,12 @@ module Kapa::KapaControllerBase
       @current_user.request = request
     else
       flash[:info] = "Please log in to continue."
-      redirect_to(new_kapa_main_session_path) and return
+      redirect_to(new_kapa_user_session_path) and return
     end
     unless @current_user_session and @current_user and @current_user.status >= 3
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
-      redirect_to(new_kapa_main_session_path) and return
+      redirect_to(new_kapa_user_session_path) and return
     end
   end
 
@@ -125,12 +125,8 @@ module Kapa::KapaControllerBase
     params[:controller].gsub("/", "_")
   end
 
-  def controller_module_name
-    params[:controller].split("/").second
-  end
-
   def filter(options = {})
-    name = "filter_#{controller_module_name}".to_sym
+    name = "filter_#{controller_name}".to_sym
     session[name] = filter_defaults if session[name].nil?
     session[name].update(params[:filter]) if params[:filter].present?
     session[name].update(options) if options.present?
@@ -155,15 +151,15 @@ module Kapa::KapaControllerBase
   def menu_items(name, options = {})
     items = []
     case name.to_s
-      when "main"
-        items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:kapa_main_transition_points)
-        items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:kapa_main_curriculums)
-        items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:kapa_main_enrollments)
+      when "program"
+        items.push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
+        items.push ["Cohorts", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
+        items.push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
       when "document"
-        items.push ["Files", kapa_document_files_path] if @current_user.read?(:kapa_document_files)
-        items.push ["Forms", kapa_document_forms_path] if @current_user.read?(:kapa_document_forms)
-        items.push ["Tests", kapa_document_exams_path] if @current_user.read?(:kapa_document_exams)
-        items.push ["Reports", kapa_document_reports_path] if @current_user.read?(:kapa_document_reports)
+        items.push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
+        items.push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
+        items.push ["Tests", kapa_exams_path] if @current_user.read?(:kapa_exams)
+        items.push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
       when "advising"
         items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
       when "course"
@@ -172,12 +168,12 @@ module Kapa::KapaControllerBase
         items.push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
         items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
       when "admin"
-        items.push ["Terms", kapa_admin_terms_path] if @current_user.manage?(:kapa_admin_terms)
-        items.push ["Programs", kapa_admin_programs_path] if @current_user.manage?(:kapa_admin_programs)
-        items.push ["Properties", kapa_admin_properties_path] if @current_user.manage?(:kapa_admin_properties)
-        items.push ["Assessments", kapa_admin_rubrics_path] if @current_user.manage?(:kapa_admin_rubrics)
-        items.push ["Datasets", kapa_admin_datasets_path] if @current_user.manage?(:kapa_admin_datasets)
-        items.push ["Users", kapa_admin_users_path] if @current_user.manage?(:kapa_admin_users)
+        items.push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
+        items.push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
+        items.push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
+        items.push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
+        items.push ["Datasets", kapa_datasets_path] if @current_user.manage?(:kapa_datasets)
+        items.push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)
     end
     items
   end

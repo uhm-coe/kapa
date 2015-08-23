@@ -1,0 +1,15 @@
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_person_path(:id => @person, :focus => :advising), :class => "glyphicon glyphicon-chevron-left" %>
+    Advising Record
+  </h4>
+
+  <div>
+    <%=bootstrap_form_for :advising_session, :url => kapa_advising_sessions_path do |f| %>
+      <%=render :partial => "session_form", :locals => {:f => f} %>
+      <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+    <% end %>
+  </div>
+<% end %>

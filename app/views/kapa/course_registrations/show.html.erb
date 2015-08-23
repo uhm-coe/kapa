@@ -1,0 +1,63 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'course';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+
+      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
+
+      $('#filter_assessment_rubric_id').change(function() {
+        $(this).parents('form').submit();
+      });
+
+      appFn.initAssessmentTable('#assessment_table');
+
+      $('#all_green_button').click(function() {
+        if(confirm('Would you like to fill all empty cells in green?')) {
+          appFn.setAssessmentScores('2');
+        }
+      });
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_person_path(:id => @person, :focus => :course), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@course_offer.name%> - <%=h @course_offer.term_desc %>
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#course_tab" data-toggle="tab">Course</a></li>
+      <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="course_tab" class="tab-pane">
+        <%=bootstrap_form_for :course_registration, :url => kapa_course_registration_path(:id => @course_registration), :html => {:method => :put}  do |f| %>
+          <%=render :partial => "registration_form" %>
+        <% end %>
+      </div>
+
+      <div id="assessment_tab" class="tab-pane">
+        <%=bootstrap_form_for :filter, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
+          <div class="row">
+            <div class="col-sm-6">
+              <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => "600"}) %>
+            </div>
+          </div>
+        <% end %>
+        <%=bootstrap_form_for :assessment_score, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :put} do |f| %>
+          <%=render :partial => "assessment_form" %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,28 @@
+<% level_selections = [["No Access", "0"], ["Read", "1"], ["Write", "2"], ["Manage", "3"]] %>
+<% list_selections = [["Assigned records", "1"], ["Departmental records", "2"], ["All records", "3"]] %>
+
+<%= bootstrap_fields_for :permission do |f| %>
+  <table id="user_list" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Route</th>
+        <th>Access Level</th>
+        <th>Data Scope</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% Rails.configuration.available_routes.each do |o| %>
+        <tr>
+          <td><h5><%=o %></h5></td>
+          <% if o =~ /^kapa/%>
+            <td><%= f.select "#{o}", [["No Access", "0"], ["Manage", "3"]], {:label => :no} %></td>
+            <td></td>
+          <% else %>
+            <td><%= f.select "#{o}", level_selections, {:label => :no} %></td>
+            <td><%= f.select "#{o}_scope", list_selections, {:label => :no}, {} %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

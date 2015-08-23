@@ -1,0 +1,23 @@
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Program
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#program_profile_tab" data-toggle="tab">Profile</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="program_profile_tab" class="tab-pane active">
+        <%=bootstrap_form_for :program, :url => kapa_programs_path do |f| %>
+          <%=render :partial => "program_form" %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

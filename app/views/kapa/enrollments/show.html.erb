@@ -1,0 +1,31 @@
+<% content_for(:box1) do %>
+  <%= render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%= link_to "", kapa_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    Enrollment
+  </h4>
+
+  <div>
+    <%= bootstrap_form_for :enrollment, :url => kapa_enrollment_path(:id => @enrollment), :html => {:method => :put} do |f| %>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <%= f.term_select :term_id %>
+          <%= f.text_field :sequence %>
+          <%= f.property_select :category, :name => :enrollment_category, :include_blank => true %>
+          <%= f.property_select :status, :name => :enrollment_status, :include_blank => true %>
+          <%= f.property_select :dept, :name => :dept, :include_blank => true %>
+          <%= f.user_select :user_primary_id, :include_blank => true, :label => "Primary Reviewer", :depts => @current_user.depts %>
+          <%= f.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Reviewer" %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.text_area :note, {:cols => 54, :rows => 20} %>
+          <%= f.hidden_field :curriculum_id %>
+        </div>
+      </div>
+
+      <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+    <% end %>
+  </div>
+<% end %>

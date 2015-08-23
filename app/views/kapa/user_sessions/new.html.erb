@@ -1,0 +1,44 @@
+<% content_for(:head) do %>
+  <style>
+    .jumbotron {
+      background-color: #eeeeee;
+      color: inherit;
+      margin-bottom: 0px;
+      padding: 30px;
+    }
+
+    .right-col {
+      padding: 120px 0 0 0;
+      float: none;
+      display: inline-block;
+    }
+  </style>
+<% end %>
+
+<% content_for(:box1) do %>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="jumbotron">
+        <h1>Welcome</h1>
+
+        <p>
+          KAPA Admin Console is an administrative UI to organize student academic records including advising, courses,
+          transition points, field placements, electronic documents, etc...
+        </p>
+
+        <p>
+          This highly customizable UI provides a set of tools to support various needs for higher education
+          institutions.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4 right-col">
+      <%= bootstrap_form_for(:user_session, :url => kapa_user_session_path, :html => {:method => :post}) do |f| %>
+        <%= f.text_field :uid, :label => "Username" %>
+        <%= f.password_field :password %>
+        <%= f.submit "Login", :class => "btn btn-primary btn-lg" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    New Program
+  </h4>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%=bootstrap_form_for :curriculum, :url => kapa_curriculums_path(:id => @person) do |f| %>
+        <%=f.program_select :program_id, :value => :id, :depts => @current_user.depts, :label => "Program" %>
+        <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

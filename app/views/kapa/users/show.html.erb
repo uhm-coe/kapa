@@ -1,0 +1,64 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'user_profile';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
+    <%=bootstrap_form_for :role, :url => kapa_user_path(:id => @user, :focus => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
+      <%=f.select "Role", [["Admin", "admin"], ["Adviser", "adviser"], ["Faculty", "faculty"]] %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    User Record
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#permission_tab" data-toggle="tab">Permissions</a></li>
+      <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
+      <li><a href="#other_accounts_tab" data-toggle="tab">Other Accounts</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="user_profile_tab" class="tab-pane">
+        <%=bootstrap_form_for :user, :url => kapa_user_path(:id => @user), :html => {:method => :put} do |f| %>
+          <%=render :partial => "user_form", :locals => {:f => f} %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="permission_tab" class="tab-pane">
+        <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :focus => :role), :html => {:method => :put}  do |f| %>
+          <%=render :partial => "role_form", :locals => {:f => f} %>
+          <%= render :layout => "/kapa/layouts/controls" do %>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#apply_role_dialog">Role</button>
+          <% end if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="activity_tab" class="tab-pane">
+        <%=render :partial => "activity_table" %>
+      </div>
+
+      <div id="other_accounts_tab" class="tab-pane">
+        <%=render :partial => "account_table" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

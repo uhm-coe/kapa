@@ -1,0 +1,25 @@
+<% @show_options = true if FileTest.exists?("#{Rails.root}/app/views/admin/_#{@property.name}_form.html.erb") %>
+
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@property.name%>/<%=@property.code %>
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#property_tab" data-toggle="tab">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="property_tab" class="tab-pane active">
+        <%=bootstrap_form_for :property, :url => kapa_property_path(:id => @property), :html => {:method => :put} do |f| %>
+          <%=render :partial => "property_form", :locals => {:f => f} %>
+          <%=render :partial => "/kapa/layouts/controls" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

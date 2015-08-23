@@ -1,0 +1,63 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_assessment_rubrics_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%= f.text_field :title %>
+      <div class="form-group">
+        <label for="filter_program">Program</label>
+        <%= program_select :filter, :program, {:include_blank => "Any"}, :class => "form-control" %>
+      </div>
+      <%= f.property_select :course, {:name => :assessment_course, :include_blank => "Any"} %>
+      <%= f.property_select :transition_point, :include_blank => "Any" %>
+      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Assessments</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=bootstrap_button "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Program</th>
+        <th>Effective</th>
+        <th>Criteria</th>
+        <th>Dept</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for assessment_rubric in @assessment_rubrics %>
+        <tr>
+          <td><%=abbr assessment_rubric.title, 50 %></td>
+          <td><%=abbr assessment_rubric.program.join(", "), 23 %></td>
+          <td><%=h assessment_rubric.effective_term %></td>
+          <td><%=h assessment_rubric.assessment_criterions.length.to_i %></td>
+          <td><%=h assessment_rubric.dept.join(", ") %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => assessment_rubric}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%=will_paginate @assessment_rubrics, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>

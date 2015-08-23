@@ -1,0 +1,61 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      var lookup_person = function(key) {
+          $.getJSON('<%=kapa_persons_lookup_path(:id => @person)%>',
+                    {key: key},
+                    function(data) {
+                      if(data['person']) {
+                         $('#person_id_number').val(data['person']['id_number']);
+                         $('#person_email').val(data['person']['email']);
+                         $('#person_last_name').val(data['person']['last_name']);
+                         $('#person_first_name').val(data['person']['first_name']);
+                         $('#person_status').val(data['person']['status']);
+                      }
+
+                      if(data['action'] == 'promote') {
+                        alert('Person was verified with the external directory.  Please check the name and save this record.');
+                      }
+                      else if(data['action'] == 'merge') {
+                        alert('This person already exists in this system.  You will be redirect to the person record.');
+                        window.location.href = data['redirect_path']
+                      }
+                      else if(data['action'] == 'alert') {
+                        $('#person_id_number').val('');
+                        $('#person_email').val('');
+                        alert('No record was found in the external directory. Please check ID or Email');
+                      }
+                     });
+      }
+
+      $('#person_id_number').keyup(function() {
+        if($(this).val().match(/<%=Rails.configuration.regex_id_number %>/i)) {
+          lookup_person($(this).val());
+        }
+      });
+
+      $('#person_email').keyup(function() {
+         if($(this).val().match(/<%=Rails.configuration.regex_email %>/i)) {
+          lookup_person($(this).val());
+         }
+      });
+   });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Person
+  </h4>
+
+  <%=bootstrap_form_for :person, :url => kapa_persons_path do %>
+    <div id="person_form">
+      <%=render :partial => "kapa/persons/person_form" %>
+    </div>
+    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+  <% end %>
+
+<% end %>
+

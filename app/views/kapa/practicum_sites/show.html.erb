@@ -1,0 +1,90 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'site_profile';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=h @practicum_site.name%>
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#site_profile_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#site_contact_tab" data-toggle="tab">Contact</a></li>
+      <li><a href="#mentors_tab" data-toggle="tab">Mentors</a></li>
+      <li><a href="#placements_tab" data-toggle="tab">Placements</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="site_profile_tab" class="tab-pane">
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(:id => @practicum_site), :html => {:method => :put} do |f|%>
+          <%=render :partial => "site_form", :locals => {:f => f} %>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_practicum_site_path(:id => @practicum_site)} if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="site_contact_tab" class="tab-pane">
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :focus => :site_contact), :html => {:method => :put}  do |f|%>
+          <%=render :partial => "site_contact_form" %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="mentors_tab" class="tab-pane">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Placements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for mentor in @mentors %>
+              <tr>
+                <td><%=h mentor.full_name %></td>
+                <td><%=mail_to mentor.contact.email if mentor.contact %></td>
+                <td><%=h mentor.practicum_placements.length.to_i if mentor.practicum_placements.present? %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="placements_tab" class="tab-pane">
+        <table id="placement_list" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Mentor</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for practicum_placement in @practicum_placements %>
+              <tr>
+                <td><%=practicum_placement.term_desc %></td>
+                <td><%=practicum_placement.person.id_number %></td>
+                <td><%=abbr practicum_placement.person.full_name%></td>
+                <td><%=h practicum_placement.mentor.full_name if practicum_placement.mentor.present? %></td>
+                <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<% end %>

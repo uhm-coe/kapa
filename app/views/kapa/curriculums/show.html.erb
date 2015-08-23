@@ -1,0 +1,84 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      // Set active tab and pane
+      var focus = '<%=params[:focus]%>' || 'curriculum';
+      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
+      $('#' + focus + '_tab').addClass('active');
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_person_path(:id => @curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
+    Program Details
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#curriculum_tab" data-toggle="tab">Curriculum</a></li>
+      <li><a href="#transition_points_tab" data-toggle="tab">Transition Points</a></li>
+      <li><a href="#enrollments_tab" data-toggle="tab">Enrollments</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="curriculum_tab" class="tab-pane">
+        <%=bootstrap_form_for :curriculum, :url => kapa_curriculum_path(:id => @curriculum), :html => {:method => :put}  do %>
+          <%=render :partial => "curriculum_form" %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="transition_points_tab" class="tab-pane">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Type</th>
+              <th>Latest Action</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for transition_point in @transition_points %>
+              <tr>
+                <td><%=h transition_point.term_desc %></td>
+                <td><%=h transition_point.type.to_s.capitalize %></td>
+                <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+                <td class="right"><%=link_to "Show", kapa_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p class="new right"><%=link_to "New Transition Point", new_kapa_transition_point_path(:id => @curriculum) %></p>
+      </div>
+
+      <div id="enrollments_tab" class="tab-pane">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for enrollment in @enrollments %>
+              <tr>
+                <td><%=h enrollment.term_desc %></td>
+                <td><%=h enrollment.category %></td>
+                <td><%=h enrollment.status %></td>
+                <td class="right"><%=link_to "Show", kapa_enrollment_path(:id => enrollment), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p class="new right"><%=link_to "New Enrollment", new_kapa_enrollment_path(:id => @curriculum) %></p>
+      </div>
+    </div>
+  </div>
+<% end %>

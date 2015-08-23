@@ -1,0 +1,32 @@
+
+<% content_for(:box1) do %>
+  <h4>User Activities</h4>
+  <%=form_tag :action => :logs do %>
+    <table>
+      <tr class="bottom">
+        <td>
+          <p><label for="filter_admin_user">Start date:</label><br>
+          <%=date_picker :filter, :date_start %></p>
+        </td>
+        <td>
+          <p><label for="filter_admin_user">End date:</label><br>
+          <%=date_picker :filter, :date_end %></p>
+        </td>
+        <td>
+          <p><label for="filter_admin_user">Action Filter:</label><br>
+          <%=text_field :filter, :path %></p>
+        </td>
+        <td>
+          <p class="right"><%=submit_tag "Show" %></p>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>
+
+
+<% content_for(:box2) do %>
+
+  <%=render :partial => "activity_table" %>
+
+<% end %>

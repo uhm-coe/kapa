@@ -1,0 +1,20 @@
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", kapa_curriculum_path(:id => @curriculum), :class => "glyphicon glyphicon-chevron-left" %>
+    New Transition Point
+  </h4>
+  <%=bootstrap_form_for :transition_point, :url => kapa_transition_points_path(:id => @person) do |f| %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%=f.term_select :term_id, :label => "Term" %>
+      </div>
+      <div class="col-sm-6">
+        <%=f.property_select :type, :name => :transition_point %>
+      </div>
+    </div>
+    <%=f.hidden_field :curriculum_id %>
+    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+  <% end %>
+<%end%>

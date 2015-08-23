@@ -1,0 +1,83 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      <% if @modal %>$('#filter_dialog').modal({show: true});
+      <% end %>
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%= bootstrap_form_for(:filter, :url => kapa_exams_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%= f.text_field :name, :label => "Name" %>
+      <div class="form-group">
+        <%= label_tag "filter_birth_date", "Birth Date" %>
+        <%= date_picker :filter, :birth_date %>
+      </div>
+      <div class="form-group">
+        <%= label_tag "filter_date_start", "Report Date Start" %>
+        <%= date_picker :filter, :date_start %>
+      </div>
+      <div class="form-group">
+        <%= label_tag "filter_date_end", "Report Date End" %>
+        <%= date_picker :filter, :date_end %>
+      </div>
+      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+    <% end %>
+  <% end %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Test Scores", :modal_form_id => "import_exam_form"} do %>
+    <%= bootstrap_form_for(:data, :url => import_kapa_exams_path, :html => {:multipart => true, :id => "import_exam_form"}) do |f| %>
+      <%= f.select :type, [["Praxis", "praxis"]] %></p>
+      <%= f.file_field :import_file %></p>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Tests</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <% if @current_user.manage? %>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
+      <% end %>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table id="report_list" class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Birth Date</th>
+      <th>Test</th>
+      <th>Report Date</th>
+      <th>Records</th>
+      <th>Dept</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for exam in @exams %>
+      <tr>
+        <td><%= exam.person.id_number %></td>
+        <td><%= link_to abbr(exam.person.full_name), kapa_person_path(:id => exam.person) %></td>
+        <td><%= format_date exam.person.birth_date %></td>
+        <td><%= format_date exam.name %></td>
+        <td><%= format_date exam.report_date %></td>
+        <td><%= h exam.exam_scores.length %></td>
+        <td><%= h exam.dept %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => exam}, {:target => :blank, :class => "btn btn-default btn-xs"} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%= will_paginate @exams, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>

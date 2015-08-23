@@ -1,0 +1,52 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_persons_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+       <%=f.text_field :key, :label => "Please enter a search key, i.e., ID, Name, Email, etc..." %>
+     <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Search Person: <%=@filter.key%></h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=bootstrap_button "New", {:action => :new}, :icon => "glyphicon-plus" if @current_user.manage? %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Other Names</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for person in @persons %>
+        <tr>
+          <td><%=person.id_number %></td>
+          <td><%=h person.full_name %></td>
+          <td><%=abbr person.other_name, 30 %></td>
+          <td><%=mail_to person.email %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>
