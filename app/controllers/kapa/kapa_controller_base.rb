@@ -152,9 +152,10 @@ module Kapa::KapaControllerBase
     items = []
     case name.to_s
       when "program"
-        items.push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
         items.push ["Cohorts", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
+        items.push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
         items.push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
+        items.push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
       when "document"
         items.push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
         items.push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
@@ -169,7 +170,6 @@ module Kapa::KapaControllerBase
         items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
       when "admin"
         items.push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
-        items.push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
         items.push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
         items.push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
         items.push ["Datasets", kapa_datasets_path] if @current_user.manage?(:kapa_datasets)

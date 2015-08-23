@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe Kapa::Admin::DatasetsController, type: :controller do
+describe Kapa::DatasetsController, type: :controller do
   render_views
   let(:user){FactoryGirl.create(:user)}
 
