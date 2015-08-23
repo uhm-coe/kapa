@@ -156,14 +156,13 @@ module Kapa::KapaControllerBase
     items = []
     case name.to_s
       when "main"
-        items.push ["Search Person", kapa_main_persons_path] if @current_user.read?(:kapa_main_persons)
-        items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:kapa_main_curriculums)
         items.push ["Transition Points", kapa_main_transition_points_path] if @current_user.read?(:kapa_main_transition_points)
+        items.push ["Cohorts", kapa_main_curriculums_path] if @current_user.read? (:kapa_main_curriculums)
         items.push ["Enrollments", kapa_main_enrollments_path] if @current_user.read?(:kapa_main_enrollments)
       when "document"
         items.push ["Files", kapa_document_files_path] if @current_user.read?(:kapa_document_files)
         items.push ["Forms", kapa_document_forms_path] if @current_user.read?(:kapa_document_forms)
-        items.push ["Standardized Tests", kapa_document_exams_path] if @current_user.read?(:kapa_document_exams)
+        items.push ["Tests", kapa_document_exams_path] if @current_user.read?(:kapa_document_exams)
         items.push ["Reports", kapa_document_reports_path] if @current_user.read?(:kapa_document_reports)
       when "advising"
         items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)

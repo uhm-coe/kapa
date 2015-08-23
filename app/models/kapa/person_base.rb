@@ -34,9 +34,6 @@ module Kapa::PersonBase
     "#{last_name}, #{first_name}"
   end
 
-  def details(obj)
-  end
-
   def ethnicity_desc
     return Kapa::Property.lookup_description("ethnicity", self.ethnicity)
   end
@@ -134,7 +131,7 @@ module Kapa::PersonBase
     def lookup_remote(key)
       #Implement a way to load single person data from a remote datasource in main application.
       #This method is called from lookup method if the system cannot find a person in the local database.
-      return []
+      return nil
     end
   end
 end

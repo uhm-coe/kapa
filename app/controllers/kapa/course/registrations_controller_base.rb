@@ -6,7 +6,6 @@ module Kapa::Course::RegistrationsControllerBase
     @course_registration = Kapa::CourseRegistration.find(params[:id])
     @course_offer = @course_registration.course_offer
     @person = @course_registration.person
-    @person.details(self)
     @assessment_rubrics = @course_offer.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @scores = Kapa::AssessmentScore.scores([@course_registration], @assessment_rubric)

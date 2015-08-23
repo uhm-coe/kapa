@@ -5,13 +5,12 @@ module Kapa::Main::EnrollmentsControllerBase
     @enrollment = Kapa::Enrollment.find(params[:id])
     @curriculum = @enrollment.curriculum
     @person = @curriculum.person
-    @person.details(self)
+
   end
 
   def new
     @curriculum = Kapa::Curriculum.find(params[:id])
     @person = @curriculum.person
-    @person.details(self)
     @enrollment = @curriculum.enrollments.build(:term_id => Kapa::Term.current_term.id, :curriculum_id => params[:id])
   end
 

@@ -12,7 +12,7 @@ module Kapa::Main::TransitionPointsControllerBase
     @programs = Kapa::Program.where(:active => true)
     @transition_actions = @transition_point.transition_actions
     @person = @curriculum.person
-    @person.details(self)
+
     @curriculums = @person.curriculums
     @assessment_rubrics = @transition_point.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
@@ -52,7 +52,6 @@ module Kapa::Main::TransitionPointsControllerBase
   def new
     @curriculum = Kapa::Curriculum.find(params[:id])
     @person = @curriculum.person
-    @person.details(self)
     @curriculums = @person.curriculums
     @transition_point = @curriculum.transition_points.build(:term_id => Kapa::Term.current_term.id, :curriculum_id => params[:id])
   end

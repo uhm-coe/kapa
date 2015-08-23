@@ -8,7 +8,7 @@ module Kapa::Main::CurriculumsControllerBase
     @transition_points = @curriculum.transition_points
     @enrollments = @curriculum.enrollments
     @person = @curriculum.person
-    @person.details(self)
+
   end
 
   def update
@@ -27,7 +27,6 @@ module Kapa::Main::CurriculumsControllerBase
 
   def new
     @person = Kapa::Person.find(params[:id])
-    @person.details(self)
   end
 
   def create

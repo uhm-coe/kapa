@@ -4,13 +4,12 @@ module Kapa::Advising::SessionsControllerBase
   def show
     @advising_session = Kapa::AdvisingSession.find(params[:id])
     @person = @advising_session.person
-    @person.details(self)
     @curriculums = @person.curriculums
   end
 
   def new
     @person = Kapa::Person.find(params[:id])
-    @person.details(self)
+
     @curriculums = @person.curriculums
     previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
     @advising_session = Kapa::AdvisingSession.new
