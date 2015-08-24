@@ -1,13 +1,13 @@
-module Kapa::CourseOffersControllerBase
+module Kapa::CoursesControllerBase
   extend ActiveSupport::Concern
 
   def show
 #    session[:filter_course][:assessment_rubric_id] = nil if request.get? and params[:format] != "file"
     @filter = filter((request.get? and params[:format] != "file") ? {:assessment_rubric_id => nil} : {})
-    @course_offer = Kapa::CourseOffer.find(params[:id])
-    @assessment_rubrics = @course_offer.assessment_rubrics
+    @course = Kapa::Course.find(params[:id])
+    @assessment_rubrics = @course.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
-    @course_registrations = @course_offer.course_registrations
+    @course_registrations = @course.course_registrations
     @scores = Kapa::AssessmentScore.scores(@course_registrations, @assessment_rubric)
     session[:scores] = @scores
 
@@ -15,7 +15,7 @@ module Kapa::CourseOffersControllerBase
       format.html
       format.file {
         csv_string = CSV.generate do |csv|
-          title = [@course_offer.name, @course_offer.term_desc, @course_offer.instructor, @assessment_rubric.title]
+          title = [@course.name, @course.term_desc, @course.instructor, @assessment_rubric.title]
           csv << title
           header_row = [:id_number, :last_name, :first_name]
           @assessment_rubric.assessment_criterions.each { |c| header_row.push("#{c.criterion}:#{c.criterion_desc}") }
@@ -33,7 +33,7 @@ module Kapa::CourseOffersControllerBase
         send_data csv_string,
                   :type => "application/csv",
                   :disposition => "inline",
-                  :filename => "#{@course_offer.name}_#{@course_offer.term_desc}.csv"
+                  :filename => "#{@course.name}_#{@course.term_desc}.csv"
       }
     end
   end
@@ -56,21 +56,21 @@ module Kapa::CourseOffersControllerBase
           end
         rescue ActiveRecord::StatementInvalid
           flash[:danger] = "There was an error updating scores. Please try again."
-          redirect_to kapa_course_offer_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id) and return false
+          redirect_to kapa_course_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id) and return false
         end
       end
     end
-    redirect_to  kapa_course_offer_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id)
+    redirect_to  kapa_course_path(:id => params[:id], :assessment_rubric_id => @filter.assessment_rubric_id)
   end
 
   def index
     @filter = filter
-    @course_offers = Kapa::CourseOffer.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+    @courses = Kapa::Course.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   def export
     @filter = filter
-    send_data Kapa::CourseOffer.to_csv(:filter => @filter),
+    send_data Kapa::Course.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "courses_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"

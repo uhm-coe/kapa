@@ -67,7 +67,7 @@ module Kapa::TransitionPointsControllerBase
       flash[:danger] = @transition_point.errors.full_messages.join(", ")
       redirect_to new_kapa_transition_point_path(:id => @curriculum) and return false
     end
-    flash[:success] = "Academic record was successfully created."
+    flash[:success] = "Transition point was successfully created."
     redirect_to kapa_transition_point_path(:id => @transition_point)
   end
 
@@ -86,7 +86,7 @@ module Kapa::TransitionPointsControllerBase
 
   private
   def transition_point_params
-    params.require(:transition_point).permit(:term_id, :category, :priority, :status, :user_primary_id,
+    params.require(:transition_point).permit(:term_id, :type, :category, :priority, :status, :user_primary_id,
                                              :user_secondary_id, :note, :curriculum_id, :user_ids=>[])
   end
 

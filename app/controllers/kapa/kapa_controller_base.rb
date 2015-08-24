@@ -164,7 +164,7 @@ module Kapa::KapaControllerBase
       when "advising"
         items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
       when "course"
-        items.push ["Rosters", kapa_course_offers_path] if @current_user.read?(:kapa_course_offers)
+        items.push ["Rosters", kapa_courses_path] if @current_user.read?(:kapa_courses)
       when "practicum"
         items.push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
         items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)

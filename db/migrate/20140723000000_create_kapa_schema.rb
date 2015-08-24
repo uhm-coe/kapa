@@ -116,7 +116,7 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "contacts", ["entity_id"], name: "index_contacts_on_entity_id", using: :btree
 
-    create_table "course_offers", force: :cascade do |t|
+    create_table "courses", force: :cascade do |t|
       t.string "academic_period", limit: 150
       t.string "crn", limit: 150
       t.string "subject", limit: 255
@@ -134,11 +134,11 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "dept", limit: 255
     end
 
-    add_index "course_offers", ["academic_period", "crn"], name: "index_course_offers_on_academic_period_and_crn", unique: true, using: :btree
-    add_index "course_offers", ["term_id"], name: "index_course_offers_on_term_id", using: :btree
+    add_index "courses", ["academic_period", "crn"], name: "index_courses_on_academic_period_and_crn", unique: true, using: :btree
+    add_index "courses", ["term_id"], name: "index_courses_on_term_id", using: :btree
 
     create_table "course_registrations", force: :cascade do |t|
-      t.integer "course_offer_id", limit: 4
+      t.integer "course_id", limit: 4
       t.integer "person_id", limit: 4
       t.string "status", limit: 255
       t.datetime "created_at"
@@ -147,7 +147,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text "xml", limit: 65535
     end
 
-    add_index "course_registrations", ["course_offer_id", "person_id"], name: "index_assessment_course_registrations_on_course_id_and_person_id", unique: true, using: :btree
+    add_index "course_registrations", ["course_id", "person_id"], name: "index_assessment_course_registrations_on_course_id_and_person_id", unique: true, using: :btree
 
     create_table "curriculums", force: :cascade do |t|
       t.integer "person_id", limit: 4, null: false

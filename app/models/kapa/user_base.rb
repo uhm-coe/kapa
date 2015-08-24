@@ -174,8 +174,8 @@ module Kapa::UserBase
         permission["kapa_advising_sessions"] = '2'
         permission["kapa_advising_sessions_scope"] = '2'
       when "instructor"
-        permission["kapa_course_offers"] = '2'
-        permission["kapa_course_offers_scope"] = '2'
+        permission["kapa_courses"] = '2'
+        permission["kapa_courses_scope"] = '2'
         permission["kapa_course_registrations"] = '2'
         permission["kapa_course_registrations_scope"] = '2'
     end

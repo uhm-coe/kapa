@@ -70,15 +70,12 @@ module Kapa::FormsControllerBase
   def form_data_params(type)
     case type
       when "declaration"
-        permitted_params = {:declaration_curriculum => [:program_id, :second_degree, :major_primary, :major_secondary, :location],
-                            :declaration_background => [:current, :current_college, :aa_degree, :aa_degree_when],
-                            :declaration_agreement => [:agreement_saf1, :agreement, :question]}
+        permitted_params = [:declaration_curriculum, :declaration_background, :declaration_agreement]
       when "admission"
-        #Define permitted params for admission_form
-        permitted_params = {}
+        permitted_params = [:admission_curriculum, :admission_background, :admission_agreement]
     end
     form_data_params = {}
-    permitted_params.each_pair {|k, v| form_data_params[k] = params.require(k).permit(v) if params[k]}
+    permitted_params.each {|k, v| form_data_params[k] = params.require(k).permit! if params[k]}
     return form_data_params
   end
 end

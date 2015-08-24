@@ -4,9 +4,9 @@ module Kapa::CourseRegistrationsControllerBase
   def show
     @filter = filter(request.get? ? {:assessment_rubric_id => nil} : {})
     @course_registration = Kapa::CourseRegistration.find(params[:id])
-    @course_offer = @course_registration.course_offer
+    @course = @course_registration.course
     @person = @course_registration.person
-    @assessment_rubrics = @course_offer.assessment_rubrics
+    @assessment_rubrics = @course.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @scores = Kapa::AssessmentScore.scores([@course_registration], @assessment_rubric)
   end

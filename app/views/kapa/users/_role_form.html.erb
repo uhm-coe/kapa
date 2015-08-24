@@ -15,7 +15,7 @@
         <tr>
           <td><h5><%=o %></h5></td>
           <% if %w(kapa_curriculums kapa_transition_points kapa_enrollments kapa_files kapa_forms kapa_exams
-                   kapa_advising_sessions kapa_course_offers kapa_course_registrations kapa_practicum_placements
+                   kapa_advising_sessions kapa_courses kapa_course_registrations kapa_practicum_placements
                    kapa_practicum_sites).include? o %>
             <td><%= f.select "#{o}", level_selections, {:label => :no} %></td>
             <td><%= f.select "#{o}_scope", list_selections, {:label => :no}, {} %></td>

@@ -8,7 +8,7 @@
      via a link though.]
   <% end %>
   <p class="text-center">
-    <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
+    <%=bootstrap_button "Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download" %>
     <% if @current_user.write? %>
       <%=bootstrap_button "Delete", kapa_file_path(:id => @file), :method => :delete, "data-confirm" => "Proceed with deletion?", :icon => "glyphicon-trash" %>
       <%=bootstrap_button "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_file_dialog", :icon => "glyphicon-wrench" %>

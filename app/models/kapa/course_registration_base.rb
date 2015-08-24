@@ -3,15 +3,15 @@ module Kapa::CourseRegistrationBase
 
   included do
     belongs_to :person
-    belongs_to :course_offer
+    belongs_to :course
     has_many :assessment_scores, :as => :assessment_scorable
   end
 
   def term_desc
-    self.course_offer.term_desc
+    self.course.term_desc
   end
 
   def subject
-    self.course_offer.subject
+    self.course.subject
   end
 end

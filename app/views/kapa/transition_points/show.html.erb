@@ -51,7 +51,7 @@
           <%= render :partial => "transition_point_form" %>
           <%= render :layout => "/kapa/layouts/controls" do %>
             <% if @current_user.manage? %>
-              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#move_transition_point_dialog">Move</button>
+              <%=bootstrap_button "Move", nil, "data-toggle" => "modal", "data-target" => "#move_transition_point_dialog", :icon => "glyphicon-move" %>
             <% end %>
           <% end if @current_user.write? %>
         <% end %>

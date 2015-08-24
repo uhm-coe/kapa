@@ -1,4 +1,4 @@
-module Kapa::CourseOfferBase
+module Kapa::CourseBase
   extend ActiveSupport::Concern
 
   included do
@@ -45,21 +45,21 @@ module Kapa::CourseOfferBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      course_offers = Kapa::CourseOffer.eager_load(:course_registrations).where("course_offers.status" => "A").order("subject, number, section")
-      course_offers = course_offers.where("course_offers.term_id" => filter.term_id) if filter.term_id.present?
-      course_offers = course_offers.where("course_offers.subject" => filter.subject) if filter.subject.present?
-      course_offers = course_offers.where("concat(course_offers.subject, course_offers.number, '-', course_offers.section) like ?", "%#{filter.name}%") #if filter.name.present?
+      courses = Kapa::Course.eager_load(:course_registrations).where("courses.status" => "A").order("subject, number, section")
+      courses = courses.where("courses.term_id" => filter.term_id) if filter.term_id.present?
+      courses = courses.where("courses.subject" => filter.subject) if filter.subject.present?
+      courses = courses.where("concat(courses.subject, courses.number, '-', courses.section) like ?", "%#{filter.name}%") #if filter.name.present?
       case filter.user.access_scope
         when 3
           # Do nothing
         when 2
-          course_offers = course_offers.depts_scope(filter.user.depts)
+          courses = courses.depts_scope(filter.user.depts)
         when 1
           # TODO: Not implemented yet
         else
-          course_offers = course_offers.where("1 = 2")
+          courses = courses.where("1 = 2")
       end
-      return course_offers
+      return courses
     end
 
     def csv_format

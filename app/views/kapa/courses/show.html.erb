@@ -95,10 +95,10 @@
 
 <% content_for(:box1) do %>
 
-  <%=bootstrap_form_for :filter, :url => kapa_course_offer_path(:id => @course_offer), :html => {:method => :get}  do |f| %>
+  <%=bootstrap_form_for :filter, :url => kapa_course_path(:id => @course), :html => {:method => :get}  do |f| %>
     <h4 class="section-header">
       <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-      <%=h @course_offer.name %> - <%=h @course_offer.term_desc %>
+      <%=h @course.name %> - <%=h @course.term_desc %>
     </h4>
     <div class="row">
       <div class="col-sm-6">
@@ -107,10 +107,10 @@
     </div>
   <% end %>
 
-  <%=bootstrap_form_for(:course, :url => kapa_course_offer_path(:id => @course_offer), :html => {:method => :put}) do %>
+  <%=bootstrap_form_for(:course, :url => kapa_course_path(:id => @course), :html => {:method => :put}) do %>
     <%=render :partial => "table" %>
     <%= render :layout => "/kapa/layouts/controls" do %>
-      <%=bootstrap_button "Download", {:action => :show, :id => @course_offer, :format => :file}, :icon => "glyphicon-download" %>
+      <%=bootstrap_button "Download", {:action => :show, :id => @course, :format => :file}, :icon => "glyphicon-download" %>
     <% end if @current_user.write? %>
   <% end %>
 <% end %>

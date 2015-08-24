@@ -42,14 +42,14 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-8">
           <%= bootstrap_flash %>
         </div>
       </div>
       <% if content_for?(:box1) %>
-        <div class="header"><h1><%=@title%></h1></div>
+        <div class="header col-md-8 text-center"><h1><%=@title%></h1></div>
         <div class="row">
-          <div class="well col-lg-12">
+          <div class="well col-md-8">
             <%= yield :box1 %>
           </div>
         </div>
@@ -57,7 +57,7 @@
 
       <% if content_for?(:box2) %>
         <div class="row">
-          <div class="well col-lg-12">
+          <div class="well col-lg-8">
             <%= yield :box2 %>
           </div>
         </div>
@@ -68,7 +68,7 @@
       <% end %>
 
       <footer>
-        <p class="text-center">&copy; College of Education, University of Hawaii at Manoa 2014</p>
+        <p class="col-lg-8 text-center">&copy; College of Education, University of Hawaii at Manoa 2014</p>
       </footer>
     </div>
   </body>

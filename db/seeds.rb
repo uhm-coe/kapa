@@ -21,7 +21,7 @@ fixtures = %w(
   advising_sessions
   transition_points
   transition_actions
-  course_offers
+  courses
   course_registrations
   enrollments
   practicum_placements

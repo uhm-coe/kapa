@@ -27,7 +27,7 @@ module Kapa::ExamsControllerBase
       redirect_to kapa_exam_path(:id => @exam) and return false
     end
     flash[:success] = "Test record was successfully deleted."
-    redirect_to kapa_persons_path(:action => :show, :id => @exam.person_id, :focus => :exam)
+    redirect_to kapa_persons_path(:action => :show, :id => @exam.person_id, :focus => :document)
   end
 
   def index

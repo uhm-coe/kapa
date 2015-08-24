@@ -150,9 +150,9 @@
             <% for course_registration in @course_registrations %>
               <tr>
                 <td><%=h "#{course_registration.term_desc}" %></td>
-                <td><%=h "#{course_registration.course_offer.name}" %></td>
-                <td><%=abbr "#{course_registration.course_offer.title}", 50 %></td>
-                <td><%=abbr "#{course_registration.course_offer.instructor}", 50 %></td>
+                <td><%=h "#{course_registration.course.name}" %></td>
+                <td><%=abbr "#{course_registration.course.title}", 50 %></td>
+                <td><%=abbr "#{course_registration.course.instructor}", 50 %></td>
                 <td class="right"><%=link_to "Show", kapa_course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
