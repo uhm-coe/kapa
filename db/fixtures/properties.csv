@@ -1,4 +1,4 @@
-id,name,code,description,description_short,category,regexp,sequence,active,dept,yml,xml
+id,name,code,description,description_short,category,regexp,sequence,active,dept,yml,json
 179377088,advising_task,Admissions - Pre-Ed Students,Admissions - Pre-Ed Students,,,,0,0,,,
 179377089,advising_task,Admissions - Pre-KLS Students,Admissions - Pre-KLS Students,,,,0,0,,,
 179377090,advising_task,American Samoa Program,American Samoa Program,,,,0,0,,,

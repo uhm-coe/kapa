@@ -15,7 +15,7 @@ module Kapa::TransitionActionBase
   end
 
   def action_desc
-    Kapa::Property.lookup_description("#{self.type}_action", action)
+    Kapa::Property.lookup_description("#{self.transition_point.type}_action", action)
   end
 
   def admissible?

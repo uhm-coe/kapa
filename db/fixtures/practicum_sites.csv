@@ -1,4 +1,4 @@
-id,code,area_group,district,level_from,level_to,category,name,name_short,area,url,status,yml,xml
+id,code,area_group,district,level_from,level_to,category,name,name_short,area,url,status,yml,json
 1,335,Oahu,Windward,K,6,DOE,'Ahuimanu Elementary,Ahuimanu El,Castle-Kahuku,,,"---
 :site_contact:
   :street: 47-470 Hui Aeko Place

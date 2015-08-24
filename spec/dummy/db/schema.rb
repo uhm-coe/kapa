@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "dept",                     limit: 255
     t.integer  "curriculum_enrollment_id", limit: 4
     t.text     "yml",                      limit: 65535
-    t.text     "xml",                      limit: 65535
+    t.text     "json",                     limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "curriculum_id",            limit: 4
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
     t.integer  "assessment_rubric_id", limit: 4,     default: 0,         null: false
     t.text     "yml",                  limit: 65535
-    t.text     "xml",                  limit: 65535
+    t.text     "json",                 limit: 65535
     t.string   "type",                 limit: 255,   default: "default", null: false
     t.string   "type_option",          limit: 255
   end
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "reference_url",         limit: 255
     t.string   "dept",                  limit: 255
     t.text     "yml",                   limit: 65535
-    t.text     "xml",                   limit: 65535
+    t.text     "json",                  limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "program",               limit: 255
@@ -89,15 +89,16 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "assessment_rubrics", ["start_term_id"], name: "index_assessment_rubrics_on_start_term_id", using: :btree
 
   create_table "assessment_scores", force: :cascade do |t|
-    t.integer  "assessment_scorable_id",   limit: 4
     t.integer  "assessment_criterion_id",  limit: 4
+    t.integer  "assessment_scorable_id",   limit: 4
+    t.string   "assessment_scorable_type", limit: 255
+    t.integer  "user_id",                  limit: 4
     t.string   "rating",                   limit: 255
     t.string   "rated_by",                 limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",                      limit: 65535
-    t.text     "xml",                      limit: 65535
-    t.string   "assessment_scorable_type", limit: 255
+    t.text     "json",                     limit: 65535
     t.string   "academic_period",          limit: 255
   end
 
@@ -122,12 +123,24 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "email",           limit: 255
     t.string   "note",            limit: 255
     t.text     "yml",             limit: 65535
-    t.text     "xml",             limit: 65535
+    t.text     "json",            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "contacts", ["entity_id"], name: "index_contacts_on_entity_id", using: :btree
+
+  create_table "course_registrations", force: :cascade do |t|
+    t.integer  "course_id",  limit: 4
+    t.integer  "person_id",  limit: 4
+    t.string   "status",     limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",        limit: 65535
+    t.text     "json",       limit: 65535
+  end
+
+  add_index "course_registrations", ["course_id", "person_id"], name: "index_assessment_course_registrations_on_course_id_and_person_id", unique: true, using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.string   "academic_period", limit: 150
@@ -141,7 +154,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",             limit: 65535
-    t.text     "xml",             limit: 65535
+    t.text     "json",            limit: 65535
     t.string   "final_grade",     limit: 255
     t.integer  "term_id",         limit: 4,     default: 0, null: false
     t.string   "dept",            limit: 255
@@ -149,18 +162,6 @@ ActiveRecord::Schema.define(version: 20140723000000) do
 
   add_index "courses", ["academic_period", "crn"], name: "index_courses_on_academic_period_and_crn", unique: true, using: :btree
   add_index "courses", ["term_id"], name: "index_courses_on_term_id", using: :btree
-
-  create_table "course_registrations", force: :cascade do |t|
-    t.integer  "course_id", limit: 4
-    t.integer  "person_id",       limit: 4
-    t.string   "status",          limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml",             limit: 65535
-    t.text     "xml",             limit: 65535
-  end
-
-  add_index "course_registrations", ["course_id", "person_id"], name: "index_assessment_course_registrations_on_course_id_and_person_id", unique: true, using: :btree
 
   create_table "curriculums", force: :cascade do |t|
     t.integer  "person_id",         limit: 4,                        null: false
@@ -180,7 +181,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.boolean  "active",                          default: false
     t.text     "note",              limit: 65535
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -207,7 +208,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",          limit: 65535
-    t.text     "xml",          limit: 65535
+    t.text     "json",         limit: 65535
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -221,7 +222,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.integer  "user_primary_id",   limit: 4
     t.integer  "user_secondary_id", limit: 4
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -249,7 +250,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.integer  "category_points_10", limit: 4
     t.string   "status",             limit: 255
     t.text     "yml",                limit: 65535
-    t.text     "xml",                limit: 65535
+    t.text     "json",               limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -265,7 +266,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.text     "note",          limit: 65535
     t.text     "raw",           limit: 65535
     t.text     "yml",           limit: 65535
-    t.text     "xml",           limit: 65535
+    t.text     "json",          limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "dept",          limit: 255
@@ -290,7 +291,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
   end
 
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
@@ -302,7 +303,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "submit_ip",        limit: 255
     t.text     "yml",              limit: 65535
     t.string   "lock",             limit: 255,   default: "N"
-    t.text     "xml",              limit: 65535
+    t.text     "json",             limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "note",             limit: 65535
@@ -339,7 +340,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "ssn_agreement",  limit: 255
     t.string   "other_name",     limit: 255
     t.text     "yml",            limit: 65535
-    t.text     "xml",            limit: 65535
+    t.text     "json",           limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -364,7 +365,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
   end
 
   add_index "practicum_placements", ["curriculum_id"], name: "index_practicum_placements_on_curriculum_id", using: :btree
@@ -388,7 +389,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "category",   limit: 255
     t.string   "status",     limit: 255
     t.text     "yml",        limit: 65535
-    t.text     "xml",        limit: 65535
+    t.text     "json",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -397,21 +398,21 @@ ActiveRecord::Schema.define(version: 20140723000000) do
 
   create_table "program_offers", force: :cascade do |t|
     t.integer  "program_id",                limit: 4,                    null: false
-    t.string   "distribution",              limit: 255,                  null: false
+    t.integer  "start_term_id",             limit: 4
+    t.integer  "end_term_id",               limit: 4
     t.string   "description",               limit: 255
     t.string   "description_short",         limit: 255
     t.string   "major",                     limit: 255
-    t.string   "academic_period",           limit: 255
     t.string   "available_major",           limit: 255
+    t.string   "distribution",              limit: 255
+    t.string   "academic_period",           limit: 255
     t.string   "available_academic_period", limit: 255
     t.integer  "sequence",                  limit: 4
     t.boolean  "active",                                  default: true
     t.text     "yml",                       limit: 65535
-    t.text     "xml",                       limit: 65535
+    t.text     "json",                      limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "start_term_id",             limit: 4
-    t.integer  "end_term_id",               limit: 4
   end
 
   add_index "program_offers", ["end_term_id"], name: "index_program_offers_on_end_term_id", using: :btree
@@ -435,7 +436,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.boolean  "active",                               default: true
     t.string   "dept",                   limit: 255
     t.text     "yml",                    limit: 65535
-    t.text     "xml",                    limit: 65535
+    t.text     "json",                   limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_primary_id",        limit: 4
@@ -456,7 +457,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.boolean  "active",                          default: true
     t.string   "dept",              limit: 255
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -481,7 +482,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.boolean  "active",                          default: true
     t.string   "dept",              limit: 255
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "academic_year",     limit: 255
@@ -514,7 +515,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",                 limit: 65535
-    t.text     "xml",                 limit: 65535
+    t.text     "json",                limit: 65535
   end
 
   add_index "transition_actions", ["action"], name: "index_transition_actions_on_action", using: :btree
@@ -537,7 +538,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.text     "json",              limit: 65535
     t.datetime "status_updated_at"
     t.integer  "term_id",           limit: 4,     default: 0,         null: false
   end
@@ -570,7 +571,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.integer  "emp_status",          limit: 4,     default: 0
     t.integer  "status",              limit: 4,     default: 0
     t.text     "yml",                 limit: 65535
-    t.text     "xml",                 limit: 65535
+    t.text     "json",                limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "persistence_token",   limit: 255,               null: false
