@@ -26,7 +26,7 @@ module Kapa::FilesControllerBase
   def update
     @file = Kapa::File.find(params[:id])
     @person = @file.person
-    @file.attributes=(params[:file])
+    @file.attributes = file_param
     if params[:file][:data]
       @file.name = @file.data_file_name.humanize
       @file.uploaded_by = @current_user.uid
@@ -48,10 +48,8 @@ module Kapa::FilesControllerBase
     end
 
     @person = Kapa::Person.find(params[:id])
-    @file = @person.files.build(params[:file])
-
-    doc_name = params[:file][:name]
-    @file.name = doc_name.blank? ? @file.data_file_name : doc_name
+    @file = @person.files.build(file_param)
+    @file.name = @file.data_file_name if @file.name.blank?
     @file.uploaded_by = @current_user.uid
     @file.dept = @current_user.primary_dept
     unless @file.save
@@ -72,5 +70,9 @@ module Kapa::FilesControllerBase
       flash[:danger] = error_message_for(@file)
     end
     redirect_to kapa_person_path(:id => @file.person_id, :focus => "document")
+  end
+
+  def file_param
+    params.require(:file).permit(:person_id, :data, :name, :lock, :note)
   end
 end

@@ -27,7 +27,7 @@ module Kapa::FormsControllerBase
 
   def create
     @person = Kapa::Person.find params[:id]
-    @form = @person.forms.build(params[:form])
+    @form = @person.forms.build(form_param)
     @form.dept = @current_user.primary_dept
 
     unless @form.save
@@ -64,7 +64,7 @@ module Kapa::FormsControllerBase
 
   private
   def form_param
-    params.require(:form).permit(:form_id, :person_id, :lock, :note)
+    params.require(:form).permit(:type, :person_id, :lock, :note)
   end
 
   def form_data_params(type)
@@ -72,7 +72,7 @@ module Kapa::FormsControllerBase
       when "declaration"
         permitted_params = [:declaration_curriculum, :declaration_background, :declaration_agreement]
       when "admission"
-        permitted_params = [:admission_curriculum, :admission_background, :admission_agreement]
+        permitted_params = [:admission_curriculum, :admission_background, :admission_agreement, :admission_essay]
     end
     form_data_params = {}
     permitted_params.each {|k, v| form_data_params[k] = params.require(k).permit! if params[k]}

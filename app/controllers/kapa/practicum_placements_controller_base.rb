@@ -7,7 +7,7 @@ module Kapa::PracticumPlacementsControllerBase
 
     @curriculums = @person.curriculums
     @practicum_sites = Kapa::PracticumSite.select("id, name_short")
-    @mentors = Kapa::Person.eager_load(:contact).where("id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @mentors = Kapa::Person.eager_load(:contact).where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
   end
 
   def new
