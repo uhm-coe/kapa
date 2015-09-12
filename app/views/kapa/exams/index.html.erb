@@ -18,11 +18,11 @@
       </div>
       <div class="form-group">
         <%= label_tag "filter_date_start", "Report Date Start" %>
-        <%= date_picker :filter, :date_start %>
+        <%= date_picker :filter, :exam_date_start %>
       </div>
       <div class="form-group">
         <%= label_tag "filter_date_end", "Report Date End" %>
-        <%= date_picker :filter, :date_end %>
+        <%= date_picker :filter, :exam_date_end %>
       </div>
       <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>

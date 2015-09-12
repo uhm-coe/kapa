@@ -11,8 +11,8 @@
 
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%= bootstrap_form_for(:filter, :url => kapa_forms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.term_select :term_id, :include_blank => "Any" %>
-      <%= f.property_select :type, :name => :form, :include_blank => "Any", :label => "Form Title" %>
+      <%= f.property_select :type, :name => :form, :include_blank => "Any", :label => "Form" %>
+      <%= f.term_select :form_term_id, :include_blank => "Any" %>
       <%= f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => "Any", :label => "Lock" %>
       <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>
@@ -22,8 +22,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Forms/<%= Kapa::Property.lookup_description(:form, @filter.type) %>
-    (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+  <h3>Forms</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -37,7 +36,7 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Form ID</th>
+      <th>Form</th>
       <th>Last Update</th>
       <th>Submitted</th>
       <th>Lock</th>
@@ -50,7 +49,7 @@
       <tr>
         <td><%= form.person.id_number if form.person %></td>
         <td><%= link_to abbr(form.person.full_name), kapa_person_path(:id => form.person_id) if form.person %></td>
-        <td><%= h form.id %></td>
+        <td><%= h form.name %></td>
         <td><%= time_ago_in_words form.updated_at if form.updated_at %> ago</td>
         <td><%= format_date form.submitted_at %></td>
         <td><%= h form.lock %></td>

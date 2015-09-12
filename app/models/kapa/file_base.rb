@@ -31,9 +31,9 @@ module Kapa::FileBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      files = Kapa::File.eager_load([:person]).order("persons.last_name, persons.first_name")
-      files = files.where("files.type" => filter.type.to_s) if filter.type.present?
-      files = files.depts_scope(filter.user.depts, "public = 'Y'")
+      files = Kapa::File.eager_load([:person]).order("files.created_at DESC").limit(500)
+      files = files.column_matches("name" => filter.name) if filter.name.present?
+#      files = files.depts_scope(filter.user.depts, "public = 'Y'")
       return files
     end
 

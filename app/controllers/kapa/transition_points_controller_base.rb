@@ -35,7 +35,7 @@ module Kapa::TransitionPointsControllerBase
       params[:assessment_scores].each_pair do |k, v|
         scorable_id = k.split("_").first
         criterion_id = k.split("_").last
-        score = Kapa::AssessmentScore.find_or_initialize_by_assessment_scorable_type_and_assessment_scorable_id_and_assessment_criterion_id("TransitionPoint", scorable_id, criterion_id)
+        score = Kapa::AssessmentScore.find_or_initialize_by(:assessment_scorable_type => "Kapa::TransitionPoint", :assessment_scorable_id => scorable_id, :assessment_criterion_id => criterion_id)
         score.rating = v
         score.rated_by = @current_user.uid
         unless score.save
