@@ -6,7 +6,6 @@ module Kapa::UserSessionsControllerBase
     skip_before_filter :validate_login
     skip_before_filter :check_read_permission
     skip_before_filter :check_write_permission
-    skip_before_filter :check_manage_permission
     before_filter :validate_login, :only => :show
   end
 

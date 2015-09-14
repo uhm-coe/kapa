@@ -8,7 +8,6 @@ module Kapa::KapaControllerBase
     before_filter :validate_login
     before_filter :check_read_permission
     before_filter :check_write_permission, :only => [:new, :create, :update, :destroy]
-    before_filter :check_manage_permission, :only => [:export, :import]
     after_filter :put_timestamp
     helper :all
     helper_method :url_for, :menu_items
@@ -48,13 +47,6 @@ module Kapa::KapaControllerBase
   def check_write_permission
     unless @current_user.write?(controller_name)
       flash[:danger] = "You do not have a write permission on #{controller_name}."
-      redirect_to(kapa_error_path) and return false
-    end
-  end
-
-  def check_manage_permission
-    unless @current_user.write?(controller_name, :delegate => params[:action])
-      flash[:danger] = "You do not have a manage permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -126,7 +118,7 @@ module Kapa::KapaControllerBase
   end
 
   def filter(options = {})
-    name = "filter_#{controller_name}".to_sym
+    name = :filter
     session[name] = filter_defaults if session[name].nil?
     session[name].update(params[:filter]) if params[:filter].present?
     session[name].update(options) if options.present?

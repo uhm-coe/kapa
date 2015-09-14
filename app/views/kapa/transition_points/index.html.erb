@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
-          <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts %>
+          <%= f.program_select :program_id, :include_blank => "Any", :depts => @current_user.depts, :value => :id %>
           <%= f.property_select :type, :name => :transition_point %>
           <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
         </div>

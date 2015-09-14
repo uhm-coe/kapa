@@ -1,10 +1,6 @@
 module Kapa::PropertiesControllerBase
   extend ActiveSupport::Concern
 
-  included do
-    before_filter :check_manage_permission
-  end
-
   def show
     @property = Kapa::Property.find params[:id]
   end

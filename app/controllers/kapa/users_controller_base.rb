@@ -1,10 +1,6 @@
 module Kapa::UsersControllerBase
   extend ActiveSupport::Concern
 
-  included do
-    before_filter :check_manage_permission
-  end
-
   def show
     @user = Kapa::User.find params[:id]
     @permission = @user.deserialize(:permission, :as => OpenStruct)

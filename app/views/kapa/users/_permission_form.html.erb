@@ -14,14 +14,11 @@
       <% Rails.configuration.available_routes.each do |o| %>
         <tr>
           <td><h5><%=o %></h5></td>
+          <td><%= f.select "#{o}", level_selections, {:label => :no} %></td>
           <% if %w(kapa_curriculums kapa_transition_points kapa_enrollments kapa_files kapa_forms kapa_exams
                    kapa_advising_sessions kapa_courses kapa_course_registrations kapa_practicum_placements
                    kapa_practicum_sites).include? o %>
-            <td><%= f.select "#{o}", level_selections, {:label => :no} %></td>
             <td><%= f.select "#{o}_scope", list_selections, {:label => :no}, {} %></td>
-          <% else %>
-            <td><%= f.select "#{o}", [["No Access", "0"], ["Manage", "3"]], {:label => :no} %></td>
-            <td></td>
           <% end %>
         </tr>
       <% end %>

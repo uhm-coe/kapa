@@ -36,13 +36,10 @@ module Kapa::EnrollmentBase
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       enrollments = Kapa::Enrollment.eager_load([{:curriculum => :person}, {:curriculum => :program}]).order("persons.last_name, persons.first_name")
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
-      if filter.program == "NA"
-        enrollments = enrollments.where("programs.code is NULL")
-      else
-        enrollments = enrollments.where("programs.code" => filter.program) if filter.program.present?
-      end
+      enrollments = enrollments.where("curriculums.program_id" => filter.program_id) if filter.program_id.present?
       enrollments = enrollments.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       enrollments = enrollments.where("curriculums.major_primary" => filter.major) if filter.major.present?
+      enrollments = enrollments.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
 
       case filter.user.access_scope

@@ -52,13 +52,13 @@
       <span class="glyphicon glyphicon-user"></span><span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-      <li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Profile</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contacts</a></li>
-      <li><a href="#">Send Email</a></li>
-      <li><a href="#">Open External Site</a></li>
+      <% if  @current_user.read?(:kapa_persons) %><li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Profile</a></li><% end %>
+      <% if  @current_user.read?(:kapa_contacts) %><li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contacts</a></li><% end %>
+      <li><%=mail_to @person.email, "Send Email" %></li>
+      <li><%=link_to "External Site", nil%></li>
     </ul>
   </div>
-  <%= link_to @person.full_name, kapa_person_path(:action => :show, :id => @person) %>
+  <%= link_to_if @current_user.read?(:kapa_persons), @person.full_name, kapa_person_path(:action => :show, :id => @person) %>
 </h3>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Profile", :modal_form_id => "person_form"} do %>

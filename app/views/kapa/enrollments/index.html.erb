@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any" %>
-          <%= f.property_select :program, :include_blank => "Any", :depts => @current_user.depts, :include_code => true %>
+          <%= f.program_select :program_id, :include_blank => "Any", :depts => @current_user.depts, :value => :id %>
           <%= f.property_select :distribution, :include_blank => "Any" %>
         </div>
         <div class="col-sm-6">
@@ -56,8 +56,8 @@
       <th>ID</th>
       <th>Name</th>
       <th>Program</th>
-      <th>Last Transition Point</th>
-      <th>Last Action</th>
+      <th>Sequence</th>
+      <th>Status</th>
       <th>Assignee</th>
       <th></th>
     </tr>
@@ -68,8 +68,8 @@
         <td><%= enrollment.curriculum.person.id_number %></td>
         <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(enrollment.curriculum.person.full_name), kapa_person_path(:id => enrollment.curriculum.person_id, :focus => "practicum") %></td>
         <td><%= h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
-        <td><%= h enrollment.curriculum.rsend(:last_transition_point, :type_desc) %></td>
-        <td><%= h enrollment.curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
+        <td><%= enrollment.sequence %>
+        <td><%= enrollment.status %>
         <td><%= h enrollment.curriculum.rsend(:user_primary, :person, :last_name) %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => enrollment}, :class => "btn btn-default btn-xs" %></td>
       </tr>
