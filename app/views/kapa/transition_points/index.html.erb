@@ -62,7 +62,7 @@
         <td><%= abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
         <td><%= h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
         <td><%= h transition_point.status_desc %></td>
-        <td><%= h transition_point.user_primary.person.last_name if transition_point.user_primary %></td>
+        <td><%= h transition_point.rsend(:users, :first, :person, :last_name) %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => transition_point}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

@@ -70,7 +70,7 @@
         <td><%= h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
         <td><%= enrollment.sequence %>
         <td><%= enrollment.status %>
-        <td><%= h enrollment.curriculum.rsend(:user_primary, :person, :last_name) %></td>
+        <td><%= h enrollment.rsend(:users, :first, :person, :last_name) %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => enrollment}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

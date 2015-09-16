@@ -4,6 +4,9 @@ module Kapa::CourseBase
   included do
     belongs_to :term
     has_many :course_registrations, -> {includes(:person, :assessment_scores).where("course_registrations.status like 'R%'").order("persons.last_name, persons.first_name")}
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
+
     validates_presence_of :term_id
     obfuscate_id
   end

@@ -9,6 +9,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#practicum_placement_tab" data-toggle="tab">Placement</a></li>
+      <li><a href="#practicum_logs_tab" data-toggle="tab">Logs</a></li>
     </ul>
 
     <div class="tab-content">
@@ -17,6 +18,10 @@
           <%=render :partial => "placement_form" %>
           <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_practicum_placement_path(:id => @practicum_placement)} if @current_user.write? %>
         <% end %>
+      </div>
+
+      <div id="practicum_logs_tab" class="tab-pane">
+
       </div>
     </div>
   </div>

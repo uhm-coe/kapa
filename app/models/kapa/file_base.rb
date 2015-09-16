@@ -2,7 +2,6 @@ module Kapa::FileBase
   extend ActiveSupport::Concern
 
   included do
-    self.inheritance_column = nil
     belongs_to :person
     has_attached_file :data
     validates_presence_of :person_id

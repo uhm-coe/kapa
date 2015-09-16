@@ -62,7 +62,7 @@
         <td><%= abbr curriculum.code_desc, curriculum.code %></td>
         <td><%= h curriculum.rsend(:last_transition_point, :type_desc) %></td>
         <td><%= h curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
-        <td><%= h curriculum.rsend(:user_primary, :person, :last_name) %></td>
+        <td><%= h curriculum.rsend(:users, :first, :person, :last_name) %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => curriculum}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

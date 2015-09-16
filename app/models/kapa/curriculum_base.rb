@@ -4,12 +4,6 @@ module Kapa::CurriculumBase
   included do
     belongs_to :person
     belongs_to :program
-    belongs_to :user_primary,
-               :class_name => "User",
-               :foreign_key => "user_primary_id"
-    belongs_to :user_secondary,
-               :class_name => "User",
-               :foreign_key => "user_secondary_id"
     has_many :transition_points
     has_many :enrollments
     has_one :practicum_profile
@@ -22,6 +16,8 @@ module Kapa::CurriculumBase
                                            order by tm.sequence desc
                                            limit 1)")},
             :class_name => "TransitionPoint"
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
 
     validates_presence_of :person_id, :program_id
     before_create :set_default_options

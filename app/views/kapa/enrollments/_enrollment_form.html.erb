@@ -1,0 +1,18 @@
+<%= bootstrap_fields_for :enrollment do |f| %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.term_select :term_id %>
+      <%= f.text_field :sequence %>
+      <%= f.property_select :category, :name => :enrollment_category, :include_blank => true %>
+      <%= f.property_select :status, :name => :enrollment_status, :include_blank => true %>
+      <%= f.property_select :dept, :name => :dept, :include_blank => true %>
+      <%= f.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.text_area :note, {:cols => 54, :rows => 20} %>
+      <%= f.hidden_field :curriculum_id %>
+    </div>
+  </div>
+
+<% end %>

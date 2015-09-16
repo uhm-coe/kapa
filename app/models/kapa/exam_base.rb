@@ -2,7 +2,6 @@ module Kapa::ExamBase
   extend ActiveSupport::Concern
 
   included do
-    self.inheritance_column = nil
     belongs_to :person
     has_many :exam_scores
     before_save :format_fields

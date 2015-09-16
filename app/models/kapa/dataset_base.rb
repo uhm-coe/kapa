@@ -2,7 +2,6 @@ module Kapa::DatasetBase
   extend ActiveSupport::Concern
 
   included do
-    self.inheritance_column = nil
     attr_accessor :file
   end
 

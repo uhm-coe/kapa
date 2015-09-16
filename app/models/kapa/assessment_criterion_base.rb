@@ -2,7 +2,6 @@ module Kapa::AssessmentCriterionBase
   extend ActiveSupport::Concern
 
   included do
-    self.inheritance_column = nil
     belongs_to :assessment_rubric
     has_many :assessment_scores
     validates_uniqueness_of :criterion, :scope => :assessment_rubric_id

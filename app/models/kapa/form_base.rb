@@ -2,7 +2,6 @@ module Kapa::FormBase
   extend ActiveSupport::Concern
 
   included do
-    self.inheritance_column = nil
     belongs_to :person
     belongs_to :term
     has_one :transition_point

@@ -9,6 +9,9 @@ module Kapa::AdvisingSessionBase
     belongs_to :user_secondary,
                :class_name => "User",
                :foreign_key => "user_secondary_id"
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
+
     validates_presence_of :person_id, :session_date, :session_type
     obfuscate_id
   end

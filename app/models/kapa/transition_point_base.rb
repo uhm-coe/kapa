@@ -2,7 +2,6 @@ module Kapa::TransitionPointBase
   extend ActiveSupport::Concern
 
   included do
-    self.inheritance_column = nil
     belongs_to :curriculum
     belongs_to :term
     belongs_to :user_primary,

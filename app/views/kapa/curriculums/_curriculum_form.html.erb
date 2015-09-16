@@ -34,8 +34,7 @@
     <div class="col-sm-6">
       <%= f.property_select :major_primary, {:name => :major, :label => "Primary Major/Concentration", :include_code => true, :program => @program} %>
       <%= f.property_select :major_secondary, {:name => :major, :label => "Secondary Major/Concentration", :include_code => true, :include_blank => true} %>
-      <%= f.user_select :user_primary_id, :include_blank => true, :label => "Primary Assignee", :depts => @current_user.depts %>
-      <%= f.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Assignee" %>
+      <%= f.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>
     </div>
   </div>
   <%= f.hidden_field :person_id %>
