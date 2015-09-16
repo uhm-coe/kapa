@@ -1,11 +1,4 @@
 <% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-      <% if @current_user.nil? %>$('#login_dialog').modal({show: true});
-      <% end %>
-    });
-  </script>
-
   <style>
     .jumbotron {
       background-color: #eeeeee;

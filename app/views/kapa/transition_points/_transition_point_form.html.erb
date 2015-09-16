@@ -1,20 +1,15 @@
 <%= bootstrap_fields_for :transition_point do |t| %>
   <div class="row">
     <div class="col-sm-6">
-      <%= t.term_select :term_id, :label => "Term" %>
-      <%= t.property_select :category, :name => "#{@transition_point.type}_category", :include_blank => true %>
-      <%= t.property_select :priority, :name => "#{@transition_point.type}_priority", :include_blank => true %>
-      <%= t.property_select :status, :name => "#{@transition_point.type}_status", :include_blank => true %>
+      <%=t.term_select :term_id, :label => "Term" %>
+      <%=t.property_select :category, :name => "#{@transition_point.type}_category", :include_blank => true %>
+      <%=t.property_select :priority, :name => "#{@transition_point.type}_priority", :include_blank => true %>
+      <%=t.property_select :status, :name => "#{@transition_point.type}_status", :include_blank => true %>
+      <%=t.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>
     </div>
 
     <div class="col-sm-6">
-      <%= t.user_select :user_ids, {:label => "Assigned to", :depts => @current_user.depts}, {:multiple => true} %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-12">
-       <%= t.text_area :note, :style => "width:100%", :rows => 3 %>
+      <%=t.text_area :note, {:cols => 54, :rows => 20} %>
     </div>
   </div>
 

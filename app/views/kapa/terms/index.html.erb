@@ -1,11 +1,3 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      <% if @modal %>$('#filter_dialog').modal({show : true});<% end %>
-    });
-  </script>
-<% end %>
-
 <% content_for(:dialog) do %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>

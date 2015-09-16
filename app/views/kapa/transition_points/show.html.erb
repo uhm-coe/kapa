@@ -1,10 +1,6 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
-      $(".hidden-text-area a").click(function () {
-        $(this).next().toggle();
-      });
-
       $('#filter_assessment_rubric_id').change(function () {
         $('<input>', {
           type: 'hidden',

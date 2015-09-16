@@ -1,8 +1,6 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
-
       $('#filter_assessment_rubric_id').change(function() {
         $(this).parents('form').submit();
       });

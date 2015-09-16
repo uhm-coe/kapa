@@ -1,11 +1,3 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      <% if @modal %>$('#change_program_dialog').modal({show : true});<% end %>
-    });
-  </script>
-<% end %>
-
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_program_dialog", :modal_title => "Change Program", :modal_form_id => "change_program_form"} do %>
     <%=bootstrap_form_for(:curriculum, :url => kapa_curriculum_path(:id => @curriculum), :html => {:method => :put, :id => "change_program_form"}) do |t| %>

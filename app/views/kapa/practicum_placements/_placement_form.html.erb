@@ -1,10 +1,8 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      <% if @modal %>$('#change_mentor_dialog').modal({show : true});<% end %>
-
       // When selecting a person from the change mentor dialog,
-      //   automatically set the values in last name, first name, and email fields
+      // automatically set the values in last name, first name, and email fields
       function get_mentor() {
         var mentor_person_id = $('#mentor_person_id').val();
         if(mentor_person_id !== '') {
