@@ -32,7 +32,7 @@ module Kapa::PropertiesControllerBase
       redirect_to new_kapa_property_path and return false
     end
     flash[:success] = 'System property was successfully created.'
-    redirect_to kapa_property_path(:id => @property, :focus => params[:focus])
+    redirect_to kapa_property_path(:id => @property, :anchor => params[:anchor])
   end
 
   def index

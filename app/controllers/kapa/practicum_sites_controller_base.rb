@@ -32,7 +32,7 @@ module Kapa::PracticumSitesControllerBase
     else
       flash[:danger] = "Failed to update site profile."
     end
-    redirect_to kapa_practicum_site_path(:id => @practicum_site, :focus => params[:focus])
+    redirect_to kapa_practicum_site_path(:id => @practicum_site, :anchor => params[:anchor])
   end
 
   def destroy

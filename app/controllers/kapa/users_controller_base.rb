@@ -4,7 +4,7 @@ module Kapa::UsersControllerBase
   def show
     @user = Kapa::User.find params[:id]
     @permission = @user.deserialize(:permission, :as => OpenStruct)
-    params[:focus] = "activity" if params[:page].present?
+    params[:anchor] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
     @person = @user.person
@@ -24,7 +24,7 @@ module Kapa::UsersControllerBase
     else
       flash[:danger] = error_message_for(@user)
     end
-    redirect_to kapa_user_path(:id => @user, :focus => params[:focus])
+    redirect_to kapa_user_path(:id => @user, :anchor => params[:anchor])
   end
 
   def create

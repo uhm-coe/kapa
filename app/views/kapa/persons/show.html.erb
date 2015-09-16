@@ -2,7 +2,7 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
       // Set active panel
-      var focus = '<%=params[:focus]%>' || 'curriculum';
+      var focus = '<%=params[:anchor]%>' || 'curriculum';
       $('#' + focus + '_detail').addClass('in');
       $("#curriculum_list > dd").first().addClass('in');
     });

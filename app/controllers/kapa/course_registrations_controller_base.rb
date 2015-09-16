@@ -25,7 +25,7 @@ module Kapa::CourseRegistrationsControllerBase
           end
         rescue ActiveRecord::StatementInvalid
           flash[:danger] = "There was an error updating scores. Please try again."
-          redirect_to kapa_course_registration_path(:id => params[:id], :focus => params[:focus]) and return false
+          redirect_to kapa_course_registration_path(:id => params[:id], :anchor => params[:anchor]) and return false
         end
         flash[:success] = "Scores were successfully saved."
       end
@@ -34,6 +34,6 @@ module Kapa::CourseRegistrationsControllerBase
     if flash[:success].nil?
       flash[:warning] = "There are no scores to save."
     end
-    redirect_to kapa_course_registration_path(:id => params[:id], :focus => params[:focus])
+    redirect_to kapa_course_registration_path(:id => params[:id], :anchor => params[:anchor])
   end
 end

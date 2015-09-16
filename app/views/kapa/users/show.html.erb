@@ -1,17 +1,6 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      // Set active tab and pane
-      var focus = '<%=params[:focus]%>' || 'user_profile';
-      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
-      $('#' + focus + '_tab').addClass('active');
-    });
-  </script>
-<% end %>
-
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
-    <%=bootstrap_form_for :role, :url => kapa_user_path(:id => @user, :focus => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
+    <%=bootstrap_form_for :role, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
       <%=f.select "Role", [["Admin", "admin"], ["Adviser", "adviser"], ["Faculty", "faculty"], ["No Access", "nothing"]] %>
     <% end %>
   <% end %>
@@ -43,7 +32,7 @@
       </div>
 
       <div id="permission_tab" class="tab-pane">
-        <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :focus => :permission), :html => {:method => :put}  do |f| %>
+        <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put}  do |f| %>
           <%=render :partial => "permission_form", :locals => {:f => f} %>
           <%= render :layout => "/kapa/layouts/controls" do %>
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#apply_role_dialog">Role</button>

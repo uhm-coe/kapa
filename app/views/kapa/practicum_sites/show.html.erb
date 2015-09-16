@@ -1,14 +1,3 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-      // Set active tab and pane
-      var focus = '<%=params[:focus]%>' || 'site_profile';
-      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
-      $('#' + focus + '_tab').addClass('active');
-    });
-  </script>
-<% end %>
-
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
@@ -33,7 +22,7 @@
       </div>
 
       <div id="site_contact_tab" class="tab-pane">
-        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :focus => :site_contact), :html => {:method => :put}  do |f|%>
+        <%=bootstrap_form_for :practicum_site, :url => kapa_practicum_site_path(@practicum_site, :anchor => :site_contact), :html => {:method => :put}  do |f|%>
           <%=render :partial => "site_contact_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>

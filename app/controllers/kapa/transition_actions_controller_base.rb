@@ -10,7 +10,7 @@ module Kapa::TransitionActionsControllerBase
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_transition_point_path(:id => @transition_point, :focus => params[:focus], :action_panel => @action.id)
+    redirect_to kapa_transition_point_path(:id => @transition_point, :anchor => params[:anchor], :action_panel => @action.id)
   end
 
   def update
@@ -22,7 +22,7 @@ module Kapa::TransitionActionsControllerBase
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_transition_point_path(:id => @action.transition_point_id, :focus => params[:focus], :action_panel => params[:action_panel])
+    redirect_to kapa_transition_point_path(:id => @action.transition_point_id, :anchor => params[:anchor], :action_panel => params[:action_panel])
   end
 
   def destroy
@@ -33,7 +33,7 @@ module Kapa::TransitionActionsControllerBase
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_transition_point_path(:id => @action.transition_point, :focus => params[:focus])
+    redirect_to kapa_transition_point_path(:id => @action.transition_point, :anchor => params[:anchor])
   end
 
   private

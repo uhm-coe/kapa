@@ -1,14 +1,3 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-      // Set active tab and pane
-      var focus = '<%=params[:focus]%>' || 'curriculum';
-      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
-      $('#' + focus + '_tab').addClass('active');
-    });
-  </script>
-<% end %>
-
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/persons/person_detail" %>
 

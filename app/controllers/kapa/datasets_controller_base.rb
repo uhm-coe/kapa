@@ -48,7 +48,7 @@ module Kapa::DatasetsControllerBase
     else
       flash[:danger] = @dataset.errors.full_messages.join(", ")
     end
-    redirect_to kapa_dataset_path(:id => @dataset, :focus => params[:focus], :parameter_panel => params[:parameter_panel])
+    redirect_to kapa_dataset_path(:id => @dataset, :anchor => params[:anchor], :parameter_panel => params[:parameter_panel])
   end
 
   def destroy
@@ -70,7 +70,7 @@ module Kapa::DatasetsControllerBase
       flash[:danger] = e.message
     end
 
-    redirect_to kapa_dataset_path(@dataset, :focus => params[:focus])
+    redirect_to kapa_dataset_path(@dataset, :anchor => params[:anchor])
   end
 
   def feed

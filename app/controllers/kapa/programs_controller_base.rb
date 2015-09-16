@@ -34,7 +34,7 @@ module Kapa::ProgramsControllerBase
       redirect_to new_kapa_program_path and return false
     end
     flash[:success] = "Program was successfully created."
-    redirect_to kapa_program_path(:id => @program, :focus => params[:focus])
+    redirect_to kapa_program_path(:id => @program, :anchor => params[:anchor])
   end
 
   def destroy

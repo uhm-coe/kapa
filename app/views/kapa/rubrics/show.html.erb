@@ -4,11 +4,6 @@
       $(".hidden-text-area a").click(function () {
         $(this).next().toggle();
       });
-
-      // Set active tab and pane
-      var focus = '<%=params[:focus]%>' || 'rubric_profile';
-      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
-      $('#' + focus + '_tab').addClass('active');
     });
   </script>
 <% end %>
@@ -46,9 +41,9 @@
               </div>
               <div id="assessment_criterion_<%= @assessment_criterion.id %>" class="panel-collapse collapse<%= ' in' if params[:criterion_panel] == assessment_criterion.id.to_s || (params[:criterion_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <%= bootstrap_form_for :assessment_criterion, :url => kapa_assessment_criterion_path(:id => @assessment_criterion, :focus => :criterions, :criterion_panel => assessment_criterion.id), :html => {:method => :put} do |f| %>
+                  <%= bootstrap_form_for :assessment_criterion, :url => kapa_assessment_criterion_path(:id => @assessment_criterion, :anchor => :criterions, :criterion_panel => assessment_criterion.id), :html => {:method => :put} do |f| %>
                     <%= render :partial => "criterion" %>
-                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_assessment_criterion_path(:id => @assessment_criterion, :focus => :criterions)} if @current_user.write? :kapa_assessment_criterions %>
+                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_assessment_criterion_path(:id => @assessment_criterion, :anchor => :criterions)} if @current_user.write? :kapa_assessment_criterions %>
                   <% end %>
                 </div>
               </div>
@@ -64,7 +59,7 @@
             <div id="new_assessment_criterion" class="panel-collapse collapse<%= ' in' if @assessment_criterions.length == 0 %>">
               <div class="panel-body">
                 <% @assessment_criterion = Kapa::AssessmentCriterion.new %>
-                <%= bootstrap_form_for :assessment_criterion, :url => kapa_assessment_criterions_path(:id => @assessment_rubric, :focus => :criterions) do |f| %>
+                <%= bootstrap_form_for :assessment_criterion, :url => kapa_assessment_criterions_path(:id => @assessment_rubric, :anchor => :criterions) do |f| %>
                   <%= render :partial => "criterion_form" %>
                   <%= render :partial => "/kapa/layouts/controls" if @current_user.write? :kapa_assessment_criterions %>
                 <% end %>

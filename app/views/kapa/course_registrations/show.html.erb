@@ -1,11 +1,6 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      // Set active tab and pane
-      var focus = '<%=params[:focus]%>' || 'course';
-      $('a[href="#' + focus + '_tab"]').parent().addClass('active');
-      $('#' + focus + '_tab').addClass('active');
-
       $('#open_dialog').click(function() {jQuery('#dialog').dialog('open');})
 
       $('#filter_assessment_rubric_id').change(function() {
@@ -27,7 +22,7 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", kapa_person_path(:id => @person, :focus => :course), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_person_path(:id => @person, :anchor => :course), :class => "glyphicon glyphicon-chevron-left" %>
     <%=@course.name%> - <%=h @course.term_desc %>
   </h4>
 
@@ -45,14 +40,14 @@
       </div>
 
       <div id="assessment_tab" class="tab-pane">
-        <%=bootstrap_form_for :filter, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :get}  do |f| %>
+        <%=bootstrap_form_for :filter, :url => kapa_course_registration_path(:id => @course_registration, :anchor => :assessment), :html => {:method => :get}  do |f| %>
           <div class="row">
             <div class="col-sm-6">
               <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect {|r| [r.title, "0#{r.id}"]}, {}, {:minWidth => "600"}) %>
             </div>
           </div>
         <% end %>
-        <%=bootstrap_form_for :assessment_score, :url => kapa_course_registration_path(:id => @course_registration, :focus => :assessment), :html => {:method => :put} do |f| %>
+        <%=bootstrap_form_for :assessment_score, :url => kapa_course_registration_path(:id => @course_registration, :anchor => :assessment), :html => {:method => :put} do |f| %>
           <%=render :partial => "assessment_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>

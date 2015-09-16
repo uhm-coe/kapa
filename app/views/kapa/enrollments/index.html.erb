@@ -66,7 +66,7 @@
     <% for enrollment in @enrollments %>
       <tr>
         <td><%= enrollment.curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(enrollment.curriculum.person.full_name), kapa_person_path(:id => enrollment.curriculum.person_id, :focus => "practicum") %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(enrollment.curriculum.person.full_name), kapa_person_path(:id => enrollment.curriculum.person_id, :anchor => "practicum") %></td>
         <td><%= h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
         <td><%= enrollment.sequence %>
         <td><%= enrollment.status %>

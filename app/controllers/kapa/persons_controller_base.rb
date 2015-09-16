@@ -39,7 +39,7 @@ module Kapa::PersonsControllerBase
     #   @person_verified.merge(@person, :include_associations => true)
     #   flash[:success] = "Person was successfully merged."
     #   params[:return_uri][:id] = @person_verified.id if params[:return_uri][:controller] == "kapa/main/persons"  #This is needed for requests comes from outside of main
-    #   params[:return_uri][:focus] = params[:focus]
+    #   params[:return_uri][:anchor] = params[:anchor]
     #   redirect_to params[:return_uri]
 
     # else

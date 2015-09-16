@@ -27,7 +27,7 @@ module Kapa::TransitionPointsControllerBase
 
       unless @transition_point.save
         flash[:danger] = @transition_point.errors.full_messages.join(", ")
-        redirect_to kapa_transition_point_path(:id => @transition_point, :focus => params[:focus]) and return false
+        redirect_to kapa_transition_point_path(:id => @transition_point, :anchor => params[:anchor]) and return false
       end
     end
 
@@ -40,13 +40,13 @@ module Kapa::TransitionPointsControllerBase
         score.rated_by = @current_user.uid
         unless score.save
           flash[:danger] = "There was an error updating scores. Please try again."
-          redirect_to kapa_transition_point_path(:id => @transition_point, :focus => params[:focus]) and return false
+          redirect_to kapa_transition_point_path(:id => @transition_point, :anchor => params[:anchor]) and return false
         end
       end
     end
 
     flash[:success] = "Transition point was successfully updated."
-    redirect_to kapa_transition_point_path(:id => @transition_point, :focus => params[:focus])
+    redirect_to kapa_transition_point_path(:id => @transition_point, :anchor => params[:anchor])
   end
 
   def new
