@@ -7,6 +7,7 @@ module Kapa::ExamBase
     has_many :exam_scores
     before_save :format_fields
     validates_presence_of :person_id
+    obfuscate_id
   end
 
   def format_fields

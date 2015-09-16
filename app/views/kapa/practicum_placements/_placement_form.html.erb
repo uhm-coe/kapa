@@ -5,10 +5,11 @@
 
       // When selecting a person from the change mentor dialog,
       //   automatically set the values in last name, first name, and email fields
-      $('#mentor_person_id').change(function() {
-        if($(this).val() !== '') {
+      function get_mentor() {
+        var mentor_person_id = $('#mentor_person_id').val();
+        if(mentor_person_id !== '') {
           $.getJSON('<%=kapa_practicum_placements_get_mentor_path %>', {
-              person_id: $(this).val()
+              person_id: mentor_person_id
             },
             function(data) {
               $('#mentor_last_name').val(data['last_name']);
@@ -21,7 +22,9 @@
           $('#mentor_first_name').val('');
           $('#mentor_email').val('');
         }
-      });
+      }
+      $('#mentor_person_id').change(get_mentor);
+      get_mentor();
 
       // Turn off the default call (located in kapa.js) to submit on the modal submit button
       $('button[data-submit="#change_mentor_form"]#modal_submit').off('click');
@@ -34,13 +37,16 @@
         if ($('#mentor_person_id').val() === '' && ($('#mentor_last_name').val() === '' || $('#mentor_first_name').val() === '')) {
           return alert('Please select an existing mentor or fill out the fields if a new mentor.');
         }
-        $.getJSON('<%=kapa_practicum_placements_update_mentor_path %>',
-          $('#change_mentor_form').serialize(),
-          function(data) {
+        $.ajax({
+          type: 'PUT',
+          url: '<%=kapa_practicum_placements_update_mentor_path %>',
+          data: $('#change_mentor_form').serialize(),
+          success: function (data) {
             $('#practicum_placement_mentor_person_name').text(data['full_name']);
             $('#practicum_placement_mentor_person_id').val(data['person_id']);
             $('#change_mentor_dialog').modal('hide');
-          });
+          }
+        });
       });
 
     });
@@ -50,7 +56,7 @@
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_mentor_dialog", :modal_title => "Select/Create Mentor", :modal_form_id => "change_mentor_form"} do %>
     <%=bootstrap_form_for(:mentor, :url => nil, :html => {:method => :get, :id => "change_mentor_form"}) do |m| %>
-      <%=m.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor"} %>
+      <%=m.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor", :selected => @practicum_placement.mentor_person_id}, {:class => "search-select"} %>
       <%=m.text_field :last_name %>
       <%=m.text_field :first_name %>
       <%=m.text_field :email %>
@@ -66,15 +72,14 @@
       <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, {:include_blank => true}, :label => "Placement Site" if @practicum_placement.person %>
       <div class="form-group"><%=label :practicum_placement, :mentor_person_name, "Mentor Teacher" %>
         <p class="form-control-static">
-          <span id="practicum_placement_mentor_person_name"><%=@practicum_placement.mentor ? @practicum_placement.mentor.full_name : ""%></span>
+          <span id="practicum_placement_mentor_person_name"><%=@practicum_placement.mentor ? @practicum_placement.mentor.full_name : "Not assigned..."%></span>
           <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_mentor_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
         </p>
       </div>
-      <%=f.user_select :user_primary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Primary"} %>
-      <%=f.user_select :user_secondary_id, {:include_blank => true, :include => :employee, :label => "Supervisor Secondary"} %>
+      <%=f.user_select :user_ids, {:label => "Assigned to", :depts => @current_user.depts}, {:multiple => true} %>
     </div>
     <div class="col-sm-6">
-      <%=f.text_area :note %>
+      <%=f.text_area :note, {:cols => 54, :rows => 20} %>
     </div>
   </div>
   <%=f.hidden_field :person_id %>

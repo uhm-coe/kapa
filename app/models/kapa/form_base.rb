@@ -7,6 +7,7 @@ module Kapa::FormBase
     belongs_to :term
     has_one :transition_point
     validates_presence_of :person_id, :type
+    obfuscate_id
   end
 
   def term_desc

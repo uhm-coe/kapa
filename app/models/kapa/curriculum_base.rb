@@ -25,6 +25,7 @@ module Kapa::CurriculumBase
 
     validates_presence_of :person_id, :program_id
     before_create :set_default_options
+    obfuscate_id
   end
 
   def set_default_options

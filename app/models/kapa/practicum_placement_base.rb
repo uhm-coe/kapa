@@ -9,14 +9,11 @@ module Kapa::PracticumPlacementBase
     belongs_to :mentor,
                :class_name => "Person",
                :foreign_key => "mentor_person_id"
-    belongs_to :user_primary,
-               :class_name => "User",
-               :foreign_key => "user_primary_id"
-    belongs_to :user_secondary,
-               :class_name => "User",
-               :foreign_key => "user_secondary_id"
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
 
     validates_presence_of :person_id, :curriculum_id, :term_id
+#    obfuscate_id
   end
 
   def term_desc

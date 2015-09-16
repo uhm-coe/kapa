@@ -29,22 +29,22 @@ module Kapa::BootstrapFormHelper
         case name.to_s
           when /(field$)|(area$)/
             options = args.first.is_a?(Hash) ? args.first : {}
-            tag = @template.send(name, @object_name, method, options.merge(:class => "form-control"))
+            tag = @template.send(name, @object_name, method, options.merge(:class => "form-control #{options[:class]}"))
 
           when "select"
             options = args.second.is_a?(Hash) ? args.second : {}
             html_options = args.third.is_a?(Hash) ? args.third : {}
-            tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control"))
+            tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select", "date_select"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control"))
+            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "date_select"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control date-select"))
+            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control date-select #{html_options[:class]}"))
 
           when "check_box"
             options = args.first.is_a?(Hash) ? args.first : {}
@@ -59,7 +59,7 @@ module Kapa::BootstrapFormHelper
 
           when "static"
             options = args.first.is_a?(Hash) ? args.first : {}
-            tag = @template.content_tag(:p, options[:content], :class => "form-control-static")
+            tag = @template.content_tag(:p, options[:content], :class => "form-control-static #{options[:class]}")
           else
             tag = @template.send(name, @object_name, method, *args)
         end

@@ -5,6 +5,7 @@ module Kapa::CourseBase
     belongs_to :term
     has_many :course_registrations, -> {includes(:person, :assessment_scores).where("course_registrations.status like 'R%'").order("persons.last_name, persons.first_name")}
     validates_presence_of :term_id
+    obfuscate_id
   end
 
   def assessment_rubrics

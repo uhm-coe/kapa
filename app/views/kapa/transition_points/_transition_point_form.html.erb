@@ -8,8 +8,6 @@
     </div>
 
     <div class="col-sm-6">
-      <%= t.user_select :user_primary_id, :include_blank => true, :label => "Primary Reviewer", :depts => @current_user.depts %>
-      <%= t.user_select :user_secondary_id, :include_blank => true, :label => "Secondary Reviewer" %>
       <%= t.user_select :user_ids, {:label => "Reviewers", :depts => @current_user.depts}, {:multiple => true} %>
     </div>
   </div>

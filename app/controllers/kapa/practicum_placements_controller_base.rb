@@ -4,10 +4,9 @@ module Kapa::PracticumPlacementsControllerBase
   def show
     @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
     @person = @practicum_placement.person
-
+    @mentors = Kapa::Person.eager_load(:contact).where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
     @curriculums = @person.curriculums
     @practicum_sites = Kapa::PracticumSite.select("id, name_short")
-    @mentors = Kapa::Person.eager_load(:contact).where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
   end
 
   def new
@@ -101,6 +100,6 @@ module Kapa::PracticumPlacementsControllerBase
 
   private
   def practicum_placement_params
-    params.require(:practicum_placement).permit(:term_id, :curriculum_id)
+    params.require(:practicum_placement).permit(:term_id, :person_id, :mentor_person_id, :curriculum_id, :practicum_site_id, :note)
   end
 end

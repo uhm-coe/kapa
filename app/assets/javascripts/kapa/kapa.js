@@ -43,6 +43,14 @@ jQuery(document).ready(function ($) {
     buttonClass: 'btn btn-default kapa-multiselect-btn'
   });
 
+  $('.search-select').multiselect({
+    numberDisplayed: 1,
+    enableCaseInsensitiveFiltering: true,
+    includeSelectAllOption: true,
+    buttonContainer: '<div class="btn-group kapa-multiselect-btn-group"></div>',
+    buttonClass: 'btn btn-default kapa-multiselect-btn'
+  });
+
   $('[data-toggle="tooltip"]').tooltip();
 
   $("a[rel~=popover], .has-popover").popover();

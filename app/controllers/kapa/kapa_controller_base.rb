@@ -7,10 +7,9 @@ module Kapa::KapaControllerBase
     before_filter :check_if_route_is_enabled
     before_filter :validate_login
     before_filter :check_read_permission
-    before_filter :check_write_permission, :only => [:new, :create, :update, :destroy]
+    before_filter :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
     after_filter :put_timestamp
     helper :all
-    helper_method :url_for, :menu_items
   end
 
   def check_if_route_is_enabled
@@ -58,19 +57,6 @@ module Kapa::KapaControllerBase
       user.put_timestamp
     end
   end
-
-  #def url_for(options = {})
-  #  if options.kind_of?(Hash)
-  #    #This will avoid generating absolute path when hash is passed in.
-  #    options[:only_path] = true if options[:controller].blank?
-  #
-  #    if validate_authkey?(options[:action])
-  #      id = options[:id].kind_of?(ActiveRecord::Base) ? options[:id].id.to_s : options[:id].to_s
-  #      options[:authkey] = authkey(id)
-  #    end
-  #  end
-  #  super(options)
-  #end
 
   def redirect_to(options = {}, response_status = {})
     if request.xhr?
@@ -138,35 +124,5 @@ module Kapa::KapaControllerBase
      :start_term_id => Kapa::Term.current_term.id,
      :end_term_id => Kapa::Term.current_term.id,
      :per_page => Rails.configuration.items_per_page}
-  end
-
-  def menu_items(name, options = {})
-    items = []
-    case name.to_s
-      when "program"
-        items.push ["Cohorts", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
-        items.push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
-        items.push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
-        items.push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
-      when "document"
-        items.push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
-        items.push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
-        items.push ["Tests", kapa_exams_path] if @current_user.read?(:kapa_exams)
-        items.push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
-      when "advising"
-        items.push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
-      when "course"
-        items.push ["Rosters", kapa_courses_path] if @current_user.read?(:kapa_courses)
-      when "practicum"
-        items.push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
-        items.push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
-      when "admin"
-        items.push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
-        items.push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
-        items.push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
-        items.push ["Datasets", kapa_datasets_path] if @current_user.manage?(:kapa_datasets)
-        items.push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)
-    end
-    items
   end
 end

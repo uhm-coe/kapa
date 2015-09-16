@@ -12,6 +12,7 @@ module Kapa::EnrollmentBase
                :foreign_key => "user_secondary_id"
 
     validates_presence_of :curriculum_id, :term_id
+    obfuscate_id
   end
 
   def practicum_assignments_select(assignment_type, index = nil)
