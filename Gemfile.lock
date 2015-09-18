@@ -26,7 +26,6 @@ PATH
       less-rails
       mysql2 (~> 0.3.18)
       net-ldap
-      obfuscate_id
       paperclip (~> 3.0)
       rails (~> 4.2.0)
       sequel
@@ -138,9 +137,6 @@ GEM
     net-ldap (0.11)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    obfuscate_id (0.2.0)
-      rails (~> 4.2.0)
-      scatter_swap (~> 0.0.3)
     paperclip (3.5.4)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -193,7 +189,6 @@ GEM
       rspec-mocks (~> 3.3.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
-    scatter_swap (0.0.3)
     scrypt (2.0.2)
       ffi-compiler (>= 0.0.2)
       rake

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get 'practicum_placements/get_mentor(/:id)' => 'practicum_placements#get_mentor', :as => :practicum_placements_get_mentor
     put 'practicum_placements/update_mentor(/:id)' => 'practicum_placements#update_mentor', :as => :practicum_placements_update_mentor
     resources :practicum_placements, &extra_actions
+    resources :practicum_logs, &extra_actions
     resources :practicum_sites, &extra_actions
     resources :users, &extra_actions
     resources :terms, &extra_actions

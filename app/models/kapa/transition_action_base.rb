@@ -3,6 +3,9 @@ module Kapa::TransitionActionBase
 
   included do
     belongs_to :transition_point
+    has_one :user_assignment, :as => :assignable
+    has_one :user, :through => :user_assignment
+
     validates_presence_of :transition_point_id, :action, :action_date
     before_save :copy_type
   end

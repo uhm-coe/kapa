@@ -2,7 +2,7 @@
  if @current_user
    menu_items = {}
    menu_items["Program"] = []
-   menu_items["Program"].push ["Cohorts", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
+   menu_items["Program"].push ["Candidates", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
    menu_items["Program"].push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
    menu_items["Program"].push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
    menu_items["Program"].push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)

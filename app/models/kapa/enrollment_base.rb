@@ -8,7 +8,6 @@ module Kapa::EnrollmentBase
     has_many :users, :through => :user_assignments
 
     validates_presence_of :curriculum_id, :term_id
-    obfuscate_id
   end
 
   def practicum_assignments_select(assignment_type, index = nil)

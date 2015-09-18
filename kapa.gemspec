@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'authlogic'
   s.add_dependency 'paperclip', '~> 3.0'
   s.add_dependency 'fastercsv'
-  s.add_dependency 'obfuscate_id'
   s.add_dependency 'mysql2', '~> 0.3.18'
   s.add_dependency 'net-ldap'
   s.add_dependency 'sequel'

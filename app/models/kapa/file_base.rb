@@ -5,7 +5,6 @@ module Kapa::FileBase
     belongs_to :person
     has_attached_file :data
     validates_presence_of :person_id
-    obfuscate_id
   end
 
   def url(*args)

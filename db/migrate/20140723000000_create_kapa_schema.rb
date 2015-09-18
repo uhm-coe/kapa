@@ -27,8 +27,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
       t.integer "curriculum_id", limit: 4
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
     end
 
     add_index "advising_sessions", ["curriculum_id"], name: "index_advising_sessions_on_curriculum_id", using: :btree
@@ -163,8 +161,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "cohort", limit: 255
       t.string "status", limit: 255
       t.string "dept", limit: 255
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
       t.boolean "active", limit: 1, default: false
       t.text "note", limit: 65535
       t.text "yml", limit: 65535
@@ -177,8 +173,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "curriculums", ["dept"], name: "index_curriculums_on_dept", using: :btree
     add_index "curriculums", ["person_id"], name: "index_curriculums_on_person_id", using: :btree
     add_index "curriculums", ["program_id"], name: "index_curriculums_on_program_id", using: :btree
-    add_index "curriculums", ["user_primary_id"], name: "index_curriculums_on_user_primary_id", using: :btree
-    add_index "curriculums", ["user_secondary_id"], name: "index_curriculums_on_user_secondary_id", using: :btree
 
     create_table "datasets", force: :cascade do |t|
       t.string "name", limit: 255
@@ -206,8 +200,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "status", limit: 255
       t.text "note", limit: 65535
       t.string "dept", limit: 255
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
       t.text "yml", limit: 65535
       t.text "json", limit: 65535
       t.datetime "created_at"
@@ -216,8 +208,6 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "enrollments", ["curriculum_id"], name: "index_enrollments_on_curriculum_id", using: :btree
     add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id", using: :btree
-    add_index "enrollments", ["user_primary_id"], name: "index_enrollments_on_user_primary_id", using: :btree
-    add_index "enrollments", ["user_secondary_id"], name: "index_enrollments_on_user_secondary_id", using: :btree
 
     create_table "exam_scores", force: :cascade do |t|
       t.integer "exam_id", limit: 4
@@ -347,8 +337,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "category", limit: 255
       t.string "status", limit: 255
       t.string "dept", limit: 255
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
       t.datetime "created_at"
       t.datetime "updated_at"
       t.text "yml", limit: 65535
@@ -360,8 +348,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "practicum_placements", ["person_id"], name: "index_practicum_placements_on_person_id", using: :btree
     add_index "practicum_placements", ["practicum_site_id"], name: "index_practicum_placements_on_practicum_site_id", using: :btree
     add_index "practicum_placements", ["term_id"], name: "index_practicum_placements_on_term_id", using: :btree
-    add_index "practicum_placements", ["user_primary_id"], name: "index_practicum_placements_on_user_primary_id", using: :btree
-    add_index "practicum_placements", ["user_secondary_id"], name: "index_practicum_placements_on_user_secondary_id", using: :btree
 
     create_table "practicum_sites", force: :cascade do |t|
       t.string "code", limit: 255
@@ -427,8 +413,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text "json", limit: 65535
       t.datetime "created_at"
       t.datetime "updated_at"
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
     end
 
     add_index "programs", ["code"], name: "index_programs_on_code", using: :btree
@@ -517,8 +501,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "status", limit: 255
       t.string "category", limit: 255
       t.string "priority", limit: 255
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
       t.string "dept", limit: 255
       t.boolean "active", limit: 1, default: false
       t.text "note", limit: 65535

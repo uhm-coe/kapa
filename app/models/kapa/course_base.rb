@@ -8,7 +8,6 @@ module Kapa::CourseBase
     has_many :users, :through => :user_assignments
 
     validates_presence_of :term_id
-    obfuscate_id
   end
 
   def assessment_rubrics

@@ -5,7 +5,6 @@ module Kapa::PracticumSiteBase
     has_many :practicum_placements
     validates_presence_of :name, :code
     validates_uniqueness_of :code
-    obfuscate_id
   end
 
   def site_contact

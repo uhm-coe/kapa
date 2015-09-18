@@ -13,7 +13,6 @@ module Kapa::AdvisingSessionBase
     has_many :users, :through => :user_assignments
 
     validates_presence_of :person_id, :session_date, :session_type
-    obfuscate_id
   end
 
   class_methods do

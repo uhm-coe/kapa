@@ -1,3 +1,67 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      // When selecting a person from the change mentor dialog,
+      // automatically set the values in last name, first name, and email fields
+      function get_mentor() {
+        var mentor_person_id = $('#mentor_person_id').val();
+        if(mentor_person_id !== '') {
+          $.getJSON('<%=kapa_practicum_placements_get_mentor_path %>', {
+              person_id: mentor_person_id
+            },
+            function(data) {
+              $('#mentor_last_name').val(data['last_name']);
+              $('#mentor_first_name').val(data['first_name']);
+              $('#mentor_email').val(data['email']);
+            });
+        }
+        else {
+          $('#mentor_last_name').val('');
+          $('#mentor_first_name').val('');
+          $('#mentor_email').val('');
+        }
+      }
+      $('#mentor_person_id').change(get_mentor);
+      get_mentor();
+
+      // Turn off the default call (located in kapa.js) to submit on the modal submit button
+      $('button[data-submit="#change_mentor_form"]#modal_submit').off('click');
+
+      // Add a new click event handler on the modal submit button
+      // Instead of performing an update, send a GET request
+      $('button[data-submit="#change_mentor_form"]#modal_submit').click(function(e) {
+        e.preventDefault();
+        // If user selects "New Mentor" and either last name or first name fields are blank upon submission
+        if ($('#mentor_person_id').val() === '' && ($('#mentor_last_name').val() === '' || $('#mentor_first_name').val() === '')) {
+          return alert('Please select an existing mentor or fill out the fields if a new mentor.');
+        }
+        $.ajax({
+          type: 'PUT',
+          url: '<%=kapa_practicum_placements_update_mentor_path %>',
+          data: $('#change_mentor_form').serialize(),
+          success: function (data) {
+            $('#practicum_placement_mentor_person_name').text(data['full_name']);
+            $('#practicum_placement_mentor_person_id').val(data['person_id']);
+            $('#change_mentor_dialog').modal('hide');
+          }
+        });
+      });
+
+    });
+  </script>
+<% end %>
+
+<% content_for(:dialog) do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_mentor_dialog", :modal_title => "Select/Create Mentor", :modal_form_id => "change_mentor_form"} do %>
+    <%=bootstrap_form_for(:mentor, :url => nil, :html => {:method => :get, :id => "change_mentor_form"}) do |m| %>
+      <%=m.select :person_id, @mentors.collect{|c| ["#{c.last_name}, #{c.first_name}", c.id]}, {:include_blank => "New Mentor", :selected => @practicum_placement.mentor_person_id}, {:class => "search-select"} %>
+      <%=m.text_field :last_name %>
+      <%=m.text_field :first_name %>
+      <%=m.text_field :email %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/persons/person_detail" %>
 
@@ -21,7 +85,47 @@
       </div>
 
       <div id="practicum_logs_tab" class="tab-pane">
+        <div class="panel-group" id="accordion">
 
+          <% @practicum_logs.each_with_index do |practicum_log, index| %>
+            <% @practicum_log = practicum_log %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#practicum_log_<%= @practicum_log.id %>"><span class="strong"><%= format_date @practicum_log.log_date %>
+                    - <%= h @practicum_log.task_desc %></span></a>
+                </h3>
+              </div>
+              <div id="practicum_log_<%= @practicum_log.id %>" class="panel-collapse collapse<%= ' in' if params[:action_panel] == @practicum_log.id.to_s || (params[:action_panel].nil? && index == 0) %>">
+                <div class="panel-body">
+                  <%= bootstrap_form_for :practicum_log, :url => kapa_practicum_log_path(:id => @practicum_log, :anchor => :practicum_logs, :action_panel => @practicum_log.id), :html => {:method => :put} do |f| %>
+                    <%= render :partial => "log_form" %>
+                    <%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_practicum_log_path(:id => @practicum_log)} if @current_user.write?(:kapa_practicum_logs) %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_practicum_log"><span class="new">New Log </span></a>
+              </h3>
+            </div>
+
+            <div id="new_practicum_logs" class="panel-collapse collapse<%= ' in' if @practicum_logs.length == 0 %>">
+              <div class="panel-body">
+                <% @practicum_log = @practicum_placement.practicum_logs.build(:user_id => @current_user.id, :log_date => Date.today) %>
+                <%= bootstrap_form_for :practicum_log, :url => kapa_practicum_logs_path(:id => @practicum_placement, :anchor => :practicum_logs) do %>
+                  <%= render :partial => "log_form" %>
+                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:kapa_practicum_logs) %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>

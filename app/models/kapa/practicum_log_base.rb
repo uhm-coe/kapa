@@ -1,27 +1,21 @@
-module Kapa::PracticumPlacementBase
+module Kapa::PracticumLogBase
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :person
-    belongs_to :curriculum
-    belongs_to :term
-    belongs_to :practicum_site
-    belongs_to :mentor,
-               :class_name => "Person",
-               :foreign_key => "mentor_person_id"
-    has_many :practicum_logs
-    has_many :user_assignments, :as => :assignable
-    has_many :users, :through => :user_assignments
-
-    validates_presence_of :person_id, :term_id
+    belongs_to :practicum_placement
+    validates_presence_of :log_date
   end
 
-  def term_desc
-    return Kapa::Term.find(term_id).description
+  def type_desc
+    return Kapa::Property.lookup_description(:placement_log_type, type)
   end
 
   def category_desc
-    return Kapa::Property.lookup_description(:placement_category, category)
+    return Kapa::Property.lookup_description(:placement_log_category, category)
+  end
+
+  def task_desc
+    return Kapa::Property.lookup_description(:placement_log_task, task)
   end
 
   class_methods do

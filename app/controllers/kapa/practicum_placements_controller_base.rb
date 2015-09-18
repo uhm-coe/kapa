@@ -3,6 +3,7 @@ module Kapa::PracticumPlacementsControllerBase
 
   def show
     @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
+    @practicum_logs = @practicum_placement.practicum_logs
     @person = @practicum_placement.person
     @mentors = Kapa::Person.eager_load(:contact).where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
     @curriculums = @person.curriculums

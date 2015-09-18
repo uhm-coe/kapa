@@ -1,0 +1,26 @@
+<% practicum_log = @practicum_log.new_record? ? "practicum_log" : "practicum_log[]" %>
+<%= bootstrap_fields_for practicum_log do |a| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <%=label_tag "#{practicum_log}_log_date", "Log Date" %>
+        <%=date_picker practicum_log, :log_date %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <%= a.property_select :type, :name => :practicum_log_type, :include_blank => true %>
+    </div>
+    <div class="col-sm-3">
+      <%= a.property_select :category, :name => :practicum_log_category, :include_blank => true %>
+    </div>
+    <div class="col-sm-3">
+      <%= a.user_select "user_id", :include_blank => true, :label => "Logged by", :locked => !@current_user.manage? %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <%= a.text_area "note", :style => "width:100%; height:100px" %>
+    </div>
+  </div>
+<% end %>
