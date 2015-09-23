@@ -4,7 +4,6 @@ module Kapa::PracticumPlacementBase
   included do
     belongs_to :person
     belongs_to :curriculum
-    belongs_to :term
     belongs_to :practicum_site
     belongs_to :mentor,
                :class_name => "Person",
@@ -13,11 +12,19 @@ module Kapa::PracticumPlacementBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    validates_presence_of :person_id, :term_id
+    validates_presence_of :person_id, :start_term_id, :end_term_id
   end
 
-  def term_desc
-    return Kapa::Term.find(term_id).description
+  def start_term_desc
+    "#{Kapa::Term.find(self.start_term_id).description}"
+  end
+
+  def end_term_desc
+    "#{Kapa::Term.find(self.end_term_id).description}"
+  end
+
+  def effective_term_desc
+    "#{Kapa::Term.find(self.start_term_id).description} - #{Kapa::Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
   end
 
   def category_desc
@@ -28,65 +35,30 @@ module Kapa::PracticumPlacementBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       placements = Kapa::PracticumPlacement.eager_load([:person, :practicum_site]).order("persons.last_name, persons.first_name")
-      placements = placements.where("practicum_placements.term_id" => filter.term_id) if filter.term_id.present?
+      placements = placements.where("? between practicum_placements.start_term_id and practicum_placements.end_term_id", filter.term_id) if filter.term_id.present?
       placements = placements.where("practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
       placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
       return placements
     end
 
-    def csv_columns
-      [:id_number,
-       :last_name,
-       :first_name,
-       :email,
-       :category,
-       # :sequence,
-       # :mentor_type,
-       :term,
-       :status,
+    def csv_format
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :last_name],
+       :email => [:person, :email],
+       :type => [:type],
+       :start_term => [:start_term_desc],
+       :end_term => [:end_term_desc],
+       :mentor_person_id => [:mentor_person_id],
+       :mentor_last_name => [:mentor, :last_name],
+       :mentor_first_name => [:mentor, :first_name],
+       :mentor_email => [:mentor, :contact, :email],
+       :site_code => [:practicum_site, :code],
+       :site_name => [:practicum_site, :name],
        # :total_mentors,
-       :mentor_person_id,
-       :mentor_last_name,
-       :mentor_first_name,
-       :mentor_email,
-       :site_code,
-       :site_name,
        # :content_area,
-       :supervisor_1_uid,
-       :supervisor_1_last_name,
-       :supervisor_1_first_name,
-       :supervisor_2_uid,
-       :supervisor_2_last_name,
-       :supervisor_2_first_name,
-       :note]
-    end
-
-    def csv_row(c)
-      [c.rsend(:person, :id_number),
-       c.rsend(:person, :last_name),
-       c.rsend(:person, :first_name),
-       c.rsend(:person, :email),
-       c.rsend(:category),
-       # c.rsend(:practicum_placement, :sequence), # TODO: No longer exists on practicum_placement
-       # c.rsend(:practicum_placement, :mentor_type), # TODO: No longer exists on practicum_placement
-       c.rsend(:term, :description),
-       c.rsend(:status),
-       # c.rsend(:practicum_placement, [:practicum_assignments_select, :mentor], :length), # TODO
-       c.rsend(:person_mentor_id),
-       c.rsend(:mentor, :last_name),
-       c.rsend(:mentor, :first_name),
-       c.rsend(:mentor, :contact, :email),
-       c.rsend(:practicum_site, :code),
-       c.rsend(:practicum_site, :name_short),
-       # c.rsend(:content_area), # TODO: Used to be on practicum_assignments
-       c.rsend(:user_primary, :uid),
-       c.rsend(:user_primary, :person, :last_name),
-       c.rsend(:user_primary, :person, :first_name),
-       c.rsend(:user_secondary, :uid),
-       c.rsend(:user_secondary, :person, :last_name),
-       c.rsend(:user_secondary, :person, :first_name),
-       c.rsend(:note)]
+       # :supervisor
+       :note => [:note]}
     end
   end
-
 end

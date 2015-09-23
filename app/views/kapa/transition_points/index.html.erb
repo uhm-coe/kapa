@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
-          <%= f.program_select :program_id, :include_blank => "Any", :depts => @current_user.depts, :value => :id %>
+          <%= f.program_select :program_id, {:include_blank => "Any", :depts => @current_user.depts, :value => :id}, :class => "search-select" %>
           <%= f.property_select :type, :name => :transition_point %>
           <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
         </div>

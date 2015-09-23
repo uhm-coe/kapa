@@ -53,7 +53,7 @@
         <table id="placement_list" class="table table-striped">
           <thead>
             <tr>
-              <th>Term</th>
+              <th>Terms</th>
               <th>ID</th>
               <th>Name</th>
               <th>Mentor</th>
@@ -63,7 +63,7 @@
           <tbody>
             <% for practicum_placement in @practicum_placements %>
               <tr>
-                <td><%=practicum_placement.term_desc %></td>
+                <td><%=practicum_placement.effective_term_desc %></td>
                 <td><%=practicum_placement.person.id_number %></td>
                 <td><%=abbr practicum_placement.person.full_name%></td>
                 <td><%=h practicum_placement.mentor.full_name if practicum_placement.mentor.present? %></td>

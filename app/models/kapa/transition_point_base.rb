@@ -80,7 +80,7 @@ module Kapa::TransitionPointBase
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
       transition_points = transition_points.where("transition_points.type" => filter.type.to_s) if filter.type.present?
-      transition_points = transition_points.where("programs_id" => filter.program_id) if filter.program_id.present?
+      transition_points = transition_points.where("curriculums.program_id" => filter.program_id) if filter.program_id.present?
       transition_points = transition_points.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       transition_points = transition_points.where("curriculums.major_primary" => filter.major) if filter.major.present?
       transition_points = transition_points.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?

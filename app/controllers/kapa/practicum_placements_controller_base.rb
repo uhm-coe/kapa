@@ -12,7 +12,7 @@ module Kapa::PracticumPlacementsControllerBase
 
   def new
     @person = Kapa::Person.find(params[:id])
-    @practicum_placement = @person.practicum_placements.build(:term_id => Kapa::Term.current_term.id)
+    @practicum_placement = @person.practicum_placements.build(:start_term_id => Kapa::Term.current_term.id, :end_term_id => Kapa::Term.current_term.id)
     @curriculums = @person.curriculums
   end
 
@@ -61,11 +61,10 @@ module Kapa::PracticumPlacementsControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{@filter.inspect}"
     send_data Kapa::PracticumPlacement.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "placements_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}_#{Date.today}.csv"
+              :filename => "placements_#{Kapa::Term.find(@filter.term_id).description}_#{Date.today}.csv"
   end
 
   def get_mentor
@@ -101,6 +100,6 @@ module Kapa::PracticumPlacementsControllerBase
 
   private
   def practicum_placement_params
-    params.require(:practicum_placement).permit(:term_id, :person_id, :mentor_person_id, :curriculum_id, :practicum_site_id, :note, :user_ids => [])
+    params.require(:practicum_placement).permit(:start_term_id, :end_term_id, :person_id, :mentor_person_id, :curriculum_id, :practicum_site_id, :type, :category, :note, :user_ids => [])
   end
 end

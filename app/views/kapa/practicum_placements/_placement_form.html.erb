@@ -1,11 +1,18 @@
 <%=bootstrap_fields_for :practicum_placement do |f| %>
   <div class="row">
     <div class="col-sm-6">
-      <%=f.term_select :term_id %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= f.term_select :start_term_id %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.term_select :end_term_id %>
+        </div>
+      </div>
       <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
-      <%=f.property_select :category, :name => :placement_category, :include_blank => true %>
+      <%=f.select :type, ["OJT", "OJTB", "M", "TFA", "MUSE", "SONG"], :name => :placement_type %>
       <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, :include_blank => true, :label => "Placement Site" if @practicum_placement.person %>
-      <div class="form-group"><%=label :practicum_placement, :mentor_person_name, "Mentor Teacher" %>
+      <div class="form-group"><%=label :practicum_placement, :mentor_person_name, "Mentor" %>
         <p class="form-control-static">
           <span id="practicum_placement_mentor_person_name"><%=@practicum_placement.mentor ? @practicum_placement.mentor.full_name : "Not assigned..."%></span>
           <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_mentor_dialog"><span class="glyphicon glyphicon-pencil"></span></button>

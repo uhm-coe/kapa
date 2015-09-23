@@ -11,7 +11,7 @@
       <%= a.property_select :type, :name => :practicum_log_type, :include_blank => true %>
     </div>
     <div class="col-sm-3">
-      <%= a.property_select :category, :name => :practicum_log_category, :include_blank => true %>
+      <%= a.property_select :task, :name => :practicum_log_category, :include_blank => true %>
     </div>
     <div class="col-sm-3">
       <%= a.user_select "user_id", :include_blank => true, :label => "Logged by", :locked => !@current_user.manage? %>

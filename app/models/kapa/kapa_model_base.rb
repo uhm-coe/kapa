@@ -121,7 +121,7 @@ module Kapa::KapaModelBase
 
     def csv_format
       #This method should be implemented in subclasses to define csv data.
-      []
+      {}
     end
   end
 end

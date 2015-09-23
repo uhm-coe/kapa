@@ -114,7 +114,7 @@
               </h3>
             </div>
 
-            <div id="new_practicum_logs" class="panel-collapse collapse<%= ' in' if @practicum_logs.length == 0 %>">
+            <div id="new_practicum_log" class="panel-collapse collapse<%= ' in' if @practicum_logs.length == 0 %>">
               <div class="panel-body">
                 <% @practicum_log = @practicum_placement.practicum_logs.build(:user_id => @current_user.id, :log_date => Date.today) %>
                 <%= bootstrap_form_for :practicum_log, :url => kapa_practicum_logs_path(:id => @practicum_placement, :anchor => :practicum_logs) do %>

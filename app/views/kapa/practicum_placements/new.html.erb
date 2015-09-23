@@ -15,11 +15,17 @@
       <div id="practicum_placement_tab" class="tab-pane active">
         <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placements_path(:id => @person) do |f| %>
           <div class="row">
-            <div class="col-sm-6">
-              <%=f.term_select :term_id %>
+            <div class="col-sm-3">
+              <%=f.term_select :start_term_id %>
             </div>
-            <div class="col-sm-6">
-              <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code}", c.id]}, :include_blank => "N/A", :label => "Program" %>
+            <div class="col-sm-3">
+              <%=f.term_select :end_term_id %>
+            </div>
+            <div class="col-sm-4">
+              <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => "N/A", :label => "Program" %>
+            </div>
+            <div class="col-sm-2">
+              <%=f.select :type, ["OJT", "OJTB", "M", "TFA", "MUSE", "SONG"], :name => :placement_type %>
             </div>
           </div>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>

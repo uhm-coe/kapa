@@ -327,19 +327,20 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
     create_table "practicum_placements", force: :cascade do |t|
-      t.integer "person_id", limit: 4, default: 0, null: false
-      t.integer "term_id", limit: 4, default: 0, null: false
-      t.integer "curriculum_id", limit: 4, default: 0, null: false
-      t.integer "practicum_site_id", limit: 4
-      t.integer "mentor_person_id", limit: 4
-      t.integer "fee", limit: 4
-      t.text "note", limit: 65535
-      t.string "category", limit: 255
-      t.string "status", limit: 255
-      t.string "dept", limit: 255
+      t.integer  "person_id",         limit: 4
+      t.integer  "start_term_id",     limit: 4
+      t.integer  "end_term_id",       limit: 4
+      t.integer  "curriculum_id",     limit: 4
+      t.integer  "practicum_site_id", limit: 4
+      t.integer  "mentor_person_id",  limit: 4
+      t.text     "note",              limit: 65535
+      t.string   "type",              limit: 255
+      t.string   "category",          limit: 255
+      t.string   "status",            limit: 255
+      t.string   "dept",              limit: 255
       t.datetime "created_at"
       t.datetime "updated_at"
-      t.text "yml", limit: 65535
+      t.text     "yml",               limit: 65535
       t.text "json", limit: 65535
     end
 
@@ -347,7 +348,8 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "practicum_placements", ["mentor_person_id"], name: "index_practicum_placements_on_mentor_person_id", using: :btree
     add_index "practicum_placements", ["person_id"], name: "index_practicum_placements_on_person_id", using: :btree
     add_index "practicum_placements", ["practicum_site_id"], name: "index_practicum_placements_on_practicum_site_id", using: :btree
-    add_index "practicum_placements", ["term_id"], name: "index_practicum_placements_on_term_id", using: :btree
+    add_index "practicum_placements", ["start_term_id"]
+    add_index "practicum_placements", ["end_term_id"]
 
     create_table "practicum_sites", force: :cascade do |t|
       t.string "code", limit: 255
