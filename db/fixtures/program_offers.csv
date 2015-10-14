@@ -1,4 +1,4 @@
-id,program_id,distribution,description,description_short,major,academic_period,available_major,available_academic_period,sequence,active,yml,json
+id,program_id,distribution,description,description_short,major,academic_period,available_major,available_academic_period,sequence,active,yml,xml
 1,1,MAN,Disability & Diversity Studies-GCERT (Manoa),,,,DDS,,,1,,
 2,2,MAN,Early Childhood Education-MEd (Manoa),,,,ECED,,,1,,
 3,3,MAN,Counseling & Guidance-MEd (Manoa),,,,EDCG,,,1,,

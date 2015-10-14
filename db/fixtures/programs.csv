@@ -1,4 +1,4 @@
-id,code,description,description_short,degree,major,track,distribution,location,available_major,available_track,available_distribution,available_location,category,sequence,active,dept,yml,json
+id,code,description,description_short,degree,major,track,distribution,location,available_major,available_track,available_distribution,available_location,category,sequence,active,dept,yml,xml
 999,NA,Not Defined,,NA,,,,,,,,,,,1,"OSAS,ITE,SPED","--- {}
 ",
 1,DDS-GCERT,Disability & Diversity Studies-GCERT,,GCERT,DDS,,,,DDS,N,MAN,"OAH,AS,HAW,INT,KAU,LAN,MAI,MAU,MOL,OTH",Advanced Program,,1,DDS,"--- {}

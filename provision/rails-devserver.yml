@@ -34,7 +34,7 @@
     copy: src=/vagrant/provision/passenger.list dest=/etc/apt/sources.list.d/passenger.list mode=0600 owner=root
 
   - name: Installing Passenger/Apache
-    apt: pkg=libapache2-mod-passenger state=latest update_cache=yes
+    apt: pkg=apache2,libapache2-mod-passenger state=latest update_cache=yes
 
   - name: Disableing default virtual host
     shell: a2dissite 000-default
