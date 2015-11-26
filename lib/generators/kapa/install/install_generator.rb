@@ -9,6 +9,11 @@ class Kapa::InstallGenerator < Rails::Generators::Base
     inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
   end
 
+  def install_locale
+    puts "Installing default locale..."
+    copy_file("en.yml", "#{Rails.root}/config/locale/en.yml")
+  end
+
   def install_seeds
     puts "Installing database seeds..."
     copy_file("#{Kapa::Engine.root}/db/seeds.rb", "#{Rails.root}/db/seeds.rb")

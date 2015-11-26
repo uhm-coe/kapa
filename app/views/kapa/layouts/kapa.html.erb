@@ -1,39 +1,10 @@
-<%
- if @current_user
-   menu_items = {}
-   menu_items["Program"] = []
-   menu_items["Program"].push ["Candidates", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
-   menu_items["Program"].push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
-   menu_items["Program"].push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
-   menu_items["Program"].push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
-   menu_items["Document"] = []
-   menu_items["Document"].push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
-   menu_items["Document"].push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
-   menu_items["Document"].push ["Tests", kapa_exams_path] if @current_user.read?(:kapa_exams)
-   menu_items["Document"].push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
-   menu_items["Advising"] = []
-   menu_items["Advising"].push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
-   menu_items["Course"] = []
-   menu_items["Course"].push ["Rosters", kapa_courses_path] if @current_user.read?(:kapa_courses)
-   menu_items["Placement"] = []
-   menu_items["Placement"].push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
-   menu_items["Placement"].push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
-   menu_items["Administration"] = []
-   menu_items["Administration"].push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
-   menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
-   menu_items["Administration"].push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
-   menu_items["Administration"].push ["Datasets", kapa_datasets_path] if @current_user.manage?(:kapa_datasets)
-   menu_items["Administration"].push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)
- end
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for?(:title) ? yield(:title) : "KAPA" %></title>
+  <title><%= content_for?(:title) ? yield(:title) : t(:kapa_brand) %></title>
   <%= csrf_meta_tags %>
 
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -70,41 +41,8 @@
 
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
-    <%= link_to "KAPA", kapa_root_path, :class => "navbar-brand" %>
-
-    <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <ul class="nav navbar-nav">
-        <% if @current_user %>
-          <% menu_items.each_pair do |menu, items| %>
-            <% if items.present? %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=menu %><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <% for item in items %>
-                  <%= content_tag :li, link_to(item[0], item[1]) %>
-                <% end %>
-              </ul>
-            </li>
-            <% end %>
-          <% end %>
-          <%=bootstrap_form_for(:filter, :url => kapa_persons_path, :html => {:method => :get, :class => "navbar-form navbar-left", :role => "search"}) do |f| %>
-             <%=f.text_field :key, :label => :no, :placeholder => "Search Person", "data-toggle" => "tooltip", "data-placement" => "bottom", :title => "ID, Name, Email, or Phone" %>
-             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-          <% end if @current_user.read? :kapa_persons %>
-        <% end %>
-      </ul>
-      <% if @current_user %>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as
-              <strong><%= h @current_user.uid %></strong><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Logout", kapa_user_session_path, {:method => :delete} %></li>
-            </ul>
-          </li>
-        </ul>
-      <% end %>
-    </div>
+    <%= link_to t(:kapa_brand), kapa_root_path, :class => "navbar-brand" %>
+    <%= render :partial => "kapa/layouts/menu", :locals => {:current_user => @current_user} %>
   </div>
 </div>
 
@@ -135,7 +73,7 @@
   <% end %>
 
   <footer>
-    <p class="text-center">&copy; College of Education, University of Hawaiʻi at Mānoa <%= Date.today.year %></p>
+    <p class="text-center"><%=t :kapa_footer_html, :year => Date.today.year%></p>
   </footer>
 
 </div>

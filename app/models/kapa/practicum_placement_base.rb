@@ -8,7 +8,7 @@ module Kapa::PracticumPlacementBase
     belongs_to :mentor,
                :class_name => "Person",
                :foreign_key => "mentor_person_id"
-    has_many :practicum_logs
+    has_many :practicum_logs, -> {order("practicum_logs.log_date DESC")}
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
