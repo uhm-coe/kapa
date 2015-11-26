@@ -11,7 +11,7 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
   def install_locale
     puts "Installing default locale..."
-    copy_file("en.yml", "#{Rails.root}/config/locale/en.yml")
+    copy_file("en.yml", "#{Rails.root}/config/locales/en.yml")
   end
 
   def install_seeds
