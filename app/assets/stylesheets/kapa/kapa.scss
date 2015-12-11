@@ -1,13 +1,8 @@
-/*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *
- *= require bootstrap-datepicker
- *= require bootstrap-multiselect
- *= require kapa/bootstrap_and_overrides.css.less
- *= require_self
-*/
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "bootstrap-datepicker";
+@import "bootstrap-multiselect";
 
 .section-header {
   padding-bottom: 9px;

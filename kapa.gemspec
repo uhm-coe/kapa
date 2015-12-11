@@ -28,8 +28,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'therubyracer'
-  s.add_dependency 'less-rails'
-  s.add_dependency 'twitter-bootstrap-rails'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'bootstrap-sass'
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.3.1.1'
   s.add_dependency 'bootstrap-multiselect-rails'
   #include github version in Gemfile
