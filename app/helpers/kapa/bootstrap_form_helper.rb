@@ -23,7 +23,7 @@ module Kapa::BootstrapFormHelper
     link_to(name.html_safe, options, html_options, &block)
   end
 
-  def bootstrap_flash
+  def bootstrap_flash(options = {})
     flash_messages = []
     flash.each do |type, message|
       # Skip empty messages, e.g. for devise messages set to nothing in a locale file.
