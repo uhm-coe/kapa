@@ -1,0 +1,1225 @@
+id,name,code,description,description_short,category,regexp,sequence,active,dept,yml,xml
+179377088,advising_task,Admissions - Pre-Ed Students,Admissions - Pre-Ed Students,,,,0,0,,,
+179377089,advising_task,Admissions - Pre-KLS Students,Admissions - Pre-KLS Students,,,,0,0,,,
+179377090,advising_task,American Samoa Program,American Samoa Program,,,,0,0,,,
+179377091,advising_task,Appointment,Appointment,,,,0,1,,,
+179377092,advising_task,Credit Overload,Credit Overload,,,,0,0,,,
+179377093,advising_task,Financial Aid/Scholarships,Financial Aid/Scholarships,,,,0,1,,,
+179377094,advising_task,Fingerprinting/Clearances,Fingerprinting/Clearances,,,,0,0,,,
+179377095,advising_task,Graduation Check,Graduation Check,,,,0,1,,,
+179377096,advising_task,Other,Other,,,,0,1,,,
+179377097,advising_task,PRAXIS,PRAXIS,,,,0,0,,,
+179444737,advising_task,Program Specific Info/Requirements,Program Specific Info/Requirements,,,,0,1,,,
+179444738,advising_task,Registration,Registration,,,,0,1,,,
+179444739,advising_task,Teacher Licensing,Teacher Licensing,,,,0,1,,,
+179444740,advising_task,Teacher Placement File,Teacher Placement File,,,,0,0,,,
+179444741,advising_task,Transfer Questions,Transfer Questions,,,,0,0,,,
+179444742,advising_task,Recruitment,Recruitment,,,,0,0,,,
+179444743,advising_type,email,Email,,,,0,1,,,
+179444744,advising_type,inperson,In-Person,,,,0,1,,,
+179444745,advising_type,other,Other,,,,0,1,,,
+179444746,advising_type,phone,Phone,,,,0,1,,,
+179512386,attending_status,FT,Full-Time,,,,0,1,,,
+179512387,attending_status,PT,Part-Time,,,,0,1,,,
+179512388,distribution,AS,Samoa,,,,1,1,,,
+179512389,distribution,KAU,Kauai,,,,0,0,,,
+179512390,distribution,MAN,Manoa,,,,5,1,,,
+179512391,distribution,MAU,Maui,,,,0,0,,,
+179512392,distribution,SW,Statewide,,,,3,1,,,
+179512393,distribution,MANE,Manoa Evening,,,,4,1,,,
+179512394,distribution,NW,Nationwide,,,,2,1,,,
+179512395,admission_action,1,Admitted,,admissible,,3,1,,"--- {}
+",
+179580035,admission_action,2,Cond. Admitted,,admissible,,2,1,,"--- {}
+",
+179580036,admission_action,3,Denied,,,,1,1,,,
+179580037,admission_action,4,Withdrew,,,,0,1,,,
+179580038,admission_action,5,Withdrew,,,,0,0,,,
+179580039,admission_action,6,Incomplete,,,,0,0,,,
+179580040,graduation_action,1,Approved,,,,4,1,,"--- {}
+
+",
+179580041,graduation_action,3,Denied,,,,2,1,,,
+179580042,graduation_action,4,Canceled,,,,1,1,,,
+179580043,degree,BED,Bachelor of Education,Bachelor's,,,0,1,,,
+179580044,degree,BS,Bachelor of Science,Bachelor's,,,0,1,,,
+179647684,degree,GCERT,Graduate Certificate,Certificate,,,0,1,,,
+179647685,degree,MED,Master of Education,Master's,,,0,1,,,
+179647686,degree,MEDT,Master of Educ in Teaching,Master's,,,0,1,,,
+179647687,degree,MS,Master of Science,Master's,,,0,1,,,
+179647688,degree,PCERT,Post-Baccalaureate Cert,Certificate,,,0,1,,,
+179647689,degree,PD,Professional Diploma,Certificate,,,0,1,,,
+179647690,degree,PDE,Professional Diploma in Ed,Certificate,,,0,1,,,
+179647691,degree,PHD,Doctor of Philosophy,Doctoral,,,0,1,,,
+179647692,degree,SPND,Special Non-Degree,Non-Degree,,,0,0,,,
+179647693,ethnicity,AA,African American or Black,,,,0,1,,,
+179715333,ethnicity,AI,American Indian/Alaskan Native,,,,0,1,,,
+179715334,ethnicity,CA,Caucasian or White,,,,0,1,,,
+179715335,ethnicity,CH,Chinese,,,,0,1,,,
+179715336,ethnicity,FI,Filipino,,,,0,1,,,
+179715337,ethnicity,GC,Guamanian or Chamorro,,,,0,1,,,
+179715338,ethnicity,HS,Hispanic,,,,0,1,,,
+179715339,ethnicity,HW,Native Hawaiian/Part-Hawaiian,,,,0,1,,,
+179715340,ethnicity,IN,Asian Indian,,,,0,1,,,
+179715341,ethnicity,JP,Japanese,,,,0,1,,,
+179715342,ethnicity,KO,Korean,,,,0,1,,,
+179782982,ethnicity,LA,Laotian,,,,0,1,,,
+179782983,ethnicity,MA,Mixed Asian,,,,0,1,,,
+179782984,ethnicity,MC,Micronesian (except Guamanian or Chamorro),,,,0,1,,,
+179782985,ethnicity,MP,Mixed Pacific Islander,,,,0,1,,,
+179782986,ethnicity,MX,Mixed Race (two or more races),,,,0,1,,,
+179782987,ethnicity,NA,No Answer,,,,0,1,,,
+179782988,ethnicity,OA,Other Asian,,,,0,1,,,
+179782989,ethnicity,OP,Other Pacific Islander,,,,0,1,,,
+179782990,ethnicity,SA,Samoan,,,,0,1,,,
+179782991,ethnicity,TH,Thai,,,,0,1,,,
+179850631,ethnicity,TO,Tongan,,,,0,1,,,
+179850632,ethnicity,VI,Vietnamese,,,,0,1,,,
+179850633,institute,HAW,Hawaii CC,,,,0,1,,,
+179850634,institute,HIL,UH Hilo,,,,0,1,,,
+179850635,institute,HON,Honolulu CC,,,,0,1,,,
+179850636,institute,KAP,Kapiolani CC,,,,0,1,,,
+179850637,institute,KAU,Kauai CC,,,,0,1,,,
+179850638,institute,LEE,Leeward CC,,,,0,1,,,
+179850639,institute,MAN,Inter-Manoa,,,,0,1,,,
+179850640,institute,MAU,Maui CC,,,,0,1,,,
+179918280,institute,OTR1,Other (Hawaii),,,,0,1,,,
+179918281,institute,OTR2,Other (Mainland),,,,0,1,,,
+179918282,institute,OTR3,Other (Foreign),,,,0,1,,,
+179918283,institute,WHO,UH West Oahu,,,,0,1,,,
+179918284,institute,WIN,Windward CC,,,,0,1,,,
+179918285,level,FR,Freshman,,,,0,1,,,
+179918286,level,GR,Graduate,,,,0,1,,,
+179918287,level,JR,Junior,,,,0,1,,,
+179918288,level,SO,Sophomore,,,,0,1,,,
+179918289,level,SR,Senior,,,,0,1,,,
+179985929,location,American Samoa,American Samoa,,,,0,1,,,
+179985930,location,Big Island,Big Island,,,,0,1,,,
+179985931,location,International,International,,,,0,0,,"--- {}
+",
+179985932,location,Kauai,Kauai,,,,0,1,,,
+179985933,location,Lanai,Lanai,,,,0,1,,,
+179985934,location,Mainland,Continental U.S. & Alaska,,,,0,0,,"--- {}
+",
+179985935,location,Maui,Maui,,,,0,1,,,
+179985936,location,Molokai,Molokai,,,,0,1,,,
+179985937,location,Oahu,Oahu,,,,0,1,,,
+179985938,location,Other,Other,,,,0,1,,"--- {}
+",
+187896765,major,DDS,Disability & Diversity Studies,,,,0,1,DDS,,
+187896766,major,ECED,Early Childhood Education,,,NA,0,1,EDCS,"--- {}
+
+",
+187896767,major,EDCG,Counseling and Guidance,,,,0,0,,,
+187896768,major,EDCS,Curriculum Studies,,,NA,0,1,EDCS,,
+187896769,major,EDEA,Educational Administration,,,NA,0,1,"EDEA, PHD",,
+187896770,major,EDEF,Educational Foundations,,,NA,0,1,"EDEF, PHD",,
+187896771,major,EDEL,Elementary Education,,EDEL,(BED|MEDT)/(EDEL|TCH)/(MAN|SW|AS)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+187896772,major,EDEP,Educational Psychology,,,NA,0,1,EDEP,,
+187896773,major,EDSE,Secondary Education,,,,0,1,"OSAS, ITE","--- {}
+
+",
+187896774,major,EDTC,Educational Technology,,,NA,0,1,"EDTC, PHD",,
+187964414,major,EDUC,Education,,,NA,0,1,PHD,,
+187964415,major,1,1,,,,0,0,,,
+187964416,major,EDCI,Curriculum and Instruction,,,,0,1,"EDCS, PHD",,
+187964417,major,EDPS,Educational Foundations - Policy Studies,,,NA,0,1,"EDEF, PHD",,
+187964418,major,EE01,"Elementary Ed, Anthropology",,EDEL,,0,0,,,
+187964419,major,EE02,"Elementary Ed, Art",,EDEL,,0,0,,,
+187964420,major,EE03,"Elementary Ed, Fam Resources",,EDEL,,0,0,,,
+187964421,major,EE04,"Elementary Ed, Dance",,EDEL,,0,0,,,
+187964422,major,EE06,"Elementary Ed, Language Arts",,EDEL,,0,0,,,
+187964423,major,EE07,"Elementary Ed, Mathematics",,EDEL,,0,0,,,
+188032063,major,EE08,"Elem Edu, English as Sec Lang",,EDEL,,0,0,,,
+188032064,major,EE10,"Elementary Ed, Music",,EDEL,,0,0,,,
+188032065,major,EE12,"Elementary Ed, Hawn Studies",,EDEL,,0,0,,,
+188032066,major,EE13,"Elementary Ed, Physical Educ",,EDEL,,0,0,,,
+188032067,major,EE14,"Elementary Ed, Political Sci",,EDEL,,0,0,,,
+188032068,major,EE15,"Elementary Ed, Psychology",,EDEL,,0,0,,,
+188032069,major,EE16,"Elem Educ, Hawn & Foreign Lang",,EDEL,,0,0,,,
+188032070,major,EE17,"Elementary Ed, Science",,EDEL,,0,0,,,
+188032071,major,EE19,"Elementary Ed, Sociology",,EDEL,,0,0,,,
+188032072,major,EE21,"Elementary Ed, Special Educ",,EDEL,,0,0,,,
+188099712,major,EE22,"Elementary Ed, Speech",,EDEL,,0,0,,,
+188099713,major,EE24,"Elementary Ed, Early Child",,EDEL,(BED)/(EDEL)/(MAN|AS)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188099714,major,EE25,"Elementary Ed, Economics",,EDEL,,0,0,,,
+188099715,major,EE26,"Elementary Ed, Geography",,EDEL,,0,0,,,
+188099716,major,EE27,"Elementary Ed, History",,EDEL,,0,0,,,
+188099717,major,EESP,Elementary Ed & Special  Educ,,EDEL,(BED)/(EDEL)/(MAN)/(L|N|P),0,1,"OSAS, ITE, SPED","--- {}
+
+",
+188099718,major,KLS,Kinesiology & Leisure Science,,,,0,0,"OSAS, KRS",,
+188099719,major,KLS1,"KLS, Hlth/Exer Sci & Lifest Mg",,,,0,0,"OSAS, KRS","--- {}
+
+",
+188099720,major,KLS2,"KLS, Physical Education",,,,0,0,"OSAS, KRS","--- {}
+
+",
+188099721,major,KLS3,"KLS, Athletic Training",,,,0,0,"OSAS, KRS",,
+188167361,major,KLS4,"KLS, Recreation/Leisure Scienc",,,,0,0,"OSAS, KRS",,
+188167362,major,KLS5,"KLS, Health/Exercise Science",,,,0,0,"OSAS, KRS",,
+188167363,major,SE01,"Secondary Ed, American Stud",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167364,major,SE02,"Secondary Ed, Anthropology",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167365,major,SE03,"Secondary Ed, Art",Art,EDSE,(PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167366,major,SE04,"Secondary Ed, Biological Sci",Sciences,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167367,major,SE05,"Secondary Ed, Bus & Office",Vocational Studies,EDSE,(BED|PCERT|MEDT)/(EDSE|TCH)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167368,major,SE06,"Secondary Ed, Chemistry",Sciences,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167369,major,SE07,"Secondary Ed, Chinese",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188167370,major,SE08,"Secondary Ed, CC Trade & Ind",Vocational Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,0,"OSAS, ITE","--- {}
+
+",
+188235010,major,SE09,"Secondary Ed, Marketing",Vocational Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,0,"OSAS, ITE","--- {}
+
+",
+188235011,major,SE10,"Secondary Ed, Drama & Theatre",Drama & Theatre,EDSE,(PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235012,major,SE11,"Secondary Ed, Earth Science",Sciences,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235013,major,SE12,"Secondary Ed, Economics",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235014,major,SE13,"Secondary Ed, Eng Lang Teach",English as Second Language,EDSE,(PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235015,major,SE14,"Secondary Ed, English",English,EDSE,(BED|PCERT|MEDT)/(EDSE|TCH)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235016,major,SE15,"Secondary Ed, French",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235017,major,SE16,"Secondary Ed, General Science",Sciences,EDSE,(BED|PCERT|MEDT)/(EDSE|TCH)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235018,major,SE17,"Secondary Ed, Geography",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188235019,major,SE18,"Secondary Ed, German",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302659,major,SE20,"Secondary Ed, Hawaiian",Languages,EDSE,(BED|PCERT|MEDT)/(EDSE|TCH)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302660,major,SE21,"Secondary Ed, Hawn Studies",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302661,major,SE23,"Secondary Ed, HS Trade & Ind",Vocational Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,0,"OSAS, ITE","--- {}
+
+",
+188302662,major,SE24,"Secondary Ed, History",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302663,major,SE25,"Secondary Ed, Industrial Arts",Vocational Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,0,"OSAS, ITE","--- {}
+
+",
+188302664,major,SE26,"Secondary Ed, Japanese",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302665,major,SE27,"Secondary Ed, Latin",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302666,major,SE28,"Secondary Ed, Mathematics",Mathematics,EDSE,(BED|PCERT|MEDT)/(EDSE|TCH)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302667,major,SE29,"Secondary Ed, Music",Music,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188302668,major,SE30,"Secondary Ed, Philippine Lang",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370308,major,SE31,"Secondary Ed, Physical Educ",Health and Physical Educ.,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370309,major,SE32,"Secondary Ed, Physical Sci",Sciences,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370310,major,SE33,"Secondary Ed, Physics",Sciences,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370311,major,SE34,"Secondary Ed, Political Sci",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370312,major,SE35,"Secondary Ed, Psychology",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370313,major,SE36,"Secondary Ed, Russian",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370314,major,SE37,"Secondary Ed, Social Studies",Social Studies,EDSE,(MEDT)/(TCH)/(MAN)/(L|R|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370315,major,SE38,"Secondary Ed, Sociology",Social Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370316,major,SE39,"Secondary Ed, Spanish",Languages,EDSE,(BED|PCERT)/(EDSE)/(MAN)/(L|N|P),0,1,"OSAS, ITE","--- {}
+
+",
+188370317,major,SE41,"Secondary Ed, Vocational Ag",Vocational Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,0,"OSAS, ITE","--- {}
+
+",
+188437957,major,SE42,"Secondary Ed, Vocational HEC",Vocational Studies,EDSE,(BED|PCERT)/(EDSE)/(MAN|SW)/(L|N|P),0,0,"OSAS, ITE","--- {}
+
+",
+188437958,major,SE90,"Sec Ed, Trades & Industries",,EDSE,,0,0,,,
+188437959,major,SE91,"Sec Ed, Physical Science",,EDSE,,0,0,,,
+188437960,major,SE92,"Sec Ed, Distibutive Ed",,EDSE,,0,0,,,
+188437961,major,SE93,"Sec Ed, Commercial",,EDSE,,0,0,,,
+188437962,major,SE94,"Sec Ed, Health & Phys Ed",,EDSE,,0,0,,,
+188437963,major,SE95,"Sec Ed, Pacific Area Studies",,EDSE,,0,0,,,
+188437964,major,SE96,"Sec Ed, Speech Communication",,EDSE,,0,0,,,
+188437965,major,SE97,"Sec Ed, Teach Eng as Sec Lang",,EDSE,,0,0,,,
+188437966,major,SPED,Special Education,,SPED,NA,0,1,"OSAS, SPED, PHD","--- {}
+
+",
+188505606,major,SP01,Special Education Mild/Moderate,,SPED,(PCERT)/(SPED)/(MAN|SW)/(L|N),0,1,"OSAS, SPED",,
+188505607,major,SP03,Special Education Severe/Autism,,SPED,(PCERT)/(SPED)/(MAN|SW)/(L|N),0,1,"OSAS, SPED","--- {}
+
+",
+188505608,major,TCH,Teaching,,,,0,1,"OSAS, ITE","--- {}
+
+",
+188505609,major,XHLI,Hawaiian Language Immersion,,,NA,0,1,"OSAS, ITE","--- {}
+
+",
+188505610,major,NHIE,Native Hawaiian & Indigenous Education,,,,0,1,"OSAS, ITE","--- {}
+
+",
+188505611,program,DDS-GCERT,Disability & Diversity Studies-GCERT,Advanced Program,,,0,1,DDS,,
+188505612,program,ECED-MED,Early Childhood Education-MEd,Advanced Program,,,0,1,EDCS,"--- {}
+
+",
+188505613,program,EDCG-MED,Counseling & Guidance-MEd,Advanced Program,,,0,0,EDCG,,
+188505614,program,EDCG-SPND,Counseling & Guidance-SPND,Advanced Program,,,0,0,EDCG,,
+188505615,program,EDCS-MED,Curriculum Studies-MEd,Advanced Program,,,0,1,EDCS,,
+196416442,program,EDEA-MED,Educational Administration-MEd,Advanced Program,,,0,1,EDEA,,
+196416443,program,EDEF-MED,Educational Foundations-MEd,Advanced Program,,,0,1,EDEF,,
+196416444,program,EDEL-BED,Elementary Education-BEd,Initial Teacher Licensure Program,,,0,1,"OSAS, ITE","--- {}
+
+",
+196416445,program,EDEL-MED,Elementary Education-MEd,Advanced Program,,,0,0,ITE,"--- {}
+
+",
+196416446,program,EDEP-MED,Educational Psychology-MEd,Advanced Program,,,0,1,EDEP,,
+196416447,program,EDEP-PHD,Educational Psychology-PhD,Advanced Program,,,0,1,EDEP,,
+196416448,program,EDSE-BED,Secondary Education-BEd,Initial Teacher Licensure Program,,,0,1,"OSAS, ITE","--- {}
+
+",
+196416449,program,EDSE-MED,Secondary Education-MEd,Advanced Program,,,0,0,ITE,"--- {}
+
+",
+196416450,program,EDSE-PCERT,Secondary Education-PCERT,Initial Teacher Licensure Program,,,0,1,"OSAS, ITE","--- {}
+
+",
+196416451,program,EDTC-MED,Educational Technology-MEd,Advanced Program,,,0,1,EDTC,,
+196484091,program,EDUC-PHD,Education-PhD,Advanced Program,,,0,1,"EDCS, EDEF, EDEA, EDTC, KRS, SPED, PHD",,
+196484092,program,EESP-BED,Elem Educ-Elem & Spec Ed-BEd,Initial Teacher Licensure Program,,,0,1,"OSAS, ITE, SPED","--- {}
+
+",
+196484093,program,KLS-BS,Kinesiology & Leisure Sci-BS,Advanced Program,,,0,0,"OSAS, KLS","--- {}
+
+",
+196484094,program,KLS-MS,Kinesiology & Leisure Sci-MS,Advanced Program,,,0,0,KLS,"--- {}
+
+",
+196484095,program,PD,Professional Diploma,Advanced Program,,,0,0,OSAS,,
+196484096,program,PDE,Professional Diploma in Ed,Advanced Program,,,0,1,OSAS,,
+196484097,program,SPED-MED,Special Education-MEd,Advanced Program,,,0,1,SPED,,
+196484098,program,SPED-PCERT,Special Education-PCERT,Initial Teacher Licensure Program,,,0,1,"OSAS, SPED",,
+196484099,program,TCH-MEDT,Master of Educ in Teaching,Initial Teacher Licensure Program,,,0,1,"OSAS, ITE","--- {}
+
+",
+196484100,scholarship_status,C,App Complete,,,,0,1,,,
+196551740,scholarship_status,R,Waiting for Rec Letter,,,,0,1,,,
+196551741,scholarship_status,L,Letter Sent,,,,0,1,,,
+196551742,grade,0,K,,,,13,1,,,
+196551743,grade,1,1,,,,12,1,,,
+196551744,grade,2,2,,,,11,1,,,
+196551745,grade,3,3,,,,10,1,,,
+196551746,grade,4,4,,,,9,1,,,
+196551747,grade,5,5,,,,8,1,,,
+196551748,grade,6,6,,,,7,1,,,
+196551749,grade,7,7,,,,6,1,,,
+196619389,grade,8,8,,,,5,1,,,
+196619390,grade,9,9,,,,4,1,,,
+196619391,grade,10,10,,,,3,1,,,
+196619392,grade,11,11,,,,2,1,,,
+196619393,grade,12,12,,,,1,1,,,
+196619394,grade,99,N/A,,,,0,1,,,
+196619395,district,Honolulu,Honolulu,,,,0,1,,,
+196619396,district,Central,Central,,,,0,1,,,
+196619397,district,Leeward,Leeward,,,,0,1,,,
+196619398,district,Windward,Windward,,,,0,1,,,
+196687038,district,Hawaii,Hawaii,,,,0,1,,,
+196687039,district,Maui,Maui,,,,0,1,,,
+196687040,district,Kauai,Kauai,,,,0,1,,,
+196687041,district,State,State,,,,0,1,,,
+196687042,area,Kaiser,Kaiser,,,,0,1,,,
+196687043,area,Kaimuki,Kaimuki,,,,0,1,,,
+196687044,area,Roosevelt,Roosevelt,,,,0,1,,,
+196687045,area,McKinley,McKinley,,,,0,1,,,
+196687046,area,Farrington,Farrington,,,,0,1,,,
+196687047,area,Kalani,Kalani,,,,0,1,,,
+196754687,area,Aiea,Aiea,,,,0,1,,,
+196754688,area,Radford,Radford,,,,0,1,,,
+196754689,area,Waialua,Waialua,,,,0,1,,,
+196754690,area,Leilehua,Leilehua,,,,0,1,,,
+196754691,area,Mililani,Mililani,,,,0,1,,,
+196754692,area,Moanalua,Moanalua,,,,0,1,,,
+196754693,area,Waipahu,Waipahu,,,,0,1,,,
+196754694,area,Kapolei,Kapolei,,,,0,1,,,
+196754695,area,Campbell,Campbell,,,,0,1,,,
+196754696,area,Pearl City,Pearl City,,,,0,1,,,
+196822336,area,Waianae,Waianae,,,,0,1,,,
+196822337,area,Nanakuli,Nanakuli,,,,0,1,,,
+196822338,area,Kalaheo,Kalaheo,,,,0,1,,,
+196822339,area,Castle,Castle,,,,0,1,,,
+196822340,area,Kailua,Kailua,,,,0,1,,,
+196822341,area,Kahuku,Kahuku,,,,0,1,,,
+196822342,area,Hilo,Hilo,,,,0,1,,,
+196822343,area,Keaau,Keaau,,,,0,1,,,
+196822344,area,Kealakehe,Kealakehe,,,,0,1,,,
+196822345,area,Konawaena,Konawaena,,,,0,1,,,
+196889985,area,Honokaa,Honokaa,,,,0,1,,,
+196889986,area,Kohala,Kohala,,,,0,1,,,
+196889987,area,Kau,Kau,,,,0,1,,,
+196889988,area,Laupahoehoe,Laupahoehoe,,,,0,1,,,
+196889989,area,Pahoa,Pahoa,,,,0,1,,,
+196889990,area,Waiakea,Waiakea,,,,0,1,,,
+196889991,area,Baldwin,Baldwin,,,,0,1,,,
+196889992,area,Kekaulike,Kekaulike,,,,0,1,,,
+196889993,area,Hana,Hana,,,,0,1,,,
+196889994,area,Maui,Maui,,,,0,1,,,
+196957634,area,Lahainaluna,Lahainaluna,,,,0,1,,,
+196957635,area,Molokai,Molokai,,,,0,1,,,
+196957636,area,Lanai,Lanai,,,,0,1,,,
+196957637,area,Kapaa,Kapaa,,,,0,1,,,
+196957638,area,Kauai,Kauai,,,,0,1,,,
+196957639,area,Waimea,Waimea,,,,0,1,,,
+196957640,area,Community School,Community School,,,,0,1,,,
+196957641,area,Special School,Special School,,,,0,1,,,
+196957642,area,Special Education Services Branch,Special Education Services Branch,,,,0,1,,,
+196957643,area_group,Farrington-Kaiser-Kalani,Farrington-Kaiser-Kalani,,,,0,1,,,
+197025283,area_group,Kaimuki-McKinley-Roosevelt,Kaimuki-McKinley-Roosevelt,,,,0,1,,,
+197025284,area_group,Aiea-Moanalua-Radford,Aiea-Moanalua-Radford,,,,0,1,,,
+197025285,area_group,Leilehua-Mililani-Waialua,Leilehua-Mililani-Waialua,,,,0,1,,,
+197025286,area_group,Pearl City-Waipahu,Pearl City-Waipahu,,,,0,1,,,
+197025287,area_group,Campbell-Kapolei,Campbell-Kapolei,,,,0,1,,,
+197025288,area_group,Nanakuli-Waianae,Nanakuli-Waianae,,,,0,1,,,
+197025289,area_group,Kailua-Kalaheo,Kailua-Kalaheo,,,,0,1,,,
+197025290,area_group,Castle-Kahuku,Castle-Kahuku,,,,0,1,,,
+197025291,area_group,Hilo-Laupahoehoe-Waiakea,Hilo-Laupahoehoe-Waiakea,,,,0,1,,,
+197025292,area_group,Kau-Keaau-Pahoa,Kau-Keaau-Pahoa,,,,0,1,,,
+204936119,area_group,"Honokaa-Kealakehe-Kohala-Konawaena (""Hawaii-West"")",Honokaa-Kealakehe-Kohala-Konawaena,,,,0,1,,,
+204936120,area_group,Baldwin-Kekaulike-Maui,Baldwin-Kekaulike-Maui,,,,0,1,,,
+204936121,area_group,Hana-Lahainaluna-Lanai-Molokai,Hana-Lahainaluna-Lanai-Molokai,,,,0,1,,,
+204936122,area_group,Kapaa-Kauai-Waimea,Kapaa-Kauai-Waimea,,,,0,1,,,
+204936123,area_group,Special Schools,Special Schools,,,,0,1,,,
+204936124,school_affiliation,ITE Supervisor,ITE Supervisor,,,,0,1,,,
+204936125,school_affiliation,School Contact,School Contact,,,,0,1,,,
+204936126,school_affiliation,Mentor Teacher,Mentor Teacher,,,,0,1,,,
+204936127,subject,EDUC,EDUC,,,,0,1,EDEF,,
+204936128,subject,EDCS,EDCS,,,,0,1,EDCS,,
+205003768,subject,EDEA,EDEA,,,,0,1,EDEA,,
+205003769,subject,EDEF,EDEF,,,,0,1,EDEF,,
+205003770,subject,ITE,ITE,,,,0,1,ITE,"--- {}
+
+",
+205003771,subject,KRS,KRS,,,,0,1,KRS,,
+205003772,subject,DIS,DIS,,,,0,1,DIS,,
+205003773,subject,EDSE,EDSE,,,,0,0,ITE,"--- {}
+
+",
+205003774,subject,EDEP,EDEP,,,,0,1,EDEP,,
+205003775,subject,EDEE,EDEE,,,,0,0,ITE,"--- {}
+
+",
+205003776,subject,ETEC,ETEC,,,,0,1,ETEC,,
+205003777,subject,SPED,SPED,,,,0,1,SPED,,
+205071417,subject,EDCG,EDCG,,,,0,1,KRS,,
+1229120315,academic_period,200010,Fall 1999,,,,10,1,,,
+1229120316,academic_period,200030,Spring 2000,,,,11,1,,,
+1229120317,academic_period,200040,Summer 2000,,,,12,1,,,
+1229120318,academic_period,200110,Fall 2000,,,,13,1,,,
+1229120319,academic_period,200130,Spring 2001,,,,14,1,,,
+1229120320,academic_period,200140,Summer 2001,,,,15,1,,,
+1229120321,academic_period,200210,Fall 2001,,,,16,1,,,
+1229120322,academic_period,200230,Spring 2002,,,,17,1,,,
+1229120323,academic_period,200240,Summer 2002,,,,18,1,,,
+1229120324,academic_period,200310,Fall 2002,,,,19,1,,,
+1229187964,academic_period,200330,Spring 2003,,,,20,1,,,
+1229187965,academic_period,200340,Summer 2003,,,,21,1,,,
+1229187966,academic_period,200410,Fall 2003,,,,22,1,,,
+1229187967,academic_period,200430,Spring 2004,,,,23,1,,,
+1229187968,academic_period,200440,Summer 2004,,,,24,1,,,
+1229187969,academic_period,200510,Fall 2004,,,,25,1,,,
+1229187970,academic_period,200530,Spring 2005,,,,26,1,,,
+1229187971,academic_period,200540,Summer 2005,,,,27,1,,,
+1229187972,academic_period,200610,Fall 2005,,,,28,1,,,
+1229187973,academic_period,200630,Spring 2006,,,,29,1,,,
+1229255613,academic_period,200640,Summer 2006,,,,30,1,,,
+1229255614,academic_period,200710,Fall 2006,,,,31,1,,,
+1229255615,academic_period,200730,Spring 2007,,,,32,1,,,
+1229255616,academic_period,200740,Summer 2007,,,,33,1,,,
+1229255617,academic_period,200810,Fall 2007,,,,34,1,,,
+1229255618,academic_period,200830,Spring 2008,,,,35,1,,,
+1229255619,academic_period,200840,Summer 2008,,,,36,1,,,
+1229255620,academic_period,200910,Fall 2008,,,,37,1,,,
+1229255621,academic_period,200930,Spring 2009,,,,38,1,,,
+1229255622,academic_period,200940,Summer 2009,,,,39,1,,,
+1229323262,academic_period,201010,Fall 2009,,,,40,1,,,
+1229323263,academic_period,201030,Spring 2010,,,,41,1,,,
+1229323264,academic_period,201040,Summer 2010,,,,42,1,,,
+1229323265,academic_period,201110,Fall 2010,,,,43,1,,,
+1229323266,academic_period,201130,Spring 2011,,,,44,1,,,
+1229323267,academic_period,201140,Summer 2011,,,,45,1,,,
+1229323268,admission_priority,R,Regular,,,,0,0,,,
+1229323269,admission_priority,P,Priority,,,,0,1,,,
+1229323270,admission_priority,L,Late,,,,0,1,,,
+1229323271,admission_status,A,RSVP Accept,,,,0,0,,,
+1229390911,admission_status,C,Rdy for Review,,,,6,1,,,
+1229390912,admission_status,E,Rdy for Review (IC),,,,5,1,,,
+1229390913,admission_status,P,Review in progress,,,,4,1,,,
+1229390914,admission_status,D,RSVP Decline,,,,0,0,,,
+1229390915,admission_status,I,AP Incomplete,,,,7,1,,,
+1229390916,admission_status,L,Letter Sent,,,,2,1,,,
+1229390917,admission_status,R,RSVP Complete,,,,1,1,,,
+1229390918,admission_status,W,Self Withdrew,,,,0,0,,,
+1229390919,admission_status,G,Action Complete,,,,3,1,,,
+1229390920,form_admission_status,C,Application complete,We have received all required documents.  Your application will be reviewed shortly.,,,0,1,,,
+1229458560,form_admission_status,E,Waiting for documents,We are still waiting for missing documents.  Please check the instruction and send required documents as soon as possible.,,,0,1,,,
+1229458561,form_admission_status,P,Application being reviewed,We are reviewing your application.,,,0,1,,,
+1229458562,form_admission_status,I,Waiting for documents,We are still waiting for missing documents.  Please check the instruction and send required documents as soon as possible.,,,0,1,,,
+1229458563,form_admission_status,L,Letter Sent,We have processed your application. You will receive a notice shortly.,,,0,1,,,
+1229458564,form_admission_status,R,RSVP Received,We have received your RSVP notice.,,,0,1,,,
+1229458565,form_admission_status,G,Application complete,We have received all required documents.  Your application will be reviewed shortly.,,,0,1,,,
+1229458566,advising_action,Answered Question,Answered Question,,,,0,1,,,
+1229458567,advising_action,Forwarded to:,Forwarded to:,,,,0,1,,,
+1229458568,advising_action,Inquiry to:,Inquiry to:,,,,0,1,,,
+1229458569,advising_action,Left Message,Left Message,,,,0,1,,,
+1229526208,advising_action,Other,Other,,,,0,1,,,
+1229526210,advising_classification,Prospective Student,Prospective Student,,,,1,0,,,
+1229526211,advising_classification,Current Student,Current Student,,,,2,0,,,
+1229526212,advising_classification,UH Personnel,UH Personnel,,,,3,0,,,
+1229526213,advising_classification,External Personnel,External Personnel,,,,4,0,,,
+1229526214,advising_classification,UHM COE,UHM COE,,,,0,0,,,
+1229526215,advising_classification,UHM Pre-Ed,UHM Pre-Ed,,,,0,0,,,
+1229526216,advising_classification,HCC,Honolulu CC,,,,0,1,,,
+1229526217,advising_classification,LCC,Leeward CC,,,,0,1,,,
+1229526218,advising_classification,KCC,Kapiolani CC,,,,0,1,,,
+1229593857,advising_classification,MCC,Maui CC,,,,0,1,,,
+1229593858,advising_classification,WCC,Windward CC,,,,0,1,,,
+1229593860,advising_classification,UH Hilo,UH Hilo,,,,0,1,,,
+1229593861,advising_classification,UH West Oahu,UH West Oahu,,,,0,1,,,
+1229593862,advising_classification,Other,Other,,,,0,1,,,
+1229593863,advising_interest,American Samoa,American Samoa,,,,0,1,,,
+1229593864,advising_interest,B.Ed. Elementary Statewide,B.Ed. Elementary Statewide,,,,9,1,,,
+1229593865,advising_interest,B.Ed. Elementary/ECE,B.Ed. Elementary/ECE,,,,8,1,,,
+1229593866,advising_interest,B.Ed. Elementary/SPED,B.Ed. Elementary/SPED,,,,7,1,,,
+1229593867,advising_interest,B.Ed. Secondary Ed,B.Ed. Secondary Ed,,,,6,1,,,
+1229661506,advising_interest,B.S. KLS,B.S. KRS,,,,4,1,,"--- {}
+",
+1229661507,advising_interest,Graduate Programs,Other COE Graduate Programs,,,,0,1,,,
+1229661508,advising_interest,Other,Other,,,,0,1,,,
+1229661510,advising_interest,PBCSE,PBCSE,,,,0,1,,,
+1229661511,advising_interest,PBCSE Statewide,PBCSE Statewide,,,,0,1,,,
+1229661512,advising_interest,PBSPED,PBSPED,,,,0,1,,,
+1229661513,advising_interest,PBSPED Statewide,PBSPED Statewide,,,,0,1,,,
+1229661514,advising_task,Admissions,Admissions,,,,0,1,,,
+1229661515,advising_task,Admissions - Current Students,Admissions - Current Students,,,,0,0,,,
+1229661516,advising_task,Admissions - New COE Students,Admissions - New COE Students,,,,0,0,,,
+2024241164,academic_period,199710,Fall 1996,,,,1,1,,,
+2024241165,academic_period,199730,Spring 1997,,,,2,1,,,
+2024241166,academic_period,199740,Summer 1997,,,,3,1,,,
+2024241167,academic_period,199810,Fall 1997,,,,4,1,,,
+2024241168,academic_period,199830,Spring 1998,,,,5,1,,,
+2024241169,academic_period,199840,Summer 1998,,,,6,1,,,
+2024241170,academic_period,199910,Fall 1998,,,,7,1,,,
+2024241171,academic_period,199930,Spring 1999,,,,8,1,,,
+2024241172,academic_period,199940,Summer 1999,,,,9,1,,,
+2024241173,academic_period,0,Not assigned,,,,,1,,"--- {}
+
+",
+2024241174,assessment_rating,2,Target,,,,,1,,,
+2024241175,assessment_rating,1,Acceptable,,,,,1,,,
+2024241176,assessment_rating,0,Unacceptable,,,,,1,,,
+2024241177,assessment_rating,N,No evidence,,,,,1,,,
+2024241178,advising_classification,KAW,Kauai CC,,,,,1,,,
+2024241179,program,KRS-MS,Kinesiology & Rehab Science-MS,Advanced Program,,,0,1,KRS,,
+2024241180,program,KRS-BS,"KRS,Hlth/ExerSc & Lifest Mg-BS",Advanced Program,,,0,1,"OSAS, KRS",,
+2024241181,major,KRS,Kinesiology & Rehab Science,,KRS,NA,0,1,"KRS, PHD",,
+2024241182,major,KRS1,"KRS, Hlth/Exer Sci & Lifest Mg",,KRS,(BS)/(KRS1)/(MAN)/(N),0,1,"OSAS, KRS",,
+2024241183,major,KRS2,"KRS, Physical Education",,KRS,,0,1,"OSAS, KRS",,
+2024241184,major,KRS3,"KRS, Athletic Training",,KRS,,0,0,"OSAS, KRS",,
+2024241185,major,KRS4,"KRS, Recreation/Leisure Sci",,KRS,,0,0,"OSAS, KRS",,
+2024241186,graduation_status,PO,PG - OK,,,,,1,,,
+2024241187,graduation_status,PH,PG - Hold,,,,,1,,,
+2024241188,graduation_status,PN,PG - No,,,,,1,,,
+2024241189,advising_classification,HAW,Hawaii CC,,,,,1,,,
+2024241190,advising_type,skype,Skype,,,,0,1,,,
+2024241191,advising_interest,M.Ed.T.,M.Ed.T.,,,,0,1,,,
+2024241192,recommendation_action,1,Approved,,,,,1,,,
+2024241193,recommendation_action,3,Denied,,,,,1,,,
+2024241194,recommendation_action,4,Canceled,,,,,1,,,
+2024241195,assessment_course,SPED390,SPED390,,,,,1,SPED,,
+2024241196,assessment_course,SPED490,SPED490,,,,,1,SPED,,
+2024241197,assessment_course,SPED491,SPED491,,,,,1,SPED,,
+2024241198,assessment_course,SPED627,SPED627,,,,,1,SPED,,
+2024241199,assessment_course,SPED628,SPED628,,,,,1,SPED,,
+2024241200,assessment_course,SPED425,SPED425,,,,,1,SPED,,
+2024241201,assessment_course,SPED461,SPED461,,,,,1,SPED,,
+2024241202,assessment_course,SPED485,SPED485,,,,,1,SPED,,
+2024241203,assessment_course,SPED500,SPED500,,,,,1,SPED,,
+2024241204,assessment_course,SPED699,SPED699,,,,,1,SPED,,
+2024241205,assessment_course,SPED600,SPED600,,,,,1,SPED,,
+2024241206,assessment_course,SPED603,SPED603,,,,,1,SPED,,
+2024241207,assessment_course,SPED605,SPED605,,,,,1,SPED,,
+2024241208,assessment_course,SPED611,SPED611,,,,,1,SPED,,
+2024241209,assessment_course,SPED614,SPED614,,,,,1,SPED,,
+2024241210,assessment_course,SPED621,SPED621,,,,,1,SPED,,
+2024241211,assessment_course,SPED632,SPED632,,,,,1,SPED,,
+2024241212,assessment_course,SPED642,SPED642,,,,,1,SPED,,
+2024241213,assessment_course,SPED444,SPED444,,,,,1,SPED,,
+2024241214,assessment_course,SPED445,SPED445,,,,,1,SPED,,
+2024241215,assessment_course,SPED404,SPED404,,,,,1,SPED,,
+2024241216,dept,SPED,SPED,,,,,1,,"--- {}
+",
+2024241217,assessment_course,SPED630,SPED630,,,,,1,SPED,,
+2024241218,academic_period,201210,Fall 2011,,,,46,1,,,
+2024241219,academic_period,201230,Spring 2012,,,,47,1,,,
+2024241220,academic_period,201240,Summer 2012,,,,48,1,,,
+2024241221,assessment_course,ETEC690,ETEC690,,,,,1,ETEC,,
+2024241222,assessment_course,ETEC600,ETEC600,,,,,1,ETEC,,
+2024241223,assessment_course,ETEC687,ETEC687,,,,,1,ETEC,,
+2024241224,assessment_course,ETEC603,ETEC603,,,,,1,ETEC,,
+2024241225,assessment_course,ETEC602,ETEC602,,,,,1,ETEC,,
+2024241226,enrollment_action,L,Leave of absence,,,,,1,,"--- {}
+
+",
+2024241227,enrollment_action,W,Withdrew from program,,,,,1,,"--- {}
+
+",
+2024241228,enrollment_action,C,Change of curriculum,,,,,1,,"--- {}
+
+",
+2024241229,assessment_course,ITE317,ITE317,,,,,1,ITE,"--- {}
+
+",
+2024241230,assessment_course,ITE390B,ITE390B,,,,,1,ITE,"--- {}
+
+",
+2024241231,assessment_course,ITE390C,ITE390C,,,,,1,ITE,"--- {}
+
+",
+2024241232,assessment_course,ITE390S,ITE390S,,,,,1,ITE,"--- {}
+
+",
+2024241233,assessment_course,ITE391B,ITE391B,,,,,1,ITE,"--- {}
+
+",
+2024241234,assessment_course,ITE391C,ITE391C,,,,,1,ITE,"--- {}
+
+",
+2024241235,assessment_course,ITE391S,ITE391S,,,,,1,ITE,"--- {}
+
+",
+2024241236,academic_period,1,To be deleted,,,,,1,,"--- {}
+
+",
+2024241237,assessment_course,EDEF660,EDEF660,,,,,1,EDEF,"--- {}
+
+",
+2024241238,assessment_course,EDEF610,EDEF610,,,,,1,EDEF,"--- {}
+
+",
+2024241239,assessment_course,EDEF630,EDEF630,,,,,1,EDEF,"--- {}
+
+",
+2024241240,assessment_course,EDEF683,EDEF683,,,,,1,EDEF,"--- {}
+
+",
+2024241241,assessment_course,EDEF651,EDEF651,,,,,1,EDEF,"--- {}
+
+",
+2024241242,assessment_course,EDEF652,EDEF652,,,,,1,EDEF,"--- {}
+
+",
+2024241243,assessment_course,EDEF669,EDEF669,,,,,1,EDEF,"--- {}
+
+",
+2024241244,assessment_course,EDEF671,EDEF671,,,,,1,EDEF,"--- {}
+
+",
+2024241245,assessment_course,SPED480,SPED480,,,,,1,SPED,"--- {}
+
+",
+2024241246,cc_program,LBRT-AA,AA in Liberal Arts from a UH System CC,,,,1,1,,"--- {}
+
+",
+2024241247,cc_program,ED-AA-KAP,	AA (Elementary Ed/Special Ed Dual Prep Track) from Kapiolani CC,,,,,1,,"--- {}
+
+",
+2024241248,cc_program,HSER-AS-MAU,AS in Human Services - Early Childhood Education from Maui College,,,,,1,,"--- {}
+
+",
+2024241249,cc_program,TCH-AA-LEE,	AA in Teaching from Leeward CC,,,,,1,,"--- {}
+
+",
+2024241250,assessment_course,FAMR491,FAMR491,,,,,1,EDCS,"--- {}
+
+",
+2024241251,assessment_course,EDCS667B,EDCS667B,,,,,1,EDCS,"--- {}
+
+",
+2024241252,assessment_course,SPED631,SPED631,,,,,1,"SPED, EDCS","--- {}
+
+",
+2024241253,assessment_course,SPED601,SPED601,,,,,1,SPED,"--- {}
+
+",
+2024241254,assessment_course,SPED602,SPED602,,,,,1,SPED,"--- {}
+
+",
+2024241255,assessment_course,EDCS622B,EDCS622B,,,,,1,EDCS,"--- {}
+
+",
+2024241256,assessment_course,EDCS622D,EDCS622D,,,,,1,EDCS,"--- {}
+
+",
+2024241257,assessment_course,EDCS622G,EDCS622G,,,,,1,EDCS,"--- {}
+
+",
+2024241258,assessment_course,EDCS640B,EDCS640B,,,,,1,EDCS,"--- {}
+
+",
+2024241259,assessment_course,EDCS640C,EDCS640C,,,,,1,EDCS,"--- {}
+
+",
+2024241260,assessment_course,EDCS640F,EDCS640F,,,,,1,EDCS,"--- {}
+
+",
+2024241261,assessment_course,EDCS640G,EDCS640G,,,,,1,EDCS,"--- {}
+
+",
+2024241262,assessment_course,EDCS640H,EDCS640H,,,,,1,EDCS,"--- {}
+
+",
+2024241263,assessment_course,EDCS640I,EDCS640I,,,,,1,EDCS,"--- {}
+
+",
+2024241264,assessment_course,EDCS640J,EDCS640J,,,,,1,EDCS,"--- {}
+
+",
+2024241265,assessment_course,EDCS640K,EDCS640K,,,,,1,EDCS,"--- {}
+
+",
+2024241266,assessment_course,EDCS640M,EDCS640M,,,,,1,EDCS,"--- {}
+
+",
+2024241267,assessment_course,EDCS640N,EDCS640N,,,,,1,EDCS,"--- {}
+
+",
+2024241268,assessment_course,EDCS640O,EDCS640O,,,,,1,EDCS,"--- {}
+
+",
+2024241269,assessment_course,EDCS624C,EDCS624C,,,,,1,EDCS,"--- {}
+
+",
+2024241270,assessment_course,EDCS626,EDCS626,,,,,1,EDCS,"--- {}
+
+",
+2024241271,assessment_course,EDCS632,EDCS632,,,,,1,EDCS,"--- {}
+
+",
+2024241272,assessment_course,EDCS601,EDCS601,,,,,1,EDCS,"--- {}
+
+",
+2024241273,assessment_course,EDCS638,EDCS638,,,,,1,EDCS,"--- {}
+
+",
+2024241274,assessment_course,EDCS667D,EDCS667D,,,,,1,EDCS,"--- {}
+
+",
+2024241275,assessment_course,EDCS618,EDCS618,,,,,1,EDCS,"--- {}
+
+",
+2024241276,assessment_course,KRS402,KRS402,,,,,1,KRS,"--- {}
+
+",
+2024241277,assessment_course,KRS405,KRS405,,,,,1,KRS,"--- {}
+
+",
+2024241278,assessment_course,KRS406,KRS406,,,,,1,KRS,"--- {}
+
+",
+2024241279,assessment_course,KRS181,KRS181,,,,,1,KRS,"--- {}
+
+",
+2024241280,assessment_course,KRS182,KRS182,,,,,1,KRS,"--- {}
+
+",
+2024241281,assessment_course,KRS474,KRS474,,,,,0,KRS,"--- {}
+
+",
+2024241282,assessment_course,KRS470,KRS470,,,,,1,KRS,"--- {}
+
+",
+2024241283,assessment_course,KRS372,KRS372,,,,,1,KRS,"--- {}
+
+",
+2024241284,assessment_course,EDCS667G,EDCS667G,,,,,1,EDCS,"--- {}
+
+",
+2024241285,exam_subject,10,Education in the Elementary School,,,,,1,,,
+2024241286,exam_subject,11,"Elementary Education: Curriculum, Instruction, and Assessment",,,,,1,,,
+2024241287,exam_subject,12,Elementary Education: Content Area Exercises,,,,,1,,,
+2024241288,exam_subject,13,Elementary Education: Content Essays,,,,,1,,,
+2024241289,exam_subject,14,Elementary Education: Content Knowledge,,,,,1,,,
+2024241290,exam_subject,16,"Elementary Education: Curriculum, Instruction, and Assessment",,,,,1,,,
+2024241291,exam_subject,20,Early Childhood Education,,,,,1,,,
+2024241292,exam_subject,21,Education of Young Children,,,,,1,,,
+2024241293,exam_subject,30,Biology and General Science,,,,,1,,,
+2024241294,exam_subject,40,English Language and Literature,,,,,1,,,
+2024241295,exam_subject,41,"English Language, Literature, and Composition: Content Knowledge",,,,,1,,,
+2024241296,exam_subject,42,"English Language, Literature, and Composition: Essays",,,,,1,,,
+2024241297,exam_subject,43,"English Language, Literature, and Composition: Pedagogy",,,,,1,,,
+2024241298,exam_subject,48,Teaching Foundations: English,,,,,1,,,
+2024241299,exam_subject,49,Middle School English Language Arts,,,,,1,,,
+2024241300,exam_subject,50,Technology Education,,,,,1,,,
+2024241301,exam_subject,60,Mathematics,,,,,1,,,
+2024241302,exam_subject,61,Mathematics: Content Knowledge,,,,,1,,,
+2024241303,exam_subject,63,"Mathematics: Proofs, Models, and Problems, Part 1",,,,,1,,,
+2024241304,exam_subject,64,"Mathematics: Proofs, Models, and Problems, Part 2",,,,,1,,,
+2024241305,exam_subject,65,Mathematics:  Pedagogy,,,,,1,,,
+2024241306,exam_subject,66,Middle School Mathematics: Content Knowledge  discontinued fall 2000,,,,,1,,,
+2024241307,exam_subject,67,General Mathematics,,,,,1,,,
+2024241308,exam_subject,68,Teaching Foundations: Mathematics,,,,,1,,,
+2024241309,exam_subject,69,Middle School Mathematics,,,,,1,,,
+2024241310,exam_subject,70,"Chemistry, Physics, and General Science",,,,,1,,,
+2024241311,exam_subject,80,Social Studies,,,,,1,,,
+2024241312,exam_subject,81,Social Studies:  Content Knowledge,,,,,1,,,
+2024241313,exam_subject,82,Social Studies:  Analytical Essays,,,,,1,,,
+2024241314,exam_subject,83,Social Studies:  Interpretation of Materials,,,,,1,,,
+2024241315,exam_subject,84,Social Studies:  Pedagogy,,,,,1,,,
+2024241316,exam_subject,85,Social Studies:  Interpretation and Analysis,,,,,1,,,
+2024241317,exam_subject,87,Citizenship Education: Content Knowledge,,,,,1,,,
+2024241318,exam_subject,88,Teaching Foundations: Social Science,,,,,1,,,
+2024241319,exam_subject,89,Middle School Social Studies,,,,,1,,,
+2024241320,exam_subject,90,Physical Education,,,,,1,,,
+2024241321,exam_subject,91,Physical Education:  Content Knowledge,,,,,1,,,
+2024241322,exam_subject,92,Physical Education: Movement Forms - Analysis and Design,,,,,1,,,
+2024241323,exam_subject,93,Physical Education: Movement Forms - Video Evaluation,,,,,1,,,
+2024241324,exam_subject,97,Athletic Trainer,,,,,1,,,
+2024241325,exam_subject,100,Business Education,,,,,1,,,
+2024241326,exam_subject,110,Music Education,,,,,1,,,
+2024241327,exam_subject,111,Music:  Concepts and Processes,,,,,1,,,
+2024241328,exam_subject,112,Music: Analysis,,,,,1,,,
+2024241329,exam_subject,113,Music: Content Knowledge,,,,,1,,,
+2024241330,exam_subject,120,Family and Consumer Sciences,,,,,1,,,
+2024241331,exam_subject,130,Art Education,,,,,1,,,
+2024241332,exam_subject,131,Art Making,,,,,1,,,
+2024241333,exam_subject,132,"Art: Content, Traditions, Criticism and Aesthetics",,,,,1,,,
+2024241334,exam_subject,133,Art: Content Knowledge,,,,,1,,,
+2024241335,exam_subject,140,MSAT: Content Knowledge,,,,,1,,,
+2024241336,exam_subject,146,Middle School: Content Knowledge,,,,,1,,,
+2024241337,exam_subject,151,MSAT: Content Area Exercises,,,,,1,,,
+2024241338,exam_subject,170,French,,,,,1,,,
+2024241339,exam_subject,171,French: Productive Language Skills … new session in 99-00,,,,,1,,,
+2024241340,exam_subject,172,"French: Linguistic, Literary, and Cultural Analysis",,,,,1,,,
+2024241341,exam_subject,173,French: Content Knowledge … new session In 99-00,,,,,1,,,
+2024241342,exam_subject,180,German,,,,,1,,,
+2024241343,exam_subject,181,German: Content Knowledge,,,,,1,,,
+2024241344,exam_subject,182,German: Productive Language Skills,,,,,1,,,
+2024241345,exam_subject,190,Spanish,,,,,1,,,
+2024241346,exam_subject,191,Spanish: Content Knowledge,,,,,1,,,
+2024241347,exam_subject,192,Spanish: Productive Language Skills,,,,,1,,,
+2024241348,exam_subject,193,"Spanish: Linguistic, Literary, and Cultural Analysis",,,,,1,,,
+2024241349,exam_subject,194,Spanish: Pedagogy,,,,,1,,,
+2024241350,exam_subject,200,Introduction to the Teaching of Reading,,,,,1,,,
+2024241351,exam_subject,201,Reading Across the Curriculum: Elementary,,,,,1,,,
+2024241352,exam_subject,202,Reading Across the Curriculum: Secondary,,,,,1,,,
+2024241353,exam_subject,210,School Social Worker,,,,,1,,,
+2024241354,exam_subject,211,School Social Worker: Content Knowledge,,,,,1,,,
+2024241355,exam_subject,220,Speech Communication,,,,,1,,,
+2024241356,exam_subject,230,Biology,,,,,1,,,
+2024241357,exam_subject,231,"Biology: Content Knowledge, Part 1",,,,,1,,,
+2024241358,exam_subject,232,"Biology: Content Knowledge, Part 2",,,,,1,,,
+2024241359,exam_subject,233,Biology: Content Essays,,,,,1,,,
+2024241360,exam_subject,234,Life Science: Pedagogy,,,,,1,,,
+2024241361,exam_subject,235,Biology: Content Knowledge,,,,,1,,,
+2024241362,exam_subject,240,Chemistry,,,,,1,,,
+2024241363,exam_subject,241,Chemistry: Content Knowledge,,,,,1,,,
+2024241364,exam_subject,242,Chemistry: Content Essays,,,,,1,,,
+2024241365,exam_subject,245,Chemistry: Content Knowledge,,,,,1,,,
+2024241366,exam_subject,260,Physics,,,,,1,,,
+2024241367,exam_subject,261,Physics: Content Knowledge,,,,,1,,,
+2024241368,exam_subject,262,Physics: Content Essays,,,,,1,,,
+2024241369,exam_subject,265,Physics: Content Knowledge,,,,,1,,,
+2024241370,exam_subject,271,Education of Deaf and Hard of Hearing Students,,,,,1,,,
+2024241371,exam_subject,280,Teaching Students with Visual Impairments,,,,,1,,,
+2024241372,exam_subject,290,Teaching Students with Orthopedic Impairments,,,,,1,,,
+2024241373,exam_subject,300,Reading Specialist,,,,,1,,,
+2024241374,exam_subject,310,Library Media Specialist,,,,,1,,,
+2024241375,exam_subject,320,Education of Students with Mental Retardation,,,,,1,,,
+2024241376,exam_subject,321,Special Education: Teaching Students with Mental Retardation,,,,,1,,,
+2024241377,exam_subject,330,Speech-Language Pathology,,,,,1,,,
+2024241378,exam_subject,340,Audiology,,,,,1,,,
+2024241379,exam_subject,350,Special Education,,,,,1,,,
+2024241380,exam_subject,351,Special Education: Knowledge-Based Core Principles,,,,,1,,,
+2024241381,exam_subject,352,Special Education: Application of Core Principles Across Categories of Disability,,,,,1,,,
+2024241382,exam_subject,353,Education of Exceptional Students: Core Content Knowledge,,,,,1,,,
+2024241383,exam_subject,357,Gifted Education,,,,,1,,,
+2024241384,exam_subject,360,English to Speakers of Other Languages,,,,,1,,,
+2024241385,exam_subject,370,Teaching Students with Emotional Disturbance,,,,,1,,,
+2024241386,exam_subject,371,Special Education: Teaching Students w/Behavioral Disorders/Emotional Disturbances,,,,,1,,,
+2024241387,exam_subject,380,Teaching Students with Learning Disabilities,,,,,1,,,
+2024241388,exam_subject,381,Special Education: Teaching Students with Learning Disabilities,,,,,1,,,
+2024241389,exam_subject,382,Education of Exceptional Students: Learning Disabilities,,,,,1,,,
+2024241390,exam_subject,390,Psychology,,,,,1,,,
+2024241391,exam_subject,400,School Psychologist,,,,,1,,,
+2024241392,exam_subject,410,Educational Leadership: Administration and Supervision,,,,,1,,,
+2024241393,exam_subject,420,School Guidance and Counseling,,,,,1,,,
+2024241394,exam_subject,430,General Science,,,,,1,,,
+2024241395,exam_subject,431,"General Science: Content Knowledge, Part 1",,,,,1,,,
+2024241396,exam_subject,432,"General Science: Content Knowledge, Part 2",,,,,1,,,
+2024241397,exam_subject,433,General Science: Content Essays,,,,,1,,,
+2024241398,exam_subject,435,General Science: Content Knowledge,,,,,1,,,
+2024241399,exam_subject,438,Teaching Foundations: Science,,,,,1,,,
+2024241400,exam_subject,439,Middle School Science,,,,,1,,,
+2024241401,exam_subject,481,Physical Science: Content Knowledge,,,,,1,,,
+2024241402,exam_subject,482,Physical Science: Content Essays,,,,,1,,,
+2024241403,exam_subject,483,Physical Science: Pedagogy,,,,,1,,,
+2024241404,exam_subject,500,Communication Skills,,,,,1,,,
+2024241405,exam_subject,510,General Knowledge,,,,,1,,,
+2024241406,exam_subject,511,Fundamental Subjects: Content Knowledge,,,,,1,,,
+2024241407,exam_subject,520,Professional Knowledge,,,,,1,,,
+2024241408,exam_subject,521,PLT: Early Childhood,,,,,1,,,
+2024241409,exam_subject,522,PLT: Grades K-6,,,,,1,,,
+2024241410,exam_subject,523,PLT: Grades 5-9,,,,,1,,,
+2024241411,exam_subject,524,PLT: Grades 7-12,,,,,1,,,
+2024241412,exam_subject,528,Teaching Foundations: Multiple Subjects,,,,,1,,,
+2024241413,exam_subject,530,Pre-Kindergarten Education,,,,,1,,,
+2024241414,exam_subject,542,Education of Exceptional Students: Mild to Moderate Disabilities,,,,,1,,,
+2024241415,exam_subject,544,Education of Exceptional Students: Severe to Profound Disabilities,,,,,1,,,
+2024241416,exam_subject,550,Health Education,,,,,1,,,
+2024241417,exam_subject,560,Marketing Education,,,,,1,,,
+2024241418,exam_subject,570,Earth/Space Science,,,,,1,,,
+2024241419,exam_subject,571,Earth Science: Content Knowledge,,,,,1,,,
+2024241420,exam_subject,600,Latin,,,,,1,,,
+2024241421,exam_subject,620,Italian  - discontinued as of 7/1/02,,,,,1,,,
+2024241422,exam_subject,640,Theatre,,,,,1,,,
+2024241423,exam_subject,650,Computer Literacy/Data Processing,,,,,1,,,
+2024241424,exam_subject,690,Special Education: Preschool/Early Childhood,,,,,1,,,
+2024241425,exam_subject,700,Agriculture,,,,,1,,,
+2024241426,exam_subject,710,PPST Reading,,,,,1,,,
+2024241427,exam_subject,711,CBT Reading,,,,,1,,,
+2024241428,exam_subject,720,PPST Writing,,,,,1,,,
+2024241429,exam_subject,721,CBT Writing,,,,,1,,,
+2024241430,exam_subject,730,PPST Mathematics,,,,,1,,,
+2024241431,exam_subject,731,CBT Mathematics,,,,,1,,,
+2024241432,exam_subject,740,Listening Skills Test,,,,,1,,,
+2024241433,exam_subject,755,Para Professional Assessment,,,,,1,,,
+2024241434,exam_subject,780,Agriculture,,,,,1,,,
+2024241435,exam_subject,791,Accounting,,,,,1,,,
+2024241436,exam_subject,792,Data Processing,,,,,1,,,
+2024241437,exam_subject,793,Marketing,,,,,1,,,
+2024241438,exam_subject,794,Office Technology,,,,,1,,,
+2024241439,exam_subject,795,Secretarial,,,,,1,,,
+2024241440,exam_subject,800,Communication,,,,,1,,,
+2024241441,exam_subject,810,Cooperative Education,,,,,1,,,
+2024241442,exam_subject,830,Environmental Education,,,,,1,,,
+2024241443,exam_subject,840,Foreign Language Pedagogy,,,,,1,,,
+2024241444,exam_subject,850,Health and Physical Education,,,,,1,,,
+2024241445,exam_subject,856,Health and Physical Education: Content Knowledge,,,,,1,,,
+2024241446,exam_subject,860,Safety/Driver Education,,,,,1,,,
+2024241447,exam_subject,867,Driver Education,,,,,1,,,
+2024241448,exam_subject,870,Teaching Students with Physical and Mental Disabilities (discontinued fall 1998),,,,,1,,,
+2024241449,exam_subject,880,Teaching Speech to Students with Language Impairments,,,,,1,,,
+2024241450,exam_subject,890,Vocational General Knowledge,,,,,1,,,
+2024241451,exam_subject,900,Agriculture,,,,,1,,,
+2024241452,exam_subject,910,Economics,,,,,1,,,
+2024241453,exam_subject,920,Geography,,,,,1,,,
+2024241454,exam_subject,930,Government/Political Science,,,,,1,,,
+2024241455,exam_subject,940,World and U.S. History,,,,,1,,,
+2024241456,exam_subject,941,World and U.S. History: Content Knowledge,,,,,1,,,
+2024241457,exam_subject,950,Sociology,,,,,1,,,
+2024241458,exam_subject,951,Social Sciences: Content Knowledge,,,,,1,,,
+2024241459,exam_subject,1010,School Leaders Licensure Assessment,,,,,1,,,
+2024241460,exam_subject,1020,School Superintendent Assessment,,,,,1,,,
+2024241461,exam_subject,1755,Computerized Para Professional Assessment,,,,,1,,,
+2024241462,exam_subject,5710,C-PPST Reading,,,,,1,,,
+2024241463,exam_subject,5720,C-PPST Writing,,,,,1,,,
+2024241464,exam_subject,5730,C-PPST Mathematics,,,,,1,,,
+2024241465,graduation_action,2,Approved w/o L,,,,3,1,,"--- {}
+
+",
+2024241466,assessment_course,EDCS603,EDCS603,,,,,1,EDCS,"--- {}
+
+",
+2024241467,assessment_course,EDCS624D,EDCS624D,,,,,1,EDCS,"--- {}
+
+",
+2024241468,assessment_course,EDCS624E,EDCS624E,,,,,1,EDCS,"--- {}
+
+",
+2024241469,assessment_course,ITE415,ITE415,,,,,1,ITE,"--- {}
+
+",
+2024241470,assessment_course,ITE416,ITE416,,,,,1,ITE,"--- {}
+
+",
+2024241471,assessment_course,ITE415L,ITE415L,,,,,1,ITE,"--- {}
+
+",
+2024241472,assessment_course,ITE416L,ITE416L,,,,,1,ITE,"--- {}
+
+",
+2024241473,assessment_course,EDEA601,EDEA601,,,,,1,EDEA,"--- {}
+
+",
+2024241474,assessment_course,EDEA602,EDEA602,,,,,1,EDEA,"--- {}
+
+",
+2024241475,assessment_course,EDEA630,EDEA630,,,,,1,EDEA,"--- {}
+
+",
+2024241476,assessment_course,EDEA699,EDEA699,,,,,1,EDEA,"--- {}
+
+",
+2024241477,assessment_course,EDEA700,EDEA700,,,,,1,EDEA,"--- {}
+
+",
+2024241478,assessment_course,ITE603,ITE603,,,,,1,ITE,"--- {}
+
+",
+2024241479,assessment_course,SPED641,SPED641,,,,,1,SPED,"--- {}
+
+",
+2024241480,assessment_course,SPED688,SPED688,,,,,1,SPED,"--- {}
+
+",
+2024241481,assessment_course,SPED695,SPED695,,,,,1,SPED,"--- {}
+
+",
+2024241482,assessment_course,ITE402D,ITE402D,,,,,1,ITE,,
+2024241483,assessment_course,ITE402G,ITE402G,,,,,1,ITE,,
+2024241484,assessment_course,ITE402H,ITE402H,,,,,1,ITE,,
+2024241485,assessment_course,ITE402I,ITE402I,,,,,1,ITE,,
+2024241486,assessment_course,ITE402J,ITE402J,,,,,1,ITE,,
+2024241487,assessment_course,ITE404D,ITE404D,,,,,1,ITE,,
+2024241488,assessment_course,ITE404G,ITE404G,,,,,1,ITE,,
+2024241489,assessment_course,ITE404H,ITE404H,,,,,1,ITE,,
+2024241490,assessment_course,ITE404I,ITE404I,,,,,1,ITE,,
+2024241491,assessment_course,ITE404J,ITE404J,,,,,1,ITE,,
+2024241492,assessment_course,ITE405D,ITE405D,,,,,1,ITE,,
+2024241493,assessment_course,ITE405G,ITE405G,,,,,1,ITE,,
+2024241494,assessment_course,ITE405H,ITE405H,,,,,1,ITE,,
+2024241495,assessment_course,ITE405I,ITE405I,,,,,1,ITE,,
+2024241496,assessment_course,ITE405J,ITE405J,,,,,1,ITE,,
+2024241497,assessment_course,ITE406,ITE406,,,,,1,ITE,,
+2024241498,assessment_course,ITE604,ITE604,,,,,1,ITE,,
+2024241499,assessment_course,ITE610,ITE610,,,,,1,ITE,,
+2024241500,assessment_course,ITE611,ITE611,,,,,1,ITE,,
+2024241501,assessment_course,ITE405,ITE405,,,,,1,ITE,"--- {}
+
+",
+2024241502,assessment_course,SPED526,SPED526,,,,,1,SPED,"--- {}
+
+",
+2024241503,assessment_course,SPED620,SPED620,,,,,1,SPED,"--- {}
+
+",
+2024241504,assessment_course,SPED626,SPED626,,,,,1,SPED,"--- {}
+
+",
+2024241505,assessment_course,EDCS600,EDCS600,,,,,1,EDCS,"--- {}
+
+",
+2024241506,assessment_course,EDCS606,EDCS606,,,,,1,EDCS,"--- {}
+
+",
+2024241507,assessment_course,EDCS625,EDCS625,,,,,1,EDCS,"--- {}
+
+",
+2024241508,academic_period,201310,Fall 2012,,,,49,1,,"--- {}
+
+",
+2024241509,academic_period,201330,Spring 2013,,,,50,1,,"--- {}
+
+",
+2024241510,academic_period,201410,Fall 2013,,,,52,1,,"--- {}
+
+",
+2024241511,academic_period,201340,Summer 2013,,,,51,1,,"--- {}
+
+",
+2024241512,major,KRS5,"KRS, Health/Exercise Science",,KRS,,0,0,"OSAS, KRS","--- {}
+
+",
+2024241513,assessment_course,ITE612,ITE612,,,,,1,ITE,"--- {}
+
+",
+2024241514,assessment_course,ETEC613,ETEC613,,,,,1,ETEC,"--- {}
+
+",
+2024241515,track,N,Non-Licensure,,,,,1,,,
+2024241516,track,L,Licensure,,,,,1,,,
+2024241517,admission_category,N,New Student,,,,,1,,"--- {}
+",
+2024241518,admission_category,L,Licensure,,,,,1,,,
+2024241519,admission_category,CM,Change Major,,,,,1,,,
+2024241520,assessment_course,ITE322,ITE322,,,,,1,ITE,,
+2024241521,assessment_course,SPED391,SPED391,,,,,1,SPED,,
+2024241522,assessment_course,SPED400,SPED400,,,,,1,SPED,,
+2024241523,assessment_course,SPED527,SPED527,,,,,1,SPED,,
+2024241524,assessment_course,SPED528,SPED528,,,,,1,SPED,,
+2024241525,assessment_course,SPED618,SPED618,,,,,1,SPED,,
+2024241526,assessment_course,SPED700,SPED700,,,,,1,SPED,,
+2024241527,academic_period,201430,Spring 2014,,,,53,1,,,
+2024241528,academic_period,201440,Summer 2014,,,,54,1,,,
+2024241529,academic_period,201510,Fall 2014,,,,55,1,,,
+2024241530,academic_period,201530,Spring 2015,,,,56,1,,,
+2024241531,academic_period,201610,Fall 2015,,,,59,1,,,
+2024241532,academic_period,201540,Summer 2015,,,,57,1,,,
+2024241533,degree,EDD,Doctor of Education,Doctoral,,,0,1,,,
+2024241534,program,EDPP-EDD,Professional Ed Practice-EdD,,,,0,1,PHD,,
+2024241535,major,EDPP,Professional Ed Practice,,,,0,1,PHD,,
+2024241536,content_area,ECE,ECE,,,,10,1,,,
+2024241537,content_area,GEN,GEN,,,,9,1,,,
+2024241538,content_area,SPED,SPED,,,,8,1,,,
+2024241539,content_area,SEC,SEC,,,,7,1,,,
+2024241540,major,SP02,Special Education Deaf/Hard of Hearing,,SPED,(PCERT)/(SPED)/(MAN|SW)/(L|N),0,1,"OSAS, SPED",,
+2024241541,exam_subject,5014,Elementary Education: Content Knowledge,,,,,1,,,
+2024241542,declaration_status,C,Rdy for Review,,,,,1,,,
+2024241543,declaration_status,P,Review in progress,,,,,1,,,
+2024241544,declaration_status,G,Action Complete,,,,,1,,,
+2024241545,declaration_status,L,Letter Sent,,,,,1,,,
+2024241546,declaration_action,1,Admitted,,admissible,,,1,,"--- {}
+",
+2024241547,declaration_action,3,Denied,,,,,1,,,
+2024241548,declaration_action,4,Withdrew,,,,,1,,,
+2024241549,track,P,Pre-Licensure,,,,,1,,,
+2024241550,advising_task,Mandatory Advising,Mandatory Advising,,,,0,1,,,
+2024241551,declaration_status,S,CC Submitted,,,,,1,,,
+2024241552,assessment_course,EDCS624,EDCS624,,,,,1,EDCS,,
+2024241553,advising_task,Academic Action,Academic Action,,,,0,0,,,
+2024241554,admission_status,S,CC Submitted	,,,,1,1,,,
+2024241555,advising_interest,B.Ed. Elementary,B.Ed. Elementary,,,,10,1,,,
+2024241556,program,OLT-GECRT,Online Learning & Teaching-GCERT,,,,0,1,,,
+2024241557,program,PK3-GECRT,PK-3 Graduate Certificate,,,,0,1,,,
+2024241558,program,RK2-GCERT,Reading K-12 Graduate Certificate,,,,0,1,,,
+2024241559,assessment_course,ITE314,ITE314,,,,,1,ITE,,
+2024241560,assessment_course,ITE325,ITE325,,,,,1,ITE,,
+2024241561,assessment_course,ITE323,ITE323,,,,,1,ITE,,
+2024241562,advising_classification,UHM COE KRS,UHM COE KRS,,,,,1,,,
+2024241563,advising_classification,UHM COE Licensure,UHM COE Licensure,,,,,1,,,
+2024241564,advising_classification,UHM COE Pre-Licensure,UHM COE Pre-Licensure,,,,,1,,,
+2024241565,advising_classification,UHM Other,UHM Other,,,,,1,,,
+2024241566,cc_program,ECED-AS,AS in Early Childhood Education,,,,,1,,,
+2024241567,major,OLT,Online Learning & Teaching,,,,,1,,,
+2024241568,major,PK3,PK3,,,,,1,,,
+2024241569,major,RK12,Reading K-12,,,,,1,,,
+2024241570,assessment_course,EDCS617,EDCS617,,,,,1,EDCS,,
+2024241571,assessment_course,EDEP664,EDEP664,,,,,1,"EDEP, EDCS",,
+2024241572,assessment_course,ITE402B,ITE402B,,,,,1,ITE,,
+2024241573,assessment_course,ITE404B,ITE404B,,,,,1,ITE,,
+2024241574,assessment_course,ITE405B,ITE405B,,,,,1,ITE,,
+2024241575,assessment_course,EDCS695,EDCS695,,,,,1,EDCS,,
+2024241576,assessment_course,ITE417,ITE417,,,,,1,ITE,,
+2024241577,assessment_course,ITE313,ITE313,,,,,1,ITE,,
+2024241578,transition_point,admission,Admission,,entrance,,,1,"OSAS,ITE,SPED,KRS","--- {}
+",
+2024241579,transition_point,declaration,Declaration of Intent,,entrance,,,1,"OSAS,ITE,SPED,KRS","--- {}
+",
+2024241580,transition_point,graduation,Graduation,,exit,,,1,"OSAS,ITE,SPED,KRS","--- {}
+",
+2024241581,transition_point,recommendation,Licensure Recommendation,,retention,,,1,"OSAS,ITE,SPED,KRS","--- {}
+",
+2024241582,transition_point,qualification_exam,Qualification Exam,,retention,,,1,,"--- {}
+",
+2024241583,transition_point,research_proposal,Research Proposal Defense,,retention,,,1,,"--- {}
+",
+2024241584,transition_point,research_final,Final Research Defense,,retention,,,1,,"--- {}
+",
+2024241585,admission_category,I,Inter-Manoa Transfer,,,,,1,,"--- {}
+",
+2024241586,declaration_action,2,Cond. Admitted,,admissible,,,1,,"--- {}
+",
+2024241587,declaration_category,N,New Student,,,,,1,,"--- {}
+",
+2024241588,declaration_category,I,Inter-Manoa Transfer,,,,,1,,"--- {}
+",
+2024241589,declaration_category,C,Concurrent Applicant,,,,,1,,"--- {}
+",
+2024241590,general_qualification,Y,Met,,,,,1,,"--- {}
+",
+2024241591,general_qualification,N,Not Met,,,,,1,,"--- {}
+",
+2024241592,general_qualification,I,In Prog.,,,,,1,,"--- {}
+",
+2024241593,general_qualification,NA,N/A,,,,,1,,"--- {}
+",
+2024241594,dept,DO,DO,,,,,1,,"--- {}
+",
+2024241595,dept,ITE,ITE,,,,,1,,"--- {}
+",
+2024241596,dept,EDEA,EDEA,,,,,1,,"--- {}
+",
+2024241597,dept,EDEP,EDEP,,,,,1,,"--- {}
+",
+2024241598,dept,KRS,KRS,,,,,1,,"--- {}
+",
+2024241599,dept,EDEF,EDEF,,,,,1,,"--- {}
+",
+2024241600,dept,ETEC,ETEC,,,,,1,,"--- {}
+",
+2024241601,dept,TDP,TDP,,,,,1,,"--- {}
+",
+2024241602,dept,CRDG,CRDG,,,,,1,,"--- {}
+",
+2024241603,dept,CDS,CDS,,,,,1,,"--- {}
+",
+2024241604,dept,OSAS,OSAS,,,,,1,,"--- {}
+",
+2024241605,form,admission,COE Application Form,,,,,1,OSAS,"--- {}
+",
+2024241606,form,declaration,COE Declaration of Intent Form,,,,,1,OSAS,"--- {}
+",
+2024241607,academic_period,999999,The End of Time,,,,,1,,"--- {}
+",
+2024241608,assessment_course,KRS334,KRS334,,,,,1,KRS,"--- {}
+",
+2024241609,assessment_course,ITE405P,ITE405P,,,,,1,ITE,"--- {}
+",
+2024241610,assessment_course,ITE401,ITE401,,,,,1,ITE,"--- {}
+",
+2024241611,advising_interest,B.Ed. SPED/ECE,B.Ed. SPED/ECE,,,,5,1,,"--- {}
+",
+2024241612,advising_interest,M.EdT Statewide,M.EdT Statewide,,,,,1,,"--- {}
+",
+2024241613,dept,EDCS,EDCS,,,,,1,,"--- {}
+",
+2024241614,major,KRS9,"KRS, Health & Physical Ed",,,,0,1,"OSAS, KRS","--- {}
+",
+2024241615,major,EEEC,Elementary Ed EC Ed/Sp Ed,,EDEL,,0,1,"OSAS, ITE, SPED","--- {}
+",
+2024241616,advising_task,Academic Actioning,Academic Actioning,,,,0,1,,"--- {}
+",

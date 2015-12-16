@@ -1,0 +1,3784 @@
+id,code,area_group,district,level_from,level_to,category,name,name_short,area,url,status,yml,xml
+1,335,Oahu,Windward,K,6,DOE,'Ahuimanu Elementary,Ahuimanu El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 47-470 Hui Aeko Place
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 239-3125
+  :fax: 239-3127
+  :principal_last_name: Scoville
+  :principal_first_name: Randolph
+",
+2,200,Oahu,Central,K,6,DOE,'Aiea Elementary,Aiea El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 99-370 Moanalua Road
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7200
+  :fax: 483-7201
+  :principal_last_name: O'Malley
+  :principal_first_name: Kathleen
+",
+3,202,Oahu,Central,9,12,DOE,'Aiea High,Aiea High,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 98-1276 Ulune Street
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7300/483-7301
+  :fax: 483-7303
+  :principal_last_name: Tokioka
+  :principal_first_name: Michael
+",
+4,201,Oahu,Central,7,8,DOE,'Aiea Intermediate,Aiea Int,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 99-600 Kulawea Street
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7230
+  :fax: 483-7235
+  :principal_last_name: Kurashige
+  :principal_first_name: Tom
+",
+5,300,Oahu,Windward,K,6,DOE,'Aikahi Elementary,Aikahi El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 281 Ilihau Street
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 254-7944
+  :fax: 254-7962
+  :principal_last_name: Kong
+  :principal_first_name: Gay
+",
+6,100,Oahu,Honolulu,K,5,DOE,'Aina Haina Elementary,Aina Haina El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 801 W. Hind Drive
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96821""
+  :phone: 377-2419
+  :fax: 377-2426
+  :principal_last_name: Burns
+  :principal_first_name: Brendan
+",
+7,101,Oahu,Honolulu,K,5,DOE,Ala Wai Elementary,Ala Wai El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 503 Kamoku Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96826""
+  :phone: 973-0070
+  :fax: 973-0081
+  :principal_last_name: Wong
+  :principal_first_name: Sean
+",
+8,203,Oahu,Central,K,6,DOE,Aliamanu Elementary,Aliamanu El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 3265 Salt Lake Boulevard
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4280/421-4281
+  :fax: 421-4283
+  :principal_last_name: Kamemoto
+  :principal_first_name: Valarie
+",
+9,204,Oahu,Central,7,8,DOE,Aliamanu Middle,Aliamanu Middle,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 3271 Salt Lake Boulevard
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4100
+  :fax: 421-4103
+  :principal_last_name: Eggleston
+  :principal_first_name: Robert
+",
+10,102,Oahu,Honolulu,K,5,DOE,Ali'iolani Elementary,Aliiolani El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1240 7th Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4750
+  :fax: 733-4758
+  :principal_last_name: Miyamoto
+  :principal_first_name: Len
+",
+11,103,Oahu,Honolulu,K,12,DOE,Kula Kaiapuni 'O Anuenue,Anuenue,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2528 10th Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-8465
+  :fax: 733-8467
+  :principal_last_name: Naumu
+  :principal_first_name: Charles
+",
+12,905,Oahu,,,,Private,Assets School 9-12,Assets School 9-12,,,,"---
+:site_contact:
+  :street: 1 Ohana Nui Way
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 423-1356
+  :fax:
+  :principal_last_name: Travis
+  :principal_first_name: Susan
+",
+13,906,Oahu,,,,Private,Assets School K-8,Assets School K-8,,,,"---
+:site_contact:
+  :street: 1 Ohana Nui Way
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 423-1356
+  :fax:
+  :principal_last_name: Bridgewater Borg
+  :principal_first_name: Jyo
+",
+14,250,Oahu,Leeward,K,6,DOE,August Ahrens Elementary,August Ahrens El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-1170 Waipahu Street
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 675-0202
+  :fax: 675-0216
+  :principal_last_name: Smith
+  :principal_first_name: Florentina
+",
+15,400,Maui,Maui,9,12,DOE,Henry Perrine Baldwin High,Baldwin High,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 1650 Kaahumanu Avenue
+  :city: Wailuku
+  :state: HI
+  :postal_code: ""96793""
+  :phone: 984-5656
+  :fax: 984-5674
+  :principal_last_name: Davis
+  :principal_first_name: Jacquelyn
+",
+16,251,Oahu,Leeward,K,5,DOE,Barbers Point Elementary,Barbers Point El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 3001 Boxer Road
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 673-7400
+  :fax: 673-7403
+  :principal_last_name: Nakachi
+  :principal_first_name: Claudia
+",
+17,252,Oahu,Leeward,9,12,DOE,James Campbell High,Campbell High,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-980 North Road
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 689-1200
+  :fax: 689-1242
+  :principal_last_name: Takamori
+  :principal_first_name: Naomi
+",
+18,301,Oahu,Windward,9,12,DOE,James B. Castle High,Castle High,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 45-386 Kaneohe Bay Drive
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5600
+  :fax: 233-5623
+  :principal_last_name: Maeda
+  :principal_first_name: Meredith
+",
+19,104,Oahu,Honolulu,6,8,DOE,Central Middle,Central Middle,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1302 Queen Emma Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 587-4400
+  :fax: 587-4409
+  :principal_last_name: Yun-Kim
+  :principal_first_name: Cindy
+",
+20,396,Hawaii,Hawaii,K,10,Charter,Connections New Century Public Charter School,Connections NCPCS,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 174 Kamehameha Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code:
+  :phone: 961-3664
+  :fax: 961-2665
+  :principal_last_name: Thatcher II
+  :principal_first_name: John
+",
+21,351,Hawaii,Hawaii,K,6,DOE,Ernest Bowen DeSilva Elementary,DeSilva El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 278 Ainako Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4855
+  :fax: 974-4858
+  :principal_last_name: O'Brien
+  :principal_first_name: Dennis
+",
+22,105,Oahu,Honolulu,6,8,DOE,Governor Sanford B. Dole Middle,Dole Middle,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1803 Kamehameha IV Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3340
+  :fax: 832-3349
+  :principal_last_name: Kikkawa
+  :principal_first_name: Arnie
+",
+23,907,Oahu,,,,Private,Easter Seals,Easter Seals,,,,"---
+:site_contact:
+  :street: 710 Green Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 536-1015
+  :fax:
+  :principal_last_name: Kawakami
+  :principal_first_name: Norman
+",
+24,543,Oahu,Honolulu,K,12,Charter,Education Laboratory New Century Public Charter School,Educ Lab a Hawaii NCPCS,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1776 University Avenue, UHS Bldg 3, Room 121
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 956-7833
+  :fax: 956-7260
+  :principal_last_name: Jeremiah
+  :principal_first_name: Keoni
+",
+25,451,Kauai,Kauai,K,5,DOE,'Ele'ele Elementary,Eleele El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: PO Box 38
+  :city: Eleele
+  :state: HI
+  :postal_code: ""96705""
+  :phone: 335-2111
+  :fax: 335-8415
+  :principal_last_name: Rose
+  :principal_first_name: Fred
+",
+26,302,Oahu,Windward,K,6,DOE,Enchanted Lake Elementary,Enchanted Lake El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 770 Keolu Drive
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7800
+  :fax: 266-7804
+  :principal_last_name: McElhaney
+  :principal_first_name: Pua'ala
+",
+27,254,Oahu,Leeward,K,6,DOE,'Ewa Beach Elementary,Ewa Beach El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-740 Papipi Road
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 689-1271
+  :fax: 689-1275
+  :principal_last_name: Kobayashi
+  :principal_first_name: Sherry Lee
+",
+28,253,Oahu,Leeward,K,6,DOE,'Ewa Elementary,Ewa El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-1280 Renton Road
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 681-8202
+  :fax: 681-8206
+  :principal_last_name: Tamashiro
+  :principal_first_name: Stanley
+",
+29,296,Oahu,Leeward,7,8,DOE,Ewa Makai Middle,Ewa Makai Middle,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-6291 Kapolei Parkway
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 687-9500
+  :fax: 685-2052
+  :principal_last_name: Oshiro
+  :principal_first_name: Edward
+",
+30,106,Oahu,Honolulu,9,12,DOE,Governor Wallace Rider Farrington High,Farrington High,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1564 North King Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 832-3600
+  :fax: 832-3587
+  :principal_last_name: Carganilla
+  :principal_first_name: Alfredo
+",
+31,107,Oahu,Honolulu,K,5,DOE,Mayor Joseph J. Fern Elementary,Fern El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1121 Middle Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3040
+  :fax: 832-3043
+  :principal_last_name: Uli'i
+  :principal_first_name: Tiare
+",
+32,352,Hawaii,Hawaii,K,6,DOE,Ha'aheo Elementary,Haaheo El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 121 Haaheo Road
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4111
+  :fax: 974-4112
+  :principal_last_name: Bennett
+  :principal_first_name: Brad
+",
+33,108,Oahu,Honolulu,K,5,DOE,Haha'ione Elementary,Hahaione El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 595 Pepeekeo Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96825""
+  :phone: 397-5822
+  :fax: 397-5827
+  :principal_last_name: Giorgis
+  :principal_first_name: Lucinda
+",
+34,401,Maui,Maui,K,5,DOE,Ha'iku Elementary,Haiku El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 105 Pauwela Road
+  :city: Haiku
+  :state: HI
+  :postal_code: ""96708""
+  :phone: 575-3000
+  :fax: 575-3003
+  :principal_last_name: Takahata
+  :principal_first_name: Bernice
+",
+35,546,Oahu,Windward,5,12,Charter,Hakipu'u Learning Center New Century Public Charter School,Hakipuu Learning Ctr PCS,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 45-720 Kea'ahala Road (WCC Haloa Bldg)
+  :city: Kane`ohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 235-9155
+  :fax: 235-9160
+  :principal_last_name: Hoe
+  :principal_first_name: Charlene
+",
+36,540,Oahu,Honolulu,6,12,Charter,Halau Ku Mana New Century Public Charter School,Halau Ku Mana NCPCS,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2101 Makiki Heights Drive
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 945-1600
+  :fax: 945-1604
+  :principal_last_name: Cronin
+  :principal_first_name: Patti
+",
+37,542,Oahu,Honolulu,K,12,Charter,Halau Lokahi New Century Public Charter School,Halau Lokahi NCPCS,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 401 Waiakamilo Road, Unit 1A
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 832-3594
+  :fax: 842-9800
+  :principal_last_name: Allbrett
+  :principal_first_name: Laara
+",
+38,207,Oahu,Central,K,5,DOE,Hale Kula Elementary,Hale Kula El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: Waianae Ave & Ayers Ave
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6380
+  :fax: 622-6382
+  :principal_last_name: Iwase
+  :principal_first_name: Jan
+",
+39,206,Oahu,Central,K,6,DOE,Hale'iwa Elementary,Haleiwa El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 66-505 Haleiwa Road
+  :city: Haleiwa
+  :state: HI
+  :postal_code: ""96712""
+  :phone: 637-8237
+  :fax: 637-8240
+  :principal_last_name: Wetzel
+  :principal_first_name: Malaea
+",
+40,402,Maui,Maui,K,12,DOE,Hana High & Elementary (& 408-Ke'anae Elementary),Hana High & El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: PO Box 128
+  :city: Hana
+  :state: HI
+  :postal_code: ""96713""
+  :phone: 248-4815
+  :fax: 248-4819
+  :principal_last_name: Paul
+  :principal_first_name: Richard
+",
+41,908,Oahu,,,,Private,Hanahau�oli Elementary School,Hanahauoli El,,,,"---
+:site_contact:
+  :street: 1922 Makiki Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 949-6461
+  :fax:
+  :principal_last_name: Peters
+  :principal_first_name: Robert
+",
+42,452,Kauai,Kauai,K,6,DOE,Hanalei Elementary,Hanalei El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: P.O. Box 46     5-5415 Kuhio Highway
+  :city: Hanalei
+  :state: HI
+  :postal_code: ""96714""
+  :phone: 826-4300
+  :fax: 826-4302
+  :principal_last_name: Nakamura
+  :principal_first_name: Corey
+",
+43,303,Oahu,Windward,K,6,DOE,Hau'ula Elementary,Hauula El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 54-046 Kamehameha Highway
+  :city: Hauula
+  :state: HI
+  :postal_code: ""96717""
+  :phone: 293-8925
+  :fax: 293-8927
+  :principal_last_name: Izumi
+  :principal_first_name: Samuel
+",
+44,561,Hawaii,Hawaii,K,12,Charter,Hawai'i Academy of Arts & Science Public Charter School,Hawaii Academy of Arts & Science PCS,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: P.O. Box 1494
+  :city: Pahoa
+  :state: HI
+  :postal_code: ""96778""
+  :phone: 965-3730
+  :fax: 965-3733
+  :principal_last_name: Hirakami
+  :principal_first_name: Steven
+",
+45,909,Oahu,,,,Private,Hawaii Baptist Academy,Hawaii Baptist Academy,,,,"---
+:site_contact:
+  :street: 2429 Pali Highway
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""968167""
+  :phone: 595-6301
+  :fax:
+  :principal_last_name: Hirae
+  :principal_first_name: Marsha
+",
+46,470,Oahu,Honolulu,K,12,Special,Hawaii School for the Deaf and Blind,Hawaii School for the Deaf and Blind,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 3440 Leahi Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96815""
+  :phone: 733-4999
+  :fax: 733-4824
+  :principal_last_name: Alfred
+  :principal_first_name: Christina
+",
+47,551,Oahu,Leeward,K,11,Charter,Hawai'I Technology Academy Public Charter School,Hawaii Tech Acad PCS,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-810 Moloalo Street
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 676-5444
+  :fax: 676-5470
+  :principal_last_name: Piontek
+  :principal_first_name: Jeff
+",
+48,304,Oahu,Windward,K,6,DOE,He'eia Elementary,Heeia El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 46-202 Haiku Road
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5677
+  :fax: 233-5679
+  :principal_last_name: Uetake
+  :principal_first_name: Dwight
+",
+49,208,Oahu,Central,K,5,DOE,Helemano Elementary,Helemano El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 1001 Ihi Ihi Avenue
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6336
+  :fax: 622-6340
+  :principal_last_name: Muh
+  :principal_first_name: Ernest
+",
+50,209,Oahu,Central,K,6,DOE,Lt. Col. Horace Meek Hickam Elementary,Hickam El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 825 Manzelman Circle
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4148
+  :fax: 421-4157
+  :principal_last_name: Erickson
+  :principal_first_name: John
+",
+51,255,Oahu,Leeward,7,8,DOE,Highlands Intermediate,Highlands Int,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 1460 Hoolaulea Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6480
+  :fax: 453-6484
+  :principal_last_name: Martinson
+  :principal_first_name: Amy
+",
+52,355,Hawaii,Hawaii,9,12,DOE,Hilo High,Hilo High,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 556 Waianuenue Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4021
+  :fax: 974-4036
+  :principal_last_name: Dircks
+  :principal_first_name: Robert
+",
+53,356,Hawaii,Hawaii,7,8,DOE,Hilo Intermediate,Hilo Int,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 587 Waianuenue Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4955
+  :fax: 974-6184
+  :principal_last_name: Kanehailua
+  :principal_first_name: Esther
+",
+54,357,Hawaii,Hawaii,K,6,DOE,Hilo Union Elementary,Hilo Union El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 506 Waianuenue Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 933-0900
+  :fax: 933-0905
+  :principal_last_name: Andrade-Spencer
+  :principal_first_name: Patti
+",
+55,109,Oahu,Honolulu,K,5,DOE,Hokulani Elementary,Hokulani El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: Kiyonaga
+  phone: 733-4789
+  fax: 733-4792
+  email: ''
+  principal_first_name: Holly
+  street: 2940 Kamakini Street
+  city: Honolulu
+  state: HI
+  postal_code: '96816'
+",
+56,280,Oahu,Leeward,K,6,DOE,Holomua Elementary,Holomua El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-1561 Keaunui Drive
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 685-9100
+  :fax: 685-9191
+  :principal_last_name: Yasui
+  :principal_first_name: Gary
+",
+57,358,Hawaii,Hawaii,K,5,DOE,Holualoa Elementary,Holualoa El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 76-5957 Mamalahoa Highway
+  :city: Holualoa
+  :state: HI
+  :postal_code: ""96725""
+  :phone: 322-4800
+  :fax: 322-4801
+  :principal_last_name: O'Leary
+  :principal_first_name: Lauren
+",
+58,910,Oahu,,,,Private,Holy Nativity School,Holy Nativity School,,,,"---
+:site_contact:
+  :street: 5286 Kalanianaole Highway
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96821""
+  :phone: 373-3232
+  :fax:
+  :principal_last_name: Whiting
+  :principal_first_name: Robert
+",
+59,359,Hawaii,Hawaii,K,5,DOE,Honaunau Elementary,Honaunau El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 83-5360 Mamalahoa Highway
+  :city: Captain Cook
+  :state: HI
+  :postal_code: ""96704""
+  :phone: 328-2727
+  :fax: 328-2729
+  :principal_last_name: Bacon
+  :principal_first_name: Sean
+",
+60,361,Hawaii,Hawaii,K,6,DOE,Honoka'a Elementary,Honokaa El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 45-534 Pakalana Street
+  :city: Honokaa
+  :state: HI
+  :postal_code: ""96727""
+  :phone: 775-8820
+  :fax: 775-8828
+  :principal_last_name: Matsumura
+  :principal_first_name: Rachelle
+",
+61,360,Hawaii,Hawaii,7,12,DOE,Honoka'a High & Intermediate,Honokaa High & Int,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 45-527 Pakalana Street
+  :city: Honokaa
+  :state: HI
+  :postal_code: ""96727""
+  :phone: 775-8800
+  :fax: 775-8803
+  :principal_last_name: Gray
+  :principal_first_name: Glenn
+",
+62,276,Oahu,Leeward,K,6,DOE,Honowai Elementary,Honowai El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-600 Honowai Street
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 675-0165
+  :fax: 675-0167
+  :principal_last_name: Matsumura
+  :principal_first_name: Kent
+",
+63,363,Hawaii,Hawaii,K,5,DOE,Ho'okena Elementary,Hookena El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 86-4355 Mamalahoa Highway
+  :city: Captain Cook
+  :state: HI
+  :postal_code: ""96704""
+  :phone: 328-2710
+  :fax: 328-2712
+  :principal_last_name: Crisafi
+  :principal_first_name: Joyce
+",
+64,404,Maui,Maui,6,8,DOE,'Iao Intermediate,Iao Int,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 260 South Market Street
+  :city: Wailuku
+  :state: HI
+  :postal_code: ""96793""
+  :phone: 984-5610
+  :fax: 984-5617
+  :principal_last_name: Kilborn
+  :principal_first_name: Catherine
+",
+65,210,Oahu,Central,K,5,DOE,'Iliahi Elementary,Iliahi El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 2035 California Avenue
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6411
+  :fax: 622-6413
+  :principal_last_name: Tanouye
+  :principal_first_name: Dale
+",
+66,279,Oahu,Leeward,7,8,DOE,Ilima Intermediate,Ilima Int,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-884 Ft. Weaver Road
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 687-9300
+  :fax: 689-1250
+  :principal_last_name: Lee
+  :principal_first_name: Jon Henry
+",
+67,548,Hawaii,Hawaii,1,8,Charter,Innovations Public Charter School,Innovations PCS,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 75-5815 Queen Ka'ahumanu Highway
+  :city: Kailua-Kona
+  :state: HI
+  :postal_code: ""96740""
+  :phone: 1-808-327-6205
+  :fax: 327-6209
+  :principal_last_name: Hiro
+  :principal_first_name: Jennifer
+",
+68,256,Oahu,Leeward,K,6,DOE,Iroquois Point Elementary,Iroquois Point El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 5553 Cormorant Avenue
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 499-6500
+  :fax: 499-6508
+  :principal_last_name: Armstrong
+  :principal_first_name: Heidi
+",
+69,911,Oahu,,,,Private,Island Pacific Academy,Island Pacific Academy,,,,"---
+:site_contact:
+  :street: 909 Haumea Street
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 674-3523 x586
+  :fax:
+  :principal_last_name: Miller
+  :principal_first_name: Sue
+",
+70,110,Oahu,Honolulu,6,8,DOE,William P. Jarrett Middle,Jarrett Middle,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1903 Palolo Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4888
+  :fax: 733-4894
+  :principal_last_name: Gonsalves
+  :principal_first_name: Eleanor
+",
+71,111,Oahu,Honolulu,K,5,DOE,President Thomas Jefferson Elementary,Jefferson El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 324 Kapahulu Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96815""
+  :phone: 971-6922
+  :fax: 971-6933
+  :principal_last_name: Parker
+  :principal_first_name: Scott
+",
+72,144,Oahu,Honolulu,K,6,Special,Jefferson School Orthopedic Unit,Jefferson Orthopedic Unit,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 324 Kapahulu Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96815""
+  :phone: 971-6931
+  :fax: 971-6933
+  :principal_last_name: Parker
+  :principal_first_name: Scott
+",
+73,562,Hawaii,Hawaii,K,8,Charter,Ka 'Umeke Ka'eo Public Charter School,Ka 'Umeke Ka'eo PCS,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 222 Desha Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 933-3482
+  :fax: 933-3488
+  :principal_last_name: Makekau-Whittaker
+  :principal_first_name: Leinani
+",
+74,545,Oahu,Leeward,K,8,Charter,Ka Waihona 'o ka Na'auao: New Century Public Charter School,Ka Waihona o ka Na`auao NCPCS,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 89-195 Farrington Hwy
+  :city: Wai'anae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 620-9030
+  :fax: 620-9036
+  :principal_last_name: Parker
+  :principal_first_name: Alvin
+",
+75,305,Oahu,Windward,K,6,DOE,Ka'a'awa Elementary,Kaaawa El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 51-296 Kamehameha Highway
+  :city: Kaaawa
+  :state: HI
+  :postal_code: ""96730""
+  :phone: 237-7751
+  :fax: 237-7755
+  :principal_last_name: Luke-Payne
+  :principal_first_name: Jennifer
+",
+76,112,Oahu,Honolulu,K,5,DOE,Queen Ka'ahumanu Elementary,Kaahumanu El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1141 Kinau Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96814""
+  :phone: 587-4414
+  :fax: 587-4415
+  :principal_last_name: Kiyonaga
+  :principal_first_name: Holly
+",
+77,211,Oahu,Central,K,5,DOE,Ka'ala Elementary,Kaala El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 130 California Avenue
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6366
+  :fax: 622-6368
+  :principal_last_name: Fisher
+  :principal_first_name: Theodore
+",
+78,330,Oahu,Windward,K,6,DOE,Ka'elepulu Elementary,Kaelepulu El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 530 Keolu Drive
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7811
+  :fax: 266-7813
+  :principal_last_name: Udarbe
+  :principal_first_name: Christine
+",
+79,113,Oahu,Honolulu,K,5,DOE,Ka'ewai Elementary,Kaewai El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1929 Kam IV Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3500
+  :fax: 832-3509
+  :principal_last_name: Carter
+  :principal_first_name: Bert
+",
+80,371,Hawaii,Hawaii,K,5,DOE,Kahakai Elementary,Kahakai El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 76-147 Royal Poinciana Drive
+  :city: Kailua-Kona
+  :state: HI
+  :postal_code: ""96740""
+  :phone: 1-808-327-4313
+  :fax: 327-4333
+  :principal_last_name: Yamasawa
+  :principal_first_name: Jessica
+",
+81,114,Oahu,Honolulu,K,5,DOE,Kahala Elementary,Kahala El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 4559 Kilauea Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-8455
+  :fax: 733-4669
+  :principal_last_name: Gardner
+  :principal_first_name: Kinau
+",
+82,306,Oahu,Windward,K,6,DOE,Kahalu'u Elementary,Kahaluu El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 47-280 Waihee Road
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 239-3101
+  :fax: 239-3102
+  :principal_last_name: Matsuzaki
+  :principal_first_name: Naomi
+",
+83,331,Oahu,Windward,K,6,DOE,Kahuku Elementary,Kahuku El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 56-170 Pualalea Street
+  :city: Kahuku
+  :state: HI
+  :postal_code: ""96731""
+  :phone: 293-8980
+  :fax: 293-8985
+  :principal_last_name: Masaniai
+  :principal_first_name: Pauline
+",
+84,307,Oahu,Windward,7,12,DOE,Kahuku High & Intermediate,Kahuku High & Int,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 56-490 Kamehameha Highway
+  :city: Kahuku
+  :state: HI
+  :postal_code: ""96731""
+  :phone: 293-8950
+  :fax: 293-8960
+  :principal_last_name: Lindsey
+  :principal_first_name: Donna
+",
+85,405,Maui,Maui,K,5,DOE,Kahului Elementary,Kahului El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 410 South Hina Avenue
+  :city: Kahului
+  :state: HI
+  :postal_code: ""96732""
+  :phone: 873-3055
+  :fax: 873-3089
+  :principal_last_name: Markgraf
+  :principal_first_name: Fern
+",
+86,308,Oahu,Windward,K,6,DOE,Kailua Elementary,Kailua El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 315 Kuulei Road
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7878
+  :fax: 266-7882
+  :principal_last_name: Hibbs
+  :principal_first_name: Lanelle
+",
+87,309,Oahu,Windward,9,12,DOE,Kailua High,Kailua High,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 451 Ulumanu Drive
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7900
+  :fax: 266-7915
+  :principal_last_name: Honda
+  :principal_first_name: Francine
+",
+88,310,Oahu,Windward,7,8,DOE,Kailua Intermediate,Kailua Int,Kailua-Kalaheo,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: Delong
+  phone: 263-1500
+  fax: 266-7984
+  email: ''
+  principal_first_name: Lisa
+  street: 145 South Kainalu Drive
+  city: Kailua
+  state: HI
+  postal_code: '96734'
+",
+89,281,Oahu,Leeward,K,6,DOE,Kaimiloa Elementary,Kaimiloa El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-1028 Kaunolu Street
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 689-1280
+  :fax: 689-1284
+  :principal_last_name: Hatada
+  :principal_first_name: Debra
+",
+90,115,Oahu,Honolulu,9,12,DOE,Kaimuki High,Kaimuki High,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2705 Kaimuki Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4900
+  :fax: 733-4929
+  :principal_last_name: Araki
+  :principal_first_name: Wade
+",
+91,116,Oahu,Honolulu,6,8,DOE,Kaimuki Middle,Kaimuki Middle,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 631 18th Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4800
+  :fax: 733-4810
+  :principal_last_name: Fernandes
+  :principal_first_name: Frank
+",
+92,311,Oahu,Windward,K,6,DOE,Kainalu Elementary,Kainalu El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 165 Kaiholu Street
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7835
+  :fax: 266-7837
+  :principal_last_name: Sunabe
+  :principal_first_name: Sheri
+",
+93,154,Oahu,Honolulu,9,12,DOE,Henry J. Kaiser High,Kaiser High,Farrington-Kaiser-Kalani,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: Mew
+  phone: 394-1200
+  fax: 394-1201
+  email: ''
+  principal_first_name: Justin
+  street: 511 Lunalilo Home Road
+  city: Honolulu
+  state: HI
+  postal_code: '96825'
+",
+94,117,Oahu,Honolulu,K,5,DOE,Princess Victoria Ka'iulani Elementary,Kaiulani El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 783 North King Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 832-3160
+  :fax: 832-3164
+  :principal_last_name: Moriwake
+  :principal_first_name: Rodney
+",
+95,453,Kauai,Kauai,K,5,DOE,Kalaheo Elementary,Kalaheo El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4400 Maka Road
+  :city: Kalaheo
+  :state: HI
+  :postal_code: ""96741""
+  :phone: 332-6801
+  :fax: 332-6804
+  :principal_last_name: Burkman
+  :principal_first_name: Erik
+",
+96,312,Oahu,Windward,9,12,DOE,Kalaheo High,Kalaheo High,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 730 Iliaina Street
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 254-7900
+  :fax: 254-7907
+  :principal_last_name: Hummel
+  :principal_first_name: Susan
+",
+97,118,Oahu,Honolulu,6,8,DOE,King David Kalakaua Middle,Kalakaua Middle,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 821 Kalihi Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3130
+  :fax: 832-3140
+  :principal_last_name: Nomiyama
+  :principal_first_name: Calvin
+",
+98,420,Maui,Maui,6,8,DOE,Samuel Enoka Kalama Intermediate,Kalama Int,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 120 Makani Road
+  :city: Makawao
+  :state: HI
+  :postal_code: ""96768""
+  :phone: 573-8735
+  :fax: 573-8748
+  :principal_last_name: Costales Jr.
+  :principal_first_name: John
+",
+99,119,Oahu,Honolulu,9,12,DOE,Kalani High,Kalani High,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 4680 Kalanianaole Highway
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96821""
+  :phone: 377-7744
+  :fax: 377-2483
+  :principal_last_name: Otani
+  :principal_first_name: Mitchell
+",
+100,365,Hawaii,Hawaii,K,8,DOE,Prince Jonah Kuhio Kalaniana'ole Elementary & Intermediate,Kalanianaole El & Int,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 27-330 Old Mamalahoa Highway
+  :city: Papaikou
+  :state: HI
+  :postal_code: ""96781""
+  :phone: 964-9700
+  :fax: 964-9703
+  :principal_last_name: Iwashita
+  :principal_first_name: Joyce
+",
+101,287,Oahu,Leeward,K,6,DOE,Kalei'opu'u Elementary,Kaleiopuu El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-665 Kaaholo Street
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 675-0266
+  :fax: 675-0269
+  :principal_last_name: Young
+  :principal_first_name: Vernon
+",
+102,120,Oahu,Honolulu,K,5,DOE,Kalihi Elementary,Kalihi El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 2471 Kula Kolea Drive
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3177
+  :fax: 832-3179
+  :principal_last_name: Pila
+  :principal_first_name: David
+",
+103,121,Oahu,Honolulu,K,5,DOE,Kalihi-kai Elementary,Kalihi-kai El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 626 McNeill Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 832-3322
+  :fax: 832-3327
+  :principal_last_name: Kayatani
+  :principal_first_name: Stanley
+",
+104,122,Oahu,Honolulu,K,5,DOE,Kalihi-uka Elementary,Kalihi-uka El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 2411 Kalihi Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3310
+  :fax: 832-3313
+  :principal_last_name: Ahn
+  :principal_first_name: Laura
+",
+105,123,Oahu,Honolulu,K,5,DOE,Kalihi-waena Elementary,Kalihi-waena El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1240 Gulick Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3210
+  :fax: 832-3213
+  :principal_last_name: Gallardo
+  :principal_first_name: Veronica
+",
+106,275,Oahu,Leeward,K,8,Charter,Kamaile Academy Public Charter School,Kamaile Academy PCS,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 85-180 Ala Akau Street
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 697-7110
+  :fax: 697-7115
+  :principal_last_name: Weiss
+  :principal_first_name: Emma
+",
+107,448,Kauai,Kauai,6,8,DOE,Chiefess Kamakahelei Middle,Kamakahelei Middle,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4431 Nuhou Street
+  :city: Lihue
+  :state: HI
+  :postal_code: ""96766""
+  :phone: 241-3200
+  :fax: 241-3210
+  :principal_last_name: Badua
+  :principal_first_name: Debra
+",
+108,431,Maui,Maui,K,5,DOE,Kamali'i Elementary,Kamalii El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 180 Ke Alii Alanui
+  :city: Kihei
+  :state: HI
+  :postal_code: ""96753""
+  :phone: 875-6840
+  :fax: 875-6843
+  :principal_last_name: Daly
+  :principal_first_name: Christopher
+",
+109,912,Oahu,,,,Private,Kamehameha (Haiku),Kamehameha (Haiku),,,,"---
+:site_contact:
+  :street:
+  :city:
+  :state:
+  :postal_code:
+  :phone: 235-3547
+  :fax:
+  :principal_last_name: Newhouse
+  :principal_first_name: Malia
+",
+110,913,Oahu,,,,Private,Kamehameha Elementary School,Kamehameha El (Kapalama),,,,"---
+:site_contact:
+  :street: 225 Bishop Circle
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 842-8564
+  :fax:
+  :principal_last_name: Stender
+  :principal_first_name: Holoua
+",
+111,939,Oahu,Central,0,0,Private,Kamehameha School - Kea'au Campus,Kamehameha (Hawaii),Aiea,,,"---
+:site_contact:
+  :street: 16-714 Volcano Road
+  :fax: ""8089820210""
+  :city: Keaau
+  :principal_last_name: Nae'ole-Wong
+  :postal_code: ""96749""
+  :principal_first_name: Mona
+  :state: HI
+  :phone: ""8089820200""
+",
+112,914,Oahu,,,,Private,Kamehameha High School,Kamehameha High (Kapalama),,,,"---
+:site_contact:
+  :street: 210 Konia Circle
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 842-8351
+  :fax:
+  :principal_last_name: Ako
+  :principal_first_name: Julian
+",
+113,406,Maui,Maui,K,5,DOE,King Kamehameha III Elementary,Kamehameha III El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 611 Front Street
+  :city: Lahaina
+  :state: HI
+  :postal_code: ""96761""
+  :phone: 662-3955
+  :fax: 662-3958
+  :principal_last_name: Franz
+  :principal_first_name: Steve
+",
+114,915,Oahu,,,,Private,Kamehameha Preschool (Kahuku),Kamehameha PK (Kahuku),,,,"---
+:site_contact:
+  :street: ""56-117 Pualalea St #17""
+  :city: Kahuku
+  :state: HI
+  :postal_code: ""96731""
+  :phone: 293-9066
+  :fax:
+  :principal_last_name: Newhouse
+  :principal_first_name: Malia
+",
+115,916,Oahu,,,,Private,Kamehameha Preschool (Kaneohe),Kamehameha PK (Kaneohe),,,,"---
+:site_contact:
+  :street: 46-068 Alaloa Street
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 235-3547
+  :fax:
+  :principal_last_name: Newhouse
+  :principal_first_name: Malia
+",
+116,917,Oahu,,,,Private,Kamehameha Preschool (Keanu),Kamehameha PK (Keanu) ,,,,"---
+:site_contact:
+  :street: 4224 Keanu Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 842-8461
+  :fax: 847-6378
+  :principal_last_name: Sua-Filo
+  :principal_first_name: Cookie
+",
+117,918,Oahu,,,,Private,Kamehameha Preschool (Ulupono),Kamehameha PK (Ulupono),,,,"---
+:site_contact:
+  :street:
+  :city:
+  :state:
+  :postal_code:
+  :phone: 842-8383
+  :fax:
+  :principal_last_name: Murray
+  :principal_first_name: Vivian
+",
+118,919,Oahu,,,,Private,Kamehameha Preschool (Ulupono),Kamehameha PK (Ulupono),,,,"---
+:site_contact:
+  :street:
+  :city:
+  :state:
+  :postal_code:
+  :phone: 842-8462
+  :fax:
+  :principal_last_name: Murray
+  :principal_first_name: Vivian
+",
+119,920,Oahu,,,,Private,Kamehameha Preschool (Waianae 1),Kamehameha PK (Waianae 1),,,,"---
+:site_contact:
+  :street: 87-227 St. John's Rd
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 668-1196
+  :fax:
+  :principal_last_name: Lui-Kwan
+  :principal_first_name: Kalia
+",
+120,155,Oahu,Honolulu,K,5,DOE,Kamiloiki Elementary,Kamiloiki El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 7788 Hawaii Kai Drive
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96825""
+  :phone: 397-5800
+  :fax: 397-5806
+  :principal_last_name: Okano
+  :principal_first_name: Susan
+",
+121,313,Oahu,Windward,K,6,DOE,Kane'ohe Elementary,Kaneohe El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 45-495 Kamehameha Highway
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5633
+  :fax: 235-9185
+  :principal_last_name: Noh
+  :principal_first_name: Ed
+",
+122,283,Oahu,Leeward,K,6,DOE,Kanoelani Elementary,Kanoelani El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-1091 Oli Loop
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 675-0195
+  :fax: 675-0135
+  :principal_last_name: Ahu
+  :principal_first_name: Sandy
+",
+123,397,Hawaii,Hawaii,K,12,Charter,Kanu 'o ka 'Aina New Century Public Charter School,Kanu o ka Aina NCPCS,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 65-1170 Opelo Road
+  :city: Kamuela
+  :state: HI
+  :postal_code: ""96743""
+  :phone: 887-8144
+  :fax: 887-8146
+  :principal_last_name: Tamura
+  :principal_first_name: Allyson
+",
+124,564,Kauai,Kauai,K,10,Charter,Kanuikapono Learning Center Public Charter School,Kanuikapono PCS,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: ""4-4911 Kuhio Hwy (mail: P.O. Box 12)""
+  :city: Anahola
+  :state: HI
+  :postal_code: ""96703""
+  :phone: 823-9160
+  :fax: 823-9140
+  :principal_last_name: Torio
+  :principal_first_name: Kuuipo
+",
+125,454,Kauai,Kauai,K,5,DOE,Kapa'a Elementary,Kapaa El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4886 Kawaihau Road
+  :city: Kapaa
+  :state: HI
+  :postal_code: ""96746""
+  :phone: 821-4424
+  :fax: 821-4431
+  :principal_last_name: Kuloloia
+  :principal_first_name: Jason
+",
+126,455,Kauai,Kauai,9,12,DOE,Kapa'a High,Kapaa High,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4695 Mailihuna Road
+  :city: Kapaa
+  :state: HI
+  :postal_code: ""96746""
+  :phone: 821-4400
+  :fax: 821-4420
+  :principal_last_name: Hamada
+  :principal_first_name: Daniel
+",
+127,447,Kauai,Kauai,6,8,DOE,Kapa'a Middle,Kapaa Middle,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4867 Olohena Road
+  :city: Kapaa
+  :state: HI
+  :postal_code: ""96746""
+  :phone: 821-4460
+  :fax: 821-6967
+  :principal_last_name: Aiwohi
+  :principal_first_name: Nathan
+",
+128,124,Oahu,Honolulu,K,5,DOE,Kapalama Elementary,Kapalama El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1601 North School Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 832-3290
+  :fax: 832-3302
+  :principal_last_name: Dang
+  :principal_first_name: Patricia
+",
+129,367,Hawaii,Hawaii,K,6,DOE,Chiefess Kapi'olani Elementary,Kapiolani El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 966 Kilauea Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4160
+  :fax: 974-4161
+  :principal_last_name: Stewart
+  :principal_first_name: Lucia
+",
+130,282,Oahu,Leeward,K,5,DOE,Kapolei Elementary,Kapolei El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-1119 Kamaaha Loop
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 693-7000
+  :fax: 693-7011
+  :principal_last_name: Miyamura
+  :principal_first_name: Michael
+",
+131,292,Oahu,Leeward,9,12,DOE,Kapolei High,Kapolei High,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-5007 Kapolei Parkway
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 692-8200
+  :fax: 692-8255
+  :principal_last_name: Esmeralda
+  :principal_first_name: Elden
+",
+132,291,Oahu,Leeward,6,8,DOE,Kapolei Middle,Kapolei Middle,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-5335 Kapolei Parkway
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 693-7025
+  :fax: 693-7030
+  :principal_last_name: Kobashigawa
+  :principal_first_name: Dana
+",
+133,315,Oahu,Windward,K,6,DOE,Kapunahala Elementary,Kapunahala El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 45-828 Anoi Road
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5650
+  :fax: 233-5651
+  :principal_last_name: Nekomoto
+  :principal_first_name: Deborah
+",
+134,368,Hawaii,Hawaii,K,12,DOE,Ka'u High & Pahala Elementary,Kau High & Pahala El,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 96-3150 Pikake Street
+  :city: Pahala
+  :state: HI
+  :postal_code: ""96777""
+  :phone: 928-2088
+  :fax: 928-2092
+  :principal_last_name: Beck
+  :principal_first_name: Sharon
+",
+135,456,Kauai,Kauai,9,12,DOE,Kaua'i High,Kauai High,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 3577 Lala Road
+  :city: Lihue
+  :state: HI
+  :postal_code: ""96766""
+  :phone: 274-3160
+  :fax: 274-3170
+  :principal_last_name: Smith
+  :principal_first_name: Linda
+",
+136,125,Oahu,Honolulu,K,5,DOE,Kauluwela Elementary,Kauluwela El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1486 Aala Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 587-4447
+  :fax: 587-4453
+  :principal_last_name: Lee
+  :principal_first_name: Gwendolyn
+",
+137,369,Hawaii,Hawaii,K,6,DOE,Ka'umana Elementary,Kaumana El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 1710 Kaumana Drive
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4190
+  :fax: 974-4197
+  :principal_last_name: Mizuba
+  :principal_first_name: Ray
+",
+138,457,Kauai,Kauai,K,5,DOE,King Kaumuali'i Elementary,Kaumualii El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4380 Hanamaulu Road
+  :city: Lihue
+  :state: HI
+  :postal_code: ""96766""
+  :phone: 241-3150
+  :fax: 241-3159
+  :principal_last_name: Liu
+  :principal_first_name: Karen
+",
+139,407,Maui,Maui,K,6,DOE,Kaunakakai Elementary,Kaunakakai El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: PO Box 1950
+  :city: Kaunakakai
+  :state: HI
+  :postal_code: ""96748""
+  :phone: 553-1730
+  :fax: 553-1737
+  :principal_last_name: Espiritu
+  :principal_first_name: Janice
+",
+140,565,Kauai,Kauai,K,12,Charter,Kawaikini New Century Public Charter School,Kawaikini NCPCS,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: P.O. Box 662014
+  :city: Lihue
+  :state: HI
+  :postal_code: ""96766""
+  :phone: 632-2032
+  :fax: 246-4635
+  :principal_last_name: Kauahi
+  :principal_first_name: Leialoha
+",
+141,126,Oahu,Honolulu,6,8,DOE,Prince David Kawananakoa Middle,Kawananakoa Middle,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 49 Funchal Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 587-4430
+  :fax: 587-4443
+  :principal_last_name: Ishihara-Shibata
+  :principal_first_name: Sandra
+",
+142,549,Hawaii,Hawaii,7,12,Charter,Ke Ana La'ahana Public Charter School,Ke Ana La`ahana PCS,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 1500 Kalaniana'ole Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 961-6228
+  :fax: 961-6229
+  :principal_last_name: Ili
+  :principal_first_name: Russell
+",
+143,563,Hawaii,Hawaii,K,8,Charter,Ke Kula 'o Nawahiokalani'opu'u Iki Laboratory Public Charter School,Ke Kula Nawahiokalaniopuu Iki Lab PCS,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 16-120 'Opukaha'ia Street, Suite 2
+  :city: Kea'au
+  :state: HI
+  :postal_code: ""96749""
+  :phone: 982-4260
+  :fax: 966-7821
+  :principal_last_name: Kamana
+  :principal_first_name: Kauanoe
+",
+144,556,Kauai,Kauai,K,12,Charter,Ke Kula Ni'ihau O Kekaha Learning Center A Laboratory Public Charter School,Ke Kula Niihau Kekaha PCS,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: ""8135 Kekaha Road (mail: P.O. Box 129)""
+  :city: Kekaha
+  :state: HI
+  :postal_code: ""96752""
+  :phone: 337-0481
+  :fax: 337-1289
+  :principal_last_name: Seward
+  :principal_first_name: Haunani
+",
+145,378,Hawaii,Hawaii,K,12,DOE,Ke Kula 'o 'Ehunuikaimalino,Ke Kula o Ehunuikaimalino,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 81-1041 Konawaena School Rd
+  :city: Kealakekua
+  :state: HI
+  :postal_code: ""96750""
+  :phone: 323-1900
+  :fax: 323-4538
+  :principal_last_name: Lino
+  :principal_first_name: Tim
+",
+146,547,Oahu,Windward,K,12,Charter,Ke Kula 'o Samuel M. Kamakau a Laboratory Public Charter School,Ke Kula O Kamakau Lab PCS,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 45-037 Kane'ohe Bay Drive
+  :city: Kane'ohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 235-9174
+  :fax: 235-9173
+  :principal_last_name: Kelling
+  :principal_first_name: Keahilahila
+",
+147,353,Hawaii,Hawaii,K,5,DOE,Kea'au Elementary,Keaau El,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 16-680 Keauu-Pahoa Road
+  :city: Kea`au
+  :state: HI
+  :postal_code: ""96749""
+  :phone: 982-4210
+  :fax: 982-4217
+  :principal_last_name: Farias
+  :principal_first_name: Chad
+",
+148,354,Hawaii,Hawaii,9,12,DOE,Kea'au High,Keaau High,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 16-725 Keaau-Pahoa Road
+  :city: Kea`au
+  :state: HI
+  :postal_code: ""96749""
+  :phone: 982-4220
+  :fax: 982-4224
+  :principal_last_name: Cevallos
+  :principal_first_name: Dean
+",
+149,370,Hawaii,Hawaii,6,8,DOE,Kea'au Middle,Keaau Middle,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 16-565 Keaau-Pahoa Road
+  :city: Kea`au
+  :state: HI
+  :postal_code: ""96749""
+  :phone: 982-4200
+  :fax: 982-4219
+  :principal_last_name: Watanabe
+  :principal_first_name: Ken
+",
+150,388,Hawaii,Hawaii,K,5,DOE,Kealakehe Elementary,Kealakehe El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 74-5118 Kealakaa Street
+  :city: Kailua-Kona
+  :state: HI
+  :postal_code: ""96740""
+  :phone: 327-4308
+  :fax: 327-4347
+  :principal_last_name: Matsukawa
+  :principal_first_name: Nancy
+",
+151,392,Hawaii,Hawaii,9,12,DOE,Kealakehe High,Kealakehe High,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 74-5000 Puohulihuli Street
+  :city: Kailua-Kona
+  :state: HI
+  :postal_code: ""96740""
+  :phone: 327-4300
+  :fax: 327-4307
+  :principal_last_name: Murakami
+  :principal_first_name: Wilfred
+",
+152,390,Hawaii,Hawaii,6,8,DOE,Kealakehe Intermediate,Kealakehe Int,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 74-5062 Onipa'a Street
+  :city: Kailua-Kona
+  :state: HI
+  :postal_code: ""96740""
+  :phone: 327-4314
+  :fax: 327-4315
+  :principal_last_name: Merwin
+  :principal_first_name: Don
+",
+153,372,Hawaii,Hawaii,K,6,DOE,Keaukaha Elementary,Keaukaha El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 240 Desha Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4181
+  :fax: 974-4868
+  :principal_last_name: Veincent
+  :principal_first_name: Lehua
+",
+154,921,Oahu,,,,Private,Keiki Care Center of Hawaii,Keiki Care Center of Hawaii,,,,"---
+:site_contact:
+  :street: 757 Hoomalu Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 455-5545
+  :fax:
+  :principal_last_name: Cudiamat
+  :principal_first_name: Cheryl
+",
+155,458,Kauai,Kauai,K,5,DOE,Kekaha Elementary,Kekaha El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 8140 Kekaha Road
+  :city: Kekaha
+  :state: HI
+  :postal_code: ""96752""
+  :phone: 337-7655
+  :fax: 337-7657
+  :principal_last_name: Yoshida
+  :principal_first_name: Jason
+",
+156,435,Maui,Maui,9,12,DOE,King Kekaulike High,Kekaulike High,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 121 Kula Highway
+  :city: Pukalani
+  :state: HI
+  :postal_code: ""96768""
+  :phone: 573-8710
+  :fax: 573-2231
+  :principal_last_name: Scofield
+  :principal_first_name: Susan
+",
+157,317,Oahu,Windward,K,6,DOE,Keolu Elementary,Keolu El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 1416 Keolu Drive
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7818
+  :fax: 266-7892
+  :principal_last_name: Souki
+  :principal_first_name: Alma
+",
+158,391,Hawaii,Hawaii,K,6,DOE,Keonepoko Elementary,Keonepoko El,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 15-890 Kahakai Blvd.
+  :city: Pahoa
+  :state: HI
+  :postal_code: ""96778""
+  :phone: 965-2131
+  :fax: 965-2138
+  :principal_last_name: Romero
+  :principal_first_name: Kathleen
+",
+159,294,Oahu,Leeward,K,6,DOE,Keone'ula Elementary,Keoneula El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-970 Kaileolea Drive
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 689-1380
+  :fax: 689-1395
+  :principal_last_name: Hirota
+  :principal_first_name: Eileen
+",
+160,409,Maui,Maui,K,5,DOE,Kihei Elementary,Kihei El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 250 E. Lipoa Street
+  :city: Kihei
+  :state: HI
+  :postal_code: ""96753""
+  :phone: 875-6818
+  :fax: 875-6825
+  :principal_last_name: Maxwell
+  :principal_first_name: Halle
+",
+161,554,Maui,Maui,K,12,Charter,Kihei Public Charter High School,Kihei PC High School,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: ""300 Ohukai Road #209 (mail: P.O. Box 1098)""
+  :city: Kihei
+  :state: HI
+  :postal_code: ""96753""
+  :phone: 875-0700
+  :fax: 874-6745
+  :principal_last_name: Christiano
+  :principal_first_name: Mark
+",
+162,459,Kauai,Kauai,K,6,DOE,Kilauea Elementary,Kilauea El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 2440 Kolo Road
+  :city: Kilauea
+  :state: HI
+  :postal_code: ""96754""
+  :phone: 828-1212
+  :fax: 828-2034
+  :principal_last_name: Scott
+  :principal_first_name: Sherry
+",
+163,410,Maui,Maui,K,6,DOE,Kilohana Elementary,Kilohana El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: HC 01, Box 334
+  :city: Kaunakakai
+  :state: HI
+  :postal_code: ""96748""
+  :phone: 558-2200
+  :fax: 558-2203
+  :principal_last_name: Stevens
+  :principal_first_name: Richard
+",
+164,318,Oahu,Windward,7,8,DOE,Governor Samuel Wilder King Intermediate,King Int,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 46-155 Kamehameha Highway
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5727
+  :fax: 233-5747
+  :principal_last_name: Alaiasa
+  :principal_first_name: Sheena
+",
+165,212,Oahu,Central,K,5,DOE,Kipapa Elementary,Kipapa El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 95-076 Kipapa Drive
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 627-7322/627-7323
+  :fax: 627-7326
+  :principal_last_name: Yogi
+  :principal_first_name: Corinne
+",
+166,395,Hawaii,Hawaii,K,5,DOE,Kohala Elementary,Kohala El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: PO Box 819
+  :city: Kapaau
+  :state: HI
+  :postal_code: ""96755""
+  :phone: 889-7100
+  :fax: 889-7103
+  :principal_last_name: Garcia
+  :principal_first_name: Danny
+",
+167,373,Hawaii,Hawaii,9,12,DOE,Kohala High,Kohala High,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: P.O. Box 279
+  :city: Kapaau
+  :state: HI
+  :postal_code: ""96755""
+  :phone: 889-7117
+  :fax: 889-7120
+  :principal_last_name: Snelling
+  :principal_first_name: Janette
+",
+168,366,Hawaii,Hawaii,6,8,DOE,Kohala Middle,Kohala Middle,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: PO Box 777
+  :city: Kapaau
+  :state: HI
+  :postal_code: ""96755""
+  :phone: 889-7119
+  :fax: 889-7121
+  :principal_last_name: Champagne
+  :principal_first_name: Patricia
+",
+169,127,Oahu,Honolulu,K,5,DOE,Koko Head Elementary,Koko Head El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 189 Lunalilo Home Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96825""
+  :phone: 397-5811
+  :fax: 397-5816
+  :principal_last_name: Shitaoka
+  :principal_first_name: Jeffrey
+",
+170,460,Kauai,Kauai,K,5,DOE,Koloa Elementary,Koloa El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 3223 Poipu Road
+  :city: Koloa
+  :state: HI
+  :postal_code: ""96756""
+  :phone: 742-8460
+  :fax: 742-8466
+  :principal_last_name: Lindsey
+  :principal_first_name: Debra
+",
+171,566,Hawaii,Hawaii,K,8,Charter,Kona Pacific Public Charter School,Kona Pacific PCS,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: ! '79-7595 Mamalahoa Hwy (mail: PO Box 115)'
+  :city: Kealakekua
+  :state: HI
+  :postal_code: '96750'
+  :phone: 322-4900
+  :fax: 322-4906
+  :principal_last_name: Kotner
+  :principal_first_name: Usha
+",
+172,375,Hawaii,Hawaii,K,5,DOE,Konawaena Elementary,Konawaena El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 81-901 Onouli Road
+  :city: Kealakekua
+  :state: HI
+  :postal_code: ""96750""
+  :phone: 323-4555
+  :fax: 323-4551
+  :principal_last_name: Yoshida
+  :principal_first_name: Claire
+",
+173,374,Hawaii,Hawaii,9,12,DOE,Konawaena High,Konawaena High,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 81-1043 Konawaena School Road
+  :city: Kealakekua
+  :state: HI
+  :postal_code: ""96750""
+  :phone: 323-4500
+  :fax: 323-4515
+  :principal_last_name: Suzuki
+  :principal_first_name: Shawn
+",
+174,376,Hawaii,Hawaii,6,8,DOE,Konawaena Middle,Konawaena Middle,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 81-1045 Konawaena School Road
+  :city: Kealakekua
+  :state: HI
+  :postal_code: ""96750""
+  :phone: 323-4566
+  :fax: 323-4574
+  :principal_last_name: Burgess
+  :principal_first_name: Teddy
+",
+175,940,Oahu,,,,Private,"Nanakuli II, Community Learning Center at N�n�kuli",KSBE Nanakuli,,,,"---
+:site_contact:
+  :street: 89-101 Farrington Hwy.
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone:
+  :fax:
+  :principal_last_name:
+  :principal_first_name:
+",
+176,941,Oahu,,,,Private,"Hoaliku Drake Preschool, Princess Kahanu Estates",KSBE Waianae,,,,"---
+:site_contact:
+  :street: 87-115 Wai'olu St.
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone:
+  :fax:
+  :principal_last_name:
+  :principal_first_name:
+",
+177,557,Hawaii,Hawaii,K,12,Charter,Kua 'o Ka La Public Charter School,Kua O Ka La PCS,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 14-5322 Kaimu/Kapoho Road
+  :city: Pahoa
+  :state: HI
+  :postal_code:
+  :phone: 965-5098
+  :fax: 965-9618
+  :principal_last_name: Osborne
+  :principal_first_name: Susan
+",
+178,411,Maui,Maui,K,6,Charter,Kualapu'u Elementary New Century Public Conversion Charter School,Kualapuu El NCPCCS,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 260 Farrington Avenue
+  :city: Kualapuu
+  :state: HI
+  :postal_code: ""96757""
+  :phone: 567-6900
+  :fax: 567-6906
+  :principal_last_name: Trinidad
+  :principal_first_name: Lydia
+",
+179,128,Oahu,Honolulu,K,5,DOE,Prince Jonah Kuhio Elementary,Kuhio El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2759 S. King Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96826""
+  :phone: 973-0085
+  :fax: 973-0088
+  :principal_last_name: Hao
+  :principal_first_name: Evelyn
+",
+180,466,Kauai,Kauai,K,12,Charter,Kula Aupuni Ni`ihau A Kahelelani Aloha New Century Public Charter School (KANAKA),Kula Aupuni Ni`ihau A Kahelelani Aloha,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 8315 Kekaha Road
+  :city: Kekaha
+  :state: HI
+  :postal_code: ""96752""
+  :phone: 337-2022
+  :fax: 337-2033
+  :principal_last_name: Sullivan
+  :principal_first_name: Hedy
+",
+181,412,Maui,Maui,K,5,DOE,Kula Elementary,Kula El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 5000 Kula Highway
+  :city: Kula
+  :state: HI
+  :postal_code: ""96790""
+  :phone: 876-7610
+  :fax: 876-7616
+  :principal_last_name: Oura
+  :principal_first_name: Barbara
+",
+182,413,Maui,Maui,6,8,DOE,Lahaina Intermediate,Lahaina Int,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 871 Lahainaluna Road
+  :city: Lahaina
+  :state: HI
+  :postal_code: ""96761""
+  :phone: 662-3965
+  :fax: 662-3968
+  :principal_last_name: Nakamura
+  :principal_first_name: Marsha
+",
+183,414,Maui,Maui,9,12,DOE,Lahainaluna High,Lahainaluna High,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 980 Lahainaluna Road
+  :city: Lahaina
+  :state: HI
+  :postal_code: ""96761""
+  :phone: 662-4000
+  :fax: 662-3997
+  :principal_last_name: DeCosta
+  :principal_first_name: Emily
+",
+184,319,Oahu,Windward,K,6,DOE,La'ie Elementary,Laie El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 55-109 Kulanui Street
+  :city: Laie
+  :state: HI
+  :postal_code: ""96762""
+  :phone: 293-8965
+  :fax: 293-8968
+  :principal_last_name: Ho
+  :principal_first_name: Matthew
+",
+185,415,Maui,Maui,K,12,DOE,Lanai High & Elementary,Lanai High & El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: PO Box 630630
+  :city: Lanai City
+  :state: HI
+  :postal_code: ""96763""
+  :phone: 565-7900
+  :fax: 565-7904
+  :principal_last_name: Myers
+  :principal_first_name: Pierce
+",
+186,129,Oahu,Honolulu,K,5,DOE,Lanakila Elementary,Lanakila El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 717 North Kuakini Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 587-4466
+  :fax: 587-4468
+  :principal_last_name: Dilwith
+  :principal_first_name: Linell
+",
+187,320,Oahu,Windward,K,6,Charter,Lanikai Elementary Public Charter School,Lanikai El PCS,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 140 Alala Road
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7844
+  :fax: 266-7848
+  :principal_last_name: Noh
+  :principal_first_name: Ed
+",
+188,377,Hawaii,Hawaii,K,12,DOE,Laupahoehoe High & Elementary,Laupahoehoe High & El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: PO Box 189
+  :city: Laupahoehoe
+  :state: HI
+  :postal_code: ""96764""
+  :phone: 962-2200
+  :fax: 962-2202
+  :principal_last_name: Denight
+  :principal_first_name: James
+",
+189,903,Oahu,Central,0,0,DOE,Leeward Community College Children�s Center,LCC Childrens Center,Aiea,,,"---
+:site_contact:
+  :street: 96-045 Ala Ike Street
+  :principal_last_name: Moravcik
+  :city: Pearl City
+  :principal_first_name: Eva
+  :postal_code: ""96782""
+  :state: HI
+  :phone: 455-0488
+  :fax:
+",
+190,922,Oahu,,,,Private,Le Jardin Academy,Le Jardin Academy,,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: McNeill
+  phone: 261-0707
+  fax: ''
+  email: vicki.mcneill@lejardinacademy.org
+  principal_first_name: Victoria
+  street: 917 Kalanianaole Highway
+  city: Kailua
+  state: HI
+  postal_code: '96734'
+",
+191,268,Oahu,Leeward,K,6,DOE,Lehua Elementary,Lehua El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 791 Lehua Avenue
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6490
+  :fax: 453-6497
+  :principal_last_name: Toyama
+  :principal_first_name: Fay
+",
+192,271,Oahu,Leeward,K,6,DOE,Leihoku Elementary,Leihoku El,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 86-285 Leihoku Street
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 697-7100
+  :fax: 697-7142
+  :principal_last_name: Miura
+  :principal_first_name: Randall
+",
+193,214,Oahu,Central,9,12,DOE,Leilehua High,Leilehua High,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 1515 California Avenue
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6550
+  :fax: 622-6554
+  :principal_last_name: Coleman
+  :principal_first_name: Aloha
+",
+194,416,Maui,Maui,K,5,DOE,Lihikai Elementary,Lihikai El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 335 S. Papa Avenue
+  :city: Kahului
+  :state: HI
+  :postal_code: ""96732""
+  :phone: 873-3033
+  :fax: 873-3570
+  :principal_last_name: Pollock
+  :principal_first_name: Michael
+",
+195,130,Oahu,Honolulu,K,5,DOE,King Liholiho Elementary,Liholiho El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 3430 Maunaloa Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4850
+  :fax: 733-4856
+  :principal_last_name: Small
+  :principal_first_name: Christina
+",
+196,131,Oahu,Honolulu,K,5,DOE,Princess Miriam K. Likelike Elementary,Likelike El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1618 Palama Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 832-3370
+  :fax: 832-3374
+  :principal_last_name: Bart
+  :principal_first_name: Kelly
+",
+197,132,Oahu,Honolulu,K,5,DOE,Queen Lydia Lili'uokalani Elementary,Liliuokalani El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 3633 Waialae Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4680
+  :fax: 733-4685
+  :principal_last_name: Chock
+  :principal_first_name: Raelene
+",
+198,133,Oahu,Honolulu,K,2,DOE,Linapuni Elementary,Linapuni El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1434 Linapuni Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3303
+  :fax: 832-3305
+  :principal_last_name: Sunahara
+  :principal_first_name: Cindy
+",
+199,134,Oahu,Honolulu,K,5,DOE,President Abraham Lincoln Elementary,Lincoln El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 615 Auwaiolimu Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 587-4480
+  :fax: 587-4487
+  :principal_last_name: Emoto
+  :principal_first_name: Irving
+",
+200,430,Maui,Maui,6,8,DOE,Lokelani Intermediate,Lokelani Int,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 1401 Liloa Drive
+  :city: Kihei
+  :state: HI
+  :postal_code: ""96753""
+  :phone: 875-6800
+  :fax: 875-6835
+  :principal_last_name: Whitford
+  :principal_first_name: Donna
+",
+201,135,Oahu,Honolulu,K,5,DOE,King William Lunalilo Elementary,Lunalilo El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 810 Pumehana Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96826""
+  :phone: 973-0270
+  :fax: 973-0276
+  :principal_last_name: Kantrowitz
+  :principal_first_name: Amy
+",
+202,136,Oahu,Honolulu,K,5,DOE,Ma'ema'e Elementary,Maemae El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 319 Wyllie Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 595-5400
+  :fax: 595-5405
+  :principal_last_name: Blaisdell
+  :principal_first_name: Pearlene
+",
+203,257,Oahu,Leeward,K,6,DOE,Ma'ili Elementary,Maili El,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 87-360 Kula'aupuni Street
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 697-7150
+  :fax: 697-7151
+  :principal_last_name: Hauge
+  :principal_first_name: Disa
+",
+204,258,Oahu,Leeward,K,6,DOE,Makaha Elementary,Makaha El,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 84-200 Ala Naauao Place
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 695-7900
+  :fax: 695-7905
+  :principal_last_name: Okamura
+  :principal_first_name: Lynn
+",
+205,259,Oahu,Leeward,K,5,DOE,Makakilo Elementary,Makakilo El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 92-675 Anipeahi Street
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 672-1122
+  :fax: 672-1128
+  :principal_last_name: Tajima
+  :principal_first_name: Sean
+",
+206,215,Oahu,Central,K,6,DOE,Makalapa Elementary,Makalapa El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 4435 Salt Lake Blvd.
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4110/421-4111
+  :fax: 421-4112
+  :principal_last_name: Fujii
+  :principal_first_name: Raymond
+",
+207,417,Maui,Maui,K,5,DOE,Makawao Elementary,Makawao El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 3542 Baldwin Avenue
+  :city: Makawao
+  :state: HI
+  :postal_code: ""96768""
+  :phone: 573-8770
+  :fax: 573-8774
+  :principal_last_name: Honda
+  :principal_first_name: Robyn
+",
+208,260,Oahu,Leeward,K,6,DOE,Manana Elementary,Manana El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 1147 Kumano Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6430
+  :fax: 453-6437
+  :principal_last_name: Loo
+  :principal_first_name: Bryan
+",
+209,137,Oahu,Honolulu,K,6,DOE,Manoa Elementary,Manoa El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 3155 Manoa Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 988-1868
+  :fax: 988-1860
+  :principal_last_name: Uyeda
+  :principal_first_name: Jeanette
+",
+210,938,Oahu,,,,Private,Maryknoll High School,Maryknoll High,,,,"---
+:site_contact:
+  :street: 1526 Alexander St.
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: ""9528400""
+  :fax:
+  :principal_last_name: Gunderson
+  :principal_first_name: Betsey
+",
+211,418,Maui,Maui,9,12,DOE,Maui High,Maui High,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 660 S. Lono Avenue
+  :city: Kahului
+  :state: HI
+  :postal_code: ""96732""
+  :phone: 873-3000
+  :fax: 873-3010
+  :principal_last_name: Yamanuha
+  :principal_first_name: Randy
+",
+212,428,Maui,Maui,6,8,DOE,Maui Waena Intermediate,Maui Waena Int,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 795 Onehee Avenue
+  :city: Kahului
+  :state: HI
+  :postal_code: ""96732""
+  :phone: 873-3070
+  :fax: 873-3066
+  :principal_last_name: Yap
+  :principal_first_name: Jamie
+",
+213,286,Oahu,Leeward,K,5,DOE,Mauka Lani Elementary,Mauka Lani El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 92-1300 Panana Street
+  :city: Kapolei
+  :state: HI
+  :postal_code: ""96707""
+  :phone: 672-1100
+  :fax: 672-1114
+  :principal_last_name: Ferrara
+  :principal_first_name: Shelley
+",
+214,419,Maui,Maui,K,6,DOE,Maunaloa Elementary,Maunaloa El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: PO Box 128
+  :city: Maunaloa
+  :state: HI
+  :postal_code: ""96770""
+  :phone: 552-2000
+  :fax: 552-2004
+  :principal_last_name: Yamamoto
+  :principal_first_name: Joe
+",
+215,321,Oahu,Windward,K,6,DOE,Maunawili Elementary,Maunawili El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 1465 Ulupii Street
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7822
+  :fax: 266-7834
+  :principal_last_name: Amine
+  :principal_first_name: Ryan
+",
+216,138,Oahu,Honolulu,9,12,DOE,President William McKinley High,McKinley High,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1039 S. King Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96814""
+  :phone: 594-0400
+  :fax: 594-0407
+  :principal_last_name: Okamura
+  :principal_first_name: Ron
+",
+217,923,Oahu,,,,Private,Mid-Pacific Institute (Elementary),Mid-Pacific Institute (El),,,,"---
+:site_contact:
+  :street: 2445 Kaala Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 441-3800
+  :fax:
+  :principal_last_name: Hussey
+  :principal_first_name: Edna
+",
+218,924,Oahu,,,,Private,Mid-Pacific Institute (Secondary),Mid-Pacific Institute (Sec),,,,"---
+:site_contact:
+  :street: 2445 Kaala St
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: ""973-5019 ""
+  :fax:
+  :principal_last_name: Cruz
+  :principal_first_name: Grace
+",
+219,216,Oahu,Central,9,12,DOE,Mililani High,Mililani High,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 95-1200 Meheula Parkway
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 627-7747
+  :fax: 627-7375
+  :principal_last_name: Brummel
+  :principal_first_name: John
+",
+220,240,Oahu,Central,K,5,DOE,Mililani 'Ike Elementary,Mililani Ike El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 95-1330 Lehiwa Drive
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 626-2980
+  :fax: 626-2958
+  :principal_last_name: Nakasato
+  :principal_first_name: Steve
+",
+221,241,Oahu,Central,K,5,DOE,Mililani Mauka Elementary,Mililani Mauka El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 95-1111 Makaikai Street
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 626-3350
+  :fax: 626-3360
+  :principal_last_name: Petersen
+  :principal_first_name: Carol
+",
+222,238,Oahu,Central,6,8,DOE,Mililani Middle,Mililani Middle,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 95-1140 Lehiwa Drive
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 626-7355
+  :fax: 626-7358
+  :principal_last_name: Chung
+  :principal_first_name: Elynne
+",
+223,242,Oahu,Central,K,5,DOE,Mililani Uka Elementary,Mililani Uka El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 94-380 Kuahelani Avenue
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 627-7303
+  :fax: 627-7387
+  :principal_last_name: Wilhelm
+  :principal_first_name: Heather
+",
+224,234,Oahu,Central,K,5,DOE,Mililani Waena Elementary,Mililani Waena El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 95-502 Kipapa Drive
+  :city: Mililani
+  :state: HI
+  :postal_code: ""96789""
+  :phone: 627-7300
+  :fax: 627-7455
+  :principal_last_name: Castro
+  :principal_first_name: Dale
+",
+225,217,Oahu,Central,K,6,DOE,Moanalua Elementary,Moanalua El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 1337 Mahiole Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 831-7878/831-7879
+  :fax: 831-7877
+  :principal_last_name: Meyer
+  :principal_first_name: Ben
+",
+226,218,Oahu,Central,9,12,DOE,Moanalua High,Moanalua High,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 2825 Ala Ilima Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 837-8455
+  :fax: 831-7919
+  :principal_last_name: Galera
+  :principal_first_name: Darrel
+",
+227,219,Oahu,Central,7,8,DOE,Moanalua Middle,Moanalua Middle,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 1289 Mahiole Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 831-7850
+  :fax: 831-7859
+  :principal_last_name: Nagamine
+  :principal_first_name: Lisa
+",
+228,322,Oahu,Windward,K,6,DOE,Mokapu Elementary,Mokapu El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 1193 Mokapu Road
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 254-7964
+  :fax: 254-7969
+  :principal_last_name: Kane
+  :principal_first_name: Traci
+",
+229,220,Oahu,Central,K,6,DOE,Mokulele Elementary,Mokulele El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 250 Aupaka Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4180
+  :fax: 421-4182
+  :principal_last_name: Nakamoto
+  :principal_first_name: Bart
+",
+230,421,Maui,Maui,9,12,DOE,Moloka'i High,Molokai High,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 2140 Farrington Ave
+  :city: Hoolehua
+  :state: HI
+  :postal_code: ""96729""
+  :phone: 567-6950
+  :fax: 567-6960
+  :principal_last_name: Hao
+  :principal_first_name: Stanford
+",
+231,434,Maui,Maui,7,8,DOE,Moloka'i Middle,Molokai Middle,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 2175 Lihi Pali Avenue
+  :city: Hoolehua
+  :state: HI
+  :postal_code: ""96729""
+  :phone: 567-6940
+  :fax: 567-6939
+  :principal_last_name: Davidson
+  :principal_first_name: Gary
+",
+232,285,Oahu,Leeward,K,6,DOE,Momilani Elementary,Momilani El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 2130 Ho'okiekie Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6444
+  :fax: 453-6448
+  :principal_last_name: Higa
+  :principal_first_name: Doreen
+",
+233,379,Hawaii,Hawaii,K,5,DOE,Mountain View Elementary,Mountain View El,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: PO Box 9
+  :city: Mountain View
+  :state: HI
+  :postal_code: ""96771""
+  :phone: 968-2300
+  :fax: 968-2305
+  :principal_last_name: Riley
+  :principal_first_name: Barbara
+",
+234,544,Oahu,Honolulu,K,12,Charter,Myron B. Thompson Academy A New Century Public Charter School,Myron Thompson Acad NCPCS,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 629 Pohukaina Street Suite 3
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 441-8001
+  :fax: 586-3640
+  :principal_last_name: Oshiro
+  :principal_first_name: Diana
+",
+235,380,Hawaii,Hawaii,K,6,DOE,Na'alehu Elementary,Naalehu El,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 95-5547 Mamalahoa Hwy
+  :city: Naalehu
+  :state: HI
+  :postal_code: ""96772""
+  :phone: 939-2413
+  :fax: 939-2419
+  :principal_last_name: Burgess
+  :principal_first_name: Teddy
+",
+236,429,Maui,Maui,K,5,DOE,Princess Nahi'ena'ena Elementary,Nahienaena El,Hana-Lahainaluna-Lanai-Molokai,,,"---
+:site_contact:
+  :street: 816 Niheu Street
+  :city: Lahaina
+  :state: HI
+  :postal_code: ""96761""
+  :phone: 662-4020
+  :fax: 662-4023
+  :principal_last_name: Kahoohalahala
+  :principal_first_name: Lynn
+",
+237,261,Oahu,Leeward,K,6,DOE,Nanaikapono Elementary,Nanaikapono El,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 89-153 Mano Avenue
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 668-5800
+  :fax: 668-5890
+  :principal_last_name: Knight
+  :principal_first_name: Debra
+",
+238,262,Oahu,Leeward,K,6,DOE,Nanakuli Elementary,Nanakuli El,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 89-778 Haleakala Avenue
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 668-5813
+  :fax: 668-5817
+  :principal_last_name: Takahashi
+  :principal_first_name: Wendy
+",
+239,263,Oahu,Leeward,7,12,DOE,Nanakuli High & Intermediate,Nanakuli High & Int,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 89-980 Nanakuli Avenue
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 668-5823
+  :fax: 668-5828
+  :principal_last_name: Pilialoha
+  :principal_first_name: Darin
+",
+240,925,WA,,,,Private,New Market Skills Center,New Market Skills Center,,,,"---
+:site_contact:
+  :street: 7299 New Market Street SW
+  :city: Tumwater
+  :state: WA
+  :postal_code: ""98501""
+  :phone: 360-570-4500
+  :fax:
+  :principal_last_name: Kinerk
+  :principal_first_name: Joe
+",
+241,461,Kauai,Kauai,K,12,DOE,Ni'ihau High & Elementary,Niihau High & El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: PO Box 339
+  :city: Waimea
+  :state: HI
+  :postal_code: ""96796""
+  :phone: 338-6800
+  :fax: 338-6807
+  :principal_last_name: Caberto
+  :principal_first_name: Nely
+",
+242,221,Oahu,Central,K,6,DOE,Admiral Chester W. Nimitz Elementary,Nimitz El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 520 Main Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4165
+  :fax: 421-4170
+  :principal_last_name: Lee
+  :principal_first_name: Kenneth
+",
+243,139,Oahu,Honolulu,6,8,DOE,Niu Valley Middle,Niu Valley Middle,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 310 Halemaumau Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96821""
+  :phone: 377-2440
+  :fax: 377-2444
+  :principal_last_name: Mew
+  :principal_first_name: Justin
+",
+244,140,Oahu,Honolulu,K,5,DOE,Noelani Elementary,Noelani El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2655 Woodlawn Drive
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 988-1858
+  :fax: 988-1855
+  :principal_last_name: Mahoe
+  :principal_first_name: Rochelle
+",
+245,141,Oahu,Honolulu,K,5,DOE,Nu'uanu Elementary,Nuuanu El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 3055 Puiwa Lane
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96817""
+  :phone: 595-5422
+  :fax: 595-5425
+  :principal_last_name: Toyooka
+  :principal_first_name: James
+",
+246,926,Kauai,,,,Private,�?lelo Christian Academy,Olelo Christian Academy,,,,"---
+:site_contact:
+  :street: 3223 Elua St
+  :city: Lihue
+  :state: HI
+  :postal_code: ""96766""
+  :phone: 808 246-6535
+  :fax:
+  :principal_last_name: Elledge
+  :principal_first_name: Scott
+",
+247,475,Oahu,Windward,7,12,DOE,Olomana,Olomana,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 42-522 Kalanianaole Hwy
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 266-7866
+  :fax: 266-7873
+  :principal_last_name: Oshio
+  :principal_first_name: Stacey
+",
+248,382,Hawaii,Hawaii,K,9,DOE,Pa'auilo Elementary & Intermediate,Paauilo El & Int,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: PO Box 329
+  :city: Paauilo
+  :state: HI
+  :postal_code: ""96776""
+  :phone: 776-7710
+  :fax: 776-7714
+  :principal_last_name: Simon
+  :principal_first_name: Brian
+",
+249,381,Hawaii,Hawaii,K,5,DOE,Pahoa Elementary,Pahoa El,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 15-3030 Puna Road
+  :city: Pahoa
+  :state: HI
+  :postal_code: ""96778""
+  :phone: 965-2141
+  :fax: 965-2180
+  :principal_last_name: Payne-Arakaki
+  :principal_first_name: Michelle
+",
+250,383,Hawaii,Hawaii,7,12,DOE,Pahoa High & Intermediate,Pahoa High & Int,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 15-3038 Puna Road
+  :city: Pahoa
+  :state: HI
+  :postal_code: ""96778""
+  :phone: 965-2150
+  :fax: 965-2153
+  :principal_last_name: Bee
+  :principal_first_name: Darlene
+",
+251,422,Maui,Maui,K,5,DOE,Pa'ia Elementary,Paia El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 955 Baldwin Avenue
+  :city: Paia
+  :state: HI
+  :postal_code: ""96779""
+  :phone: 579-2100
+  :fax: 579-2103
+  :principal_last_name: Alivado
+  :principal_first_name: Susan
+",
+252,264,Oahu,Leeward,K,6,DOE,Palisades Elementary,Palisades El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 2306 Auhuhu Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6550
+  :fax: 453-5910
+  :principal_last_name: Yamada
+  :principal_first_name: Suzanne
+",
+253,142,Oahu,Honolulu,K,5,DOE,Palolo Elementary,Palolo El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2106 10th Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4700
+  :fax: 733-4708
+  :principal_last_name: Silberstein
+  :principal_first_name: Ruth
+",
+254,323,Oahu,Windward,K,6,DOE,Reverend Benjamin Parker Elementary,Parker El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 45-259 Waikalua Road
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5686
+  :fax: 233-5689
+  :principal_last_name: Kahikina
+  :principal_first_name: Kathy
+",
+255,143,Oahu,Honolulu,K,5,DOE,Pauoa Elementary,Pauoa El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 2301 Pauoa Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 587-4500
+  :fax: 587-4506
+  :principal_last_name: Richards
+  :principal_first_name: Roberta
+",
+256,265,Oahu,Leeward,K,6,DOE,Pearl City Elementary,Pearl City El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 1090 Waimano Home Road
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6455
+  :fax: 453-6467
+  :principal_last_name: Hirokane
+  :principal_first_name: Susan
+",
+257,266,Oahu,Leeward,9,12,DOE,Pearl City High,Pearl City High,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 2100 Hookiekie Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 454-5500
+  :fax: 453-6521
+  :principal_last_name: Fujimoto
+  :principal_first_name: Carlyn
+",
+258,267,Oahu,Leeward,K,6,DOE,Pearl City Highlands Elementary,Pearl City Highlands El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 1419 Waimano Home Road
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6470
+  :fax: 453-6472
+  :principal_last_name: Nakasato
+  :principal_first_name: Michael
+",
+259,927,Oahu,,,,Private,Pearl Harbor Christian Academy,Pearl Harbor Christian Academy,,,,"---
+:site_contact:
+  :street: 94-1044 Waipio Uka St.
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 678-3997
+  :fax:
+  :principal_last_name: Dutton
+  :principal_first_name: Jenny
+",
+260,222,Oahu,Central,K,6,DOE,Pearl Harbor Elementary,Pearl Harbor El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 1 Moanalua Ridge
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4125/421-4126
+  :fax: 421-4128
+  :principal_last_name: Sunday
+  :principal_first_name: James
+",
+261,223,Oahu,Central,K,6,DOE,Pearl Harbor Kai Elementary,Pearl Harbor Kai El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 1 C Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4245/421-4246
+  :fax: 421-4248
+  :principal_last_name: Casupang
+  :principal_first_name: Dean
+",
+262,243,Oahu,Central,K,6,DOE,Pearl Ridge Elementary,Pearl Ridge El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 98-940 Moanalua Road
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7250
+  :fax: 483-7255
+  :principal_last_name: Dunn
+  :principal_first_name: Laureen
+",
+263,269,Oahu,Leeward,K,6,DOE,Pohakea Elementary,Pohakea El,Campbell-Kapolei,,,"---
+:site_contact:
+  :street: 91-750 Ft. Weaver Road
+  :city: Ewa Beach
+  :state: HI
+  :postal_code: ""96706""
+  :phone: 689-1290
+  :fax: 689-1293
+  :principal_last_name: Kunihisa
+  :principal_first_name: Stacie
+",
+264,433,Maui,Maui,K,5,DOE,Pomaika'i Elementary,Pomaikai El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 4650 S. Kamehameha Avenue
+  :city: Kahului
+  :state: HI
+  :postal_code: ""96732""
+  :phone: 873-3410
+  :fax: 873-3414
+  :principal_last_name: Yamafuji
+  :principal_first_name: Rene
+",
+265,324,Oahu,Windward,K,6,DOE,Blanche Pope Elementary,Pope El,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 41-133 Huli Street
+  :city: Waimanalo
+  :state: HI
+  :postal_code: ""96795""
+  :phone: 259-0450
+  :fax: 259-0452
+  :principal_last_name: Reed
+  :principal_first_name: Ofelia
+",
+266,426,Maui,Maui,K,5,DOE,Pukalani Elementary,Pukalani El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 2945 Iolani Street
+  :city: Pukalani
+  :state: HI
+  :postal_code: ""96768""
+  :phone: 573-8760
+  :fax: 573-8766
+  :principal_last_name: Okamoto
+  :principal_first_name: Chad
+",
+267,928,Oahu,,,,Private,Punahou School 9-12,Punahou School 9-12,,,,"---
+:site_contact:
+  :street: 1601 Punahou St
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 944-5711
+  :fax:
+  :principal_last_name: Conway
+  :principal_first_name: Kevin
+",
+268,929,Oahu,,,,Private,Punahou School K-8,Punahou School K-8,,,,"---
+:site_contact:
+  :street: 1601 Punahou Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 944-5711
+  :fax:
+  :principal_last_name: Walker
+  :principal_first_name: Michael
+",
+269,314,Oahu,Windward,K,6,DOE,Pu'ohala Elementary,Puohala El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 45-233 Kulauli Street
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 233-5660
+  :fax: 233-5663
+  :principal_last_name: Kane
+  :principal_first_name: Alexis
+",
+270,145,Oahu,Honolulu,K,5,DOE,Pu'uhale Elementary,Puuhale El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 345 Puuhale Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3190
+  :fax: 832-3195
+  :principal_last_name: St. Laurent
+  :principal_first_name: Yolanda
+",
+271,224,Oahu,Central,9,12,DOE,Admiral Arthur W. Radford High,Radford High,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 4361 Salt Lake Boulevard
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 421-4200
+  :fax: 421-4210
+  :principal_last_name: Ali
+  :principal_first_name: Elias
+",
+272,225,Oahu,Central,K,6,DOE,Red Hill Elementary,Red Hill El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 1265 Ala Kula Place
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 831-7866/831-7867
+  :fax: 831-7861
+  :principal_last_name: Smoot
+  :principal_first_name: Mona
+",
+273,146,Oahu,Honolulu,9,12,DOE,President Theodore Roosevelt High,Roosevelt High,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1120 Nehoa Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 587-4600
+  :fax: 587-4637
+  :principal_last_name: Uyeda
+  :principal_first_name: Lenn
+",
+274,147,Oahu,Honolulu,K,5,DOE,Royal School,Royal El,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1519 Queen Emma Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 587-4510
+  :fax: 587-4518
+  :principal_last_name: Sugibayashi
+  :principal_first_name: Ann
+",
+275,943,Oahu,,,,Private,Sacred Hearts Academy,Sacred Hearts Academy,,,,"---
+:site_contact:
+  :street: 3253 Waialae Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: ""8087345058""
+  :fax: ""8087377867""
+  :principal_last_name: Rickard
+  :principal_first_name: Patricia
+",
+276,239,Oahu,Central,K,6,DOE,Salt Lake Elementary,Salt Lake El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 1131 Ala Lilikoi Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96818""
+  :phone: 831-7870/831-7871
+  :fax: 831-7873
+  :principal_last_name: Abe
+  :principal_first_name: Duwayne
+",
+277,227,Oahu,Central,K,6,DOE,Alvah A. Scott Elementary,Scott El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 98-1230 Moanalua Road
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7220/483-7221
+  :fax: 483-7223
+  :principal_last_name: Watanabe
+  :principal_first_name: Sandra
+",
+278,228,Oahu,Central,K,6,DOE,Major General William R. Shafter Elementary,Shafter El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 2 Fort Shafter
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96819""
+  :phone: 832-3560/832-3562
+  :fax: 832-3562
+  :principal_last_name: Martin
+  :principal_first_name: Robin
+",
+279,226,Oahu,Central,K,5,DOE,Sergeant Samuel K. Solomon Elementary,Solomon El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 2875 Waianae Uka Avenue
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 624-9500
+  :fax: 624-9505
+  :principal_last_name: Nanbu
+  :principal_first_name: Avis
+",
+280,930,Oahu,,,,Private,Saint Andrew�s Priory School,St. Andrews Priory School,,,,"---
+:site_contact:
+  :street: 224 Queen Emma Square
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96813""
+  :phone: 536-6102
+  :fax:
+  :principal_last_name: Theunik
+  :principal_first_name: Sandra
+",
+281,944,Maui,,,,Private,St. Anthony Junior-Senior High School,St. Anthony High,,,,"---
+:site_contact:
+  :street: 1618 Lower Main Street
+  :city: Wailuku
+  :state: HI
+  :postal_code: ""96793""
+  :phone: ""8082444190""
+  :fax:
+  :principal_last_name: White
+  :principal_first_name: Betty
+",
+282,931,Oahu,,,,Private,Saint Clement�s Elementary School,St. Clements El,,,,"---
+:site_contact:
+  :street: 1515 Wilder Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 949-2082
+  :fax:
+  :principal_last_name: Izumo
+  :principal_first_name: Patsy
+",
+283,932,Oahu,,,,Private,Saint Francis School,St. Francis,,,,"---
+:site_contact:
+  :street: 2707 Pamoa Road
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 988-4111
+  :fax:
+  :principal_last_name: Joan of Arc Souza
+  :principal_first_name:
+",
+284,933,Oahu,,,,Private,Saint John Vianney School,St.Vianney,,,,"---
+:site_contact:
+  :street: 940 Keolu Dr
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone: 261-4651
+  :fax:
+  :principal_last_name: Busekrus
+  :principal_first_name: Michael
+",
+285,148,Oahu,Honolulu,6,8,DOE,Robert Louis Stevenson Middle,Stevenson Middle,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1202 Prospect Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96822""
+  :phone: 587-4520
+  :fax: 587-4523
+  :principal_last_name: Luke
+  :principal_first_name: Rodney
+",
+286,325,Oahu,Windward,K,6,DOE,Sunset Beach Elementary,Sunset Beach El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 59-360 Kamehameha Highway
+  :city: Haleiwa
+  :state: HI
+  :postal_code: ""96712""
+  :phone: 638-8777
+  :fax: 638-8789
+  :principal_last_name: Tyrell
+  :principal_first_name: Bernie
+",
+287,942,Oahu,,,,Private,Sunshine School,Sunshine School,,,,"---
+:site_contact:
+  :street: 175A Kihapai St.
+  :city: Kailua
+  :state: HI
+  :postal_code: ""96734""
+  :phone:
+  :fax:
+  :principal_last_name:
+  :principal_first_name:
+",
+288,934,Oahu,,,,Private,The Early School,The Early School,,,,"---
+:site_contact:
+  :street: 2510 Bingham Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96826""
+  :phone: 955-5881
+  :fax:
+  :principal_last_name: Dote
+  :principal_first_name: Frances
+",
+289,904,Oahu,Central,0,0,Special,UH M?noa Children�s Center,UH Manoa Childrens Center,Aiea,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  state: HI
+  principal_first_name: Wayne
+  email: """"
+  principal_last_name: Watkins
+  phone: 956-7963
+  city: Honolulu
+  postal_code: ""96822""
+  fax: """"
+  street: Office of Student Affairs, Childrens Center, 2600 Campus Road, QLCSS 407
+",
+290,935,Oahu,,,,Private,Variety School of Hawai�i,Variety School of Hawaii,,,,"---
+:site_contact:
+  :street: 710 Palekaua Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 732-2835
+  :fax:
+  :principal_last_name: Yee
+  :principal_first_name: Duane
+",
+291,560,Hawaii,Hawaii,K,8,Charter,Volcano School of Arts & Sciences: A Community Public Charter School,Volcano Sch Art/Sci PCS,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: ""99-128 Old Volcano Road (mail: P.O. Box 845)""
+  :city: Volcano
+  :state: HI
+  :postal_code: ""96785""
+  :phone: 985-9800
+  :fax: 985-9898
+  :principal_last_name: Rizor
+  :principal_first_name: David
+",
+292,541,Oahu,Honolulu,K,8,Charter,Voyager A Public Charter School,Voyager PCS,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: Deuber
+  phone: 521-9770
+  fax: 521-9772
+  email: ''
+  principal_first_name: Susan Lee
+  street: 2428 Wilder Avenue
+  city: Honolulu
+  state: HI
+  postal_code: '96822'
+",
+293,229,Oahu,Central,K,5,DOE,Wahiawa Elementary,Wahiawa El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 1402 Glen Avenue
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6393
+  :fax: 622-6394
+  :principal_last_name: Tamura
+  :principal_first_name: Troy
+",
+294,230,Oahu,Central,6,8,DOE,Wahiawa Middle,Wahiawa Middle,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 275 Rose Street
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6500
+  :fax: 622-6506
+  :principal_last_name: Yamaguchi
+  :principal_first_name: Gayle
+",
+295,326,Oahu,Windward,K,6,DOE,Waiahole Elementary,Waiahole El,Castle-Kahuku,,,"---
+:site_contact:
+  :street: 48-215 Waiahole Valley Road
+  :city: Kaneohe
+  :state: HI
+  :postal_code: ""96744""
+  :phone: 239-3111
+  :fax: 239-3113
+  :principal_last_name: Maeda
+  :principal_first_name: Karen
+",
+296,384,Hawaii,Hawaii,K,5,DOE,Waiakea Elementary,Waiakea El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 180 W. Puainako Street
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 981-7215
+  :fax: 981-7218
+  :principal_last_name: Urasaki
+  :principal_first_name: Jasmine
+",
+297,389,Hawaii,Hawaii,9,12,DOE,Waiakea High,Waiakea High,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 155 W. Kawili Street
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 974-4888
+  :fax: 974-4880
+  :principal_last_name: Koga
+  :principal_first_name: Kelcy
+",
+298,385,Hawaii,Hawaii,6,8,DOE,Waiakea Intermediate,Waiakea Int,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 200 W. Puainako Street
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 981-7231
+  :fax: 981-7237
+  :principal_last_name: Matsunami
+  :principal_first_name: Lloyd
+",
+299,386,Hawaii,Hawaii,K,5,DOE,Waiakeawaena Elementary,Waiakeawaena El,Hilo-Laupahoehoe-Waiakea,,,"---
+:site_contact:
+  :street: 2420 Kilauea Avenue
+  :city: Hilo
+  :state: HI
+  :postal_code: ""96720""
+  :phone: 981-7200
+  :fax: 981-7205
+  :principal_last_name: McCall
+  :principal_first_name: Beverly
+",
+300,149,Oahu,Honolulu,K,5,Charter,Wai'alae Elementary Public Charter School,Waialae El PCS,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 1045 19th Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4880
+  :fax: 733-4886
+  :principal_last_name: Lagareta
+  :principal_first_name: Wendy
+",
+301,231,Oahu,Central,K,6,DOE,Waialua Elementary,Waialua El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 67-020 Waialua Beach Road
+  :city: Waialua
+  :state: HI
+  :postal_code: ""96791""
+  :phone: 637-8228
+  :fax: 637-8225
+  :principal_last_name: Moore
+  :principal_first_name: Scott
+",
+302,232,Oahu,Central,7,12,DOE,Waialua High & Intermediate,Waialua High & Int,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 67-160 Farrington Highway
+  :city: Waialua
+  :state: HI
+  :postal_code: ""96791""
+  :phone: 637-8200
+  :fax: 637-8209
+  :principal_last_name: Porras-Tang
+  :principal_first_name: Randiann
+",
+303,270,Oahu,Leeward,K,6,DOE,Wai'anae Elementary,Waianae El,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 85-220 McArthur Street
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 697-7083
+  :fax: 697-7090
+  :principal_last_name: Wataoka
+  :principal_first_name: John
+",
+304,272,Oahu,Leeward,9,12,DOE,Wai'anae High,Waianae High,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 85-251 Farrington Highway
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 697-9400
+  :fax: 697-7018
+  :principal_last_name: Shigeta
+  :principal_first_name: Nelson
+",
+305,273,Oahu,Leeward,7,8,DOE,Wai'anae Intermediate,Waianae Int,Nanakuli-Waianae,,,"---
+:site_contact:
+  :street: 85-626 Farrington Highway
+  :city: Waianae
+  :state: HI
+  :postal_code: ""96792""
+  :phone: 697-7121
+  :fax: 697-7124
+  :principal_last_name: Fabrao
+  :principal_first_name: Raechelle
+",
+306,288,Oahu,Leeward,K,6,DOE,Waiau Elementary,Waiau El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 98-450 Hookanike Street
+  :city: Pearl City
+  :state: HI
+  :postal_code: ""96782""
+  :phone: 453-6530
+  :fax: 453-6541
+  :principal_last_name: Takazono
+  :principal_first_name: Troy
+",
+307,424,Maui,Maui,K,5,DOE,Waihe'e Elementary,Waihee El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 2125 Kahekili Highway
+  :city: Wailuku
+  :state: HI
+  :postal_code: ""96793""
+  :phone: 984-5644
+  :fax: 984-5648
+  :principal_last_name: Hayashida
+  :principal_first_name: Leila
+",
+308,290,Oahu,Leeward,K,6,DOE,Waikele Elementary,Waikele El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-1035 Kukula Street
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 677-6100
+  :fax: 677-6106
+  :principal_last_name: Oshio
+  :principal_first_name: Sheldon
+",
+309,150,Oahu,Honolulu,K,6,DOE,Waikiki Elementary,Waikiki El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 3710 Leahi Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96815""
+  :phone: 971-6900
+  :fax: 971-6902
+  :principal_last_name: Tabor
+  :principal_first_name: Bonnie
+",
+310,393,Hawaii,Hawaii,K,8,DOE,Waikoloa Elementary & Middle,Waikoloa El & Middle,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 68-1730 Ho'oko Street
+  :city: Waikoloa
+  :state: HI
+  :postal_code: ""96738""
+  :phone: 883-6808
+  :fax: 883-6811
+  :principal_last_name: Kosa-Correia
+  :principal_first_name: Kris
+",
+311,425,Maui,Maui,K,5,DOE,Wailuku Elementary,Wailuku El,Baldwin-Kekaulike-Maui,,,"---
+:site_contact:
+  :street: 355 S. High Street
+  :city: Wailuku
+  :state: HI
+  :postal_code: ""96793""
+  :phone: 984-5622
+  :fax: 984-5627
+  :principal_last_name: Stanich
+  :principal_first_name: Beverly
+",
+312,233,Oahu,Central,K,6,DOE,Waimalu Elementary,Waimalu El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 98-825 Moanalua Road
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7210/483-7212
+  :fax: 483-7213
+  :principal_last_name: Hui
+  :principal_first_name: Keith
+",
+313,327,Oahu,Windward,K,8,DOE,Waimanalo Elementary & Intermediate,Waimanalo El & Int,Kailua-Kalaheo,,,"---
+:site_contact:
+  :street: 41-1330 Kalanianaole Highway
+  :city: Waimanalo
+  :state: HI
+  :postal_code: ""96795""
+  :phone: 259-0460
+  :fax: 259-0463
+  :principal_last_name: Richardson
+  :principal_first_name: Noel
+",
+314,464,Kauai,Kauai,6,8,DOE,Waimea Canyon Middle,Waimea Canyon Middle,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 9555 Huakai St
+  :city: Waimea
+  :state: HI
+  :postal_code: ""96796""
+  :phone: 338-6830
+  :fax: 338-6832
+  :principal_last_name: Miyazaki
+  :principal_first_name: Glenda
+",
+315,387,Hawaii,Hawaii,K,5,DOE,Waimea Elementary,Waimea El,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 67-1225 Mamalahoa Highway
+  :city: Kamuela
+  :state: HI
+  :postal_code: ""96743""
+  :phone: 887-7636
+  :fax: 887-7640
+  :principal_last_name: McClelland
+  :principal_first_name: Marcella
+",
+316,462,Kauai,Kauai,9,12,DOE,Waimea High,Waimea High,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: PO Box 339
+  :city: Waimea
+  :state: HI
+  :postal_code: ""96796""
+  :phone: 338-6800
+  :fax: 338-6807
+  :principal_last_name: Caberto
+  :principal_first_name: Nely
+",
+317,394,Hawaii,Hawaii,6,8,Charter,Waimea Middle Public Conversion Charter School,Waimea Middle PCCS,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: 67-1229 Mamalahoa Hwy
+  :city: Kamuela
+  :state: HI
+  :postal_code: ""96743""
+  :phone: 887-6090
+  :fax: 887-6087
+  :principal_last_name: Colson
+  :principal_first_name: John
+",
+318,936,Oahu,,,,Private,Waiokeola Church Preschool,Waiokeola Preschool,,,,"---
+:site_contact:
+  :street: 4705 Kilauea Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 734-4277
+  :fax:
+  :principal_last_name: Viray-Wright
+  :principal_first_name: Lily
+",
+319,274,Oahu,Leeward,K,6,DOE,Waipahu Elementary,Waipahu El,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-465 Waipahu Street
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 675-0150
+  :fax: 675-0121
+  :principal_last_name: Taga
+  :principal_first_name: Paul
+",
+320,277,Oahu,Leeward,9,12,DOE,Waipahu High,Waipahu High,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-1211 Farrington Highway
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 528-9555
+  :fax: 675-0257
+  :principal_last_name: Hayashi
+  :principal_first_name: Keith
+",
+321,278,Oahu,Leeward,7,8,DOE,Waipahu Intermediate,Waipahu Int,Pearl City-Waipahu,,,"---
+:site_contact:
+  :street: 94-445 Farrington Highway
+  :city: Waipahu
+  :state: HI
+  :postal_code: ""96797""
+  :phone: 675-0177
+  :fax: 675-0181
+  :principal_last_name: Dunn
+  :principal_first_name: Randell
+",
+322,152,Oahu,Honolulu,6,8,DOE,President George Washington Middle,Washington Middle,Kaimuki-McKinley-Roosevelt,,,"---
+:site_contact:
+  :street: 1633 S. King Street
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96826""
+  :phone: 973-0177
+  :fax: 973-0181
+  :principal_last_name: Harano
+  :principal_first_name: Michael
+",
+323,398,Hawaii,Hawaii,K,6,Charter,Waters of Life New Century Public Charter School,Waters of Life NCPCS,Kau-Keaau-Pahoa,,,"---
+:site_contact:
+  :street: 17-715 Ala Loop
+  :city: Kurtistown
+  :state: HI
+  :postal_code: ""96760""
+  :phone: 966-6175
+  :fax: 982-7863
+  :principal_last_name: Caluya
+  :principal_first_name: Daniel
+",
+324,235,Oahu,Central,K,6,DOE,Gustav H. Webling Elementary,Webling El,Aiea-Moanalua-Radford,,,"---
+:site_contact:
+  :street: 99-370 Paihi Street
+  :city: Aiea
+  :state: HI
+  :postal_code: ""96701""
+  :phone: 483-7240/483-7241
+  :fax: 483-7242
+  :principal_last_name: Yamada
+  :principal_first_name: Sherrylyn
+",
+325,399,Hawaii,Hawaii,6,12,Charter,West Hawai'i Explorations Academy Public Charter School,West Hawaii Explorations PCS,Honokaa-Kealakehe-Kohala-Konawaena,,,"---
+:site_contact:
+  :street: ""73-4460 Queen Ka'ahumanu Highway PMB 503 Hwy, #105""
+  :city: Kailua-Kona
+  :state: HI
+  :postal_code: ""96740""
+  :phone: 327-4751
+  :fax: 327-4750
+  :principal_last_name: Nakakura
+  :principal_first_name: Heather
+",
+326,236,Oahu,Central,K,5,DOE,Major Sheldon Wheeler Elementary,Wheeler El,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 1 Wheeler Army Airfield
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6400/622-6401
+  :fax: 622-6403
+  :principal_last_name: Murphy
+  :principal_first_name: Fred
+",
+327,237,Oahu,Central,6,8,DOE,Major Sheldon Wheeler Middle,Wheeler Middle,Leilehua-Mililani-Waialua,,,"---
+:site_contact:
+  :street: 2 Wheeler Army Airfield
+  :city: Wahiawa
+  :state: HI
+  :postal_code: ""96786""
+  :phone: 622-6525
+  :fax: 622-6529
+  :principal_last_name: Vierra-Chun
+  :principal_first_name: Brenda
+",
+328,463,Kauai,Kauai,K,5,DOE,Elsie H. Wilcox Elementary,Wilcox El,Kapaa-Kauai-Waimea,,,"---
+:site_contact:
+  :street: 4319 Hardy Street
+  :city: Lihue
+  :state: HI
+  :postal_code: ""96766""
+  :phone: 274-3150
+  :fax: 274-3152
+  :principal_last_name: Proctor
+  :principal_first_name: Terry
+",
+329,153,Oahu,Honolulu,K,5,DOE,Mayor John H. Wilson Elementary,Wilson El,Farrington-Kaiser-Kalani,,,"---
+:site_contact:
+  :street: 4945 Kilauea Avenue
+  :city: Honolulu
+  :state: HI
+  :postal_code: ""96816""
+  :phone: 733-4740
+  :fax: 733-4746
+  :principal_last_name: Kiyonaga
+  :principal_first_name: Richard
+",
+330,945,Maui,Private,0,0,,Emmanuel Lutheran School,Emmanuel Lutheran School,Aiea,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  principal_last_name: """"
+  phone: ""8088736334""
+  fax: """"
+  email: """"
+  principal_first_name: """"
+  street: 520 West One Street
+  city: Kahului
+  state: HI
+  postal_code: """"
+",
+331,946,Oahu,Private,0,0,,'Iolani School,Iolani School,Aiea,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  principal_last_name: """"
+  phone: ""8089495355""
+  fax: """"
+  email: info@iolani.org
+  principal_first_name: """"
+  street: 563 Kamoku Street
+  city: Honolulu
+  state: HI
+  postal_code: ""96826""
+",
+332,947,Oahu,Private,0,0,,Makaha Farms,Makaha Farms,Aiea,,,,
+333,948,Oahu,Private,0,0,,Ka Papa Loi o Kanewai,Ka Papa Loi,Aiea,,,,
+334,949,Oahu,Private,0,0,,St. Louis School,St. Louis School,Aiea,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  principal_last_name: """"
+  phone: ""8087397777""
+  fax: """"
+  email: """"
+  principal_first_name: """"
+  street: 3142 Wai'alae Avenue
+  city: Honolulu
+  state: HI
+  postal_code: ""96816""
+",
+335,950,Oahu,Private,0,0,,Seagull Schools,Seagull Schools,Aiea,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  principal_last_name: """"
+  phone: ""8086741444""
+  fax: """"
+  email: """"
+  principal_first_name: """"
+  street: 531 Farrington Highway
+  city: Kapolei
+  state: HI
+  postal_code: ""96707""
+",
+336,951,Oahu,Private,0,6,,Maryknoll Grade School,Maryknoll El,Special School,,,,
+337,999,Oahu,Private,0,6,,Ka Waihona O Ka Na&#x27;auao Public Charter School,Ka Waihona PCS,Waianae,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  phone: ""8086209030""
+  postal_code: ""96792""
+  fax: """"
+  state: HI
+  principal_first_name: Alvin
+  street: 89-195 Farrington Highway
+  city: Waianae
+  principal_last_name: Parker
+  email: """"
+",
+338,952,Maui,Private,0,12,,Maui Preparatory Academy,Maui Prep Acad,Maui,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  phone: ""8086659966""
+  postal_code: ""96761""
+  fax: ""8086655107""
+  state: HI
+  principal_first_name: Jonathan
+  street: ""PMB #186, 5095 Napilihau St., #109B""
+  city: Lahaina
+  principal_last_name: Silver
+  email: """"
+",
+339,953,Oahu,Private,99,99,,Bernice Pauahi Bishop Museum,Bishop Museum,Special School,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  phone: ""8088473511""
+  postal_code: ""96817""
+  fax: ""8088484147""
+  state: HI
+  principal_first_name: """"
+  street: 1525 Bernice Street
+  city: Honolulu
+  principal_last_name: """"
+  email: """"
+",
+340,954,Oahu,Private,99,99,,Hawaii Association of Independent Schools,HAIS,Special School,,,"---
+:site_contact: !map:HashWithIndifferentAccess
+  phone: ""8089731540""
+  postal_code: ""96814""
+  fax: ""8089731545""
+  state: HI
+  principal_first_name: """"
+  street: Ala Moana Pacific Center, 1585 Kapiolani Blvd. Suite 1212
+  city: Honolulu
+  principal_last_name: """"
+  email: """"
+",
+341,955,Oahu,Private,6,7,,The School for Examining Essential Questions of Sustainability ,SEEQS,Aiea,,,,
+342,956,Oahu,Private,0,8,,Kaimuki Christian School,Kaimuki Christian,Aiea,,,,
+343,958,American Samoa,Private,0,0,,Hawaii Nature Center Oahu,Hawaii Nature Center Oahu,Aiea,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: ''
+  phone: '8089550100'
+  fax: ''
+  email: http://www.hawaiinaturecenter.org/
+  principal_first_name: ''
+  street: 2131 Makikki Heights Dr
+  city: Honolulu
+  state: HI
+  postal_code: '96822'
+",
+344,959,Oahu,Private,0,0,,Nā Pua No‘eau Center for Gifted and Talented Native Hawaiian Children,Na Pua Noeau,Aiea,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: ''
+  phone: '8089569410'
+  fax: '9569240'
+  email: ''
+  principal_first_name: ''
+  street: ! '2600 Campus Road, SSC #406'
+  city: Honolulu
+  state: HI
+  postal_code: 96822-2205
+",
+345,960,Oahu,Private,0,0,,Office of Hawaiian Student Services,Office of Hawaiian Student Services,Aiea,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: ''
+  phone: '8085941888'
+  fax: '8085941865'
+  email: ''
+  principal_first_name: ''
+  street: 560 N. Nimitz Hwy., Suite 200
+  city: Honolulu
+  state: HI
+  postal_code: '96817'
+",
+346,961,Oahu,Private,0,12,,Le Jardin Academy,Le Jardin Academy (Middle School),Kailua,,,"---
+:site_contact: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  principal_last_name: Rentoule
+  phone: ''
+  fax: ''
+  email: damian.rentoule@lejardinacademy.org
+  principal_first_name: Damian
+  street: ''
+  city: ''
+  state: ''
+  postal_code: ''
+",
+347,962,Oahu,Private,0,0,,Hongwanji Mission School,Hongwanji Mission School,Aiea,,,"--- {}
+",
+348,963,Oahu,Private,0,0,,Doris Todd Christian School,Doris Todd Christian School,Aiea,,,"--- {}
+",
+349,964,Maui,Private,0,0,,Puu Kukui Elementary,Puu Kukui El,Aiea,,,"--- {}
+",
+350,965,Maui,Private,0,0,,ROOTS (Real Ongoing Opportunities to Soar),ROOTS (Real Ongoing Opportunities to Soar),Aiea,,,"--- {}
+",
+351,966,Oahu,Private,-1,-1,,Navy Hale Keiki School,Navy Hale Keiki School,Aiea,,,,
