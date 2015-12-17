@@ -7,15 +7,15 @@ module Kapa::PracticumLogBase
   end
 
   def type_desc
-    return Kapa::Property.lookup_description(:placement_log_type, type)
+    return Kapa::Property.lookup_description(:practicum_log_type, type)
   end
 
   def category_desc
-    return Kapa::Property.lookup_description(:placement_log_category, category)
+    return Kapa::Property.lookup_description(:practicum_log_category, category)
   end
 
   def task_desc
-    return Kapa::Property.lookup_description(:placement_log_task, task)
+    return Kapa::Property.lookup_description(:practicum_log_task, task)
   end
 
   class_methods do

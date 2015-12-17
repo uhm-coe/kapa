@@ -93,7 +93,7 @@
               <div class="panel-heading">
                 <h3 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#practicum_log_<%= @practicum_log.id %>"><span class="strong"><%= format_date @practicum_log.log_date %>
-                    - <%= h @practicum_log.task_desc %></span></a>
+                    - <%= h @practicum_log.type_desc %></span></a>
                 </h3>
               </div>
               <div id="practicum_log_<%= @practicum_log.id %>" class="panel-collapse collapse<%= ' in' if params[:action_panel] == @practicum_log.id.to_s || (params[:action_panel].nil? && index == 0) %>">
