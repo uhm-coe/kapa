@@ -3,5 +3,6 @@ module Kapa::PublicationBase
 
   included do
     belongs_to :person
+    validates_presence_of :person_id
   end
 end
