@@ -12,6 +12,7 @@ module Kapa::PersonBase
     has_many :advising_sessions
     has_many :practicum_placements
     has_many :course_registrations
+    has_many :publications
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create

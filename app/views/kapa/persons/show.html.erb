@@ -197,5 +197,34 @@
     </div>
     <% end %>
 
+    <% if @current_user.read?(:kapa_publications) %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#publications_detail">
+            Publications (<%= @publications.length %>)
+          </a>
+        </h4>
+      </div>
+      <div id="publications_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right"><%= bootstrap_button "New Publication", new_kapa_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <table class="table table-hover">
+            <tr>
+              <th>Title</th>
+              <th></th>
+            </tr>
+            <% for publication in @publications %>
+              <tr>
+                <td><%= publication.pubtitle %></td>
+                <td class="right"><%=link_to "Show", kapa_publication_path(:id=> publication), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
   </div>
 <% end %>

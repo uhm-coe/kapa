@@ -13,6 +13,7 @@ module Kapa::PersonsControllerBase
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
     @course_registrations = @person.course_registrations.eager_load(:course => :term).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
+    @publications = @person.publications
   end
 
   def new
