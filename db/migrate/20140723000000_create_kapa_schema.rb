@@ -338,6 +338,44 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
+    create_table :publications, force: :cascade  do |t|
+        t.integer "person_id"
+        t.string "dept"
+        t.string "authors"
+        t.string "dn",                 limit: 255
+        t.string "objectclass",        limit: 255
+        t.string "ou",                 limit: 255
+        t.string "pubpages",           limit: 255
+        t.text "pubabstract"
+        t.string "pubdate",            limit: 255
+        t.string "publocation",        limit: 255
+        t.text "pubowner"
+        t.string "pubpublisher",       limit: 255
+        t.text "documentauthor"
+        t.string "pubtype",            limit: 255
+        t.string "cn",                 limit: 255
+        t.text "pubkeyword"
+        t.string "pubvenue",           limit: 255
+        t.string "pubvol",             limit: 255
+        t.string "pubcreator",         limit: 255
+        t.string "pubtitle",           limit: 255
+        t.string "pubmonth",           limit: 255
+        t.string "pubyear",            limit: 255
+        t.string "documentidentifier", limit: 255
+        t.text "pubcontributor"
+        t.string "pubeditor",          limit: 255
+        t.string "pubbooktitle",       limit: 255
+        t.string "pubthumbnail",       limit: 255
+        t.string "pubbookchapter",     limit: 255
+        t.string "pubisnotfeatured",   limit: 255
+        t.string "puborganization",    limit: 255
+        t.string "pubpdf",             limit: 255
+        t.string "pubedition",         limit: 255
+        t.string "o",                  limit: 255
+        t.string "l",                  limit: 255
+        t.string "documentlocation",   limit: 255
+    end
+
     create_table "practicum_assignments_old", force: :cascade do |t|
       t.integer  "practicum_placement_id",   limit: 4
       t.integer  "practicum_school_id",      limit: 4
@@ -680,6 +718,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "persistence_token",   limit: 255,                  null: false
       t.string   "single_access_token", limit: 255,                  null: false
       t.string   "perishable_token",    limit: 255,                  null: false
+      t.integer  "login_count",         limit: 4,        default: 0, null: false
       t.integer  "login_count",         limit: 4,        default: 0, null: false
       t.integer  "failed_login_count",  limit: 4,        default: 0, null: false
     end

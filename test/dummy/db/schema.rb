@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723000000) do
+ActiveRecord::Schema.define(version: 20151208213554) do
 
   create_table "advising_sessions", force: :cascade do |t|
     t.integer  "person_id",                limit: 4,        null: false
@@ -582,6 +582,44 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.text     "xml",               limit: 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "publications", force: :cascade do |t|
+    t.integer "person_id",          limit: 4
+    t.string  "dept",               limit: 255
+    t.string  "authors",            limit: 255
+    t.string  "dn",                 limit: 255
+    t.string  "objectclass",        limit: 255
+    t.string  "ou",                 limit: 255
+    t.string  "pubpages",           limit: 255
+    t.text    "pubabstract",        limit: 65535
+    t.string  "pubdate",            limit: 255
+    t.string  "publocation",        limit: 255
+    t.text    "pubowner",           limit: 65535
+    t.string  "pubpublisher",       limit: 255
+    t.text    "documentauthor",     limit: 65535
+    t.string  "pubtype",            limit: 255
+    t.string  "cn",                 limit: 255
+    t.text    "pubkeyword",         limit: 65535
+    t.string  "pubvenue",           limit: 255
+    t.string  "pubvol",             limit: 255
+    t.string  "pubcreator",         limit: 255
+    t.string  "pubtitle",           limit: 255
+    t.string  "pubmonth",           limit: 255
+    t.string  "pubyear",            limit: 255
+    t.string  "documentidentifier", limit: 255
+    t.text    "pubcontributor",     limit: 65535
+    t.string  "pubeditor",          limit: 255
+    t.string  "pubbooktitle",       limit: 255
+    t.string  "pubthumbnail",       limit: 255
+    t.string  "pubbookchapter",     limit: 255
+    t.string  "pubisnotfeatured",   limit: 255
+    t.string  "puborganization",    limit: 255
+    t.string  "pubpdf",             limit: 255
+    t.string  "pubedition",         limit: 255
+    t.string  "o",                  limit: 255
+    t.string  "l",                  limit: 255
+    t.string  "documentlocation",   limit: 255
   end
 
   create_table "sessions", force: :cascade do |t|
