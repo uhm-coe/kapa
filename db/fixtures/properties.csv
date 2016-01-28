@@ -1238,3 +1238,10 @@ transition_point,research_final,Final Research Defense,,retention,,,1,,"--- {}
 ",
 transition_point,research_proposal,Research Proposal Defense,,retention,,,1,,"--- {}
 ",
+publication_type,book,Book,,,,,1,,,
+publication_type,book_chapter,Book Chapter,,,,,1,,,
+publication_type,conference_proceedings,Conference Proceedings,,,,,1,,,
+publication_type,journal_article,Journal Article,,,,,1,,,
+publication_type,multimedia_contribution,Multimedia Contribution,,,,,1,,,
+publication_type,presentation,Presentation,,,,,1,,,
+publication_type,report,Research / Evaluation Report,,,,,1,,,
