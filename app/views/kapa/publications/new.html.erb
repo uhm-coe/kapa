@@ -1,0 +1,17 @@
+<% content_for(:box1) do %>
+  <%= render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%= link_to "", kapa_person_path(:id => @person), :class => "glyphicon glyphicon-chevron-left" %>
+    New Publication
+  </h4>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <%= bootstrap_form_for :publication, :url => kapa_publications_path(:id => @person) do |f| %>
+        <%= f.property_select :pubtype, :name => :publication_type, :label => "Publication Type" %>
+        <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
