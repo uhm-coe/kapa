@@ -58,6 +58,6 @@ module Kapa::PublicationsControllerBase
 
   private
   def publication_params
-    params.require(:publication).permit(:person_id, :dept, :authors, :pubpages, :pubabstract, :pubdate, :publocation, :pubowner, :pubpublisher, :documentauthor, :pubtype, :pubkeyword, :pubvenue, :pubvol, :pubcreator, :pubtitle, :pubmonth, :pubyear, :documentidentifier, :pubcontributor, :pubeditor, :pubbooktitle, :pubthumbnail, :pubbookchapter, :pubisnotfeatured, :puborganization, :pubpdf, :pubedition, :documentlocation)
+    params.require(:publication).permit(:person_id, :dept, :authors, :pubpages, :pubabstract, :pubdate, :publocation, :pubowner, :pubpublisher, :documentauthor, :pubtype, :pubkeyword, :pubvenue, :pubvol, :pubcreator, :pubtitle, :pubmonth, :pubyear, :documentidentifier, :pubcontributor, :pubeditor, :pubbooktitle, :pubthumbnail, :pubbookchapter, :pubisnotfeatured, :puborganization, :pubpdf, :pubedition, :documentlocation, :thumbnail)
   end
 end

@@ -7,7 +7,7 @@
   </h4>
 
   <div>
-    <%= bootstrap_form_for :publication, :url => kapa_publication_path(:id => @publication), :html => {:method => :put} do |f| %>
+    <%= bootstrap_form_for :publication, :url => kapa_publication_path(:id => @publication), :html => {:method => :put, :multipart => true} do |f| %>
       <%= render :partial => "publication_form", :locals => {:f => f} %>
       <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
     <% end %>

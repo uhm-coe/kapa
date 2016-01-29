@@ -94,6 +94,15 @@
     </div>
 
     <div class="col-sm-6">
+      <% if @publication.thumbnail.exists? %>
+        <p>
+          You have already uploaded a cover image named <strong><%= @publication.thumbnail_file_name %></strong>. To replace it, choose a new file below.
+        </p>
+      <% end %>
+      <%= f.file_field :thumbnail, :label => "Cover image" %>
+      <span id="thumbnail_help" class="help-block">
+        must be .gif, .jpg, or .png
+      </span>
       <%= f.text_area :pubabstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
       <%= f.hidden_field :person_id  %>
     </div>

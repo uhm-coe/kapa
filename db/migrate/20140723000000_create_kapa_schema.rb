@@ -342,9 +342,9 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.integer "person_id"
         t.string "dept"
         t.string "authors"
-        t.string "dn",                 limit: 255
-        t.string "objectclass",        limit: 255
-        t.string "ou",                 limit: 255
+        # t.string "dn",                 limit: 255
+        # t.string "objectclass",        limit: 255
+        # t.string "ou",                 limit: 255
         t.string "pubpages",           limit: 255
         t.text "pubabstract"
         t.string "pubdate",            limit: 255
@@ -353,7 +353,7 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.string "pubpublisher",       limit: 255
         t.text "documentauthor"
         t.string "pubtype",            limit: 255
-        t.string "cn",                 limit: 255
+        # t.string "cn",                 limit: 255
         t.text "pubkeyword"
         t.string "pubvenue",           limit: 255
         t.string "pubvol",             limit: 255
@@ -365,15 +365,20 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.text "pubcontributor"
         t.string "pubeditor",          limit: 255
         t.string "pubbooktitle",       limit: 255
-        t.string "pubthumbnail",       limit: 255
+        # t.string "pubthumbnail",       limit: 255
         t.string "pubbookchapter",     limit: 255
         t.string "pubisnotfeatured",   limit: 255
         t.string "puborganization",    limit: 255
         t.string "pubpdf",             limit: 255
         t.string "pubedition",         limit: 255
-        t.string "o",                  limit: 255
-        t.string "l",                  limit: 255
+        # t.string "o",                  limit: 255
+        # t.string "l",                  limit: 255
         t.string "documentlocation",   limit: 255
+
+        t.string   "thumbnail_file_name",    limit: 255
+        t.string   "thumbnail_content_type", limit: 255
+        t.integer  "thumbnail_file_size",    limit: 4
+        t.datetime "thumbnail_updated_at"
     end
 
     create_table "practicum_assignments_old", force: :cascade do |t|
