@@ -342,9 +342,9 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.integer "person_id"
         t.string "dept"
         t.string "authors"
-        # t.string "dn",                 limit: 255
-        # t.string "objectclass",        limit: 255
-        # t.string "ou",                 limit: 255
+        t.string "dn",                 limit: 255
+        t.string "objectclass",        limit: 255
+        t.string "ou",                 limit: 255 # department
         t.string "pubpages",           limit: 255
         t.text "pubabstract"
         t.string "pubdate",            limit: 255
@@ -353,10 +353,11 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.string "pubpublisher",       limit: 255
         t.text "documentauthor"
         t.string "pubtype",            limit: 255
-        # t.string "cn",                 limit: 255
+        t.string "cn",                 limit: 255
         t.text "pubkeyword"
         t.string "pubvenue",           limit: 255
         t.string "pubvol",             limit: 255
+        t.string "pubnumofvol",        limit: 255
         t.string "pubcreator",         limit: 255
         t.string "pubtitle",           limit: 255
         t.string "pubmonth",           limit: 255
@@ -371,8 +372,8 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.string "puborganization",    limit: 255
         t.string "pubpdf",             limit: 255
         t.string "pubedition",         limit: 255
-        # t.string "o",                  limit: 255
-        # t.string "l",                  limit: 255
+        t.string "o",                  limit: 255 # institution
+        t.string "l",                  limit: 255 # research location
         t.string "documentlocation",   limit: 255
 
         t.string   "thumbnail_file_name",    limit: 255

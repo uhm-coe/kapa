@@ -18,6 +18,11 @@
           <% end %>
         </p>
       </div>
+
+      <%= f.text_field :l, :label => "Research Location", :placeholder => "Honolulu" %>
+      <%= f.text_field :o, :label => "Institution", :placeholder => "College of Education, University of Hawaii at Manoa" %>
+      <%= f.text_field :ou, :label => "Department" %>
+
       <%= f.text_field :pubtitle, :label => "Title" %>
       <div class="form-group">
         <%= label_tag "publication_pubdate", "Date" %>
@@ -33,6 +38,7 @@
       <% if @publication.pubtype == "book" %>
         <!-- Book -->
         <%= f.text_field :pubvol, :label => "Volume" %>
+        <%= f.text_field :pubnumofvol, :label => "Number of Volumes" %>
         <%= f.text_field :pubpages, :label => "Pages" %>
         <%= f.text_field :pubpublisher, :label => "Publisher" %>
         <%= f.text_field :publocation, :label => "Publisher Location" %>
@@ -42,13 +48,14 @@
       <% elsif @publication.pubtype == "book_chapter" %>
         <!-- Book Chapter -->
         <%= f.text_field :pubvol, :label => "Volume" %>
+        <%= f.text_field :pubnumofvol, :label => "Number of Volumes" %>
         <%= f.text_field :pubpages, :label => "Pages" %>
+        <%= f.text_field :pubbooktitle, :label => "Book Title" %>
+        <%= f.text_field :pubbookchapter, :label => "Book Chapter" %>
         <%= f.text_field :pubpublisher, :label => "Publisher" %>
         <%= f.text_field :publocation, :label => "Publisher Location" %>
         <%= f.text_field :pubeditor, :label => "Editor" %>
         <%= f.text_field :pubedition, :label => "Edition" %>
-        <%= f.text_field :pubbooktitle, :label => "Book Title" %>
-        <%= f.text_field :pubbookchapter, :label => "Book Chapter" %>
 
       <% elsif @publication.pubtype == "conference_proceedings" %>
         <!-- Conference Proceedings -->
@@ -62,8 +69,8 @@
         <!-- Journal Article -->
         <%= f.text_field :pubvol, :label => "Volume" %>
         <%= f.text_field :pubpages, :label => "Pages" %>
-        <%= f.text_field :pubpublisher, :label => "Publisher" %>
         <%= f.text_field :pubvenue, :label => "Journal Name" %>
+        <%= f.text_field :pubpublisher, :label => "Publisher" %>
         <%= f.text_field :puborganization, :label => "Organization/Society publishing journal" %>
 
       <% elsif @publication.pubtype == "multimedia_contribution" %>
@@ -79,9 +86,9 @@
 
       <% elsif @publication.pubtype == "report" %>
         <!-- Report -->
-        <%= f.text_field :pubpages, :label => "Pages" %>
         <%= f.text_field :pubpublisher, :label => "Publisher" %>
         <%= f.text_field :publocation, :label => "Publisher Location" %>
+        <%= f.text_field :pubpages, :label => "Pages" %>
 
       <% end %>
 
