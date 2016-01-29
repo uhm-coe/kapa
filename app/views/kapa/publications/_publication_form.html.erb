@@ -87,7 +87,7 @@
 
       <%= f.text_field :pubkeyword, :label => "Keywords" %>
       <span id="pubkeyword_help" class="help-block">
-        A list of keywords, separated by commas
+        list of keywords, separated by commas
       </span>
       <%= f.text_area :pubcontributor, :label => "Authors" %>
       </span>
@@ -101,7 +101,12 @@
       <% end %>
       <%= f.file_field :thumbnail, :label => "Cover image" %>
       <span id="thumbnail_help" class="help-block">
-        must be .gif, .jpg, or .png
+        <p>
+          Any representative image appropriate to the publication, in .jpg or .png format.
+        </p>
+        <p>
+          Examples include presentation photos, book covers, or conference logos. An image is required when featuring this publication on our website.
+        </p>
       </span>
       <%= f.text_area :pubabstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
       <%= f.hidden_field :person_id  %>
