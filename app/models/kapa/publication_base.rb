@@ -18,4 +18,17 @@ module Kapa::PublicationBase
       self.pubmonth = date.strftime("%B")
     end
   end
+
+  class_methods do
+    def search(options = {})
+      filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      publications = Kapa::Publication.eager_load([:person]).order("publications.pubtitle")
+      publications = publications.column_matches("publications.pubtitle" => filter.pubtitle) if filter.pubtitle.present?
+      publications = publications.where("publications.pubtype" => filter.pubtype) if filter.pubtype.present?
+      publications = publications.where(:pubdate => filter.pubdate_start..filter.pubdate_end) if filter.pubdate_start.present? and filter.pubdate_end.present?
+      publications = publications.where("publications.pubkeyword LIKE ?", "%#{filter.keyword}%") if filter.keyword.present?
+      publications = publications.where("publications.pubcontributor LIKE ?", "%#{filter.author}%") if filter.author.present?
+      return publications
+    end
+  end
 end
