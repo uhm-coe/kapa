@@ -232,5 +232,38 @@
     </div>
     <% end %>
 
+    <% if @current_user.read?(:kapa_service_activities) %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#service_activities_detail">
+            Service Activities (<%= @service_activities.length %>)
+          </a>
+        </h4>
+      </div>
+      <div id="service_activities_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right"><%= bootstrap_button "New Service Activity", new_kapa_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <table class="table table-hover">
+            <tr>
+              <th>Type</th>
+              <th>Affiliation</th>
+              <th>Context</th>
+              <th></th>
+            </tr>
+            <% for service_activity in @service_activities %>
+              <tr>
+                <td><%= Kapa::Property.lookup_description(:service_type, service_activity.service_type) %></td>
+                <td><%= abbr service_activity.affiliation, 25 %></td>
+                <td><%= service_activity.context %></td>
+                <td class="right"><%=link_to "Show", kapa_service_activity_path(:id => service_activity), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
   </div>
 <% end %>

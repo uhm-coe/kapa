@@ -14,6 +14,7 @@ module Kapa::PersonsControllerBase
     @course_registrations = @person.course_registrations.eager_load(:course => :term).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
     @publications = @person.publications
+    @service_activities = @person.service_activities
   end
 
   def new
