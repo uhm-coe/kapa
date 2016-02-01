@@ -10,6 +10,7 @@
    menu_items["Document"].push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
    menu_items["Document"].push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
    menu_items["Document"].push ["Publications", kapa_publications_path] if @current_user.read?(:kapa_publications)
+   menu_items["Document"].push ["Service Activities", kapa_service_activities_path] if @current_user.read?(:kapa_service_activities)
    menu_items["Document"].push ["Tests", kapa_exams_path] if @current_user.read?(:kapa_exams)
    menu_items["Document"].push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
    menu_items["Advising"] = []
