@@ -247,6 +247,7 @@
           <table class="table table-hover">
             <tr>
               <th>Type</th>
+              <th>Name</th>
               <th>Affiliation</th>
               <th>Context</th>
               <th></th>
@@ -254,6 +255,7 @@
             <% for service_activity in @service_activities %>
               <tr>
                 <td><%= Kapa::Property.lookup_description(:service_type, service_activity.service_type) %></td>
+                <td><%= abbr service_activity.name, 25 %></td>
                 <td><%= abbr service_activity.affiliation, 25 %></td>
                 <td><%= service_activity.context %></td>
                 <td class="right"><%=link_to "Show", kapa_service_activity_path(:id => service_activity), :class => "btn btn-default btn-xs" %></td>
