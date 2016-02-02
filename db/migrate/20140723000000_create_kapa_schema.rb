@@ -396,7 +396,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "context",           limit: 255
       t.text     "description",       limit: 65535
       t.integer  "award_id"
-      t.string   "public",            limit: 255,   default: "N"
+      t.string   "public",            limit: 255,   default: "Y"
 
       t.string   "image_file_name",    limit: 255
       t.string   "image_content_type", limit: 255
