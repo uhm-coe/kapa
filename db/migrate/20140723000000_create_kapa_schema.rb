@@ -388,6 +388,8 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text     "yml",               limit: 65535
       t.text     "xml",               limit: 65535
       t.string   "service_type",      limit: 255
+      t.date     "service_date_start"
+      t.date     "service_date_end"
       t.string   "affiliation",       limit: 255
       t.text     "role",              limit: 65535
       t.string   "name",              limit: 255
