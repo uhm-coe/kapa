@@ -26,6 +26,8 @@
   <table id="advising_list" class="table table-striped">
     <thead>
       <tr>
+        <th>ID</th>
+        <th>Name</th>
         <th>Type</th>
         <th>Name</th>
         <th>Affiliation</th>
@@ -34,6 +36,8 @@
       </tr>
       <% for service_activity in @service_activities %>
         <tr>
+          <td><%= service_activity.person.id_number %></td>
+          <td><%= link_to abbr(service_activity.person.full_name), kapa_person_path(:id => service_activity.person_id) if service_activity.person %></td>
           <td><%= Kapa::Property.lookup_description(:service_type, service_activity.service_type) %></td>
           <td><%= abbr service_activity.name, 25 %></td>
           <td><%= abbr service_activity.affiliation, 25 %></td>
