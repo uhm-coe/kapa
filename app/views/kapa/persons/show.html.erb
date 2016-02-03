@@ -13,7 +13,7 @@
   <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-    <% if @current_user.read?(:kapa_curriculums) %>
+    <% if @current_user.read?(:kapa_curriculums) && Rails.configuration.available_routes.include?("kapa_curriculums") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -56,7 +56,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_files) %>
+    <% if @current_user.read?(:kapa_files) && Rails.configuration.available_routes.include?("kapa_files") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -92,7 +92,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_advising_sessions) %>
+    <% if @current_user.read?(:kapa_advising_sessions) && Rails.configuration.available_routes.include?("kapa_advising_sessions") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -127,7 +127,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_course_registrations) %>
+    <% if @current_user.read?(:kapa_course_registrations) && Rails.configuration.available_routes.include?("kapa_course_registrations") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -162,7 +162,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_practicum_placements) %>
+    <% if @current_user.read?(:kapa_practicum_placements) && Rails.configuration.available_routes.include?("kapa_practicum_placements") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -197,7 +197,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_publications) %>
+    <% if @current_user.read?(:kapa_publications) && Rails.configuration.available_routes.include?("kapa_publications") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -232,7 +232,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_service_activities) %>
+    <% if @current_user.read?(:kapa_service_activities) && Rails.configuration.available_routes.include?("kapa_service_activities") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
