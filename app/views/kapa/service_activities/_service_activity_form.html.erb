@@ -17,7 +17,7 @@
   </div>
 
   <div class="col-sm-6">
-    <% if @service_activity.image.exists? %>
+    <% if @service_activity && @service_activity.image.exists? %>
       <p>
         You have already uploaded an image named <strong><%= @service_activity.image_file_name %></strong>. To replace it, choose a new file below.
       </p>

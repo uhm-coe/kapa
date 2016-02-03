@@ -9,7 +9,7 @@
 <%= bootstrap_fields_for :publication do |f| %>
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <div class="form-group">
         <%= label :pubtype, :description, "Publication Type" %>
         <p class="form-control-static"><span><%= Kapa::Property.lookup_description(:publication_type, @publication.pubtype) %></span>
@@ -34,7 +34,9 @@
       <span id="documentidentifier_help" class="help-block">
         The DOI or ISBN number for publications that have one, e.g. 978-1412957465 (13-digit ISBN), 141295746X (10-digit ISBN), or 10.1007/BF02504547 (DOI).
       </span>
+    </div>
 
+    <div class="col-sm-4">
       <% if @publication.pubtype == "book" %>
         <!-- Book -->
         <%= f.text_field :pubvol, :label => "Volume" %>
@@ -100,7 +102,7 @@
       </span>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <% if @publication.thumbnail.exists? %>
         <p>
           You have already uploaded a cover image named <strong><%= @publication.thumbnail_file_name %></strong>. To replace it, choose a new file below.
