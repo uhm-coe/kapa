@@ -1,6 +1,6 @@
 <% content_for(:dialog) do %>
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_publication_type_dialog", :modal_title => "Change Publication Type", :modal_form_id => "change_publication_type_form" } do %>
-    <%= bootstrap_form_for(:publication, :url => kapa_publication_path(:id => @publication), :html => {:method => :put, :id => "change_publication_type_form"}) do |t| %>
+    <%= bootstrap_form_for(:publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :id => "change_publication_type_form"}) do |t| %>
       <%= f.property_select :pubtype, :name => :publication_type, :label => "Publication Type" %>
     <% end %>
   <% end %>

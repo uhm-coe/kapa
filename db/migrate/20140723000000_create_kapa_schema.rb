@@ -338,7 +338,7 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
-    create_table :publications, force: :cascade  do |t|
+    create_table "faculty_publications", force: :cascade  do |t|
         t.integer "person_id"
         t.string "dept"
         t.string "authors"
@@ -382,7 +382,7 @@ class CreateKapaSchema < ActiveRecord::Migration
         t.datetime "thumbnail_updated_at"
     end
 
-    create_table "service_activities", force: :cascade do |t|
+    create_table "faculty_service_activities", force: :cascade do |t|
       t.integer  "person_id"
       t.string   "dept",              limit: 255
       t.text     "yml",               limit: 65535

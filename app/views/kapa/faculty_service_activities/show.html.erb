@@ -7,7 +7,7 @@
   </h4>
 
   <div class="row">
-    <%= bootstrap_form_for :service_activity, :url => kapa_service_activity_path(:id => @service_activity), :html => {:method => :put, :multipart => true} do |f| %>
+    <%= bootstrap_form_for :service_activity, :url => kapa_faculty_service_activity_path(:id => @service_activity), :html => {:method => :put, :multipart => true} do |f| %>
       <%= render :partial => "service_activity_form", :locals => {:f => f} %>
       <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
     <% end %>

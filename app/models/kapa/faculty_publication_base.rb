@@ -1,4 +1,4 @@
-module Kapa::PublicationBase
+module Kapa::FacultyPublicationBase
   extend ActiveSupport::Concern
 
   included do
@@ -22,12 +22,12 @@ module Kapa::PublicationBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      publications = Kapa::Publication.eager_load([:person]).order("publications.pubtitle")
-      publications = publications.column_matches("publications.pubtitle" => filter.pubtitle) if filter.pubtitle.present?
-      publications = publications.where("publications.pubtype" => filter.pubtype) if filter.pubtype.present?
+      publications = Kapa::FacultyPublication.eager_load([:person]).order("faculty_publications.pubtitle")
+      publications = publications.column_matches("faculty_publications.pubtitle" => filter.pubtitle) if filter.pubtitle.present?
+      publications = publications.where("faculty_publications.pubtype" => filter.pubtype) if filter.pubtype.present?
       publications = publications.where(:pubdate => filter.pubdate_start..filter.pubdate_end) if filter.pubdate_start.present? and filter.pubdate_end.present?
-      publications = publications.where("publications.pubkeyword LIKE ?", "%#{filter.keyword}%") if filter.keyword.present?
-      publications = publications.where("publications.pubcontributor LIKE ?", "%#{filter.author}%") if filter.author.present?
+      publications = publications.where("faculty_publications.pubkeyword LIKE ?", "%#{filter.keyword}%") if filter.keyword.present?
+      publications = publications.where("faculty_publications.pubcontributor LIKE ?", "%#{filter.author}%") if filter.author.present?
       return publications
     end
   end

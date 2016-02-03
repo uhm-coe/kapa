@@ -197,7 +197,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_publications) && Rails.configuration.available_routes.include?("kapa_publications") %>
+    <% if @current_user.read?(:kapa_faculty_publications) && Rails.configuration.available_routes.include?("kapa_faculty_publications") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -208,7 +208,7 @@
       </div>
       <div id="publications_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= bootstrap_button "New Publication", new_kapa_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%= bootstrap_button "New Publication", new_kapa_faculty_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Type</th>
@@ -223,7 +223,7 @@
                 <td><%= abbr publication.pubtitle, 25 %></td>
                 <td><%= publication.pubdate %></td>
                 <td><%= abbr publication.pubcontributor, 25 %></td>
-                <td class="right"><%=link_to "Show", kapa_publication_path(:id=> publication), :class => "btn btn-default btn-xs" %></td>
+                <td class="right"><%=link_to "Show", kapa_faculty_publication_path(:id=> publication), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </table>
@@ -232,7 +232,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_service_activities) && Rails.configuration.available_routes.include?("kapa_service_activities") %>
+    <% if @current_user.read?(:kapa_faculty_service_activities) && Rails.configuration.available_routes.include?("kapa_faculty_service_activities") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -243,7 +243,7 @@
       </div>
       <div id="service_activities_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= bootstrap_button "New Service Activity", new_kapa_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%= bootstrap_button "New Service Activity", new_kapa_faculty_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Type</th>
@@ -258,7 +258,7 @@
                 <td><%= abbr service_activity.name, 25 %></td>
                 <td><%= abbr service_activity.affiliation, 25 %></td>
                 <td><%= service_activity.context %></td>
-                <td class="right"><%=link_to "Show", kapa_service_activity_path(:id => service_activity), :class => "btn btn-default btn-xs" %></td>
+                <td class="right"><%=link_to "Show", kapa_faculty_service_activity_path(:id => service_activity), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </table>

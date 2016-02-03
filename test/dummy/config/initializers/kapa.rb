@@ -42,6 +42,6 @@ Rails.configuration.available_routes = %w{
   kapa_properties
   kapa_terms
   kapa_users
-  kapa_publications
-  kapa_service_activities
+  kapa_faculty_publications
+  kapa_faculty_service_activities
 }

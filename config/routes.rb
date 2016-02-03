@@ -41,8 +41,8 @@ Rails.application.routes.draw do
     put 'datasets/load(/:id)' => 'datasets#load_data', :as => :datasets_load
     get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
     resources :datasets, &extra_actions
-    resources :publications, &extra_actions
-    resources :service_activities, &extra_actions
+    resources :faculty_publications, &extra_actions
+    resources :faculty_service_activities, &extra_actions
 
   end
 
