@@ -197,6 +197,39 @@
     </div>
     <% end %>
 
+    <% if @current_user.read?(:kapa_faculty_awards) && Rails.configuration.available_routes.include?("kapa_faculty_awards") %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#awards_detail">
+            Awards (<%= @awards.length %>)
+          </a>
+        </h4>
+      </div>
+      <div id="awards_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right"><%= bootstrap_button "New Award", new_kapa_faculty_award_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <table class="table table-hover">
+            <tr>
+              <th>Award Name</th>
+              <th>Affiliation</th>
+              <th>Context</th>
+              <th></th>
+            </tr>
+            <% for award in @awards %>
+              <tr>
+                <td><%= abbr award.name, 25 %></td>
+                <td><%= abbr award.affiliation, 25 %></td>
+                <td><%= award.context %></td>
+                <td class="right"><%=link_to "Show", kapa_faculty_award_path(:id => award), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
     <% if @current_user.read?(:kapa_faculty_publications) && Rails.configuration.available_routes.include?("kapa_faculty_publications") %>
     <div class="panel panel-default">
       <div class="panel-heading">

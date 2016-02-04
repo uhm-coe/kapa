@@ -338,6 +338,28 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
+    create_table "faculty_awards", force: :cascade do |t|
+      t.integer  "person_id"
+      t.string   "dept",              limit: 255
+      t.text     "yml",               limit: 65535
+      t.text     "xml",               limit: 65535
+      t.string   "name",              limit: 255
+      t.date     "award_date"
+      t.string   "affiliation",       limit: 255
+      t.text     "description",       limit: 65535
+      t.string   "url",               limit: 255
+      t.string   "context",           limit: 255
+      t.string   "public",            limit: 255,   default: "Y"
+
+      t.string   "image_file_name",    limit: 255
+      t.string   "image_content_type", limit: 255
+      t.integer  "image_file_size",    limit: 4
+      t.datetime "image_updated_at"
+
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
     create_table "faculty_publications", force: :cascade  do |t|
         t.integer "person_id"
         t.string "dept"

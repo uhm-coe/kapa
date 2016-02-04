@@ -17,7 +17,7 @@
           <td><%= f.select "#{o}", level_selections, {:label => :no} %></td>
           <% if %w(kapa_curriculums kapa_transition_points kapa_enrollments kapa_files kapa_forms kapa_exams
                    kapa_advising_sessions kapa_courses kapa_course_registrations kapa_practicum_placements
-                   kapa_practicum_sites kapa_faculty_publications kapa_faculty_service_activities).include? o %>
+                   kapa_practicum_sites kapa_faculty_publications kapa_faculty_service_activities kapa_faculty_awards).include? o %>
             <td><%= f.select "#{o}_scope", list_selections, {:label => :no}, {} %></td>
           <% end %>
         </tr>

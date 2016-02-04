@@ -14,6 +14,7 @@ module Kapa::PersonBase
     has_many :course_registrations
     has_many :faculty_publications
     has_many :faculty_service_activities
+    has_many :faculty_awards
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create

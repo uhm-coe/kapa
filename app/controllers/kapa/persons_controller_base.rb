@@ -15,6 +15,7 @@ module Kapa::PersonsControllerBase
     @practicum_placements = @person.practicum_placements
     @publications = @person.faculty_publications
     @service_activities = @person.faculty_service_activities
+    @awards = @person.faculty_awards
   end
 
   def new

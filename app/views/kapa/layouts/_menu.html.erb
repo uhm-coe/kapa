@@ -7,6 +7,7 @@
    menu_items["Program"].push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
    menu_items["Program"].push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
    menu_items["Document"] = []
+   menu_items["Document"].push ["Awards", kapa_faculty_awards_path] if @current_user.read?(:kapa_faculty_awards)
    menu_items["Document"].push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
    menu_items["Document"].push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
    menu_items["Document"].push ["Publications", kapa_faculty_publications_path] if @current_user.read?(:kapa_faculty_publications)
