@@ -52,7 +52,7 @@
     <tbody>
       <% for publication in @publications %>
         <tr>
-          <td><%= publication.person.id_number %></td>
+          <td><%= publication.person.id_number if publication.person %></td>
           <td><%= link_to abbr(publication.person.full_name), kapa_person_path(:id => publication.person_id) if publication.person %></td>
           <td><%= Kapa::Property.lookup_description(:publication_type, publication.pubtype) %>
           <td><%= abbr publication.pubtitle, 25 %></td>
