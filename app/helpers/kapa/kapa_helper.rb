@@ -63,6 +63,12 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
+  def person_select(object_name, method, options = {}, html_options = {})
+    options[:model_class] = Kapa::Person
+    options[:model_options] = options
+    model_select(object_name, method, options, html_options)
+  end
+
   def program_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::Program
     options[:model_options] = options
