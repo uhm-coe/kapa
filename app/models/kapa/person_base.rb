@@ -13,8 +13,6 @@ module Kapa::PersonBase
     has_many :practicum_placements
     has_many :course_registrations
     has_many :faculty_publications
-    has_many :faculty_publications_authors
-    # has_many :publications, :through => :faculty_publications_authors, :source => :faculty_publication
     has_many :faculty_service_activities
     has_many :faculty_awards
 
