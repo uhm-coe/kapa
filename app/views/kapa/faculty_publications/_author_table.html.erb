@@ -11,7 +11,7 @@
       <tr>
         <td><%= author.sequence %></td>
         <td>
-          <% if author.person? %>
+          <% if author.internal? %>
             <%= link_to author.full_name, kapa_person_path(:id => author.person_id) %>
           <% else %>
             <%= author.full_name %>

@@ -17,15 +17,11 @@ module Kapa::FacultyPublicationsAuthorBase
     type == "external"
   end
 
-  def person?
-    internal?
-  end
-
   def person
     Kapa::Person.find_by(:id => person_id)
   end
 
   def full_name
-    (person?)? person.full_name : "#{last_name}, #{first_name} #{middle_initial}"
+    (internal?)? person.full_name : "#{last_name}, #{first_name} #{middle_initial}"
   end
 end
