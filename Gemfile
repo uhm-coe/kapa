@@ -16,3 +16,4 @@ gemspec
 gem 'rails', '~> 4.2.3'
 gem 'rails-csv-fixtures', :git => 'https://github.com/bfolkens/rails-csv-fixtures.git'
 gem 'activerecord-session_store', :git => 'https://github.com/rails/activerecord-session_store.git'
+gem 'rake'

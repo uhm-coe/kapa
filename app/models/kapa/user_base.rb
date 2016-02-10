@@ -105,46 +105,8 @@ module Kapa::UserBase
   end
 
   def apply_role(name)
-    permission = {}
-    case name.to_s
-    when "admin"
-      Rails.configuration.available_routes.each do |o|
-        permission["#{o}"] = '3'
-        permission["#{o}_scope"] = '3'
-      end
-    when "nothing"
-      Rails.configuration.available_routes.each do |o|
-        permission["#{o}"] = '0'
-        permission["#{o}_scope"] = '0'
-      end
-    when "adviser"
-      permission["kapa_persons"] = '2'
-      permission["kapa_persons_scope"] = '2'
-      permission["kapa_contacts"] = '2'
-      permission["kapa_contacts_scope"] = '2'
-      permission["kapa_curriculums"] = '2'
-      permission["kapa_curriculums_scope"] = '2'
-      permission["kapa_transition_points"] = '2'
-      permission["kapa_transition_points_scope"] = '2'
-      permission["kapa_transition_actions"] = '2'
-      permission["kapa_transition_actions_scope"] = '2'
-      permission["kapa_enrollments"] = '2'
-      permission["kapa_enrollments_scope"] = '2'
-      permission["kapa_files"] = '2'
-      permission["kapa_files_scope"] = '2'
-      permission["kapa_forms"] = '2'
-      permission["kapa_forms_scope"] = '2'
-      permission["kapa_exams"] = '2'
-      permission["kapa_exams_scope"] = '2'
-      permission["kapa_advising_sessions"] = '2'
-      permission["kapa_advising_sessions_scope"] = '2'
-    when "instructor"
-      permission["kapa_courses"] = '2'
-      permission["kapa_courses_scope"] = '2'
-      permission["kapa_course_registrations"] = '2'
-      permission["kapa_course_registrations_scope"] = '2'
-    end
-    self.serialize(:permission, permission)
+    role = Kapa::User.roles[name.to_sym]
+    self.serialize(:permission, role[:permission])
   end
 
   def valid_credential?(password)
@@ -194,6 +156,56 @@ module Kapa::UserBase
        :status => [:status],
        :dept => [:dept],
        :category => [:category]}
+    end
+
+    def default_roles
+      r = {}
+      admin_permission = {}
+      Rails.configuration.available_routes.each do |route|
+        admin_permission["#{route}"] = '3'
+        admin_permission["#{route}_scope"] = '3'
+      end
+      r[:admin] = {:name => "Administrator", :permission => admin_permission}
+      none_permission = {}
+      Rails.configuration.available_routes.each do |route|
+        none_permission["#{route}"] = '0'
+        none_permission["#{route}_scope"] = '0'
+      end
+      r[:none] = {:name => "None", :permission => none_permission}
+      return r
+    end
+
+    def roles
+      r = Kapa::User.default_roles
+      adviser_permission = {}
+      adviser_permission["kapa_persons"] = '2'
+      adviser_permission["kapa_persons_scope"] = '2'
+      adviser_permission["kapa_contacts"] = '2'
+      adviser_permission["kapa_contacts_scope"] = '2'
+      adviser_permission["kapa_curriculums"] = '2'
+      adviser_permission["kapa_curriculums_scope"] = '2'
+      adviser_permission["kapa_transition_points"] = '2'
+      adviser_permission["kapa_transition_points_scope"] = '2'
+      adviser_permission["kapa_transition_actions"] = '2'
+      adviser_permission["kapa_transition_actions_scope"] = '2'
+      adviser_permission["kapa_enrollments"] = '2'
+      adviser_permission["kapa_enrollments_scope"] = '2'
+      adviser_permission["kapa_files"] = '2'
+      adviser_permission["kapa_files_scope"] = '2'
+      adviser_permission["kapa_forms"] = '2'
+      adviser_permission["kapa_forms_scope"] = '2'
+      adviser_permission["kapa_exams"] = '2'
+      adviser_permission["kapa_exams_scope"] = '2'
+      adviser_permission["kapa_advising_sessions"] = '2'
+      adviser_permission["kapa_advising_sessions_scope"] = '2'
+      r[:adviser] = {:name => "Adviser", :permission => adviser_permission}
+      instructor_permission = {}
+      instructor_permission["kapa_courses"] = '2'
+      instructor_permission["kapa_courses_scope"] = '2'
+      instructor_permission["kapa_course_registrations"] = '2'
+      instructor_permission["kapa_course_registrations_scope"] = '2'
+      r[:instructor] = {:name => "Adviser", :permission => instructor_permission}
+      return r
     end
   end
 end

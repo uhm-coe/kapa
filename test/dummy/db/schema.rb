@@ -283,6 +283,93 @@ ActiveRecord::Schema.define(version: 20151208213554) do
 
   add_index "exams", ["person_id"], name: "index_exams_on_person_id", using: :btree
 
+  create_table "faculty_awards", force: :cascade do |t|
+    t.integer  "person_id",          limit: 4
+    t.string   "dept",               limit: 255
+    t.text     "yml",                limit: 65535
+    t.text     "xml",                limit: 65535
+    t.string   "name",               limit: 255
+    t.date     "award_date"
+    t.string   "affiliation",        limit: 255
+    t.text     "description",        limit: 65535
+    t.string   "url",                limit: 255
+    t.string   "context",            limit: 255
+    t.string   "public",             limit: 255,   default: "Y"
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "faculty_publications", force: :cascade do |t|
+    t.integer  "person_id",              limit: 4
+    t.string   "dept",                   limit: 255
+    t.string   "authors",                limit: 255
+    t.string   "dn",                     limit: 255
+    t.string   "objectclass",            limit: 255
+    t.string   "ou",                     limit: 255
+    t.string   "pubpages",               limit: 255
+    t.text     "pubabstract",            limit: 65535
+    t.string   "pubdate",                limit: 255
+    t.string   "publocation",            limit: 255
+    t.text     "pubowner",               limit: 65535
+    t.string   "pubpublisher",           limit: 255
+    t.text     "documentauthor",         limit: 65535
+    t.string   "pubtype",                limit: 255
+    t.string   "cn",                     limit: 255
+    t.text     "pubkeyword",             limit: 65535
+    t.string   "pubvenue",               limit: 255
+    t.string   "pubvol",                 limit: 255
+    t.string   "pubnumofvol",            limit: 255
+    t.string   "pubcreator",             limit: 255
+    t.string   "pubtitle",               limit: 255
+    t.string   "pubmonth",               limit: 255
+    t.string   "pubyear",                limit: 255
+    t.string   "documentidentifier",     limit: 255
+    t.text     "pubcontributor",         limit: 65535
+    t.string   "pubeditor",              limit: 255
+    t.string   "pubbooktitle",           limit: 255
+    t.string   "pubbookchapter",         limit: 255
+    t.string   "pubisnotfeatured",       limit: 255
+    t.string   "puborganization",        limit: 255
+    t.string   "pubpdf",                 limit: 255
+    t.string   "pubedition",             limit: 255
+    t.string   "o",                      limit: 255
+    t.string   "l",                      limit: 255
+    t.string   "documentlocation",       limit: 255
+    t.string   "thumbnail_file_name",    limit: 255
+    t.string   "thumbnail_content_type", limit: 255
+    t.integer  "thumbnail_file_size",    limit: 4
+    t.datetime "thumbnail_updated_at"
+  end
+
+  create_table "faculty_service_activities", force: :cascade do |t|
+    t.integer  "person_id",          limit: 4
+    t.string   "dept",               limit: 255
+    t.text     "yml",                limit: 65535
+    t.text     "xml",                limit: 65535
+    t.string   "service_type",       limit: 255
+    t.date     "service_date_start"
+    t.date     "service_date_end"
+    t.string   "affiliation",        limit: 255
+    t.text     "role",               limit: 65535
+    t.string   "name",               limit: 255
+    t.string   "compensation",       limit: 255
+    t.boolean  "relevant",                         default: true
+    t.string   "context",            limit: 255
+    t.text     "description",        limit: 65535
+    t.integer  "award_id",           limit: 4
+    t.string   "public",             limit: 255,   default: "Y"
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "files", force: :cascade do |t|
     t.integer  "person_id",         limit: 4,                   null: false
     t.string   "name",              limit: 255
@@ -585,41 +672,45 @@ ActiveRecord::Schema.define(version: 20151208213554) do
   end
 
   create_table "publications", force: :cascade do |t|
-    t.integer "person_id",          limit: 4
-    t.string  "dept",               limit: 255
-    t.string  "authors",            limit: 255
-    t.string  "dn",                 limit: 255
-    t.string  "objectclass",        limit: 255
-    t.string  "ou",                 limit: 255
-    t.string  "pubpages",           limit: 255
-    t.text    "pubabstract",        limit: 65535
-    t.string  "pubdate",            limit: 255
-    t.string  "publocation",        limit: 255
-    t.text    "pubowner",           limit: 65535
-    t.string  "pubpublisher",       limit: 255
-    t.text    "documentauthor",     limit: 65535
-    t.string  "pubtype",            limit: 255
-    t.string  "cn",                 limit: 255
-    t.text    "pubkeyword",         limit: 65535
-    t.string  "pubvenue",           limit: 255
-    t.string  "pubvol",             limit: 255
-    t.string  "pubcreator",         limit: 255
-    t.string  "pubtitle",           limit: 255
-    t.string  "pubmonth",           limit: 255
-    t.string  "pubyear",            limit: 255
-    t.string  "documentidentifier", limit: 255
-    t.text    "pubcontributor",     limit: 65535
-    t.string  "pubeditor",          limit: 255
-    t.string  "pubbooktitle",       limit: 255
-    t.string  "pubthumbnail",       limit: 255
-    t.string  "pubbookchapter",     limit: 255
-    t.string  "pubisnotfeatured",   limit: 255
-    t.string  "puborganization",    limit: 255
-    t.string  "pubpdf",             limit: 255
-    t.string  "pubedition",         limit: 255
-    t.string  "o",                  limit: 255
-    t.string  "l",                  limit: 255
-    t.string  "documentlocation",   limit: 255
+    t.integer  "person_id",              limit: 4
+    t.string   "dept",                   limit: 255
+    t.string   "authors",                limit: 255
+    t.string   "dn",                     limit: 255
+    t.string   "objectclass",            limit: 255
+    t.string   "ou",                     limit: 255
+    t.string   "pubpages",               limit: 255
+    t.text     "pubabstract",            limit: 65535
+    t.string   "pubdate",                limit: 255
+    t.string   "publocation",            limit: 255
+    t.text     "pubowner",               limit: 65535
+    t.string   "pubpublisher",           limit: 255
+    t.text     "documentauthor",         limit: 65535
+    t.string   "pubtype",                limit: 255
+    t.string   "cn",                     limit: 255
+    t.text     "pubkeyword",             limit: 65535
+    t.string   "pubvenue",               limit: 255
+    t.string   "pubvol",                 limit: 255
+    t.string   "pubnumofvol",            limit: 255
+    t.string   "pubcreator",             limit: 255
+    t.string   "pubtitle",               limit: 255
+    t.string   "pubmonth",               limit: 255
+    t.string   "pubyear",                limit: 255
+    t.string   "documentidentifier",     limit: 255
+    t.text     "pubcontributor",         limit: 65535
+    t.string   "pubeditor",              limit: 255
+    t.string   "pubbooktitle",           limit: 255
+    t.string   "pubbookchapter",         limit: 255
+    t.string   "pubisnotfeatured",       limit: 255
+    t.string   "puborganization",        limit: 255
+    t.string   "pubpdf",                 limit: 255
+    t.string   "pubedition",             limit: 255
+    t.string   "o",                      limit: 255
+    t.string   "l",                      limit: 255
+    t.string   "documentlocation",       limit: 255
+    t.string   "thumbnail_file_name",    limit: 255
+    t.string   "thumbnail_content_type", limit: 255
+    t.integer  "thumbnail_file_size",    limit: 4
+    t.datetime "thumbnail_updated_at"
   end
 
   create_table "sessions", force: :cascade do |t|

@@ -55,7 +55,7 @@
           <td><%= publication.person.id_number if publication.person %></td>
           <td><%= link_to abbr(publication.person.full_name), kapa_person_path(:id => publication.person_id) if publication.person %></td>
           <td><%= Kapa::Property.lookup_description(:publication_type, publication.pubtype) %>
-          <td><%= abbr publication.pubtitle, 25 %></td>
+          <td><%= abbr publication.pubtitle, 60 %></td>
           <td><%= publication.pubdate %></td>
           <td><%= abbr publication.pubcontributor, 25 %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => publication}, :class => "btn btn-default btn-xs" %></td>
