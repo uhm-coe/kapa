@@ -13,6 +13,10 @@ module Kapa::FacultyPublicationBase
     before_save :format_dates
   end
 
+  def authors_ordered
+    authors.order(:sequence)
+  end
+
   def format_dates
     unless self.pubdate.blank?
       date = self.pubdate.to_time
