@@ -262,6 +262,113 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "type",          limit: 255
     end
 
+    create_table "faculty_awards", force: :cascade do |t|
+      t.integer  "person_id"
+      t.string   "dept",              limit: 255
+      t.text     "yml",               limit: 65535
+      t.text     "xml",               limit: 65535
+      t.string   "name",              limit: 255
+      t.date     "award_date"
+      t.string   "affiliation",       limit: 255
+      t.text     "description",       limit: 65535
+      t.string   "url",               limit: 255
+      t.string   "context",           limit: 255
+      t.string   "public",            limit: 255,   default: "Y"
+
+      t.string   "image_file_name",    limit: 255
+      t.string   "image_content_type", limit: 255
+      t.integer  "image_file_size",    limit: 4
+      t.datetime "image_updated_at"
+
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    create_table "faculty_publications", force: :cascade  do |t|
+      t.integer "person_id"
+      t.string "dept"
+      t.string "authors"
+      t.string "dn",                 limit: 255
+      t.string "objectclass",        limit: 255
+      t.string "ou",                 limit: 255 # department
+      t.string "pubpages",           limit: 255
+      t.text "pubabstract"
+      t.string "pubdate",            limit: 255
+      t.string "publocation",        limit: 255
+      t.text "pubowner"
+      t.string "pubpublisher",       limit: 255
+      t.text "documentauthor"
+      t.string "pubtype",            limit: 255
+      t.string "cn",                 limit: 255
+      t.text "pubkeyword"
+      t.string "pubvenue",           limit: 255
+      t.string "pubvol",             limit: 255
+      t.string "pubnumofvol",        limit: 255
+      t.string "pubcreator",         limit: 255
+      t.string "pubtitle",           limit: 255
+      t.string "pubmonth",           limit: 255
+      t.string "pubyear",            limit: 255
+      t.string "documentidentifier", limit: 255
+      t.text "pubcontributor"
+      t.string "pubeditor",          limit: 255
+      t.string "pubbooktitle",       limit: 255
+      # t.string "pubthumbnail",       limit: 255
+      t.string "pubbookchapter",     limit: 255
+      t.string "pubisnotfeatured",   limit: 255
+      t.string "puborganization",    limit: 255
+      t.string "pubpdf",             limit: 255
+      t.string "pubedition",         limit: 255
+      t.string "o",                  limit: 255 # institution
+      t.string "l",                  limit: 255 # research location
+      t.string "documentlocation",   limit: 255
+
+      t.string   "thumbnail_file_name",    limit: 255
+      t.string   "thumbnail_content_type", limit: 255
+      t.integer  "thumbnail_file_size",    limit: 4
+      t.datetime "thumbnail_updated_at"
+    end
+
+    create_table "faculty_publications_authors", force: :cascade do |t|
+      t.integer  "faculty_publication_id"
+      t.string   "type",                  limit: 255
+      t.integer  "person_id",                         null: true
+      t.string   "last_name",             limit: 255
+      t.string   "first_name",            limit: 255
+      t.string   "middle_initial",        limit: 255
+      t.integer  "sequence"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.text     "yml",                   limit: 65535
+      t.text     "xml",                   limit: 65535
+    end
+
+    create_table "faculty_service_activities", force: :cascade do |t|
+      t.integer  "person_id"
+      t.string   "dept",              limit: 255
+      t.text     "yml",               limit: 65535
+      t.text     "xml",               limit: 65535
+      t.string   "service_type",      limit: 255
+      t.date     "service_date_start"
+      t.date     "service_date_end"
+      t.string   "affiliation",       limit: 255
+      t.text     "role",              limit: 65535
+      t.string   "name",              limit: 255
+      t.string   "compensation",      limit: 255
+      t.boolean  "relevant",                        default: true
+      t.string   "context",           limit: 255
+      t.text     "description",       limit: 65535
+      t.integer  "award_id"
+      t.string   "public",            limit: 255,   default: "Y"
+
+      t.string   "image_file_name",    limit: 255
+      t.string   "image_content_type", limit: 255
+      t.integer  "image_file_size",    limit: 4
+      t.datetime "image_updated_at"
+
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
     add_index "exams", ["person_id"], name: "index_exams_on_person_id", using: :btree
 
     create_table "files", force: :cascade do |t|
@@ -337,99 +444,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["email"], name: "index_persons_on_email", using: :btree
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
-
-    create_table "faculty_awards", force: :cascade do |t|
-      t.integer  "person_id"
-      t.string   "dept",              limit: 255
-      t.text     "yml",               limit: 65535
-      t.text     "xml",               limit: 65535
-      t.string   "name",              limit: 255
-      t.date     "award_date"
-      t.string   "affiliation",       limit: 255
-      t.text     "description",       limit: 65535
-      t.string   "url",               limit: 255
-      t.string   "context",           limit: 255
-      t.string   "public",            limit: 255,   default: "Y"
-
-      t.string   "image_file_name",    limit: 255
-      t.string   "image_content_type", limit: 255
-      t.integer  "image_file_size",    limit: 4
-      t.datetime "image_updated_at"
-
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    create_table "faculty_publications", force: :cascade  do |t|
-        t.integer "person_id"
-        t.string "dept"
-        t.string "authors"
-        t.string "dn",                 limit: 255
-        t.string "objectclass",        limit: 255
-        t.string "ou",                 limit: 255 # department
-        t.string "pubpages",           limit: 255
-        t.text "pubabstract"
-        t.string "pubdate",            limit: 255
-        t.string "publocation",        limit: 255
-        t.text "pubowner"
-        t.string "pubpublisher",       limit: 255
-        t.text "documentauthor"
-        t.string "pubtype",            limit: 255
-        t.string "cn",                 limit: 255
-        t.text "pubkeyword"
-        t.string "pubvenue",           limit: 255
-        t.string "pubvol",             limit: 255
-        t.string "pubnumofvol",        limit: 255
-        t.string "pubcreator",         limit: 255
-        t.string "pubtitle",           limit: 255
-        t.string "pubmonth",           limit: 255
-        t.string "pubyear",            limit: 255
-        t.string "documentidentifier", limit: 255
-        t.text "pubcontributor"
-        t.string "pubeditor",          limit: 255
-        t.string "pubbooktitle",       limit: 255
-        # t.string "pubthumbnail",       limit: 255
-        t.string "pubbookchapter",     limit: 255
-        t.string "pubisnotfeatured",   limit: 255
-        t.string "puborganization",    limit: 255
-        t.string "pubpdf",             limit: 255
-        t.string "pubedition",         limit: 255
-        t.string "o",                  limit: 255 # institution
-        t.string "l",                  limit: 255 # research location
-        t.string "documentlocation",   limit: 255
-
-        t.string   "thumbnail_file_name",    limit: 255
-        t.string   "thumbnail_content_type", limit: 255
-        t.integer  "thumbnail_file_size",    limit: 4
-        t.datetime "thumbnail_updated_at"
-    end
-
-    create_table "faculty_service_activities", force: :cascade do |t|
-      t.integer  "person_id"
-      t.string   "dept",              limit: 255
-      t.text     "yml",               limit: 65535
-      t.text     "xml",               limit: 65535
-      t.string   "service_type",      limit: 255
-      t.date     "service_date_start"
-      t.date     "service_date_end"
-      t.string   "affiliation",       limit: 255
-      t.text     "role",              limit: 65535
-      t.string   "name",              limit: 255
-      t.string   "compensation",      limit: 255
-      t.boolean  "relevant",                        default: true
-      t.string   "context",           limit: 255
-      t.text     "description",       limit: 65535
-      t.integer  "award_id"
-      t.string   "public",            limit: 255,   default: "Y"
-
-      t.string   "image_file_name",    limit: 255
-      t.string   "image_content_type", limit: 255
-      t.integer  "image_file_size",    limit: 4
-      t.datetime "image_updated_at"
-
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
 
     create_table "practicum_assignments_old", force: :cascade do |t|
       t.integer  "practicum_placement_id",   limit: 4

@@ -1,0 +1,30 @@
+<table id="authors" class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Author</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for author in @authors %>
+      <tr>
+        <td><%= author.sequence %></td>
+        <td>
+          <% if author.person? %>
+            <%= link_to author.full_name, kapa_person_path(:id => author.person_id) %>
+          <% else %>
+            <%= author.full_name %>
+          <% end %>
+        </td>
+        <td class="right">
+          <%= link_to "Edit", {:controller => :faculty_publications_authors, :action => :show, :id => author}, :class => "btn btn-default btn-xs" %>
+
+          <%= bootstrap_form_for(:author, :url => kapa_faculty_publications_author_path(:id => author, :faculty_publication_id => @publication), :html => {:method => :delete}) do |f| %>
+            <button class="btn btn-default btn-xs" name="commit" type="submit">Delete</button>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

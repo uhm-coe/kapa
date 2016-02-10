@@ -8,6 +8,7 @@ module Kapa::FacultyPublicationsControllerBase
 
   def show
     @publication = Kapa::FacultyPublication.find(params[:id])
+    @authors = @publication.authors
     @person = @publication.person
   end
 
