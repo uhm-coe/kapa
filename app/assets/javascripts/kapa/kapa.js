@@ -51,7 +51,7 @@ jQuery(document).ready(function ($) {
   });
 
   $('.tabs').each(function(i, e) {
-    var index = $(e).find('.nav-tabs a').index($('a[href=' + document.location.hash + '_tab]'));
+    var index = $(e).find('.nav-tabs a').index($("a[href='" + document.location.hash + "_tab']"));
     index = index > 0 ? index : 0
     $(e).find('li:eq(' + index + ') a').tab('show')
   });
