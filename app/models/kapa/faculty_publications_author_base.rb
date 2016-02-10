@@ -5,10 +5,20 @@ module Kapa::FacultyPublicationsAuthorBase
     self.table_name = :faculty_publications_authors
     belongs_to :faculty_publication
     validates_presence_of :faculty_publication_id
+    validates_presence_of :person_id, :if => :internal?
+    validates_presence_of :last_name, :first_name, :if => :external?
+  end
+
+  def internal?
+    type == "internal"
+  end
+
+  def external?
+    type == "external"
   end
 
   def person?
-    person_id.present?
+    internal?
   end
 
   def person
