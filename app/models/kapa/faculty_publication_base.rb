@@ -14,7 +14,11 @@ module Kapa::FacultyPublicationBase
   end
 
   def authors_ordered
-    authors.order(:sequence)
+    authors.order("sequence IS NULL, sequence ASC, id") # NULLs last
+  end
+
+  def author_names
+    authors_ordered.map { |author| author.full_name }.join("; ")
   end
 
   def format_dates

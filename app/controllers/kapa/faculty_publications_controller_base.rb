@@ -8,7 +8,7 @@ module Kapa::FacultyPublicationsControllerBase
 
   def show
     @publication = Kapa::FacultyPublication.find(params[:id])
-    @authors = @publication.authors.order("sequence IS NULL, sequence ASC, id") # NULLs last
+    @authors = @publication.authors_ordered
     @person = @publication.person
   end
 
