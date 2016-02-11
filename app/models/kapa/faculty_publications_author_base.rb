@@ -22,6 +22,6 @@ module Kapa::FacultyPublicationsAuthorBase
   end
 
   def full_name
-    (internal?)? person.full_name : "#{last_name}, #{first_name} #{middle_initial}"
+    (internal?)? person.full_name : "#{last_name}, #{first_name} #{middle_initial}".strip
   end
 end

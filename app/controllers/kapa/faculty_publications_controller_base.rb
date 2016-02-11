@@ -34,15 +34,16 @@ module Kapa::FacultyPublicationsControllerBase
   def update
     @publication = Kapa::FacultyPublication.find(params[:id])
 
-    # If authors sequence form was submitted, update author order
+    # If authors sequence form was submitted, update author sequences
     if params[:author][:order]
       params[:author][:order].each do |id, seq|
         author = @publication.authors.find(id)
         author.update(:sequence => seq) unless author.nil?
       end
-      flash[:success] = "Authors order was successfully updated."
+      flash[:success] = "Author order was successfully updated."
       redirect_to kapa_faculty_publication_path(:id => @publication) and return true
 
+    # Otherwise, update publication attributes
     else
       @publication.attributes = publication_params
 

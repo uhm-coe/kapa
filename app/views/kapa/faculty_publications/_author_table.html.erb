@@ -1,30 +1,30 @@
 <% content_for(:head) do %>
   <style type="text/css">
-    .handle {
+    #authors-rows tr {
       cursor: move;
+    }
+    .handle {
       padding: 5px;
     }
   </style>
 
   <script type="text/javascript">
     jQuery(document).ready(function($) {
+      // Initializes sequence values (some rows may have NULL values)
       $('#authors-rows').find('tr').each(function() {
-          var index = $(this).index();
+        var index = $(this).index();
         $(this).find('input[type=hidden]').attr('value', index);
         $(this).find('.sequence').html(index);
       });
 
-      dragula([document.querySelector('#authors-rows')], {
-        moves: function (el, container, handle) {
-          return $(handle).hasClass('handle');
-        }
-      }).on('drop', function (el) {
-        $(el).siblings('tr').andSelf().each(function() {
-          var index = $(this).index();
-          $(this).find('input[type=hidden]').attr('value', index);
-          $(this).find('.sequence').html(index);
+      dragula([document.querySelector('#authors-rows')])
+        .on('drop', function (el) {
+          $(el).siblings('tr').andSelf().each(function() {
+            var index = $(this).index();
+            $(this).find('input[type=hidden]').attr('value', index);
+            $(this).find('.sequence').html(index);
+          });
         });
-      });
     });
   </script>
 <% end %>
@@ -42,7 +42,7 @@
       <% for author in @authors %>
         <tr>
           <td>
-            <span class="handle">+</span>
+            <span class="handle"><span class="glyphicon glyphicon-menu-hamburger"></span></span>
             <span class="sequence"><%= author.sequence %></span>
             <%= hidden_field :author, "order[#{author.id}]", {:value => author.sequence} %>
           </td>

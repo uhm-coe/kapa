@@ -29,8 +29,8 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
 
   def update
     @author = Kapa::FacultyPublicationsAuthor.find(params[:id])
+    @publication = @author.faculty_publication_id
     @author.attributes = author_params_subset(params)
-    @publication = Kapa::FacultyPublication.find(params[:faculty_publication_id])
 
     unless @author.save
       flash[:danger] = @author.errors.full_messages.join(", ")
@@ -60,9 +60,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
     params.require(:author).permit(:faculty_publication_id, :type, :person_id, :last_name, :first_name, :middle_initial, :sequence, :yml, :xml)
   end
 
-  # Only selects fields relevant to author type.
-  # If author is internal, last/first/MI are irrelevant.
-  # If author is external, person_id must be nil.
+  # Only select and assign fields relevant to author type. Unassigned fields will be nil.
   def author_params_subset(params)
     case params[:author][:type]
       when "internal"
