@@ -342,6 +342,8 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text     "xml",                   limit: 65535
     end
 
+    add_index "faculty_publications_authors", ["faculty_publication_id"], name: "index_authors_on_faculty_publication_id", using: :btree
+
     create_table "faculty_service_activities", force: :cascade do |t|
       t.integer  "person_id"
       t.string   "dept",              limit: 255
