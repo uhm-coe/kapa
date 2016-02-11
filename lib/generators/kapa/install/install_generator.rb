@@ -5,13 +5,13 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
   def install_initializers
     puts "Installing initializers..."
-    copy_file("test/dummy/config/kapa.rb", "#{Rails.root}/config/initializers/kapa.rb")
+    copy_file("test/dummy/config/initializers/kapa.rb", "#{Rails.root}/config/initializers/kapa.rb")
     inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
   end
 
   def install_locale
     puts "Installing default locale..."
-    copy_file("test/dummy/config/en.yml", "#{Rails.root}/config/locales/en.yml")
+    copy_file("test/dummy/config/locales/en.yml", "#{Rails.root}/config/locales/en.yml")
   end
 
   def install_seeds
@@ -21,6 +21,6 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
   def install_fixtures
     puts "Installing fixtures..."
-    directory("db/fixtures", "#{Rails.root}/db/fixtures")
+    directory("test/fixtures", "#{Rails.root}/test/fixtures")
   end
 end

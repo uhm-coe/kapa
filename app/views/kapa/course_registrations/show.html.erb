@@ -20,7 +20,6 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", kapa_person_path(:id => @person, :anchor => :course), :class => "glyphicon glyphicon-chevron-left" %>
     <%=@course.name%> - <%=h @course.term_desc %>
   </h4>
 
