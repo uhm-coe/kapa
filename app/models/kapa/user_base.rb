@@ -105,46 +105,7 @@ module Kapa::UserBase
   end
 
   def apply_role(name)
-    permission = {}
-    case name.to_s
-    when "admin"
-      Rails.configuration.available_routes.each do |o|
-        permission["#{o}"] = '3'
-        permission["#{o}_scope"] = '3'
-      end
-    when "nothing"
-      Rails.configuration.available_routes.each do |o|
-        permission["#{o}"] = '0'
-        permission["#{o}_scope"] = '0'
-      end
-    when "adviser"
-      permission["kapa_persons"] = '2'
-      permission["kapa_persons_scope"] = '2'
-      permission["kapa_contacts"] = '2'
-      permission["kapa_contacts_scope"] = '2'
-      permission["kapa_curriculums"] = '2'
-      permission["kapa_curriculums_scope"] = '2'
-      permission["kapa_transition_points"] = '2'
-      permission["kapa_transition_points_scope"] = '2'
-      permission["kapa_transition_actions"] = '2'
-      permission["kapa_transition_actions_scope"] = '2'
-      permission["kapa_enrollments"] = '2'
-      permission["kapa_enrollments_scope"] = '2'
-      permission["kapa_files"] = '2'
-      permission["kapa_files_scope"] = '2'
-      permission["kapa_forms"] = '2'
-      permission["kapa_forms_scope"] = '2'
-      permission["kapa_exams"] = '2'
-      permission["kapa_exams_scope"] = '2'
-      permission["kapa_advising_sessions"] = '2'
-      permission["kapa_advising_sessions_scope"] = '2'
-    when "instructor"
-      permission["kapa_courses"] = '2'
-      permission["kapa_courses_scope"] = '2'
-      permission["kapa_course_registrations"] = '2'
-      permission["kapa_course_registrations_scope"] = '2'
-    end
-    self.serialize(:permission, permission)
+    self.serialize(:permission, Rails.configuration.roles[name])
   end
 
   def valid_credential?(password)

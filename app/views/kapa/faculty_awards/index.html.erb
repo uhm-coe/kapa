@@ -40,9 +40,10 @@
         <th>Context</th>
         <th></th>
       </tr>
+    </thead>
       <% for award in @awards %>
         <tr>
-          <td><%= award.person.id_number %></td>
+          <td><%= award.person.id_number if award.person %></td>
           <td><%= link_to abbr(award.person.full_name), kapa_person_path(:id => award.person_id) if award.person %></td>
           <td><%= abbr award.name, 25 %></td>
           <td><%= abbr award.affiliation, 25 %></td>

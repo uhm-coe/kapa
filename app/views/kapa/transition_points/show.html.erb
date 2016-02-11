@@ -25,7 +25,6 @@
   <%= render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", kapa_person_path(:id => @transition_point.curriculum.person_id), :class => "glyphicon glyphicon-chevron-left" %>
     <%=link_to @curriculum.code_desc, kapa_curriculum_path(:id => @curriculum) %> - <%= @transition_point.type_desc %>
   </h4>
 

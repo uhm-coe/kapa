@@ -1,11 +1,10 @@
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
     <%=bootstrap_form_for :role, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
-      <%=f.select "Role", [["Admin", "admin"], ["Adviser", "adviser"], ["Faculty", "faculty"], ["No Access", "nothing"]] %>
+      <%=f.select :role, Rails.configuration.roles.keys %>
     <% end %>
   <% end %>
 <% end %>
-
 
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/persons/person_detail" %>

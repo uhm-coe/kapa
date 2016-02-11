@@ -19,6 +19,7 @@ module Kapa::UsersControllerBase
     @user = Kapa::User.find params[:id]
     @user.attributes = user_params if params[:user]
     @user.serialize(:permission, params[:permission]) if params[:permission]
+    @user.apply_role(params[:role][:role]) if params[:role]
     if @user.save
       flash[:success] = "User was successfully updated."
     else

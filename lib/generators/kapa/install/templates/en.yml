@@ -1,9 +1,0 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
-en:
-  kapa_brand: "KAPA"
-  kapa_footer_html: "&copy; College of Education, University of Hawaiʻi at Mānoa %{year}"
-  kapa_welcome_html: "<h1>Welcome</h1>
-                      <p>KAPA Admin Console is an administrative UI to organize student academic records including advising, courses, transition points, field placements, electronic documents, etc...</p>
-                      <p>This highly customizable UI provides a set of tools to support various needs for higher education institutions.</p>"
