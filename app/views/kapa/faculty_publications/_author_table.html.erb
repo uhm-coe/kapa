@@ -1,15 +1,45 @@
+<% content_for(:head) do %>
+  <style type="text/css">
+    .handle {
+      cursor: move;
+      padding: 5px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#authors-rows').find('tr').each(function() {
+        $(this).find('input[type=text]').attr('value', $(this).index());
+      });
+
+      dragula([document.querySelector('#authors-rows')], {
+        moves: function (el, container, handle) {
+          return $(handle).hasClass('handle');
+        }
+      }).on('drop', function (el) {
+        $(el).siblings('tr').andSelf().each(function() {
+          $(this).find('input[type=text]').attr('value', $(this).index());
+        });
+      });
+    });
+  </script>
+<% end %>
+
 <table id="authors" class="table table-striped">
   <thead>
     <tr>
-      <th>#</th>
+      <th>Order</th>
       <th>Author</th>
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="authors-rows">
     <% for author in @authors %>
       <tr>
-        <td><%= author.sequence %></td>
+        <td>
+          <span class="handle">+</span>
+          <input type="text" name="order[<%= author.id %>]" value="<%= author.sequence %>" disabled>
+        </td>
         <td>
           <% if author.internal? %>
             <%= link_to author.full_name, kapa_person_path(:id => author.person_id) %>
