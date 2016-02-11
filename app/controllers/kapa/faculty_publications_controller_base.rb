@@ -8,7 +8,7 @@ module Kapa::FacultyPublicationsControllerBase
 
   def show
     @publication = Kapa::FacultyPublication.find(params[:id])
-    @authors = @publication.authors
+    @authors = @publication.authors.order("sequence IS NULL, sequence ASC, id") # NULLs last
     @person = @publication.person
   end
 
@@ -33,15 +33,27 @@ module Kapa::FacultyPublicationsControllerBase
 
   def update
     @publication = Kapa::FacultyPublication.find(params[:id])
-    @publication.attributes = publication_params
 
-    unless @publication.save
-      flash[:danger] = @publication.errors.full_messages.join(", ")
-      redirect_to kapa_faculty_publication_path(:id => @publication) and return false
+    # If authors sequence form was submitted, update author order
+    if params[:author][:order]
+      params[:author][:order].each do |id, seq|
+        author = @publication.authors.find(id)
+        author.update(:sequence => seq) unless author.nil?
+      end
+      flash[:success] = "Authors order was successfully updated."
+      redirect_to kapa_faculty_publication_path(:id => @publication) and return true
+
+    else
+      @publication.attributes = publication_params
+
+      unless @publication.save
+        flash[:danger] = @publication.errors.full_messages.join(", ")
+        redirect_to kapa_faculty_publication_path(:id => @publication) and return false
+      end
+
+      flash[:success] = "Publication was successfully updated."
+      redirect_to kapa_faculty_publication_path(:id => @publication)
     end
-
-    flash[:success] = "Publication was successfully updated."
-    redirect_to kapa_faculty_publication_path(:id => @publication)
   end
 
   def destroy

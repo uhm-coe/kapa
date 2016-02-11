@@ -9,7 +9,9 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
       $('#authors-rows').find('tr').each(function() {
-        $(this).find('input[type=text]').attr('value', $(this).index());
+          var index = $(this).index();
+        $(this).find('input[type=hidden]').attr('value', index);
+        $(this).find('.sequence').html(index);
       });
 
       dragula([document.querySelector('#authors-rows')], {
@@ -18,43 +20,46 @@
         }
       }).on('drop', function (el) {
         $(el).siblings('tr').andSelf().each(function() {
-          $(this).find('input[type=text]').attr('value', $(this).index());
+          var index = $(this).index();
+          $(this).find('input[type=hidden]').attr('value', index);
+          $(this).find('.sequence').html(index);
         });
       });
     });
   </script>
 <% end %>
 
-<table id="authors" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Order</th>
-      <th>Author</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="authors-rows">
-    <% for author in @authors %>
+<%= bootstrap_form_for(:publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put}) do |f| %>
+  <table id="authors" class="table table-striped">
+    <thead>
       <tr>
-        <td>
-          <span class="handle">+</span>
-          <input type="text" name="order[<%= author.id %>]" value="<%= author.sequence %>" disabled>
-        </td>
-        <td>
-          <% if author.internal? %>
-            <%= link_to author.full_name, kapa_person_path(:id => author.person_id) %>
-          <% else %>
-            <%= author.full_name %>
-          <% end %>
-        </td>
-        <td class="right">
-          <%= link_to "Edit", {:controller => :faculty_publications_authors, :action => :show, :id => author}, :class => "btn btn-default btn-xs" %>
-
-          <%= bootstrap_form_for(:author, :url => kapa_faculty_publications_author_path(:id => author, :faculty_publication_id => @publication), :html => {:method => :delete}) do |f| %>
-            <button class="btn btn-default btn-xs" name="commit" type="submit">Delete</button>
-          <% end %>
-        </td>
+        <th>Order</th>
+        <th>Author</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody id="authors-rows">
+      <% for author in @authors %>
+        <tr>
+          <td>
+            <span class="handle">+</span>
+            <span class="sequence"><%= author.sequence %></span>
+            <%= hidden_field :author, "order[#{author.id}]", {:value => author.sequence} %>
+          </td>
+          <td>
+            <% if author.internal? %>
+              <%= link_to author.full_name, kapa_person_path(:id => author.person_id) %>
+            <% else %>
+              <%= author.full_name %>
+            <% end %>
+          </td>
+          <td class="right">
+            <%= link_to "Edit", kapa_faculty_publications_author_path(:id => author), :class => "btn btn-default btn-xs" %>
+            <%= link_to "Delete", kapa_faculty_publications_author_path(:id => author, :faculty_publication_id => @publication), :method => :delete, :class => "btn btn-default btn-xs" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+<% end %>
