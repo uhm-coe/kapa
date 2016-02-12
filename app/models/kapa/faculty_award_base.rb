@@ -14,9 +14,9 @@ module Kapa::FacultyAwardBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      awards = Kapa::FacultyAward.eager_load([:person]).order("persons.last_name, persons.first_name")
-      awards = awards.where("faculty_awards.name LIKE ?", "%#{filter.name}%") if filter.name.present?
-      awards = awards.where("faculty_awards.affiliation LIKE ?", "%#{filter.affiliation}%") if filter.affiliation.present?
+      awards = Kapa::FacultyAward.eager_load([:person, :faculty_service_activity]).order("persons.last_name, persons.first_name")
+      awards = awards.column_matches("faculty_awards.name" => filter.name) if filter.name.present?
+      awards = awards.column_matches("faculty_awards.affiliation" => filter.affiliation) if filter.affiliation.present?
       awards = awards.where("faculty_awards.context" => filter.context) if filter.context.present?
       awards = awards.where(:award_date => filter.award_date_start..filter.award_date_end) if filter.award_date_start.present? and filter.award_date_end.present?
       return awards
