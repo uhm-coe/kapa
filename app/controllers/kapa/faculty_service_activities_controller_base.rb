@@ -55,6 +55,6 @@ module Kapa::FacultyServiceActivitiesControllerBase
 
   private
   def service_activity_params
-    params.require(:service_activity).permit(:person_id, :dept, :yml, :xml, :service_type, :service_date_start, :service_date_end, :affiliation, :role, :name, :compensation, :relevant, :context, :description, :award_id, :public, :image)
+    params.require(:service_activity).permit(:person_id, :dept, :yml, :xml, :service_type, :service_date_start, :service_date_end, :affiliation, :role, :name, :compensation, :relevant, :context, :description, :public, :image, :faculty_award_ids => [])
   end
 end

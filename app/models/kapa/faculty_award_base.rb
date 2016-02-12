@@ -3,6 +3,7 @@ module Kapa::FacultyAwardBase
 
   included do
     belongs_to :person
+    belongs_to :faculty_service_activity
 
     has_attached_file :image
     # validates_attachment_content_type :thumbnail, content_type: /\Aimage/ # TODO: Requires Paperclip >4.0

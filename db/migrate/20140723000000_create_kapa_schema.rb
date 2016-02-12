@@ -273,6 +273,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text     "description",       limit: 65535
       t.string   "url",               limit: 255
       t.string   "context",           limit: 255
+      t.integer  "faculty_service_activity_id"
       t.string   "public",            limit: 255,   default: "Y"
 
       t.string   "image_file_name",    limit: 255
@@ -359,7 +360,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.boolean  "relevant",                        default: true
       t.string   "context",           limit: 255
       t.text     "description",       limit: 65535
-      t.integer  "award_id"
       t.string   "public",            limit: 255,   default: "Y"
 
       t.string   "image_file_name",    limit: 255

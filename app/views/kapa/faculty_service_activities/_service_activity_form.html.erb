@@ -38,6 +38,7 @@
       </p>
     </span>
     <%= f.select :public, [["Yes", "Y"], ["No", "N"]], {:label => "Display publicly"} %>
+    <%= f.select :faculty_award_ids, @person.faculty_awards.collect {|a| ["#{a.name}", a.id]}, {:label => "Awards"}, {:multiple => true} %>
     <%= f.check_box :relevant, {:label => "Service is relevant to professional area"}, 1, 0 %>
     <%= f.hidden_field :person_id  %>
   </div>
