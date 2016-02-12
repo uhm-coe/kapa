@@ -23,5 +23,26 @@ module Kapa::FacultyServiceActivityBase
       service_activities = service_activities.where("faculty_service_activities.service_date_end <= ?", filter.service_date_end) if filter.service_date_end.present?
       return service_activities
     end
+
+    def csv_format
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :cur_street => [:person, :contact, :cur_street],
+       :cur_city => [:person, :contact, :cur_city],
+       :cur_state => [:person, :contact, :cur_state],
+       :cur_postal_code => [:person, :contact, :cur_postal_code],
+       :cur_phone => [:person, :contact, :cur_phone],
+       :email => [:person, :contact, :email],
+       :service_type => [:service_type],
+       :service_date_start => [:service_date_start],
+       :service_date_end => [:service_date_end],
+       :affiliation => [:affiliation],
+       :role => [:role],
+       :service_name => [:name],
+       :compensation => [:compensation],
+       :context => [:context],
+       :description => [:description]}
+    end
   end
 end

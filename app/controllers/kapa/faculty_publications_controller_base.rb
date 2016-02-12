@@ -35,7 +35,7 @@ module Kapa::FacultyPublicationsControllerBase
     @publication = Kapa::FacultyPublication.find(params[:id])
 
     # If authors sequence form was submitted, update author sequences
-    if params[:author][:order]
+    if params[:author] && params[:author][:order]
       params[:author][:order].each do |id, seq|
         author = @publication.authors.find(id)
         author.update(:sequence => seq) unless author.nil?
@@ -68,6 +68,12 @@ module Kapa::FacultyPublicationsControllerBase
   end
 
   def export
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data Kapa::FacultyPublication.to_csv(:filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "faculty_publications_#{@filter.date_start.to_s}.csv"
   end
 
   private

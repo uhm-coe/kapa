@@ -21,5 +21,25 @@ module Kapa::FacultyAwardBase
       awards = awards.where(:award_date => filter.award_date_start..filter.award_date_end) if filter.award_date_start.present? and filter.award_date_end.present?
       return awards
     end
+
+    def csv_format
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :cur_street => [:person, :contact, :cur_street],
+       :cur_city => [:person, :contact, :cur_city],
+       :cur_state => [:person, :contact, :cur_state],
+       :cur_postal_code => [:person, :contact, :cur_postal_code],
+       :cur_phone => [:person, :contact, :cur_phone],
+       :email => [:person, :contact, :email],
+       :award_name => [:name],
+       :award_date => [:award_date],
+       :affiliation => [:affiliation],
+       :description => [:description],
+       :url => [:url],
+       :context => [:context],
+       :service_name => [:faculty_service_activity, :name],
+       :service_type => [:faculty_service_activity, :service_type]}
+    end
   end
 end

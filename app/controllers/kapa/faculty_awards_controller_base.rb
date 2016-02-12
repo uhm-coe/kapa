@@ -53,6 +53,15 @@ module Kapa::FacultyAwardsControllerBase
     redirect_to kapa_person_path(:id => @award.person_id)
   end
 
+  def export
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data Kapa::FacultyAward.to_csv(:filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "faculty_awards_#{@filter.date_start.to_s}.csv"
+  end
+
   private
   def award_params
     params.require(:award).permit(:person_id, :dept, :yml, :xml, :name, :award_date, :affiliation, :description, :url, :context, :public, :image)
