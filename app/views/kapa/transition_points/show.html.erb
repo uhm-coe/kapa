@@ -33,6 +33,9 @@
       <li><a href="#transition_point_tab" data-toggle="tab">Transition Point</a></li>
       <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
+      <% if @transition_point.form_id.present? %>
+        <li><a href="<%= '/' %>" target="_blank">Form</a></li>
+      <% end %>
     </ul>
 
     <div class="tab-content">
