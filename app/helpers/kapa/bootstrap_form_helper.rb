@@ -64,12 +64,12 @@ module Kapa::BootstrapFormHelper
             html_options = args.third.is_a?(Hash) ? args.third : {}
             tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
 
-          when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select", "date_select"
+          when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
             tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
 
-          when "date_select"
+          when "date_picker"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
             tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control date-select #{html_options[:class]}"))
@@ -115,7 +115,7 @@ module Kapa::BootstrapFormHelper
       end
     end
 
-    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_select}
+    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_picker}
     helpers.each do |name|
       build_label_field(name)
     end

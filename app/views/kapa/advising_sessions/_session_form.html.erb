@@ -2,10 +2,7 @@
 
   <div class="row">
   <div class="col-sm-6">
-    <div class="form-group">
-      <%=label_tag "advising_session_session_date", "Date" %>
-      <%=date_picker :advising_session, :session_date %>
-    </div>
+    <%=f.date_picker :session_date, :label => "Date" %>
     <%=f.property_select :session_type, :name => :advising_type, :label => "Type" %></p>
     <%=f.property_select :task, :name => :advising_task %></p>
     <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :label => "Program", :include_blank => "Prospective" %>

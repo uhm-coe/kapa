@@ -4,14 +4,8 @@
       <%=f.text_field :code %>
       <%=f.text_field :description %>
       <%=f.text_field :description_short %>
-      <div class="form-group">
-        <%=label_tag "term_start_date", "Start Date" %>
-        <%=date_picker :term, :start_date %>
-      </div>
-      <div class="form-group">
-        <%=label_tag "term_end_date", "End Date" %>
-        <%=date_picker :term, :end_date %>
-      </div>
+      <%=f.date_picker :start_date, :label => "Start Date" %>
+      <%=f.date_picker :end_date, :label => "End Date" %>
     </div>
     <div class="col-sm-6">
       <%=f.text_field :sequence %>

@@ -6,14 +6,8 @@
       <%= f.select :context, [["University", "university"], ["Professional", "professional"], ["Community", "community"]], :label => "Context", :include_blank => "Any" %>
       <%= f.text_field :name, :label => "Name of Award/Journal/Committee/Service Activity" %>
       <%= f.text_field :affiliation, :label => "Affiliation" %>
-      <div class="form-group">
-        <%= label_tag "filter_date_start", "Service Date Start" %>
-        <%= date_picker :filter, :service_date_start %>
-      </div>
-      <div class="form-group">
-        <%= label_tag "filter_date_end", "Service Date End" %>
-        <%= date_picker :filter, :service_date_end %>
-      </div>
+      <%= f.date_picker :service_date_start, :label => "Service Date Start" %>
+      <%= f.date_picker :service_date_end, :label => "Service Date End" %>
       <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>
   <% end %>

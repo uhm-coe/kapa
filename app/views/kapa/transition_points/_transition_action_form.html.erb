@@ -2,10 +2,7 @@
 <%= bootstrap_fields_for transition_action do |a| %>
   <div class="row">
     <div class="col-sm-3">
-      <div class="form-group">
-        <%=label_tag "#{transition_action}_action_date", "Action Date" %>
-        <%=date_picker transition_action, :action_date %>
-      </div>
+      <%= a.date_picker :action_date, :label => "Action Date" %>
     </div>
     <div class="col-sm-3">
       <%= a.property_select "action", :name => "#{@transition_action.transition_point.type}_action", :include_blank => true %>

@@ -93,7 +93,7 @@ module Kapa::KapaHelper
     select(object_name, method, selections, options, html_options)
   end
 
-  def date_picker(object_name, method, options = {})
+  def date_picker(object_name, method, options = {}, html_options = {})
     object = instance_variable_get("@#{object_name}".delete("[]"))
     options[:class] = "kapa-datepicker form-control #{options[:class]}"
     options[:size] = nil

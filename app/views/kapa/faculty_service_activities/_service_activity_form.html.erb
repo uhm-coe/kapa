@@ -2,14 +2,8 @@
 
   <div class="col-sm-6">
     <%= f.property_select :service_type, :name => :service_type, :label => "Type of Service" %>
-    <div class="form-group">
-      <%= label_tag "service_activity_service_date_start", "Service Date Start" %>
-      <%= date_picker :service_activity, :service_date_start %>
-    </div>
-    <div class="form-group">
-      <%= label_tag "service_activity_service_date_end", "Service Date End" %>
-      <%= date_picker :service_activity, :service_date_end %>
-    </div>
+    <%= f.date_picker :service_date_start, :label => "Service Date Start" %>
+    <%= f.date_picker :service_date_end, :label => "Service Date End" %>
 
     <%= f.text_field :affiliation, :label => "Affiliation" %>
     <span id="affiliation_help" class="help-block">

@@ -2,10 +2,7 @@
 <%= bootstrap_fields_for practicum_log do |a| %>
   <div class="row">
     <div class="col-sm-3">
-      <div class="form-group">
-        <%=label_tag "#{practicum_log}_log_date", "Log Date" %>
-        <%=date_picker practicum_log, :log_date %>
-      </div>
+      <%=a.date_picker :log_date, :label => "Log Date" %>
     </div>
     <div class="col-sm-3">
       <%= a.property_select :type, :name => :practicum_log_type, :include_blank => true %>

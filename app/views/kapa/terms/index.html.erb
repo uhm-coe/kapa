@@ -2,14 +2,8 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_terms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <div class="form-group">
-        <%=label_tag "filter_start_date", "Start Date" %>
-        <%=date_picker :filter, :start_date %>
-      </div>
-      <div class="form-group">
-        <%=label_tag "filter_end_date", "End Date" %>
-        <%=date_picker :filter, :end_date %>
-      </div>
+      <%= f.date_picker :start_date, :label => "Start Date" %>
+      <%= f.date_picker :end_date, :label => "End Date" %>
       <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => "Any" %>
       <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>

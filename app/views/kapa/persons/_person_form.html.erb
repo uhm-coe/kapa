@@ -5,10 +5,7 @@
       <%= f.text_field :id_number, :size => 10, :readonly => @person.verified?, :class => "id_number", :label => "Campus ID" %>
       <%= f.text_field :last_name, :size => 30 %>
       <%= f.text_field :middle_initial, :size => 30 %>
-      <div class="form-group">
-        <%= label_tag "person_birth_date", "Birth Date" %>
-        <%= date_picker :person, :birth_date %>
-      </div>
+      <%= f.date_picker :birth_date, :label => "Birth Date" %>
       <%= f.text_field :ssn, :size => 10, :class => "ssn", :label => "SSN" %>
       <%= f.check_box :ssn_agreement, {:label => "SSN Agreement"}, "Y", "N" %>
     </div>

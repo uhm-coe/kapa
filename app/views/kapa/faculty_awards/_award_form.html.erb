@@ -2,11 +2,7 @@
 
   <div class="col-sm-6">
     <%= f.text_field :name, :label => "Award Name" %>
-
-    <div class="form-group">
-      <%= label_tag "award_award_date", "Award Date" %>
-      <%= date_picker :award, :award_date %>
-    </div>
+    <%= f.date_picker :award_date, :label => "Award Date" %>
 
     <%= f.text_field :affiliation, :label => "Affiliation" %>
     <span id="affiliation_help" class="help-block">

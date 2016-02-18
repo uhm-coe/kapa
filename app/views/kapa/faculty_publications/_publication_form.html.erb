@@ -24,10 +24,7 @@
       <%= f.text_field :ou, :label => "Department" %>
 
       <%= f.text_field :pubtitle, :label => "Title" %>
-      <div class="form-group">
-        <%= label_tag "publication_pubdate", "Date" %>
-        <%= date_picker :publication, :pubdate %>
-      </div>
+      <%= f.date_picker :pubdate, :label => "Date" %>
 
       <%= f.text_field :documentlocation, :label => "Document URL" %>
       <%= f.text_field :documentidentifier, :label => "Document Identifier" %>

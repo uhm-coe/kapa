@@ -59,10 +59,7 @@
           <% when "user_select" %>
             <%= f.user_select(@parameter.name, :label => @parameter.label, :include_blank => "Any", :depts => @current_user.depts) %>
           <% when "date_picker" %>
-            <div class="form-group">
-              <%= label_tag "filter_#{@parameter.name}", @parameter.label %>
-              <%= date_picker(:filter, @parameter.name) %>
-            </div>
+            <%= f.date_picker(@parameter.name, :label => @parameter.label) %>
           <% when "check_box" %>
             <%= f.check_box(@parameter.name, {:label => @parameter.label}, "Y", "N") %>
           <% end %>
