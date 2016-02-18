@@ -34,7 +34,7 @@
       <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
       <% if @transition_point.form_id.present? %>
-        <li><a href="<%= '/' %>" target="_blank">Form</a></li>
+        <li><a href="<%= link_to kapa_form_path(:id => @transition_point.form_id) %>" target="_blank">Form</a></li>
       <% end %>
     </ul>
 
