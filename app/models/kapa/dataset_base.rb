@@ -19,7 +19,7 @@ module Kapa::DatasetBase
     if name.to_s == "local"
       Rails.configuration.database_configuration[Rails.env]
     else
-      Rails.application.secrets.datasources[name].deep_symbolize_keys
+      Rails.application.secrets[name].deep_symbolize_keys
     end
   end
 

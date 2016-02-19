@@ -80,9 +80,9 @@ module Kapa::DatasetsControllerBase
 
   def datasource_options
     datasources = [["Local Database", "local"], ["CSV File", "file"]]
-    Rails.application.secrets.datasources.each_pair do |k, v|
+    Rails.configuration.datasources.each_pair do |k, v|
       datasources.push [v["name"], k]
-    end if Rails.application.secrets.datasources
+    end if Rails.configuration.datasources.present?
     return datasources
   end
 

@@ -14,8 +14,13 @@ Rails.configuration.regex_email = '^[A-Z0-9_%+-]+@hawaii.edu$'
 # Default items per page on list views
 Rails.configuration.items_per_page = 20
 
-# Default LDAP configuration
-Rails.configuration.ldap = nil
+# Default LDAP configuration.  This LDAP will be used for user authentication
+Rails.configuration.ldap = Net::LDAP.new(Rails.application.secrets.uh_ldap)
+Rails.configuration.ldap_base = "ou=people,dc=hawaii,dc=edu"
+Rails.configuration.ldap_filter = "(uid = ?)"
+
+# Datasources available for datasets
+Rails.configuration.datasources = []
 
 # Available routes
 Rails.configuration.available_routes = %w{
