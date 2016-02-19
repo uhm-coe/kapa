@@ -14,6 +14,6 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 gem 'rails', '~> 4.2.3'
-gem 'rails-csv-fixtures', :git => 'https://github.com/bfolkens/rails-csv-fixtures.git'
-gem 'activerecord-session_store', :git => 'https://github.com/rails/activerecord-session_store.git'
+gem 'rails-csv-fixtures', :github => 'bfolkens/rails-csv-fixtures'
 gem 'rake'
+gem 'activerecord-session_store'

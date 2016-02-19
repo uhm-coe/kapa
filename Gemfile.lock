@@ -1,19 +1,9 @@
 GIT
-  remote: https://github.com/bfolkens/rails-csv-fixtures.git
+  remote: git://github.com/bfolkens/rails-csv-fixtures.git
   revision: 674f02ea28cad307b09bce220cf2bb772fa02b50
   specs:
     rails-csv-fixtures (0.0.2)
       rails (>= 3.2, < 5.0)
-
-GIT
-  remote: https://github.com/rails/activerecord-session_store.git
-  revision: 1f1999c549701f92007e6946cb476baf3ed3a4c2
-  specs:
-    activerecord-session_store (0.1.2)
-      actionpack (>= 4.0, < 5.1)
-      activerecord (>= 4.0, < 5.1)
-      rack (>= 1.5.2, < 3)
-      railties (>= 4.0, < 5.1)
 
 PATH
   remote: .
@@ -29,6 +19,7 @@ PATH
       net-ldap (~> 0.13.0)
       paperclip (~> 3.0)
       rails (~> 4.2.0)
+      rails-csv-fixtures
       sass-rails
       sequel
       therubyracer
@@ -68,6 +59,10 @@ GEM
       activemodel (= 4.2.5.1)
       activesupport (= 4.2.5.1)
       arel (~> 6.0)
+    activerecord-session_store (0.1.2)
+      actionpack (>= 4.0.0, < 5)
+      activerecord (>= 4.0.0, < 5)
+      railties (>= 4.0.0, < 5)
     activesupport (4.2.5.1)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -80,7 +75,7 @@ GEM
       activesupport (>= 3.2)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 3.0)
-    autoprefixer-rails (6.3.1)
+    autoprefixer-rails (6.3.3)
       execjs
       json
     bootstrap-datepicker-rails (1.3.1.1)
@@ -195,7 +190,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-session_store!
+  activerecord-session_store
   kapa!
   rails (~> 4.2.3)
   rails-csv-fixtures!
