@@ -8,6 +8,7 @@ module Kapa::FacultyPublicationsControllerBase
 
   def show
     @publication = Kapa::FacultyPublication.find(params[:id])
+    @authors = @publication.authors_ordered
     @person = @publication.person
   end
 
@@ -32,15 +33,28 @@ module Kapa::FacultyPublicationsControllerBase
 
   def update
     @publication = Kapa::FacultyPublication.find(params[:id])
-    @publication.attributes = publication_params
 
-    unless @publication.save
-      flash[:danger] = @publication.errors.full_messages.join(", ")
-      redirect_to kapa_faculty_publication_path(:id => @publication) and return false
+    # If authors sequence form was submitted, update author sequences
+    if params[:author] && params[:author][:order]
+      params[:author][:order].each do |id, seq|
+        author = @publication.authors.find(id)
+        author.update(:sequence => seq) unless author.nil?
+      end
+      flash[:success] = "Author order was successfully updated."
+      redirect_to kapa_faculty_publication_path(:id => @publication) and return true
+
+    # Otherwise, update publication attributes
+    else
+      @publication.attributes = publication_params
+
+      unless @publication.save
+        flash[:danger] = @publication.errors.full_messages.join(", ")
+        redirect_to kapa_faculty_publication_path(:id => @publication) and return false
+      end
+
+      flash[:success] = "Publication was successfully updated."
+      redirect_to kapa_faculty_publication_path(:id => @publication)
     end
-
-    flash[:success] = "Publication was successfully updated."
-    redirect_to kapa_faculty_publication_path(:id => @publication)
   end
 
   def destroy
@@ -54,6 +68,12 @@ module Kapa::FacultyPublicationsControllerBase
   end
 
   def export
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data Kapa::FacultyPublication.to_csv(:filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "faculty_publications_#{@filter.date_start.to_s}.csv"
   end
 
   private

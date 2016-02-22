@@ -53,8 +53,17 @@ module Kapa::FacultyServiceActivitiesControllerBase
     redirect_to kapa_person_path(:id => @service_activity.person_id)
   end
 
+  def export
+    @filter = filter
+    logger.debug "----filter: #{filter.inspect}"
+    send_data Kapa::FacultyServiceActivity.to_csv(:filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "faculty_service_activities_#{@filter.date_start.to_s}.csv"
+  end
+
   private
   def service_activity_params
-    params.require(:service_activity).permit(:person_id, :dept, :yml, :xml, :service_type, :service_date_start, :service_date_end, :affiliation, :role, :name, :compensation, :relevant, :context, :description, :award_id, :public, :image)
+    params.require(:service_activity).permit(:person_id, :dept, :yml, :xml, :service_type, :service_date_start, :service_date_end, :affiliation, :role, :name, :compensation, :relevant, :context, :description, :public, :image, :faculty_award_ids => [])
   end
 end

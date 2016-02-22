@@ -1,3 +1,11 @@
+<% content_for(:dialog) do %>
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_author_dialog", :modal_title => "Add Author", :modal_form_id => "add_author_form" } do %>
+    <%= bootstrap_form_for(:author, :url => kapa_faculty_publications_authors_path(:faculty_publication_id => @publication), :html => {:id => "add_author_form"}) do %>
+      <%= render "kapa/faculty_publications_authors/author_form" %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <% content_for(:box1) do %>
   <%= render :partial => "/kapa/persons/person_detail" %>
 
@@ -5,10 +13,26 @@
     Publications
   </h4>
 
-  <div>
-    <%= bootstrap_form_for :publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :multipart => true} do |f| %>
-      <%= render :partial => "publication_form", :locals => {:f => f} %>
-      <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-    <% end %>
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#publication_tab" data-toggle="tab">Details</a></li>
+      <li><a href="#author_tab" data-toggle="tab">Authors</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="publication_tab" class="tab-pane">
+        <%= bootstrap_form_for :publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :multipart => true} do |f| %>
+          <%= render :partial => "publication_form", :locals => {:f => f} %>
+          <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="author_tab" class="tab-pane">
+        <p class="text-right">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_author_dialog"><span class="glyphicon glyphicon-plus"></span> Add Author</button>
+        </p>
+        <%= render :partial => "author_table" %>
+      </div>
+    </div>
   </div>
 <% end %>

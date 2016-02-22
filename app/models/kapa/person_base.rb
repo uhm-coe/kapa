@@ -83,6 +83,15 @@ module Kapa::PersonBase
   end
 
   class_methods do
+    def selections(options = {})
+      persons = order(:last_name, :first_name)
+      persons = persons.depts_scope(options[:depts]) if options[:depts].present?
+      persons = persons.where(options[:conditions]) if options[:conditions].present?
+      persons.collect do |p|
+        ["#{p.last_name}, #{p.first_name}", p.id]
+      end
+    end
+
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
 

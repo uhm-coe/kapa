@@ -9,6 +9,7 @@
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker/core
 //= require bootstrap-multiselect
+//= require dragula
 
 jQuery(document).ready(function ($) {
 

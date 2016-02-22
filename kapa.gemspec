@@ -32,5 +32,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap-sass'
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.3.1.1'
   s.add_dependency 'bootstrap-multiselect-rails'
+  s.add_dependency 'dragula-rails'
   s.add_dependency 'rails-csv-fixtures'
 end
