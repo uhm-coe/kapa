@@ -24,7 +24,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
     end
 
     flash[:success] = "Author was successfully created."
-    redirect_to kapa_faculty_publication_path(:id => @publication)
+    redirect_to kapa_faculty_publication_path(:id => @publication, :anchor => "author")
   end
 
   def update
@@ -38,7 +38,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
     end
 
     flash[:success] = "Author was successfully updated."
-    redirect_to kapa_faculty_publication_path(:id => @publication)
+    redirect_to kapa_faculty_publication_path(:id => @publication, :anchor => "author")
   end
 
   def destroy
@@ -49,7 +49,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
       redirect_to kapa_faculty_publication_path(:id => @publication) and return false
     end
     flash[:success] = "Author was successfully deleted."
-    redirect_to kapa_faculty_publication_path(:id => @publication)
+    redirect_to kapa_faculty_publication_path(:id => @publication, :anchor => "author")
   end
 
   def export

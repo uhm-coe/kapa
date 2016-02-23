@@ -4,14 +4,14 @@
     <%= bootstrap_form_for(:filter, :url => kapa_faculty_publications_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-sm-6">
-          <%= f.text_field :pubtitle, :label => "Title" %>
-          <%= f.property_select :pubtype, :name => :publication_type, :label => "Type", :include_blank => "Any" %>
+          <%= f.text_field :title, :label => "Title" %>
+          <%= f.property_select :type, :name => :publication_type, :label => "Type", :include_blank => "Any" %>
           <%= f.text_field :keyword, :label => "Keyword" %>
           <%= f.text_field :author, :label => "Author" %>
         </div>
         <div class="col-sm-6">
-          <%= f.date_picker :pubdate_start, :label => "Publication Date Start" %>
-          <%= f.date_picker :pubdate_end, :label => "Publication Date End" %>
+          <%= f.date_picker :published_date_start, :label => "Publication Date Start" %>
+          <%= f.date_picker :published_date_end, :label => "Publication Date End" %>
           <%= f.select :per_page, [10, 20, 30, 40, 50] %>
         </div>
       </div>
@@ -48,9 +48,9 @@
         <tr>
           <td><%= publication.person.id_number if publication.person %></td>
           <td><%= link_to abbr(publication.person.full_name), kapa_person_path(:id => publication.person_id) if publication.person %></td>
-          <td><%= Kapa::Property.lookup_description(:publication_type, publication.pubtype) %>
-          <td><%= abbr publication.pubtitle, 60 %></td>
-          <td><%= publication.pubdate %></td>
+          <td><%= Kapa::Property.lookup_description(:publication_type, publication.type) %>
+          <td><%= abbr publication.title, 60 %></td>
+          <td><%= publication.published_date %></td>
           <td><%= abbr publication.author_names, 40 %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => publication}, :class => "btn btn-default btn-xs" %></td>
         </tr>

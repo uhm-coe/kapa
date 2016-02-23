@@ -1,7 +1,7 @@
 <% content_for(:dialog) do %>
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_publication_type_dialog", :modal_title => "Change Publication Type", :modal_form_id => "change_publication_type_form" } do %>
     <%= bootstrap_form_for(:publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :id => "change_publication_type_form"}) do |t| %>
-      <%= f.property_select :pubtype, :name => :publication_type, :label => "Publication Type" %>
+      <%= f.property_select :type, :name => :publication_type, :label => "Publication Type" %>
     <% end %>
   <% end %>
 <% end %>
@@ -11,99 +11,38 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
-        <%= label :pubtype, :description, "Publication Type" %>
-        <p class="form-control-static"><span><%= Kapa::Property.lookup_description(:publication_type, @publication.pubtype) %></span>
+        <%= label :type, :description, "Publication Type" %>
+        <p class="form-control-static"><span><%= Kapa::Property.lookup_description(:publication_type, @publication.type) %></span>
           <% if @current_user.manage? %>
             <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_publication_type_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
           <% end %>
         </p>
       </div>
 
-      <%= f.text_field :l, :label => "Research Location", :placeholder => "Honolulu" %>
-      <%= f.text_field :o, :label => "Institution", :placeholder => "College of Education, University of Hawaii at Manoa" %>
-      <%= f.text_field :ou, :label => "Department" %>
+      <%= f.text_field :title, :label => "Title" %>
+      <%= f.text_field :keyword, :label => "Keywords" %>
+      <span id="keyword_help" class="help-block">
+        list of keywords, separated by commas
+      </span>
+      <%= f.text_area :abstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
+      <%= f.property_select :dept, :label => "Dept" %>
+    </div>
 
-      <%= f.text_field :pubtitle, :label => "Title" %>
-      <%= f.date_picker :pubdate, :label => "Date" %>
-
-      <%= f.text_field :documentlocation, :label => "Document URL" %>
-      <%= f.text_field :documentidentifier, :label => "Document Identifier" %>
+    <div class="col-sm-4">
+      <%= f.date_picker :published_date, :label => "Published Date" %>
+      <%= f.text_field :document_location, :label => "Document URL" %>
+      <%= f.text_field :document_identifier, :label => "Document Identifier" %>
       <span id="documentidentifier_help" class="help-block">
         The DOI or ISBN number for publications that have one, e.g. 978-1412957465 (13-digit ISBN), 141295746X (10-digit ISBN), or 10.1007/BF02504547 (DOI).
       </span>
-    </div>
 
-    <div class="col-sm-4">
-      <% if @publication.pubtype == "book" %>
-        <!-- Book -->
-        <%= f.text_field :pubvol, :label => "Volume" %>
-        <%= f.text_field :pubnumofvol, :label => "Number of Volumes" %>
-        <%= f.text_field :pubpages, :label => "Pages" %>
-        <%= f.text_field :pubpublisher, :label => "Publisher" %>
-        <%= f.text_field :publocation, :label => "Publisher Location" %>
-        <%= f.text_field :pubeditor, :label => "Editor" %>
-        <%= f.text_field :pubedition, :label => "Edition" %>
-
-      <% elsif @publication.pubtype == "book_chapter" %>
-        <!-- Book Chapter -->
-        <%= f.text_field :pubvol, :label => "Volume" %>
-        <%= f.text_field :pubnumofvol, :label => "Number of Volumes" %>
-        <%= f.text_field :pubpages, :label => "Pages" %>
-        <%= f.text_field :pubbooktitle, :label => "Book Title" %>
-        <%= f.text_field :pubbookchapter, :label => "Book Chapter" %>
-        <%= f.text_field :pubpublisher, :label => "Publisher" %>
-        <%= f.text_field :publocation, :label => "Publisher Location" %>
-        <%= f.text_field :pubeditor, :label => "Editor" %>
-        <%= f.text_field :pubedition, :label => "Edition" %>
-
-      <% elsif @publication.pubtype == "conference_proceedings" %>
-        <!-- Conference Proceedings -->
-        <%= f.text_field :pubvol, :label => "Volume" %>
-        <%= f.text_field :pubpages, :label => "Pages" %>
-        <%= f.text_field :pubvenue, :label => "Conference Name" %>
-        <%= f.text_field :publocation, :label => "Conference Location" %>
-        <%= f.text_field :puborganization, :label => "Society/Organization running conference" %>
-
-      <% elsif @publication.pubtype == "journal_article" %>
-        <!-- Journal Article -->
-        <%= f.text_field :pubvol, :label => "Volume" %>
-        <%= f.text_field :pubpages, :label => "Pages" %>
-        <%= f.text_field :pubvenue, :label => "Journal Name" %>
-        <%= f.text_field :pubpublisher, :label => "Publisher" %>
-        <%= f.text_field :puborganization, :label => "Organization/Society publishing journal" %>
-
-      <% elsif @publication.pubtype == "multimedia_contribution" %>
-        <!-- Multimedia Contribution -->
-        <%= f.text_field :pubvol, :label => "Volume" %>
-        <%= f.text_field :pubpublisher, :label => "Publisher" %>
-
-      <% elsif @publication.pubtype == "presentation" %>
-        <!-- Presentation -->
-        <%= f.text_field :pubvenue, :label => "Event at which presented" %>
-        <%= f.text_field :publocation, :label => "Location of presentation" %>
-        <%= f.text_field :puborganization, :label => "Organization presented to" %>
-
-      <% elsif @publication.pubtype == "report" %>
-        <!-- Report -->
-        <%= f.text_field :pubpublisher, :label => "Publisher" %>
-        <%= f.text_field :publocation, :label => "Publisher Location" %>
-        <%= f.text_field :pubpages, :label => "Pages" %>
-
-      <% end %>
-
-      <%= f.text_field :pubkeyword, :label => "Keywords" %>
-      <span id="pubkeyword_help" class="help-block">
-        list of keywords, separated by commas
-      </span>
-      </span>
-    </div>
-
-    <div class="col-sm-4">
       <% if @publication.thumbnail.exists? %>
         <p>
           You have already uploaded a cover image named <strong><%= @publication.thumbnail_file_name %></strong>. To replace it, choose a new file below.
         </p>
       <% end %>
+      <%= f.text_field :institution, :label => "Institution", :placeholder => "College of Education, University of Hawaii at Manoa" %>
+      <%= f.text_field :research_location, :label => "Research Location", :placeholder => "Honolulu" %>
       <%= f.file_field :thumbnail, :label => "Cover image" %>
       <span id="thumbnail_help" class="help-block">
         <p>
@@ -113,9 +52,69 @@
           Examples include presentation photos, book covers, or conference logos. An image is required when featuring this publication on our website.
         </p>
       </span>
-      <%= f.text_area :pubabstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
       <%= f.hidden_field :person_id  %>
     </div>
+
+    <div class="col-sm-4">
+      <% if @publication.type == "book" %>
+        <!-- Book -->
+        <%= f.text_field :vol, :label => "Volume" %>
+        <%= f.text_field :num_of_vol, :label => "Number of Volumes" %>
+        <%= f.text_field :pages, :label => "Pages" %>
+        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%= f.text_field :location, :label => "Publisher Location" %>
+        <%= f.text_field :editor, :label => "Editor" %>
+        <%= f.text_field :edition, :label => "Edition" %>
+
+      <% elsif @publication.type == "book_chapter" %>
+        <!-- Book Chapter -->
+        <%= f.text_field :vol, :label => "Volume" %>
+        <%= f.text_field :num_of_vol, :label => "Number of Volumes" %>
+        <%= f.text_field :pages, :label => "Pages" %>
+        <%= f.text_field :book_title, :label => "Book Title" %>
+        <%= f.text_field :book_chapter, :label => "Book Chapter" %>
+        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%= f.text_field :location, :label => "Publisher Location" %>
+        <%= f.text_field :editor, :label => "Editor" %>
+        <%= f.text_field :edition, :label => "Edition" %>
+
+      <% elsif @publication.type == "conference_proceedings" %>
+        <!-- Conference Proceedings -->
+        <%= f.text_field :vol, :label => "Volume" %>
+        <%= f.text_field :pages, :label => "Pages" %>
+        <%= f.text_field :venue, :label => "Conference Name" %>
+        <%= f.text_field :location, :label => "Conference Location" %>
+        <%= f.text_field :organization, :label => "Society/Organization running conference" %>
+
+      <% elsif @publication.type == "journal_article" %>
+        <!-- Journal Article -->
+        <%= f.text_field :vol, :label => "Volume" %>
+        <%= f.text_field :pages, :label => "Pages" %>
+        <%= f.text_field :venue, :label => "Journal Name" %>
+        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%= f.text_field :organization, :label => "Organization/Society publishing journal" %>
+
+      <% elsif @publication.type == "multimedia_contribution" %>
+        <!-- Multimedia Contribution -->
+        <%= f.text_field :vol, :label => "Volume" %>
+        <%= f.text_field :publisher, :label => "Publisher" %>
+
+      <% elsif @publication.type == "presentation" %>
+        <!-- Presentation -->
+        <%= f.text_field :venue, :label => "Event at which presented" %>
+        <%= f.text_field :location, :label => "Location of presentation" %>
+        <%= f.text_field :organization, :label => "Organization presented to" %>
+
+      <% elsif @publication.type == "report" %>
+        <!-- Report -->
+        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%= f.text_field :location, :label => "Publisher Location" %>
+        <%= f.text_field :pages, :label => "Pages" %>
+
+      <% end %>
+
+    </div>
+
   </div>
 
 <% end %>

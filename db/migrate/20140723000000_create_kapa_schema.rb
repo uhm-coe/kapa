@@ -288,45 +288,38 @@ class CreateKapaSchema < ActiveRecord::Migration
     create_table "faculty_publications", force: :cascade  do |t|
       t.integer "person_id"
       t.string "dept"
-      t.string "authors"
-      t.string "dn",                 limit: 255
-      t.string "objectclass",        limit: 255
-      t.string "ou",                 limit: 255 # department
-      t.string "pubpages",           limit: 255
-      t.text "pubabstract"
-      t.string "pubdate",            limit: 255
-      t.string "publocation",        limit: 255
-      t.text "pubowner"
-      t.string "pubpublisher",       limit: 255
-      t.text "documentauthor"
-      t.string "pubtype",            limit: 255
-      t.string "cn",                 limit: 255
-      t.text "pubkeyword"
-      t.string "pubvenue",           limit: 255
-      t.string "pubvol",             limit: 255
-      t.string "pubnumofvol",        limit: 255
-      t.string "pubcreator",         limit: 255
-      t.string "pubtitle",           limit: 255
-      t.string "pubmonth",           limit: 255
-      t.string "pubyear",            limit: 255
-      t.string "documentidentifier", limit: 255
-      t.text "pubcontributor"
-      t.string "pubeditor",          limit: 255
-      t.string "pubbooktitle",       limit: 255
-      # t.string "pubthumbnail",       limit: 255
-      t.string "pubbookchapter",     limit: 255
-      t.string "pubisnotfeatured",   limit: 255
-      t.string "puborganization",    limit: 255
-      t.string "pubpdf",             limit: 255
-      t.string "pubedition",         limit: 255
-      t.string "o",                  limit: 255 # institution
-      t.string "l",                  limit: 255 # research location
-      t.string "documentlocation",   limit: 255
-
+      t.string "type",            limit: 255
+      t.text "abstract"
+      t.string "pages",           limit: 255
+      t.string "published_date",            limit: 255
+      t.string "location",        limit: 255
+      t.string "publisher",       limit: 255
+      t.text "keyword"
+      t.string "venue",           limit: 255
+      t.string "vol",             limit: 255
+      t.string "num_of_vol",        limit: 255
+      t.string "creator",         limit: 255
+      t.string "title",           limit: 255
+      t.string "month",           limit: 255
+      t.string "year",            limit: 255
+      t.string "document_identifier", limit: 255
+      t.string "editor",          limit: 255
+      t.string "book_title",       limit: 255
+      t.string "book_chapter",     limit: 255
+      t.string "organization",    limit: 255
+      t.string "edition",         limit: 255
+      t.string "institution",                  limit: 255 # institution
+      t.string "research_location",                  limit: 255 # research location
+      t.string "document_location",   limit: 255
+      t.boolean "featured"
       t.string   "thumbnail_file_name",    limit: 255
       t.string   "thumbnail_content_type", limit: 255
       t.integer  "thumbnail_file_size",    limit: 4
       t.datetime "thumbnail_updated_at"
+      t.text     "yml",               limit: 65535
+      t.text     "xml",               limit: 65535
+      t.datetime "created_at"
+      t.datetime "updated_at"
     end
 
     create_table "faculty_publications_authors", force: :cascade do |t|

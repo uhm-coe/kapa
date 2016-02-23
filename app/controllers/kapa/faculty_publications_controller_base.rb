@@ -78,6 +78,6 @@ module Kapa::FacultyPublicationsControllerBase
 
   private
   def publication_params
-    params.require(:publication).permit(:person_id, :dn, :l, :o, :ou, :cn, :objectclass, :dept, :authors, :pubpages, :pubabstract, :pubdate, :publocation, :pubowner, :pubpublisher, :documentauthor, :pubtype, :pubkeyword, :pubvenue, :pubvol, :pubnumofvol, :pubcreator, :pubtitle, :pubmonth, :pubyear, :documentidentifier, :pubcontributor, :pubeditor, :pubbooktitle, :pubthumbnail, :pubbookchapter, :pubisnotfeatured, :puborganization, :pubpdf, :pubedition, :documentlocation, :thumbnail)
+    params.require(:publication).permit(:person_id, :dept, :pages, :abstract, :published_date, :location, :publisher, :type, :keyword, :venue, :vol, :num_of_vol, :creator, :title, :month, :year, :document_identifier, :editor, :book_title, :book_chapter, :featured, :organization, :edition, :document_location, :research_location, :institution, :thumbnail)
   end
 end

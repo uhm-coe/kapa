@@ -22,8 +22,8 @@ module Kapa::FacultyPublicationBase
   end
 
   def format_dates
-    unless self.pubdate.blank?
-      date = self.pubdate.to_time
+    unless self.published_date.blank?
+      date = self.published_date.to_time
       self.pubyear = date.strftime("%Y")
       self.pubmonth = date.strftime("%B")
     end
@@ -32,11 +32,11 @@ module Kapa::FacultyPublicationBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      publications = Kapa::FacultyPublication.eager_load([:person, :authors]).order("faculty_publications.pubtitle")
-      publications = publications.column_matches("faculty_publications.pubtitle" => filter.pubtitle) if filter.pubtitle.present?
-      publications = publications.where("faculty_publications.pubtype" => filter.pubtype) if filter.pubtype.present?
-      publications = publications.where(:pubdate => filter.pubdate_start..filter.pubdate_end) if filter.pubdate_start.present? and filter.pubdate_end.present?
-      publications = publications.column_matches(:pubkeyword => filter.keyword) if filter.keyword.present?
+      publications = Kapa::FacultyPublication.eager_load([:person, :authors]).order("faculty_publications.title")
+      publications = publications.column_matches("faculty_publications.title" => filter.title) if filter.title.present?
+      publications = publications.where("faculty_publications.type" => filter.type) if filter.type.present?
+      publications = publications.where(:published_date => filter.published_date_start..filter.published_date_end) if filter.published_date_start.present? and filter.published_date_end.present?
+      publications = publications.column_matches(:keyword => filter.keyword) if filter.keyword.present?
       return publications
     end
 
@@ -50,20 +50,20 @@ module Kapa::FacultyPublicationBase
        :cur_postal_code => [:person, :contact, :cur_postal_code],
        :cur_phone => [:person, :contact, :cur_phone],
        :email => [:person, :contact, :email],
-       :pubtype => [:pubtype],
-       :pubtitle => [:pubtitle],
+       :type => [:type],
+       :title => [:title],
        :dept => [:dept],
-       :pubdate => [:pubdate],
-       :documentidentifier => [:documentidentifier],
-       :pubvol => [:pubvol],
-       :pubnumofvol => [:pubnumofvol],
-       :pubpages => [:pubpages],
-       :pubpublisher => [:pubpublisher],
-       :publocation => [:publocation],
-       :pubeditor => [:pubeditor],
-       :publocation => [:publocation],
-       :pubedition => [:pubedition],
-       :pubabstract => [:pubabstract]}
+       :published_date => [:published_date],
+       :document_identifier => [:documentidentifier],
+       :vol => [:pubvol],
+       :num_of_vol => [:pubnumofvol],
+       :pages => [:pubpages],
+       :publisher => [:pubpublisher],
+       :location => [:publocation],
+       :editor => [:pubeditor],
+       :location => [:publocation],
+       :edition => [:pubedition],
+       :abstract => [:pubabstract]}
     end
   end
 end
