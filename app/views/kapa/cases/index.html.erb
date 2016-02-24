@@ -1,0 +1,62 @@
+<% content_for(:dialog) do %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%= bootstrap_form_for(:filter, :url => kapa_cases_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
+          <%= f.property_select :type, :name => :@case %>
+          <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.date_picker :start_date %>
+          <%= f.date_picker :end_data %>
+          <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+          <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Cases (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Program</th>
+      <th>Latest Action</th>
+      <th>Status</th>
+      <th>Assignee</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for @case in @cases %>
+      <tr>
+        <td><%= @case.curriculum.person.id_number %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.curriculum.person.full_name), kapa_person_path(:id => @case.curriculum.person_id) %></td>
+        <td><%= abbr @case.curriculum.code_desc, @case.curriculum.code %></td>
+        <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
+        <td><%= h @case.status_desc %></td>
+        <td><%= h @case.rsend(:users, :first, :person, :last_name) %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => @case}, :class => "btn btn-default btn-xs" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%= will_paginate @cases, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>
