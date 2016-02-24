@@ -3,8 +3,8 @@ module Kapa::FacultyPublicationBase
 
   included do
     belongs_to :person
-    has_many :faculty_publications_authors
-    has_many :authors, :class_name => "FacultyPublicationsAuthor"
+    has_many :faculty_publication_authors
+    has_many :authors, :class_name => "FacultyPublicationAuthor"
 
     has_attached_file :thumbnail
     # validates_attachment_content_type :thumbnail, content_type: /\Aimage/ # TODO: Requires Paperclip >4.0

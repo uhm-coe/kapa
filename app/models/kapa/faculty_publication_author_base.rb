@@ -1,4 +1,4 @@
-module Kapa::FacultyPublicationsAuthorBase
+module Kapa::FacultyPublicationAuthorBase
   extend ActiveSupport::Concern
 
   included do

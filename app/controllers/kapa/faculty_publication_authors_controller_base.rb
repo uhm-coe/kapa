@@ -1,11 +1,11 @@
-module Kapa::FacultyPublicationsAuthorsControllerBase
+module Kapa::FacultyPublicationAuthorsControllerBase
   extend ActiveSupport::Concern
 
   def index
   end
 
   def show
-    @author = Kapa::FacultyPublicationsAuthor.find(params[:id])
+    @author = Kapa::FacultyPublicationAuthor.find(params[:id])
     @publication = @author.faculty_publication
     @person = @publication.person
   end
@@ -14,7 +14,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
   end
 
   def create
-    @author = Kapa::FacultyPublicationsAuthor.new(author_params_subset(params))
+    @author = Kapa::FacultyPublicationAuthor.new(author_params_subset(params))
     @publication = Kapa::FacultyPublication.find(params[:faculty_publication_id])
     @publication.authors << @author
 
@@ -28,7 +28,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
   end
 
   def update
-    @author = Kapa::FacultyPublicationsAuthor.find(params[:id])
+    @author = Kapa::FacultyPublicationAuthor.find(params[:id])
     @publication = @author.faculty_publication_id
     @author.attributes = author_params_subset(params)
 
@@ -42,7 +42,7 @@ module Kapa::FacultyPublicationsAuthorsControllerBase
   end
 
   def destroy
-    @author = Kapa::FacultyPublicationsAuthor.find(params[:id])
+    @author = Kapa::FacultyPublicationAuthor.find(params[:id])
     @publication = @author.faculty_publication
     unless @author.destroy
       flash[:danger] = error_message_for(@author)

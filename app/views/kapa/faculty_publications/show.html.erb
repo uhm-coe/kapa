@@ -1,7 +1,7 @@
 <% content_for(:dialog) do %>
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_author_dialog", :modal_title => "Add Author", :modal_form_id => "add_author_form" } do %>
-    <%= bootstrap_form_for(:author, :url => kapa_faculty_publications_authors_path(:faculty_publication_id => @publication), :html => {:id => "add_author_form"}) do %>
-      <%= render "kapa/faculty_publications_authors/author_form" %>
+    <%= bootstrap_form_for(:author, :url => kapa_faculty_publication_authors_path(:faculty_publication_id => @publication), :html => {:id => "add_author_form"}) do %>
+      <%= render "kapa/faculty_publication_authors/author_form" %>
     <% end %>
   <% end %>
 <% end %>

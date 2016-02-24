@@ -7,9 +7,9 @@
   </h4>
 
   <div>
-    <%= bootstrap_form_for(:author, :url => kapa_faculty_publications_author_path(:id => @author), :html => {:method => :put}) do %>
+    <%= bootstrap_form_for(:author, :url => kapa_faculty_publication_author_path(:id => @author), :html => {:method => :put}) do %>
       <%= render :partial => "author_form" %>
-      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_faculty_publications_author_path(:id => @author)} if @current_user.write? %>
+      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_faculty_publication_author_path(:id => @author)} if @current_user.write? %>
     <% end %>
   </div>
 <% end %>
