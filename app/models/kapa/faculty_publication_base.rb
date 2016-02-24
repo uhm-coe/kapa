@@ -24,8 +24,8 @@ module Kapa::FacultyPublicationBase
   def format_dates
     unless self.published_date.blank?
       date = self.published_date.to_time
-      self.pubyear = date.strftime("%Y")
-      self.pubmonth = date.strftime("%B")
+      self.year = date.strftime("%Y")
+      self.month = date.strftime("%B")
     end
   end
 
