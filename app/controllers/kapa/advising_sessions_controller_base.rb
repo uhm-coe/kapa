@@ -14,7 +14,6 @@ module Kapa::AdvisingSessionsControllerBase
     previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
     @advising_session = Kapa::AdvisingSession.new
     @advising_session.person_id = params[:id]
-    @advising_session.user_primary_id = @current_user.id
     @advising_session.session_date = Date.today
     if previous_advising
       @advising_session.curriculum_id = previous_advising.curriculum_id
@@ -35,6 +34,8 @@ module Kapa::AdvisingSessionsControllerBase
       flash[:danger] = error_message_for(@advising_session)
       redirect_to new_kapa_advising_session_path(:id => @person) and return false
     end
+    @advising_session.users << @current_user
+
     flash[:success] = "Advising record was successfully created."
     redirect_to kapa_advising_session_path(:id => @advising_session)
   end
@@ -78,6 +79,6 @@ module Kapa::AdvisingSessionsControllerBase
   private
   def advising_session_params
     params.require(:advising_session).permit(:session_date, :session_type, :task, :curriculum_id, :interest,
-                                             :classification, :location, :user_primary_id, :note, :person_id)
+                                             :classification, :location, :note, :person_id)
   end
 end

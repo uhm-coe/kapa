@@ -98,7 +98,8 @@ module Kapa::KapaModelBase
     end
 
     def assigned_scope(user_id)
-      where("? in (user_primary_id, user_secondary_id)", user_id)
+#TODO: Check where conditions with joins
+#      includes(:user_assignments).where("? in (user_primary_id, user_secondary_id)", user_id)
     end
 
     def search(options = {})

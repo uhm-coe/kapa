@@ -3,12 +3,6 @@ module Kapa::AdvisingSessionBase
 
   included do
     belongs_to :person
-    belongs_to :user_primary,
-               :class_name => "User",
-               :foreign_key => "user_primary_id"
-    belongs_to :user_secondary,
-               :class_name => "User",
-               :foreign_key => "user_secondary_id"
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
