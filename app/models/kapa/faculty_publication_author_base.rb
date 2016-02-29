@@ -2,7 +2,6 @@ module Kapa::FacultyPublicationAuthorBase
   extend ActiveSupport::Concern
 
   included do
-    self.table_name = :faculty_publications_authors
     belongs_to :faculty_publication
     validates_presence_of :faculty_publication_id
     validates_presence_of :person_id, :if => :internal?

@@ -297,6 +297,22 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
   end
 
+  create_table "faculty_publication_authors", force: :cascade do |t|
+    t.integer  "faculty_publication_id", limit: 4
+    t.string   "type",                   limit: 255
+    t.integer  "person_id",              limit: 4
+    t.string   "last_name",              limit: 255
+    t.string   "first_name",             limit: 255
+    t.string   "middle_initial",         limit: 255
+    t.integer  "sequence",               limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",                    limit: 65535
+    t.text     "xml",                    limit: 65535
+  end
+
+  add_index "faculty_publication_authors", ["faculty_publication_id"], name: "index_authors_on_faculty_publication_id", using: :btree
+
   create_table "faculty_publications", force: :cascade do |t|
     t.integer  "person_id",              limit: 4
     t.string   "dept",                   limit: 255
@@ -333,22 +349,6 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "faculty_publications_authors", force: :cascade do |t|
-    t.integer  "faculty_publication_id", limit: 4
-    t.string   "type",                   limit: 255
-    t.integer  "person_id",              limit: 4
-    t.string   "last_name",              limit: 255
-    t.string   "first_name",             limit: 255
-    t.string   "middle_initial",         limit: 255
-    t.integer  "sequence",               limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml",                    limit: 65535
-    t.text     "xml",                    limit: 65535
-  end
-
-  add_index "faculty_publications_authors", ["faculty_publication_id"], name: "index_authors_on_faculty_publication_id", using: :btree
 
   create_table "faculty_service_activities", force: :cascade do |t|
     t.integer  "person_id",          limit: 4
