@@ -791,6 +791,54 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
   end
 
+  create_table "case_actions", force: :cascade do |t|
+    t.integer  "case_id", limit: 4
+    t.string   "type",                limit: 255
+    t.string   "action",              limit: 255
+    t.string   "action_specify",      limit: 255
+    t.date     "action_date"
+    t.string   "note",                limit: 255
+    t.integer  "sequence",            limit: 4,     default: 99
+    t.integer  "user_id",             limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",                 limit: 65535
+    t.text     "xml",                 limit: 65535
+  end
+
+  add_index "case_actions", ["action"]
+  add_index "case_actions", ["case_id"]
+
+  create_table "cases", force: :cascade do |t|
+    t.integer  "person_id",           limit: 4
+    t.integer  "term_id",           limit: 4
+    t.integer  "curriculum_id",     limit: 4
+    t.integer  "form_id",           limit: 4
+    t.string   "type",              limit: 255,   default: "",        null: false
+    t.string   "status",            limit: 255
+    t.string   "category",          limit: 255
+    t.string   "priority",          limit: 255
+    t.string   "dept",              limit: 255
+    t.boolean  "active",                          default: false
+    t.text     "note",              limit: 65535
+    t.string   "location"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "status_updated_at"
+    t.text     "yml",               limit: 65535
+    t.text     "xml",               limit: 65535
+  end
+
+  add_index "cases", ["person_id"]
+  add_index "cases", ["dept"]
+  add_index "cases", ["form_id"]
+  add_index "cases", ["status"]
+  add_index "cases", ["term_id"]
+  add_index "cases", ["type"]
+
+
   def down
   end
 end

@@ -45,7 +45,8 @@ Rails.application.routes.draw do
     resources :faculty_publication_authors
     resources :faculty_service_activities, &extra_actions
     resources :faculty_awards, &extra_actions
-
+    resources :cases, &extra_actions
+    resources :case_actions, &extra_actions
   end
 
 end
