@@ -9,7 +9,7 @@ class Kapa::InstallGenerator < Rails::Generators::Base
     copy_file("test/dummy/config/initializers/roles.rb", "#{Rails.root}/config/initializers/roles.rb")
     copy_file("test/dummy/config/initializers/attachments.rb", "#{Rails.root}/config/initializers/attachments.rb")
     copy_file("test/dummy/config/initializers/ldap.rb", "#{Rails.root}/config/initializers/ldap.rb")
-    copy_file("test/dummy/config/initializers/datasources.rb", "#{Rails.root}/config/initializers/datasourcesrb")
+    copy_file("test/dummy/config/initializers/datasources.rb", "#{Rails.root}/config/initializers/datasources.rb")
     copy_file("test/dummy/config/initializers/mailer.rb", "#{Rails.root}/config/initializers/mailer.rb")
     inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
   end

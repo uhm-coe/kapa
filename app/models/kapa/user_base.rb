@@ -110,7 +110,7 @@ module Kapa::UserBase
 
   def valid_credential?(password)
     if category == "ldap"
-      ldap = Rails.configuration.ldap
+      ldap = Net::LDAP.new(Rails.configuration.ldap_settings)
       base = Rails.configuration.ldap_base
       filter = Rails.configuration.ldap_filter.gsub("?", self.uid)
       dn = nil
