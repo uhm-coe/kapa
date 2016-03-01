@@ -51,7 +51,7 @@
           <td><%= Kapa::Property.lookup_description(:publication_type, publication.type) %>
           <td><%= abbr publication.title, 60 %></td>
           <td><%= publication.published_date %></td>
-          <td><%= abbr publication.author_names, 40 %></td>
+          <td><%= publication.faculty_publication_authors.length.to_i %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => publication}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
