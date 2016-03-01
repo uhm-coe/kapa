@@ -8,7 +8,7 @@
   <div class="row">
     <%= bootstrap_form_for :award, :url => kapa_faculty_award_path(:id => @award), :html => {:method => :put, :multipart => true} do |f| %>
       <%= render :partial => "award_form", :locals => {:f => f} %>
-      <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+      <div class="row"><%= render :partial => "/kapa/layouts/controls" if @current_user.write? %></div>
     <% end %>
   </div>
 <% end %>
