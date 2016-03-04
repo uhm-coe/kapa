@@ -46,9 +46,9 @@
     <tbody>
     <% for @case in @cases %>
       <tr>
-        <td><%= @case.curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.curriculum.person.full_name), kapa_person_path(:id => @case.curriculum.person_id) %></td>
-        <td><%= abbr @case.curriculum.code_desc, @case.curriculum.code %></td>
+        <td><%= @case.person.id_number %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.person.full_name), kapa_person_path(:id => @case.person_id) %></td>
+        <td><%= abbr @case.curriculum.code_desc, @case.curriculum.code if @case.curriculum %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
         <td><%= h @case.status_desc %></td>
         <td><%= h @case.rsend(:users, :first, :person, :last_name) %></td>

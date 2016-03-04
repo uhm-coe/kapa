@@ -7,7 +7,7 @@ module Kapa::CasesControllerBase
     @curriculum = @case.curriculum
     @program = @curriculum.program if @curriculum
     @programs = Kapa::Program.where(:active => true)
-    @case_actions = @case.case_actions
+    @case_actions = @case.case_actions.order("action_date DESC, id DESC")
     @person = @case.person
     @curriculums = @person.curriculums
   end

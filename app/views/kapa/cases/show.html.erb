@@ -53,7 +53,7 @@
               <div class="panel-heading">
                 <h3 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#case_action_<%= @case_action.id %>"><span class="strong"><%= format_date @case_action.action_date %>
-                    - <%= h @case_action.action_desc %> <%= h @case_action.action_specify %></span></a>
+                    - <%= h @case_action.action_desc %> <%="(#{@case_action.action_specify})" if @case_action.action_specify.present? %></span></a>
                 </h3>
               </div>
               <div id="case_action_<%= @case_action.id %>" class="panel-collapse collapse<%= ' in' if params[:action_panel] == @case_action.id.to_s || (params[:action_panel].nil? && index == 0) %>">

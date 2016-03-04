@@ -16,6 +16,6 @@ module Kapa::CaseActionBase
   end
 
   def action_desc
-    Kapa::Property.lookup_description("#{self.case.type}_action", action)
+    Kapa::Property.lookup_description("case_action", action)
   end
 end

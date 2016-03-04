@@ -10,7 +10,7 @@ module Kapa::CaseBase
             -> { where("case_actions.id =
                                         (select a.id
                                          from case_actions a
-                                         where a.case_point_id = case_actions.case_point_id
+                                         where a.case_id = case_actions.case_id
                                          order by sequence desc, action_date desc, id desc
                                          limit 1)")},
             :class_name => "CaseAction"
