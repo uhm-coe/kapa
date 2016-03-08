@@ -1,22 +1,18 @@
 <% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-      $('#filter_assessment_rubric_id').change(function () {
-        $('<input>', {
-          type: 'hidden',
-          name: 'focus',
-          value: 'assessment'
-        }).appendTo('#assessment_form');
-        $(this).parents('form').submit();
-      });
-    });
-  </script>
+  <style type="text/css">
+    #involved_persons-rows tr {
+      cursor: move;
+    }
+    .handle {
+      padding: 5px;
+    }
+  </style>
 <% end %>
 
 <% content_for(:dialog) do %>
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "move_case_dialog", :modal_title => "Move Transition Point to Different Curriculum", :modal_form_id => "move_case_form"} do %>
-    <%= bootstrap_form_for(:case, :url => kapa_case_path(:id => @case), :html => {:method => :put, :id => "move_case_form"}) do |t| %>
-      <%= t.select :curriculum_id, @curriculums.collect { |c| ["#{c.code_desc} - #{@case.term_desc}", c.id] }, :label => "Program" %>
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_involved_person_dialog", :modal_title => "Add Person Involved", :modal_form_id => "add_case_involved_person_form" } do %>
+    <%= bootstrap_form_for(:case_involved_person, :url => kapa_case_involved_persons_path(:case_id => @case), :html => {:id => "add_case_involved_person_form"}) do %>
+      <%= render "kapa/case_involved_persons/involved_person_form" %>
     <% end %>
   <% end %>
 <% end %>
@@ -31,6 +27,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#involved_person_tab" data-toggle="tab">Parties Involved</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
     </ul>
 
@@ -38,10 +35,50 @@
       <div id="case_tab" class="tab-pane">
         <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} do %>
           <%= render :partial => "case_form" %>
-          <%= render :layout => "/kapa/layouts/controls" do %>
-            <%=bootstrap_button "Move", nil, "data-toggle" => "modal", "data-target" => "#move_case_dialog", :icon => "glyphicon-move" if @current_user.manage? %>
-          <% end if @current_user.write? %>
         <% end %>
+      </div>
+
+      <div id="involved_person_tab" class="tab-pane">
+        <p class="text-right">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_involved_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Person</button>
+        </p>
+          <table id="involved_persons" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>E-mail</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="involved_persons-rows">
+              <% for involved_person in @involved_persons %>
+                <tr>
+                  <td>
+                    <%=involved_person.type %>
+                  </td>
+                  <td>
+                    <% if involved_person.internal? %>
+                      <%= link_to involved_person.full_name, kapa_person_path(:id => involved_person.person_id) %>
+                    <% else %>
+                      <%= involved_person.full_name %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%=involved_person.phone %>
+                  </td>
+                  <td>
+                    <%=involved_person.email %>
+                  </td>
+                  <td class="right">
+                    <%= link_to "Edit", kapa_case_involved_person_path(:id => involved_person), :class => "btn btn-default btn-xs" %>
+                    <%= link_to "Delete", kapa_case_involved_person_path(:id => involved_person, :case_involved_person_id => @case_involved_person), :method => :delete, :class => "btn btn-default btn-xs" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
       </div>
 
       <div id="actions_tab" class="tab-pane">

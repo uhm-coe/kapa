@@ -3,10 +3,8 @@ module Kapa::CasesControllerBase
 
   def show
     @case = Kapa::Case.find(params[:id])
+    @involved_persons = @case.case_involved_persons
     @case_ext = @case.deserialize(:_ext, :as => OpenStruct)
-    @curriculum = @case.curriculum
-    @program = @curriculum.program if @curriculum
-    @programs = Kapa::Program.where(:active => true)
     @case_actions = @case.case_actions.order("action_date DESC, id DESC")
     @person = @case.person
     @curriculums = @person.curriculums
@@ -16,7 +14,7 @@ module Kapa::CasesControllerBase
     if params[:case]
       @case = Kapa::Case.find(params[:id])
       @case.attributes = case_params
-      @case.update_serialized_attributes(:_ext, params[:case_ext])
+      @case.update_serialized_attributes(:_ext, params[:case_ext]) if params[:case_ext]
 
       unless @case.save
         flash[:danger] = @case.errors.full_messages.join(", ")
@@ -61,7 +59,7 @@ module Kapa::CasesControllerBase
 
   private
   def case_params
-    params.require(:case).permit(:term_id, :type, :category, :priority, :status, :note, :curriculum_id, :user_ids => [])
+    params.require(:case).permit(:person_id, :term_id, :curriculum_id, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_datetime, :investigator, :dept, :note, :user_ids => [])
   end
 
 end

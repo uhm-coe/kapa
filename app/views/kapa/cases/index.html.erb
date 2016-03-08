@@ -22,7 +22,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Cases (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+  <h3>Cases</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -36,10 +36,11 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Program</th>
+      <th>Start Date</th>
       <th>Latest Action</th>
       <th>Status</th>
       <th>Assignee</th>
+      <th>Dept</th>
       <th></th>
     </tr>
     </thead>
@@ -48,10 +49,11 @@
       <tr>
         <td><%= @case.person.id_number %></td>
         <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.person.full_name), kapa_person_path(:id => @case.person_id) %></td>
-        <td><%= abbr @case.curriculum.code_desc, @case.curriculum.code if @case.curriculum %></td>
+        <td><%= h @case.start_date %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
         <td><%= h @case.status_desc %></td>
         <td><%= h @case.rsend(:users, :first, :person, :last_name) %></td>
+        <td><%= h @case.dept %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => @case}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

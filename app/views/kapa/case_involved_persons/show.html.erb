@@ -1,0 +1,15 @@
+<% content_for(:box1) do %>
+  <%= render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%= link_to "", kapa_case_path(:id => @case, :anchor => :involved_person), :class => "glyphicon glyphicon-chevron-left" %>
+    Person Involved
+  </h4>
+
+  <div>
+    <%= bootstrap_form_for(:author, :url => kapa_faculty_publication_author_path(:id => @case_involved_person, :html => {:method => :put})) do %>
+      <%= render :partial => "involved_person_form" %>
+      <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_case_involved_person_path(:id => @case_involved_person)} if @current_user.write? %>
+    <% end %>
+  </div>
+<% end %>

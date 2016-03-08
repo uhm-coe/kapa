@@ -5,6 +5,7 @@ module Kapa::CaseBase
     belongs_to :person
     belongs_to :curriculum
     belongs_to :term
+    has_many :case_involved_persons
     has_many :case_actions
     has_one :last_case_action,
             -> { where("case_actions.id =

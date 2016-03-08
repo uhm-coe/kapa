@@ -2,14 +2,19 @@
   <div class="row">
     <div class="col-sm-6">
       <%=t.term_select :term_id, :label => "Term" %>
-      <%=t.property_select :category, :name => "#{@case.type}_category", :include_blank => true %>
-      <%=t.property_select :priority, :name => "#{@case.type}_priority", :include_blank => true %>
-      <%=t.property_select :status, :name => "#{@case.type}_status", :include_blank => true %>
+      <%=t.property_select :type, :name => "case_type" %>
+      <%=t.property_select :category, :name => "case_category", :include_blank => true %>
+      <%=t.property_select :dept, :include_blank => true, :label => "Campus" %>
       <%=t.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>
+      <%#=t.text_field :investigator %>
+      <%=t.property_select :status, :name => "case_status", :include_blank => true %>
     </div>
 
     <div class="col-sm-6">
-      <%=t.text_area :note, {:cols => 54, :rows => 20} %>
+      <%=t.date_picker :incident_datetime, :label => "Incident Date" %>
+      <%=t.property_select :location, :name => "case_location", :include_blank => true, :label => "Incident Location" %>
+      <%=t.text_field :location_detail , :label => "Incident Location Detail" %>
+      <%=t.text_area :note, {:label => "Incident Situation", :cols => 54, :rows => 15} %>
     </div>
   </div>
 

@@ -818,10 +818,13 @@ class CreateKapaSchema < ActiveRecord::Migration
     t.string   "status",            limit: 255
     t.string   "category",          limit: 255
     t.string   "priority",          limit: 255
+    t.string   "location",          limit: 255
+    t.string   "location_detail",          limit: 255
+    t.datetime "incident_datetime"
+    t.string   "investigator",          limit: 255
     t.string   "dept",              limit: 255
-    t.boolean  "active",                          default: false
+    t.boolean  "active",                          default: true
     t.text     "note",              limit: 65535
-    t.string   "location"
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
@@ -838,6 +841,21 @@ class CreateKapaSchema < ActiveRecord::Migration
   add_index "cases", ["term_id"]
   add_index "cases", ["type"]
 
+  create_table "case_involved_persons", force: :cascade do |t|
+    t.integer  "case_id"
+    t.string   "type",                  limit: 255
+    t.integer  "person_id",                         null: true
+    t.string   "last_name",             limit: 255
+    t.string   "first_name",            limit: 255
+    t.string   "middle_initial",        limit: 255
+    t.string   "phone",        limit: 255
+    t.string   "email",        limit: 255
+    t.integer  "sequence"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",                   limit: 65535
+    t.text     "xml",                   limit: 65535
+  end
 
   def down
   end
