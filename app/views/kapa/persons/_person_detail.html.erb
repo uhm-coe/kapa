@@ -62,27 +62,31 @@
 </h3>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Profile", :modal_form_id => "person_form"} do %>
-  <%= bootstrap_form_for :person, :url => kapa_person_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
+  <%= bootstrap_form_for :person, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
     <%= render :partial => "kapa/persons/person_form" %>
   <% end %>
 <% end if @current_user.read? :kapa_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
-  <%= bootstrap_form_for :contact, :url => kapa_contact_path(:id => @person, :return_uri => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
+  <%= bootstrap_form_for :contact, :url => kapa_contact_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
     <%= render :partial => "kapa/persons/contact_form", :locals => {:object_name => :contact} %>
   <% end %>
 <% end if @current_user.read? :kapa_contacts %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-  <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_url => url_for(:anchor => "document", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+  <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.file_field :data, :label => "File to upload" %>
     <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
     <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
+    <%=f.hidden_field :attachable_type, :value => @attachable_type %>
+    <%=f.hidden_field :attachable_id, :value => @attachable_id %>
   <% end %>
 <% end %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
-  <%= bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_url => url_for(:anchor => "document", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
+  <%= bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
+    <%=f.hidden_field :attachable_type, :value => @attachable_type %>
+    <%=f.hidden_field :attachable_id, :value => @attachable_id %>
   <% end %>
 <% end %>

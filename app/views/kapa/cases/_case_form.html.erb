@@ -6,7 +6,6 @@
       <%=t.property_select :category, :name => "case_category", :include_blank => true %>
       <%=t.property_select :dept, :include_blank => true, :label => "Campus" %>
       <%=t.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>
-      <%#=t.text_field :investigator %>
       <%=t.property_select :status, :name => "case_status", :include_blank => true %>
     </div>
 

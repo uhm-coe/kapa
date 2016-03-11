@@ -5,8 +5,9 @@ module Kapa::CaseBase
     belongs_to :person
     belongs_to :curriculum
     belongs_to :term
-    has_many :case_involved_persons
     has_many :case_actions
+    has_many :person_references, :as => :referenceable
+    has_many :involved_persons, :through => :person_references, :source => :person
     has_one :last_case_action,
             -> { where("case_actions.id =
                                         (select a.id
@@ -18,6 +19,8 @@ module Kapa::CaseBase
 
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
+    has_many :files, :as => :attachable
+    has_many :forms, :as => :attachable
 
     validates_presence_of :term_id, :type
 

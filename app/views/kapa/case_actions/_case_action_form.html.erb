@@ -1,0 +1,15 @@
+<%= bootstrap_fields_for :case_action do |a| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=a.hidden_field :case_id %>
+      <%=a.date_picker :action_date, :label => "Action Date" %>
+      <%=a.property_select "action", :name => "case_action", :include_blank => true %>
+      <%=a.text_field "action_specify" %>
+      <%=a.user_select "user_id", :include_blank => true, :label => "User" if @current_user.manage? %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=a.text_area "note", :style => "width:100%; height:200px" %>
+    </div>
+  </div>
+<% end %>

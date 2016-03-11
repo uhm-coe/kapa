@@ -248,6 +248,8 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "exams", force: :cascade do |t|
       t.integer  "person_id",     limit: 4
+      t.integer  "attachable_id",   limit: 4
+      t.string   "attachable_type", limit: 255
       t.string   "report_number", limit: 255
       t.date     "report_date"
       t.string   "status",        limit: 255
@@ -368,6 +370,8 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "files", force: :cascade do |t|
       t.integer  "person_id",         limit: 4,                   null: false
+      t.integer  "attachable_id",   limit: 4
+      t.string   "attachable_type", limit: 255
       t.string   "name",              limit: 255
       t.string   "type",              limit: 255
       t.string   "status",            limit: 255
@@ -389,7 +393,8 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "forms", force: :cascade do |t|
       t.integer  "person_id",        limit: 4
-      t.integer  "form_template_id", limit: 4
+      t.integer  "attachable_id",   limit: 4
+      t.string   "attachable_type", limit: 255
       t.datetime "submitted_at"
       t.string   "submit_ip",        limit: 255
       t.text     "yml",              limit: 16777215
@@ -406,7 +411,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer  "term_id",          limit: 4
     end
 
-    add_index "forms", ["academic_period"], name: "index_forms_on_academic_period", using: :btree
+    add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
     add_index "forms", ["term_id"], name: "index_forms_on_term_id", using: :btree
     add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
@@ -439,6 +444,23 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["email"], name: "index_persons_on_email", using: :btree
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
+
+    create_table "person_references", force: :cascade do |t|
+      t.integer "person_id",         limit: 4
+      t.integer "referenceable_id",   limit: 4
+      t.string  "referenceable_type", limit: 255
+      t.string  "type", limit: 255
+      t.string  "category", limit: 255
+      t.string  "status", limit: 255
+      t.integer  "sequence"
+      t.text     "note",  limit: 16777215
+      t.text     "yml",            limit: 16777215
+      t.text     "xml",            limit: 16777215
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    add_index "person_references", ["person_id", "referenceable_id", "referenceable_type"], name: "index_person_references_on_person_id_and_referenceable_id", unique: true, using: :btree
 
     create_table "practicum_assignments_old", force: :cascade do |t|
       t.integer  "practicum_placement_id",   limit: 4
@@ -761,6 +783,10 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer "user_id",         limit: 4
       t.integer "assignable_id",   limit: 4
       t.string  "assignable_type", limit: 255
+      t.text     "yml",            limit: 16777215
+      t.text     "xml",            limit: 16777215
+      t.datetime "created_at"
+      t.datetime "updated_at"
     end
 
     add_index "user_assignments", ["user_id", "assignable_id", "assignable_type"], name: "index_user_assignments_on_user_id_and_assignable_id", unique: true, using: :btree

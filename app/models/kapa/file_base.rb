@@ -3,6 +3,7 @@ module Kapa::FileBase
 
   included do
     belongs_to :person
+    belongs_to :attachable, :polymorphic => true
     has_attached_file :data
     validates_presence_of :person_id
   end

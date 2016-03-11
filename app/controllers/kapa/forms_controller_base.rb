@@ -36,7 +36,7 @@ module Kapa::FormsControllerBase
     end
 
     flash[:success] = "Form was successfully created."
-    redirect_to params[:return_url]
+    redirect_to params[:return_path]
   end
 
   def destroy
@@ -64,7 +64,7 @@ module Kapa::FormsControllerBase
 
   private
   def form_param
-    params.require(:form).permit(:type, :person_id, :lock, :note)
+    params.require(:form).permit(:type, :person_id, :attachable_id, :attachable_type, :lock, :note)
   end
 
   def form_data_params(type)

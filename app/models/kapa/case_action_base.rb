@@ -16,6 +16,10 @@ module Kapa::CaseActionBase
   end
 
   def action_desc
-    Kapa::Property.lookup_description("case_action", action)
+    if self.action == "RM"
+      Kapa::Property.lookup_description("case_action", action) + " to #{self.action_specify}"
+    else
+      Kapa::Property.lookup_description("case_action", action)
+    end
   end
 end

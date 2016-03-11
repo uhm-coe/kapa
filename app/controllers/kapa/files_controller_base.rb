@@ -44,7 +44,7 @@ module Kapa::FilesControllerBase
   def create
     if params[:file][:data].nil?
       flash[:warning] = "No file was specified. Please select a file to upload."
-      redirect_to params[:return_url] and return false
+      redirect_to params[:return_path] and return false
     end
 
     @person = Kapa::Person.find(params[:id])
@@ -54,11 +54,11 @@ module Kapa::FilesControllerBase
     @file.dept = @current_user.primary_dept
     unless @file.save
       flash[:danger] = error_message_for(@file)
-      redirect_to params[:return_url] and return false
+      redirect_to params[:return_path] and return false
     end
 
     flash[:success] = "File was successfully uploaded."
-    redirect_to params[:return_url]
+    redirect_to params[:return_path]
   end
 
   def destroy
@@ -73,6 +73,6 @@ module Kapa::FilesControllerBase
   end
 
   def file_param
-    params.require(:file).permit(:person_id, :data, :name, :lock, :note)
+    params.require(:file).permit(:person_id, :attachable_id, :attachable_type, :data, :name, :lock, :note)
   end
 end

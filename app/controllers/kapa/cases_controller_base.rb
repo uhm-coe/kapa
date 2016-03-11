@@ -3,11 +3,16 @@ module Kapa::CasesControllerBase
 
   def show
     @case = Kapa::Case.find(params[:id])
-    @involved_persons = @case.case_involved_persons
+    @person_references = @case.person_references
     @case_ext = @case.deserialize(:_ext, :as => OpenStruct)
     @case_actions = @case.case_actions.order("action_date DESC, id DESC")
     @person = @case.person
     @curriculums = @person.curriculums
+    @documents = []
+    @documents += @case.files
+    @documents += @case.forms
+    @attachable_type = @case.class.name
+    @attachable_id = @case.id
   end
 
   def update

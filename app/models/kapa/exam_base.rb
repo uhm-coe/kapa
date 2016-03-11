@@ -4,6 +4,7 @@ module Kapa::ExamBase
   included do
     belongs_to :person
     has_many :exam_scores
+    belongs_to :attachable, :polymorphic => true
     before_save :format_fields
     validates_presence_of :person_id
   end

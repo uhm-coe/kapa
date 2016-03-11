@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resources :faculty_awards, &extra_actions
     resources :cases, &extra_actions
     resources :case_actions, &extra_actions
-    resources :case_involved_persons
+    resources :person_references
   end
 
 end

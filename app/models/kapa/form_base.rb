@@ -4,6 +4,7 @@ module Kapa::FormBase
   included do
     belongs_to :person
     belongs_to :term
+    belongs_to :attachable, :polymorphic => true
     has_one :transition_point
     validates_presence_of :person_id, :type
   end
