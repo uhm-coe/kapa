@@ -5,12 +5,11 @@
       <div class="row">
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
-          <%= f.property_select :type, :name => :@case %>
-          <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
+          <%= f.property_select :case_type, :include_blank => "Any", :name => :case_type %>
+          <%= f.property_select :case_status, :name => :case_status, :include_blank => "Any" %>
         </div>
         <div class="col-sm-6">
-          <%= f.date_picker :start_date %>
-          <%= f.date_picker :end_data %>
+          <%= f.text_field :case_id, :label => "Case Number" %>
           <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
           <%= f.select :per_page, [10, 20, 30, 40, 50] %>
         </div>
@@ -34,9 +33,9 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>ID</th>
+      <th>Case #</th>
       <th>Name</th>
-      <th>Start Date</th>
+      <th>Reported Date</th>
       <th>Latest Action</th>
       <th>Status</th>
       <th>Assignee</th>
@@ -47,7 +46,7 @@
     <tbody>
     <% for @case in @cases %>
       <tr>
-        <td><%= @case.person.id_number %></td>
+        <td><%= @case.id %></td>
         <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.person.full_name), kapa_person_path(:id => @case.person_id) %></td>
         <td><%= h @case.start_date %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>

@@ -15,7 +15,7 @@ module Kapa::CaseActionsControllerBase
   end
 
   def create
-    @case = Kapa::Case.find(params[:id])
+    @case = Kapa::Case.find(params[:case_id])
     @action = @case.case_actions.build(case_action_params)
 
     if @action.save

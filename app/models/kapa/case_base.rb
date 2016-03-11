@@ -54,14 +54,11 @@ module Kapa::CaseBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      cases = Kapa::Case.eager_load([:person, :curriculum, {:curriculum => :program}]).order("persons.last_name, persons.first_name")
-      cases = cases.where("cases.term_id" => filter.term_id) if filter.term_id.present?
-      cases = cases.where("cases.status" => filter.status) if filter.status.present?
-      cases = cases.where("cases.type" => filter.type.to_s) if filter.type.present?
-      cases = cases.where("curriculums.program_id" => filter.program_id) if filter.program_id.present?
-      cases = cases.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
-      cases = cases.where("curriculums.major_primary" => filter.major) if filter.major.present?
-      cases = cases.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
+      cases = Kapa::Case.eager_load([:person, :curriculum, {:curriculum => :program}, :user_assignments]).order("cases.id DESC")
+#      cases = cases.where("cases.term_id" => filter.term_id) if filter.term_id.present?
+      cases = cases.where("cases.status" => filter.case_status) if filter.case_status.present?
+      cases = cases.where("cases.type" => filter.case_type.to_s) if filter.case_type.present?
+      cases = cases.where("cases.id" => filter.case_id.to_s) if filter.case_id.present?
       cases = cases.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
@@ -78,28 +75,25 @@ module Kapa::CaseBase
     end
 
     def csv_format
-      {:id_number => [:curriculum, :person, :id_number],
-       :last_name => [:curriculum, :person, :last_name],
-       :first_name => [:curriculum, :person, :first_name],
-       :cur_street => [:curriculum, :person, :contact, :cur_street],
-       :cur_city => [:curriculum, :person, :contact, :cur_city],
-       :cur_state => [:curriculum, :person, :contact, :cur_state],
-       :cur_postal_code => [:curriculum, :person, :contact, :cur_postal_code],
-       :cur_phone => [:curriculum, :person, :contact, :cur_phone],
-       :email => [:curriculum, :person, :contact, :email],
-       :program_desc => [:curriculum, :program, :description],
-       :track_desc => [:curriculum, :track_desc],
-       :major_primary_desc => [:curriculum, :major_primary_desc],
-       :major_secondary_desc => [:curriculum, :major_secondary_desc],
-       :distribution_desc => [:curriculum, :distribution_desc],
-       :location_desc => [:curriculum, :location_desc],
-       :second_degree => [:curriculum, :second_degree],
-       :term_desc => [:term, :description],
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :cur_street => [:person, :contact, :cur_street],
+       :cur_city => [:person, :contact, :cur_city],
+       :cur_state => [:person, :contact, :cur_state],
+       :cur_postal_code => [:person, :contact, :cur_postal_code],
+       :cur_phone => [:person, :contact, :cur_phone],
+       :email => [:person, :contact, :email],
+       :case_number => [:id],
+       :type_desc => [:type_desc],
+       :location_desc => [:location],
+       :second_degree => [:location_detail],
        :category_desc => [:category_desc],
-       :priority_desc => [:priority_desc],
        :status_desc => [:status_desc],
-       :user_primary => [:user_primary, :person, :full_name],
-       :user_secondary => [:user_secondary, :person, :full_name],
+       :dept => [:dept],
+       :assignee1 => [:user_assignments, :first, :user, :person, :full_name],
+       :assignee2 => [:user_assignments, :second, :user, :person, :full_name],
+       :assignee3 => [:user_assignments, :third, :user, :person, :full_name],
        :action => [:last_case_action, :action],
        :action_desc => [:last_case_action, :action_desc],
        :action_date => [:last_case_action, :action_date]}

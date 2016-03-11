@@ -5,7 +5,7 @@
     <%= link_to "", kapa_case_path(:id => @case, :anchor => :actions), :class => "glyphicon glyphicon-chevron-left" %>
     New Case Action
   </h4>
-  <%=bootstrap_form_for :case_action, :url => kapa_case_actions_path(:id => @person) do |f| %>
+  <%=bootstrap_form_for :case_action, :url => kapa_case_actions_path(:case_id => @case) do |f| %>
     <%=render :partial => "case_action_form" %>
     <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
   <% end %>

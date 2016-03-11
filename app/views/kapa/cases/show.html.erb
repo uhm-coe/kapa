@@ -22,15 +22,15 @@
 <% end %>
 
 <% content_for(:dialog) do %>
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_person_reference_dialog", :modal_title => "Add Person", :modal_form_id => "add_person_reference_form" } do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_person_reference_dialog", :modal_title => "Add Person", :modal_form_id => "add_person_reference_form" } do %>
     <%= bootstrap_form_for(:case_person_reference, :url => kapa_person_references_path(:referenceable_id => @case), :html => {:id => "add_person_reference_form"}) do %>
-      <%= render "person_reference_form" %>
+      <%=render "person_reference_form" %>
     <% end %>
   <% end %>
 <% end %>
 
 <% content_for(:box1) do %>
-  <%= render :partial => "/kapa/persons/person_detail" %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
      Case #<%=@case.id %>
@@ -47,7 +47,8 @@
     <div class="tab-content">
       <div id="case_tab" class="tab-pane">
         <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} do %>
-          <%= render :partial => "case_form" %>
+          <%=render :partial => "case_form" %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_path(:id => @case)} if @current_user.write? %>
         <% end %>
       </div>
 
