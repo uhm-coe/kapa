@@ -5,7 +5,7 @@ module Kapa::CasesControllerBase
     @case = Kapa::Case.find(params[:id])
     @person_references = @case.person_references
     @case_ext = @case.deserialize(:_ext, :as => OpenStruct)
-    @case_actions = @case.case_actions.order("action_date DESC, id DESC")
+    @case_actions = @case.case_actions.eager_load(:user_assignments => :user).order("case_actions.action_date DESC, case_actions.id DESC")
     @person = @case.person
     @curriculums = @person.curriculums
     @documents = []

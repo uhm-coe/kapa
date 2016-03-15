@@ -10,13 +10,13 @@ module Kapa::CaseActionsControllerBase
   def new
     @case = Kapa::Case.find(params[:case_id])
     @case_action = @case.case_actions.build(:action_date => Date.today)
-    @case_action.user_id = @current_user.id
     @person = @case.person
   end
 
   def create
     @case = Kapa::Case.find(params[:case_id])
     @action = @case.case_actions.build(case_action_params)
+    @action.users << @current_user
 
     if @action.save
       flash[:success] = "Action was successfully created."
@@ -51,6 +51,6 @@ module Kapa::CaseActionsControllerBase
 
   private
   def case_action_params
-    params.require(:case_action).permit(:action_date, :action, :action_specify, :user_id, :note)
+    params.require(:case_action).permit(:action_date, :action, :action_specify, :note, :user_ids => [])
   end
 end

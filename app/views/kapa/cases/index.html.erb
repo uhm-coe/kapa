@@ -51,7 +51,7 @@
         <td><%= h @case.start_date %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
         <td><%= h @case.status_desc %></td>
-        <td><%= h @case.rsend(:users, :first, :person, :last_name) %></td>
+        <td><%= h @case.rsend(:users, :first, :uid) %></td>
         <td><%= h @case.dept %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => @case}, :class => "btn btn-default btn-xs" %></td>
       </tr>

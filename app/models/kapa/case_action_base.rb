@@ -3,23 +3,23 @@ module Kapa::CaseActionBase
 
   included do
     belongs_to :case
-    has_one :user_assignment, :as => :assignable
-    has_one :user, :through => :user_assignment
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
 
     validates_presence_of :case_id, :action, :action_date
     before_save :copy_type
   end
 
-  #This type field needs to be exist in this model due to query performance
+  #Type field needs to be copied here for improving query performance
   def copy_type
     self.type = self.case.type
   end
 
   def action_desc
     if self.action == "RM"
-      Kapa::Property.lookup_description("case_action", action) + " to #{self.action_specify}"
+      Kapa::Property.lookup_description("#{self.type}_action", action) + " to #{self.action_specify}"
     else
-      Kapa::Property.lookup_description("case_action", action)
+      Kapa::Property.lookup_description("#{self.type}_action", action)
     end
   end
 end

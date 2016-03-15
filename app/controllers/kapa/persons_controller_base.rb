@@ -76,6 +76,11 @@ module Kapa::PersonsControllerBase
         flash.now[:warning] = "No record was found."
       end
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => {:persons => @persons.collect {|p| {:full_name => p.full_name, :email => p.email}}} }
+    end
   end
 
   def lookup
