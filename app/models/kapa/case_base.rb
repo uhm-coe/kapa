@@ -6,8 +6,6 @@ module Kapa::CaseBase
     belongs_to :curriculum
     belongs_to :term
     has_many :case_actions
-    has_many :person_references, :as => :referenceable
-    has_many :involved_persons, :through => :person_references, :source => :person
     has_one :last_case_action,
             -> { where("case_actions.id =
                                         (select a.id
@@ -17,6 +15,8 @@ module Kapa::CaseBase
                                          limit 1)")},
             :class_name => "CaseAction"
 
+    has_many :person_assignments, :as => :assignable
+    has_many :case_persons, :through => :person_assignments, :source => :person
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
     has_many :files, :as => :attachable

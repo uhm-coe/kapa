@@ -1,14 +1,23 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
+      function get_table_row(person) {
+        console.log(person);
+        var tag = '<tr><td>#full_name</td><td>#email</td><td><div><input type="radio" value="#person_id" name="person_assignment[person_id]"><label></div></td></tr>'
+        tag = tag.replace('#person_id', person['person_id']);
+        tag = tag.replace('#full_name', person['full_name']);
+        tag = tag.replace('#email', person['email'] ? person['email'] : 'none');
+        return tag
+      }
+
       $('#search_person_form').submit(function( event ) {
         $.getJSON('<%=kapa_persons_path(:format => :json) %>',
-        { key: $('filter_key').val() },
+        $('#search_person_form').serialize(),
         function(data) {
-          console.log(data);
+          $('#persons_search_result tbody').html('');
           var persons = data['persons'];
           for(i = 0; i < persons.length; i++) {
-            $('#persons_search_result tbody').append('<tr><td>' + persons[i]['full_name'] + '</td><td>' + persons[i]['email'] + '</td></tr>');
+            $('#persons_search_result tbody').append(get_table_row(persons[i]));
           }
         });
         event.preventDefault();
@@ -18,7 +27,7 @@
 <% end %>
 
 <% content_for(:dialog) do %>
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_person_reference_dialog", :modal_title => "Add Person", :modal_form_id => "add_person_reference_form" } do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_person_assignment_dialog", :modal_title => "Add Person", :modal_form_id => "add_person_assignment_form" } do %>
     <%=form_for(:filter, :url => nil, :html => {:id => "search_person_form"}) do |f| %>
       <div class="row">
         <div class="col-lg-12">
@@ -36,6 +45,7 @@
         <tr>
           <th>Name</th>
           <th>E-mail</th>
+          <th>Select</th>
         </tr>
       </thead>
       <tbody>
@@ -55,7 +65,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#person_references_tab" data-toggle="tab">Additional Contacts</a></li>
+      <li><a href="#person_assignments_tab" data-toggle="tab">Additional Contacts</a></li>
       <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
     </ul>
@@ -68,11 +78,11 @@
         <% end %>
       </div>
 
-      <div id="person_references_tab" class="tab-pane">
+      <div id="person_assignments_tab" class="tab-pane">
         <p class="text-right">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_person_reference_dialog"><span class="glyphicon glyphicon-plus"></span> Add Person</button>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_person_assignment_dialog"><span class="glyphicon glyphicon-plus"></span> Add Person</button>
         </p>
-          <table id="person_references" class="table table-striped">
+          <table id="person_assignments" class="table table-striped">
             <thead>
               <tr>
                 <th>Type</th>
@@ -82,23 +92,23 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody id="person_references-rows">
-              <% for person_reference in @person_references %>
+            <tbody id="person_assignments-rows">
+              <% for person_assignment in @person_assignments %>
                 <tr>
                   <td>
-                    <%=person_reference.type %>
+                    <%=person_assignment.type %>
                   </td>
                   <td>
-                    <%= link_to_if person_reference.type == "internal", person_reference.person.full_name, kapa_person_path(:id => person_reference.person_id) %>
+                    <%= link_to_if person_assignment.type == "internal", person_assignment.person.full_name, kapa_person_path(:id => person_assignment.person_id) %>
                   </td>
                   <td>
-                    <%#=person_reference.phone %>
+                    <%#=person_assignment.phone %>
                   </td>
                   <td>
-                    <%#=person_reference.email %>
+                    <%#=person_assignment.email %>
                   </td>
                   <td class="right">
-                    <%= link_to "Show", kapa_person_reference_path(:id => person_reference), :class => "btn btn-default btn-xs" %>
+                    <%= link_to "Show", kapa_person_assignment_path(:id => person_assignment), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>

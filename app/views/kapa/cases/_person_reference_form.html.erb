@@ -1,4 +1,4 @@
-<%= bootstrap_fields_for :person_reference do |f| %>
+<%= bootstrap_fields_for :person_assignment do |f| %>
   <%= f.select :type, [["Internal Person", "internal"], ["External Person", "external"]] %>
   <div id="involved-person">
     <%= f.person_select :person_id, {:label => "Person", :depts => @current_user.depts, :include_blank => "Select a person..."} %>
