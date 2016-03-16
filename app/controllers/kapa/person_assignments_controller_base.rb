@@ -5,6 +5,8 @@ module Kapa::PersonAssignmentsControllerBase
     @person_assignment = Kapa::PersonAssignment.find(params[:id])
     @assignable = @person_assignment.assignable
     @person = @assignable.person
+    @assignee = @person_assignment.person
+    @assignee_contact =  @assignee.contact
   end
 
   def new
@@ -12,30 +14,31 @@ module Kapa::PersonAssignmentsControllerBase
 
   def create
     @person_assignment = Kapa::PersonAssignment.new(person_assignment_params)
-    @assignable = Kapa::Case.find(params[:assignable_id])
-    @assignable.person_assignments << @person_assignment
-
     unless @person_assignment.save
       flash[:danger] = error_message_for(@person_assignment)
-      redirect_to kapa_case_path(:id => @assignable) and return false
+      redirect_to kapa_case_path(:id => @person_assignment.assignable) and return false
     end
 
-    flash[:success] = "Person was successfully created."
-    redirect_to kapa_case_path(:id => @assignable, :anchor => "involved_person")
+    flash[:success] = "Person was successfully added."
+    redirect_to kapa_person_assignment_path(:id => @person_assignment)
   end
 
   def update
     @person_assignment = Kapa::PersonAssignment.find(params[:id])
-    @assignable = @person_assignment.assignable_id
-    @person_assignment.attributes = person_assignment_params
+    @assignee = @person_assignment.person
+    @assignee_contact =  @assignee.contact ||= @assignee.build_contact
 
-    unless @person_assignment.save
-      flash[:danger] = @person_assignment.errors.full_messages.join(", ")
-      redirect_to kapa_assignable_path(:id => @assignable) and return false
+    @person_assignment.attributes = person_assignment_params
+    @assignee.attributes = assignee_params
+    @assignee_contact.attributes = assignee_contact_params
+
+    unless @person_assignment.save and @assignee.save and @assignee_contact.save
+      flash[:danger] = error_message_for(@person_assignment, @assignee, @assignee_contact)
+      redirect_to kapa_assignment_path(:id => @person_assignment) and return false
     end
 
     flash[:success] = "Person was successfully updated."
-    redirect_to kapa_assignable_path(:id => @assignable, :anchor => "involved_person")
+    redirect_to kapa_person_assignment_path(:id => @person_assignment)
   end
 
   def destroy
@@ -54,16 +57,16 @@ module Kapa::PersonAssignmentsControllerBase
 
   private
   def person_assignment_params
-    params.require(:person_assignment).permit(:assignable_id, :type, :person_id, :sequence, :yml, :xml)
+    params.require(:person_assignment).permit(:assignable_id, :assignable_type, :type, :person_id, :sequence)
   end
 
-  # Only select and assign fields relevant to person_assignment type. Unassigned fields will be nil.
-  #def person_assignment_params_subset(params)
-  #  assignable params[:person_assignment][:type]
-  #    when "internal"
-  #      person_assignment_params.slice("type", "person_id")
-  #    when "external"
-  #      person_assignment_params.slice("type", "last_name", "first_name", "middle_initial")
-  #  end
-  #end
+  def assignee_params
+    params.require(:assignee).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
+                                    :email, :first_name, :other_name, :title, :gender, :status)
+  end
+
+  def assignee_contact_params
+    params.require(:assignee_contact).permit(:cur_phone, :mobile_phone, :email, :cur_street, :cur_city, :cur_state,
+                                    :cur_postal_code, :per_street, :per_city, :per_state, :per_postal_code)
+  end
 end

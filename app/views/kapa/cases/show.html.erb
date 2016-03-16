@@ -40,18 +40,22 @@
         </div>
       </div>
     <% end %>
-    <table id="persons_search_result" class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>E-mail</th>
-          <th>Select</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-
+    <br/>
+    <%=bootstrap_form_for(:person_assignment, :url => kapa_person_assignments_path, :html => {:id => "add_person_assignment_form"}) do |f| %>
+      <%=f.hidden_field :assignable_type, :value => @case.class.name %>
+      <%=f.hidden_field :assignable_id, :value => @case.id %>
+      <table id="persons_search_result" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    <% end %>
   <% end %>
 <% end %>
 

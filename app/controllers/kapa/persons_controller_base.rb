@@ -79,7 +79,7 @@ module Kapa::PersonsControllerBase
 
     respond_to do |format|
       format.html
-      format.json { render :json => {:persons => @persons.collect {|p| {:full_name => p.full_name, :email => p.email}}} }
+      format.json { render :json => {:persons => @persons.collect {|p| {:person_id => p.id, :id_number => p.id_number, :full_name => p.full_name, :email => p.email}}} }
     end
   end
 
