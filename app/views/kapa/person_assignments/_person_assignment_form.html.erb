@@ -1,38 +1,11 @@
 <%= bootstrap_fields_for :person_assignment do |f| %>
-  <div class="row">
-    <div class="col-sm-6">
-      <%=f.property_select :type, :name => "t9_person_assignment_type" %>
-    </div>
-    <div class="col-sm-6">
-      <%=f.text_area :note %>
-    </div>
+<div class="row">
+  <div class="col-sm-6">
+    <%=f.property_select :type, :name => "t9_person_assignment_type" %>
   </div>
-<% end %>
 
-<%= bootstrap_fields_for :assignee do |p| %>
-  <div class="row">
-    <div class="col-sm-6">
-      <%=p.text_field :last_name, :size => 30 %>
-    </div>
-    <div class="col-sm-6">
-      <%=p.text_field :first_name, :size => 30 %>
-    </div>
+  <div class="col-sm-6">
+    <%=f.text_area :note, :size => "5x7" %>
   </div>
-<% end %>
-
-<%= bootstrap_fields_for :assignee_contact do |f| %>
-  <div class="row">
-    <div class="col-sm-6">
-      <%= f.text_field :cur_phone, :label => "Phone" %>
-      <%= f.text_field :mobile_phone, :label => "Mobile Phone" %>
-      <%= f.text_field :email, :label => "Personal E-mail" %>
-    </div>
-
-    <div class="col-sm-6">
-      <%= f.text_field :cur_street, :label => "Street" %>
-      <%= f.text_field :cur_city, :label => "City" %>
-      <%= f.text_field :cur_state, :label => "State" %>
-      <%= f.text_field :cur_postal_code, :label => "ZIP" %>
-    </div>
-  </div>
+</div>
 <% end %>
