@@ -5,7 +5,7 @@
       <%=a.date_picker :action_date, :label => "Action Date" %>
       <%=a.property_select "action", :name => "#{@case.type}_action" %>
       <%=a.text_field "action_specify" %>
-      <%=a.user_select "user_ids", {:label => "Actioned by", :depts => @current_user.depts}, {:class => "search-select"} if @current_user.manage? %>
+      <%=a.user_select "user_ids", {:label => "Actioned by", :depts => @current_user.depts}, {:multiple => true} if @current_user.manage? %>
     </div>
 
     <div class="col-sm-6">

@@ -41,8 +41,7 @@
       </div>
     <% end %>
     <br/>
-    <%=bootstrap_form_for(:case_person, :url => kapa_case_persons_path(:return_path => url_for(:anchor => "case_persons", :only_path => true)), :html => {:id => "add_case_person_form"}) do |f| %>
-      <%=f.hidden_field :case_id, :value => @case.id %>
+    <%=bootstrap_form_for(:case_person, :url => kapa_case_persons_path(:case_id => @case), :html => {:id => "add_case_person_form"}) do |f| %>
       <table id="persons_search_result" class="table table-striped">
         <thead>
           <tr>
@@ -56,6 +55,7 @@
       </table>
     <% end %>
   <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
@@ -83,7 +83,7 @@
 
       <div id="case_persons_tab" class="tab-pane">
         <p class="text-right">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Person</button>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Internal Person</button>
           <%=bootstrap_button "Add External Person", new_kapa_case_person_path(:case_id => @case), :icon => "glyphicon-plus" %>
         </p>
           <table id="case_persons" class="table table-striped">
@@ -101,22 +101,22 @@
               <% for case_person in @case_persons %>
                 <tr>
                   <td>
-                    <%=case_person.person.id_number %>
+                    <%=case_person.person.id_number if case_person.internal? %>
                   </td>
                   <td>
-                    <%= link_to_if case_person.person_id, case_person.person.full_name, kapa_person_path(:id => case_person.person_id) %>
+                    <%= link_to_if case_person.internal?, case_person.person.full_name, kapa_person_path(:id => case_person.person_id), :target => :blank %>
                   </td>
                   <td>
                     <%=case_person.type_desc %>
                   </td>
                   <td>
-                    <%=case_person.person.contact.cur_phone if case_person.person.contact %>
+                    <%=case_person.phone %>
                   </td>
                   <td>
-                    <%=case_person.person.contact.email if case_person.person.contact %>
+                    <%=case_person.email %>
                   </td>
                   <td class="right">
-                    <%= link_to "Show", kapa_case_person_path(:id => case_person, :return_path => url_for(:anchor => "case_persons")), :class => "btn btn-default btn-xs" %>
+                    <%= link_to "Show", kapa_case_person_path(:id => case_person), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>

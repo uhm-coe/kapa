@@ -7,7 +7,7 @@
   <%=bootstrap_form_for :case, :url => kapa_cases_path(:id => @person) do |f| %>
     <div class="row">
       <div class="col-sm-6">
-        <%=f.term_select :term_id, :label => "Term" %>
+        <%=f.date_picker :start_date, :label => "Case Reported date" %>
       </div>
       <div class="col-sm-6">
         <%=f.property_select :type, :name => :case_type %>

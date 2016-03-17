@@ -820,7 +820,6 @@ class CreateKapaSchema < ActiveRecord::Migration
 
   create_table "cases", force: :cascade do |t|
     t.integer  "person_id",           limit: 4
-    t.integer  "term_id",           limit: 4
     t.integer  "curriculum_id",     limit: 4
     t.integer  "form_id",           limit: 4
     t.string   "type",              limit: 255,   default: "",        null: false
@@ -847,7 +846,6 @@ class CreateKapaSchema < ActiveRecord::Migration
   add_index "cases", ["dept"]
   add_index "cases", ["form_id"]
   add_index "cases", ["status"]
-  add_index "cases", ["term_id"]
   add_index "cases", ["type"]
 
   create_table "case_persons", force: :cascade do |t|

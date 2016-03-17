@@ -16,7 +16,7 @@ module Kapa::CaseActionsControllerBase
   def create
     @case = Kapa::Case.find(params[:case_id])
     @action = @case.case_actions.build(case_action_params)
-    @action.users << @current_user
+#    @action.users << @current_user
 
     if @action.save
       flash[:success] = "Action was successfully created."

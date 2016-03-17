@@ -83,6 +83,14 @@ module Kapa::PersonBase
     end
   end
 
+  def email_preferred
+    if self.email.present?
+      self.email
+    elsif self.contact
+      self.contact.email
+    end
+  end
+
   class_methods do
     def selections(options = {})
       persons = order(:last_name, :first_name)

@@ -33,7 +33,7 @@ module Kapa::CasesControllerBase
 
   def new
     @person = Kapa::Person.find(params[:id])
-    @case = @person.cases.build(:term_id => Kapa::Term.current_term.id)
+    @case = @person.cases.build(:start_date => Date.today)
   end
 
   def create
@@ -64,7 +64,7 @@ module Kapa::CasesControllerBase
 
   private
   def case_params
-    params.require(:case).permit(:person_id, :term_id, :curriculum_id, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_datetime, :investigator, :dept, :note, :user_ids => [])
+    params.require(:case).permit(:person_id, :start_date, :end_date, :curriculum_id, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_datetime, :investigator, :dept, :note, :user_ids => [])
   end
 
 end

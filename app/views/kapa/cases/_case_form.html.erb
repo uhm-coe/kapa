@@ -1,8 +1,9 @@
 <%= bootstrap_fields_for :case do |t| %>
   <div class="row">
     <div class="col-sm-6">
-      <%=t.term_select :term_id, :label => "Term" %>
       <%=t.property_select :type, :name => "case_type" %>
+      <%=t.date_picker :start_date, :label => "Case reported date" %>
+      <%=t.date_picker :end_date, :label => "Case closed date" %>
       <%=t.property_select :category, :name => "case_category", :include_blank => true %>
       <%=t.property_select :dept, :include_blank => true, :label => "Campus" %>
       <%=t.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>

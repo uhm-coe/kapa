@@ -4,7 +4,6 @@ module Kapa::CaseBase
   included do
     belongs_to :person
     belongs_to :curriculum
-    belongs_to :term
     has_many :case_actions
     has_one :last_case_action,
             -> { where("case_actions.id =
@@ -21,17 +20,13 @@ module Kapa::CaseBase
     has_many :files, :as => :attachable
     has_many :forms, :as => :attachable
 
-    validates_presence_of :term_id, :type
+    validates_presence_of :start_date, :type
 
     before_save :update_status_timestamp
   end
 
   def update_status_timestamp
     self.status_updated_at = DateTime.now if self.status_changed?
-  end
-
-  def term_desc
-    Kapa::Term.lookup_description(self.term_id)
   end
 
   def category_desc
