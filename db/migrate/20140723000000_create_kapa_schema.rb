@@ -445,23 +445,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
-    create_table "person_assignments", force: :cascade do |t|
-      t.integer "person_id",         limit: 4
-      t.integer "assignable_id",   limit: 4
-      t.string  "assignable_type", limit: 255
-      t.string  "type", limit: 255
-      t.string  "category", limit: 255
-      t.string  "status", limit: 255
-      t.integer  "sequence"
-      t.text     "note",  limit: 16777215
-      t.text     "yml",            limit: 16777215
-      t.text     "xml",            limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "person_assignments", ["person_id", "assignable_id", "assignable_type"], name: "index_person_assignments_on_person_id_and_assignable_id", unique: true, using: :btree
-
     create_table "practicum_assignments_old", force: :cascade do |t|
       t.integer  "practicum_placement_id",   limit: 4
       t.integer  "practicum_school_id",      limit: 4
@@ -867,21 +850,22 @@ class CreateKapaSchema < ActiveRecord::Migration
   add_index "cases", ["term_id"]
   add_index "cases", ["type"]
 
-  create_table "case_involved_persons", force: :cascade do |t|
-    t.integer  "case_id"
-    t.string   "type",                  limit: 255
-    t.integer  "person_id",                         null: true
-    t.string   "last_name",             limit: 255
-    t.string   "first_name",            limit: 255
-    t.string   "middle_initial",        limit: 255
-    t.string   "phone",        limit: 255
-    t.string   "email",        limit: 255
+  create_table "case_persons", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "person_id",         limit: 4
+    t.string  "type", limit: 255
+    t.string  "category", limit: 255
+    t.string  "status", limit: 255
     t.integer  "sequence"
+    t.text     "note",  limit: 16777215
+    t.text     "yml",            limit: 16777215
+    t.text     "xml",            limit: 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "yml",                   limit: 65535
-    t.text     "xml",                   limit: 65535
   end
+
+  add_index "case_persons", ["person_id", "case_id"], name: "index_case_persons_on_person_id_and_case_id", using: :btree
+
 
   def down
   end

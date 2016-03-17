@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resource :user_session
     get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
     resources :persons, &extra_actions
-    resources :person_assignments, &extra_actions
+    resources :case_persons, &extra_actions
     resources :contacts
     resources :curriculums, &extra_actions
     resources :transition_points, &extra_actions
