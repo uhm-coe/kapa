@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-sm-6">
-      <%=t.date_picker :incident_datetime, :label => "Incident Date" %>
+      <%#=t.date_picker :incident_datetime, :label => "Incident Date" %>
       <%=t.property_select :location, :name => "case_location", :include_blank => true, :label => "Incident Location" %>
       <%=t.text_field :location_detail , :label => "Incident Location Detail" %>
       <%=t.text_area :note, {:label => "Incident Situation", :cols => 54, :rows => 15} %>
