@@ -135,7 +135,7 @@ module Kapa::PersonBase
       end
       person = self.search(:filter => filter).first
       if person.blank?
-        person_remote = Kapa::Person.lookup_remote(key).first
+        person_remote = Kapa::Person.lookup_remote(key)
 
         #Make sure the person found in the remote database is not in the local database.
         #This avoids the problem when email is missing in local record but exists in external data source.

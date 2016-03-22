@@ -672,6 +672,8 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
+    add_index "properties", ["name", "code"], name: "index_properties_on_name_and_code", unique: true, using: :btree
+
     create_table "sessions", force: :cascade do |t|
       t.string   "session_id", limit: 255,   null: false
       t.text     "data",       limit: 65535

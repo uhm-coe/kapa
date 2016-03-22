@@ -22,7 +22,7 @@
       <div class="row form-block">
         <div class="col-sm-4">
           <%= f.text_field :name %>
-          <%= f.text_field :dept if @current_user.manage? :kapa_files %>
+          <%= f.text_field :dept, :label => t(:kapa_global_dept) if @current_user.manage? :kapa_files %>
           <%= f.check_box :public, {:label => "Share document"}, "Y", "N" %>
         </div>
       </div>

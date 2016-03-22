@@ -104,7 +104,7 @@
                     <%=case_person.person.id_number if case_person.internal? %>
                   </td>
                   <td>
-                    <%= link_to_if case_person.internal?, case_person.person.full_name, kapa_person_path(:id => case_person.person_id), :target => :blank %>
+                    <%=case_person.internal? ? link_to(case_person.full_name, kapa_person_path(:id => case_person.person_id), :target => :blank) : case_person.full_name%>
                   </td>
                   <td>
                     <%=case_person.type_desc %>

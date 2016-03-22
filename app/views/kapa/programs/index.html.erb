@@ -2,7 +2,7 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_programs_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.property_select :dept, :include_blank => "Any" %>
+      <%= f.property_select :dept, :label => t(:kapa_global_dept), :include_blank => "Any" %>
       <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => "Any" %>
       <%= f.select :per_page, [10, 20, 30, 40, 50] %>
     <% end %>
@@ -27,7 +27,7 @@
         <th>Code</th>
         <th>Description</th>
         <th>Category</th>
-        <th>Dept</th>
+        <th><%=t(:kapa_global_dept) %></th>
         <th>Sequence</th>
         <th>Active</th>
         <th></th>
