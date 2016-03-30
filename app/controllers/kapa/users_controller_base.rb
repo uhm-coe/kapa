@@ -77,11 +77,12 @@ module Kapa::UsersControllerBase
   end
 
   def import
+    # TODO: Fix corresponding view
     errors = 0
-    file = params[:import_file]
-    CSV.foreach(file, :headers => true) do |row|
+    file = params[:data][:import_file]
+    CSV.foreach(file.path, :headers => true) do |row|
       user = Kapa::User.find_by_uid(row["uid"])
-      user = Kapa::User.build(:uid => row["uid"], :status => 0) if user.blank?
+      user = Kapa::User.new(:uid => row["uid"], :status => 0) if user.blank?
       user.status = row["status"]
       user.category = row["category"]
       user.position = row["position"]
@@ -95,7 +96,7 @@ module Kapa::UsersControllerBase
       person = user.build_person(:id_number => row["id_number"]) if person.blank?
       person.last_name = row["last_name"]
       person.first_name = row["first_name"]
-      perdson.status = row["status"]
+      person.status = row["status"]
       unless person.save
         errors = errors + 1
         logger.error "!!!!-- Failed to save person: {#{person.errors.full_messages}}"
