@@ -7,7 +7,7 @@
       <%= f.select :context, [["University", "university"], ["Professional", "professional"], ["Community", "community"]], :label => "Context", :include_blank => "Any" %>
       <%= f.date_picker :award_date_start, :label => "Award Date Start" %>
       <%= f.date_picker :award_date_end, :label => "Award Date End" %>
-      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 

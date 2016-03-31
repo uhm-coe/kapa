@@ -33,28 +33,6 @@ Rails.configuration.roles["Adviser"] = {
     kapa_advising_sessions_scope: '2'
 }
 
-adviser_permission = {}
-adviser_permission["kapa_persons"] = '2'
-adviser_permission["kapa_persons_scope"] = '2'
-adviser_permission["kapa_contacts"] = '2'
-adviser_permission["kapa_contacts_scope"] = '2'
-adviser_permission["kapa_curriculums"] = '2'
-adviser_permission["kapa_curriculums_scope"] = '2'
-adviser_permission["kapa_transition_points"] = '2'
-adviser_permission["kapa_transition_points_scope"] = '2'
-adviser_permission["kapa_transition_actions"] = '2'
-adviser_permission["kapa_transition_actions_scope"] = '2'
-adviser_permission["kapa_enrollments"] = '2'
-adviser_permission["kapa_enrollments_scope"] = '2'
-adviser_permission["kapa_files"] = '2'
-adviser_permission["kapa_files_scope"] = '2'
-adviser_permission["kapa_forms"] = '2'
-adviser_permission["kapa_forms_scope"] = '2'
-adviser_permission["kapa_exams"] = '2'
-adviser_permission["kapa_exams_scope"] = '2'
-adviser_permission["kapa_advising_sessions"] = '2'
-adviser_permission["kapa_advising_sessions_scope"] = '2'
-Rails.configuration.roles["Adviser"] = adviser_permission
 instructor_permission = {}
 instructor_permission["kapa_courses"] = '2'
 instructor_permission["kapa_courses_scope"] = '2'

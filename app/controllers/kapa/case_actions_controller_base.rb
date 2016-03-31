@@ -1,21 +1,34 @@
 module Kapa::CaseActionsControllerBase
   extend ActiveSupport::Concern
 
+  def show
+    @case_action = Kapa::CaseAction.find(params[:id])
+    @case = @case_action.case
+    @person = @case.person
+  end
+
+  def new
+    @case = Kapa::Case.find(params[:case_id])
+    @case_action = @case.case_actions.build(:action_date => Date.today)
+    @person = @case.person
+  end
+
   def create
-    @case = Kapa::Case.find(params[:id])
-    @action = @case.case_actions.build(create_case_action_params)
+    @case = Kapa::Case.find(params[:case_id])
+    @action = @case.case_actions.build(case_action_params)
+#    @action.users << @current_user
 
     if @action.save
       flash[:success] = "Action was successfully created."
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_case_path(:id => @case, :anchor => params[:anchor], :action_panel => @action.id)
+    redirect_to kapa_case_path(:id => @case, :anchor => "actions")
   end
 
   def update
     @action = Kapa::CaseAction.find(params[:id])
-    @action.attributes = update_case_action_params(@action.id.to_s)
+    @action.attributes = case_action_params
 
     if @action.save
       flash[:success] = "Action was successfully updated."
@@ -37,13 +50,7 @@ module Kapa::CaseActionsControllerBase
   end
 
   private
-  def case_action_fields
-    [:action_date, :action, :action_specify, :user_id, :note]
-  end
-  def create_case_action_params
-    params.require(:case_action).permit(*case_action_fields)
-  end
-  def update_case_action_params(action_id)
-    params.require(:case_action)[action_id].permit(*case_action_fields)
+  def case_action_params
+    params.require(:case_action).permit(:action_date, :action, :action_specify, :note, :user_ids => [])
   end
 end

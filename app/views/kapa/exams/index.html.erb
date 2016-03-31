@@ -6,7 +6,7 @@
       <%= f.date_picker :birth_date, :label => "Birth Date" %>
       <%= f.date_picker :exam_date_start, :label => "Report Date Start" %>
       <%= f.date_picker :exam_date_end, :label => "Report Date End" %>
-      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
@@ -41,7 +41,7 @@
       <th>Test</th>
       <th>Report Date</th>
       <th>Records</th>
-      <th>Dept</th>
+      <th><%=t(:kapa_global_dept) %></th>
       <th></th>
     </tr>
     </thead>

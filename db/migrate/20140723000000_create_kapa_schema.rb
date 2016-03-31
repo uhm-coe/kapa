@@ -248,6 +248,8 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "exams", force: :cascade do |t|
       t.integer  "person_id",     limit: 4
+      t.integer  "attachable_id",   limit: 4
+      t.string   "attachable_type", limit: 255
       t.string   "report_number", limit: 255
       t.date     "report_date"
       t.string   "status",        limit: 255
@@ -368,6 +370,8 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "files", force: :cascade do |t|
       t.integer  "person_id",         limit: 4,                   null: false
+      t.integer  "attachable_id",   limit: 4
+      t.string   "attachable_type", limit: 255
       t.string   "name",              limit: 255
       t.string   "type",              limit: 255
       t.string   "status",            limit: 255
@@ -389,7 +393,8 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "forms", force: :cascade do |t|
       t.integer  "person_id",        limit: 4
-      t.integer  "form_template_id", limit: 4
+      t.integer  "attachable_id",   limit: 4
+      t.string   "attachable_type", limit: 255
       t.datetime "submitted_at"
       t.string   "submit_ip",        limit: 255
       t.text     "yml",              limit: 16777215
@@ -406,7 +411,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer  "term_id",          limit: 4
     end
 
-    add_index "forms", ["academic_period"], name: "index_forms_on_academic_period", using: :btree
+    add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
     add_index "forms", ["term_id"], name: "index_forms_on_term_id", using: :btree
     add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
@@ -667,6 +672,8 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
+    add_index "properties", ["name", "code"], name: "index_properties_on_name_and_code", unique: true, using: :btree
+
     create_table "sessions", force: :cascade do |t|
       t.string   "session_id", limit: 255,   null: false
       t.text     "data",       limit: 65535
@@ -761,6 +768,10 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer "user_id",         limit: 4
       t.integer "assignable_id",   limit: 4
       t.string  "assignable_type", limit: 255
+      t.text     "yml",            limit: 16777215
+      t.text     "xml",            limit: 16777215
+      t.datetime "created_at"
+      t.datetime "updated_at"
     end
 
     add_index "user_assignments", ["user_id", "assignable_id", "assignable_type"], name: "index_user_assignments_on_user_id_and_assignable_id", unique: true, using: :btree
@@ -811,17 +822,19 @@ class CreateKapaSchema < ActiveRecord::Migration
 
   create_table "cases", force: :cascade do |t|
     t.integer  "person_id",           limit: 4
-    t.integer  "term_id",           limit: 4
     t.integer  "curriculum_id",     limit: 4
     t.integer  "form_id",           limit: 4
     t.string   "type",              limit: 255,   default: "",        null: false
     t.string   "status",            limit: 255
     t.string   "category",          limit: 255
     t.string   "priority",          limit: 255
+    t.string   "location",          limit: 255
+    t.string   "location_detail",          limit: 255
+    t.datetime "incident_datetime"
+    t.string   "investigator",          limit: 255
     t.string   "dept",              limit: 255
-    t.boolean  "active",                          default: false
+    t.boolean  "active",                          default: true
     t.text     "note",              limit: 65535
-    t.string   "location"
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
@@ -835,8 +848,23 @@ class CreateKapaSchema < ActiveRecord::Migration
   add_index "cases", ["dept"]
   add_index "cases", ["form_id"]
   add_index "cases", ["status"]
-  add_index "cases", ["term_id"]
   add_index "cases", ["type"]
+
+  create_table "case_persons", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "person_id",         limit: 4
+    t.string  "type", limit: 255
+    t.string  "category", limit: 255
+    t.string  "status", limit: 255
+    t.integer  "sequence"
+    t.text     "note",  limit: 16777215
+    t.text     "yml",            limit: 16777215
+    t.text     "xml",            limit: 16777215
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "case_persons", ["person_id", "case_id"], name: "index_case_persons_on_person_id_and_case_id", using: :btree
 
 
   def down

@@ -3,7 +3,7 @@
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%= bootstrap_form_for(:filter, :url => kapa_files_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%= f.text_field :name, :label => "File Name" %>
-      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
@@ -27,7 +27,7 @@
       <th>Name</th>
       <th>File Name</th>
       <th>Uploaded</th>
-      <th>Dept</th>
+      <th><%=t(:kapa_global_dept) %></th>
       <th></th>
     </tr>
     </thead>

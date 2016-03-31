@@ -4,7 +4,7 @@
     <%= bootstrap_form_for(:filter, :url => kapa_properties_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%= f.history_select :name, :model_class => Kapa::Property, :model_method => :name %>
       <%= f.select :active, [["Active", "1"], ["In-Active", "0"]], :include_blank => "Any" %>
-      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
@@ -27,7 +27,7 @@
       <th>Key</th>
       <th>Value</th>
       <th>Category</th>
-      <th>Dept</th>
+      <th><%=t(:kapa_global_dept) %></th>
       <th>Sequence</th>
       <th>Active</th>
       <th></th>

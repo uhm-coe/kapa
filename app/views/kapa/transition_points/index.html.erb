@@ -13,7 +13,7 @@
           <%= f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
           <%= f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
           <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
-          <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+          <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
         </div>
       </div>
     <% end %>
@@ -41,7 +41,7 @@
       <th>Program</th>
       <th>Latest Action</th>
       <th>Status</th>
-      <th>Assignee</th>
+      <th><%=t(:kapa_global_user_ids) %></th>
       <th></th>
     </tr>
     </thead>

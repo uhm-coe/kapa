@@ -8,7 +8,7 @@
 
   <div class="col-sm-6">
     <%=f.text_field :category %>
-    <%=f.property_select :dept, {:name => :dept}, {:multiple => true} %>
+    <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
     <%=f.text_field :sequence %>
     <%=f.check_box :active, {}, 1, 0 %>
   </div>

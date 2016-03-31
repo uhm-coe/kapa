@@ -3,20 +3,23 @@ module Kapa::CasesControllerBase
 
   def show
     @case = Kapa::Case.find(params[:id])
+    @case_persons = @case.case_persons
     @case_ext = @case.deserialize(:_ext, :as => OpenStruct)
-    @curriculum = @case.curriculum
-    @program = @curriculum.program if @curriculum
-    @programs = Kapa::Program.where(:active => true)
-    @case_actions = @case.case_actions
+    @case_actions = @case.case_actions.eager_load(:user_assignments => {:user => :person}).order("case_actions.action_date DESC, case_actions.id DESC")
     @person = @case.person
     @curriculums = @person.curriculums
+    @documents = []
+    @documents += @case.files
+    @documents += @case.forms
+    @attachable_type = @case.class.name
+    @attachable_id = @case.id
   end
 
   def update
     if params[:case]
       @case = Kapa::Case.find(params[:id])
       @case.attributes = case_params
-      @case.update_serialized_attributes(:_ext, params[:case_ext])
+      @case.update_serialized_attributes(:_ext, params[:case_ext]) if params[:case_ext]
 
       unless @case.save
         flash[:danger] = @case.errors.full_messages.join(", ")
@@ -30,7 +33,7 @@ module Kapa::CasesControllerBase
 
   def new
     @person = Kapa::Person.find(params[:id])
-    @case = @person.cases.build(:term_id => Kapa::Term.current_term.id)
+    @case = @person.cases.build(:start_date => Date.today)
   end
 
   def create
@@ -61,7 +64,7 @@ module Kapa::CasesControllerBase
 
   private
   def case_params
-    params.require(:case).permit(:term_id, :type, :category, :priority, :status, :note, :curriculum_id, :user_ids => [])
+    params.require(:case).permit(:person_id, :start_date, :end_date, :curriculum_id, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_datetime, :investigator, :dept, :note, :user_ids => [])
   end
 
 end

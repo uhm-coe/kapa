@@ -1,28 +1,65 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-      $('#filter_assessment_rubric_id').change(function () {
-        $('<input>', {
-          type: 'hidden',
-          name: 'focus',
-          value: 'assessment'
-        }).appendTo('#assessment_form');
-        $(this).parents('form').submit();
+    jQuery(document).ready(function($) {
+      function get_table_row(person) {
+        console.log(person);
+        var tag = '<tr><td>#full_name</td><td>#email</td><td><div><input type="radio" value="#person_id" name="case_person[person_id]"><label></div></td></tr>'
+        tag = tag.replace('#person_id', person['person_id']);
+        tag = tag.replace('#full_name', person['full_name']);
+        tag = tag.replace('#email', person['email'] ? person['email'] : 'none');
+        return tag
+      }
+
+      $('#search_person_form').submit(function( event ) {
+        $.getJSON('<%=kapa_persons_path(:format => :json) %>',
+        $('#search_person_form').serialize(),
+        function(data) {
+          $('#persons_search_result tbody').html('');
+          var persons = data['persons'];
+          for(i = 0; i < persons.length; i++) {
+            $('#persons_search_result tbody').append(get_table_row(persons[i]));
+          }
+        });
+        event.preventDefault();
       });
     });
   </script>
 <% end %>
 
 <% content_for(:dialog) do %>
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "move_case_dialog", :modal_title => "Move Transition Point to Different Curriculum", :modal_form_id => "move_case_form"} do %>
-    <%= bootstrap_form_for(:case, :url => kapa_case_path(:id => @case), :html => {:method => :put, :id => "move_case_form"}) do |t| %>
-      <%= t.select :curriculum_id, @curriculums.collect { |c| ["#{c.code_desc} - #{@case.term_desc}", c.id] }, :label => "Program" %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_case_person_dialog", :modal_title => "Add Person", :modal_form_id => "add_case_person_form" } do %>
+    <%=form_for(:filter, :url => nil, :html => {:id => "search_person_form"}) do |f| %>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="input-group">
+            <%=f.text_field :key, :placeholder => "Search Person", "data-toggle" => "tooltip", "data-placement" => "bottom", :title => "ID, Name, Email, or Phone", :class => "form-control"%>
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">Show</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <br/>
+    <%=bootstrap_form_for(:case_person, :url => kapa_case_persons_path(:case_id => @case), :html => {:id => "add_case_person_form"}) do |f| %>
+      <table id="persons_search_result" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
     <% end %>
   <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
-  <%= render :partial => "/kapa/persons/person_detail" %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
      Case #<%=@case.id %>
@@ -31,62 +68,119 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
+      <li><a href="#case_persons_tab" data-toggle="tab">Additional Contacts</a></li>
+      <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
     </ul>
 
     <div class="tab-content">
       <div id="case_tab" class="tab-pane">
         <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} do %>
-          <%= render :partial => "case_form" %>
-          <%= render :layout => "/kapa/layouts/controls" do %>
-            <%=bootstrap_button "Move", nil, "data-toggle" => "modal", "data-target" => "#move_case_dialog", :icon => "glyphicon-move" if @current_user.manage? %>
-          <% end if @current_user.write? %>
+          <%=render :partial => "case_form" %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_path(:id => @case)} if @current_user.write? %>
         <% end %>
       </div>
 
-      <div id="actions_tab" class="tab-pane">
-        <div class="panel-group" id="accordion">
-
-          <% @case_actions.each_with_index do |case_action, index| %>
-            <% @case_action = case_action %>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#case_action_<%= @case_action.id %>"><span class="strong"><%= format_date @case_action.action_date %>
-                    - <%= h @case_action.action_desc %> <%= h @case_action.action_specify %></span></a>
-                </h3>
-              </div>
-              <div id="case_action_<%= @case_action.id %>" class="panel-collapse collapse<%= ' in' if params[:action_panel] == @case_action.id.to_s || (params[:action_panel].nil? && index == 0) %>">
-                <div class="panel-body">
-                  <%= bootstrap_form_for :case_action, :url => kapa_case_action_path(:id => @case_action, :anchor => :actions, :action_panel => @case_action.id), :html => {:method => :put} do |f| %>
-                    <%= render :partial => "case_action_form" %>
-                    <%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_action_path(:id => @case_action, :anchor => :actions)} if @current_user.write?(:kapa_case_actions) %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#new_case_action"><span class="new">New Action </span></a>
-              </h3>
-            </div>
-
-            <div id="new_case_action" class="panel-collapse collapse<%= ' in' if @case_actions.length == 0 %>">
-              <div class="panel-body">
-                <% @case_action = @case.case_actions.build(:user_id => @current_user.id, :action_date => Date.today) %>
-                <%= bootstrap_form_for :case_action, :url => kapa_case_actions_path(:id => @case, :anchor => :actions) do %>
-                  <%= render :partial => "case_action_form" %>
-                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:kapa_case_actions) %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-
-        </div>
+      <div id="case_persons_tab" class="tab-pane">
+        <p class="text-right">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Internal Person</button>
+          <%=bootstrap_button "Add External Person", new_kapa_case_person_path(:case_id => @case), :icon => "glyphicon-plus" %>
+        </p>
+          <table id="case_persons" class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Phone</th>
+                <th>E-mail</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="case_persons-rows">
+              <% for case_person in @case_persons %>
+                <tr>
+                  <td>
+                    <%=case_person.person.id_number if case_person.internal? %>
+                  </td>
+                  <td>
+                    <%=case_person.internal? ? link_to(case_person.full_name, kapa_person_path(:id => case_person.person_id), :target => :blank) : case_person.full_name%>
+                  </td>
+                  <td>
+                    <%=case_person.type_desc %>
+                  </td>
+                  <td>
+                    <%=case_person.phone %>
+                  </td>
+                  <td>
+                    <%=case_person.email %>
+                  </td>
+                  <td class="right">
+                    <%= link_to "Show", kapa_case_person_path(:id => case_person), :class => "btn btn-default btn-xs" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
       </div>
+
+      <div id="documents_tab" class="tab-pane">
+        <p class="text-right">
+          <%=bootstrap_button "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+          <%=bootstrap_button "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
+        </p>
+        <table class="table table-striped">
+          <thead>
+           <tr>
+             <th>Type</th>
+             <th>Name</th>
+             <th>Date</th>
+             <th></th>
+           </tr>
+          </thead>
+          <tbody>
+           <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
+             <tr>
+               <td><%=document_icon d%></td>
+               <td><%=d.name%></td>
+               <td><%=format_date d.date %></td>
+               <td class="right"><%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+             </tr>
+           <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="actions_tab" class="tab-pane">
+        <p class="text-right">
+          <%=bootstrap_button "New Action", new_kapa_case_action_path(:case_id => @case), :icon => "glyphicon-plus" %>
+        </p>
+        <table class="table table-striped">
+          <thead>
+           <tr>
+             <th>Date</th>
+             <th>Action</th>
+             <th>Note</th>
+             <th>Actioned by</th>
+             <th></th>
+           </tr>
+          </thead>
+          <tbody>
+           <% @case_actions.each_with_index do |case_action, index| %>
+             <tr>
+               <td><%=format_date case_action.action_date %></td>
+               <td><%=case_action.action_desc %> </td>
+               <td><%=case_action.note %></td>
+               <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
+               <td class="right">
+                 <%= link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
+               </td>
+             </tr>
+           <% end %>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 
