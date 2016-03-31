@@ -4,20 +4,13 @@ module Kapa::TransitionPointBase
   included do
     belongs_to :curriculum
     belongs_to :term
-    belongs_to :user_primary,
-               :class_name => "User",
-               :foreign_key => "user_primary_id"
-    belongs_to :user_secondary,
-               :class_name => "User",
-               :foreign_key => "user_secondary_id"
     has_many :transition_actions
     has_one :last_transition_action,
-            -> { where("transition_actions.id =
-                                          (select a.id
-                                           from transition_actions a
-                                           where a.transition_point_id = transition_actions.transition_point_id
-                                           order by sequence desc, action_date desc, id desc
-                                           limit 1)")},
+            -> { where("transition_actions.id = (select a.id
+                                                 from transition_actions a
+                                                 where a.transition_point_id = transition_actions.transition_point_id
+                                                 order by sequence desc, action_date desc, id desc
+                                                 limit 1)")},
             :class_name => "TransitionAction"
 
     has_many :assessment_scores, :as => :assessment_scorable

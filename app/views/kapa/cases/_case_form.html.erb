@@ -1,0 +1,17 @@
+<%= bootstrap_fields_for :case do |t| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=t.term_select :term_id, :label => "Term" %>
+      <%=t.property_select :category, :name => "#{@case.type}_category", :include_blank => true %>
+      <%=t.property_select :priority, :name => "#{@case.type}_priority", :include_blank => true %>
+      <%=t.property_select :status, :name => "#{@case.type}_status", :include_blank => true %>
+      <%=t.user_select :user_ids, {:label => "Assignee", :depts => @current_user.depts}, {:multiple => true} %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=t.text_area :note, {:cols => 54, :rows => 20} %>
+    </div>
+  </div>
+
+  <%= t.hidden_field :curriculum_id %>
+<% end %>

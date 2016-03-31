@@ -115,7 +115,6 @@ module Kapa::KapaControllerBase
 
   def filter_defaults
     {:key => "",
-     :type => :admission,
      :active => 1,
      :property => :major,
      :date_start => Date.today,

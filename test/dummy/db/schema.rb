@@ -104,6 +104,53 @@ ActiveRecord::Schema.define(version: 20140723000000) do
 
   add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
 
+  create_table "case_actions", force: :cascade do |t|
+    t.integer  "case_id",        limit: 4
+    t.string   "type",           limit: 255
+    t.string   "action",         limit: 255
+    t.string   "action_specify", limit: 255
+    t.date     "action_date"
+    t.string   "note",           limit: 255
+    t.integer  "sequence",       limit: 4,     default: 99
+    t.integer  "user_id",        limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",            limit: 65535
+    t.text     "xml",            limit: 65535
+  end
+
+  add_index "case_actions", ["action"], name: "index_case_actions_on_action", using: :btree
+  add_index "case_actions", ["case_id"], name: "index_case_actions_on_case_id", using: :btree
+
+  create_table "cases", force: :cascade do |t|
+    t.integer  "person_id",         limit: 4
+    t.integer  "term_id",           limit: 4
+    t.integer  "curriculum_id",     limit: 4
+    t.integer  "form_id",           limit: 4
+    t.string   "type",              limit: 255,   default: "",    null: false
+    t.string   "status",            limit: 255
+    t.string   "category",          limit: 255
+    t.string   "priority",          limit: 255
+    t.string   "dept",              limit: 255
+    t.boolean  "active",                          default: false
+    t.text     "note",              limit: 65535
+    t.string   "location",          limit: 255
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "status_updated_at"
+    t.text     "yml",               limit: 65535
+    t.text     "xml",               limit: 65535
+  end
+
+  add_index "cases", ["dept"], name: "index_cases_on_dept", using: :btree
+  add_index "cases", ["form_id"], name: "index_cases_on_form_id", using: :btree
+  add_index "cases", ["person_id"], name: "index_cases_on_person_id", using: :btree
+  add_index "cases", ["status"], name: "index_cases_on_status", using: :btree
+  add_index "cases", ["term_id"], name: "index_cases_on_term_id", using: :btree
+  add_index "cases", ["type"], name: "index_cases_on_type", using: :btree
+
   create_table "contacts", force: :cascade do |t|
     t.integer  "entity_id",       limit: 4,        null: false
     t.string   "entity_type",     limit: 255
@@ -297,6 +344,22 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
   end
 
+  create_table "faculty_publication_authors", force: :cascade do |t|
+    t.integer  "faculty_publication_id", limit: 4
+    t.string   "type",                   limit: 255
+    t.integer  "person_id",              limit: 4
+    t.string   "last_name",              limit: 255
+    t.string   "first_name",             limit: 255
+    t.string   "middle_initial",         limit: 255
+    t.integer  "sequence",               limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",                    limit: 65535
+    t.text     "xml",                    limit: 65535
+  end
+
+  add_index "faculty_publication_authors", ["faculty_publication_id"], name: "index_authors_on_faculty_publication_id", using: :btree
+
   create_table "faculty_publications", force: :cascade do |t|
     t.integer  "person_id",              limit: 4
     t.string   "dept",                   limit: 255
@@ -333,22 +396,6 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "faculty_publications_authors", force: :cascade do |t|
-    t.integer  "faculty_publication_id", limit: 4
-    t.string   "type",                   limit: 255
-    t.integer  "person_id",              limit: 4
-    t.string   "last_name",              limit: 255
-    t.string   "first_name",             limit: 255
-    t.string   "middle_initial",         limit: 255
-    t.integer  "sequence",               limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml",                    limit: 65535
-    t.text     "xml",                    limit: 65535
-  end
-
-  add_index "faculty_publications_authors", ["faculty_publication_id"], name: "index_authors_on_faculty_publication_id", using: :btree
 
   create_table "faculty_service_activities", force: :cascade do |t|
     t.integer  "person_id",          limit: 4

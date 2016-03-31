@@ -13,6 +13,7 @@
    menu_items["Document"].push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
    menu_items["Advising"] = []
    menu_items["Advising"].push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
+   menu_items["Advising"].push ["Cases", kapa_cases_path] if @current_user.read?(:kapa_cases)
    menu_items["Course"] = []
    menu_items["Course"].push ["Rosters", kapa_courses_path] if @current_user.read?(:kapa_courses)
    menu_items["Placement"] = []
