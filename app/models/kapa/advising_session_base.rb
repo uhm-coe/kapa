@@ -19,11 +19,11 @@ module Kapa::AdvisingSessionBase
       advising_sessions = advising_sessions.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
-        when 3
+        when 30
           # Do nothing
-        when 2
+        when 20
           advising_sessions = advising_sessions.depts_scope(filter.user.depts)
-        when 1
+        when 10
           advising_sessions = advising_sessions.assigned_scope(filter.user.id)
         else
           advising_sessions = advising_sessions.where("0 = 1")

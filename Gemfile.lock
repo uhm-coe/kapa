@@ -19,7 +19,6 @@ PATH
       mysql2 (~> 0.3.18)
       net-ldap (~> 0.13.0)
       paperclip (~> 3.0)
-      rails (~> 4.2.0)
       rails-csv-fixtures
       sass-rails
       sequel

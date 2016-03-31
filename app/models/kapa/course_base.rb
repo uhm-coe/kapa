@@ -53,11 +53,11 @@ module Kapa::CourseBase
       courses = courses.where("courses.subject" => filter.subject) if filter.subject.present?
       courses = courses.where("concat(courses.subject, courses.number, '-', courses.section) like ?", "%#{filter.name}%") #if filter.name.present?
       case filter.user.access_scope
-        when 3
+        when 30
           # Do nothing
-        when 2
+        when 20
           courses = courses.depts_scope(filter.user.depts)
-        when 1
+        when 10
           # TODO: Not implemented yet
         else
           courses = courses.where("1 = 2")

@@ -14,8 +14,8 @@
       <%= f.text_field :email, :size => 30, :readonly => @person.verified?, :label => "Campus Email" %>
       <%= f.text_field :first_name, :size => 30 %>
       <%= f.text_field :other_name %>
-      <%= f.select :title, [["Mr.", "MR"], ["Ms.", "MS"], ["Dr.", "DR"]], :include_blank => true %>
-      <%= f.select :gender, [["Male", "M"], ["Female", "F"]], :include_blank => true %>
+      <%= f.property_select :title, :include_blank => true %>
+      <%= f.property_select :gender, :include_blank => true %>
     </div>
 
     <%=f.hidden_field :status %>

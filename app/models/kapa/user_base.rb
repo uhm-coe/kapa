@@ -88,15 +88,15 @@ module Kapa::UserBase
   end
 
   def read?(name = controller_name, options = {})
-    check_permission(1, name, options)
+    check_permission(10, name, options)
   end
 
   def write?(name = controller_name, options = {})
-    check_permission(2, name, options)
+    check_permission(20, name, options)
   end
 
   def manage?(name = controller_name, options = {})
-    check_permission(3, name, options)
+    check_permission(30, name, options)
   end
 
   def access_scope(name = controller_name, condition = nil)

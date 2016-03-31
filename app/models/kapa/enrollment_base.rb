@@ -39,11 +39,11 @@ module Kapa::EnrollmentBase
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
 
       case filter.user.access_scope
-        when 3
+        when 30
           # do nothing
-        when 2
+        when 20
           enrollments = enrollments.depts_scope(filter.user.depts)
-        when 1
+        when 10
           enrollments = enrollments.assigned_scope(filter.user.id)
         else
           enrollments = enrollments.where("1 = 2") #Do not list any objects

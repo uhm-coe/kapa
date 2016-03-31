@@ -80,11 +80,11 @@ module Kapa::TransitionPointBase
       transition_points = transition_points.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
-        when 3
+        when 30
           # Do nothing
-        when 2
+        when 20
           transition_points = transition_points.depts_scope(filter.user.depts)
-        when 1
+        when 10
           transition_points = transition_points.assigned_scope(filter.user.id)
         else
           transition_points = transition_points.where("1 = 2") # Do not list any objects
