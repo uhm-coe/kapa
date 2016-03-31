@@ -9,7 +9,7 @@
       </div>
       <%= f.property_select :course, {:name => :assessment_course, :include_blank => "Any"} %>
       <%= f.property_select :transition_point, :include_blank => "Any" %>
-      <%= f.select :per_page, [10, 20, 30, 40, 50] %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 

@@ -13,6 +13,9 @@ Rails.configuration.regex_email = '^[A-Z0-9_%+-]+@hawaii.edu$'
 # Default items per page on list views
 Rails.configuration.items_per_page = 20
 
+# Selections for pagination on list views
+Rails.configuration.items_per_page_selections = [10, 20, 30, 40, 50]
+
 # Available routes
 Rails.configuration.available_routes = %w{
   kapa_persons
