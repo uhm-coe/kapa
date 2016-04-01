@@ -122,19 +122,37 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "case_actions", ["action"], name: "index_case_actions_on_action", using: :btree
   add_index "case_actions", ["case_id"], name: "index_case_actions_on_case_id", using: :btree
 
+  create_table "case_persons", force: :cascade do |t|
+    t.integer  "case_id",    limit: 4
+    t.integer  "person_id",  limit: 4
+    t.string   "type",       limit: 255
+    t.string   "category",   limit: 255
+    t.string   "status",     limit: 255
+    t.integer  "sequence",   limit: 4
+    t.text     "note",       limit: 16777215
+    t.text     "yml",        limit: 16777215
+    t.text     "xml",        limit: 16777215
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "case_persons", ["person_id", "case_id"], name: "index_case_persons_on_person_id_and_case_id", using: :btree
+
   create_table "cases", force: :cascade do |t|
     t.integer  "person_id",         limit: 4
-    t.integer  "term_id",           limit: 4
     t.integer  "curriculum_id",     limit: 4
     t.integer  "form_id",           limit: 4
-    t.string   "type",              limit: 255,   default: "",    null: false
+    t.string   "type",              limit: 255,   default: "",   null: false
     t.string   "status",            limit: 255
     t.string   "category",          limit: 255
     t.string   "priority",          limit: 255
-    t.string   "dept",              limit: 255
-    t.boolean  "active",                          default: false
-    t.text     "note",              limit: 65535
     t.string   "location",          limit: 255
+    t.string   "location_detail",   limit: 255
+    t.datetime "incident_datetime"
+    t.string   "investigator",      limit: 255
+    t.string   "dept",              limit: 255
+    t.boolean  "active",                          default: true
+    t.text     "note",              limit: 65535
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
@@ -148,7 +166,6 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "cases", ["form_id"], name: "index_cases_on_form_id", using: :btree
   add_index "cases", ["person_id"], name: "index_cases_on_person_id", using: :btree
   add_index "cases", ["status"], name: "index_cases_on_status", using: :btree
-  add_index "cases", ["term_id"], name: "index_cases_on_term_id", using: :btree
   add_index "cases", ["type"], name: "index_cases_on_type", using: :btree
 
   create_table "contacts", force: :cascade do |t|
@@ -306,19 +323,21 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "exam_scores", ["exam_id"], name: "index_exam_scores_on_exam_id", using: :btree
 
   create_table "exams", force: :cascade do |t|
-    t.integer  "person_id",     limit: 4
-    t.string   "report_number", limit: 255
+    t.integer  "person_id",       limit: 4
+    t.integer  "attachable_id",   limit: 4
+    t.string   "attachable_type", limit: 255
+    t.string   "report_number",   limit: 255
     t.date     "report_date"
-    t.string   "status",        limit: 255
-    t.string   "public",        limit: 255,   default: "Y"
-    t.text     "note",          limit: 65535
-    t.text     "raw",           limit: 65535
-    t.text     "yml",           limit: 65535
-    t.text     "xml",           limit: 65535
+    t.string   "status",          limit: 255
+    t.string   "public",          limit: 255,   default: "Y"
+    t.text     "note",            limit: 65535
+    t.text     "raw",             limit: 65535
+    t.text     "yml",             limit: 65535
+    t.text     "xml",             limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "dept",          limit: 255
-    t.string   "type",          limit: 255
+    t.string   "dept",            limit: 255
+    t.string   "type",            limit: 255
   end
 
   add_index "exams", ["person_id"], name: "index_exams_on_person_id", using: :btree
@@ -423,6 +442,8 @@ ActiveRecord::Schema.define(version: 20140723000000) do
 
   create_table "files", force: :cascade do |t|
     t.integer  "person_id",         limit: 4,                   null: false
+    t.integer  "attachable_id",     limit: 4
+    t.string   "attachable_type",   limit: 255
     t.string   "name",              limit: 255
     t.string   "type",              limit: 255
     t.string   "status",            limit: 255
@@ -443,25 +464,26 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
 
   create_table "forms", force: :cascade do |t|
-    t.integer  "person_id",        limit: 4
-    t.integer  "form_template_id", limit: 4
+    t.integer  "person_id",       limit: 4
+    t.integer  "attachable_id",   limit: 4
+    t.string   "attachable_type", limit: 255
     t.datetime "submitted_at"
-    t.string   "submit_ip",        limit: 255
-    t.text     "yml",              limit: 16777215
-    t.string   "lock",             limit: 255,      default: "N"
-    t.text     "xml",              limit: 16777215
+    t.string   "submit_ip",       limit: 255
+    t.text     "yml",             limit: 16777215
+    t.string   "lock",            limit: 255,      default: "N"
+    t.text     "xml",             limit: 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "note",             limit: 16777215
-    t.string   "public",           limit: 255,      default: "Y"
-    t.string   "type",             limit: 255
-    t.integer  "version",          limit: 4
-    t.string   "academic_period",  limit: 255
-    t.string   "dept",             limit: 255
-    t.integer  "term_id",          limit: 4
+    t.text     "note",            limit: 16777215
+    t.string   "public",          limit: 255,      default: "Y"
+    t.string   "type",            limit: 255
+    t.integer  "version",         limit: 4
+    t.string   "academic_period", limit: 255
+    t.string   "dept",            limit: 255
+    t.integer  "term_id",         limit: 4
   end
 
-  add_index "forms", ["academic_period"], name: "index_forms_on_academic_period", using: :btree
+  add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
   add_index "forms", ["term_id"], name: "index_forms_on_term_id", using: :btree
   add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
@@ -722,6 +744,8 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
   end
 
+  add_index "properties", ["name", "code"], name: "index_properties_on_name_and_code", unique: true, using: :btree
+
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255,   null: false
     t.text     "data",       limit: 65535
@@ -813,9 +837,13 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "transition_points", ["type"], name: "index_transition_points_on_type", using: :btree
 
   create_table "user_assignments", force: :cascade do |t|
-    t.integer "user_id",         limit: 4
-    t.integer "assignable_id",   limit: 4
-    t.string  "assignable_type", limit: 255
+    t.integer  "user_id",         limit: 4
+    t.integer  "assignable_id",   limit: 4
+    t.string   "assignable_type", limit: 255
+    t.text     "yml",             limit: 16777215
+    t.text     "xml",             limit: 16777215
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "user_assignments", ["user_id", "assignable_id", "assignable_type"], name: "index_user_assignments_on_user_id_and_assignable_id", unique: true, using: :btree
@@ -824,11 +852,10 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "uid",                 limit: 255
     t.string   "hashed_password",     limit: 255
     t.string   "dept",                limit: 255
+    t.string   "primary_dept",        limit: 255
     t.integer  "person_id",           limit: 4
     t.string   "category",            limit: 255
     t.string   "position",            limit: 255
-    t.string   "department",          limit: 255
-    t.integer  "emp_status",          limit: 4,        default: 0
     t.integer  "status",              limit: 4,        default: 0
     t.text     "yml",                 limit: 16777215
     t.text     "xml",                 limit: 16777215

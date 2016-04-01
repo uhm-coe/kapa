@@ -34,7 +34,7 @@ end
 #Create a sample user on each role
 Rails.configuration.roles.each_key do |name|
   person = Kapa::Person.create(:last_name => name, :first_name => "User")
-  user = person.users.create(:uid => name.downcase, :category => "local", :status => 3, :emp_status => 3)
+  user = person.users.create(:uid => name.downcase, :category => "local", :status => 30)
   user.password = name.downcase
   user.apply_role(name)
   user.save!

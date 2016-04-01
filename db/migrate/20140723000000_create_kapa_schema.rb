@@ -780,11 +780,10 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "uid",                 limit: 255
       t.string   "hashed_password",     limit: 255
       t.string   "dept",                limit: 255
+      t.string   "primary_dept",          limit: 255
       t.integer  "person_id",           limit: 4
       t.string   "category",            limit: 255
       t.string   "position",            limit: 255
-      t.string   "department",          limit: 255
-      t.integer  "emp_status",          limit: 4,        default: 0
       t.integer  "status",              limit: 4,        default: 0
       t.text     "yml",                 limit: 16777215
       t.text     "xml",                 limit: 16777215

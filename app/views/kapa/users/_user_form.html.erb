@@ -2,11 +2,11 @@
   <div class="col-sm-6">
     <%=f.text_field :uid, :label => "UID" %>
     <%=f.text_field :password %>
-    <%=f.select :category, [["LDAP", "ldap"],["Local" , "local"]], :label => {:text => "Auth Method"} %>
-    <%=f.select :emp_status, [["Non-Employee", 0],["Former Employee" , 1],["Active Employee" , 2],["Overridden" , 3]] %>
+    <%=f.select :category, Rails.configuration.user_categories, :label => {:text => "Auth Method"} %>
+    <%=f.select :status, Rails.configuration.user_status, :label => "User Status" %>
   </div>
   <div class="col-sm-6">
-    <%=f.select :status, [["No Access", 0],["Guest" , 1],["User" , 3]], :label => "User Status" %>
+    <%=f.select :status, Rails.configuration.user_status, :label => "User Status" %>
     <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
     <%=f.property_select :department, :name => :dept, :label => "Primary #{t(:kapa_global_dept)}", :include_blank => true %>
     <%=f.text_field :position %>
