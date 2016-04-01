@@ -6,7 +6,7 @@ class Kapa::InstallGenerator < Rails::Generators::Base
   def install_initializers
     puts "Installing initializers..."
     copy_file("test/dummy/config/initializers/kapa.rb", "#{Rails.root}/config/initializers/kapa.rb")
-    copy_file("test/dummy/config/initializers/roles.rb", "#{Rails.root}/config/initializers/roles.rb")
+    copy_file("test/dummy/config/initializers/permissions.rb", "#{Rails.root}/config/initializers/permissions.rb")
     copy_file("test/dummy/config/initializers/attachments.rb", "#{Rails.root}/config/initializers/attachments.rb")
     copy_file("test/dummy/config/initializers/ldap.rb", "#{Rails.root}/config/initializers/ldap.rb")
     copy_file("test/dummy/config/initializers/datasources.rb", "#{Rails.root}/config/initializers/datasources.rb")

@@ -3,7 +3,7 @@
 # Define default user levels and scopes
 Rails.configuration.user_levels = [["No Access", "0"], ["Read", "10"], ["Write", "20"], ["Manage", "30"]]
 Rails.configuration.user_scopes = [["Assigned records", "10"], ["Assigned or Dept records", "20"], ["All records", "30"]]
-Rails.configuration.user_status = [["No Access", 0],["Guest" , 10],["User" , 30]]
+Rails.configuration.user_status = [["No Access", "0"],["Guest" , "10"],["User" , "30"]]
 Rails.configuration.user_categories = [["LDAP", "ldap"],["Local" , "local"]]
 
 # Define user roles (pre-defined permissions)

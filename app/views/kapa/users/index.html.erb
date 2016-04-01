@@ -38,8 +38,7 @@
         <th>User ID</th>
         <th>Name</th>
         <th>Auth Type</th>
-        <th>ES</th>
-        <th>US</th>
+        <th>Status</th>
         <th><%="#{t(:kapa_global_dept)}(s)"%></th>
         <th><%="Primary #{t(:kapa_global_dept)}"%></th>
         <th></th>
@@ -51,8 +50,7 @@
           <td><%=h user.uid %></td>
           <td><%=h user.person.full_name if user.person %></td>
           <td><%=h user.category %></td>
-          <td><%=h user.emp_status %></td>
-          <td><%=h user.status %></td>
+          <td><%=h user.status_desc %></td>
           <td><%=h user.dept.join(", ") %></td>
           <td><%=h user.primary_dept %></td>
           <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>

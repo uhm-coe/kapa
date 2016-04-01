@@ -57,14 +57,8 @@ module Kapa::UserBase
   end
 
   def status_desc
-    case status
-      when 0 then
-        "In-active"
-      when 1 then
-        "Guest"
-      when 3 then
-        "User"
-    end
+    user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
+    user_status[0]
   end
 
   def active?
@@ -126,7 +120,7 @@ module Kapa::UserBase
 
   class_methods do
     def selections(options = {})
-      users = where(:status => 3)
+      users = where(:status => 30)
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
@@ -139,7 +133,7 @@ module Kapa::UserBase
       users = Kapa::User.eager_load(:person).order("users.uid")
       users = users.where("department" => filter.department) if filter.department.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
-      users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
+      users = users.where("users.category" => filter.category) if filter.category.present?
       users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
       return users
     end
