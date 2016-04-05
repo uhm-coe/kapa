@@ -52,10 +52,6 @@ module Kapa::UserBase
     self.dept
   end
 
-  def primary_dept
-    depts.first if depts.present?
-  end
-
   def status_desc
     user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
     user_status[0]
