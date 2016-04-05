@@ -120,7 +120,7 @@ module Kapa::UserBase
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
-        ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
+        ["#{u.person.last_name}, #{u.person.first_name} (#{u.primary_dept})", u.id]
       end
     end
 
