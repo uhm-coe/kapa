@@ -76,8 +76,6 @@
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
   <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.file_field :data, :label => "File to upload" %>
-    <%=f.text_field :name, :placeholder => "Enter filename (optional)" %>
-    <%#=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
     <%=f.hidden_field :attachable_type, :value => @attachable_type %>
     <%=f.hidden_field :attachable_id, :value => @attachable_id %>
   <% end %>
