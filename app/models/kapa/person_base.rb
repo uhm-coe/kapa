@@ -3,6 +3,8 @@ module Kapa::PersonBase
 
   included do
     self.table_name = :persons
+    serialize :type, Kapa::CsvSerializer
+
     has_one :contact, :as => :entity, :autosave => true
     has_many :curriculums
     has_many :users
