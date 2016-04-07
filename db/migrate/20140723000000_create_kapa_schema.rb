@@ -845,7 +845,7 @@ class CreateKapaSchema < ActiveRecord::Migration
   add_index "cases", ["status"]
   add_index "cases", ["type"]
 
-  create_table "case_persons", force: :cascade do |t|
+  create_table "case_involvements", force: :cascade do |t|
     t.integer "case_id"
     t.integer "person_id",         limit: 4
     t.string  "type", limit: 255
@@ -859,8 +859,7 @@ class CreateKapaSchema < ActiveRecord::Migration
     t.datetime "updated_at"
   end
 
-  add_index "case_persons", ["person_id", "case_id"], name: "index_case_persons_on_person_id_and_case_id", using: :btree
-
+  add_index "case_involvements", ["person_id", "case_id"], name: "index_case_involvements_on_person_id_and_case_id", using: :btree
 
   def down
   end

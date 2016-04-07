@@ -12,8 +12,8 @@ module Kapa::PersonBase
     has_many :files
     has_many :exams
     has_many :advising_sessions
-    has_many :case_persons
-    has_many :cases, :through => :case_persons
+    has_many :case_involvements
+    has_many :cases, :through => :case_involvements
     has_many :practicum_placements
     has_many :course_registrations
     has_many :faculty_publications
@@ -127,7 +127,7 @@ module Kapa::PersonBase
         persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
       end
 
-      return persons.order("status desc").limit(100)
+      return persons.order("status desc").limit(filter.limit.present? ? filter.limit : 100)
     end
 
     def lookup(key)
