@@ -17,7 +17,7 @@
   <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-    <% if @current_user.read?(:kapa_curriculums) && Rails.configuration.available_routes.include?("kapa_curriculums") %>
+  <% if @current_user.read?(:kapa_curriculums) && Rails.configuration.available_routes.include?("kapa_curriculums") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">

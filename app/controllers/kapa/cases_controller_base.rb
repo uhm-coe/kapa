@@ -6,8 +6,6 @@ module Kapa::CasesControllerBase
     @case_persons = @case.case_persons
     @case_ext = @case.deserialize(:_ext, :as => OpenStruct)
     @case_actions = @case.case_actions.eager_load(:user_assignments => {:user => :person}).order("case_actions.action_date DESC, case_actions.id DESC")
-    @person = @case.person
-    @curriculums = @person.curriculums
     @documents = []
     @documents += @case.files
     @documents += @case.forms
@@ -32,18 +30,16 @@ module Kapa::CasesControllerBase
   end
 
   def new
-    @person = Kapa::Person.find(params[:id])
-    @case = @person.cases.build(:start_date => Date.today)
+    @case = Kapa::Case.new(:start_date => Date.today)
   end
 
   def create
-    @person = Kapa::Person.find(params[:id])
-    @case = @person.cases.build(case_params)
+    @case = Kapa::Case.new(case_params)
     @case.dept = @current_user.primary_dept
     @case.active = true
     unless @case.save
       flash[:danger] = @case.errors.full_messages.join(", ")
-      redirect_to new_kapa_case_path(:id => @person) and return false
+      redirect_to new_kapa_case_path and return false
     end
     flash[:success] = "Case was successfully created."
     redirect_to kapa_case_path(:id => @case)

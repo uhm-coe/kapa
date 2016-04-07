@@ -15,6 +15,7 @@ module Kapa::CaseBase
             :class_name => "CaseAction"
 
     has_many :case_persons
+    has_many :cases, :through => :case_persons
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
     has_many :files, :as => :attachable
@@ -48,8 +49,7 @@ module Kapa::CaseBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      cases = Kapa::Case.eager_load([:person, :curriculum, {:curriculum => :program}, :user_assignments]).order("cases.id DESC")
-#      cases = cases.where("cases.term_id" => filter.term_id) if filter.term_id.present?
+      cases = Kapa::Case.eager_load([:user_assignments]).order("cases.id DESC")
       cases = cases.where("cases.status" => filter.case_status) if filter.case_status.present?
       cases = cases.where("cases.type" => filter.case_type.to_s) if filter.case_type.present?
       cases = cases.where("cases.id" => filter.case_id.to_s) if filter.case_id.present?

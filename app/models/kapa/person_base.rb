@@ -12,7 +12,8 @@ module Kapa::PersonBase
     has_many :files
     has_many :exams
     has_many :advising_sessions
-    has_many :cases
+    has_many :case_persons
+    has_many :cases, :through => :case_persons
     has_many :practicum_placements
     has_many :course_registrations
     has_many :faculty_publications

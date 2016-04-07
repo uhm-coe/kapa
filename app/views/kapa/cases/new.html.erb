@@ -1,6 +1,4 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/kapa/persons/person_detail" %>
-
   <h4 class="section-header divider">
     New Case
   </h4>
@@ -13,7 +11,6 @@
         <%=f.property_select :type, :name => :case_type %>
       </div>
     </div>
-    <%=f.hidden_field :person_id %>
     <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
   <% end %>
 <%end%>

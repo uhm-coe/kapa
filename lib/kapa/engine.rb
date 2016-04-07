@@ -10,6 +10,7 @@ module Kapa
         end
       end
     end
+    config.autoload_paths << File.expand_path("../app", __FILE__)
 
     initializer "kapa.assets" do |app|
       app.config.assets.precompile += %w(kapa/kapa.css kapa/kapa.js kapa/reports.js kapa/reports.css *.icon *.png)

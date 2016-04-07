@@ -492,6 +492,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "id_number",      limit: 255
     t.string   "ets_id",         limit: 255
     t.string   "uid",            limit: 255
+    t.string   "type",           limit: 255
     t.string   "email",          limit: 255
     t.string   "email_alt",      limit: 255
     t.string   "last_name",      limit: 255

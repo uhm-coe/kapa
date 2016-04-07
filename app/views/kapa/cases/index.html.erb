@@ -25,6 +25,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
+      <%=bootstrap_button "New", {:action => :new}, :icon => "glyphicon-plus" %>
       <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
       <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
@@ -47,7 +48,7 @@
     <% for @case in @cases %>
       <tr>
         <td><%= @case.id %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.person.full_name), kapa_person_path(:id => @case.person_id) %></td>
+        <td><%= "TBA" %></td>
         <td><%= h @case.start_date %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
         <td><%= h @case.status_desc %></td>

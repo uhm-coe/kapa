@@ -59,7 +59,6 @@
 <% end %>
 
 <% content_for(:box1) do %>
-  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
      Case #<%=@case.id %>
@@ -68,7 +67,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#case_persons_tab" data-toggle="tab">Additional Contacts</a></li>
+      <li><a href="#case_persons_tab" data-toggle="tab">People</a></li>
       <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
     </ul>
@@ -83,8 +82,8 @@
 
       <div id="case_persons_tab" class="tab-pane">
         <p class="text-right">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Internal Person</button>
-          <%=bootstrap_button "Add External Person", new_kapa_case_person_path(:case_id => @case), :icon => "glyphicon-plus" %>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Person</button>
+          <%#=bootstrap_button "Add External Person", new_kapa_case_person_path(:case_id => @case), :icon => "glyphicon-plus" %>
         </p>
           <table id="case_persons" class="table table-striped">
             <thead>

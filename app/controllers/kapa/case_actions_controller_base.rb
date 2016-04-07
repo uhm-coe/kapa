@@ -4,13 +4,11 @@ module Kapa::CaseActionsControllerBase
   def show
     @case_action = Kapa::CaseAction.find(params[:id])
     @case = @case_action.case
-    @person = @case.person
   end
 
   def new
     @case = Kapa::Case.find(params[:case_id])
     @case_action = @case.case_actions.build(:action_date => Date.today)
-    @person = @case.person
   end
 
   def create
