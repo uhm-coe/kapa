@@ -10,15 +10,25 @@ module Kapa::CaseInvolvementsControllerBase
 
   def new
     @case = Kapa::Case.find(params[:case_id])
+    @person = Kapa::Person.new :source => "Manual"
   end
 
   def create
     @case = Kapa::Case.find(params[:case_id])
     @case_involvement = @case.case_involvements.build(case_involvement_params)
+    if params[:person]
+      @person = Kapa::Person.new(person_params)
+      @contact = @person.contact ||= @person.build_contact
+      unless @person.save and @contact.save and @case_involvement.save
+        flash[:danger] = error_message_for(@person, @contact)
+        redirect_to kapa_case_path(:id => @case, :anchor => "case_involvements") and return false
+      end
+      @case_involvement.person = @person
+    end
 
     unless @case_involvement.save
       flash[:danger] = error_message_for(@case_involvement)
-      redirect_to kapa_case_path(:id => @case_involvement.case, :anchor => "case_involvements") and return false
+      redirect_to kapa_case_path(:id => @case, :anchor => "case_involvements") and return false
     end
 
     flash[:success] = "Person was successfully added."
@@ -70,7 +80,7 @@ module Kapa::CaseInvolvementsControllerBase
   end
 
   def contact_params
-    params.require(:contact).permit(:cur_phone, :mobile_phone, :email, :cur_street, :cur_city, :cur_state,
+    params.require(:contact).permit(:entity_id, :entity_type, :cur_phone, :mobile_phone, :email, :cur_street, :cur_city, :cur_state,
                                     :cur_postal_code, :per_street, :per_city, :per_state, :per_postal_code)
   end
 end

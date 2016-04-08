@@ -2,9 +2,7 @@ module Kapa::ContactBase
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :entity, :polymorphic => true
-    validates_presence_of :entity_id
-    validates_uniqueness_of :entity_id, :scope => :entity_type, :on => :create, :message => "is already used"
+    belongs_to :person
   end
 
   def format
