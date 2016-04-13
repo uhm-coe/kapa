@@ -26,8 +26,7 @@ module Kapa::FormsControllerBase
   end
 
   def create
-    @person = Kapa::Person.find params[:id]
-    @form = @person.forms.build(form_param)
+    @form = Kapa::Form.new(form_param)
     @form.dept = @current_user.primary_dept
 
     unless @form.save

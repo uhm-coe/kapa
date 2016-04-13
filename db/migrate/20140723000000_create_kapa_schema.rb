@@ -369,7 +369,7 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "exams", ["person_id"], name: "index_exams_on_person_id", using: :btree
 
     create_table "files", force: :cascade do |t|
-      t.integer  "person_id",         limit: 4,                   null: false
+      t.integer  "person_id",         limit: 4
       t.integer  "attachable_id",   limit: 4
       t.string   "attachable_type", limit: 255
       t.string   "name",              limit: 255
@@ -446,37 +446,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
-    create_table "practicum_assignments_old", force: :cascade do |t|
-      t.integer  "practicum_placement_id",   limit: 4
-      t.integer  "practicum_school_id",      limit: 4
-      t.string   "assignment_type",          limit: 255
-      t.integer  "person_id",                limit: 4
-      t.string   "name",                     limit: 255
-      t.string   "content_area",             limit: 255
-      t.string   "courses",                  limit: 255
-      t.integer  "payment",                  limit: 4
-      t.text     "yml",                      limit: 65535
-      t.text     "xml",                      limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.string   "supervisor_primary_uid",   limit: 255
-      t.string   "supervisor_secondary_uid", limit: 255
-      t.text     "note",                     limit: 65535
-      t.integer  "user_primary_id",          limit: 4
-      t.integer  "user_secondary_id",        limit: 4
-      t.string   "grade",                    limit: 255
-    end
-
-    add_index "practicum_assignments_old", ["assignment_type"], name: "index_practicum_assignments_old_on_assignment_type", using: :btree
-    add_index "practicum_assignments_old", ["name"], name: "index_practicum_assignments_old_on_name", using: :btree
-    add_index "practicum_assignments_old", ["person_id"], name: "index_practicum_assignments_old_on_person_id", using: :btree
-    add_index "practicum_assignments_old", ["practicum_placement_id"], name: "index_practicum_assignments_old_on_practicum_placement_id", using: :btree
-    add_index "practicum_assignments_old", ["practicum_school_id"], name: "index_practicum_assignments_old_on_practicum_school_id", using: :btree
-    add_index "practicum_assignments_old", ["supervisor_primary_uid"], name: "index_practicum_assignments_old_on_supervisor_primary_uid", using: :btree
-    add_index "practicum_assignments_old", ["supervisor_secondary_uid"], name: "index_practicum_assignments_old_on_supervisor_secondary_uid", using: :btree
-    add_index "practicum_assignments_old", ["user_primary_id"], name: "index_practicum_assignments_old_on_user_primary_id", using: :btree
-    add_index "practicum_assignments_old", ["user_secondary_id"], name: "index_practicum_assignments_old_on_user_secondary_id", using: :btree
-
     create_table "practicum_logs", force: :cascade do |t|
       t.integer  "practicum_placement_id", limit: 4
       t.date     "log_date"
@@ -517,77 +486,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "practicum_placements", ["person_id"], name: "index_practicum_placements_on_person_id", using: :btree
     add_index "practicum_placements", ["practicum_site_id"], name: "index_practicum_placements_on_practicum_site_id", using: :btree
     add_index "practicum_placements", ["start_term_id"], name: "index_practicum_placements_on_start_term_id", using: :btree
-
-    create_table "practicum_placements_old", force: :cascade do |t|
-      t.integer  "practicum_profile_id", limit: 4
-      t.string   "academic_period",      limit: 255
-      t.string   "status",               limit: 255
-      t.string   "uid",                  limit: 255
-      t.string   "sequence",             limit: 255
-      t.string   "category",             limit: 255
-      t.string   "mentor_type",          limit: 255
-      t.text     "note",                 limit: 16777215
-      t.string   "dept",                 limit: 255
-      t.text     "yml",                  limit: 16777215
-      t.text     "xml",                  limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.integer  "user_primary_id",      limit: 4
-      t.integer  "user_secondary_id",    limit: 4
-      t.integer  "term_id",              limit: 4
-    end
-
-    add_index "practicum_placements_old", ["academic_period"], name: "index_practicum_placements_old_on_academic_period", using: :btree
-    add_index "practicum_placements_old", ["practicum_profile_id"], name: "index_practicum_placements_old_on_practicum_profile_id", using: :btree
-    add_index "practicum_placements_old", ["term_id"], name: "index_practicum_placements_old_on_term_id", using: :btree
-    add_index "practicum_placements_old", ["user_primary_id"], name: "index_practicum_placements_old_on_user_primary_id", using: :btree
-    add_index "practicum_placements_old", ["user_secondary_id"], name: "index_practicum_placements_old_on_user_secondary_id", using: :btree
-
-    create_table "practicum_profiles_old", force: :cascade do |t|
-      t.integer  "person_id",                  limit: 4
-      t.integer  "curriculum_id",              limit: 4
-      t.string   "bgc",                        limit: 255
-      t.date     "bgc_date"
-      t.string   "insurance",                  limit: 255
-      t.string   "insurance_effective_period", limit: 255
-      t.text     "note",                       limit: 16777215
-      t.string   "dept",                       limit: 255
-      t.text     "yml",                        limit: 16777215
-      t.text     "xml",                        limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.string   "coordinator_primary_uid",    limit: 255
-      t.string   "coordinator_secondary_uid",  limit: 255
-      t.string   "group",                      limit: 255
-      t.string   "cohort",                     limit: 255
-    end
-
-    add_index "practicum_profiles_old", ["coordinator_primary_uid"], name: "index_practicum_profiles_old_on_coordinator_primary_uid", using: :btree
-    add_index "practicum_profiles_old", ["coordinator_secondary_uid"], name: "index_practicum_profiles_old_on_coordinator_secondary_uid", using: :btree
-    add_index "practicum_profiles_old", ["curriculum_id"], name: "index_practicum_profiles_old_on_curriculum_id", using: :btree
-    add_index "practicum_profiles_old", ["group"], name: "index_practicum_profiles_old_on_group", using: :btree
-    add_index "practicum_profiles_old", ["person_id"], name: "index_practicum_profiles_old_on_person_id", using: :btree
-
-    create_table "practicum_schools_old", force: :cascade do |t|
-      t.string   "code",        limit: 255
-      t.string   "island",      limit: 255
-      t.string   "district",    limit: 255
-      t.string   "grade_from",  limit: 255
-      t.string   "grade_to",    limit: 255
-      t.string   "school_type", limit: 255
-      t.string   "name",        limit: 255
-      t.string   "name_short",  limit: 255
-      t.string   "area",        limit: 255
-      t.string   "area_group",  limit: 255
-      t.string   "url_home",    limit: 255
-      t.string   "status",      limit: 255
-      t.text     "yml",         limit: 65535
-      t.text     "xml",         limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "practicum_schools_old", ["code"], name: "index_practicum_schools_old_on_code", using: :btree
 
     create_table "practicum_sites", force: :cascade do |t|
       t.string   "code",       limit: 255
@@ -804,6 +702,7 @@ class CreateKapaSchema < ActiveRecord::Migration
 
   create_table "case_actions", force: :cascade do |t|
     t.integer  "case_id", limit: 4
+    t.integer  "person_id", limit: 4
     t.string   "type",                limit: 255
     t.string   "action",              limit: 255
     t.string   "action_specify",      limit: 255

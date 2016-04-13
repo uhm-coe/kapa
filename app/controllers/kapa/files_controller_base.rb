@@ -47,8 +47,7 @@ module Kapa::FilesControllerBase
       redirect_to params[:return_path] and return false
     end
 
-    @person = Kapa::Person.find(params[:id])
-    @file = @person.files.build(file_param)
+    @file = Kapa::File.new(file_param)
     @file.name = @file.data_file_name if @file.name.blank?
     @file.uploaded_by = @current_user.uid
     @file.dept = @current_user.primary_dept

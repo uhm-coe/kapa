@@ -45,6 +45,10 @@ module Kapa::PersonBase
     "#{first_name} #{last_name}"
   end
 
+  def full_name_short
+    "#{first_name} #{last_name[0]}"
+  end
+
   def ethnicity_desc
     return Kapa::Property.lookup_description("ethnicity", self.ethnicity)
   end

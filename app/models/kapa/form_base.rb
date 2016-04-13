@@ -6,7 +6,7 @@ module Kapa::FormBase
     belongs_to :term
     belongs_to :attachable, :polymorphic => true
     has_one :transition_point
-    validates_presence_of :person_id, :type
+    validates_presence_of :type
   end
 
   def term_desc

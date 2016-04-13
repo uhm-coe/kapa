@@ -1,6 +1,6 @@
 <% content_for(:box1) do %>
 
-  <h3><%= h @person.full_name %> - <%= h @form.term_desc %></h3>
+  <h3><%= h @person.full_name if @person %> <%= h @form.term_desc %></h3>
   <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
     <%= render :partial => "#{@form.type}_form" %>
     <%= hidden_field :form, :person_id %>

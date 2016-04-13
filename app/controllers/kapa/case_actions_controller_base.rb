@@ -4,10 +4,19 @@ module Kapa::CaseActionsControllerBase
   def show
     @case_action = Kapa::CaseAction.find(params[:id])
     @case = @case_action.case
+    @case_involvements = @case.case_involvements
+    @documents = []
+    @documents += @case.files
+    @documents += @case.forms
   end
 
   def new
     @case = Kapa::Case.find(params[:case_id])
+    @case_involvements = @case.case_involvements
+    @case_involvements = @case.case_involvements
+    @documents = []
+    @documents += @case.files
+    @documents += @case.forms
     @case_action = @case.case_actions.build(:action_date => Date.today)
   end
 
@@ -49,6 +58,6 @@ module Kapa::CaseActionsControllerBase
 
   private
   def case_action_params
-    params.require(:case_action).permit(:action_date, :action, :action_specify, :note, :user_ids => [])
+    params.require(:case_action).permit(:action_date, :action, :action_specify, :person_id, :note, :user_ids => [])
   end
 end

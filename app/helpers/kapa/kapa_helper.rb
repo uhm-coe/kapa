@@ -142,7 +142,7 @@ module Kapa::KapaHelper
     content_tag :abbr, abbr_str, :title => str, "data-toggle" => "tooltip", "data-placement" => "right"
   end
 
-  def document_icon(document)
+  def document_type(document)
      if document.is_a? Kapa::File
       return "File"
      elsif document.is_a? Kapa::Form

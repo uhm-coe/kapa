@@ -30,6 +30,12 @@ module Kapa::CaseBase
     self.status_updated_at = DateTime.now if self.status_changed?
   end
 
+  def name
+    reporting_party = self.case_involvements.eager_load(:person).where(:type => "CO").first
+    responding_party = self.case_involvements.eager_load(:person).where(:type => "RE").first
+    "#{reporting_party ? reporting_party.person.full_name_ordered : "?"} vs. #{responding_party ? responding_party.person.full_name_ordered : "?"}"
+  end
+
   def category_desc
     return Kapa::Property.lookup_description("#{type}_category", category)
   end
