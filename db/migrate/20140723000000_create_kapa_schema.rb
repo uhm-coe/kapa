@@ -667,6 +667,8 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer "user_id",         limit: 4
       t.integer "assignable_id",   limit: 4
       t.string  "assignable_type", limit: 255
+      t.string  "task", limit: 255
+      t.datetime  "due_date"
       t.text     "yml",            limit: 16777215
       t.text     "xml",            limit: 16777215
       t.datetime "created_at"

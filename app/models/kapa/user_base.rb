@@ -54,7 +54,7 @@ module Kapa::UserBase
 
   def status_desc
     user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
-    user_status[0]
+    user_status[0] if user_status
   end
 
   def active?
@@ -120,7 +120,7 @@ module Kapa::UserBase
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
-        ["#{u.person.last_name}, #{u.person.first_name} (#{u.primary_dept})", u.id]
+        ["#{u.person.full_name} (#{u.primary_dept})", u.id]
       end
     end
 

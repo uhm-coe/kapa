@@ -76,6 +76,15 @@
     <% end %>
   <% end %>
 
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_user_dialog", :modal_title => "Assign user", :modal_form_id => "new_user_assignment_form"} do %>
+    <%= bootstrap_form_for :user_assignment, :url => kapa_user_assignments_path(:return_path => url_for(:anchor => "assignments", :only_path => true)), :html => {:id => "new_user_assignment_form"} do |f| %>
+      <%=f.user_select :user_id %>
+      <%=f.property_select :task, :name => "#{@case.type}_task" %>
+      <%=f.date_picker :due_date %>
+      <%=f.hidden_field :assignable_type, :value => @case.class %>
+      <%=f.hidden_field :assignable_id, :value => @case.id %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <% content_for(:box1) do %>
@@ -90,6 +99,7 @@
       <li><a href="#case_involvements_tab" data-toggle="tab">People</a></li>
       <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
+      <li><a href="#assignments_tab" data-toggle="tab">Assignees</a></li>
     </ul>
 
     <div class="tab-content">
@@ -199,6 +209,40 @@
            <% end %>
           </tbody>
         </table>
+      </div>
+
+      <div id="assignments_tab" class="tab-pane">
+        <p class="text-right">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_user_dialog"><span class="glyphicon glyphicon-plus"></span> Add User</button>
+        </p>
+          <table id="assignments" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Task</th>
+                <th>Due Date</th>
+                <th><%=t(:kapa_global_dept)%></th>
+              </tr>
+            </thead>
+            <tbody id="assignments-rows">
+              <% for user_assignment in @user_assignments %>
+                <tr>
+                  <td>
+                    <%=user_assignment.user.person.full_name %>
+                  </td>
+                  <td>
+                    <%=user_assignment.task_desc %>
+                  </td>
+                  <td>
+                    <%=user_assignment.due_date %>
+                  </td>
+                  <td>
+                    <%=user_assignment.user.primary_dept %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
       </div>
 
     </div>

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     resources :practicum_logs, &extra_actions
     resources :practicum_sites, &extra_actions
     resources :users, &extra_actions
+    resources :user_assignments, &extra_actions
     resources :terms, &extra_actions
     resources :programs, &extra_actions
     resources :program_offers
