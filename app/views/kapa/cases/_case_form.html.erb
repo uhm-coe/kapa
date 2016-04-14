@@ -6,7 +6,6 @@
       <%=t.date_picker :end_date, :label => "Case closed date" %>
       <%=t.property_select :category, :name => "case_category", :include_blank => true %>
       <%=t.property_select :dept, :include_blank => true, :label => t(:kapa_global_dept) %>
-      <%=t.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
       <%=t.property_select :status, :name => "#{@case.type}_status", :include_blank => true %>
     </div>
 

@@ -7,6 +7,6 @@ module Kapa::UserAssignmentBase
   end
 
   def task_desc
-    return Kapa::Property.lookup_description("t9_task", task)
+    return Kapa::Property.lookup_description("task", task)
   end
 end

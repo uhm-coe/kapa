@@ -76,15 +76,6 @@
     <% end %>
   <% end %>
 
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_user_dialog", :modal_title => "Assign user", :modal_form_id => "new_user_assignment_form"} do %>
-    <%= bootstrap_form_for :user_assignment, :url => kapa_user_assignments_path(:return_path => url_for(:anchor => "assignments", :only_path => true)), :html => {:id => "new_user_assignment_form"} do |f| %>
-      <%=f.user_select :user_id %>
-      <%=f.property_select :task, :name => "#{@case.type}_task" %>
-      <%=f.date_picker :due_date %>
-      <%=f.hidden_field :assignable_type, :value => @case.class %>
-      <%=f.hidden_field :assignable_id, :value => @case.id %>
-    <% end %>
-  <% end %>
 <% end %>
 
 <% content_for(:box1) do %>
@@ -190,8 +181,8 @@
            <tr>
              <th>Date</th>
              <th>Action</th>
-             <th>Note</th>
              <th>Actioned by</th>
+             <th></th>
              <th></th>
            </tr>
           </thead>
@@ -200,8 +191,8 @@
              <tr>
                <td><%=format_date case_action.action_date %></td>
                <td><%=case_action.action_desc %> </td>
-               <td><%=case_action.note %></td>
                <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
+               <td><%=bootstrap_button "", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-comment" %><%=case_action.note %></td>
                <td class="right">
                  <%= link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
                </td>
@@ -213,22 +204,25 @@
 
       <div id="assignments_tab" class="tab-pane">
         <p class="text-right">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_user_dialog"><span class="glyphicon glyphicon-plus"></span> Add User</button>
+          <%=bootstrap_button "New User", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
         </p>
           <table id="assignments" class="table table-striped">
             <thead>
               <tr>
+                <th>Date</th>
                 <th>Name</th>
                 <th>Task</th>
                 <th>Due Date</th>
-                <th><%=t(:kapa_global_dept)%></th>
               </tr>
             </thead>
             <tbody id="assignments-rows">
               <% for user_assignment in @user_assignments %>
                 <tr>
                   <td>
-                    <%=user_assignment.user.person.full_name %>
+                    <%=format_date user_assignment.created_at %>
+                  </td>
+                  <td>
+                    <%="#{user_assignment.user.person.full_name} (#{user_assignment.user.primary_dept})" %>
                   </td>
                   <td>
                     <%=user_assignment.task_desc %>
@@ -236,8 +230,8 @@
                   <td>
                     <%=user_assignment.due_date %>
                   </td>
-                  <td>
-                    <%=user_assignment.user.primary_dept %>
+                  <td class="right">
+                    <%= link_to "Show", kapa_user_assignment_path(:id => user_assignment, :return_path => url_for(:anchor => "assignments", :only_path => true)), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>
