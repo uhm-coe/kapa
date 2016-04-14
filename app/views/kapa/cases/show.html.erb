@@ -135,7 +135,7 @@
                     <%=case_involvement.rsend(:person, :contact, :email) %>
                   </td>
                   <td class="right">
-                    <%=bootstrap_button "", nil, :tabindex => "0", :role => "button", "data-toggle" => "popover", "data-trigger" => "focus",  "data-placement" => "left", "data-content" => case_involvement.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                    <%=popover_button "", case_involvement.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
                     <%= link_to "Show", kapa_case_involvement_path(:id => case_involvement), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
@@ -146,8 +146,8 @@
 
       <div id="documents_tab" class="tab-pane">
         <p class="text-right">
-          <%=bootstrap_button "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
-          <%=bootstrap_button "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
+          <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+          <%=button_to_link "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
         </p>
         <table class="table table-striped">
           <thead>
@@ -177,7 +177,7 @@
 
       <div id="actions_tab" class="tab-pane">
         <p class="text-right">
-          <%=bootstrap_button "New Action", new_kapa_case_action_path(:case_id => @case), :icon => "glyphicon-plus" %>
+          <%=button_to_link "New Action", new_kapa_case_action_path(:case_id => @case), :icon => "glyphicon-plus" %>
         </p>
         <table class="table table-striped">
           <thead>
@@ -196,7 +196,7 @@
                <td><%=case_action.action_desc %> </td>
                <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
                <td class="right">
-                 <%=bootstrap_popover "", case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                 <%=popover_button "", case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
                  <%=link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
                </td>
              </tr>
@@ -207,7 +207,7 @@
 
       <div id="assignments_tab" class="tab-pane">
         <p class="text-right">
-          <%=bootstrap_button "New User", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
+          <%=button_to_link "New User", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
         </p>
           <table id="assignments" class="table table-striped">
             <thead>

@@ -728,13 +728,14 @@ class CreateKapaSchema < ActiveRecord::Migration
     t.string   "priority",          limit: 255
     t.string   "location",          limit: 255
     t.string   "location_detail",          limit: 255
-    t.datetime "incident_datetime"
-    t.string   "investigator",          limit: 255
+    t.datetime "incident_occurred_at"
+    t.string   "incident_category", limit: 255
+    t.string   "referrer",          limit: 255
     t.string   "dept",              limit: 255
     t.boolean  "active",                          default: true
     t.text     "note",              limit: 65535
-    t.date     "start_date"
-    t.date     "end_date"
+    t.datetime "reported_at"
+    t.datetime "closed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "status_updated_at"

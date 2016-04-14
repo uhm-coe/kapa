@@ -29,7 +29,7 @@ module Kapa::CasesControllerBase
   end
 
   def new
-    @case = Kapa::Case.new(:start_date => Date.today)
+    @case = Kapa::Case.new(:reported_at => DateTime.now)
   end
 
   def create
@@ -59,7 +59,7 @@ module Kapa::CasesControllerBase
 
   private
   def case_params
-    params.require(:case).permit(:person_id, :start_date, :end_date, :curriculum_id, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_datetime, :investigator, :dept, :note, :user_ids => [])
+    params.require(:case).permit(:person_id, :reported_at, :closed_at, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_occurred_at, :referrer, :dept, :note, :incident_category => [], :user_ids => [])
   end
 
 end

@@ -21,8 +21,8 @@ module Kapa::CaseBase
     has_many :files, :as => :attachable
     has_many :forms, :as => :attachable
 
-    validates_presence_of :start_date, :type
-
+    serialize :incident_category, Kapa::CsvSerializer
+    validates_presence_of :reported_at, :type
     before_save :update_status_timestamp
   end
 
@@ -50,6 +50,10 @@ module Kapa::CaseBase
 
   def type_desc
     return Kapa::Property.lookup_description(:case, type)
+  end
+
+  def target_resolution_at
+    reported_at + 60.days
   end
 
   class_methods do

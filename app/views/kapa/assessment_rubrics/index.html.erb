@@ -21,8 +21,8 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=bootstrap_button "New", {:action => :new}, :icon => "glyphicon-plus" %>
-      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
 

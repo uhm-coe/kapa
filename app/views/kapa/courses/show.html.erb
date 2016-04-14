@@ -110,7 +110,7 @@
   <%=bootstrap_form_for(:course, :url => kapa_course_path(:id => @course), :html => {:method => :put}) do %>
     <%=render :partial => "table" %>
     <%= render :layout => "/kapa/layouts/controls" do %>
-      <%=bootstrap_button "Download", {:action => :show, :id => @course, :format => :file}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Download", {:action => :show, :id => @course, :format => :file}, :icon => "glyphicon-download" %>
     <% end if @current_user.write? %>
   <% end %>
 <% end %>

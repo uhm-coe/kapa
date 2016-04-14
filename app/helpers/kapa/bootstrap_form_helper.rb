@@ -12,28 +12,6 @@ module Kapa::BootstrapFormHelper
     fields_for(record_name, nil, options.merge(:builder => BootstrapFormBuilder), &proc)
   end
 
-  def bootstrap_button(name = nil, options = nil, html_options = nil, &block)
-    options = "javascript:void(0)" if options.nil?
-    name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
-    if html_options[:class]
-      html_options[:class] = "btn #{html_options[:class]}"
-    else
-      html_options[:class] = "btn btn-default"
-    end
-    link_to(name.html_safe, options, html_options, &block)
-  end
-
-  def bootstrap_popover(name = nil, content = nil, html_options = nil, &block)
-    html_options[:tabindex] = "0"
-    html_options[:role] = "button"
-    html_options["data-content"] = content
-    html_options["data-toggle"] = "popover"
-    html_options["data-trigger"] = "focus"
-    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
-    html_options[:title] = html_options[:title] if html_options[:title]
-    bootstrap_button(name, nil, html_options, &block)
-  end
-
   def bootstrap_flash(options = {})
     flash_messages = []
     flash.each do |type, message|
