@@ -6,8 +6,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require moment
 //= require bootstrap-sprockets
-//= require bootstrap-datepicker/core
+//= require bootstrap-datetimepicker
 //= require bootstrap-multiselect
 //= require dragula
 
@@ -24,17 +25,28 @@ jQuery(document).ready(function ($) {
     $(form_id).trigger('reset');
   });
 
-  $('.kapa-datepicker').datepicker({
-    format: 'yyyy-mm-dd'
+  $('.datepicker').datetimepicker({
+    format: 'MM/DD/YYYY'
   }).on('changeDate',function (e) {
-      $(this).datepicker('hide');
-    }).on('keydown', function (e) {
+      $(this).datetimepicker('hide');
+  }).on('keydown', function (e) {
       if (e.keyCode === 8) { // If backspace key is pressed
         e.preventDefault(); // Disable "back button" action; stay on the page
-        $(this).val(''); // Clear date in the input field
-        $(this).datepicker('hide'); // Dismiss the calendar
+        $(this).find('.form-control').val(''); // Clear date in the input field
+        $(this).datetimepicker('hide'); // Dismiss the calendar
       }
-    });
+  });
+
+  $('.datetimepicker').datetimepicker({
+  }).on('changeDate',function (e) {
+      $(this).datetimepicker('hide');
+  }).on('keydown', function (e) {
+      if (e.keyCode === 8) { // If backspace key is pressed
+        e.preventDefault(); // Disable "back button" action; stay on the page
+        $(this).find('.form-control').val(''); // Clear date in the input field
+        $(this).datetimepicker('hide'); // Dismiss the calendar
+      }
+  });
 
   $('[multiple="multiple"]').multiselect({
     numberDisplayed: 3,

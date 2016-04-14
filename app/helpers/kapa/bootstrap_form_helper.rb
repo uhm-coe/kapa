@@ -72,7 +72,12 @@ module Kapa::BootstrapFormHelper
           when "date_picker"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control date-select #{html_options[:class]}"))
+            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
+
+          when "datetime_picker"
+            options = args.first.is_a?(Hash) ? args.first : {}
+            html_options = args.second.is_a?(Hash) ? args.second : {}
+            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "check_box"
             options = args.first.is_a?(Hash) ? args.first : {}
@@ -115,7 +120,7 @@ module Kapa::BootstrapFormHelper
       end
     end
 
-    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_picker person_select}
+    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_picker datetime_picker person_select}
     helpers.each do |name|
       build_label_field(name)
     end
