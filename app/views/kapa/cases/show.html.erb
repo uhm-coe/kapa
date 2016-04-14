@@ -196,8 +196,8 @@
                <td><%=case_action.action_desc %> </td>
                <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
                <td class="right">
-                 <%=bootstrap_button "", nil, :tabindex => "0", :role => "button", "data-toggle" => "popover", "data-trigger" => "focus",  "data-placement" => "left", "data-content" => case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
-                 <%= link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
+                 <%=bootstrap_popover "", case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                 <%=link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
                </td>
              </tr>
            <% end %>

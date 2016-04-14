@@ -23,6 +23,17 @@ module Kapa::BootstrapFormHelper
     link_to(name.html_safe, options, html_options, &block)
   end
 
+  def bootstrap_popover(name = nil, content = nil, html_options = nil, &block)
+    html_options[:tabindex] = "0"
+    html_options[:role] = "button"
+    html_options["data-content"] = content
+    html_options["data-toggle"] = "popover"
+    html_options["data-trigger"] = "focus"
+    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
+    html_options[:title] = html_options[:title] if html_options[:title]
+    bootstrap_button(name, nil, html_options, &block)
+  end
+
   def bootstrap_flash(options = {})
     flash_messages = []
     flash.each do |type, message|
@@ -55,7 +66,7 @@ module Kapa::BootstrapFormHelper
     def self.build_label_field(name)
       define_method(name) do |method, *args|
         case name.to_s
-          when /(field$)|(area$)/
+          when /(field$)|(area$)|(picker$)/
             options = args.first.is_a?(Hash) ? args.first : {}
             tag = @template.send(name, @object_name, method, options.merge(:class => "form-control #{options[:class]}"))
 
@@ -65,16 +76,6 @@ module Kapa::BootstrapFormHelper
             tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select", "person_select"
-            options = args.first.is_a?(Hash) ? args.first : {}
-            html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
-
-          when "date_picker"
-            options = args.first.is_a?(Hash) ? args.first : {}
-            html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
-
-          when "datetime_picker"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
             tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
@@ -96,7 +97,6 @@ module Kapa::BootstrapFormHelper
           else
             tag = @template.send(name, @object_name, method, *args)
         end
-
 
         if options[:label].kind_of?(Hash)
           label_options = options[:label]

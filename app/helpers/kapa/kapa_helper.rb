@@ -100,16 +100,12 @@ module Kapa::KapaHelper
   end
 
   def date_picker(object_name, method, options = {}, html_options = {})
-    object = instance_variable_get("@#{object_name}".delete("[]"))
-    options[:class] = "form-control #{options[:class]}"
     input_tag = text_field(object_name, method, options)
     icon_tag = "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>"
     content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datepicker ")
   end
 
   def datetime_picker(object_name, method, options = {}, html_options = {})
-    object = instance_variable_get("@#{object_name}".delete("[]"))
-    options[:class] = "form-control #{options[:class]}"
     input_tag = text_field(object_name, method, options)
     icon_tag = "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>"
     content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datetimepicker ")
