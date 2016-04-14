@@ -63,16 +63,16 @@
     <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
       <%=f.file_field :data, :label => "File to upload" %>
       <%=f.select :person_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.person_id]}, :include_blank => true %>
-      <%=f.hidden_field :attachable_type, :value => @attachable_type %>
-      <%=f.hidden_field :attachable_id, :value => @attachable_id %>
+      <%=f.hidden_field :attachable_type, :value => @case.class.name %>
+      <%=f.hidden_field :attachable_id, :value => @case.id %>
     <% end %>
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
     <%= bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
       <%=f.property_select :type, :name => :form %>
-      <%=f.hidden_field :attachable_type, :value => @attachable_type %>
-      <%=f.hidden_field :attachable_id, :value => @attachable_id %>
+      <%=f.hidden_field :attachable_type, :value => @case.class.name %>
+      <%=f.hidden_field :attachable_id, :value => @case.id %>
     <% end %>
   <% end %>
 
@@ -135,6 +135,7 @@
                     <%=case_involvement.rsend(:person, :contact, :email) %>
                   </td>
                   <td class="right">
+                    <%=bootstrap_button "", nil, :tabindex => "0", :role => "button", "data-toggle" => "popover", "data-trigger" => "focus",  "data-placement" => "left", "data-content" => case_involvement.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
                     <%= link_to "Show", kapa_case_involvement_path(:id => case_involvement), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
@@ -165,7 +166,9 @@
                <td><%=d.name%></td>
                <td><%=d.person.full_name_ordered if d.person%></td>
                <td><%=format_date d.date %></td>
-               <td class="right"><%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+               <td class="right">
+                 <%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %>
+               </td>
              </tr>
            <% end %>
           </tbody>
@@ -192,8 +195,8 @@
                <td><%=format_date case_action.action_date %></td>
                <td><%=case_action.action_desc %> </td>
                <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
-               <td><%=bootstrap_button "", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-comment" %><%=case_action.note %></td>
                <td class="right">
+                 <%=bootstrap_button "", nil, :tabindex => "0", :role => "button", "data-toggle" => "popover", "data-trigger" => "focus",  "data-placement" => "left", "data-content" => case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
                  <%= link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
                </td>
              </tr>

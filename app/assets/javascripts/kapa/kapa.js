@@ -57,6 +57,7 @@ jQuery(document).ready(function ($) {
     $(e).find('li:eq(' + index + ') a').tab('show')
   });
 
+  $('[data-toggle="popover"]').popover();
   $('[data-toggle="tooltip"]').tooltip();
 
   $("a[rel~=popover], .has-popover").popover();
