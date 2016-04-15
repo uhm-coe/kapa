@@ -668,7 +668,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer "assignable_id",   limit: 4
       t.string  "assignable_type", limit: 255
       t.string  "task", limit: 255
-      t.datetime  "due_date"
+      t.datetime  "due_at"
       t.text     "yml",            limit: 16777215
       t.text     "xml",            limit: 16777215
       t.datetime "created_at"
@@ -729,7 +729,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     t.string   "location",          limit: 255
     t.string   "location_detail",          limit: 255
     t.datetime "incident_occurred_at"
-    t.string   "incident_category", limit: 255
     t.string   "referrer",          limit: 255
     t.string   "dept",              limit: 255
     t.boolean  "active",                          default: true

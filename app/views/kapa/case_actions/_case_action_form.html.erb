@@ -11,7 +11,6 @@
     </div>
 
     <div class="col-sm-6">
-      <%=e.select :documents, @documents.collect {|d| [d.name, "#{document_type(d)}_#{d.id}"]}, {}, {:multiple => true} %>
       <%=a.text_area "note", :style => "width:100%; height:200px" %>
     </div>
   </div>

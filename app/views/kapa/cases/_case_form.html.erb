@@ -4,8 +4,7 @@
       <%=t.property_select :type, :name => "case_type" %>
       <%=t.datetime_picker :reported_at, :label => "Case reported" %>
       <%=t.datetime_picker :closed_at, :label => "Case closed" %>
-      <%=t.static :target_resolution_at, :content => "#{@case.target_resolution_at} (#{distance_of_time_in_words(@case.target_resolution_at, DateTime.now)})", :label => "Target resolution" %>
-      <%=t.property_select :category, :name => "case_category", :include_blank => true %>
+      <%=t.property_select :category, {:name => "#{@case.type}_category" , :label => "Reported Activity"}, {:multiple => true} %>
       <%=t.property_select :dept, :include_blank => true, :label => t(:kapa_global_dept) %>
       <%=t.text_field :referrer , :label => "Referrer" %>
       <%=t.property_select :status, :name => "#{@case.type}_status", :include_blank => true %>
@@ -15,7 +14,6 @@
       <%=t.datetime_picker :incident_occurred_at, :label => "Incident Date Time" %>
       <%=t.property_select :location, :name => "case_location", :include_blank => true, :label => "Incident Location" %>
       <%=t.text_field :location_detail , :label => "Incident Location Detail" %>
-      <%=t.property_select :incident_category, {:name => "#{@case.type}_incident_category" , :label => "Reported Activity"}, {:multiple => true} %>
       <%=t.text_area :note, {:label => "Incident Situation", :cols => 54, :rows => 15} %>
     </div>
   </div>

@@ -3,6 +3,7 @@ module Kapa::CaseActionsControllerBase
 
   def show
     @case_action = Kapa::CaseAction.find(params[:id])
+    @case_action_ext = @case_action.ext
     @case = @case_action.case
     @case_involvements = @case.case_involvements
     @documents = []
@@ -36,6 +37,7 @@ module Kapa::CaseActionsControllerBase
   def update
     @action = Kapa::CaseAction.find(params[:id])
     @action.attributes = case_action_params
+    @action.update_serialized_attributes(:_ext, case_action_ext_params) if params[:case_action_ext]
 
     if @action.save
       flash[:success] = "Action was successfully updated."
@@ -59,5 +61,9 @@ module Kapa::CaseActionsControllerBase
   private
   def case_action_params
     params.require(:case_action).permit(:action_date, :action, :action_specify, :person_id, :note, :user_ids => [])
+  end
+
+  def case_action_ext_params
+    params.require(:case_action_ext).permit!
   end
 end

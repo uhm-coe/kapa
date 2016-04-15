@@ -8,8 +8,8 @@ module Kapa::CasesControllerBase
     @case_actions = @case.case_actions.eager_load(:user_assignments => {:user => :person}).order("case_actions.action_date DESC, case_actions.id DESC")
     @user_assignments = @case.user_assignments.order("user_assignments.created_at DESC")
     @documents = []
-    @documents += @case.files
-    @documents += @case.forms
+    @documents += @case.files.eager_load(:person)
+    @documents += @case.forms.eager_load(:person)
   end
 
   def update
@@ -59,7 +59,7 @@ module Kapa::CasesControllerBase
 
   private
   def case_params
-    params.require(:case).permit(:person_id, :reported_at, :closed_at, :form_id, :type, :status, :category, :priority, :location, :location_detail, :incident_occurred_at, :referrer, :dept, :note, :incident_category => [], :user_ids => [])
+    params.require(:case).permit(:person_id, :reported_at, :closed_at, :form_id, :type, :status, :priority, :location, :location_detail, :incident_occurred_at, :referrer, :dept, :note, :category => [], :user_ids => [])
   end
 
 end

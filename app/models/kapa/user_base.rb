@@ -7,6 +7,7 @@ module Kapa::UserBase
     serialize :dept, Kapa::CsvSerializer
 
     belongs_to :person
+    has_many :user_assignments
     has_many :user_timestamps
 
     validates_format_of :email, :with => /@/, :message => "is not a valid format", :allow_blank => true

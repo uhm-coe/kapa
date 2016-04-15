@@ -81,7 +81,7 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header divider">
-     Case #<%=@case.id %>: <%=@case.name %>
+     Case #<%=@case.id %>: <%=@case.name %> (Target Resolution: <%=distance_of_time_in_words(@case.target_resolution_at, DateTime.now)%>)
   </h4>
 
   <div class="tabs">
@@ -231,7 +231,7 @@
                     <%=user_assignment.task_desc %>
                   </td>
                   <td>
-                    <%=user_assignment.due_date %>
+                    <%=user_assignment.due_at %>
                   </td>
                   <td class="right">
                     <%= link_to "Show", kapa_user_assignment_path(:id => user_assignment, :return_path => url_for(:anchor => "assignments", :only_path => true)), :class => "btn btn-default btn-xs" %>

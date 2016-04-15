@@ -45,6 +45,6 @@ module Kapa::UserAssignmentsControllerBase
 
   private
   def user_assignment_params
-    params.require(:user_assignment).permit(:assignable_type, :assignable_id, :user_id, :task, :due_date)
+    params.require(:user_assignment).permit(:assignable_type, :assignable_id, :user_id, :task, :due_at)
   end
 end
