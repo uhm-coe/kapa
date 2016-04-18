@@ -18,7 +18,7 @@ module Kapa::TermBase
     def selections(options = {})
       selections = []
       terms = Kapa::Term.where(:active => true).order("sequence DESC, code")
-      terms = temrs.where(options[:condition]) if options[:condition].present?
+      terms = terms.where(options[:conditions]) if options[:conditions].present?
       terms.each { |v| selections.push [v.description, v.id] }
       return selections
     end
