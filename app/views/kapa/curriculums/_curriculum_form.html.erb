@@ -17,15 +17,15 @@
           <% end %>
         </p>
       </div>
-      <%= f.select :second_degree, [["Second Degree", "Y"]], {:label => "Degree option", :include_blank => "Regular"} %>
-      <%= f.property_select :track, {:include_blank => true, :program => @program} %>
-      <%= f.property_select :distribution, {:label =>"Program Distribution", :program => @program} %>
-      <%= f.property_select :location, {:include_blank => true, :label =>"Program Location"} %>
+      <%= f.property_select :second_degree, {:include_blank => true} %>
+      <%= f.property_select :major_primary, {:name => :major, :label => "Primary Major/Concentration", :include_code => true, :program => @program} %>
+      <%= f.property_select :major_secondary, {:name => :major, :label => "Secondary Major/Concentration", :include_code => true, :include_blank => true} %>
     </div>
 
     <div class="col-sm-6">
-      <%= f.property_select :major_primary, {:name => :major, :label => "Primary Major/Concentration", :include_code => true, :program => @program} %>
-      <%= f.property_select :major_secondary, {:name => :major, :label => "Secondary Major/Concentration", :include_code => true, :include_blank => true} %>
+      <%= f.property_select :track, {:include_blank => true, :program => @program} %>
+      <%= f.property_select :distribution, {:label =>"Program Distribution", :program => @program} %>
+      <%= f.property_select :location, {:include_blank => true, :label =>"Program Location"} %>
       <%= f.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
     </div>
   </div>

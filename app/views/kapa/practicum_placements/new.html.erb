@@ -24,7 +24,7 @@
               <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => "N/A", :label => "Program" %>
             </div>
             <div class="col-sm-2">
-              <%=f.select :type, ["OJT", "OJTB", "M", "TFA", "MUSE", "SONG"], :name => :placement_type %>
+              <%=f.property_select :type, :name => :placement_type %>
             </div>
           </div>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>

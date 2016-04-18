@@ -10,7 +10,7 @@
         </div>
       </div>
       <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>
-      <%=f.select :type, ["OJT", "OJTB", "M", "TFA", "MUSE", "SONG"], :name => :placement_type %>
+      <%=f.property_select :type, :name => :placement_type %>
       <%=f.select :practicum_site_id, @practicum_sites.collect {|c| [c.name_short, c.id]}, {:include_blank => "Not assigned...", :label => "Placement Site"}, {:class => "search-select"} %>
       <div class="form-group"><%=label :practicum_placement, :mentor_person_name, "Mentor" %>
         <p class="form-control-static">

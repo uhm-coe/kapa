@@ -56,11 +56,11 @@ module Kapa::CaseBase
       cases = cases.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
-        when 3
+        when 30
           # Do nothing
-        when 2
+        when 20
           cases = cases.depts_scope(filter.user.depts)
-        when 1
+        when 10
           cases = cases.assigned_scope(filter.user.id)
         else
           cases = cases.where("1 = 2") # Do not list any objects

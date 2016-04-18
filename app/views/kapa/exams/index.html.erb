@@ -12,7 +12,7 @@
 
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Test Scores", :modal_form_id => "import_exam_form"} do %>
     <%= bootstrap_form_for(:data, :url => import_kapa_exams_path, :html => {:multipart => true, :id => "import_exam_form"}) do |f| %>
-      <%= f.select :type, [["Praxis", "praxis"]] %></p>
+      <%= f.property_select :exam_type %></p>
       <%= f.file_field :import_file %></p>
     <% end %>
   <% end %>

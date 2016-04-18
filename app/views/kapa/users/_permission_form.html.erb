@@ -1,6 +1,3 @@
-<% level_selections = [["No Access", "0"], ["Read", "1"], ["Write", "2"], ["Manage", "3"]] %>
-<% list_selections = [["Assigned records", "1"], ["Departmental records", "2"], ["All records", "3"]] %>
-
 <%= bootstrap_fields_for :permission do |f| %>
   <table id="user_list" class="table table-striped">
     <thead>
@@ -14,13 +11,8 @@
       <% Rails.configuration.available_routes.each do |o| %>
         <tr>
           <td><h5><%=o %></h5></td>
-          <td><%= f.select "#{o}", level_selections, {:label => :no} %></td>
-          <% if %w(kapa_curriculums kapa_transition_points kapa_enrollments kapa_files kapa_forms kapa_exams
-                   kapa_advising_sessions kapa_courses kapa_course_registrations kapa_practicum_placements
-                   kapa_practicum_sites kapa_faculty_publications kapa_faculty_publication_authors
-                   kapa_faculty_service_activities kapa_faculty_awards).include? o %>
-            <td><%= f.select "#{o}_scope", list_selections, {:label => :no}, {} %></td>
-          <% end %>
+          <td><%= f.select "#{o}", Rails.configuration.user_levels, {:label => :no} %></td>
+          <td><%= f.select "#{o}_scope", Rails.configuration.user_scopes, {:label => :no}, {} %></td>
         </tr>
       <% end %>
     </tbody>

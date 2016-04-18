@@ -80,11 +80,11 @@ module Kapa::CurriculumBase
       curriculums = curriculums.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
-        when 3
+        when 30
           # do nothing
-        when 2
+        when 20
           curriculums = curriculums.depts_scope(filter.user.depts)
-        when 1
+        when 10
           curriculums = curriculums.user_id(filter.user.id)
         else
           curriculums = curriculums.where("1 = 2") #Do not list any objects

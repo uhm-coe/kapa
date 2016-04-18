@@ -52,19 +52,9 @@ module Kapa::UserBase
     self.dept
   end
 
-  def primary_dept
-    depts.first if depts.present?
-  end
-
   def status_desc
-    case status
-      when 0 then
-        "In-active"
-      when 1 then
-        "Guest"
-      when 3 then
-        "User"
-    end
+    user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
+    user_status[0]
   end
 
   def active?
@@ -88,15 +78,15 @@ module Kapa::UserBase
   end
 
   def read?(name = controller_name, options = {})
-    check_permission(1, name, options)
+    check_permission(10, name, options)
   end
 
   def write?(name = controller_name, options = {})
-    check_permission(2, name, options)
+    check_permission(20, name, options)
   end
 
   def manage?(name = controller_name, options = {})
-    check_permission(3, name, options)
+    check_permission(30, name, options)
   end
 
   def access_scope(name = controller_name, condition = nil)
@@ -126,11 +116,11 @@ module Kapa::UserBase
 
   class_methods do
     def selections(options = {})
-      users = where(:status => 3)
+      users = where(:status => 30)
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
-        ["#{u.person.last_name}, #{u.person.first_name} (#{u.department})", u.id]
+        ["#{u.person.last_name}, #{u.person.first_name} (#{u.primary_dept})", u.id]
       end
     end
 
@@ -139,7 +129,7 @@ module Kapa::UserBase
       users = Kapa::User.eager_load(:person).order("users.uid")
       users = users.where("department" => filter.department) if filter.department.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
-      users = users.where("emp_status" => filter.emp_status) if filter.emp_status.present?
+      users = users.where("users.category" => filter.category) if filter.category.present?
       users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
       return users
     end
