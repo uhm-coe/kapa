@@ -136,28 +136,31 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#case_detail">
-            Cases (<%=@cases.length%>)
+            Cases (<%=@case_involvements.length%>)
           </a>
         </h4>
       </div>
       <div id="case_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=button_to_link "New Case", new_kapa_case_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
+              <th>ID</th>
+              <th>Name</th>
               <th>Date</th>
-              <th>Type</th>
+              <th>Involvement</th>
               <th>Status</th>
-              <th><%=t(:kapa_global_user_ids) %></th>
+              <th>Sanctions</th>
               <th></th>
             </tr>
-            <% for @case in @cases %>
+            <% for @case_involvement in @case_involvements %>
               <tr>
-                <td><%=format_date @case.start_date %></td>
-                <td><%=h @case.type_desc %></td>
-                <td><%=h @case.status_desc %></td>
-                <td><%=h "User" %></td>
-                <td class="right"><%=link_to "Show", kapa_case_path(:id => @case), :class => "btn btn-default btn-xs" %></td>
+                <td><%=h @case_involvement.case.id %></td>
+                <td><%=h @case_involvement.case.name %></td>
+                <td><%=h @case_involvement.case.reported_at %></td>
+                <td><%=h @case_involvement.type_desc %></td>
+                <td><%=h @case_involvement.case.status_desc %></td>
+                <td><%=h 0 %></td>
+                <td class="right"><%=link_to "Show", kapa_case_path(:id => @case_involvement.case), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </table>

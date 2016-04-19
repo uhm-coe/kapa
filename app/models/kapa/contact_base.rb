@@ -18,4 +18,13 @@ module Kapa::ContactBase
   def email_alt
     email unless email =~ /^[A-Z0-9_%+-]+@hawaii.edu$/i
   end
+
+  def cur_address
+    "#{cur_street}<br/>#{cur_city}, #{cur_state} #{cur_postal_code}".html_safe
+  end
+
+  def per_address
+    "#{per_street}<br/>#{per_city}, #{per_state} #{per_postal_code}".html_safe
+  end
+
 end
