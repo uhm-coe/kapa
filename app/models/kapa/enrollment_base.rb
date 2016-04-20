@@ -160,11 +160,11 @@ module Kapa::EnrollmentBase
       # end
 
       row += [
-          c.rsend(:curriculum, :person, :contact, :cur_street),
-          c.rsend(:curriculum, :person, :contact, :cur_city),
-          c.rsend(:curriculum, :person, :contact, :cur_state),
-          c.rsend(:curriculum, :person, :contact, :cur_postal_code),
-          c.rsend(:curriculum, :person, :contact, :cur_phone)
+          c.rsend(:curriculum, :person, :cur_street),
+          c.rsend(:curriculum, :person, :cur_city),
+          c.rsend(:curriculum, :person, :cur_state),
+          c.rsend(:curriculum, :person, :cur_postal_code),
+          c.rsend(:curriculum, :person, :cur_phone)
       ]
 
       return row

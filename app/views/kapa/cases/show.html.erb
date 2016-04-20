@@ -129,10 +129,10 @@
                     <%=case_involvement.type_desc %>
                   </td>
                   <td>
-                    <%=case_involvement.rsend(:person, :contact, :cur_phone) %>
+                    <%=case_involvement.rsend(:person, :cur_phone) %>
                   </td>
                   <td>
-                    <%=case_involvement.rsend(:person, :contact, :email) %>
+                    <%=case_involvement.rsend(:person, :email_preferred) %>
                   </td>
                   <td class="right">
                     <%=popover_button "", case_involvement.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>

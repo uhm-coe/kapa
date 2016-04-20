@@ -5,7 +5,6 @@ module Kapa::CaseInvolvementsControllerBase
     @case_involvement = Kapa::CaseInvolvement.find(params[:id])
     @case = @case_involvement.case
     @person = @case_involvement.person
-    @contact =  @person.contact if @person.contact
   end
 
   def new
@@ -18,9 +17,8 @@ module Kapa::CaseInvolvementsControllerBase
     @case_involvement = @case.case_involvements.build(case_involvement_params)
     if params[:person]
       @person = Kapa::Person.new(person_params)
-      @contact = @person.contact ||= @person.build_contact
-      unless @person.save and @contact.save and @case_involvement.save
-        flash[:danger] = error_message_for(@person, @contact)
+      unless @person.save and @case_involvement.save
+        flash[:danger] = error_message_for(@person)
         redirect_to kapa_case_path(:id => @case, :anchor => "case_involvements") and return false
       end
       @case_involvement.person = @person
@@ -40,11 +38,10 @@ module Kapa::CaseInvolvementsControllerBase
     @case = @case_involvement.case
 
     @person = @case_involvement.person
-    @contact =  @person.contact ||= @person.build_contact
     @person.attributes = person_params if params[:person]
-    @contact.attributes = contact_params if params[:contact]
-    unless @person.save and @contact.save
-      flash[:danger] = error_message_for(@person, @contact)
+    @person.attributes = contact_params if params[:contact]
+    unless @person.save
+      flash[:danger] = error_message_for(@person)
       redirect_to kapa_case_involvement_path(:id => @case_involvement) and return false
     end
 

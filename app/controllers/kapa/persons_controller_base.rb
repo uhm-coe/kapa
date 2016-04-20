@@ -3,7 +3,6 @@ module Kapa::PersonsControllerBase
 
   def show
     @person = Kapa::Person.find(params[:id])
-    @contact = @person.contact
     #TODO add public or dept conditions
     @documents = []
     @documents += @person.files
@@ -118,6 +117,9 @@ module Kapa::PersonsControllerBase
   private
   def person_params
     params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
-                                    :email, :first_name, :other_name, :title, :gender, :status, :type => [])
+                                    :email, :first_name, :other_name, :title, :gender, :status,
+                                    :cur_phone, :mobile_phone, :email, :cur_street, :cur_city, :cur_state,
+                                    :cur_postal_code, :per_street, :per_city, :per_state, :per_postal_code,
+                                    :type => [])
   end
 end

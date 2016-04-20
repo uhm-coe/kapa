@@ -69,7 +69,7 @@ module Kapa::PracticumLogBase
        c.rsend(:person_mentor_id),
        c.rsend(:mentor, :last_name),
        c.rsend(:mentor, :first_name),
-       c.rsend(:mentor, :contact, :email),
+       c.rsend(:mentor, :email),
        c.rsend(:practicum_site, :code),
        c.rsend(:practicum_site, :name_short),
        # c.rsend(:content_area), # TODO: Used to be on practicum_assignments

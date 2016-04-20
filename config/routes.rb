@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
     resources :persons, &extra_actions
     resources :case_involvements, &extra_actions
-    resources :contacts
     resources :curriculums, &extra_actions
     resources :transition_points, &extra_actions
     resources :transition_actions

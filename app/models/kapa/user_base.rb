@@ -17,7 +17,7 @@ module Kapa::UserBase
 
     before_validation :use_email_as_uid
     before_save :format_fields
-    after_save :update_contact
+    after_save :update_person
 
     acts_as_authentic do |c|
       c.login_field = :uid
@@ -36,11 +36,8 @@ module Kapa::UserBase
     self.uid = self.uid.to_s.downcase
   end
 
-  def update_contact
-    if self.category == "local" and self.person
-      contact = self.person.contact ||= self.person.create_contact
-      contact.update_attribute(:email, self.uid)
-    end
+  def update_person
+    self.person.update_attribute(:email_alt, self.uid) if local?
   end
 
   def put_timestamp

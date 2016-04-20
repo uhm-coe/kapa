@@ -92,32 +92,6 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
 
-    create_table "contacts", force: :cascade do |t|
-      t.integer  "entity_id",       limit: 4,        null: false
-      t.string   "entity_type",     limit: 255
-      t.string   "cur_street",      limit: 255
-      t.string   "cur_city",        limit: 255
-      t.string   "cur_state",       limit: 255
-      t.string   "cur_postal_code", limit: 255
-      t.string   "per_street",      limit: 255
-      t.string   "per_city",        limit: 255
-      t.string   "per_state",       limit: 255
-      t.string   "per_postal_code", limit: 255
-      t.string   "cur_phone",       limit: 255
-      t.string   "per_phone",       limit: 255
-      t.string   "business_phone",  limit: 255
-      t.string   "mobile_phone",    limit: 255
-      t.string   "fax",             limit: 255
-      t.string   "email",           limit: 255
-      t.string   "note",            limit: 255
-      t.text     "yml",             limit: 16777215
-      t.text     "xml",             limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "contacts", ["entity_id"], name: "index_contacts_on_entity_id", using: :btree
-
     create_table "course_registrations", force: :cascade do |t|
       t.integer  "course_id",  limit: 4
       t.integer  "person_id",  limit: 4
@@ -416,28 +390,42 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
     create_table "persons", force: :cascade do |t|
-      t.string   "ssn",            limit: 255
       t.string   "id_number",      limit: 255
       t.string   "ets_id",         limit: 255
       t.string   "uid",            limit: 255
       t.string   "type",           limit: 255
-      t.string   "email",          limit: 255
-      t.string   "email_alt",      limit: 255
       t.string   "last_name",      limit: 255
       t.string   "first_name",     limit: 255
       t.string   "middle_initial", limit: 255
+      t.string   "other_name",     limit: 255
+      t.string   "title",          limit: 255
       t.date     "birth_date"
       t.string   "ethnicity",      limit: 255
       t.string   "gender",         limit: 255
-      t.string   "title",          limit: 255
-      t.string   "source",         limit: 255
-      t.string   "status",         limit: 255,      default: "N"
-      t.text     "note",           limit: 16777215
+      t.string   "ssn",            limit: 255
       t.text     "ssn_crypted",    limit: 16777215
       t.string   "ssn_agreement",  limit: 255
-      t.string   "other_name",     limit: 255
-      t.text     "yml",            limit: 16777215
-      t.text     "xml",            limit: 16777215
+      t.string   "email",          limit: 255
+      t.string   "email_alt",      limit: 255
+      t.string   "cur_phone",       limit: 255
+      t.string   "per_phone",       limit: 255
+      t.string   "business_phone",  limit: 255
+      t.string   "mobile_phone",    limit: 255
+      t.string   "cur_street",      limit: 255
+      t.string   "cur_city",        limit: 255
+      t.string   "cur_state",       limit: 255
+      t.string   "cur_postal_code", limit: 255
+      t.string   "per_street",      limit: 255
+      t.string   "per_city",        limit: 255
+      t.string   "per_state",       limit: 255
+      t.string   "per_postal_code", limit: 255
+      t.string   "fax",             limit: 255
+      t.string   "dept",            limit: 255
+      t.string   "source",          limit: 255
+      t.string   "status",          limit: 255,      default: "N"
+      t.text     "note",            limit: 16777215
+      t.text     "yml",             limit: 16777215
+      t.text     "xml",             limit: 16777215
       t.datetime "created_at"
       t.datetime "updated_at"
     end

@@ -5,7 +5,6 @@ module Kapa::PersonBase
     self.table_name = :persons
     serialize :type, Kapa::CsvSerializer
 
-    has_one :contact, :as => :entity, :autosave => true
     has_many :curriculums
     has_many :users
     has_many :forms
@@ -25,11 +24,22 @@ module Kapa::PersonBase
     #  validates_length_of :ssn, :is => 9, :allow_blank => true
     #  validates_numericality_of :ssn, :allow_blank => true
 
-    before_save :format_fields
+    before_save :format_fields, :format_ssn
   end
+
 
   def format_fields
     self.id_number = nil if self.id_number.blank?
+    self.attributes().each_pair do |k, v|
+     if v
+       self.[]=(k, v.gsub(/\D/, "")) if k =~ /(phone$)/
+       self.[]=(k, v.to_s.split(' ').map { |w| w.capitalize }.join(' ')) if k =~ /(street$)|(city$)/
+       self.[]=(k, v.to_s.upcase) if k =~ /(state$)/
+     end
+    end
+  end
+
+  def format_ssn
     ssn_formatted = self.ssn.gsub(/\D/, "") if self.ssn
     unless ssn_formatted.blank?
       self.ssn_crypted = Kapa::Person.encrypt(ssn_formatted)
@@ -47,6 +57,14 @@ module Kapa::PersonBase
 
   def full_name_short
     "#{first_name} #{last_name[0]}"
+  end
+
+  def cur_address
+    "#{cur_street}<br/>#{cur_city}, #{cur_state} #{cur_postal_code}".html_safe
+  end
+
+  def per_address
+    "#{per_street}<br/>#{per_city}, #{per_state} #{per_postal_code}".html_safe
   end
 
   def ethnicity_desc
@@ -93,8 +111,8 @@ module Kapa::PersonBase
   def email_preferred
     if self.email.present?
       self.email
-    elsif self.contact
-      self.contact.email
+    else
+      self.email_alt
     end
   end
 
@@ -115,7 +133,7 @@ module Kapa::PersonBase
         return []
       end
 
-      persons = Kapa::Person.eager_load(:contact).where("status <> 'D'")
+      persons = Kapa::Person.where("status <> 'D'")
       persons = persons.where(:status => "V") if options[:verified]
 
       if filter.key =~ Regexp.new(Rails.configuration.regex_id_number)
@@ -123,7 +141,7 @@ module Kapa::PersonBase
       elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
         persons = persons.where(:email => filter.key)
       elsif filter.key =~ /\d+/
-        persons = persons.column_matches("contacts.cur_phone" => filter.key, "contacts.per_phone" => filter.key, "contacts.mobile_phone" => filter.key)
+        persons = persons.column_matches("cur_phone" => filter.key, "per_phone" => filter.key, "mobile_phone" => filter.key)
       elsif filter.key =~ /\w+,\s*\w+/
         keys = filter.key.split(/,\s*/)
         persons = persons.column_matches(:last_name => keys[0], :first_name => keys[1])

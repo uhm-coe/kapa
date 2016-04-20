@@ -55,7 +55,7 @@
 
     <div class="col-sm-6">
       <div class="panel panel-default ">
-        <div class="panel-heading"><h4 class="panel-title">Personal Profile</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">Profile</h4></div>
         <div class="panel-body">
           <div class = "text-right"><%=button_to_link "Edit Profile", nil, "data-toggle" => "modal", "data-target" => "#person_profile_modal", :icon => "glyphicon-pencil" %></div>
           <dl class="dl-horizontal">
@@ -72,7 +72,7 @@
             <dt><strong>Other Name:</strong></dt>
             <dd><%= @person.other_name %></dd>
 
-            <dt><strong>Borth Date:</strong></dt>
+            <dt><strong>Birth Date:</strong></dt>
             <dd><%= @person.birth_date %></dd>
 
             <dt><strong>Title:</strong></dt>
@@ -81,10 +81,10 @@
             <dt><strong>Gender:</strong></dt>
             <dd><%= @person.gender %></dd>
 
-            <dt><strong>Peron Type:</strong></dt>
+            <dt><strong>Person Type:</strong></dt>
             <dd><%= @person.type.join(", ") %></dd>
 
-            <dt><strong>Peron Status:</strong></dt>
+            <dt><strong>Person Status:</strong></dt>
             <dd><%= @person.status %></dd>
           </dl>
         </div>
@@ -97,17 +97,17 @@
         <div class="panel-body">
           <div class = "text-right"><%=button_to_link "Edit Contact", nil, "data-toggle" => "modal", "data-target" => "#person_contact_modal", :icon => "glyphicon-pencil" %></div>
           <dl class="dl-horizontal">
-            <dt><strong>Phone:</strong></dt>
-            <dd><%= @person.rsend(:contact, :cur_phone) %></dd>
+            <dt><strong>Current Phone:</strong></dt>
+            <dd><%= @person.cur_phone %></dd>
 
             <dt><strong>Mobile Phone:</strong></dt>
-            <dd><%= @person.rsend(:contact, :mobile_phone) %></dd>
+            <dd><%= @person.mobile_phone %></dd>
 
             <dt><strong>Current Address:</strong></dt>
-            <dd><%= @person.rsend(:contact, :cur_address) %></dd>
+            <dd><%= @person.cur_address %></dd>
 
             <dt><strong>Permanent Address:</strong></dt>
-            <dd><%= @person.rsend(:contact, :per_address) %></dd>
+            <dd><%= @person.per_address %></dd>
           </dl>
         </div>
       </div>
@@ -123,10 +123,10 @@
 <% end if @current_user.read? :kapa_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
-  <%= bootstrap_form_for :contact, :url => kapa_contact_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
-    <%= render :partial => "kapa/persons/contact_form", :locals => {:object_name => :contact} %>
+  <%= bootstrap_form_for :contact, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
+    <%= render :partial => "kapa/persons/contact_form" %>
   <% end %>
-<% end if @current_user.read? :kapa_contacts %>
+<% end if @current_user.read? :kapa_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
   <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>

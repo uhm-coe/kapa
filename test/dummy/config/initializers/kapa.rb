@@ -19,7 +19,6 @@ Rails.configuration.items_per_page_selections = [10, 20, 30, 40, 50]
 # Available routes
 Rails.configuration.available_routes = %w{
   kapa_persons
-  kapa_contacts
   kapa_curriculums
   kapa_transition_points
   kapa_transition_actions

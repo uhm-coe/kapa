@@ -52,7 +52,7 @@ module Kapa::PracticumPlacementBase
        :mentor_person_id => [:mentor_person_id],
        :mentor_last_name => [:mentor, :last_name],
        :mentor_first_name => [:mentor, :first_name],
-       :mentor_email => [:mentor, :contact, :email],
+       :mentor_email => [:mentor, :email],
        :site_code => [:practicum_site, :code],
        :site_name => [:practicum_site, :name],
        # :total_mentors,
