@@ -68,7 +68,7 @@ module Kapa::FilesControllerBase
     else
       flash[:danger] = error_message_for(@file)
     end
-    redirect_to kapa_person_path(:id => @file.person_id, :anchor => "document")
+    render(:js => "close();")
   end
 
   def file_param

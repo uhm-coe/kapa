@@ -93,7 +93,8 @@ module Kapa::KapaModelBase
       where(conditions)
     end
 
-    def depts_scope(depts, exception = nil)
+    def depts_scope(depts, user_id = nil)
+      exception = "user_assignments.user_id = #{user_id}" if user_id
       self.column_contains({"#{self.table_name}.dept" => depts}, exception)
     end
 

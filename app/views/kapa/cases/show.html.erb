@@ -194,7 +194,7 @@
              <tr>
                <td><%=format_date case_action.action_date %></td>
                <td><%=case_action.action_desc %> </td>
-               <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
+               <td><%=case_action.users.first.person.full_name if case_action.users.first %></td>
                <td class="right">
                  <%=popover_button "", case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
                  <%=link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>

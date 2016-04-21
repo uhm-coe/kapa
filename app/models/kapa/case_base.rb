@@ -31,8 +31,8 @@ module Kapa::CaseBase
   end
 
   def name
-    reporting_party = self.case_involvements.eager_load(:person).where(:type => "CO").first
-    responding_party = self.case_involvements.eager_load(:person).where(:type => "RE").first
+    reporting_party = self.case_involvements.where(:type => "CO").first
+    responding_party = self.case_involvements.where(:type => "RE").first
     "#{reporting_party ? reporting_party.person.full_name_ordered : "?"} vs. #{responding_party ? responding_party.person.full_name_ordered : "?"}"
   end
 
@@ -52,14 +52,10 @@ module Kapa::CaseBase
     return Kapa::Property.lookup_description(:case, type)
   end
 
-  def target_resolution_at
-    reported_at + 60.days
-  end
-
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      cases = Kapa::Case.eager_load([:user_assignments]).order("cases.id DESC")
+      cases = Kapa::Case.eager_load([:user_assignments, {:case_involvements => :person}, :last_case_action]).order("cases.id DESC")
       cases = cases.where("cases.status" => filter.case_status) if filter.case_status.present?
       cases = cases.where("cases.type" => filter.case_type.to_s) if filter.case_type.present?
       cases = cases.where("cases.id" => filter.case_id.to_s) if filter.case_id.present?
@@ -69,7 +65,7 @@ module Kapa::CaseBase
         when 30
           # Do nothing
         when 20
-          cases = cases.depts_scope(filter.user.depts)
+          cases = cases.depts_scope(filter.user.depts, filter.user.id)
         when 10
           cases = cases.assigned_scope(filter.user.id)
         else

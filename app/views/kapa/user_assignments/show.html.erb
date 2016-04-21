@@ -6,6 +6,6 @@
 
   <%= bootstrap_form_for(:user_assignment, :url => kapa_user_assignment_path(:id => @user_assignment, :return_path => params[:return_path]), :html => {:method => :put}) do %>
     <%= render :partial => "user_assignment_form" %>
-    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_user_assignment_path(:id => @user_assignment)} if @current_user.write? %>
+    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_user_assignment_path(:id => @user_assignment, :return_path => params[:return_path])} if @current_user.write? %>
   <% end %>
 <% end %>

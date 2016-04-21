@@ -10,7 +10,7 @@
   <p class="text-center">
     <%=button_to_link "Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download" %>
     <% if @current_user.write? %>
-      <%=button_to_link "Delete", kapa_file_path(:id => @file), :method => :delete, "data-confirm" => "Proceed with deletion?", :icon => "glyphicon-trash" %>
+      <%=button_to_link "Delete", kapa_file_path(:id => @file, :return_path => params[:return_path]), :method => :delete, "data-confirm" => "Proceed with deletion?", :icon => "glyphicon-trash" %>
       <%=button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_file_dialog", :icon => "glyphicon-wrench" %>
     <% end %>
   </p>
