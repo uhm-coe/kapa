@@ -54,6 +54,13 @@ module Kapa::PersonBase
     return self.status == "D"
   end
 
+  def active_curriculums(options = {})
+    curriculums = self.curriculums
+    curriculums = curriculums.includes(:program) if options[:includes] == :program
+    curriculums = curriculums.order(:id => :desc).select { |c| c.deserialize(:journey, :as => OpenStruct).active == "Y" }
+    return curriculums
+  end
+
   def merge(another_person, options = {})
     ActiveRecord::Base.transaction do
       #Merge attributes to this person
