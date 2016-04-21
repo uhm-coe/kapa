@@ -3,6 +3,7 @@ module Kapa::AdvisingSessionBase
 
   included do
     belongs_to :person
+    belongs_to :term
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 

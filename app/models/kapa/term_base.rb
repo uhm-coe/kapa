@@ -5,6 +5,7 @@ module Kapa::TermBase
     has_many :transition_points
     has_many :forms
     has_many :courses
+    has_many :advising_sessions
     validates_presence_of :code, :description
     before_create :set_id
   end

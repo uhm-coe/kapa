@@ -30,6 +30,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer  "curriculum_id",            limit: 4
       t.integer  "user_primary_id",          limit: 4
       t.integer  "user_secondary_id",        limit: 4
+      t.integer  "term_id",                  limit: 4
     end
 
     add_index "advising_sessions", ["curriculum_id"], name: "index_advising_sessions_on_curriculum_id", using: :btree
@@ -147,6 +148,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "dept",            limit: 255
       t.integer  "user_id",         limit: 4
       t.integer  "term_id",         limit: 4
+      t.integer  "credits",         limit: 4
     end
 
     add_index "courses", ["academic_period", "crn"], name: "index_courses_on_academic_period_and_crn", unique: true, using: :btree
