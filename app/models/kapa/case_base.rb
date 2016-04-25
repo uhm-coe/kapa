@@ -14,19 +14,26 @@ module Kapa::CaseBase
                                          limit 1)")},
             :class_name => "CaseAction"
 
-    has_many :case_persons
+    has_many :case_involvements
+    has_many :cases, :through => :case_involvements
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
     has_many :files, :as => :attachable
     has_many :forms, :as => :attachable
 
-    validates_presence_of :start_date, :type
-
+    serialize :category, Kapa::CsvSerializer
+    validates_presence_of :reported_at, :type
     before_save :update_status_timestamp
   end
 
   def update_status_timestamp
     self.status_updated_at = DateTime.now if self.status_changed?
+  end
+
+  def name
+    reporting_party = self.case_involvements.where(:type => "CO").first
+    responding_party = self.case_involvements.where(:type => "RE").first
+    "#{reporting_party ? reporting_party.person.full_name_ordered : "?"} vs. #{responding_party ? responding_party.person.full_name_ordered : "?"}"
   end
 
   def category_desc
@@ -48,8 +55,7 @@ module Kapa::CaseBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      cases = Kapa::Case.eager_load([:person, :curriculum, {:curriculum => :program}, :user_assignments]).order("cases.id DESC")
-#      cases = cases.where("cases.term_id" => filter.term_id) if filter.term_id.present?
+      cases = Kapa::Case.eager_load([:user_assignments, {:case_involvements => :person}, :last_case_action]).order("cases.id DESC")
       cases = cases.where("cases.status" => filter.case_status) if filter.case_status.present?
       cases = cases.where("cases.type" => filter.case_type.to_s) if filter.case_type.present?
       cases = cases.where("cases.id" => filter.case_id.to_s) if filter.case_id.present?
@@ -59,7 +65,7 @@ module Kapa::CaseBase
         when 30
           # Do nothing
         when 20
-          cases = cases.depts_scope(filter.user.depts)
+          cases = cases.depts_scope(filter.user.depts, filter.user.id)
         when 10
           cases = cases.assigned_scope(filter.user.id)
         else
@@ -72,12 +78,12 @@ module Kapa::CaseBase
       {:id_number => [:person, :id_number],
        :last_name => [:person, :last_name],
        :first_name => [:person, :first_name],
-       :cur_street => [:person, :contact, :cur_street],
-       :cur_city => [:person, :contact, :cur_city],
-       :cur_state => [:person, :contact, :cur_state],
-       :cur_postal_code => [:person, :contact, :cur_postal_code],
-       :cur_phone => [:person, :contact, :cur_phone],
-       :email => [:person, :contact, :email],
+       :cur_street => [:person, :cur_street],
+       :cur_city => [:person, :cur_city],
+       :cur_state => [:person, :cur_state],
+       :cur_postal_code => [:person, :cur_postal_code],
+       :cur_phone => [:person, :cur_phone],
+       :email => [:person, :email],
        :case_number => [:id],
        :type_desc => [:type_desc],
        :location_desc => [:location],

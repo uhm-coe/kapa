@@ -5,7 +5,7 @@ module Kapa::PracticumPlacementsControllerBase
     @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
     @practicum_logs = @practicum_placement.practicum_logs
     @person = @practicum_placement.person
-    @mentors = Kapa::Person.eager_load(:contact).where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
+    @mentors = Kapa::Person.where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
     @curriculums = @person.curriculums
     @practicum_sites = Kapa::PracticumSite.select("id, name_short")
   end
@@ -88,10 +88,8 @@ module Kapa::PracticumPlacementsControllerBase
     end
     person.last_name = params[:mentor][:last_name]
     person.first_name = params[:mentor][:first_name]
+    contact.email_alt = params[:mentor][:email].downcase
     person.save
-    contact = person.contact ||= person.build_contact
-    contact.email = params[:mentor][:email].downcase
-    contact.save
     mentor = {}
     mentor[:person_id] = person.id
     mentor[:full_name] = person.full_name

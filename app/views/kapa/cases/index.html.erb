@@ -25,8 +25,9 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
-      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
 
@@ -35,10 +36,9 @@
     <tr>
       <th>Case #</th>
       <th>Name</th>
-      <th>Reported Date</th>
+      <th>Reported</th>
       <th>Latest Action</th>
       <th>Status</th>
-      <th><%=t(:kapa_global_user_ids) %></th>
       <th><%=t(:kapa_global_dept) %></th>
       <th></th>
     </tr>
@@ -47,11 +47,10 @@
     <% for @case in @cases %>
       <tr>
         <td><%= @case.id %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(@case.person.full_name), kapa_person_path(:id => @case.person_id) %></td>
-        <td><%= h @case.start_date %></td>
+        <td><%= @case.name %></td>
+        <td><%= h @case.reported_at %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
         <td><%= h @case.status_desc %></td>
-        <td><%= h @case.rsend(:users, :first, :uid) %></td>
         <td><%= h @case.dept %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => @case}, :class => "btn btn-default btn-xs" %></td>
       </tr>

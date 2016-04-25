@@ -1,6 +1,4 @@
 <% content_for(:box1) do %>
-  <%=render :partial => "/kapa/persons/person_detail" %>
-
   <h4 class="section-header divider">
     <%= link_to "", kapa_case_path(:id => @case, :anchor => "actions"), :class => "glyphicon glyphicon-chevron-left" %>
     Case #<%=@case.id %> Action

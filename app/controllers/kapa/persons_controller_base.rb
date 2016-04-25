@@ -3,7 +3,6 @@ module Kapa::PersonsControllerBase
 
   def show
     @person = Kapa::Person.find(params[:id])
-    @contact = @person.contact
     #TODO add public or dept conditions
     @documents = []
     @documents += @person.files
@@ -11,7 +10,7 @@ module Kapa::PersonsControllerBase
     @documents += @person.exams
     @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @cases = @person.cases.order("start_date DESC")
+    @case_involvements = @person.case_involvements.eager_load(:case).order("cases.reported_at DESC")
     @course_registrations = @person.course_registrations.eager_load(:course => :term).order("terms.sequence DESC")
     @practicum_placements = @person.practicum_placements
     @publications = @person.faculty_publications
@@ -118,6 +117,9 @@ module Kapa::PersonsControllerBase
   private
   def person_params
     params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
-                                    :email, :first_name, :other_name, :title, :gender, :status)
+                                    :email, :first_name, :other_name, :title, :gender, :status,
+                                    :cur_phone, :mobile_phone, :email, :cur_street, :cur_city, :cur_state,
+                                    :cur_postal_code, :per_street, :per_city, :per_state, :per_postal_code,
+                                    :type => [])
   end
 end

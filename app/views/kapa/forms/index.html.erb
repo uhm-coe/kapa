@@ -17,8 +17,8 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=bootstrap_button "Download", {:action => :export}, :icon => "glyphicon-download" %>
-      <%=bootstrap_button "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
 

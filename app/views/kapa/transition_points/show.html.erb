@@ -43,7 +43,7 @@
         <%= bootstrap_form_for :transition_point, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :transition_point), :html => {:method => :put} do %>
           <%= render :partial => "transition_point_form" %>
           <%= render :layout => "/kapa/layouts/controls" do %>
-            <%=bootstrap_button "Move", nil, "data-toggle" => "modal", "data-target" => "#move_transition_point_dialog", :icon => "glyphicon-move" if @current_user.manage? %>
+            <%=button_to_link "Move", nil, "data-toggle" => "modal", "data-target" => "#move_transition_point_dialog", :icon => "glyphicon-move" if @current_user.manage? %>
           <% end if @current_user.write? %>
         <% end %>
       </div>

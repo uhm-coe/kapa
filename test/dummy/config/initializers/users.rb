@@ -19,8 +19,6 @@ Rails.configuration.roles["None"] = Rails.configuration.available_routes.each_wi
 Rails.configuration.roles["Adviser"] = {
     kapa_persons: '20',
     kapa_persons_scope: '20',
-    kapa_contacts: '20',
-    kapa_contacts_scope: '20',
     kapa_curriculums: '20',
     kapa_curriculums_scope: '20',
     kapa_transition_points: '20',

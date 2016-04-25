@@ -29,16 +29,16 @@ module Kapa::KapaHelper
     #  options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
     #end
 
-    if options[:locked]
-      if selection
-        description = selection[0]
-      else
-        description = current_value
-      end
-      tag = hidden_field(object_name, method, :value => current_value)
-      tag << text_field(object_name, method, :value => description.to_s, :size => description.to_s.length + 5, :disabled => true)
-      return tag.html_safe
-    end
+    #if options[:locked]
+    #  if selection
+    #    description = selection[0]
+    #  else
+    #    description = current_value
+    #  end
+    #  tag = hidden_field(object_name, method, :value => current_value)
+    #  tag << text_field(object_name, method, :value => description.to_s, :size => description.to_s.length + 5, :disabled => true, :class => "form-control #{options[:class]}")
+    #  return tag.html_safe
+    #end
 
     select(object_name, method, selections, options, html_options)
   end
@@ -60,7 +60,13 @@ module Kapa::KapaHelper
   def user_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::User
     options[:model_options] = options
-    model_select(object_name, method, options, html_options)
+
+    if options[:lock]
+      tag = content_tag(:p, @current_user.person.full_name, :class => "form-control-static")
+      tag << hidden_field(object_name, method, :value => @current_user.id, :name => "#{object_name}[#{method}][]")
+    else
+      model_select(object_name, method, options, html_options)
+    end
   end
 
   def person_select(object_name, method, options = {}, html_options = {})
@@ -99,15 +105,14 @@ module Kapa::KapaHelper
     select(object_name, method, selections, options, html_options)
   end
 
-  def date_picker(object_name, method, options = {}, html_options = {})
-    object = instance_variable_get("@#{object_name}".delete("[]"))
-    options[:class] = "kapa-datepicker form-control #{options[:class]}"
-    options[:size] = nil
-    options[:readonly] = true
-    options["data-provide"] = "datepicker"
-    options[:id] = "#{object_name}_#{method}"
-    options[:id] << "_#{object.object_id}" if object
-    text_field(object_name, method, options)
+  def datetime_picker(object_name, method, options = {})
+    input_tag = text_field(object_name, method, options)
+    icon_tag = "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>"
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => options[:date_only] ? "input-group date datepicker" : "input-group date datetimepicker")
+  end
+
+  def date_picker(object_name, method, options = {})
+    datetime_picker(object_name, method, options.merge(:date_only => true))
   end
 
   def format_date(date)
@@ -142,7 +147,7 @@ module Kapa::KapaHelper
     content_tag :abbr, abbr_str, :title => str, "data-toggle" => "tooltip", "data-placement" => "right"
   end
 
-  def document_icon(document)
+  def document_type(document)
      if document.is_a? Kapa::File
       return "File"
      elsif document.is_a? Kapa::Form
@@ -160,6 +165,28 @@ module Kapa::KapaHelper
      elsif document.is_a? Kapa::Exam
       return kapa_exam_path(:id => document)
      end
+  end
+
+  def button_to_link(name = nil, options = nil, html_options = nil, &block)
+    options = "javascript:void(0)" if options.nil?
+    name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
+    if html_options[:class]
+      html_options[:class] = "btn #{html_options[:class]}"
+    else
+      html_options[:class] = "btn btn-default"
+    end
+    link_to(name.html_safe, options, html_options, &block)
+  end
+
+  def popover_button(name = nil, content = nil, html_options = nil, &block)
+    html_options[:tabindex] = "0"
+    html_options[:role] = "button"
+    html_options["data-content"] = content
+    html_options["data-toggle"] = "popover"
+    html_options["data-trigger"] = "focus"
+    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
+    html_options[:title] = html_options[:title] if html_options[:title]
+    button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)
   end
 
   private

@@ -12,17 +12,6 @@ module Kapa::BootstrapFormHelper
     fields_for(record_name, nil, options.merge(:builder => BootstrapFormBuilder), &proc)
   end
 
-  def bootstrap_button(name = nil, options = nil, html_options = nil, &block)
-    options = "javascript:void(0)" if options.nil?
-    name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
-    if html_options[:class]
-      html_options[:class] = "btn #{html_options[:class]}"
-    else
-      html_options[:class] = "btn btn-default"
-    end
-    link_to(name.html_safe, options, html_options, &block)
-  end
-
   def bootstrap_flash(options = {})
     flash_messages = []
     flash.each do |type, message|
@@ -55,7 +44,7 @@ module Kapa::BootstrapFormHelper
     def self.build_label_field(name)
       define_method(name) do |method, *args|
         case name.to_s
-          when /(field$)|(area$)/
+          when /(field$)|(area$)|(picker$)/
             options = args.first.is_a?(Hash) ? args.first : {}
             tag = @template.send(name, @object_name, method, options.merge(:class => "form-control #{options[:class]}"))
 
@@ -68,11 +57,6 @@ module Kapa::BootstrapFormHelper
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
             tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
-
-          when "date_picker"
-            options = args.first.is_a?(Hash) ? args.first : {}
-            html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control date-select #{html_options[:class]}"))
 
           when "check_box"
             options = args.first.is_a?(Hash) ? args.first : {}
@@ -91,7 +75,6 @@ module Kapa::BootstrapFormHelper
           else
             tag = @template.send(name, @object_name, method, *args)
         end
-
 
         if options[:label].kind_of?(Hash)
           label_options = options[:label]
@@ -115,7 +98,7 @@ module Kapa::BootstrapFormHelper
       end
     end
 
-    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_picker person_select}
+    helpers = %w{text_field password_field text_area file_field check_box radio_button select static property_select term_select program_select history_select user_select date_picker datetime_picker person_select}
     helpers.each do |name|
       build_label_field(name)
     end

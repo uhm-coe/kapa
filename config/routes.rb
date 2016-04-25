@@ -14,8 +14,7 @@ Rails.application.routes.draw do
     resource :user_session
     get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
     resources :persons, &extra_actions
-    resources :case_persons, &extra_actions
-    resources :contacts
+    resources :case_involvements, &extra_actions
     resources :curriculums, &extra_actions
     resources :transition_points, &extra_actions
     resources :transition_actions
@@ -35,6 +34,7 @@ Rails.application.routes.draw do
     resources :practicum_logs, &extra_actions
     resources :practicum_sites, &extra_actions
     resources :users, &extra_actions
+    resources :user_assignments, &extra_actions
     resources :terms, &extra_actions
     resources :programs, &extra_actions
     resources :program_offers

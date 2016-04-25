@@ -5,7 +5,6 @@ module Kapa::FileBase
     belongs_to :person
     belongs_to :attachable, :polymorphic => true
     has_attached_file :data
-    validates_presence_of :person_id
   end
 
   def url(*args)
@@ -41,12 +40,12 @@ module Kapa::FileBase
       {:id_number => [:person, :id_number],
        :last_name => [:person, :last_name],
        :first_name => [:person, :first_name],
-       :cur_street => [:person, :contact, :cur_street],
-       :cur_city => [:person, :contact, :cur_city],
-       :cur_state => [:person, :contact, :cur_stateperson, :contact, :cur_state],
-       :cur_postal_code => [:person, :contact, :cur_postal_code],
-       :cur_phone => [:person, :contact, :cur_phone],
-       :email => [:person, :contact, :email],
+       :cur_street => [:person, :cur_street],
+       :cur_city => [:person, :cur_city],
+       :cur_state => [:person, :cur_stateperson, :contact, :cur_state],
+       :cur_postal_code => [:person, :cur_postal_code],
+       :cur_phone => [:person, :cur_phone],
+       :email => [:person, :email],
        :updated => [:updated_at]}
     end
   end

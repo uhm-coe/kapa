@@ -7,6 +7,7 @@ module Kapa::UserBase
     serialize :dept, Kapa::CsvSerializer
 
     belongs_to :person
+    has_many :user_assignments
     has_many :user_timestamps
 
     validates_format_of :email, :with => /@/, :message => "is not a valid format", :allow_blank => true
@@ -16,7 +17,7 @@ module Kapa::UserBase
 
     before_validation :use_email_as_uid
     before_save :format_fields
-    after_save :update_contact
+    after_save :update_person
 
     acts_as_authentic do |c|
       c.login_field = :uid
@@ -35,11 +36,8 @@ module Kapa::UserBase
     self.uid = self.uid.to_s.downcase
   end
 
-  def update_contact
-    if self.category == "local" and self.person
-      contact = self.person.contact ||= self.person.create_contact
-      contact.update_attribute(:email, self.uid)
-    end
+  def update_person
+    self.person.update_attribute(:email_alt, self.uid) if local?
   end
 
   def put_timestamp
@@ -54,7 +52,7 @@ module Kapa::UserBase
 
   def status_desc
     user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
-    user_status[0]
+    user_status[0] if user_status
   end
 
   def active?
@@ -120,7 +118,7 @@ module Kapa::UserBase
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
-        ["#{u.person.last_name}, #{u.person.first_name} (#{u.primary_dept})", u.id]
+        ["#{u.person.full_name} (#{u.primary_dept})", u.id]
       end
     end
 

@@ -1,0 +1,13 @@
+<%= bootstrap_fields_for :user_assignment do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.user_select :user_id %>
+      <%=f.property_select :task %>
+      <%=f.datetime_picker :due_at %>
+      <%=f.hidden_field :assignable_type %>
+      <%=f.hidden_field :assignable_id %>
+    </div>
+    <div class="col-sm-6">
+    </div>
+  </div>
+<% end %>

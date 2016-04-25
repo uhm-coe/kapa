@@ -41,25 +41,80 @@
           lookup_person($(this).val());
          }
       });
-
     });
   </script>
 <% end %>
 
 <h3>
-  <div class="btn-group person-detail">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <span class="glyphicon glyphicon-user"></span><span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <% if  @current_user.read?(:kapa_persons) %><li><a href="#" data-toggle="modal" data-target="#person_profile_modal">Show Profile</a></li><% end %>
-      <% if  @current_user.read?(:kapa_contacts) %><li><a href="#" data-toggle="modal" data-target="#person_contact_modal">Show Contacts</a></li><% end %>
-      <li><%=mail_to @person.email, "Send Email" %></li>
-      <li><%=link_to "External Site", nil%></li>
-    </ul>
-  </div>
+  <%=button_to_link "", "#person_detail_panel", "data-toggle" => "collapse", "aria-expanded" => false, "aria-controls" => "person_detail_panel", :icon => "glyphicon-user" %></li>
   <%= link_to_if @current_user.read?(:kapa_persons), @person.full_name, kapa_person_path(:action => :show, :id => @person) %>
 </h3>
+
+<div class="collapse" id="person_detail_panel">
+  <div class="row">
+
+    <div class="col-sm-6">
+      <div class="panel panel-default ">
+        <div class="panel-heading"><h4 class="panel-title">Profile</h4></div>
+        <div class="panel-body">
+          <div class = "text-right"><%=button_to_link "Edit Profile", nil, "data-toggle" => "modal", "data-target" => "#person_profile_modal", :icon => "glyphicon-pencil" %></div>
+          <dl class="dl-horizontal">
+
+            <dt><strong>ID Number:</strong></dt>
+            <dd><%= @person.id_number %></dd>
+
+            <dt><strong>Campus Email:</strong></dt>
+            <dd><%=mail_to @person.email %></dd>
+
+            <dt><strong>Other Email:</strong></dt>
+            <dd><%=mail_to @person.email_alt %></dd>
+
+            <dt><strong>Other Name:</strong></dt>
+            <dd><%= @person.other_name %></dd>
+
+            <dt><strong>Birth Date:</strong></dt>
+            <dd><%= @person.birth_date %></dd>
+
+            <dt><strong>Title:</strong></dt>
+            <dd><%= @person.title %></dd>
+
+            <dt><strong>Gender:</strong></dt>
+            <dd><%= @person.gender %></dd>
+
+            <dt><strong>Person Type:</strong></dt>
+            <dd><%= @person.type.join(", ") %></dd>
+
+            <dt><strong>Person Status:</strong></dt>
+            <dd><%= @person.status %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="panel panel-default ">
+        <div class="panel-heading"><h4 class="panel-title">Contact</h4></div>
+        <div class="panel-body">
+          <div class = "text-right"><%=button_to_link "Edit Contact", nil, "data-toggle" => "modal", "data-target" => "#person_contact_modal", :icon => "glyphicon-pencil" %></div>
+          <dl class="dl-horizontal">
+            <dt><strong>Current Phone:</strong></dt>
+            <dd><%= @person.cur_phone %></dd>
+
+            <dt><strong>Mobile Phone:</strong></dt>
+            <dd><%= @person.mobile_phone %></dd>
+
+            <dt><strong>Current Address:</strong></dt>
+            <dd><%= @person.cur_address %></dd>
+
+            <dt><strong>Permanent Address:</strong></dt>
+            <dd><%= @person.per_address %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Profile", :modal_form_id => "person_form"} do %>
   <%= bootstrap_form_for :person, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
@@ -68,14 +123,15 @@
 <% end if @current_user.read? :kapa_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
-  <%= bootstrap_form_for :contact, :url => kapa_contact_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
-    <%= render :partial => "kapa/persons/contact_form", :locals => {:object_name => :contact} %>
+  <%= bootstrap_form_for :contact, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
+    <%= render :partial => "kapa/persons/contact_form" %>
   <% end %>
-<% end if @current_user.read? :kapa_contacts %>
+<% end if @current_user.read? :kapa_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
   <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
     <%=f.file_field :data, :label => "File to upload" %>
+    <%=f.hidden_field :person_id, :value => @person.id %>
     <%=f.hidden_field :attachable_type, :value => @attachable_type %>
     <%=f.hidden_field :attachable_id, :value => @attachable_id %>
   <% end %>
@@ -84,6 +140,7 @@
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
   <%= bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
     <%=f.property_select :type, :name => :form %>
+    <%=f.hidden_field :person_id, :value => @person.id %>
     <%=f.hidden_field :attachable_type, :value => @attachable_type %>
     <%=f.hidden_field :attachable_id, :value => @attachable_id %>
   <% end %>

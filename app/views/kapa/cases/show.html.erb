@@ -3,7 +3,7 @@
     jQuery(document).ready(function($) {
       function get_table_row(person) {
         console.log(person);
-        var tag = '<tr><td>#full_name</td><td>#email</td><td><div><input type="radio" value="#person_id" name="case_person[person_id]"><label></div></td></tr>'
+        var tag = '<tr><td>#full_name</td><td>#email</td><td><div><input type="radio" value="#person_id" name="case_involvement[person_id]"><label></div></td></tr>'
         tag = tag.replace('#person_id', person['person_id']);
         tag = tag.replace('#full_name', person['full_name']);
         tag = tag.replace('#email', person['email'] ? person['email'] : 'none');
@@ -14,10 +14,17 @@
         $.getJSON('<%=kapa_persons_path(:format => :json) %>',
         $('#search_person_form').serialize(),
         function(data) {
+          $('#persons_search_result thead').html('');
           $('#persons_search_result tbody').html('');
           var persons = data['persons'];
-          for(i = 0; i < persons.length; i++) {
-            $('#persons_search_result tbody').append(get_table_row(persons[i]));
+          if(persons.length > 0) {
+            $('#persons_search_result thead').append('<tr><th>Name</th><th>E-mail</th><th>Select</th></tr>');
+            for(i = 0; i < persons.length; i++) {
+              $('#persons_search_result tbody').append(get_table_row(persons[i]));
+            }
+          }
+          else {
+            $('#persons_search_result thead').html('Not found. <%=link_to "I will enter a person manually.", new_kapa_case_involvement_path(:case_id => @case) %>');
           }
         });
         event.preventDefault();
@@ -27,12 +34,13 @@
 <% end %>
 
 <% content_for(:dialog) do %>
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_case_person_dialog", :modal_title => "Add Person", :modal_form_id => "add_case_person_form" } do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_case_involvement_dialog", :modal_title => "Add Person", :modal_form_id => "add_case_involvement_form" } do %>
     <%=form_for(:filter, :url => nil, :html => {:id => "search_person_form"}) do |f| %>
       <div class="row">
         <div class="col-lg-12">
           <div class="input-group">
             <%=f.text_field :key, :placeholder => "Search Person", "data-toggle" => "tooltip", "data-placement" => "bottom", :title => "ID, Name, Email, or Phone", :class => "form-control"%>
+            <%=f.hidden_field :limit, :value => 10 %>
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit">Show</button>
             </span>
@@ -41,14 +49,9 @@
       </div>
     <% end %>
     <br/>
-    <%=bootstrap_form_for(:case_person, :url => kapa_case_persons_path(:case_id => @case), :html => {:id => "add_case_person_form"}) do |f| %>
+    <%=bootstrap_form_for(:case_involvement, :url => kapa_case_involvements_path(:case_id => @case), :html => {:id => "add_case_involvement_form"}) do |f| %>
       <table id="persons_search_result" class="table table-striped">
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>E-mail</th>
-            <th>Select</th>
-          </tr>
         </thead>
         <tbody>
         </tbody>
@@ -56,21 +59,38 @@
     <% end %>
   <% end %>
 
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+    <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+      <%=f.file_field :data, :label => "File to upload" %>
+      <%=f.select :person_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.person_id]}, :include_blank => true %>
+      <%=f.hidden_field :attachable_type, :value => @case.class.name %>
+      <%=f.hidden_field :attachable_id, :value => @case.id %>
+    <% end %>
+  <% end %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
+    <%= bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
+      <%=f.property_select :type, :name => :form %>
+      <%=f.hidden_field :attachable_type, :value => @case.class.name %>
+      <%=f.hidden_field :attachable_id, :value => @case.id %>
+    <% end %>
+  <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
-  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-     Case #<%=@case.id %>
+     Case #<%=@case.id %>: <%=@case.name %> (Target Resolution: <%=distance_of_time_in_words(@case.target_resolution_at, DateTime.now)%>)
   </h4>
 
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#case_persons_tab" data-toggle="tab">Additional Contacts</a></li>
+      <li><a href="#case_involvements_tab" data-toggle="tab">People</a></li>
       <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
+      <li><a href="#assignments_tab" data-toggle="tab">Assignees</a></li>
     </ul>
 
     <div class="tab-content">
@@ -81,42 +101,42 @@
         <% end %>
       </div>
 
-      <div id="case_persons_tab" class="tab-pane">
+      <div id="case_involvements_tab" class="tab-pane">
         <p class="text-right">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_person_dialog"><span class="glyphicon glyphicon-plus"></span> Add Internal Person</button>
-          <%=bootstrap_button "Add External Person", new_kapa_case_person_path(:case_id => @case), :icon => "glyphicon-plus" %>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_case_involvement_dialog"><span class="glyphicon glyphicon-plus"></span> Add Person</button>
         </p>
-          <table id="case_persons" class="table table-striped">
+          <table id="case_involvements" class="table table-striped">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Type</th>
+                <th>Involvement</th>
                 <th>Phone</th>
                 <th>E-mail</th>
                 <th></th>
               </tr>
             </thead>
-            <tbody id="case_persons-rows">
-              <% for case_person in @case_persons %>
+            <tbody id="case_involvements-rows">
+              <% for case_involvement in @case_involvements %>
                 <tr>
                   <td>
-                    <%=case_person.person.id_number if case_person.internal? %>
+                    <%=case_involvement.person.id_number %>
                   </td>
                   <td>
-                    <%=case_person.internal? ? link_to(case_person.full_name, kapa_person_path(:id => case_person.person_id), :target => :blank) : case_person.full_name%>
+                    <%=link_to(case_involvement.person.full_name, kapa_person_path(:id => case_involvement.person_id), :target => :blank) %>
                   </td>
                   <td>
-                    <%=case_person.type_desc %>
+                    <%=case_involvement.type_desc %>
                   </td>
                   <td>
-                    <%=case_person.phone %>
+                    <%=case_involvement.rsend(:person, :cur_phone) %>
                   </td>
                   <td>
-                    <%=case_person.email %>
+                    <%=case_involvement.rsend(:person, :email_preferred) %>
                   </td>
                   <td class="right">
-                    <%= link_to "Show", kapa_case_person_path(:id => case_person), :class => "btn btn-default btn-xs" %>
+                    <%=popover_button "", case_involvement.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                    <%= link_to "Show", kapa_case_involvement_path(:id => case_involvement), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>
@@ -126,14 +146,15 @@
 
       <div id="documents_tab" class="tab-pane">
         <p class="text-right">
-          <%=bootstrap_button "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
-          <%=bootstrap_button "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
+          <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+          <%=button_to_link "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
         </p>
         <table class="table table-striped">
           <thead>
            <tr>
              <th>Type</th>
-             <th>Name</th>
+             <th>Document</th>
+             <th>Person</th>
              <th>Date</th>
              <th></th>
            </tr>
@@ -141,10 +162,13 @@
           <tbody>
            <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
              <tr>
-               <td><%=document_icon d%></td>
+               <td><%=document_type d%></td>
                <td><%=d.name%></td>
+               <td><%=d.person.full_name_ordered if d.person%></td>
                <td><%=format_date d.date %></td>
-               <td class="right"><%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+               <td class="right">
+                 <%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %>
+               </td>
              </tr>
            <% end %>
           </tbody>
@@ -153,15 +177,15 @@
 
       <div id="actions_tab" class="tab-pane">
         <p class="text-right">
-          <%=bootstrap_button "New Action", new_kapa_case_action_path(:case_id => @case), :icon => "glyphicon-plus" %>
+          <%=button_to_link "New Action", new_kapa_case_action_path(:case_id => @case), :icon => "glyphicon-plus" %>
         </p>
         <table class="table table-striped">
           <thead>
            <tr>
              <th>Date</th>
              <th>Action</th>
-             <th>Note</th>
              <th>Actioned by</th>
+             <th></th>
              <th></th>
            </tr>
           </thead>
@@ -170,15 +194,52 @@
              <tr>
                <td><%=format_date case_action.action_date %></td>
                <td><%=case_action.action_desc %> </td>
-               <td><%=case_action.note %></td>
-               <td><%=case_action.users.first.person.last_name if case_action.users.first %></td>
+               <td><%=case_action.users.first.person.full_name if case_action.users.first %></td>
                <td class="right">
-                 <%= link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
+                 <%=popover_button "", case_action.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                 <%=link_to "Show", kapa_case_action_path(:id => case_action), :class => "btn btn-default btn-xs" %>
                </td>
              </tr>
            <% end %>
           </tbody>
         </table>
+      </div>
+
+      <div id="assignments_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "New User", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
+        </p>
+          <table id="assignments" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Task</th>
+                <th>Due Date</th>
+              </tr>
+            </thead>
+            <tbody id="assignments-rows">
+              <% for user_assignment in @user_assignments %>
+                <tr>
+                  <td>
+                    <%=format_date user_assignment.created_at %>
+                  </td>
+                  <td>
+                    <%="#{user_assignment.user.person.full_name} (#{user_assignment.user.primary_dept})" %>
+                  </td>
+                  <td>
+                    <%=user_assignment.task_desc %>
+                  </td>
+                  <td>
+                    <%=user_assignment.due_at %>
+                  </td>
+                  <td class="right">
+                    <%= link_to "Show", kapa_user_assignment_path(:id => user_assignment, :return_path => url_for(:anchor => "assignments", :only_path => true)), :class => "btn btn-default btn-xs" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
       </div>
 
     </div>

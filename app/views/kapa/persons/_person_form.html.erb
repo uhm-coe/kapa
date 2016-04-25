@@ -6,12 +6,12 @@
       <%= f.text_field :last_name, :size => 30 %>
       <%= f.text_field :middle_initial, :size => 30 %>
       <%= f.date_picker :birth_date, :label => "Birth Date" %>
-      <%= f.text_field :ssn, :size => 10, :class => "ssn", :label => "SSN" %>
-      <%= f.check_box :ssn_agreement, {:label => "SSN Agreement"}, "Y", "N" %>
+      <%= f.property_select :type, {:name => :person_type}, {:multiple => true}  %>
     </div>
 
     <div class="col-sm-6">
       <%= f.text_field :email, :size => 30, :readonly => @person.verified?, :label => "Campus Email" %>
+      <%= f.text_field :email_alt, :size => 30, :label => "Personal Email" %>
       <%= f.text_field :first_name, :size => 30 %>
       <%= f.text_field :other_name %>
       <%= f.property_select :title, :include_blank => true %>

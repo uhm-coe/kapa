@@ -17,7 +17,7 @@
   <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-    <% if @current_user.read?(:kapa_curriculums) && Rails.configuration.available_routes.include?("kapa_curriculums") %>
+  <% if @current_user.read?(:kapa_curriculums) and @person.type.include? "student" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -28,7 +28,7 @@
       </div>
       <div id="curriculum_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=bootstrap_button "New Program", new_kapa_curriculum_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Program", new_kapa_curriculum_path(:id => @person), :icon => "glyphicon-plus" %></p>
             <dl id="curriculum_list">
             <% for curriculum in @curriculums %>
               <% journey = curriculum.deserialize(:journey, :as => OpenStruct) %>
@@ -60,7 +60,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_files) && Rails.configuration.available_routes.include?("kapa_files") %>
+    <% if @current_user.read?(:kapa_files) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -72,8 +72,8 @@
       <div id="document_detail" class="panel-collapse collapse">
         <div class="panel-body">
           <p class="text-right">
-            <%=bootstrap_button "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
-            <%=bootstrap_button "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
+            <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+            <%=button_to_link "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
           </p>
           <table class="table table-hover">
            <tr>
@@ -96,7 +96,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_advising_sessions) && Rails.configuration.available_routes.include?("kapa_advising_sessions") %>
+    <% if @current_user.read?(:kapa_advising_sessions) and @person.type.include? "student" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -107,7 +107,7 @@
       </div>
       <div id="advising_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=bootstrap_button "New Advising Session", new_kapa_advising_session_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Advising Session", new_kapa_advising_session_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Date</th>
@@ -131,33 +131,36 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_cases) && Rails.configuration.available_routes.include?("kapa_cases") %>
+    <% if @current_user.read?(:kapa_cases) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#case_detail">
-            Cases (<%=@cases.length%>)
+            Cases (<%=@case_involvements.length%>)
           </a>
         </h4>
       </div>
       <div id="case_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=bootstrap_button "New Case", new_kapa_case_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
+              <th>ID</th>
+              <th>Name</th>
               <th>Date</th>
-              <th>Type</th>
+              <th>Involvement</th>
               <th>Status</th>
-              <th><%=t(:kapa_global_user_ids) %></th>
+              <th>Sanctions</th>
               <th></th>
             </tr>
-            <% for @case in @cases %>
+            <% for @case_involvement in @case_involvements %>
               <tr>
-                <td><%=format_date @case.start_date %></td>
-                <td><%=h @case.type_desc %></td>
-                <td><%=h @case.status_desc %></td>
-                <td><%=h "User" %></td>
-                <td class="right"><%=link_to "Show", kapa_case_path(:id => @case), :class => "btn btn-default btn-xs" %></td>
+                <td><%=h @case_involvement.case.id %></td>
+                <td><%=h @case_involvement.case.name %></td>
+                <td><%=h @case_involvement.case.reported_at %></td>
+                <td><%=h @case_involvement.type_desc %></td>
+                <td><%=h @case_involvement.case.status_desc %></td>
+                <td><%=h 0 %></td>
+                <td class="right"><%=link_to "Show", kapa_case_path(:id => @case_involvement.case), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
           </table>
@@ -166,7 +169,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_course_registrations) && Rails.configuration.available_routes.include?("kapa_course_registrations") %>
+    <% if @current_user.read?(:kapa_course_registrations) and @person.type.include? "student" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -177,7 +180,7 @@
       </div>
       <div id="course_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=bootstrap_button "New Course", new_kapa_course_registration_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Course", new_kapa_course_registration_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Term</th>
@@ -201,7 +204,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_practicum_placements) && Rails.configuration.available_routes.include?("kapa_practicum_placements") %>
+    <% if @current_user.read?(:kapa_practicum_placements) and @person.type.include? "student" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -212,7 +215,7 @@
       </div>
       <div id="practicum_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=bootstrap_button "New Placement", new_kapa_practicum_placement_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Placement", new_kapa_practicum_placement_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Terms</th>
@@ -236,7 +239,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_awards) && Rails.configuration.available_routes.include?("kapa_faculty_awards") %>
+    <% if @current_user.read?(:kapa_faculty_awards) and @person.type.include? "faculty" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -247,7 +250,7 @@
       </div>
       <div id="awards_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= bootstrap_button "New Award", new_kapa_faculty_award_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%= button_to_link "New Award", new_kapa_faculty_award_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Award Name</th>
@@ -269,7 +272,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_publications) && Rails.configuration.available_routes.include?("kapa_faculty_publications") %>
+    <% if @current_user.read?(:kapa_faculty_publications) and @person.type.include? "faculty" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -280,7 +283,7 @@
       </div>
       <div id="publications_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= bootstrap_button "New Publication", new_kapa_faculty_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%= button_to_link "New Publication", new_kapa_faculty_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Type</th>
@@ -304,7 +307,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_service_activities) && Rails.configuration.available_routes.include?("kapa_faculty_service_activities") %>
+    <% if @current_user.read?(:kapa_faculty_service_activities) and @person.type.include? "faculty" %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -315,7 +318,7 @@
       </div>
       <div id="service_activities_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= bootstrap_button "New Service Activity", new_kapa_faculty_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%= button_to_link "New Service Activity", new_kapa_faculty_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Type</th>
