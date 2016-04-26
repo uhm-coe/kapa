@@ -74,7 +74,7 @@ module Kapa::CurriculumBase
       #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?
-      curriculums = curriculums.where("programs_id" => filter.program_id) if filter.program_id.present?
+      curriculums = curriculums.where("program_id" => filter.program_id) if filter.program_id.present?
       curriculums = curriculums.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       curriculums = curriculums.where("curriculums.major_primary" => filter.major) if filter.major.present?
       curriculums = curriculums.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
