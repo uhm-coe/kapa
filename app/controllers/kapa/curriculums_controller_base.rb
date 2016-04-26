@@ -3,6 +3,7 @@ module Kapa::CurriculumsControllerBase
 
   def show
     @curriculum = Kapa::Curriculum.find(params[:id])
+    @curriculum_ext = @curriculum.ext
     @program = @curriculum.program
     @journey = @curriculum.deserialize(:journey, :as => OpenStruct)
     @transition_points = @curriculum.transition_points
@@ -13,6 +14,7 @@ module Kapa::CurriculumsControllerBase
   def update
     @curriculum = Kapa::Curriculum.find(params[:id])
     @curriculum.attributes = curriculum_params
+    @curriculum.update_serialized_attributes!(:_ext, params[:curriculum_ext]) if params[:curriculum_ext].present?
     @curriculum.update_serialized_attributes(:journey, params[:journey]) if params[:journey].present?
 
     unless @curriculum.save

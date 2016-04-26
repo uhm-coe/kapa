@@ -38,6 +38,40 @@ module Kapa::CoursesControllerBase
     end
   end
 
+  def new
+  end
+
+  def show
+    @course = Kapa::Course.find(params[:id])
+    @course_recommendations = @course.recommendations
+  end
+
+  def create
+    @course = Kapa::Course.new(course_params)
+
+    unless @course.save
+      flash[:danger] = error_message_for(@course)
+      redirect_to new_kapa_course_path and return false
+    end
+
+    flash[:notice] = "Course was successfully created."
+    redirect_to kapa_course_path(:id => @course)
+  end
+
+  def update
+    @course = Kapa::Course.find(params[:id])
+    @course.attributes = course_params
+    flash[:info] = "All students recommended for this course have been notified of the CRN." if @course.crn_changed?
+
+    unless @course.save
+      flash[:danger] = error_message_for(@course)
+      redirect_to kapa_course_path(:id => @course) and return false
+    end
+
+    flash[:notice] = "Course was successfully updated."
+    redirect_to kapa_course_path(:id => @course)
+  end
+
   def update
     @filter = filter
     if params[:assessment_scores]
@@ -74,5 +108,30 @@ module Kapa::CoursesControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "courses_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
+  end
+
+  def import
+    errors = 0
+    file = params[:data][:import_file]
+    CSV.foreach(file.path, :headers => true) do |row|
+      course = Kapa::Course.find_by(:subject => row["subject"], :number => row["number"], :term_id => row["term_id"])
+      course = Kapa::Course.new(:subject => row["subject"], :number => row["number"], :term_id => row["term_id"]) if course.blank?
+      course.crn = row["crn"]
+      course.title = row["title"]
+      course.instructor = row["instructor"]
+      course.status = "A"
+      course.credits = row["credits"]
+      unless course.save
+        errors = errors + 1
+        logger.error "!!!!-- Failed to save course: #{course.errors.full_messages}"
+      end
+    end
+    flash[:info] = "Courses were imported. Errors: #{errors}"
+    redirect_to kapa_courses_path
+  end
+
+  private
+  def course_params
+    params.require(:course).permit(:academic_period, :crn, :subject, :number, :section, :title, :instructor, :status, :uml, :xml, :final_grade, :dept, :user_id, :term_id, :credits)
   end
 end

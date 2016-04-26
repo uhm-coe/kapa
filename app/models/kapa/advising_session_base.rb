@@ -4,10 +4,15 @@ module Kapa::AdvisingSessionBase
   included do
     belongs_to :person
     belongs_to :term
+    belongs_to :curriculum
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
     validates_presence_of :person_id, :session_date, :session_type
+  end
+
+  def term_desc
+    Kapa::Term.lookup_description(self.term_id)
   end
 
   class_methods do

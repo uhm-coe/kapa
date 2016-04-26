@@ -36,4 +36,44 @@ module Kapa::CourseRegistrationsControllerBase
     end
     redirect_to kapa_course_registration_path(:id => params[:id], :anchor => params[:anchor])
   end
+
+  def new
+    @person = Kapa::Person.find(params[:id])
+  end
+
+  def create
+    @person = Kapa::Person.find(params[:id])
+    @course_registration = Kapa::CourseRegistration.new(course_registration_params)
+    @course_registration.attributes = course_registration_params
+    @course_registration.status = "R"
+    @course_registration.person = @person
+
+    unless @course_registration.save
+      flash[:danger] = error_message_for(@course_registration)
+      redirect_to new_kapa_course_registration_path(:id => @person) and return false
+    end
+
+    flash[:success] = "Course registration was successfully created."
+    redirect_to kapa_advising_session_path(:id => params[:advising_session_id]) and return true if params[:advising_session_id].present?
+    redirect_to kapa_course_registration_path(:id => @course_registration)
+  end
+
+  def destroy
+    @course_registration = Kapa::CourseRegistration.find_by(:course_id => params[:course_id], :person_id => params[:person_id])
+    @person = @course_registration.person
+
+    unless @course_registration.destroy
+      flash[:danger] = error_message_for(@course_registration)
+      redirect_to kapa_course_registration_path(:id => @course_registration) and return false
+    end
+
+    flash[:success] = "Course registration was successfully deleted."
+    redirect_to kapa_advising_session_path(:id => params[:advising_session_id]) and return true if params[:advising_session_id].present?
+    redirect_to kapa_person_path(:id => @person)
+  end
+
+  private
+  def course_registration_params
+    params.require(:course_registration).permit(:course_id, :person_id, :status, :yml, :xml)
+  end
 end

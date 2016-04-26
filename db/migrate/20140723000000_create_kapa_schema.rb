@@ -22,7 +22,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "identity_note",            limit: 255
       t.string   "contact_note",             limit: 255
       t.string   "dept",                     limit: 255
-      t.integer  "curriculum_enrollment_id", limit: 4
+      t.integer  "curriculum_id", limit: 4
       t.text     "yml",                      limit: 16777215
       t.text     "xml",                      limit: 16777215
       t.datetime "created_at"
@@ -113,6 +113,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "section",         limit: 255
       t.string   "title",           limit: 255
       t.string   "instructor",      limit: 255
+      t.integer  "credits"          limit: 4
       t.string   "status",          limit: 255
       t.datetime "created_at"
       t.datetime "updated_at"

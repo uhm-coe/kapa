@@ -4,6 +4,7 @@ module Kapa::CurriculumBase
   included do
     belongs_to :person
     belongs_to :program
+    has_many :advising_sessions
     has_many :transition_points
     has_many :enrollments
     has_one :practicum_profile
