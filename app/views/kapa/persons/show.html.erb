@@ -84,7 +84,7 @@
            </tr>
            <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
              <tr>
-               <td><%=document_icon d%></td>
+               <td><%=d.type%></td>
                <td><%=d.name%></td>
                <td><%=format_date d.date %></td>
                <td class="right"><%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>

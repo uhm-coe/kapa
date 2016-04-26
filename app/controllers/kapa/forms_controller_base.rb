@@ -11,10 +11,11 @@ module Kapa::FormsControllerBase
   def update
     @form = Kapa::Form.find params[:id]
     @person = @form.person
-
     @form.attributes = form_param
-    form_data_params(@form.type).each_pair do |k, v|
-      @form.serialize(k, v)
+    params.to_h.each_pair do |k, v|
+      unless k =~ /(utf8)|(_method)|(authenticity_token)|(form)|(commit)|(controller)|(action)|(id)/
+        @form.serialize(k.to_sym, v)
+      end
     end
 
     if @form.save
@@ -64,17 +65,5 @@ module Kapa::FormsControllerBase
   private
   def form_param
     params.require(:form).permit(:type, :person_id, :attachable_id, :attachable_type, :lock, :note)
-  end
-
-  def form_data_params(type)
-    case type
-      when "declaration"
-        permitted_params = [:declaration_curriculum, :declaration_background, :declaration_agreement]
-      when "admission"
-        permitted_params = [:admission_curriculum, :admission_background, :admission_agreement, :admission_essay]
-    end
-    form_data_params = {}
-    permitted_params.each {|k, v| form_data_params[k] = params.require(k).permit! if params[k]}
-    return form_data_params
   end
 end
