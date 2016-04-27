@@ -3,6 +3,7 @@ module Kapa::PropertiesControllerBase
 
   def show
     @property = Kapa::Property.find params[:id]
+    @property_ext = @property.ext
   end
 
   def new
@@ -14,6 +15,7 @@ module Kapa::PropertiesControllerBase
   def update
     @property = Kapa::Property.find params[:id]
     @property.attributes= property_params
+    @property.update_serialized_attributes!(:_ext, params[:property_ext]) if params[:property_ext].present?
 
     if @property.save
       flash[:success] = "System property was successfully updated."

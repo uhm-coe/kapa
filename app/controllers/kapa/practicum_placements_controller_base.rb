@@ -3,6 +3,7 @@ module Kapa::PracticumPlacementsControllerBase
 
   def show
     @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
+    @practicum_placement_ext = @practicum_placement.ext
     @practicum_logs = @practicum_placement.practicum_logs
     @person = @practicum_placement.person
     @mentors = Kapa::Person.where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
@@ -32,6 +33,7 @@ module Kapa::PracticumPlacementsControllerBase
   def update
     @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
     @practicum_placement.attributes = practicum_placement_params
+    @practicum_placement.update_serialized_attributes!(:_ext, params[:practicum_placement_ext]) if params[:practicum_placement_ext].present?
 
     if @practicum_placement.save
       flash[:success] = "Placement record was successfully updated."

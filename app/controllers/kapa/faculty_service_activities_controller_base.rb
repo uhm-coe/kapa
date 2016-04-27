@@ -27,12 +27,14 @@ module Kapa::FacultyServiceActivitiesControllerBase
 
   def show
     @service_activity = Kapa::FacultyServiceActivity.find(params[:id])
+    @service_activity_ext = @service_activity.ext
     @person = @service_activity.person
   end
 
   def update
     @service_activity = Kapa::FacultyServiceActivity.find(params[:id])
     @service_activity.attributes = service_activity_params
+    @service_activity.update_serialized_attributes!(:_ext, params[:service_activity_ext]) if params[:service_activity_ext].present?
 
     unless @service_activity.save
       flash[:danger] = @service_activity.errors.full_messages.join(", ")

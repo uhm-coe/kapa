@@ -3,11 +3,13 @@ module Kapa::UserAssignmentsControllerBase
 
   def show
     @user_assignment = Kapa::UserAssignment.find(params[:id])
+    @user_assignment_ext = @user_assignment.ext
   end
 
   def update
     @user_assignment = Kapa::UserAssignment.find(params[:id])
     @user_assignment.attributes = user_assignment_params
+    @user_assignment.update_serialized_attributes!(:_ext, params[:user_assignment_ext]) if params[:user_assignment_ext].present?
 
     if @user_assignment.save
       flash[:success] = "Assignment was successfully created."

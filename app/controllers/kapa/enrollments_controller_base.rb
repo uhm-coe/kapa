@@ -12,6 +12,7 @@ module Kapa::EnrollmentsControllerBase
     @curriculum = Kapa::Curriculum.find(params[:id])
     @person = @curriculum.person
     @enrollment = @curriculum.enrollments.build(:term_id => Kapa::Term.current_term.id, :curriculum_id => params[:id])
+    @enrollment_ext = @enrollment.ext
   end
 
   def create
@@ -31,6 +32,7 @@ module Kapa::EnrollmentsControllerBase
   def update
     @enrollment = Kapa::Enrollment.find(params[:id])
     @enrollment.attributes = enrollment_params
+    @enrollment.update_serialized_attributes!(:_ext, params[:enrollment_ext]) if params[:enrollment_ext].present?
 
     if @enrollment.save
       flash[:success] = "Enrollment was successfully updated."

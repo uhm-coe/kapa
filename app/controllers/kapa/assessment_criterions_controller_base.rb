@@ -4,6 +4,7 @@ module Kapa::AssessmentCriterionsControllerBase
   def update
     @assessment_criterion = Kapa::AssessmentCriterion.find(params[:id])
     @assessment_criterion.attributes = assessment_criterion_params
+    @assessment_criterion.update_serialized_attributes!(:_ext, params[:assessment_criterion_ext]) if params[:assessment_criterion_ext].present?
 
     if @assessment_criterion.save
       flash[:success] = "Criterion was successfully updated."

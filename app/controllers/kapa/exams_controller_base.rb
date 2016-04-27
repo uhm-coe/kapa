@@ -3,6 +3,7 @@ module Kapa::ExamsControllerBase
 
   def show
     @exam = Kapa::Exam.find(params[:id])
+    @exam_ext = @exam.ext
     @exam_scores = @exam.exam_scores
     @person = @exam.person
     @title = @exam.type_desc
@@ -11,7 +12,8 @@ module Kapa::ExamsControllerBase
 
   def update
     @exam = Kapa::Exam.find params[:id]
-    @exam.attributes = params[:exam]
+    @exam.attributes = exam_params
+    @exam.update_serialized_attributes!(:_ext, params[:exam_ext]) if params[:exam_ext].present?
     if @exam.save
       flash[:success] = "Test record was updated."
     else
@@ -69,5 +71,10 @@ module Kapa::ExamsControllerBase
 
     flash[:success] = "#{@exams.length} records are imported."
     redirect_to :action => :index
+  end
+
+  private
+  def exam_params
+    params.require(:exam).permit(:dept, :note, :person_id, :public, :raw, :report_date, :report_number, :status, :type)
   end
 end

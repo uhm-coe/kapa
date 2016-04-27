@@ -5,6 +5,7 @@ module Kapa::CoursesControllerBase
 #    session[:filter_course][:assessment_rubric_id] = nil if request.get? and params[:format] != "file"
     @filter = filter((request.get? and params[:format] != "file") ? {:assessment_rubric_id => nil} : {})
     @course = Kapa::Course.find(params[:id])
+    @course_ext = @course.ext
     @assessment_rubrics = @course.assessment_rubrics
     @assessment_rubric = @filter.assessment_rubric_id ? Kapa::AssessmentRubric.find(@filter.assessment_rubric_id) : @assessment_rubrics.first
     @course_registrations = @course.course_registrations
@@ -61,6 +62,7 @@ module Kapa::CoursesControllerBase
   def update
     @course = Kapa::Course.find(params[:id])
     @course.attributes = course_params
+    @course.update_serialized_attributes!(:_ext, params[:course_ext]) if params[:course_ext].present?
     flash[:info] = "All students recommended for this course have been notified of the CRN." if @course.crn_changed?
 
     unless @course.save

@@ -3,6 +3,7 @@ module Kapa::AssessmentRubricsControllerBase
 
   def show
     @assessment_rubric = Kapa::AssessmentRubric.find(params[:id])
+    @assessment_rubric_ext = @assessment_rubric.ext
     @assessment_criterions = @assessment_rubric.assessment_criterions
   end
 
@@ -13,6 +14,7 @@ module Kapa::AssessmentRubricsControllerBase
   def update
     @assessment_rubric = Kapa::AssessmentRubric.find(params[:id])
     @assessment_rubric.attributes = assessment_rubric_params
+    @assessment_rubric.update_serialized_attributes!(:_ext, params[:assessment_rubric_ext]) if params[:assessment_rubric_ext].present?
     if @assessment_rubric.save
       flash[:success] = "Rubric was successfully updated."
     else

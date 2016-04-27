@@ -6,6 +6,7 @@ module Kapa::FacultyPublicationAuthorsControllerBase
 
   def show
     @author = Kapa::FacultyPublicationAuthor.find(params[:id])
+    @author_ext = @author.ext
     @publication = @author.faculty_publication
     @person = @publication.person
   end
@@ -31,6 +32,7 @@ module Kapa::FacultyPublicationAuthorsControllerBase
     @author = Kapa::FacultyPublicationAuthor.find(params[:id])
     @publication = @author.faculty_publication_id
     @author.attributes = author_params_subset(params)
+    @author.update_serialized_attributes!(:_ext, params[:author_ext]) if params[:author_ext].present?
 
     unless @author.save
       flash[:danger] = @author.errors.full_messages.join(", ")
