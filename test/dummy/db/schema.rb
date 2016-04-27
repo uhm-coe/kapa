@@ -14,34 +14,34 @@
 ActiveRecord::Schema.define(version: 20140723000000) do
 
   create_table "advising_sessions", force: :cascade do |t|
-    t.integer  "person_id",                limit: 4,        null: false
+    t.integer  "person_id",         limit: 4,        null: false
     t.date     "session_date"
-    t.string   "session_type",             limit: 255
-    t.text     "note",                     limit: 16777215
-    t.string   "task",                     limit: 255
-    t.string   "action",                   limit: 255
-    t.string   "specify",                  limit: 255
-    t.string   "classification",           limit: 255
-    t.string   "current_field",            limit: 255
-    t.string   "interest",                 limit: 255
-    t.string   "location",                 limit: 255
-    t.string   "handled_by",               limit: 255
-    t.string   "first_name",               limit: 255
-    t.string   "last_name",                limit: 255
-    t.string   "email",                    limit: 255
-    t.string   "mail_address",             limit: 255
-    t.string   "phone",                    limit: 255
-    t.string   "identity_note",            limit: 255
-    t.string   "contact_note",             limit: 255
-    t.string   "dept",                     limit: 255
-    t.integer  "curriculum_enrollment_id", limit: 4
-    t.text     "yml",                      limit: 16777215
-    t.text     "xml",                      limit: 16777215
+    t.string   "session_type",      limit: 255
+    t.text     "note",              limit: 16777215
+    t.string   "task",              limit: 255
+    t.string   "action",            limit: 255
+    t.string   "specify",           limit: 255
+    t.string   "classification",    limit: 255
+    t.string   "current_field",     limit: 255
+    t.string   "interest",          limit: 255
+    t.string   "location",          limit: 255
+    t.string   "handled_by",        limit: 255
+    t.string   "first_name",        limit: 255
+    t.string   "last_name",         limit: 255
+    t.string   "email",             limit: 255
+    t.string   "mail_address",      limit: 255
+    t.string   "phone",             limit: 255
+    t.string   "identity_note",     limit: 255
+    t.string   "contact_note",      limit: 255
+    t.string   "dept",              limit: 255
+    t.integer  "curriculum_id",     limit: 4
+    t.text     "yml",               limit: 16777215
+    t.text     "xml",               limit: 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "curriculum_id",            limit: 4
-    t.integer  "user_primary_id",          limit: 4
-    t.integer  "user_secondary_id",        limit: 4
+    t.integer  "user_primary_id",   limit: 4
+    t.integer  "user_secondary_id", limit: 4
+    t.integer  "term_id",           limit: 4
   end
 
   add_index "advising_sessions", ["curriculum_id"], name: "index_advising_sessions_on_curriculum_id", using: :btree
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "section",         limit: 255
     t.string   "title",           limit: 255
     t.string   "instructor",      limit: 255
+    t.integer  "credits",         limit: 4
     t.string   "status",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"

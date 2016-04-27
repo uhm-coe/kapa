@@ -14,11 +14,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "interest",                 limit: 255
       t.string   "location",                 limit: 255
       t.string   "handled_by",               limit: 255
-      t.string   "first_name",               limit: 255
-      t.string   "last_name",                limit: 255
-      t.string   "email",                    limit: 255
-      t.string   "mail_address",             limit: 255
-      t.string   "phone",                    limit: 255
       t.string   "identity_note",            limit: 255
       t.string   "contact_note",             limit: 255
       t.string   "dept",                     limit: 255
@@ -28,8 +23,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
       t.integer  "curriculum_id",            limit: 4
-      t.integer  "user_primary_id",          limit: 4
-      t.integer  "user_secondary_id",        limit: 4
       t.integer  "term_id",                  limit: 4
     end
 
@@ -88,7 +81,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text     "xml",                      limit: 65535
       t.string   "assessment_scorable_type", limit: 255
       t.string   "academic_period",          limit: 255
-      t.integer  "user_id",                  limit: 4
     end
 
     add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
@@ -113,7 +105,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "section",         limit: 255
       t.string   "title",           limit: 255
       t.string   "instructor",      limit: 255
-      t.integer  "credits"          limit: 4
+      t.integer  "credits",          limit: 4
       t.string   "status",          limit: 255
       t.datetime "created_at"
       t.datetime "updated_at"
@@ -185,8 +177,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string   "status",            limit: 255
       t.text     "note",              limit: 65535
       t.string   "dept",              limit: 255
-      t.integer  "user_primary_id",   limit: 4
-      t.integer  "user_secondary_id", limit: 4
       t.text     "yml",               limit: 65535
       t.text     "xml",               limit: 65535
       t.datetime "created_at"
@@ -195,8 +185,6 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "enrollments", ["curriculum_id"], name: "index_enrollments_on_curriculum_id", using: :btree
     add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id", using: :btree
-    add_index "enrollments", ["user_primary_id"], name: "index_enrollments_on_user_primary_id", using: :btree
-    add_index "enrollments", ["user_secondary_id"], name: "index_enrollments_on_user_secondary_id", using: :btree
 
     create_table "exam_scores", force: :cascade do |t|
       t.integer  "exam_id",            limit: 4
