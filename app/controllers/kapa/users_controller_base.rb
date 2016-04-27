@@ -103,6 +103,7 @@ module Kapa::UsersControllerBase
       end
     end
     flash[:info] = "Users were imported. Errors: #{errors}"
+    redirect_to kapa_users_path
   end
 
   def export
