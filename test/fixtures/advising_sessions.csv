@@ -1,4 +1,4 @@
-id,person_id,session_date,session_type
+id,person_id,session_date,type
 1,1,2011-01-31,email
 2,2,2012-07-03,email
 3,3,2005-10-16,email

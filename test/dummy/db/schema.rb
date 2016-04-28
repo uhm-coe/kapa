@@ -14,38 +14,27 @@
 ActiveRecord::Schema.define(version: 20140723000000) do
 
   create_table "advising_sessions", force: :cascade do |t|
-    t.integer  "person_id",         limit: 4,        null: false
+    t.integer  "person_id",     limit: 4,        null: false
+    t.integer  "curriculum_id", limit: 4
+    t.integer  "term_id",       limit: 4
+    t.string   "type",          limit: 255
     t.date     "session_date"
-    t.string   "session_type",      limit: 255
-    t.text     "note",              limit: 16777215
-    t.string   "task",              limit: 255
-    t.string   "action",            limit: 255
-    t.string   "specify",           limit: 255
-    t.string   "classification",    limit: 255
-    t.string   "current_field",     limit: 255
-    t.string   "interest",          limit: 255
-    t.string   "location",          limit: 255
-    t.string   "handled_by",        limit: 255
-    t.string   "first_name",        limit: 255
-    t.string   "last_name",         limit: 255
-    t.string   "email",             limit: 255
-    t.string   "mail_address",      limit: 255
-    t.string   "phone",             limit: 255
-    t.string   "identity_note",     limit: 255
-    t.string   "contact_note",      limit: 255
-    t.string   "dept",              limit: 255
-    t.integer  "curriculum_id",     limit: 4
-    t.text     "yml",               limit: 16777215
-    t.text     "xml",               limit: 16777215
+    t.text     "note",          limit: 16777215
+    t.string   "task",          limit: 255
+    t.string   "action",        limit: 255
+    t.string   "specify",       limit: 255
+    t.string   "current_field", limit: 255
+    t.string   "interest",      limit: 255
+    t.string   "location",      limit: 255
+    t.string   "category",      limit: 255
+    t.string   "dept",          limit: 255
+    t.text     "yml",           limit: 16777215
+    t.text     "xml",           limit: 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_primary_id",   limit: 4
-    t.integer  "user_secondary_id", limit: 4
-    t.integer  "term_id",           limit: 4
   end
 
   add_index "advising_sessions", ["curriculum_id"], name: "index_advising_sessions_on_curriculum_id", using: :btree
-  add_index "advising_sessions", ["handled_by"], name: "index_advisings_on_handled_by", using: :btree
   add_index "advising_sessions", ["person_id"], name: "index_advisings_on_person_id", using: :btree
   add_index "advising_sessions", ["session_date"], name: "index_advisings_on_inquiry_date", using: :btree
   add_index "advising_sessions", ["task"], name: "index_advisings_on_task", using: :btree
@@ -65,30 +54,27 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   end
 
   create_table "assessment_rubrics", force: :cascade do |t|
-    t.string   "title",                 limit: 255
-    t.string   "course",                limit: 255
-    t.string   "reference_url",         limit: 255
-    t.string   "dept",                  limit: 255
-    t.text     "yml",                   limit: 65535
-    t.text     "xml",                   limit: 65535
+    t.integer  "start_term_id",    limit: 4
+    t.integer  "end_term_id",      limit: 4
+    t.string   "title",            limit: 255
+    t.string   "course",           limit: 255
+    t.string   "reference_url",    limit: 255
+    t.string   "dept",             limit: 255
+    t.text     "yml",              limit: 65535
+    t.text     "xml",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "program",               limit: 255
-    t.string   "assessment_type",       limit: 255
-    t.string   "transition_point",      limit: 255
-    t.string   "academic_period_start", limit: 255,   default: "200010"
-    t.string   "academic_period_end",   limit: 255,   default: "999999"
-    t.integer  "start_term_id",         limit: 4
-    t.integer  "end_term_id",           limit: 4
+    t.string   "program",          limit: 255
+    t.string   "assessment_type",  limit: 255
+    t.string   "transition_point", limit: 255
   end
 
-  add_index "assessment_rubrics", ["academic_period_end"], name: "index_assessment_rubrics_on_academic_period_end", using: :btree
-  add_index "assessment_rubrics", ["academic_period_start"], name: "index_assessment_rubrics_on_academic_period_start", using: :btree
   add_index "assessment_rubrics", ["course"], name: "index_assessment_rubrics_on_course", using: :btree
   add_index "assessment_rubrics", ["end_term_id"], name: "index_assessment_rubrics_on_end_term_id", using: :btree
   add_index "assessment_rubrics", ["start_term_id"], name: "index_assessment_rubrics_on_start_term_id", using: :btree
 
   create_table "assessment_scores", force: :cascade do |t|
+    t.string   "assessment_scorable_type", limit: 255
     t.integer  "assessment_scorable_id",   limit: 4
     t.integer  "assessment_criterion_id",  limit: 4
     t.string   "rating",                   limit: 255
@@ -97,9 +83,6 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
     t.text     "yml",                      limit: 65535
     t.text     "xml",                      limit: 65535
-    t.string   "assessment_scorable_type", limit: 255
-    t.string   "academic_period",          limit: 255
-    t.integer  "user_id",                  limit: 4
   end
 
   add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
@@ -177,57 +160,49 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "course_registrations", ["course_id", "person_id"], name: "index_assessment_course_registrations_on_course_id_and_person_id", unique: true, using: :btree
 
   create_table "courses", force: :cascade do |t|
-    t.string   "academic_period", limit: 150
-    t.string   "crn",             limit: 150
-    t.string   "subject",         limit: 255
-    t.string   "number",          limit: 255
-    t.string   "section",         limit: 255
-    t.string   "title",           limit: 255
-    t.string   "instructor",      limit: 255
-    t.integer  "credits",         limit: 4
+    t.string   "crn",        limit: 150
+    t.string   "subject",    limit: 255
+    t.string   "number",     limit: 255
+    t.string   "section",    limit: 255
+    t.string   "title",      limit: 255
+    t.string   "instructor", limit: 255
+    t.integer  "credits",    limit: 4
+    t.string   "status",     limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",        limit: 65535
+    t.text     "xml",        limit: 65535
+    t.string   "dept",       limit: 255
+    t.integer  "term_id",    limit: 4
+  end
+
+  add_index "courses", ["term_id", "crn"], name: "index_courses_on_term_id_and_crn", unique: true, using: :btree
+  add_index "courses", ["term_id"], name: "index_courses_on_term_id", using: :btree
+
+  create_table "curriculums", force: :cascade do |t|
+    t.integer  "person_id",       limit: 4,                     null: false
+    t.integer  "program_id",      limit: 4,                     null: false
+    t.integer  "term_id",         limit: 4
+    t.string   "second_degree",   limit: 255
+    t.string   "major_primary",   limit: 255
+    t.string   "major_secondary", limit: 255
+    t.string   "track",           limit: 255
+    t.string   "distribution",    limit: 255
+    t.string   "location",        limit: 255
+    t.string   "cohort",          limit: 255
     t.string   "status",          limit: 255
+    t.boolean  "active",                        default: false
+    t.string   "dept",            limit: 255
+    t.text     "note",            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",             limit: 65535
     t.text     "xml",             limit: 65535
-    t.string   "final_grade",     limit: 255
-    t.string   "dept",            limit: 255
-    t.integer  "user_id",         limit: 4
-    t.integer  "term_id",         limit: 4
   end
 
-  add_index "courses", ["academic_period", "crn"], name: "index_courses_on_academic_period_and_crn", unique: true, using: :btree
-  add_index "courses", ["term_id"], name: "index_courses_on_term_id", using: :btree
-
-  create_table "curriculums", force: :cascade do |t|
-    t.integer  "person_id",         limit: 4,                        null: false
-    t.integer  "program_id",        limit: 4,                        null: false
-    t.string   "academic_period",   limit: 255,   default: "000000", null: false
-    t.string   "second_degree",     limit: 255
-    t.string   "major_primary",     limit: 255
-    t.string   "major_secondary",   limit: 255
-    t.string   "track",             limit: 255
-    t.string   "distribution",      limit: 255
-    t.string   "location",          limit: 255
-    t.string   "cohort",            limit: 255
-    t.string   "status",            limit: 255
-    t.string   "dept",              limit: 255
-    t.integer  "user_primary_id",   limit: 4
-    t.integer  "user_secondary_id", limit: 4
-    t.boolean  "active",                          default: false
-    t.text     "note",              limit: 65535
-    t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "curriculums", ["academic_period"], name: "index_curriculums_on_academic_period", using: :btree
   add_index "curriculums", ["dept"], name: "index_curriculums_on_dept", using: :btree
   add_index "curriculums", ["person_id"], name: "index_curriculums_on_person_id", using: :btree
   add_index "curriculums", ["program_id"], name: "index_curriculums_on_program_id", using: :btree
-  add_index "curriculums", ["user_primary_id"], name: "index_curriculums_on_user_primary_id", using: :btree
-  add_index "curriculums", ["user_secondary_id"], name: "index_curriculums_on_user_secondary_id", using: :btree
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -248,25 +223,21 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   end
 
   create_table "enrollments", force: :cascade do |t|
-    t.integer  "curriculum_id",     limit: 4
-    t.integer  "term_id",           limit: 4
-    t.string   "sequence",          limit: 255
-    t.string   "category",          limit: 255
-    t.string   "status",            limit: 255
-    t.text     "note",              limit: 65535
-    t.string   "dept",              limit: 255
-    t.integer  "user_primary_id",   limit: 4
-    t.integer  "user_secondary_id", limit: 4
-    t.text     "yml",               limit: 65535
-    t.text     "xml",               limit: 65535
+    t.integer  "curriculum_id", limit: 4
+    t.integer  "term_id",       limit: 4
+    t.string   "sequence",      limit: 255
+    t.string   "category",      limit: 255
+    t.string   "status",        limit: 255
+    t.text     "note",          limit: 65535
+    t.string   "dept",          limit: 255
+    t.text     "yml",           limit: 65535
+    t.text     "xml",           limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "enrollments", ["curriculum_id"], name: "index_enrollments_on_curriculum_id", using: :btree
   add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id", using: :btree
-  add_index "enrollments", ["user_primary_id"], name: "index_enrollments_on_user_primary_id", using: :btree
-  add_index "enrollments", ["user_secondary_id"], name: "index_enrollments_on_user_secondary_id", using: :btree
 
   create_table "exam_scores", force: :cascade do |t|
     t.integer  "exam_id",            limit: 4
@@ -435,23 +406,22 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
 
   create_table "forms", force: :cascade do |t|
+    t.string   "type",            limit: 255
     t.integer  "person_id",       limit: 4
+    t.integer  "term_id",         limit: 4
     t.integer  "attachable_id",   limit: 4
     t.string   "attachable_type", limit: 255
     t.datetime "submitted_at"
     t.string   "submit_ip",       limit: 255
-    t.text     "yml",             limit: 16777215
     t.string   "lock",            limit: 255,      default: "N"
-    t.text     "xml",             limit: 16777215
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.text     "note",            limit: 16777215
     t.string   "public",          limit: 255,      default: "Y"
-    t.string   "type",            limit: 255
     t.integer  "version",         limit: 4
-    t.string   "academic_period", limit: 255
     t.string   "dept",            limit: 255
-    t.integer  "term_id",         limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",             limit: 16777215
+    t.text     "xml",             limit: 16777215
   end
 
   add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
@@ -489,10 +459,10 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "per_state",       limit: 255
     t.string   "per_postal_code", limit: 255
     t.string   "fax",             limit: 255
-    t.string   "dept",            limit: 255
     t.string   "source",          limit: 255
     t.string   "status",          limit: 255,      default: "N"
     t.text     "note",            limit: 16777215
+    t.string   "dept",            limit: 255
     t.text     "yml",             limit: 16777215
     t.text     "xml",             limit: 16777215
     t.datetime "created_at"
@@ -565,22 +535,21 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "practicum_sites", ["code"], name: "index_practicum_sites_on_code", using: :btree
 
   create_table "program_offers", force: :cascade do |t|
-    t.integer  "program_id",                limit: 4,                    null: false
-    t.string   "distribution",              limit: 255,                  null: false
-    t.string   "description",               limit: 255
-    t.string   "description_short",         limit: 255
-    t.string   "major",                     limit: 255
-    t.string   "academic_period",           limit: 255
-    t.string   "available_major",           limit: 255
-    t.string   "available_academic_period", limit: 255
-    t.integer  "sequence",                  limit: 4
-    t.boolean  "active",                                  default: true
-    t.text     "yml",                       limit: 65535
-    t.text     "xml",                       limit: 65535
+    t.integer  "program_id",             limit: 4,                    null: false
+    t.integer  "start_term_id",          limit: 4
+    t.integer  "end_term_id",            limit: 4
+    t.string   "description",            limit: 255
+    t.string   "description_short",      limit: 255
+    t.string   "major",                  limit: 255
+    t.string   "available_major",        limit: 255
+    t.string   "distribution",           limit: 255
+    t.string   "available_distribution", limit: 255
+    t.integer  "sequence",               limit: 4
+    t.boolean  "active",                               default: true
+    t.text     "yml",                    limit: 65535
+    t.text     "xml",                    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "start_term_id",             limit: 4
-    t.integer  "end_term_id",               limit: 4
   end
 
   add_index "program_offers", ["end_term_id"], name: "index_program_offers_on_end_term_id", using: :btree
@@ -660,15 +629,11 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   end
 
   create_table "timestamps", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.string   "remote_ip",   limit: 255
-    t.string   "controller",  limit: 255
-    t.string   "action",      limit: 255
+    t.integer  "user_id",    limit: 4
+    t.string   "path",       limit: 255
+    t.string   "remote_ip",  limit: 255
+    t.string   "agent",      limit: 255
     t.datetime "created_at"
-    t.string   "object_type", limit: 255
-    t.integer  "object_id",   limit: 4
-    t.string   "path",        limit: 255
-    t.string   "agent",       limit: 255
   end
 
   create_table "transition_actions", force: :cascade do |t|
@@ -679,7 +644,6 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.date     "action_date"
     t.string   "note",                limit: 255
     t.integer  "sequence",            limit: 4,     default: 99
-    t.integer  "user_id",             limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",                 limit: 65535
@@ -690,10 +654,10 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "transition_actions", ["transition_point_id"], name: "index_transition_actions_on_transition_point_id", using: :btree
 
   create_table "transition_points", force: :cascade do |t|
-    t.integer  "curriculum_id",     limit: 4,                         null: false
+    t.integer  "curriculum_id",     limit: 4,                     null: false
     t.integer  "form_id",           limit: 4
-    t.string   "academic_period",   limit: 255,   default: "0000000", null: false
-    t.string   "type",              limit: 255,   default: "",        null: false
+    t.integer  "term_id",           limit: 4
+    t.string   "type",              limit: 255,   default: "",    null: false
     t.string   "status",            limit: 255
     t.string   "category",          limit: 255
     t.string   "priority",          limit: 255
@@ -703,15 +667,13 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.boolean  "active",                          default: false
     t.text     "note",              limit: 65535
     t.text     "assessment_note",   limit: 65535
+    t.datetime "status_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",               limit: 65535
     t.text     "xml",               limit: 65535
-    t.datetime "status_updated_at"
-    t.integer  "term_id",           limit: 4
   end
 
-  add_index "transition_points", ["academic_period"], name: "index_transition_points_on_academic_period", using: :btree
   add_index "transition_points", ["curriculum_id"], name: "index_transition_points_on_curriculum_id", using: :btree
   add_index "transition_points", ["dept"], name: "index_transition_points_on_dept", using: :btree
   add_index "transition_points", ["form_id"], name: "index_transition_points_on_form_id", using: :btree
