@@ -6,7 +6,7 @@ module Kapa::TransitionPointsControllerBase
     @filter = filter
 
     @transition_point = Kapa::TransitionPoint.find(params[:id])
-    @transition_point_ext = @transition_point.deserialize(:_ext, :as => OpenStruct)
+    @transition_point_ext = @transition_point.ext
     @curriculum = @transition_point.curriculum
     @program = @curriculum.program
     @programs = Kapa::Program.where(:active => true)
@@ -23,7 +23,7 @@ module Kapa::TransitionPointsControllerBase
     if params[:transition_point]
       @transition_point = Kapa::TransitionPoint.find(params[:id])
       @transition_point.attributes = transition_point_params
-      @transition_point.update_serialized_attributes(:_ext, params[:transition_point_ext])
+      @transition_point.update_serialized_attributes!(:_ext, params[:transition_point_ext]) if params[:transition_point_ext].present?
 
       unless @transition_point.save
         flash[:danger] = @transition_point.errors.full_messages.join(", ")

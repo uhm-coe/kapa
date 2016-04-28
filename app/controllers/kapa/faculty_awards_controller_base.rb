@@ -27,12 +27,14 @@ module Kapa::FacultyAwardsControllerBase
 
   def show
     @award = Kapa::FacultyAward.find(params[:id])
+    @award_ext = @award.ext
     @person = @award.person
   end
 
   def update
     @award = Kapa::FacultyAward.find(params[:id])
     @award.attributes = award_params
+    @award.update_serialized_attributes!(:_ext, params[:award_ext]) if params[:award_ext].present?
 
     unless @award.save
       flash[:danger] = @award.errors.full_messages.join(", ")

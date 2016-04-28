@@ -3,6 +3,7 @@ module Kapa::AdvisingSessionsControllerBase
 
   def show
     @advising_session = Kapa::AdvisingSession.find(params[:id])
+    @advising_session_ext = @advising_session.ext
     @person = @advising_session.person
     @curriculums = @person.curriculums
   end
@@ -43,6 +44,7 @@ module Kapa::AdvisingSessionsControllerBase
   def update
     @advising_session = Kapa::AdvisingSession.find(params[:id])
     @advising_session.attributes = advising_session_params
+    @advising_session.update_serialized_attributes!(:_ext, params[:advising_session_ext]) if params[:advising_session_ext].present?
 
     if @advising_session.save
       flash[:success] = "Advising record was successfully updated."

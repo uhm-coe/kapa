@@ -8,6 +8,7 @@ module Kapa::FacultyPublicationsControllerBase
 
   def show
     @publication = Kapa::FacultyPublication.find(params[:id])
+    @publication_ext = @publication.ext
     @authors = @publication.authors_ordered
     @person = @publication.person
   end
@@ -46,6 +47,7 @@ module Kapa::FacultyPublicationsControllerBase
     # Otherwise, update publication attributes
     else
       @publication.attributes = publication_params
+      @publication.update_serialized_attributes!(:_ext, params[:publication_ext]) if params[:publication_ext].present?
 
       unless @publication.save
         flash[:danger] = @publication.errors.full_messages.join(", ")

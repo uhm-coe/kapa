@@ -8,11 +8,13 @@ module Kapa::TermsControllerBase
 
   def show
     @term = Kapa::Term.find params[:id]
+    @term_ext = @term.ext
   end
 
   def update
     @term = Kapa::Term.find params[:id]
     @term.attributes = term_params
+    @term.update_serialized_attributes!(:_ext, params[:term_ext]) if params[:term_ext].present?
 
     if @term.save
       flash[:success] = "Term was successfully updated."

@@ -3,6 +3,7 @@ module Kapa::PracticumSitesControllerBase
 
   def show
     @practicum_site = Kapa::PracticumSite.find(params[:id])
+    @practicum_site_ext = @practicum_site.ext
     @site_contact = @practicum_site.site_contact
     @mentors = Kapa::Person.eager_load(:contact).where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
     @practicum_placements = @practicum_site.practicum_placements.order("start_term_id DESC")
@@ -25,6 +26,7 @@ module Kapa::PracticumSitesControllerBase
   def update
     @practicum_site = Kapa::PracticumSite.find(params[:id])
     @practicum_site.attributes= practicum_site_params
+    @practicum_site.update_serialized_attributes!(:_ext, params[:practicum_site_ext]) if params[:practicum_site_ext].present?
     @practicum_site.serialize(:site_contact, params[:site_contact]) if not params[:site_contact].blank?
 
     if @practicum_site.save

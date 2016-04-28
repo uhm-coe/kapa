@@ -3,6 +3,7 @@ module Kapa::CaseInvolvementsControllerBase
 
   def show
     @case_involvement = Kapa::CaseInvolvement.find(params[:id])
+    @case_involvement_ext = @case_involvement.ext
     @case = @case_involvement.case
     @person = @case_involvement.person
   end

@@ -3,6 +3,7 @@ module Kapa::UsersControllerBase
 
   def show
     @user = Kapa::User.find params[:id]
+    @user_ext = @user.ext
     @permission = @user.deserialize(:permission, :as => OpenStruct)
     params[:anchor] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
@@ -18,6 +19,7 @@ module Kapa::UsersControllerBase
   def update
     @user = Kapa::User.find params[:id]
     @user.attributes = user_params if params[:user]
+    @user.update_serialized_attributes!(:_ext, params[:user_ext]) if params[:user_ext].present?
     @user.serialize(:permission, params[:permission]) if params[:permission]
     @user.apply_role(params[:role][:role]) if params[:role]
     if @user.save

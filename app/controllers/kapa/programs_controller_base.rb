@@ -3,6 +3,7 @@ module Kapa::ProgramsControllerBase
 
   def show
     @program = Kapa::Program.find params[:id]
+    @program_ext = @program.ext
     @program_offers = @program.program_offers
     @available_majors = @program.available_major.to_s.split(/,\s*/)
     @available_distributions = @program.available_distribution.to_s.split(/,\s*/)
@@ -12,6 +13,7 @@ module Kapa::ProgramsControllerBase
   def update
     @program = Kapa::Program.find params[:id]
     @program.attributes = program_params
+    @program.update_serialized_attributes!(:_ext, params[:program_ext]) if params[:program_ext].present?
 
     if @program.save
       flash[:success] = "Program was successfully updated."

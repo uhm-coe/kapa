@@ -3,6 +3,7 @@ module Kapa::PersonsControllerBase
 
   def show
     @person = Kapa::Person.find(params[:id])
+    @person_ext = @person.ext
     #TODO add public or dept conditions
     @documents = []
     @documents += @person.files
@@ -47,6 +48,7 @@ module Kapa::PersonsControllerBase
 
     # else
     @person.attributes = person_params
+    @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
     unless @person.save
       flash[:danger] = error_message_for(@person)
       redirect_to kapa_person_path(:id => @person) and return false

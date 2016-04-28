@@ -8,6 +8,7 @@ module Kapa::FilesControllerBase
 
   def show
     @file = Kapa::File.find(params[:id])
+    @file_ext = @file.ext
     @person = @file.person
     @title = @file.name
 
@@ -27,6 +28,7 @@ module Kapa::FilesControllerBase
     @file = Kapa::File.find(params[:id])
     @person = @file.person
     @file.attributes = file_param
+    @file.update_serialized_attributes!(:_ext, params[:file_ext]) if params[:file_ext].present?
     if params[:file][:data]
       @file.name = @file.data_file_name.humanize
       @file.uploaded_by = @current_user.uid
