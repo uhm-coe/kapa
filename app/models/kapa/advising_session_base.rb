@@ -18,7 +18,7 @@ module Kapa::AdvisingSessionBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      advising_sessions = Kapa::AdvisingSession.eager_load([:person => :contact]).order("session_date DESC, advising_sessions.id DESC")
+      advising_sessions = Kapa::AdvisingSession.eager_load([:user_assignments, :person]).order("session_date DESC, advising_sessions.id DESC")
       advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
       advising_sessions = advising_sessions.where(:task => filter.task) if filter.task.present?
       advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?

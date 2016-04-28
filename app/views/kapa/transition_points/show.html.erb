@@ -94,7 +94,7 @@
 
             <div id="new_transition_action" class="panel-collapse collapse<%= ' in' if @transition_actions.length == 0 %>">
               <div class="panel-body">
-                <% @transition_action = @transition_point.transition_actions.build(:user_id => @current_user.id, :action_date => Date.today) %>
+                <% @transition_action = @transition_point.transition_actions.build(:action_date => Date.today) %>
                 <%= bootstrap_form_for :transition_action, :url => kapa_transition_actions_path(:id => @transition_point, :anchor => :actions) do %>
                   <%= render :partial => "transition_action_form" %>
                   <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:kapa_transition_actions) %>

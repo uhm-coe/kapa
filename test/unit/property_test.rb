@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class ApplicationPropertyTest < ActiveSupport::TestCase
+class PropertyTest < ActiveSupport::TestCase
   test "is invalid without a code" do
-    application_property = ApplicationProperty.new
-    assert !application_property.valid?
+    property = Property.new
+    assert !property.valid?
   end
 
   test "is invalid if code is already taken for a given name" do
