@@ -4,11 +4,11 @@
   <div class="col-sm-6">
     <%=f.date_picker :session_date, :label => "Date" %>
     <%=f.term_select :term_id, :label => "Term", :include_blank => true %>
-    <%=f.property_select :session_type, :name => :advising_type, :label => "Type" %></p>
+    <%=f.property_select :type, :name => :advising_type, :label => "Type" %></p>
     <%=f.property_select :task, :name => :advising_task %></p>
     <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :label => "Program", :include_blank => "Prospective" %>
     <%=f.property_select :interest, {:name => :advising_interest, :include_blank => true} %></p>
-    <%=f.property_select :classification, {:name => :advising_classification} %></p>
+    <%=f.property_select :category, {:name => :advising_category} %></p>
     <%=f.property_select :location, {:include_blank => true} %></p>
     <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
   </div>
