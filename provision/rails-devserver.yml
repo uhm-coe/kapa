@@ -9,60 +9,65 @@
     mysql_password: vagrant
   sudo: yes
   tasks:
-  - name: Installing essntial tools
+  - name: Install essntial tools
     apt: pkg=build-essential,git-core,apt-transport-https,vim state=latest update_cache=yes cache_valid_time=3600
 
-  - name: Installing Ruby
+  - name: Install Ruby
     apt: pkg=ruby{{ruby_version}},ruby{{ruby_version}}-dev state=latest update_cache=yes cache_valid_time=3600
 
   - name: Delete default ruby
     file: dest=/usr/bin/ruby state=absent
 
-  - name: Creating sim link for ruby2.0
+  - name: Create sim link for ruby2.0
     file: src=/usr/bin/ruby2.0 dest=/usr/bin/ruby state=link
 
   - name: Delete default gem
     file: dest=/usr/bin/gem state=absent
 
-  - name: Creating sim link for gem2.0
+  - name: Create sim link for gem2.0
     file: src=/usr/bin/gem2.0 dest=/usr/bin/gem state=link
 
-  - name: Adding key for Phusion repository
+  - name: Add key for Phusion repository
     shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 
-  - name: Adding Phision repository
+  - name: Add Phision repository
     copy: src=/vagrant/provision/passenger.list dest=/etc/apt/sources.list.d/passenger.list mode=0600 owner=root
 
-  - name: Installing Passenger/Apache
+  - name: Install Passenger/Apache
     apt: pkg=apache2,libapache2-mod-passenger state=latest update_cache=yes
 
-  - name: Disableing default virtual host
+  - name: Disable default virtual host
     shell: a2dissite 000-default
 
-  - name: Adding a virtual host
+  - name: Add a virtual host
     copy: src=/vagrant/provision/000-default.conf dest=/etc/apache2/sites-available/000-default.conf
 
-  - name: Enableing a virtual host
+  - name: Enable a virtual host
     shell: a2ensite 000-default
 
-  - name: Restarting Apache
+  - name: Restart Apache
     service: name=apache2 state=restarted
 
   - name: Install MySQL server
     shell: creates=/usr/sbin/mysqld echo "mysql-server-{{mysql_version}} mysql-server/root_password password {{mysql_password}}" | debconf-set-selections;echo "mysql-server-{{mysql_version}} mysql-server/root_password_again password {{mysql_password}}" | debconf-set-selections;apt-get -y install mysql-server-{{mysql_version}}
 
-  - name: Installing MySQL library
+  - name: Install MySQL library
     apt: pkg=libmysqlclient-dev state=latest update_cache=yes
 
-  - name: Setting up remote user
+  - name: Set up remote user
     shell: mysql --user=root --password='{{mysql_password}}' -e "GRANT ALL PRIVILEGES ON *.* TO '{{mysql_user}}'@'%' IDENTIFIED BY '{{mysql_password}}' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
-  - name: Updating MySQL config
+  - name: Update MySQL config
     shell: sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 
-  - name: Restarting MySQL
+  - name: Restart MySQL
     service: name=mysql state=restarted
 
-  - name: Installing bundler
+  - name: Install bundler
     shell: sudo gem install bundler --no-rdoc --no-ri
 
+  - name: Suppress Ruby warnings
+    lineinfile: dest=/home/vagrant/.bashrc regexp='^export RUBYOPT' line='export RUBYOPT=W0'
+
+  - name: Automatically go to the project direcotry
+    lineinfile: dest=/home/vagrant/.bashrc regexp='^cd' line='cd /vagrant'
