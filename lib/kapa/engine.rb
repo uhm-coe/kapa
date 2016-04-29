@@ -5,9 +5,10 @@ module Kapa
 
     initializer :append_migrations do |app|
       unless app.root.to_s.match root.to_s
-        config.paths["db/migrate"].expanded.each do |expanded_path|
-          app.config.paths["db/migrate"] << expanded_path
+        config.paths['db/migrate'].expanded.each do |expanded_path|
+          app.config.paths['db/migrate'] << expanded_path
         end
+        ActiveRecord::Tasks::DatabaseTasks.migrations_paths = app.config.paths['db/migrate'].to_a
       end
     end
     config.autoload_paths << File.expand_path("../app", __FILE__)
