@@ -18,7 +18,7 @@ module Kapa::AdvisingSessionsControllerBase
     @advising_session.session_date = Date.today
     if previous_advising
       @advising_session.curriculum_id = previous_advising.curriculum_id
-      @advising_session.classification = previous_advising.classification
+      @advising_session.category = previous_advising.category
       @advising_session.interest = previous_advising.interest
       @advising_session.current_field = previous_advising.current_field
       @advising_session.location = previous_advising.location
@@ -56,12 +56,13 @@ module Kapa::AdvisingSessionsControllerBase
 
   def destroy
     @advising_session = Kapa::AdvisingSession.find(params[:id])
+    @person = @advising_session.person
     unless @advising_session.destroy
       flash[:danger] = error_message_for(@advising_session)
       redirect_to kapa_advising_session_path(:id => @advising_session) and return false
     end
     flash[:success] = "Advising record was successfully deleted."
-    redirect_to kapa_person_path(:id => @advising_session.person_id)
+    redirect_to kapa_person_path(:id => @person)
   end
 
   def index
@@ -80,7 +81,7 @@ module Kapa::AdvisingSessionsControllerBase
 
   private
   def advising_session_params
-    params.require(:advising_session).permit(:session_date, :session_type, :task, :curriculum_id, :interest,
-                                             :classification, :location, :note, :person_id)
+    params.require(:advising_session).permit(:session_date, :type, :task, :curriculum_id, :interest,
+                                             :category, :location, :note, :person_id)
   end
 end

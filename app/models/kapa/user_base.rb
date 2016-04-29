@@ -12,7 +12,7 @@ module Kapa::UserBase
 
     validates_format_of :email, :with => /@/, :message => "is not a valid format", :allow_blank => true
     validates_uniqueness_of :uid
-    validates_presence_of :uid
+    validates_presence_of :uid, :person_id
     validates_presence_of :password, :on => :create, :if => :local?
 
     before_validation :use_email_as_uid

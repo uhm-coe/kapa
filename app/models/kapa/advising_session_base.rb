@@ -8,7 +8,7 @@ module Kapa::AdvisingSessionBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    validates_presence_of :person_id, :session_date, :session_type
+    validates_presence_of :person_id, :session_date, :type
   end
 
   def term_desc
