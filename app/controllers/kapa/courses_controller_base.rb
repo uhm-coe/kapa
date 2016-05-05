@@ -114,6 +114,6 @@ module Kapa::CoursesControllerBase
 
   private
   def course_params
-    params.require(:course).permit(:academic_period, :crn, :subject, :number, :section, :title, :instructor, :status, :uml, :xml, :final_grade, :dept, :user_ids => [], :term_id, :credits)
+    params.require(:course).permit(:academic_period, :crn, :subject, :number, :section, :title, :instructor, :status, :yml, :xml, :final_grade, :dept, :term_id, :credits, :user_ids => [])
   end
 end
