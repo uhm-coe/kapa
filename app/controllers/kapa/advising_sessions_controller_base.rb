@@ -82,6 +82,6 @@ module Kapa::AdvisingSessionsControllerBase
   private
   def advising_session_params
     params.require(:advising_session).permit(:session_date, :type, :task, :curriculum_id, :interest,
-                                             :category, :location, :note, :person_id)
+                                             :category, :location, :note, :person_id, :user_ids => [])
   end
 end
