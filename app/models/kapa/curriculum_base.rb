@@ -70,7 +70,7 @@ module Kapa::CurriculumBase
   class_methods do
     def search(options ={})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      curriculums = Kapa::Curriculum.eager_load([:transition_points, :program, :person]).order("persons.last_name, persons.first_name")
+      curriculums = Kapa::Curriculum.eager_load([:user_assignments, :transition_points, :program, :person]).order("persons.last_name, persons.first_name")
       #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?
@@ -84,9 +84,9 @@ module Kapa::CurriculumBase
         when 30
           # do nothing
         when 20
-          curriculums = curriculums.depts_scope(filter.user.depts)
+          curriculums = curriculums.depts_scope(filter.user.depts, filter.user.id)
         when 10
-          curriculums = curriculums.user_id(filter.user.id)
+          curriculums = curriculums.assigned_scope(filter.user.id)
         else
           curriculums = curriculums.where("1 = 2") #Do not list any objects
       end
