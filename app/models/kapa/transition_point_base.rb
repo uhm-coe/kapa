@@ -69,7 +69,7 @@ module Kapa::TransitionPointBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      transition_points = Kapa::TransitionPoint.eager_load([:curriculum, {:curriculum => :program}, {:curriculum => :person}]).order("persons.last_name, persons.first_name")
+      transition_points = Kapa::TransitionPoint.eager_load([:user_assignments, :curriculum, {:curriculum => :program}, {:curriculum => :person}]).order("persons.last_name, persons.first_name")
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
       transition_points = transition_points.where("transition_points.type" => filter.type.to_s) if filter.type.present?
@@ -83,7 +83,7 @@ module Kapa::TransitionPointBase
         when 30
           # Do nothing
         when 20
-          transition_points = transition_points.depts_scope(filter.user.depts)
+          transition_points = transition_points.depts_scope(filter.user.depts, filter.user.id)
         when 10
           transition_points = transition_points.assigned_scope(filter.user.id)
         else

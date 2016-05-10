@@ -119,7 +119,7 @@
             <% for advising_session in @advising_sessions %>
               <tr>
                 <td><%=format_date advising_session.session_date %></td>
-                <td><%=h advising_session.session_type.to_s.capitalize %></td>
+                <td><%=h advising_session.type.to_s.capitalize %></td>
                 <td><%=h advising_session.task.to_s.capitalize %></td>
                 <td><%=abbr advising_session.note, 30 %></td>
                 <td class="right"><%=link_to "Show", kapa_advising_session_path(:id => advising_session), :class => "btn btn-default btn-xs" %></td>

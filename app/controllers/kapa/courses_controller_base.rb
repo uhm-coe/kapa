@@ -42,11 +42,6 @@ module Kapa::CoursesControllerBase
   def new
   end
 
-  def show
-    @course = Kapa::Course.find(params[:id])
-    @course_recommendations = @course.recommendations
-  end
-
   def create
     @course = Kapa::Course.new(course_params)
 
@@ -56,21 +51,6 @@ module Kapa::CoursesControllerBase
     end
 
     flash[:notice] = "Course was successfully created."
-    redirect_to kapa_course_path(:id => @course)
-  end
-
-  def update
-    @course = Kapa::Course.find(params[:id])
-    @course.attributes = course_params
-    @course.update_serialized_attributes!(:_ext, params[:course_ext]) if params[:course_ext].present?
-    flash[:info] = "All students recommended for this course have been notified of the CRN." if @course.crn_changed?
-
-    unless @course.save
-      flash[:danger] = error_message_for(@course)
-      redirect_to kapa_course_path(:id => @course) and return false
-    end
-
-    flash[:notice] = "Course was successfully updated."
     redirect_to kapa_course_path(:id => @course)
   end
 
@@ -134,6 +114,6 @@ module Kapa::CoursesControllerBase
 
   private
   def course_params
-    params.require(:course).permit(:academic_period, :crn, :subject, :number, :section, :title, :instructor, :status, :uml, :xml, :final_grade, :dept, :user_id, :term_id, :credits)
+    params.require(:course).permit(:academic_period, :crn, :subject, :number, :section, :title, :instructor, :status, :yml, :xml, :final_grade, :dept, :term_id, :credits, :user_ids => [])
   end
 end

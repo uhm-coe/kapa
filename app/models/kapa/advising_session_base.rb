@@ -28,7 +28,7 @@ module Kapa::AdvisingSessionBase
         when 30
           # Do nothing
         when 20
-          advising_sessions = advising_sessions.depts_scope(filter.user.depts)
+          advising_sessions = advising_sessions.depts_scope(filter.user.depts, filter.user.id)
         when 10
           advising_sessions = advising_sessions.assigned_scope(filter.user.id)
         else
