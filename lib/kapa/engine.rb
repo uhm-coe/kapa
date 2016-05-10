@@ -3,7 +3,7 @@ Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require d.name} if Gem.l
 module Kapa
   class Engine < Rails::Engine
 
-    config.autoload_paths << File.expand_path(ENV["KAPA"], __FILE__) if ENV["KAPA"]
+    config.autoload_paths << File.expand_path("#{Kapa::Engine.root}/app", __FILE__) if Rails.env.development?
 
     config.generators do |g|
       g.assets false
