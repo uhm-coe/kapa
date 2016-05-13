@@ -31,6 +31,10 @@ module Kapa::CurriculumBase
     self.location = self.program.location if self.location.blank?
   end
 
+  def term_desc
+    return Kapa::Term.find(term_id).description if term_id.present?
+  end
+
   def track_desc
     return Kapa::Property.lookup_description(:track, track)
   end
