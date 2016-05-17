@@ -35,6 +35,7 @@
       <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Term</th>
         <th>Date</th>
         <th>Task</th>
         <th>Area of Interest</th>
@@ -47,6 +48,7 @@
         <tr>
           <td><%=advising_session.person.id_number %></td>
           <td><%=link_to_if @current_user.read?(:kapa_persons), abbr(advising_session.person.full_name), kapa_person_path(:id => advising_session.person_id) %></td>
+          <td><%= advising_session.term_desc %></td>
           <td><%=format_date advising_session.session_date %></td>
           <td><%=abbr advising_session.task.to_s, 25 %></td>
           <td><%=abbr advising_session.interest.to_s, 25 %></td>

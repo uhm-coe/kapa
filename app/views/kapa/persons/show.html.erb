@@ -110,6 +110,7 @@
           <p class="text-right"><%=button_to_link "New Advising Session", new_kapa_advising_session_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
+              <th>Term</th>
               <th>Date</th>
               <th>Type</th>
               <th>Task</th>
@@ -118,6 +119,7 @@
             </tr>
             <% for advising_session in @advising_sessions %>
               <tr>
+                <td><%=h advising_session.term_desc %></td>
                 <td><%=format_date advising_session.session_date %></td>
                 <td><%=h advising_session.type.to_s.capitalize %></td>
                 <td><%=h advising_session.task.to_s.capitalize %></td>
