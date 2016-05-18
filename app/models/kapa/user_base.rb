@@ -119,7 +119,7 @@ module Kapa::UserBase
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
         ["#{u.person.full_name} (#{u.primary_dept})", u.id]
-      end
+      end.sort_by(&:first)
     end
 
     def search(options = {})
