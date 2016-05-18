@@ -139,7 +139,6 @@ module Kapa::UserBase
        :first_name => [:person, :first_name],
        :position => [:position],
        :primary_dept => [:dept],
-       :emp_status => [:emp_status],
        :status => [:status],
        :dept => [:dept],
        :category => [:category]}

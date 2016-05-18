@@ -88,8 +88,7 @@ module Kapa::UsersControllerBase
       user.status = row["status"]
       user.category = row["category"]
       user.position = row["position"]
-      user.emp_status = 2
-      user.department = row["department"]
+      user.primary_dept = row["primary_dept"]
       unless user.save
         errors = errors + 1
         logger.error "!!!!-- Failed to save user: {#{user.errors.full_messages}}"
@@ -117,7 +116,7 @@ module Kapa::UsersControllerBase
   end
 
   def user_params
-    params.require(:user).permit(:uid, :password, :category, :emp_status, :status, :primary_dept, :position, :person_id, :dept=>[])
+    params.require(:user).permit(:uid, :password, :category, :status, :primary_dept, :position, :person_id, :dept=>[])
   end
 
   def person_params
