@@ -11,6 +11,7 @@ module Kapa::CaseInvolvementsControllerBase
   def new
     @case = Kapa::Case.find(params[:case_id])
     @person = Kapa::Person.new :source => "Manual"
+    @unverified = true
   end
 
   def create

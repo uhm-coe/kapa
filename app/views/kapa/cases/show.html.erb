@@ -76,12 +76,19 @@
     <% end %>
   <% end %>
 
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "case_id_dialog", :modal_title => "Select a document", :modal_form_id => "custom_case_form"} do %>
+    <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} , :html => {:id => "custom_case_form"} do |f| %>
+      <%=f.text_field :case_id, :label => "Custom case ID" %>
+      <%=f.text_field :case_name, :label => "Custom case name" %>
+    <% end %>
+  <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
 
   <h4 class="section-header divider">
-     Case #<%=@case.id %>: <%=@case.name %> (Target Resolution: <%=distance_of_time_in_words(@case.target_resolution_at, DateTime.now)%>)
+     Case #<%=@case.case_id %>: <%=@case.case_name %>
   </h4>
 
   <div class="tabs">
@@ -207,7 +214,7 @@
 
       <div id="assignments_tab" class="tab-pane">
         <p class="text-right">
-          <%=button_to_link "New User", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
+          <%=button_to_link "New Assignment", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
         </p>
           <table id="assignments" class="table table-striped">
             <thead>

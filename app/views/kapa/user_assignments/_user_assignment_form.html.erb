@@ -1,7 +1,7 @@
 <%= bootstrap_fields_for :user_assignment do |f| %>
   <div class="row">
     <div class="col-sm-6">
-      <%=f.user_select :user_id %>
+      <%=f.user_select :user_id, nil, {:class => "search-select"} %>
       <%=f.property_select :task %>
       <%=f.datetime_picker :due_at %>
       <%=f.hidden_field :assignable_type %>

@@ -22,15 +22,30 @@ module Kapa::CaseBase
     has_many :forms, :as => :attachable
 
     serialize :category, Kapa::CsvSerializer
-    validates_presence_of :reported_at, :type
+    validates :case_id, uniqueness: true
+    validates :reported_at, :type, :case_id, :case_name, presence: true
+    before_create :update_case_id
+    before_save :update_case_name
     before_save :update_status_timestamp
+  end
+
+  def update_case_id
+    self.case_id = default_case_id
+  end
+
+  def update_case_name
+    self.case_name = default_case_name if self.case_name.include? "?"
   end
 
   def update_status_timestamp
     self.status_updated_at = DateTime.now if self.status_changed?
   end
 
-  def name
+  def default_case_id
+    "#{self.dept}-#{self.id}"
+  end
+
+  def default_case_name
     reporting_party = self.case_involvements.where(:type => "CO").first
     responding_party = self.case_involvements.where(:type => "RE").first
     "#{reporting_party ? reporting_party.person.full_name_ordered : "?"} vs. #{responding_party ? responding_party.person.full_name_ordered : "?"}"
