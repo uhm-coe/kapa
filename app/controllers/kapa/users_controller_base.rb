@@ -117,7 +117,7 @@ module Kapa::UsersControllerBase
   end
 
   def user_params
-    params.require(:user).permit(:uid, :password, :category, :emp_status, :status, :department, :position, :person_id, :dept=>[])
+    params.require(:user).permit(:uid, :password, :category, :emp_status, :status, :primary_dept, :position, :person_id, :dept=>[])
   end
 
   def person_params
