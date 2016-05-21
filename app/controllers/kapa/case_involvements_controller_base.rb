@@ -26,7 +26,7 @@ module Kapa::CaseInvolvementsControllerBase
       @case_involvement.person = @person
     end
 
-    unless @case_involvement.save
+    unless @case_involvement.save and @case.save
       flash[:danger] = error_message_for(@case_involvement)
       redirect_to kapa_case_path(:id => @case, :anchor => "case_involvements") and return false
     end
@@ -48,7 +48,7 @@ module Kapa::CaseInvolvementsControllerBase
     end
 
     @case_involvement.attributes = case_involvement_params
-    unless @case_involvement.save
+    unless @case_involvement.save and @case.save
       flash[:danger] = error_message_for(@case_involvement)
       redirect_to kapa_case_involvement_path(:id => @case_involvement) and return false
     end
