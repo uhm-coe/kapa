@@ -3,7 +3,7 @@
 
   <h4 class="section-header divider">
      <%= link_to "", kapa_case_path(:id => @case, :anchor => "case_involvements"), :class => "glyphicon glyphicon-chevron-left" %>
-    Involvement with Case #<%=@case.case_id%>
+    Involvement with Case (<%=@case.case_number%>)
   </h4>
 
   <%= bootstrap_form_for(:case_involvement, :url => kapa_case_involvement_path(:id => @case_involvement), :html => {:method => :put}) do %>

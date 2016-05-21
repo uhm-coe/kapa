@@ -672,7 +672,7 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "cases", force: :cascade do |t|
       t.string "type", limit: 255, default: "", null: false
-      t.string "case_id", limit: 255
+      t.string "case_number_alt", limit: 255
       t.string "case_name", limit: 255
       t.string "status", limit: 255
       t.string "category", limit: 255

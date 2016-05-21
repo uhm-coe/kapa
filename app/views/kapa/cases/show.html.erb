@@ -78,7 +78,7 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "case_id_dialog", :modal_title => "Select a document", :modal_form_id => "custom_case_form"} do %>
     <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} , :html => {:id => "custom_case_form"} do |f| %>
-      <%=f.text_field :case_id, :label => "Custom case ID" %>
+      <%=f.text_field :case_number_alt, :label => "Custom case number" %>
       <%=f.text_field :case_name, :label => "Custom case name" %>
     <% end %>
   <% end %>
@@ -88,7 +88,7 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header divider">
-     Case #<%=@case.case_id %>: <%=@case.case_name %>
+     <%=@case.case_number %>: <%=@case.case_name %>
   </h4>
 
   <div class="tabs">

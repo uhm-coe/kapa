@@ -22,20 +22,13 @@ module Kapa::CaseBase
     has_many :forms, :as => :attachable
 
     serialize :category, Kapa::CsvSerializer
-    validates :case_id, uniqueness: true, :on => :update
-    validates :reported_at, :type, :case_id, :case_name, :presence => true, :on => :update
+    validates :reported_at, :type, :case_name, :presence => true, :on => :update
+    validates :case_number_alt, :uniqueness => true, :on => :update, :allow_blank => true
     before_save :update_case_name
-    after_save :update_case_id, :on => :create
     before_save :update_status_timestamp
   end
 
-  def update_case_id
-    self.update_column(:case_id, default_case_id)
-    return self
-  end
-
   def update_case_name
-    logger.debug "DEBUG: filter called"
     if self.case_name.blank? or self.case_name.include? "?"
       self.case_name = default_case_name
     end
@@ -46,8 +39,12 @@ module Kapa::CaseBase
     self.status_updated_at = DateTime.now if self.status_changed?
   end
 
-  def default_case_id
-    "#{self.dept}-#{self.id.to_s.rjust(8, '0')}"
+  def case_number
+    if case_number_alt.present?
+      case_number_alt
+    else
+      "#{self.dept}#{self.id.to_s.rjust(8, '0')}"
+    end
   end
 
   def default_case_name
