@@ -701,6 +701,9 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.integer "case_id"
       t.integer "person_id", limit: 4
       t.string "type", limit: 255
+      t.string "affiliation", limit: 255
+      t.string "bargaining_unit", limit: 255
+      t.string "job_title", limit: 255
       t.string "category", limit: 255
       t.string "status", limit: 255
       t.integer "sequence"

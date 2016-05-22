@@ -6,7 +6,7 @@
       <%= f.text_field :last_name, :size => 30 %>
       <%= f.text_field :middle_initial, :size => 30 %>
       <%= f.date_picker :birth_date, :label => "Birth Date" %>
-      <%= f.property_select :type, {:name => :person_type}, {:multiple => true}  %>
+      <%= f.property_select :title, :include_blank => true %>
     </div>
 
     <div class="col-sm-6">
@@ -14,14 +14,7 @@
       <%= f.text_field :email_alt, :size => 30, :label => "Personal Email" %>
       <%= f.text_field :first_name, :size => 30 %>
       <%= f.text_field :other_name %>
-      <%= f.property_select :title, :include_blank => true %>
       <%= f.property_select :gender, :include_blank => true %>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <%=f.text_area :note %>
-      </div>
     </div>
   </div>
 
