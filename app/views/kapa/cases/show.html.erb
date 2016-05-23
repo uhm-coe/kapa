@@ -1,3 +1,7 @@
+<% content_for(:title) do %>
+  <%=@case.case_number %>: <%=@case.case_name %>
+<% end %>
+
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
@@ -130,7 +134,7 @@
                     <%=case_involvement.person.id_number %>
                   </td>
                   <td>
-                    <%=link_to(case_involvement.person.full_name, kapa_person_path(:id => case_involvement.person_id), :target => :blank) %>
+                    <%=link_to(case_involvement.person.full_name, kapa_person_path(:id => case_involvement.person_id), :target => "_blank") %>
                   </td>
                   <td>
                     <%=case_involvement.type_desc %>

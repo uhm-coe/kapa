@@ -51,61 +51,62 @@
 </h3>
 
 <div class="collapse" id="person_detail_panel">
-  <div class="row">
-
-    <div class="col-sm-6">
       <div class="panel panel-default ">
         <div class="panel-heading"><h4 class="panel-title">Profile</h4></div>
         <div class="panel-body">
           <div class = "text-right"><%=button_to_link "Edit Profile", nil, "data-toggle" => "modal", "data-target" => "#person_profile_modal", :icon => "glyphicon-pencil" %></div>
-          <dl class="dl-horizontal">
+          <hr/>
+          <div class="row">
+            <div class="col-sm-6">
 
-            <dt><strong>ID Number:</strong></dt>
-            <dd><%= @person.id_number %></dd>
+              <dl class="dl-horizontal">
 
-            <dt><strong>Campus Email:</strong></dt>
-            <dd><%=mail_to @person.email %></dd>
+                <dt><strong>ID Number:</strong></dt>
+                <dd><%= @person.id_number %></dd>
 
-            <dt><strong>Other Email:</strong></dt>
-            <dd><%=mail_to @person.email_alt %></dd>
+                <dt><strong>Full Name:</strong></dt>
+                <dd><%= @person.full_name(:all) %></dd>
 
-            <dt><strong>Other Name:</strong></dt>
-            <dd><%= @person.other_name %></dd>
+                <dt><strong>Other Name:</strong></dt>
+                <dd><%= @person.other_name %></dd>
 
-            <dt><strong>Birth Date:</strong></dt>
-            <dd><%= @person.birth_date %></dd>
+                <dt><strong>Birth Date:</strong></dt>
+                <dd><%= @person.birth_date %></dd>
 
-            <dt><strong>Title:</strong></dt>
-            <dd><%= @person.title %></dd>
+                <dt><strong>Title:</strong></dt>
+                <dd><%= @person.title %></dd>
 
-            <dt><strong>Gender:</strong></dt>
-            <dd><%= @person.gender %></dd>
-          </dl>
+                <dt><strong>Gender:</strong></dt>
+                <dd><%= @person.gender %></dd>
+              </dl>
+
+            </div>
+
+            <div class="col-sm-6">
+              <dl class="dl-horizontal">
+                <dt><strong>Campus Email:</strong></dt>
+                <dd><%=mail_to @person.email %></dd>
+
+                <dt><strong>Other Email:</strong></dt>
+                <dd><%=mail_to @person.email_alt %></dd>
+
+                <dt><strong>Current Phone:</strong></dt>
+                <dd><%= @person.cur_phone %></dd>
+
+                <dt><strong>Mobile Phone:</strong></dt>
+                <dd><%= @person.mobile_phone %></dd>
+
+                <dt><strong>Current Address:</strong></dt>
+                <dd><%= @person.cur_address %></dd>
+
+                <dt><strong>Permanent Address:</strong></dt>
+                <dd><%= @person.per_address %></dd>
+              </dl>
+            </div>
+
+          </div>
+
         </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6">
-      <div class="panel panel-default ">
-        <div class="panel-heading"><h4 class="panel-title">Contact</h4></div>
-        <div class="panel-body">
-          <div class = "text-right"><%=button_to_link "Edit Contact", nil, "data-toggle" => "modal", "data-target" => "#person_contact_modal", :icon => "glyphicon-pencil" %></div>
-          <dl class="dl-horizontal">
-            <dt><strong>Current Phone:</strong></dt>
-            <dd><%= @person.cur_phone %></dd>
-
-            <dt><strong>Mobile Phone:</strong></dt>
-            <dd><%= @person.mobile_phone %></dd>
-
-            <dt><strong>Current Address:</strong></dt>
-            <dd><%= @person.cur_address %></dd>
-
-            <dt><strong>Permanent Address:</strong></dt>
-            <dd><%= @person.per_address %></dd>
-          </dl>
-        </div>
-      </div>
-    </div>
 
   </div>
 </div>

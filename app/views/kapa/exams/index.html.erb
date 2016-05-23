@@ -55,7 +55,7 @@
         <td><%= format_date exam.report_date %></td>
         <td><%= h exam.exam_scores.length %></td>
         <td><%= h exam.dept %></td>
-        <td class="right"><%= link_to "Show", {:action => :show, :id => exam}, {:target => :blank, :class => "btn btn-default btn-xs"} %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => exam}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>
     </tbody>

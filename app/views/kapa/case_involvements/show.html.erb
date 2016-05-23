@@ -1,3 +1,7 @@
+<% content_for(:title) do %>
+  <%=@case.case_number %>: <%=@case.case_name %>
+<% end %>
+
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/persons/person_detail" %>
 

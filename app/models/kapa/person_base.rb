@@ -47,8 +47,16 @@ module Kapa::PersonBase
     end
   end
 
-  def full_name
-    "#{last_name}, #{first_name}"
+  def full_name(option = nil)
+    if option == :ordered
+      "#{first_name} #{last_name}"
+    elsif option == :short
+      "#{first_name} #{last_name[0]}"
+    elsif option == :all
+      "#{title} #{first_name} #{middle_initial} #{last_name}"
+    else
+      "#{last_name}, #{first_name}"
+    end
   end
 
   def full_name_ordered
@@ -60,11 +68,11 @@ module Kapa::PersonBase
   end
 
   def cur_address
-    "#{cur_street}<br/>#{cur_city}, #{cur_state} #{cur_postal_code}".html_safe
+    "#{cur_street}<br/>#{cur_city}, #{cur_state} #{cur_postal_code}".html_safe if cur_street.present?
   end
 
   def per_address
-    "#{per_street}<br/>#{per_city}, #{per_state} #{per_postal_code}".html_safe
+    "#{per_street}<br/>#{per_city}, #{per_state} #{per_postal_code}".html_safe if per_street.present?
   end
 
   def ethnicity_desc
