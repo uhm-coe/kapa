@@ -138,9 +138,9 @@ module Kapa::UserBase
        :last_name => [:person, :last_name],
        :first_name => [:person, :first_name],
        :position => [:position],
-       :primary_dept => [:dept],
+       :primary_dept => [:primary_dept],
        :status => [:status],
-       :dept => [:dept],
+       :dept => [:dept, [:join, ","]],
        :category => [:category]}
     end
   end
