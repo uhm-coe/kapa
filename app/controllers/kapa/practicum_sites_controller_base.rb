@@ -93,7 +93,6 @@ module Kapa::PracticumSitesControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{filter.inspect}"
     send_data Kapa::PracticumSite.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",

@@ -105,7 +105,7 @@ module Kapa::CoursesControllerBase
       course.credits = row["credits"]
       unless course.save
         errors = errors + 1
-        logger.error "!!!!-- Failed to save course: #{course.errors.full_messages}"
+        logger.error "*ERROR* Failed to save course: #{course.errors.full_messages}"
       end
     end
     flash[:info] = "Courses were imported. Errors: #{errors}"

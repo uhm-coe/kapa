@@ -71,7 +71,6 @@ module Kapa::FacultyPublicationsControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{filter.inspect}"
     send_data Kapa::FacultyPublication.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",

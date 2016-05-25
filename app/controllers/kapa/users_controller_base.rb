@@ -79,35 +79,35 @@ module Kapa::UsersControllerBase
   end
 
   def import
-    #TODO NEED Refactuoring!!!
     errors = 0
     file = params[:data][:import_file]
     CSV.foreach(file.path, :headers => true) do |row|
       ActiveRecord::Base.transaction do
         user = Kapa::User.find_by_uid(row["uid"])
-        user = Kapa::User.new(:uid => row["uid"], :status => 0) if user.blank?
+        person = user.person
+
+        #Add new user
+        if user.blank?
+          person = Kapa::Person.lookup(row["id_number"])
+          if person.blank?
+              person = Kapa::Person.new
+              person.id_number = row["id_number"]
+              person.last_name = row["last_name"]
+              person.first_name = row["first_name"]
+              person.status = row["status"]
+          end
+          unless person.save
+            errors = errors + 1
+            logger.error "*ERROR* Failed save person: #{row["id_number"]} {#{error_message_for(person)}}"
+          end
+          user = Kapa::User.new(:uid => row["uid"], :status => 0)
+          user.person = person
+        end
+
         user.status = row["status"]
         user.category = row["category"]
         user.position = row["position"]
         user.primary_dept = row["primary_dept"]
-        person = user.person
-        if person.blank?
-          person = Kapa::Person.lookup(row["id_number"])
-          if person
-          else
-            logger.error "*DEBUG* building a person: #{row["uid"]} #{row["id_number"]}"
-            person = Kapa::Person.new
-            person.id_number = row["id_number"]
-            person.last_name = row["last_name"]
-            person.first_name = row["first_name"]
-            person.status = row["status"]
-          end
-        end
-        unless person.save
-          errors = errors + 1
-          logger.error "*ERROR* Failed save person: #{row["id_number"]} {#{error_message_for(person)}}"
-        end
-        user.person = person
         unless user.save
           errors = errors + 1
           logger.error "*ERROR* Failed save user: #{row["uid"]} {#{error_message_for(person, user)}}"
@@ -123,7 +123,7 @@ module Kapa::UsersControllerBase
     send_data Kapa::User.to_csv(:filter => @filter),
               :type         => "application/csv",
       :disposition  => "inline",
-      :filename     => "user_#{Date.today}.csv"
+      :filename     => "user_#{DateTime.now}.csv"
   end
 
   def user_params

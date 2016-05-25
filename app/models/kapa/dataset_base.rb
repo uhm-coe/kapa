@@ -42,8 +42,6 @@ module Kapa::DatasetBase
   end
 
   def load
-#    logger.debug "Datasource: #{datasource_config(self.datasource).inspect}"
-
     case self.datasource_type
       when "database"
         db = Sequel.connect(datasource_config(self.datasource))

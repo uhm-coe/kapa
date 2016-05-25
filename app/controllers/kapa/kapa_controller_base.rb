@@ -17,7 +17,6 @@ module Kapa::KapaControllerBase
       flash[:danger] = "#{controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
-    logger.debug "params: #{params.inspect}"
   end
 
   def validate_login
