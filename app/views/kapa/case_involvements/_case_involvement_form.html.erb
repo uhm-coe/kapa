@@ -5,7 +5,7 @@
         <div class="col-sm-6">
           <%=a.property_select :type, :name => "case_involvement_type" %>
           <%=a.property_select :affiliation %>
-          <%=a.property_select :bargaining_unit %>
+          <%=a.property_select :bargaining_unit, :include_blank => true %>
           <%=a.text_field :job_title %>
         </div>
         <div class="col-sm-6">
