@@ -84,7 +84,7 @@ module Kapa::UsersControllerBase
     CSV.foreach(file.path, :headers => true) do |row|
       ActiveRecord::Base.transaction do
         user = Kapa::User.find_by_uid(row["uid"])
-        person = user.person
+        person = user.person if user
 
         #Add new user
         if user.blank?

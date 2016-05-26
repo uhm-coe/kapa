@@ -716,5 +716,21 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "case_involvements", ["person_id", "case_id"], name: "index_case_involvements_on_person_id_and_case_id", using: :btree
 
+    create_table "case_communications", force: :cascade do |t|
+      t.integer "case_id"
+      t.integer "person_id", limit: 4
+      t.datetime "contacted_at"
+      t.string "type", limit: 255
+      t.string "category", limit: 255
+      t.string "status", limit: 255
+      t.integer "sequence"
+      t.text "note", limit: 16777215
+      t.text "yml", limit: 16777215
+      t.text "xml", limit: 16777215
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    add_index "case_communications", ["person_id", "case_id"], name: "index_case_communications_on_person_id_and_case_id", using: :btree
   end
 end

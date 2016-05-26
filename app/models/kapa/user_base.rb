@@ -128,7 +128,7 @@ module Kapa::UserBase
       users = users.where("praimry_dept" => filter.dept) if filter.dept.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
       users = users.where("users.category" => filter.category) if filter.category.present?
-      users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
+      users = users.column_matches("users.uid" => filter.user_key, "persons.last_name" => filter.user_key, "persons.first_name" => filter.user_key) if filter.user_key.present?
       return users
     end
 

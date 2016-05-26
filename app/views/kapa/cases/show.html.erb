@@ -99,6 +99,7 @@
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
       <li><a href="#case_involvements_tab" data-toggle="tab">People</a></li>
+      <li><a href="#case_commuications_tab" data-toggle="tab">Commuications</a></li>
       <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
       <li><a href="#assignments_tab" data-toggle="tab">Assignees</a></li>
@@ -153,6 +154,36 @@
               <% end %>
             </tbody>
           </table>
+      </div>
+
+      <div id="communications_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "New Communication", new_kapa_case_communications_path(:case_id => @case), :icon => "glyphicon-plus" %>
+        </p>
+        <table class="table table-striped">
+          <thead>
+           <tr>
+             <th>Date</th>
+             <th>Type</th>
+             <th>Actioned by</th>
+             <th></th>
+             <th></th>
+           </tr>
+          </thead>
+          <tbody>
+           <% @case_communications.each_with_index do |case_communication, index| %>
+             <tr>
+               <td><%=format_date case_action.communication_date %></td>
+               <td><%=case_action.type_desc %></td>
+               <td><%=case_action.users.first.person.full_name if case_action.users.first %></td>
+               <td class="right">
+                 <%=popover_button "", case_commuication.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                 <%=link_to "Show", kapa_case_commuincations_path(:id => case_commuication), :class => "btn btn-default btn-xs" %>
+               </td>
+             </tr>
+           <% end %>
+          </tbody>
+        </table>
       </div>
 
       <div id="documents_tab" class="tab-pane">

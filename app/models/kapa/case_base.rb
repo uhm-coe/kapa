@@ -15,6 +15,7 @@ module Kapa::CaseBase
             :class_name => "CaseAction"
 
     has_many :case_involvements
+    has_many :case_communications
     has_many :cases, :through => :case_involvements
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments

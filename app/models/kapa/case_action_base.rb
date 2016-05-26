@@ -3,6 +3,7 @@ module Kapa::CaseActionBase
 
   included do
     belongs_to :case
+    belongs_to :person
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
