@@ -8,7 +8,6 @@
         <%=f.date_picker :reported_at, :label => "Case Reported date" %>
       </div>
       <div class="col-sm-6">
-        <%=f.property_select :type, :name => :case_type %>
       </div>
     </div>
     <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>

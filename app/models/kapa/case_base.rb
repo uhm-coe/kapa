@@ -25,8 +25,15 @@ module Kapa::CaseBase
     serialize :category, Kapa::CsvSerializer
     validates :reported_at, :type, :case_name, :presence => true, :on => :update
     validates :case_number_alt, :uniqueness => true, :on => :update, :allow_blank => true
+    before_save :update_case_type
     before_save :update_case_name
     before_save :update_status_timestamp
+  end
+
+  def update_case_type
+    #TODO: Implement case type logic
+    self.type = "t9"
+    return self
   end
 
   def update_case_name
@@ -35,6 +42,7 @@ module Kapa::CaseBase
     end
     return self
   end
+
 
   def update_status_timestamp
     self.status_updated_at = DateTime.now if self.status_changed?
