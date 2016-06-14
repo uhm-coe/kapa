@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :reports, &extra_actions
     resources :advising_sessions, &extra_actions
     resources :cases, &extra_actions
+    resources :case_incidents, &extra_actions
     resources :case_actions, &extra_actions
     resources :case_communications, &extra_actions
     resources :case_involvements, &extra_actions

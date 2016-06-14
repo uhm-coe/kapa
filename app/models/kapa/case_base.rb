@@ -14,6 +14,7 @@ module Kapa::CaseBase
                                          limit 1)")},
             :class_name => "CaseAction"
 
+    has_many :case_incidents
     has_many :case_involvements
     has_many :case_communications
     has_many :cases, :through => :case_involvements

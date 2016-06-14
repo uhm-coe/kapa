@@ -4,6 +4,7 @@ module Kapa::CasesControllerBase
   def show
     @case = Kapa::Case.find(params[:id])
     @case_ext = @case.ext
+    @case_incidents = @case.case_incidents
     @case_involvements = @case.case_involvements
     @case_communications = @case.case_communications
     @case_actions = @case.case_actions.eager_load(:user_assignments => {:user => :person}).order("case_actions.action_date DESC, case_actions.id DESC")

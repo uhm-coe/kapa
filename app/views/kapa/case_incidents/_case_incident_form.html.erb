@@ -1,0 +1,14 @@
+<%= bootstrap_fields_for :case_incident do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.datetime_picker :incident_occurred_at, :label => "Incident Date Time" %>
+      <%=f.property_select :location, :name => "case_location", :include_blank => true, :label => "Incident Location" %>
+      <%=f.text_field :location_detail , :label => "Incident Location Detail" %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=f.text_area "note", :style => "width:100%; height:200px", :label => "Incident Situation" %>
+      <%=f.hidden_field :case_id %>
+    </div>
+  </div>
+<% end %>
