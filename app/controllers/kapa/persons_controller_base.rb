@@ -9,7 +9,7 @@ module Kapa::PersonsControllerBase
     @documents += @person.files
     @documents += @person.forms
     @documents += @person.exams
-    @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC")
+    @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC, curriculums.id DESC")
     @advising_sessions = @person.advising_sessions.order("session_date DESC")
     @case_involvements = @person.case_involvements.eager_load(:case).order("cases.reported_at DESC")
     @course_registrations = @person.course_registrations.eager_load(:course => :term).order("terms.sequence DESC")
