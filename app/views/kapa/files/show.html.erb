@@ -2,10 +2,16 @@
 
   <h3><%=@person.full_name if @person %> <%=format_date @file.date %></h3>
 
-  <%=content_tag :iframe, :src => kapa_file_url(:id => @file, :format => :file, :inline => true), :width => "100%", :height => 1070, :frameborder => 0 do %>
-    [Your browser does not support iframe, or has been configured not to display inline frames.
-     You can access <%=link_to "the document", kapa_file_url(:id => @file, :format => :file) %>
-     via a link though.]
+  <% if Kapa::File.inline_content_types.include? @file.content_type %>
+    <%=content_tag :iframe, :src => kapa_file_url(:id => @file, :format => :file, :inline => true), :width => "100%", :height => 1070, :frameborder => 0 do %>
+      [Your browser does not support iframe, or has been configured not to display inline frames.
+       You can access <%=link_to "the document", kapa_file_url(:id => @file, :format => :file) %>
+       via a link though.]
+    <% end %>
+  <% else %>
+    <div class="well text-center">
+      A preview is not available for this file. To download this file to your computer, click "Download" below.
+    </div>
   <% end %>
   <p class="text-center">
     <%=button_to_link "Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download" %>
@@ -20,7 +26,7 @@
     <%= bootstrap_form_for(:file, :url => kapa_file_path(:id => @file), :html => {:method => :put, :id => "edit_file_form"}) do |f| %>
       <%= f.text_area :note, :text => "Note", :size => "5x7" %>
       <div class="row form-block">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <%= f.text_field :name %>
           <%= f.text_field :dept, :label => t(:kapa_global_dept) if @current_user.manage? :kapa_files %>
           <%= f.check_box :public, {:label => "Share document"}, "Y", "N" %>

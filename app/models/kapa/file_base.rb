@@ -48,5 +48,9 @@ module Kapa::FileBase
        :email => [:person, :email],
        :updated => [:updated_at]}
     end
+
+    def inline_content_types
+      ["application/pdf", "application/x-pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/html", "text/plain"]
+    end
   end
 end
