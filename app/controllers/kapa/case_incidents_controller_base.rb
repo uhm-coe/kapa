@@ -4,8 +4,10 @@ module Kapa::CaseIncidentsControllerBase
   def show
     @case_incident = Kapa::CaseIncident.find(params[:id])
     @case_incident_ext = @case_incident.ext
+    @case_violations = @case_incident.case_violations
     @case = @case_incident.case
     @case_involvements = @case.case_involvements
+
   end
 
   def new
@@ -19,7 +21,7 @@ module Kapa::CaseIncidentsControllerBase
     @action = @case.case_incidents.build(case_incident_params)
 
     if @action.save
-      flash[:success] = "Action was successfully created."
+      flash[:success] = "Incident was successfully created."
     else
       flash[:danger] = error_message_for @action
     end
@@ -32,7 +34,7 @@ module Kapa::CaseIncidentsControllerBase
     @case_incident.update_serialized_attributes(:_ext, case_incident_ext_params) if params[:case_incident_ext]
 
     if @case_incident.save
-      flash[:success] = "Communication was successfully updated."
+      flash[:success] = "Incident was successfully updated."
     else
       flash[:danger] = error_message_for @action
     end
