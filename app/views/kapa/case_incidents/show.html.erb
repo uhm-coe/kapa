@@ -4,11 +4,11 @@
 
 <% content_for(:box1) do %>
   <h4 class="section-header divider">
-    <%= link_to "", kapa_case_path(:id => @case, :anchor => "actions"), :class => "glyphicon glyphicon-chevron-left" %>
+    <%= link_to "", kapa_case_path(:id => @case, :anchor => "case_incidents"), :class => "glyphicon glyphicon-chevron-left" %>
     <%=@case.case_number %> Incident
   </h4>
   <%=bootstrap_form_for :case_incident, :url => kapa_case_incident_path(:id => @case_incident, :anchor => :case_incidents), :html => {:method => :put} do |f| %>
     <%=render :partial => "case_incident_form" %>
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_incident_path(:id => @case_incident, :anchor => :communications)} if @current_user.write? %>
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_incident_path(:id => @case_incident, :anchor => :case_incidents)} if @current_user.write? %>
   <% end %>
 <%end%>

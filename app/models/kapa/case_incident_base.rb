@@ -4,4 +4,8 @@ module Kapa::CaseIncidentBase
   included do
     belongs_to :case
   end
+
+  def location_desc
+    return Kapa::Property.lookup_description("case_location", self.location)
+  end
 end

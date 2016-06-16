@@ -701,8 +701,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "location", limit: 255
       t.string "location_detail", limit: 255
       t.datetime "incident_occurred_at"
-      t.string "activities", limit: 255
-      t.string "violations", limit: 255
       t.text "note", limit: 65535
       t.datetime "created_at"
       t.datetime "updated_at"
@@ -746,5 +744,17 @@ class CreateKapaSchema < ActiveRecord::Migration
     end
 
     add_index "case_communications", ["person_id", "case_id"], name: "index_case_communications_on_person_id_and_case_id", using: :btree
+
+    create_table "case_violations", force: :cascade do |t|
+      t.integer "case_incident_id"
+      t.integer "case_involvement_id"
+      t.string "type", limit: 255, default: "", null: false
+      t.string "policy", limit: 255
+      t.text "note", limit: 65535
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.text "yml", limit: 65535
+      t.text "xml", limit: 65535
+    end
   end
 end
