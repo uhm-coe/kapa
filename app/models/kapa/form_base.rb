@@ -2,6 +2,7 @@ module Kapa::FormBase
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :file
     belongs_to :person
     belongs_to :term
     belongs_to :attachable, :polymorphic => true

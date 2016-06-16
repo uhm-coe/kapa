@@ -340,6 +340,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "type", limit: 255
       t.integer "person_id", limit: 4
       t.integer "term_id", limit: 4
+      t.integer "file_id", limit: 4
       t.integer "attachable_id", limit: 4
       t.string "attachable_type", limit: 255
       t.datetime "submitted_at"
