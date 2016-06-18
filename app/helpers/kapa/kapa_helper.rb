@@ -13,9 +13,9 @@ module Kapa::KapaHelper
     end
     selection = selections.select { |c| c[1].to_s == current_value.to_s }.first
     # If the current value exists in the db but is not in the selections
-    #   (i.e., because an ApplicationProperty had been deactivated),
-    #   add it to the selections or else the first selection will be selected by default
-    if selection.blank? and current_value.present?
+    # (i.e., because an Property had been deactivated),
+    # add it to the selections or else the first selection will be selected by default
+    if selection.blank? and current_value.present? and not options[:grouped]
       selections.push([current_value, current_value])
     end
 
@@ -29,16 +29,16 @@ module Kapa::KapaHelper
     #  options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
     #end
 
-    #if options[:locked]
-    #  if selection
-    #    description = selection[0]
-    #  else
-    #    description = current_value
-    #  end
-    #  tag = hidden_field(object_name, method, :value => current_value)
-    #  tag << text_field(object_name, method, :value => description.to_s, :size => description.to_s.length + 5, :disabled => true, :class => "form-control #{options[:class]}")
-    #  return tag.html_safe
-    #end
+    if options[:locked]
+      if selection
+        description = selection[0]
+      else
+        description = current_value
+      end
+      tag = hidden_field(object_name, method, :value => current_value)
+      tag << text_field(object_name, method, :value => description.to_s, :size => description.to_s.length + 5, :disabled => true, :class => "form-control #{options[:class]}")
+      return tag.html_safe
+    end
 
     select(object_name, method, selections, options, html_options)
   end

@@ -26,11 +26,25 @@ module Kapa::PropertyBase
       properties = where(:active => true, :name => options[:name].to_s)
       properties = properties.depts_scope(options[:depts]) if options[:depts].present?
       properties = properties.where(options[:conditions]) if options[:conditions].present?
-      properties.order("sequence DESC, description").collect do |v|
-        description = ""
-        description << "#{v.code}/" if options[:include_code]
-        description << v.description
-        [description, v.code]
+      properties.order("sequence DESC, description")
+      if options[:grouped]
+        grouped_properties = {}
+        properties.group_by(&:category).each do |category, items|
+          grouped_properties[category] = items.collect do |v|
+            description = ""
+            description << "#{v.code}/" if options[:include_code]
+            description << v.description
+            [description, v.code]
+          end
+        end
+        grouped_properties
+      else
+        properties.collect do |v|
+          description = ""
+          description << "#{v.code}/" if options[:include_code]
+          description << v.description
+          [description, v.code]
+        end
       end
     end
 
