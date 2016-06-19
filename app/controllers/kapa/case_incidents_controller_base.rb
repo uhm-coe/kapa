@@ -18,14 +18,14 @@ module Kapa::CaseIncidentsControllerBase
 
   def create
     @case = Kapa::Case.find(params[:case_id])
-    @action = @case.case_incidents.build(case_incident_params)
+    @case_incudent = @case.case_incidents.build(case_incident_params)
 
-    if @action.save
+    if @case_incudent.save
       flash[:success] = "Incident was successfully created."
     else
-      flash[:danger] = error_message_for @action
+      flash[:danger] = error_message_for @case_incudent
     end
-    redirect_to kapa_case_path(:id => @case, :anchor => "case_incidents")
+    redirect_to kapa_case_incident_path(:id => @case_incudent)
   end
 
   def update
@@ -43,7 +43,7 @@ module Kapa::CaseIncidentsControllerBase
 
   def destroy
     @case_incident = Kapa::CaseIncident.find(params[:id])
-
+    @case_incident.case_violations.clear
     if @case_incident.destroy
       flash[:success] = "Incident was successfully deleted."
     else
