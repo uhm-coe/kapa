@@ -14,6 +14,7 @@ module Kapa::CaseIncidentsControllerBase
     @case = Kapa::Case.find(params[:case_id])
     @case_involvements = @case.case_involvements
     @case_incident = @case.case_incidents.build(:incident_occurred_at => DateTime.now)
+    @documents = @case.documents
   end
 
   def create
