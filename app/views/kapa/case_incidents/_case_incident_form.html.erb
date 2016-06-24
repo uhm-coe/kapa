@@ -1,14 +1,18 @@
 <%= bootstrap_fields_for :case_incident do |f| %>
+  <%= bootstrap_fields_for :case_incident_ext do |e| %>
   <div class="row">
     <div class="col-sm-6">
       <%=f.datetime_picker :incident_occurred_at, :label => "Incident Date Time" %>
       <%=f.property_select :location, :name => "case_location", :include_blank => true, :label => "Incident Location" %>
       <%=f.text_field :location_detail , :label => "Incident Location Detail" %>
+      <%=e.select :witness, @case_involvements.select {|i| i.type == "WI"}.collect {|i| [i.person.full_name_ordered, i.person_id]}, {:label => "Witnesses", :include_blank => false}, {:multiple => true} %>
+      <%=e.select :document, @documents.collect {|d| ["#{d.name}", "#{document_type(d)}_#{d.id}"]}, {:label => "Documents referred"}, {:multiple => true} %>
     </div>
 
     <div class="col-sm-6">
-      <%=f.text_area "note", :style => "width:100%; height:200px", :label => "Incident Situation" %>
+      <%=f.text_area "note", :style => "width:100%; height:300px", :label => "Incident Situation" %>
       <%=f.hidden_field :case_id %>
     </div>
   </div>
+  <% end %>
 <% end %>

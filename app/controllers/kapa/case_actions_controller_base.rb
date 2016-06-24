@@ -6,9 +6,7 @@ module Kapa::CaseActionsControllerBase
     @case_action_ext = @case_action.ext
     @case = @case_action.case
     @case_involvements = @case.case_involvements
-    @documents = []
-    @documents += @case.files
-    @documents += @case.forms
+    @documents = @case.documents
   end
 
   def new

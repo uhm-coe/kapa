@@ -9,9 +9,7 @@ module Kapa::CasesControllerBase
     @case_communications = @case.case_communications
     @case_actions = @case.case_actions.eager_load(:user_assignments => {:user => :person}).order("case_actions.action_date DESC, case_actions.id DESC")
     @user_assignments = @case.user_assignments.order("user_assignments.created_at DESC")
-    @documents = []
-    @documents += @case.files.eager_load(:person)
-    @documents += @case.forms.eager_load(:person)
+    @documents = @case.documents
   end
 
   def update

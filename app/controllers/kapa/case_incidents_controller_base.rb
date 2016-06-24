@@ -7,7 +7,7 @@ module Kapa::CaseIncidentsControllerBase
     @case_violations = @case_incident.case_violations
     @case = @case_incident.case
     @case_involvements = @case.case_involvements
-
+    @documents = @case.documents
   end
 
   def new

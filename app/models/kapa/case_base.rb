@@ -79,6 +79,13 @@ module Kapa::CaseBase
     return Kapa::Property.lookup_description(:case, type)
   end
 
+  def documents
+    documents = []
+    documents += self.files.eager_load(:person)
+    documents += self.forms.eager_load(:person)
+    return documents
+  end
+
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
