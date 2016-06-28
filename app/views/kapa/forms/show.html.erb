@@ -2,7 +2,7 @@
 
   <h3><%= h @person.full_name if @person %> <%= h @form.term_desc %></h3>
   <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
-    <%= render :partial => "#{@form.type}_form" %>
+    <%= render :partial => "#{@form.type}_form", :locals => {:context => :kapa} %>
     <%= hidden_field :form, :person_id %>
     <%= hidden_field :form, :type %>
 
