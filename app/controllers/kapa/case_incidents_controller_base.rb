@@ -55,7 +55,7 @@ module Kapa::CaseIncidentsControllerBase
 
   private
   def case_incident_params
-    params.require(:case_incident).permit(:activities, :case_id, :incident_occurred_at, :location, :location_detail, :note, :status_updated_at, :type, :violations)
+    params.require(:case_incident).permit(:case_id, :created_at, :id, :incident_occurred_at, :location, :location_detail, :note, :status_updated_at, :type, :updated_at)
   end
 
   def case_incident_ext_params

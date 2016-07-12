@@ -20,7 +20,7 @@ module Kapa::CaseViolationsControllerBase
     @case_violation = @case_incident.case_violations.build(case_violation_params)
 
     if @case_violation.save
-      flash[:success] = "Poilicy violation was successfully created."
+      redirect_to kapa_case_incident_path(:id => @case_incident, :anchor => "case_violations")
     else
       flash[:danger] = error_message_for @case_violation
     end

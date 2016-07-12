@@ -11,10 +11,10 @@
 
     <div class="col-sm-6">
       <%= f.text_field :email, :size => 30, :readonly => @person.verified?, :label => "Campus Email" unless @unverified  %>
-      <%= f.text_field :email_alt, :size => 30, :label => "Personal Email" %>
       <%= f.text_field :first_name, :size => 30 %>
       <%= f.text_field :other_name %>
       <%= f.property_select :gender, :include_blank => true %>
+      <%= f.text_field :email_alt, :size => 30, :label => "Personal Email" %>
     </div>
   </div>
 

@@ -62,6 +62,10 @@ module Kapa::CaseInvolvementsControllerBase
 
   private
   def case_involvement_params
-    params.require(:case_involvement).permit(:case_id, :type, :affiliation, :bargaining_unit, :job_title, :person_id, :note, :sequence)
+    params.require(:case_involvement).permit(:affiliation, :bargaining_unit, :case_id, :category, :created_at, :id, :job_title, :note, :person_id, :sequence, :status, :type, :updated_at)
+  end
+
+  def person_params
+    params.require(:person).permit(:birth_date, :business_phone, :created_at, :cur_city, :cur_phone, :cur_postal_code, :cur_state, :cur_street, :dept, :email, :email_alt, :ethnicity, :ets_id, :fax, :first_name, :gender, :id, :id_number, :last_name, :middle_initial, :mobile_phone, :note, :other_name, :per_city, :per_phone, :per_postal_code, :per_state, :per_street, :source, :ssn, :ssn_agreement, :ssn_crypted, :status, :title, :type, :uid, :updated_at)
   end
 end

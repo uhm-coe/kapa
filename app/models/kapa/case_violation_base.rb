@@ -4,6 +4,7 @@ module Kapa::CaseViolationBase
   included do
     belongs_to :case_incident
     belongs_to :case_involvement
+    validates :case_involvement_id, :presence => true
   end
 
   def policy_desc
