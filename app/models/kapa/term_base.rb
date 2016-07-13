@@ -24,9 +24,8 @@ module Kapa::TermBase
       return selections
     end
 
-    #TODO Implement this method using start date and end date.
     def current_term
-      Kapa::Term.find_by_code("201530")
+      Kapa::Term.where("? between start_date and end_date", Date.today).last or Kapa::Term.find_by_code("201630")
     end
 
     def next_term
