@@ -6,6 +6,7 @@ module Kapa::KapaControllerBase
     protect_from_forgery
     before_filter :check_if_route_is_enabled
     before_filter :validate_login
+    before_filter :check_id_format, :only => :show
     before_filter :check_read_permission
     before_filter :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
     after_filter :put_timestamp
@@ -15,6 +16,13 @@ module Kapa::KapaControllerBase
   def check_if_route_is_enabled
     unless Rails.configuration.available_routes.include?(controller_name)
       flash[:danger] = "#{controller_name} is not available."
+      redirect_to(kapa_error_path) and return false
+    end
+  end
+
+  def check_id_format
+    if params[:id].to_s.match(/^[0-9]+$/)
+      flash[:danger] = "Invaild ID format."
       redirect_to(kapa_error_path) and return false
     end
   end

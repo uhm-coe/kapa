@@ -19,10 +19,9 @@ module Kapa::CaseViolationsControllerBase
     @case_incident = Kapa::CaseIncident.find(params[:case_incident_id])
     @case_violation = @case_incident.case_violations.build(case_violation_params)
 
-    if @case_violation.save
-      redirect_to kapa_case_incident_path(:id => @case_incident, :anchor => "case_violations")
-    else
+    unless @case_violation.save
       flash[:danger] = error_message_for @case_violation
+      redirect_to kapa_case_incident_path(:id => @case_incident, :anchor => "case_violations") and return
     end
     redirect_to kapa_case_incident_path(:id => @case_incident, :anchor => "case_violations")
   end

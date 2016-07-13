@@ -90,9 +90,10 @@ module Kapa::CaseBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       cases = Kapa::Case.eager_load([:user_assignments, {:case_involvements => :person}, :last_case_action]).order("cases.id DESC")
+      cases = cases.where("cases.id" => filter.id.to_s) if filter.id.present?
       cases = cases.where("cases.status" => filter.case_status) if filter.case_status.present?
       cases = cases.where("cases.type" => filter.case_type.to_s) if filter.case_type.present?
-      cases = cases.where("cases.id" => filter.case_id.to_s) if filter.case_id.present?
+      cases = cases.where("cases.case_number" => filter.case_number.to_s) if filter.case_number.present?
       cases = cases.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
