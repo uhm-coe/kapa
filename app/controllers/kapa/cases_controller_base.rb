@@ -2,7 +2,7 @@ module Kapa::CasesControllerBase
   extend ActiveSupport::Concern
 
   def show
-    @case = Kapa::Case.find(params[:id])
+    @case = Kapa::Case.search(:filter => {:case_id => params[:id], :user => @current_user}).first
     @case_ext = @case.ext
     @case_incidents = @case.case_incidents
     @case_involvements = @case.case_involvements
