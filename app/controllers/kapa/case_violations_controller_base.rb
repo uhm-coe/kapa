@@ -41,13 +41,12 @@ module Kapa::CaseViolationsControllerBase
 
   def destroy
     @case_violation = Kapa::CaseViolation.find(params[:id])
-
     if @case_violation.destroy
       flash[:success] = "Poilicy violation was successfully deleted."
     else
       flash[:danger] = error_message_for @case_violation
     end
-    redirect_to kapa_case_path(:id => @case_violation.case, :anchor => params[:anchor])
+    redirect_to kapa_case_incident_path(:id => @case_violation.case_incident, :anchor => params[:anchor])
   end
 
   private

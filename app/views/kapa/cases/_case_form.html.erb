@@ -5,7 +5,7 @@
       <%=t.datetime_picker :reported_at, :label => "Case reported" %>
       <%=t.datetime_picker :will_close_at, :label => "Closing target" %>
       <%=t.datetime_picker :closed_at, :label => "Case closed" %>
-      <%=t.property_select :dept, :include_blank => true, :label => t(:kapa_global_dept) %>
+      <%=t.property_select :dept, {:include_blank => true, :label => t(:kapa_global_dept)}, {:disabled => !@current_user.access_all?(:kapa_cases)} %>
       <%=t.property_select :status, :name => "#{@case.type}_status", :include_blank => true %>
     </div>
 

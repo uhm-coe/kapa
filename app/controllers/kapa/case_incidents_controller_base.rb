@@ -26,7 +26,7 @@ module Kapa::CaseIncidentsControllerBase
     else
       flash[:danger] = error_message_for @case_incudent
     end
-    redirect_to kapa_case_incident_path(:id => @case_incudent)
+    redirect_to kapa_case_incident_path(:id => @case_incident)
   end
 
   def update
@@ -39,7 +39,7 @@ module Kapa::CaseIncidentsControllerBase
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_case_path(:id => @case_incident.case_id, :anchor => params[:anchor], :action_panel => params[:action_panel])
+    redirect_to kapa_case_path(:id => @case_incident.case, :anchor => params[:anchor], :action_panel => params[:action_panel])
   end
 
   def destroy

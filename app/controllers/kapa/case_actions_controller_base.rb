@@ -58,7 +58,7 @@ module Kapa::CaseActionsControllerBase
 
   private
   def case_action_params
-    params.require(:case_action).permit(:action, :action_date, :action_specify, :case_id, :created_at, :id, :note, :person_id, :sequence, :type, :updated_at, :user_id,, :user_ids => [])
+    params.require(:case_action).permit(:action, :action_date, :action_specify, :case_id, :created_at, :id, :note, :person_id, :sequence, :type, :updated_at, :user_id, :user_ids => [])
   end
 
   def case_action_ext_params

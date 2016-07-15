@@ -92,6 +92,18 @@ module Kapa::UserBase
     permission.send("#{name}_scope").to_i
   end
 
+  def access_all?(name = controller_name)
+    access_scope(name) >= 30
+  end
+
+  def access_dept?(name = controller_name)
+    access_scope(name) >= 20
+  end
+
+  def access_assigned?(name = controller_name)
+    access_scope(name) >= 10
+  end
+
   def apply_role(name)
     self.serialize(:permission, Rails.configuration.roles[name])
   end

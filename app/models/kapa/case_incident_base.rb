@@ -3,7 +3,7 @@ module Kapa::CaseIncidentBase
 
   included do
     belongs_to :case
-    has_many :case_violations
+    has_many :case_violations, :dependent => :destroy
   end
 
   def location_desc

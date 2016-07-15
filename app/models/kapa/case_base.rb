@@ -4,7 +4,7 @@ module Kapa::CaseBase
   included do
     belongs_to :person
     belongs_to :curriculum
-    has_many :case_actions
+    has_many :case_actions, :dependent => :destroy
     has_one :last_case_action,
             -> { where("case_actions.id =
                                         (select a.id
@@ -14,11 +14,11 @@ module Kapa::CaseBase
                                          limit 1)")},
             :class_name => "CaseAction"
 
-    has_many :case_incidents
-    has_many :case_involvements
-    has_many :case_communications
+    has_many :case_incidents, :dependent => :destroy
+    has_many :case_involvements, :dependent => :destroy
+    has_many :case_communications, :dependent => :destroy
     has_many :cases, :through => :case_involvements
-    has_many :user_assignments, :as => :assignable
+    has_many :user_assignments, :as => :assignable, :dependent => :destroy
     has_many :users, :through => :user_assignments
     has_many :files, :as => :attachable
     has_many :forms, :as => :attachable

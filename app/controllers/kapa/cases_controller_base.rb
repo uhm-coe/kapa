@@ -44,6 +44,12 @@ module Kapa::CasesControllerBase
     redirect_to kapa_case_path(:id => @case)
   end
 
+  def destroy
+    @case = Kapa::Case.find(params[:id])
+    @case.destroy
+    redirect_to kapa_cases_path
+  end
+
   def index
     @filter = filter
     @cases = Kapa::Case.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)

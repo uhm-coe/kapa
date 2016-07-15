@@ -138,7 +138,7 @@ module Kapa::KapaModelBase
     end
 
     def hashids
-      Hashids.new(table_name, 5)
+      Hashids.new(table_name, 10)
     end
   end
 end
