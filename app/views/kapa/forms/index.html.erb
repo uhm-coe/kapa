@@ -44,7 +44,7 @@
         <td><%= time_ago_in_words form.updated_at if form.updated_at %> ago</td>
         <td><%= format_date form.submitted_at %></td>
         <td><%= h form.lock %></td>
-        <td><%= h form.dept %></td>
+        <td><%= h form.dept.join(", ") %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>

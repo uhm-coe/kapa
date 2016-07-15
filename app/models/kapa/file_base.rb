@@ -6,6 +6,8 @@ module Kapa::FileBase
     belongs_to :person
     belongs_to :attachable, :polymorphic => true
     has_attached_file :data
+
+    serialize :dept, Kapa::CsvSerializer
   end
 
   def url(*args)

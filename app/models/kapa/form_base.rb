@@ -8,6 +8,8 @@ module Kapa::FormBase
     belongs_to :attachable, :polymorphic => true
     has_one :transition_point
     validates_presence_of :type
+
+    serialize :dept, Kapa::CsvSerializer
   end
 
   def term_desc
