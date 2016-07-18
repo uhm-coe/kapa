@@ -19,9 +19,9 @@ module Kapa::CaseIncidentsControllerBase
 
   def create
     @case = Kapa::Case.find(params[:case_id])
-    @case_incudent = @case.case_incidents.build(case_incident_params)
+    @case_incident = @case.case_incidents.build(case_incident_params)
 
-    if @case_incudent.save
+    if @case_incident.save
       flash[:success] = "Incident was successfully created."
     else
       flash[:danger] = error_message_for @case_incudent
