@@ -20,6 +20,7 @@ module Kapa::CaseIncidentsControllerBase
   def create
     @case = Kapa::Case.find(params[:case_id])
     @case_incident = @case.case_incidents.build(case_incident_params)
+    @case_incident.update_serialized_attributes(:_ext, case_incident_ext_params) if params[:case_incident_ext]
 
     if @case_incident.save
       flash[:success] = "Incident was successfully created."
