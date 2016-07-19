@@ -30,6 +30,8 @@ Rails.configuration.available_routes = %w{
   kapa_advising_sessions
   kapa_cases
   kapa_case_actions
+  kapa_case_involvements
+  kapa_case_communications
   kapa_courses
   kapa_course_registrations
   kapa_practicum_placements

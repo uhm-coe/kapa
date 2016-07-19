@@ -57,7 +57,6 @@ module Kapa::FacultyServiceActivitiesControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{filter.inspect}"
     send_data Kapa::FacultyServiceActivity.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",

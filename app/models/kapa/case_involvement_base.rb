@@ -2,9 +2,9 @@ module Kapa::CaseInvolvementBase
   extend ActiveSupport::Concern
 
   included do
-    self.table_name = :case_involvements
     belongs_to :person
     belongs_to :case
+    has_many :case_violations
   end
 
   def type_desc

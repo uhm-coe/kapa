@@ -86,7 +86,6 @@ module Kapa::ExamBase
       for i in (1..36)
         shift_exam = (i - 1) * 700
         subject = extract_value(1965, 1968, shift_exam)
-#        logger.debug "(i):(#{i}) subject: #{subject}"
         if subject.blank?
           exam_score = nil
         else
@@ -96,7 +95,6 @@ module Kapa::ExamBase
           subscores = []
           for j in (1..8)
             shift_sub = shift_exam + (j - 1) * 87
-#            logger.debug "(i,j):(#{i},#{j}) shift: #{shift_sub}, #{shift_sub+1969} category: #{extract_value(1969, 2043, shift_sub)}"
             if not extract_value(1969, 2043, shift_sub).blank?
               exam_score.[]=("category_points_0#{j}", extract_value(2044, 2046, shift_sub))
               subscores.push({:category_number => j,

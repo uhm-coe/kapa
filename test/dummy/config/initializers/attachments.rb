@@ -5,4 +5,4 @@
 Rails.configuration.attachment_root = "/srv/attachments"
 
 # Directory structure of attachment files
-Paperclip::Attachment.default_options[:path] = "#{Rails.configuration.attachment_root}/attachments/:class/:id_partition/:style.:extension"
+Paperclip::Attachment.default_options[:path] = "#{Rails.configuration.attachment_root}/:class/:attachment/:id_partition/:style.:extension"

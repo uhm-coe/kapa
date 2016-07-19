@@ -1,0 +1,56 @@
+<% content_for(:title) do %>
+  <%=@case.case_number %>: <%=@case.case_name %>
+<% end %>
+
+<% content_for(:box1) do %>
+  <h4 class="section-header divider">
+    <%= link_to "", kapa_case_path(:id => @case, :anchor => "case_incidents"), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@case.case_number %> Incident
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#case_tab" data-toggle="tab">Incident Profile</a></li>
+      <li><a href="#case_violations_tab" data-toggle="tab">Policy Violations</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="case_tab" class="tab-pane">
+        <%=bootstrap_form_for :case_incident, :url => kapa_case_incident_path(:id => @case_incident, :anchor => :case_incidents), :html => {:method => :put} do |f| %>
+          <%=render :partial => "case_incident_form" %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_incident_path(:id => @case_incident, :anchor => :case_incidents)} if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="case_violations_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "New Violation", new_kapa_case_violation_path(:case_incident_id => @case_incident), :icon => "glyphicon-plus" %>
+        </p>
+          <table id="case_violations" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Policy</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="case_violations-rows">
+              <% for case_violation in @case_violations %>
+                <tr>
+                  <td>
+                    <%=link_to(case_violation.case_involvement.person.full_name, kapa_person_path(:id => case_violation.case_involvement.person_id), :target => "_blank") %>
+                  </td>
+                  <td>
+                    <%=case_violation.policy_desc%>
+                  </td>
+                  <td class="right">
+                    <%#=popover_button "", case_violation.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                    <%= link_to "Show", kapa_case_violation_path(:id => case_violation), :class => "btn btn-default btn-xs" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+    </div>
+<%end%>

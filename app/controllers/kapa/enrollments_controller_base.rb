@@ -86,10 +86,10 @@ module Kapa::EnrollmentsControllerBase
 
         placement = practicum_profile.practicum_placements.find_by_term_id(params[:filter][:term_id])
         if placement
-          logger.debug "Record matched! #{placement.id}"
+          logger.error "*ERROR* Record matched! #{placement.id}"
           placement.practicum_assignments.clear
         else
-          logger.debug "No match! Creating a new one."
+          logger.error "*ERROR* No match! Creating a new one."
           placement = practicum_profile.practicum_placements.build(:term_id => params[:filter][:term_id], :dept => @current_user.primary_dept)
         end
 
@@ -132,7 +132,6 @@ module Kapa::EnrollmentsControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{@filter.inspect}"
     send_data Kapa::Enrollment.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",

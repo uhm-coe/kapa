@@ -92,6 +92,18 @@ module Kapa::UserBase
     permission.send("#{name}_scope").to_i
   end
 
+  def access_all?(name = controller_name)
+    access_scope(name) >= 30
+  end
+
+  def access_dept?(name = controller_name)
+    access_scope(name) >= 20
+  end
+
+  def access_assigned?(name = controller_name)
+    access_scope(name) >= 10
+  end
+
   def apply_role(name)
     self.serialize(:permission, Rails.configuration.roles[name])
   end
@@ -128,7 +140,7 @@ module Kapa::UserBase
       users = users.where("primary_dept" => filter.primary_dept) if filter.primary_dept.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
       users = users.where("users.category" => filter.category) if filter.category.present?
-      users = users.column_matches("users.uid" => filter.key, "persons.last_name" => filter.key, "persons.first_name" => filter.key) if filter.key.present?
+      users = users.column_matches("users.uid" => filter.user_key, "persons.last_name" => filter.user_key, "persons.first_name" => filter.user_key) if filter.user_key.present?
       return users
     end
 
@@ -140,7 +152,7 @@ module Kapa::UserBase
        :position => [:position],
        :primary_dept => [:primary_dept],
        :status => [:status],
-       :dept => [:dept],
+       :dept => [:dept, [:join, ","]],
        :category => [:category]}
     end
   end

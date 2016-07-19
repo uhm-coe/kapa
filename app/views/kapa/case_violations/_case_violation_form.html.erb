@@ -1,0 +1,13 @@
+<%= bootstrap_fields_for :case_violation do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.select :case_involvement_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.id]} %>
+      <%=f.property_select :policy, {:label => "Policy Violated", :grouped => true}, {:class => "search-select"} %>
+    </div>
+
+    <div class="col-sm-6">
+      <%#=f.text_area "note", :style => "width:100%; height:200px", :label => "Incident Situation" %>
+      <%=f.hidden_field :case_incident_id %>
+    </div>
+  </div>
+<% end %>

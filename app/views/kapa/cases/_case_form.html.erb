@@ -3,18 +3,14 @@
     <div class="col-sm-6">
       <%=t.property_select :type, :name => "case_type" %>
       <%=t.datetime_picker :reported_at, :label => "Case reported" %>
+      <%=t.datetime_picker :will_close_at, :label => "Closing target" %>
       <%=t.datetime_picker :closed_at, :label => "Case closed" %>
-      <%=t.property_select :category, {:name => "#{@case.type}_category" , :label => "Reported Activity"}, {:multiple => true} %>
-      <%=t.property_select :dept, :include_blank => true, :label => t(:kapa_global_dept) %>
-      <%=t.text_field :referrer , :label => "Referrer" %>
+      <%=t.property_select :dept, {:include_blank => true, :label => t(:kapa_global_dept)}, {:disabled => !@current_user.access_all?(:kapa_cases)} %>
       <%=t.property_select :status, :name => "#{@case.type}_status", :include_blank => true %>
     </div>
 
     <div class="col-sm-6">
-      <%=t.datetime_picker :incident_occurred_at, :label => "Incident Date Time" %>
-      <%=t.property_select :location, :name => "case_location", :include_blank => true, :label => "Incident Location" %>
-      <%=t.text_field :location_detail , :label => "Incident Location Detail" %>
-      <%=t.text_area :note, {:label => "Incident Situation", :cols => 54, :rows => 15} %>
+      <%=t.text_area :note, {:label => "Case description", :cols => 54, :rows => 15} %>
     </div>
   </div>
 <% end %>

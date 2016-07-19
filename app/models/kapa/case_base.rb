@@ -4,7 +4,7 @@ module Kapa::CaseBase
   included do
     belongs_to :person
     belongs_to :curriculum
-    has_many :case_actions
+    has_many :case_actions, :dependent => :destroy
     has_one :last_case_action,
             -> { where("case_actions.id =
                                         (select a.id
@@ -14,23 +14,50 @@ module Kapa::CaseBase
                                          limit 1)")},
             :class_name => "CaseAction"
 
-    has_many :case_involvements
+    has_many :case_incidents, :dependent => :destroy
+    has_many :case_involvements, :dependent => :destroy
+    has_many :case_communications, :dependent => :destroy
     has_many :cases, :through => :case_involvements
-    has_many :user_assignments, :as => :assignable
+    has_many :user_assignments, :as => :assignable, :dependent => :destroy
     has_many :users, :through => :user_assignments
     has_many :files, :as => :attachable
     has_many :forms, :as => :attachable
 
     serialize :category, Kapa::CsvSerializer
-    validates_presence_of :reported_at, :type
+    validates :reported_at, :type, :case_name, :presence => true, :on => :update
+    validates :case_number_alt, :uniqueness => true, :on => :update, :allow_blank => true
+    before_save :update_case_type
+    before_save :update_case_name
     before_save :update_status_timestamp
   end
+
+  def update_case_type
+    #TODO: Implement case type logic
+    self.type = "t9"
+    return self
+  end
+
+  def update_case_name
+    if self.case_name.blank? or self.case_name.include? "?"
+      self.case_name = default_case_name
+    end
+    return self
+  end
+
 
   def update_status_timestamp
     self.status_updated_at = DateTime.now if self.status_changed?
   end
 
-  def name
+  def case_number
+    if case_number_alt.present?
+      case_number_alt
+    else
+      "#{self.dept}#{self.id.to_s.rjust(8, '0')}"
+    end
+  end
+
+  def default_case_name
     reporting_party = self.case_involvements.where(:type => "CO").first
     responding_party = self.case_involvements.where(:type => "RE").first
     "#{reporting_party ? reporting_party.person.full_name_ordered : "?"} vs. #{responding_party ? responding_party.person.full_name_ordered : "?"}"
@@ -52,13 +79,20 @@ module Kapa::CaseBase
     return Kapa::Property.lookup_description(:case, type)
   end
 
+  def documents
+    documents = []
+    documents += self.files.eager_load(:person)
+    documents += self.forms.eager_load(:person)
+    return documents
+  end
+
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       cases = Kapa::Case.eager_load([:user_assignments, {:case_involvements => :person}, :last_case_action]).order("cases.id DESC")
       cases = cases.where("cases.status" => filter.case_status) if filter.case_status.present?
       cases = cases.where("cases.type" => filter.case_type.to_s) if filter.case_type.present?
-      cases = cases.where("cases.id" => filter.case_id.to_s) if filter.case_id.present?
+      cases = cases.where("cases.case_number" => filter.case_number.to_s) if filter.case_number.present?
       cases = cases.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope

@@ -52,6 +52,10 @@ module Kapa::KapaModelBase
     self.deserialize(:_ext, :as => OpenStruct)
   end
 
+  def to_param
+    self.class.hashids.encode(id)
+  end
+
   class_methods do
     def selections
       [["Not Defined!", "ND"]]
@@ -123,6 +127,18 @@ module Kapa::KapaModelBase
     def csv_format
       #This method should be implemented in subclasses to define csv data.
       {}
+    end
+
+    def find(id)
+      if id.is_a?(String) and !id.match(/^[0-9]+$/)
+        super(hashids.decode(id).first)
+      else
+        super(id)
+      end
+    end
+
+    def hashids
+      Hashids.new(table_name, 10)
     end
   end
 end

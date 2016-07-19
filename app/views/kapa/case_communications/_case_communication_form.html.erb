@@ -1,0 +1,14 @@
+<%= bootstrap_fields_for :case_communication do |a| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=a.select :person_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.person_id]}, :include_blank => true %>
+      <%=a.property_select "type", :name => "communication_type" %>
+      <%=a.datetime_picker :contacted_at, :label => "Contact Date Time" %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=a.text_area "note", :style => "width:100%; height:200px" %>
+      <%=a.hidden_field :case_id %>
+    </div>
+  </div>
+<% end %>

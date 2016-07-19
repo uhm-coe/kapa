@@ -1,3 +1,7 @@
+<% content_for(:title) do %>
+  <%=@case.case_number %>: <%=@case.case_name %>
+<% end %>
+
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
@@ -76,18 +80,26 @@
     <% end %>
   <% end %>
 
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "case_id_dialog", :modal_title => "Select a document", :modal_form_id => "custom_case_form"} do %>
+    <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} , :html => {:id => "custom_case_form"} do |f| %>
+      <%=f.text_field :case_number_alt, :label => "Custom case number" %>
+      <%=f.text_field :case_name, :label => "Custom case name" %>
+    <% end %>
+  <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
 
   <h4 class="section-header divider">
-     Case #<%=@case.id %>: <%=@case.name %> (Target Resolution: <%=distance_of_time_in_words(@case.target_resolution_at, DateTime.now)%>)
+     <%=@case.case_number %>: <%=@case.case_name %>
   </h4>
 
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#case_tab" data-toggle="tab">Profile</a></li>
       <li><a href="#case_involvements_tab" data-toggle="tab">People</a></li>
+      <li><a href="#case_commuications_tab" data-toggle="tab">Commuications</a></li>
       <li><a href="#documents_tab" data-toggle="tab">Documents</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
       <li><a href="#assignments_tab" data-toggle="tab">Assignees</a></li>
@@ -123,7 +135,7 @@
                     <%=case_involvement.person.id_number %>
                   </td>
                   <td>
-                    <%=link_to(case_involvement.person.full_name, kapa_person_path(:id => case_involvement.person_id), :target => :blank) %>
+                    <%=link_to(case_involvement.person.full_name, kapa_person_path(:id => case_involvement.person_id), :target => "_blank") %>
                   </td>
                   <td>
                     <%=case_involvement.type_desc %>
@@ -142,6 +154,36 @@
               <% end %>
             </tbody>
           </table>
+      </div>
+
+      <div id="communications_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "New Communication", new_kapa_case_communications_path(:case_id => @case), :icon => "glyphicon-plus" %>
+        </p>
+        <table class="table table-striped">
+          <thead>
+           <tr>
+             <th>Date</th>
+             <th>Type</th>
+             <th>Actioned by</th>
+             <th></th>
+             <th></th>
+           </tr>
+          </thead>
+          <tbody>
+           <% @case_communications.each_with_index do |case_communication, index| %>
+             <tr>
+               <td><%=format_date case_action.communication_date %></td>
+               <td><%=case_action.type_desc %></td>
+               <td><%=case_action.users.first.person.full_name if case_action.users.first %></td>
+               <td class="right">
+                 <%=popover_button "", case_commuication.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
+                 <%=link_to "Show", kapa_case_commuincations_path(:id => case_commuication), :class => "btn btn-default btn-xs" %>
+               </td>
+             </tr>
+           <% end %>
+          </tbody>
+        </table>
       </div>
 
       <div id="documents_tab" class="tab-pane">
@@ -207,7 +249,7 @@
 
       <div id="assignments_tab" class="tab-pane">
         <p class="text-right">
-          <%=button_to_link "New User", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
+          <%=button_to_link "New Assignment", new_kapa_user_assignment_path(:assignable_id => @case, :assignable_type => @case.class, :return_path => url_for(:anchor => "assignments", :only_path => true)), :icon => "glyphicon-plus" %>
         </p>
           <table id="assignments" class="table table-striped">
             <thead>

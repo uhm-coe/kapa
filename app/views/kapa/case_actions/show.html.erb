@@ -1,7 +1,11 @@
+<% content_for(:title) do %>
+  <%=@case.case_number %>: <%=@case.case_name %>
+<% end %>
+
 <% content_for(:box1) do %>
   <h4 class="section-header divider">
     <%= link_to "", kapa_case_path(:id => @case, :anchor => "actions"), :class => "glyphicon glyphicon-chevron-left" %>
-    Case #<%=@case.id %> Action
+    <%=@case.case_number %> Action
   </h4>
   <%=bootstrap_form_for :case_action, :url => kapa_case_action_path(:id => @case_action, :anchor => :actions), :html => {:method => :put} do |f| %>
     <%=render :partial => "case_action_form" %>

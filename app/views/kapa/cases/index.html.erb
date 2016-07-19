@@ -46,8 +46,8 @@
     <tbody>
     <% for @case in @cases %>
       <tr>
-        <td><%= @case.id %></td>
-        <td><%= @case.name %></td>
+        <td><%= @case.case_number %></td>
+        <td><%= @case.case_name %></td>
         <td><%= h @case.reported_at %></td>
         <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
         <td><%= h @case.status_desc %></td>

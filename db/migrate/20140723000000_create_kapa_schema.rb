@@ -673,18 +673,18 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     create_table "cases", force: :cascade do |t|
       t.string "type", limit: 255, default: "", null: false
+      t.string "case_number_alt", limit: 255
+      t.string "case_name", limit: 255
       t.string "status", limit: 255
       t.string "category", limit: 255
       t.string "priority", limit: 255
-      t.string "location", limit: 255
-      t.string "location_detail", limit: 255
       t.datetime "incident_occurred_at"
-      t.string "referrer", limit: 255
       t.string "dept", limit: 255
       t.boolean "active", default: true
       t.text "note", limit: 65535
       t.datetime "reported_at"
       t.datetime "closed_at"
+      t.datetime "will_close_at"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.datetime "status_updated_at"
@@ -696,10 +696,27 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "cases", ["status"]
     add_index "cases", ["type"]
 
+    create_table "case_incidents", force: :cascade do |t|
+      t.integer "case_id"
+      t.string "type", limit: 255, default: "", null: false
+      t.string "location", limit: 255
+      t.string "location_detail", limit: 255
+      t.datetime "incident_occurred_at"
+      t.text "note", limit: 65535
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.datetime "status_updated_at"
+      t.text "yml", limit: 65535
+      t.text "xml", limit: 65535
+    end
+
     create_table "case_involvements", force: :cascade do |t|
       t.integer "case_id"
       t.integer "person_id", limit: 4
       t.string "type", limit: 255
+      t.string "affiliation", limit: 255
+      t.string "bargaining_unit", limit: 255
+      t.string "job_title", limit: 255
       t.string "category", limit: 255
       t.string "status", limit: 255
       t.integer "sequence"
@@ -712,5 +729,33 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "case_involvements", ["person_id", "case_id"], name: "index_case_involvements_on_person_id_and_case_id", using: :btree
 
+    create_table "case_communications", force: :cascade do |t|
+      t.integer "case_id"
+      t.integer "person_id", limit: 4
+      t.datetime "contacted_at"
+      t.string "type", limit: 255
+      t.string "category", limit: 255
+      t.string "status", limit: 255
+      t.integer "sequence"
+      t.text "note", limit: 16777215
+      t.text "yml", limit: 16777215
+      t.text "xml", limit: 16777215
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    add_index "case_communications", ["person_id", "case_id"], name: "index_case_communications_on_person_id_and_case_id", using: :btree
+
+    create_table "case_violations", force: :cascade do |t|
+      t.integer "case_incident_id"
+      t.integer "case_involvement_id"
+      t.string "type", limit: 255, default: "", null: false
+      t.string "policy", limit: 255
+      t.text "note", limit: 65535
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.text "yml", limit: 65535
+      t.text "xml", limit: 65535
+    end
   end
 end

@@ -11,6 +11,7 @@ module Kapa::CaseInvolvementsControllerBase
   def new
     @case = Kapa::Case.find(params[:case_id])
     @person = Kapa::Person.new :source => "Manual"
+    @unverified = true
   end
 
   def create
@@ -25,7 +26,7 @@ module Kapa::CaseInvolvementsControllerBase
       @case_involvement.person = @person
     end
 
-    unless @case_involvement.save
+    unless @case_involvement.save and @case.save
       flash[:danger] = error_message_for(@case_involvement)
       redirect_to kapa_case_path(:id => @case, :anchor => "case_involvements") and return false
     end
@@ -38,16 +39,8 @@ module Kapa::CaseInvolvementsControllerBase
     @case_involvement = Kapa::CaseInvolvement.find(params[:id])
     @case = @case_involvement.case
 
-    @person = @case_involvement.person
-    @person.attributes = person_params if params[:person]
-    @person.attributes = contact_params if params[:contact]
-    unless @person.save
-      flash[:danger] = error_message_for(@person)
-      redirect_to kapa_case_involvement_path(:id => @case_involvement) and return false
-    end
-
     @case_involvement.attributes = case_involvement_params
-    unless @case_involvement.save
+    unless @case_involvement.save and @case.save
       flash[:danger] = error_message_for(@case_involvement)
       redirect_to kapa_case_involvement_path(:id => @case_involvement) and return false
     end
@@ -69,16 +62,10 @@ module Kapa::CaseInvolvementsControllerBase
 
   private
   def case_involvement_params
-    params.require(:case_involvement).permit(:case_id, :type, :person_id, :note, :sequence)
+    params.require(:case_involvement).permit(:affiliation, :bargaining_unit, :case_id, :category, :created_at, :id, :job_title, :note, :person_id, :sequence, :status, :type, :updated_at)
   end
 
   def person_params
-    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
-                                    :email, :first_name, :other_name, :title, :gender, :status)
-  end
-
-  def contact_params
-    params.require(:contact).permit(:entity_id, :entity_type, :cur_phone, :mobile_phone, :email, :cur_street, :cur_city, :cur_state,
-                                    :cur_postal_code, :per_street, :per_city, :per_state, :per_postal_code)
+    params.require(:person).permit(:birth_date, :business_phone, :created_at, :cur_city, :cur_phone, :cur_postal_code, :cur_state, :cur_street, :dept, :email, :email_alt, :ethnicity, :ets_id, :fax, :first_name, :gender, :id, :id_number, :last_name, :middle_initial, :mobile_phone, :note, :other_name, :per_city, :per_phone, :per_postal_code, :per_state, :per_street, :source, :ssn, :ssn_agreement, :ssn_crypted, :status, :title, :type, :uid, :updated_at)
   end
 end

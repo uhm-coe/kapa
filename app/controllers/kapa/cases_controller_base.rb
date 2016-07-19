@@ -3,13 +3,13 @@ module Kapa::CasesControllerBase
 
   def show
     @case = Kapa::Case.find(params[:id])
-    @case_involvements = @case.case_involvements
     @case_ext = @case.ext
+    @case_incidents = @case.case_incidents
+    @case_involvements = @case.case_involvements
+    @case_communications = @case.case_communications
     @case_actions = @case.case_actions.eager_load(:user_assignments => {:user => :person}).order("case_actions.action_date DESC, case_actions.id DESC")
     @user_assignments = @case.user_assignments.order("user_assignments.created_at DESC")
-    @documents = []
-    @documents += @case.files.eager_load(:person)
-    @documents += @case.forms.eager_load(:person)
+    @documents = @case.documents
   end
 
   def update
@@ -44,6 +44,12 @@ module Kapa::CasesControllerBase
     redirect_to kapa_case_path(:id => @case)
   end
 
+  def destroy
+    @case = Kapa::Case.find(params[:id])
+    @case.destroy
+    redirect_to kapa_cases_path
+  end
+
   def index
     @filter = filter
     @cases = Kapa::Case.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
@@ -59,7 +65,7 @@ module Kapa::CasesControllerBase
 
   private
   def case_params
-    params.require(:case).permit(:person_id, :reported_at, :closed_at, :form_id, :type, :status, :priority, :location, :location_detail, :incident_occurred_at, :referrer, :dept, :note, :category => [], :user_ids => [])
+    params.require(:case).permit(:active, :case_name, :case_number_alt, :category, :closed_at, :created_at, :dept, :id, :incident_occurred_at, :note, :priority, :reported_at, :status, :status_updated_at, :type, :updated_at, :will_close_at)
   end
 
 end

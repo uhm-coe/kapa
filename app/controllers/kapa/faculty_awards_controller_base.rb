@@ -57,7 +57,6 @@ module Kapa::FacultyAwardsControllerBase
 
   def export
     @filter = filter
-    logger.debug "----filter: #{filter.inspect}"
     send_data Kapa::FacultyAward.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
