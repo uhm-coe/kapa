@@ -22,7 +22,7 @@ module Kapa::KapaControllerBase
 
   def check_id_format
     if params[:id].to_s.match(/^[0-9]+$/)
-      flash[:danger] = "Invaild ID format."
+      flash[:danger] = "Invalid ID format."
       redirect_to(kapa_error_path) and return false
     end
   end

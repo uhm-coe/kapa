@@ -1,29 +1,43 @@
 module Kapa::PracticumLogsControllerBase
   extend ActiveSupport::Concern
 
-  def create
-    @practicum_placement = Kapa::PracticumPlacement.find(params[:id])
-    @practicum_log = @practicum_placement.practicum_logs.build(create_practicum_log_params)
-
-    if @practicum_log.save
-      flash[:success] = "Log was successfully created."
-    else
-      flash[:danger] = error_message_for @practicum_log
-    end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_placement, :anchor => params[:anchor], :practicum_log_panel => @practicum_log.id)
+  def show
+    @practicum_log = Kapa::PracticumLog.find(params[:id])
+    @practicum_log_ext = @practicum_log.ext
+    @practicum_placement = @practicum_log.practicum_placement
+    @person = @practicum_placement.person
   end
 
   def update
     @practicum_log = Kapa::PracticumLog.find(params[:id])
-    @practicum_log.attributes = update_practicum_log_params(@practicum_log.id.to_s)
+    @practicum_log.attributes = practicum_log_params
 
     if @practicum_log.save
       flash[:success] = "Log was successfully updated."
     else
       flash[:danger] = error_message_for @practicum_log
     end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_log.practicum_placement_id, :anchor => params[:anchor], :practicum_log_panel => params[:practicum_log_panel])
+    redirect_to kapa_practicum_placement_path(:id => @practicum_log.practicum_placement, :anchor => :logs)
   end
+
+  def new
+    @practicum_placement = Kapa::PracticumPlacement.find(params[:practicum_placement_id])
+    @practicum_log = @practicum_placement.practicum_logs.build(:log_date => Date.today)
+    @person = @practicum_placement.person
+  end
+
+  def create
+    @practicum_placement = Kapa::PracticumPlacement.find(params[:practicum_placement_id])
+    @practicum_log = @practicum_placement.practicum_logs.build(practicum_log_params)
+
+    if @practicum_log.save
+      flash[:success] = "Log was successfully created."
+    else
+      flash[:danger] = error_message_for @practicum_log
+    end
+    redirect_to kapa_practicum_log_path(:id => @practicum_log)
+  end
+
 
   def destroy
     @practicum_log = Kapa::PracticumLog.find(params[:id])
@@ -37,13 +51,7 @@ module Kapa::PracticumLogsControllerBase
   end
 
   private
-  def practicum_log_fields
-    [:practicum_placement_id, :log_date, :type, :task, :category, :status, :user_id, :note]
-  end
-  def create_practicum_log_params
-    params.require(:practicum_log).permit(*practicum_log_fields)
-  end
-  def update_practicum_log_params(practicum_log_id)
-    params.require(:practicum_log)[practicum_log_id].permit(*practicum_log_fields)
+  def practicum_log_params
+    params.require(:practicum_log).permit(:practicum_placement_id, :log_date, :type, :task, :category, :status, :user_id, :note)
   end
 end
