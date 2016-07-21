@@ -55,15 +55,17 @@ module Kapa::KapaHelper
     options[:model_class] = Kapa::Term
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
+    model_select(object_name, method, options, html_options)
   end
 
   def user_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::User
     options[:model_options] = options
-
+    options[:selected] = @current_user.id
     if options[:lock]
       tag = content_tag(:p, @current_user.person.full_name, :class => "form-control-static")
-      tag << hidden_field(object_name, method, :value => @current_user.id, :name => "#{object_name}[#{method}][]")
+      name = method == "user_ids" ? "#{object_name}[#{method}][]" : "#{object_name}[#{method}]"
+      tag << hidden_field(object_name, method, :value => @current_user.id, :name => name)
     else
       model_select(object_name, method, options, html_options)
     end

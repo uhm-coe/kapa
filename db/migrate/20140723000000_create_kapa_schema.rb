@@ -575,6 +575,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.date "action_date"
       t.string "note", limit: 255
       t.integer "sequence", limit: 4, default: 99
+      t.integer "user_id", limit: 4
       t.datetime "created_at"
       t.datetime "updated_at"
       t.text "yml", limit: 65535
@@ -736,6 +737,7 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "category", limit: 255
       t.string "status", limit: 255
       t.integer "sequence"
+      t.integer "user_id", limit: 4
       t.text "note", limit: 16777215
       t.text "yml", limit: 16777215
       t.text "xml", limit: 16777215

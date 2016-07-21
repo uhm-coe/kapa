@@ -4,6 +4,7 @@
       <%=a.select :person_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.person_id]}, :include_blank => true %>
       <%=a.property_select "type", :name => "communication_type" %>
       <%=a.datetime_picker :contacted_at, :label => "Contact Date Time" %>
+      <%=a.user_select "user_id", {:label => "Communicated by", :depts => @current_user.depts, :lock => !@current_user.manage?} %>
     </div>
 
     <div class="col-sm-6">

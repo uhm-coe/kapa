@@ -4,7 +4,8 @@ module Kapa::CaseCommunicationBase
   included do
     belongs_to :case
     belongs_to :person
-    validates_presence_of :case_id, :person_id, :type, :contacted_at
+    belongs_to :user
+    validates_presence_of :case_id, :person_id, :type, :contacted_at, :user_id
   end
 
   def type_desc
