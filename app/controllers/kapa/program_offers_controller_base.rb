@@ -10,7 +10,7 @@ module Kapa::ProgramOffersControllerBase
     else
       flash[:danger] = @program_offer.errors.full_messages.join(", ")
     end
-    redirect_to kapa_program_path(:id => @program_offer.program_id, :anchor => params[:anchor], :offer_panel => params[:offer_panel])
+    redirect_to kapa_program_path(:id => @program_offer.program, :anchor => params[:anchor], :offer_panel => params[:offer_panel])
   end
 
   def create
@@ -34,7 +34,7 @@ module Kapa::ProgramOffersControllerBase
     else
       flash[:danger] = error_message_for(@program_offer)
     end
-    redirect_to kapa_program_path(:id => @program_offer.program_id, :anchor => params[:anchor])
+    redirect_to kapa_program_path(:id => @program_offer.program, :anchor => params[:anchor])
   end
 
   def program_offer_params

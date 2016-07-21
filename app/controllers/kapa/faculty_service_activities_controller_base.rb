@@ -52,7 +52,7 @@ module Kapa::FacultyServiceActivitiesControllerBase
       redirect_to kapa_faculty_service_activity_path(:id => @service_activity) and return false
     end
     flash[:success] = "Service activity was successfully deleted."
-    redirect_to kapa_person_path(:id => @service_activity.person_id)
+    redirect_to kapa_person_path(:id => @service_activity.person)
   end
 
   def export
