@@ -75,11 +75,7 @@ module Kapa::PracticumPlacementsControllerBase
     mentor = {}
     mentor[:last_name] = person.last_name
     mentor[:first_name] = person.first_name
-    if person.contact
-      mentor[:email] = person.contact.email
-    else
-      mentor[:email] = ""
-    end
+    mentor[:email] = person.email_alt
     render :json => mentor
   end
 
@@ -91,7 +87,7 @@ module Kapa::PracticumPlacementsControllerBase
     end
     person.last_name = params[:mentor][:last_name]
     person.first_name = params[:mentor][:first_name]
-    contact.email_alt = params[:mentor][:email].downcase
+    person.email_alt = params[:mentor][:email].downcase
     person.save
     mentor = {}
     mentor[:person_id] = person.id

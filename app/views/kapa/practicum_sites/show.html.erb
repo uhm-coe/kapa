@@ -41,7 +41,7 @@
             <% for mentor in @mentors %>
               <tr>
                 <td><%=h mentor.full_name %></td>
-                <td><%=mail_to mentor.contact.email if mentor.contact %></td>
+                <td><%=mail_to mentor.email_alt %></td>
                 <td><%=h mentor.practicum_placements.length.to_i if mentor.practicum_placements.present? %></td>
               </tr>
             <% end %>

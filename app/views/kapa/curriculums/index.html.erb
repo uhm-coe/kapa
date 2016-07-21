@@ -49,7 +49,7 @@
     <% for curriculum in @curriculums %>
       <tr>
         <td><%= curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(curriculum.person.full_name), kapa_person_path(:id => curriculum.person_id) %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(curriculum.person.full_name), kapa_person_path(:id => curriculum.person) %></td>
         <td><%= abbr curriculum.code_desc, curriculum.code %></td>
         <td><%= h curriculum.rsend(:last_transition_point, :type_desc) %></td>
         <td><%= h curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>

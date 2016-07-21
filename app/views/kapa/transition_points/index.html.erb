@@ -49,7 +49,7 @@
     <% for transition_point in @transition_points %>
       <tr>
         <td><%= transition_point.curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(transition_point.curriculum.person.full_name), kapa_person_path(:id => transition_point.curriculum.person_id) %></td>
+        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(transition_point.curriculum.person.full_name), kapa_person_path(:id => transition_point.curriculum.person) %></td>
         <td><%= abbr transition_point.curriculum.code_desc, transition_point.curriculum.code %></td>
         <td><%= h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
         <td><%= h transition_point.status_desc %></td>
