@@ -3,6 +3,7 @@ module Kapa::PracticumLogBase
 
   included do
     belongs_to :practicum_placement
+    belongs_to :user
     validates_presence_of :log_date
   end
 

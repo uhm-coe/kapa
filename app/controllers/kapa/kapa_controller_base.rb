@@ -10,6 +10,7 @@ module Kapa::KapaControllerBase
     before_filter :check_read_permission
     before_filter :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
     after_filter :put_timestamp
+    after_filter :remember_last_index, :only => :index
     helper :all
   end
 
@@ -55,6 +56,10 @@ module Kapa::KapaControllerBase
       flash[:danger] = "You do not have a write permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
+  end
+
+  def remember_last_index
+    session[:last_index] = request.fullpath
   end
 
   def put_timestamp

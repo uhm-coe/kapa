@@ -17,7 +17,7 @@
   <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-  <% if @current_user.read?(:kapa_curriculums) and @person.type.include? "student" %>
+  <% if @current_user.read?(:kapa_curriculums) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -96,7 +96,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_advising_sessions) and @person.type.include? "student" %>
+    <% if @current_user.read?(:kapa_advising_sessions) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -171,7 +171,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_course_registrations) and @person.type.include? "student" %>
+    <% if @current_user.read?(:kapa_course_registrations) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -206,7 +206,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_practicum_placements) and @person.type.include? "student" %>
+    <% if @current_user.read?(:kapa_practicum_placements) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -217,7 +217,7 @@
       </div>
       <div id="practicum_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=button_to_link "New Placement", new_kapa_practicum_placement_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Placement", new_kapa_practicum_placement_path(:person_id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Terms</th>
@@ -241,7 +241,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_awards) and @person.type.include? "faculty" %>
+    <% if @current_user.read?(:kapa_faculty_awards) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -274,7 +274,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_publications) and @person.type.include? "faculty" %>
+    <% if @current_user.read?(:kapa_faculty_publications) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -309,7 +309,7 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_service_activities) and @person.type.include? "faculty" %>
+    <% if @current_user.read?(:kapa_faculty_service_activities) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">

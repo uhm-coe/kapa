@@ -66,6 +66,7 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
+    <%= link_to "", session[:last_index], :class => "glyphicon glyphicon-chevron-left" %>
     Placement
   </h4>
 
@@ -92,9 +93,8 @@
               <tr>
                 <th>Date</th>
                 <th>Type</th>
-                <th>Task</th>
                 <th>Minutes/Dulation</th>
-                <th>User</th>
+                <th>Supported by</th>
                 <th></th>
               </tr>
             </thead>
@@ -108,10 +108,10 @@
                     <%=practicum_log.type_desc %>
                   </td>
                   <td>
-                    <%=practicum_log.type_desc %>
+                    <%=practicum_log.task_desc %>
                   </td>
                   <td>
-                    <%=practicum_log.type_desc %>
+                    <%=practicum_log.user.person.full_name if practicum_log.user %>
                   </td>
                   <td>
                   </td>

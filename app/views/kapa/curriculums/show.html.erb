@@ -45,6 +45,7 @@
       </div>
 
       <div id="enrollments_tab" class="tab-pane">
+        <p class="new right"><%=link_to "New Enrollment", new_kapa_enrollment_path(:id => @curriculum) %></p>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -65,7 +66,6 @@
             <% end %>
           </tbody>
         </table>
-        <p class="new right"><%=link_to "New Enrollment", new_kapa_enrollment_path(:id => @curriculum) %></p>
       </div>
     </div>
   </div>

@@ -17,7 +17,7 @@ module Kapa::PracticumLogsControllerBase
     else
       flash[:danger] = error_message_for @practicum_log
     end
-    redirect_to kapa_practicum_placement_path(:id => @practicum_log.practicum_placement, :anchor => :logs)
+    redirect_to kapa_practicum_placement_path(:id => @practicum_log.practicum_placement, :anchor => :practicum_logs)
   end
 
   def new

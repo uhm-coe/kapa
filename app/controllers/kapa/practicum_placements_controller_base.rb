@@ -12,9 +12,10 @@ module Kapa::PracticumPlacementsControllerBase
   end
 
   def new
-    @person = Kapa::Person.find(params[:id])
-    @practicum_placement = @person.practicum_placements.build(:start_term_id => Kapa::Term.current_term.id, :end_term_id => Kapa::Term.current_term.id)
+    @person = Kapa::Person.find(params[:person_id])
     @curriculums = @person.curriculums
+    default_curriculum = @curriculums.first.id if @curriculums.present?
+    @practicum_placement = @person.practicum_placements.build(:start_term_id => Kapa::Term.current_term, :end_term_id => Kapa::Term.current_term, :curriculum_id => default_curriculum)
   end
 
   def create
