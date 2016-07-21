@@ -52,7 +52,7 @@ module Kapa::FacultyAwardsControllerBase
       redirect_to kapa_faculty_award_path(:id => @award) and return false
     end
     flash[:success] = "Award was successfully deleted."
-    redirect_to kapa_person_path(:id => @award.person_id)
+    redirect_to kapa_person_path(:id => @award.person)
   end
 
   def export

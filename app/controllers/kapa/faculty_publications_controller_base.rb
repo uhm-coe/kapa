@@ -66,7 +66,7 @@ module Kapa::FacultyPublicationsControllerBase
       redirect_to kapa_faculty_publication_path(:id => @publication) and return false
     end
     flash[:success] = "Publication was successfully deleted."
-    redirect_to kapa_person_path(:id => @publication.person_id)
+    redirect_to kapa_person_path(:id => @publication.person)
   end
 
   def export
