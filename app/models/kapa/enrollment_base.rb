@@ -2,6 +2,7 @@ module Kapa::EnrollmentBase
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :person
     belongs_to :curriculum
     belongs_to :term
     has_many :user_assignments, :as => :assignable
@@ -21,6 +22,10 @@ module Kapa::EnrollmentBase
 
   def term_desc
     return Kapa::Term.find(term_id).description
+  end
+
+  def category_desc
+    return Kapa::Property.lookup_description(:enrollment_category, category)
   end
 
   def assignment_desc(assignment_type)

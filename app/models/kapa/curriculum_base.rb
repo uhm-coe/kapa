@@ -74,7 +74,7 @@ module Kapa::CurriculumBase
   class_methods do
     def search(options ={})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      curriculums = Kapa::Curriculum.eager_load([:user_assignments, :transition_points, :program, :person]).order("persons.last_name, persons.first_name")
+      curriculums = Kapa::Curriculum.eager_load([{:user_assignments => {:user => :person}}, {:last_transition_point => :last_transition_action} , :program, :person]).order("persons.last_name, persons.first_name")
       #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       curriculums = curriculums.where("transition_points.type" => filter.type.to_s) if filter.type.present?

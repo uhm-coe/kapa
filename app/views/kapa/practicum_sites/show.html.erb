@@ -9,7 +9,6 @@
     <ul class="nav nav-tabs">
       <li><a href="#site_profile_tab" data-toggle="tab">Profile</a></li>
       <li><a href="#site_contact_tab" data-toggle="tab">Contact</a></li>
-      <li><a href="#mentors_tab" data-toggle="tab">Mentors</a></li>
       <li><a href="#placements_tab" data-toggle="tab">Placements</a></li>
     </ul>
 
@@ -26,27 +25,6 @@
           <%=render :partial => "site_contact_form" %>
           <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
-      </div>
-
-      <div id="mentors_tab" class="tab-pane">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Placements</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for mentor in @mentors %>
-              <tr>
-                <td><%=h mentor.full_name %></td>
-                <td><%=mail_to mentor.email_alt %></td>
-                <td><%=h mentor.practicum_placements.length.to_i if mentor.practicum_placements.present? %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
       </div>
 
       <div id="placements_tab" class="tab-pane">
