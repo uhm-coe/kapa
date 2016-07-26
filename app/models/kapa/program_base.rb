@@ -8,6 +8,8 @@ module Kapa::ProgramBase
     serialize :available_track, Kapa::CsvSerializer
     has_many :program_offers
     has_many :curriculums
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
 
     validates_uniqueness_of :code
     validates_presence_of :code
