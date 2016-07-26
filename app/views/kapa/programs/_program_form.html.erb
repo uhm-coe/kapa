@@ -6,6 +6,7 @@
       <%=f.text_field :description_short %>
       <%=f.text_field :category %>
       <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
+      <%=f.user_select :user_ids, {:label => "Contacts"}, {:multiple => true} %>
       <%=f.check_box :active, {}, 1, 0 %>
     </div>
 
