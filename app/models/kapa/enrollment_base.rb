@@ -7,7 +7,6 @@ module Kapa::EnrollmentBase
     belongs_to :term
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
-    has_many :practicum_placements, -> { where("enreollments.person_id = practicum_placments.person_id and enrollemtns.term_id between practicum_placments.start_term_id and practicum_pacements.end_term_id)")}
     validates_presence_of :curriculum_id, :term_id
   end
 
@@ -26,10 +25,6 @@ module Kapa::EnrollmentBase
 
   def category_desc
     return Kapa::Property.lookup_description(:enrollment_category, category)
-  end
-
-  def assignment_desc(assignment_type)
-    practicum_assignments_select(assignment_type).collect { |a| a.name }.join(", ")
   end
 
   class_methods do
