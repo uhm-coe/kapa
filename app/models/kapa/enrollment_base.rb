@@ -7,7 +7,7 @@ module Kapa::EnrollmentBase
     belongs_to :term
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
-
+    has_many :practicum_placements, -> { where("enreollments.person_id = practicum_placments.person_id and enrollemtns.term_id between practicum_placments.start_term_id and practicum_pacements.end_term_id)")}
     validates_presence_of :curriculum_id, :term_id
   end
 
@@ -35,7 +35,7 @@ module Kapa::EnrollmentBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      enrollments = Kapa::Enrollment.eager_load([{:curriculum => :person}, {:curriculum => :program}]).order("persons.last_name, persons.first_name")
+      enrollments = Kapa::Enrollment.eager_load([:person, {:curriculum => :program}], {:user_assignments => {:user => :person}}).order("persons.last_name, persons.first_name")
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
       enrollments = enrollments.where("curriculums.program_id" => filter.program_id) if filter.program_id.present?
       enrollments = enrollments.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
@@ -56,90 +56,57 @@ module Kapa::EnrollmentBase
       return enrollments
     end
 
-    def csv_columns
-      [:id_number,
-       :last_name,
-       :first_name,
-       :email,
-       :category,
-       :sequence,
-       :curriculum_id,
-       # :cohort,
-       # :term_admitted,
-       :program_desc,
-       :major_primary_desc,
-       :major_secondary_desc,
-       :distribution_desc,
-       :location,
-       :second_degree,
-       # :bgc,
-       # :bgc_date,
-       # :insurance,
-       # :insurance_effective_period,
-       :note,
-       # :group,
-       # :off_sequence,
-       # :ite401,
-       # :ite402,
-       # :ite404,
-       # :ite405,
-       :coordinator_1_uid,
-       :coordinator_1_last_name,
-       :coordinator_1_first_name,
-       :coordinator_2_uid,
-       :coordinator_2_last_name,
-       :coordinator_2_first_name,
-       :created_at,
-       :updated_at,
-       :term,
-       :status,
-       # :total_mentors,
-       # TODO
-       :cur_street,
-       :cur_city,
-       :cur_state,
-       :cur_postal_code,
-       :cur_phone]
+    def csv_format
+      {:id_number => [:person, :id_number],
+       :last_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
+       :email => [:person, :email],
+       :email_alt => [:person, :email_alt],
+       :term_desc => [:term_desc],
+       :category => [:category],
+       :sequence => [:sequence],
+       :status => [:status],
+       :curriculum_id => [:curriculum_id],
+       :cohort => [:curriculum, :cohort],
+       :program_desc => [:curriculum, :program, :description],
+       :major_primary_desc => [:curriculum, :major_primary_desc],
+       :major_secondary_desc => [:curriculum, :major_secondary_desc],
+       :distribution_desc => [:curriculum, :distribution_desc],
+       :location => [:curriculum, :location],
+       :second_degree => [:curriculum, :second_degree],
+       :note => [:note],
+       :coordinator_1_uid => [:users, :first, :uid],
+       :coordinator_1_last_name => [:users, :first, :person, :last_name],
+       :coordinator_1_first_name => [:users, :first, :person, :first_name],
+       :coordinator_2_uid => [:users, :second, :person, :uid],
+       :coordinator_2_last_name => [:users, :second, :person, :last_name],
+       :coordinator_2_first_name => [:users, :second, :person, :first_name],
+       :created_at => [:created_at],
+       :updated_at => [:updated_at],
+       :cur_street => [:person, :cur_street],
+       :cur_city => [:person, :cur_city],
+       :cur_state => [:person, :cur_state],
+       :cur_postal_code => [:person, :cur_postal_code],
+       :cur_phone => [:person, :cur_phone]
+      }
     end
 
-    def csv_row(c)
-      row = []
-      row += [c.rsend(:curriculum, :person, :id_number),
-              c.rsend(:curriculum, :person, :last_name),
-              c.rsend(:curriculum, :person, :first_name),
-              c.rsend(:curriculum, :person, :email),
-              c.rsend(:category),
-              c.rsend(:sequence),
-              c.rsend(:curriculum, :id),
-              # c.rsend(:cohort),
-              # c.rsend(:curriculum, :term_desc),
-              c.rsend(:curriculum, :program, :description),
-              c.rsend(:curriculum, :major_primary_desc),
-              c.rsend(:curriculum, :major_secondary_desc),
-              c.rsend(:curriculum, :distribution_desc),
-              c.rsend(:curriculum, :location),
-              c.rsend(:curriculum, :second_degree),
-              # c.rsend(:practicum_profile, :bgc),
-              # c.rsend(:practicum_profile, :bgc_date, [:strftime, "%m/%d/%Y"]),
-              # c.rsend(:practicum_profile, :insurance),
-              # c.rsend(:practicum_profile, :insurance_effective_period),
-              c.rsend(:note).to_s.gsub(/\n/, ""),
-              # c.rsend(:uid),
-              # c.rsend(:practicum_profile, :ext, :off_sequence),
-              # c.rsend(:practicum_profile, :ext, :ite401),
-              # c.rsend(:practicum_profile, :ext, :ite402),
-              # c.rsend(:practicum_profile, :ext, :ite404),
-              # c.rsend(:practicum_profile, :ext, :ite405),
-              c.rsend(:user_primary, :uid),
-              c.rsend(:user_primary, :person, :last_name),
-              c.rsend(:user_primary, :person, :first_name),
-              c.rsend(:user_secondary, :uid),
-              c.rsend(:user_secondary, :person, :last_name),
-              c.rsend(:user_secondary, :person, :first_name),
-              c.rsend(:created_at),
-              c.rsend(:updated_at),
-              c.rsend(:term_desc),
-              c.rsend(:status)]
+    #def csv_row(c)
+
+       # :bgc => [:practicum_profile, :bgc],
+       # :bgc_date => [:practicum_profile, :bgc_date],
+       # :insurance => [:practicum_profile, :insurance],
+       # :insurance_effective_period => [:practicum_profile, :insurance_effective_period],
+       # :note2 => [:practicum_profile, :note],
+       # :group => [:cohort_group],
+       # :off_sequence => [],
+       # :ite401 => [],
+       # :ite402 => [],
+       # :ite404 => [],
+       # :ite405 => [],
+       # :total_mentors => [],
+
+    #  row = []
       # c.rsend([:practicum_assignments_select, :mentor], :length)] # if @current_user.manage?
 
       # TODO
@@ -164,15 +131,15 @@ module Kapa::EnrollmentBase
       #   ]
       # end
 
-      row += [
-          c.rsend(:curriculum, :person, :cur_street),
-          c.rsend(:curriculum, :person, :cur_city),
-          c.rsend(:curriculum, :person, :cur_state),
-          c.rsend(:curriculum, :person, :cur_postal_code),
-          c.rsend(:curriculum, :person, :cur_phone)
-      ]
-
-      return row
-    end
+    #  row += [
+    #      c.rsend(:curriculum, :person, :cur_street),
+    #      c.rsend(:curriculum, :person, :cur_city),
+    #      c.rsend(:curriculum, :person, :cur_state),
+    #      c.rsend(:curriculum, :person, :cur_postal_code),
+    #      c.rsend(:curriculum, :person, :cur_phone)
+    #  ]
+    #
+    #  return row
+    #end
   end
 end
