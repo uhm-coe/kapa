@@ -48,7 +48,7 @@
           </td>
           <td>
             <% if author.internal? %>
-              <%= link_to author.full_name, kapa_person_path(:id => author.person_id) %>
+              <%= link_to author.full_name, kapa_person_path(:id => author.person) %>
             <% else %>
               <%= author.full_name %>
             <% end %>

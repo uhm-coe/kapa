@@ -4,19 +4,6 @@ module Kapa::PersonsControllerBase
   def show
     @person = Kapa::Person.find(params[:id])
     @person_ext = @person.ext
-    #TODO add public or dept conditions
-    @documents = []
-    @documents += @person.files
-    @documents += @person.forms
-    @documents += @person.exams
-    @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC, curriculums.id DESC")
-    @advising_sessions = @person.advising_sessions.order("session_date DESC")
-    @case_involvements = @person.case_involvements.eager_load(:case).order("cases.reported_at DESC")
-    @course_registrations = @person.course_registrations.eager_load(:course => :term).order("terms.sequence DESC")
-    @practicum_placements = @person.practicum_placements
-    @publications = @person.faculty_publications
-    @service_activities = @person.faculty_service_activities
-    @awards = @person.faculty_awards
   end
 
   def new

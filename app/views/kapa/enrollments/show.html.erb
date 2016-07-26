@@ -2,13 +2,13 @@
   <%= render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
+    <%=link_to "", kapa_curriculum_path(:id => @curriculum), :class => "glyphicon glyphicon-chevron-left" %>
     Enrollment - <%=@enrollment.term_desc%>
   </h4>
 
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#enrollment_tab" data-toggle="tab">Enrollment</a></li>
-      <li><a href="#placements_tab" data-toggle="tab">Placements</a></li>
     </ul>
 
     <div class="tab-content">
@@ -17,22 +17,6 @@
           <%= render :partial => "enrollment_form"%>
           <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
-      </div>
-
-      <div id="placements_tab" class="tab-pane">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Term</th>
-              <th>Type</th>
-              <th>Latest Action</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-        <p class="new right"><%=link_to "New Placement", new_kapa_practicum_placement_path(:id => @person) %></p>
       </div>
 
     </div>

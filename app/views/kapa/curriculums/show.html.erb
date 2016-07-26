@@ -2,7 +2,7 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    Program Details
+    <%=link_to @curriculum.code_desc, kapa_curriculum_path(:id => @curriculum) %>
   </h4>
 
   <div class="tabs">
@@ -21,6 +21,9 @@
       </div>
 
       <div id="transition_points_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "New Transition Point", new_kapa_transition_point_path(:id => @curriculum), :icon => "glyphicon-plus" %>
+        </p>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -41,10 +44,12 @@
             <% end %>
           </tbody>
         </table>
-        <p class="new right"><%=link_to "New Transition Point", new_kapa_transition_point_path(:id => @curriculum) %></p>
       </div>
 
       <div id="enrollments_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "New Enrollment", new_kapa_enrollment_path(:id => @curriculum), :icon => "glyphicon-plus" %>
+        </p>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -65,7 +70,6 @@
             <% end %>
           </tbody>
         </table>
-        <p class="new right"><%=link_to "New Enrollment", new_kapa_enrollment_path(:id => @curriculum) %></p>
       </div>
     </div>
   </div>

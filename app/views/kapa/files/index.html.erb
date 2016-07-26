@@ -35,7 +35,7 @@
     <% for file in @files %>
       <tr>
         <td><%= file.person.id_number if file.person %></td>
-        <td><%= link_to abbr(file.person.full_name), kapa_person_path(:id => file.person_id) if file.person %></td>
+        <td><%= link_to abbr(file.person.full_name), kapa_person_path(:id => file.person) if file.person %></td>
         <td><%= file.name %></td>
         <td><%= format_date file.updated_at %></td>
         <td><%= h file.dept.join(", ") %></td>

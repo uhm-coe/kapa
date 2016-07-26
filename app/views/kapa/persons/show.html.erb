@@ -13,11 +13,16 @@
   </script>
 <% end %>
 
+<% content_for(:title) do %>
+  <%=@person.full_name %>
+<% end %>
+
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-  <% if @current_user.read?(:kapa_curriculums) and @person.type.include? "student" %>
+  <% if @current_user.read?(:kapa_curriculums) %>
+    <% @curriculums = @person.curriculums.eager_load(:transition_points => :term).order("terms.sequence DESC, curriculums.id DESC") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -61,6 +66,7 @@
     <% end %>
 
     <% if @current_user.read?(:kapa_files) %>
+    <% @documents = @person.documents %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -96,7 +102,8 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_advising_sessions) and @person.type.include? "student" %>
+    <% if @current_user.read?(:kapa_advising_sessions) %>
+    <% @advising_sessions = @person.advising_sessions.order("session_date DESC") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -134,6 +141,7 @@
     <% end %>
 
     <% if @current_user.read?(:kapa_cases) %>
+    <% @case_involvements = @person.case_involvements.eager_load(:case).order("cases.reported_at DESC") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -171,7 +179,8 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_course_registrations) and @person.type.include? "student" %>
+    <% if @current_user.read?(:kapa_course_registrations) %>
+    <% @course_registrations = @person.course_registrations.eager_load(:course => :term).order("terms.sequence DESC") %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -206,7 +215,8 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_practicum_placements) and @person.type.include? "student" %>
+    <% if @current_user.read?(:kapa_practicum_placements) %>
+    <% @practicum_placements = @person.practicum_placements %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -217,7 +227,7 @@
       </div>
       <div id="practicum_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=button_to_link "New Placement", new_kapa_practicum_placement_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Placement", new_kapa_practicum_placement_path(:person_id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Terms</th>
@@ -241,7 +251,8 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_awards) and @person.type.include? "faculty" %>
+    <% if @current_user.read?(:kapa_faculty_awards) %>
+    <% @awards = @person.faculty_awards %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -274,7 +285,8 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_publications) and @person.type.include? "faculty" %>
+    <% if @current_user.read?(:kapa_faculty_publications) %>
+    <% @publications = @person.faculty_publications %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -309,7 +321,8 @@
     </div>
     <% end %>
 
-    <% if @current_user.read?(:kapa_faculty_service_activities) and @person.type.include? "faculty" %>
+    <% if @current_user.read?(:kapa_faculty_service_activities) %>
+    <% @service_activities = @person.faculty_service_activities %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">

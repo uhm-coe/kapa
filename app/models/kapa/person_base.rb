@@ -6,6 +6,7 @@ module Kapa::PersonBase
     serialize :type, Kapa::CsvSerializer
 
     has_many :curriculums
+    has_many :enrollments
     has_many :users
     has_many :forms
     has_many :files
@@ -45,6 +46,14 @@ module Kapa::PersonBase
       self.ssn_crypted = Kapa::Person.encrypt(ssn_formatted)
       self.ssn = "X" * ssn_formatted.length
     end
+  end
+
+  def documents
+    #TODO add public or dept conditions
+    documents = []
+    documents += self.files
+    documents += self.forms
+    documents += self.exams
   end
 
   def full_name(option = nil)
