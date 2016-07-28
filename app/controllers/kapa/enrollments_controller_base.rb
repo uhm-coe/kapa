@@ -4,7 +4,7 @@ module Kapa::EnrollmentsControllerBase
   def show
     @enrollment = Kapa::Enrollment.find(params[:id])
     @curriculum = @enrollment.curriculum
-    @person = @curriculum.person
+    @person = @enrollment.person
 
   end
 
