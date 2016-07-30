@@ -115,18 +115,12 @@ module Kapa::PersonBase
 
         Kapa::Person.reflect_on_all_associations.each do |assoc|
           if assoc.macro == :has_many
-            assoc.klass.update_all("#{assoc.foreign_key} = #{self.id}", "#{assoc.foreign_key} = #{another_person.id}")
-          elsif assoc.macro == :has_one
-            if self.send(assoc.name).nil?
-              assoc.klass.update_all("#{assoc.foreign_key} = #{self.id}", "#{assoc.foreign_key} = #{another_person.id}")
-            end
+            assoc.klass.where(assoc.foreign_key => another_person.id).update_all("#{assoc.foreign_key} = #{self.id}")
           end
         end
 
         #Deactivate another person
-        another_person.update_attributes(:status => "D",
-                                         :id_number => nil,
-                                         :note => "Merged to #{self.id}")
+        another_person.update_attributes(:status => "D", :id_number => nil, :note => "Merged to #{self.id}")
       end
       self.save!
     end
