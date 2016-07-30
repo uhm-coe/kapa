@@ -4,6 +4,7 @@ module Kapa::TransitionPointBase
   included do
     belongs_to :curriculum
     belongs_to :term
+    belongs_to :form
     has_many :transition_actions
     has_one :last_transition_action,
             -> { where("transition_actions.id = (select a.id
