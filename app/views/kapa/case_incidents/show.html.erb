@@ -38,7 +38,7 @@
               <% for case_violation in @case_violations %>
                 <tr>
                   <td>
-                    <%=link_to(case_violation.case_involvement.person.full_name, kapa_person_path(:id => case_violation.case_involvement.person_id), :target => "_blank") %>
+                    <%=link_to(case_violation.case_involvement.person.full_name, kapa_person_path(:id => case_violation.case_involvement.person), :target => "_blank") %>
                   </td>
                   <td>
                     <%=case_violation.policy_desc%>

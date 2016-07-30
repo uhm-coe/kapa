@@ -14,7 +14,7 @@ module Kapa::AdvisingSessionsControllerBase
     @curriculums = @person.curriculums
     previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
     @advising_session = Kapa::AdvisingSession.new
-    @advising_session.person_id = params[:id]
+    @advising_session.person_id = @person.id
     @advising_session.session_date = Date.today
     if previous_advising
       @advising_session.curriculum_id = previous_advising.curriculum_id
@@ -80,7 +80,7 @@ module Kapa::AdvisingSessionsControllerBase
 
   private
   def advising_session_params
-    params.require(:advising_session).permit(:session_date, :type, :task, :curriculum_id, :interest,
+    params.require(:advising_session).permit(:session_date, :type, :task, :curriculum_id, :term_id, :interest,
                                              :category, :location, :note, :person_id, :user_ids => [])
   end
 end
