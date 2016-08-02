@@ -19,7 +19,7 @@ module Kapa::AdvisingSessionBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       advising_sessions = Kapa::AdvisingSession.eager_load([:user_assignments, :person]).order("session_date DESC, advising_sessions.id DESC")
-      advising_sessions = advising_sessions.where(:session_date => filter.date_start..filter.date_end) if filter.date_start.present? and filter.date_end.present?
+      advising_sessions = advising_sessions.where(:session_date => filter.date_start.to_date..filter.date_end.to_date) if filter.date_start.present? and filter.date_end.present?
       advising_sessions = advising_sessions.where(:task => filter.task) if filter.task.present?
       advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?
       advising_sessions = advising_sessions.assigned_scope(filter.user_id) if filter.user_id.present?
@@ -47,13 +47,12 @@ module Kapa::AdvisingSessionBase
        :cur_postal_code => [:person, :cur_postal_code],
        :cur_phone => [:person, :cur_phone],
        :email => [:person, :email],
-       :session_date => [:classification],
-       :session_type => [:session_type],
+       :session_date => [:session_date],
+       :type => [:type],
        :task => [:task],
-       :classification => [:classification],
        :interest => [:interest],
        :location => [:location],
-       :handled_by => [:handled_by]}
+       :assignee1 => [:user_assignments, :first, :user, :person, :full_name]}
     end
   end
 end
