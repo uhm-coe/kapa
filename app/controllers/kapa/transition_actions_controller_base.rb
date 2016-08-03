@@ -15,14 +15,14 @@ module Kapa::TransitionActionsControllerBase
 
   def update
     @action = Kapa::TransitionAction.find(params[:id])
-    @action.attributes = update_transition_action_params(@action.id.to_s)
+    @action.attributes = update_transition_action_params(@action.to_param)
 
     if @action.save
       flash[:success] = "Action was successfully updated."
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_transition_point_path(:id => @action.transition_point_id, :anchor => params[:anchor], :action_panel => params[:action_panel])
+    redirect_to kapa_transition_point_path(:id => @action.transition_point, :anchor => params[:anchor], :action_panel => params[:action_panel])
   end
 
   def destroy
