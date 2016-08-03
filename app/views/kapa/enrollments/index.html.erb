@@ -58,10 +58,10 @@
       <tr>
         <td><%= enrollment.curriculum.person.id_number %></td>
         <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(enrollment.curriculum.person.full_name), kapa_person_path(:id => enrollment.curriculum.person, :anchor => "practicum") %></td>
-        <td><%= h abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
+        <td><%= abbr(enrollment.curriculum.code_desc, enrollment.curriculum.code) if enrollment.curriculum %></td>
         <td><%= enrollment.sequence %>
         <td><%= enrollment.status %>
-        <td><%= h enrollment.rsend(:users, :first, :person, :last_name) %></td>
+        <td><%= enrollment.rsend(:users, :first, :person, :last_name) %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => enrollment}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>
