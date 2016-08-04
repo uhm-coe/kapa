@@ -37,7 +37,7 @@ module Kapa::KapaControllerBase
       flash[:info] = "Please log in to continue."
       redirect_to(new_kapa_user_session_path) and return
     end
-    unless @current_user_session and @current_user and @current_user.status >= 3
+    unless @current_user_session and @current_user and @current_user.status >= 30
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(new_kapa_user_session_path) and return
