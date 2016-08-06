@@ -72,7 +72,7 @@ module Kapa::TransitionPointsControllerBase
   end
 
   def index
-    @filter = filter
+    @filter = filter(:type => "admission")
     @transition_points = Kapa::TransitionPoint.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
@@ -89,4 +89,9 @@ module Kapa::TransitionPointsControllerBase
     params.require(:transition_point).permit(:term_id, :type, :category, :priority, :status, :note, :curriculum_id, :user_ids => [])
   end
 
+  def filter_defaults
+    super.merge({
+      :type => "admission"
+    })
+  end
 end

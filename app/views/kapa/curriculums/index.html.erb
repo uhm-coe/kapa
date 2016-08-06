@@ -6,7 +6,7 @@
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
           <%= f.program_select :program_id, :include_blank => "Any", :depts => @current_user.depts, :value => :id %>
-          <%= f.property_select :type, :name => :transition_point, :conditions => "category = 'entrance'" %>
+          <%= f.property_select :transition_point_type, :name => :transition_point, :conditions => "category = 'entrance'" %>
           <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
           <%= f.history_select :cohort, :model_class => Kapa::Curriculum, :model_mathod => :cohort, :include_blank => "Any" %>
         </div>

@@ -45,7 +45,7 @@ module Kapa::FormBase
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       forms = Kapa::Form.eager_load([:person]).order("forms.submitted_at DESC")
       forms = forms.where("forms.term_id" => filter.term_id) if filter.form_term_id.present?
-      forms = forms.where("forms.type" => filter.type.to_s) if filter.type.present?
+      forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
       exams = forms.depts_scope(filter.user.depts, "public = 'Y'")
       return forms
