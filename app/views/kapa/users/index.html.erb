@@ -39,8 +39,8 @@
         <th>Name</th>
         <th>Auth Type</th>
         <th>Status</th>
-        <th><%="#{t(:kapa_global_dept)}(s)"%></th>
         <th><%="Primary #{t(:kapa_global_dept)}"%></th>
+        <th><%="#{t(:kapa_global_dept)}(s)"%></th>
         <th></th>
       </tr>
     </thead>
@@ -51,8 +51,8 @@
           <td><%=h user.person.full_name if user.person %></td>
           <td><%=h user.category %></td>
           <td><%=h user.status_desc %></td>
-          <td><%=h user.dept.join(", ") %></td>
           <td><%=h user.primary_dept %></td>
+          <td><%=h user.dept.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

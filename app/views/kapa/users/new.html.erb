@@ -2,7 +2,7 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
       var lookup_person = function(key) {
-          $.getJSON('<%=kapa_persons_lookup_path(:id => @person)%>',
+          $.getJSON('<%=kapa_persons_lookup_path(:id => @person.id)%>',
                     {key: key},
                     function(data) {
                       if(data['person']) {

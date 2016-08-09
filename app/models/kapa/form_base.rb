@@ -47,7 +47,18 @@ module Kapa::FormBase
       forms = forms.where("forms.term_id" => filter.term_id) if filter.form_term_id.present?
       forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
-      exams = forms.depts_scope(filter.user.depts, "public = 'Y'")
+
+      case filter.user.access_scope
+        when 30
+          # do nothing
+        when 20
+          forms = forms.depts_scope(filter.user.depts)
+        when 10
+          forms = forms.assigned_scope(filter.user.id)
+        else
+          forms = forms.none
+      end
+
       return forms
     end
 

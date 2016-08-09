@@ -135,7 +135,18 @@ module Kapa::ExamBase
       exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
       exams = exams.where(:report_date => filter.exam_date_start..filter.exam_date_end) if filter.exam_date_start.present? and filter.exam_date_end.present?
-      exams = exams.depts_scope(filter.user.depts)
+
+      case filter.user.access_scope
+        when 30
+          # do nothing
+        when 20
+          exams = exams.depts_scope(filter.user.depts)
+        when 10
+          exams = exams.assigned_scope(filter.user.id)
+        else
+          exams = exams.none
+      end      
+      
       return exams
     end
   end

@@ -1,6 +1,6 @@
 <% content_for(:dialog) do %>
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
-    <%=bootstrap_form_for :role, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
+    <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
       <%=f.select :role, Rails.configuration.roles.keys %>
     <% end %>
   <% end %>
@@ -31,11 +31,12 @@
       </div>
 
       <div id="permission_tab" class="tab-pane">
+        <p class="text-right">
+          <%=button_to_link "Apply Role", nil, {:icon => "glyphicon-plus", "data-toggle" => "modal", "data-target" => "#apply_role_dialog"} if @current_user.write? %>
+        </p>
         <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put}  do |f| %>
           <%=render :partial => "permission_form", :locals => {:f => f} %>
-          <%= render :layout => "/kapa/layouts/controls" do %>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#apply_role_dialog">Role</button>
-          <% end if @current_user.write? %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
 

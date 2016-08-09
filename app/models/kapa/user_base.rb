@@ -137,9 +137,9 @@ module Kapa::UserBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       users = Kapa::User.eager_load(:person).order("users.uid")
-      users = users.where("primary_dept" => filter.primary_dept) if filter.primary_dept.present?
       users = users.where("users.status" => filter.status) if filter.status.present?
       users = users.where("users.category" => filter.category) if filter.category.present?
+      users = users.column_contains({"users.dept" => filter.dept}) if filter.dept.present?
       users = users.column_matches("users.uid" => filter.user_key, "persons.last_name" => filter.user_key, "persons.first_name" => filter.user_key) if filter.user_key.present?
       return users
     end
