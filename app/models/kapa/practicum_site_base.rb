@@ -24,7 +24,7 @@ module Kapa::PracticumSiteBase
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       sites = Kapa::PracticumSite.eager_load([:practicum_placements]).order("name_short")
       sites = sites.column_matches(:name => filter.name) if filter.name.present?
-      # f.append_condition "? between level_from and level_to", :grade # TODO: Is this still needed?
+      sites = sites.where("? between level_from and level_to", filter.level) if filter.level.present?
       sites = sites.where("district" => filter.district) if filter.district.present?
       sites = sites.where("area_group" => filter.area_group) if filter.area_group.present?
       return sites;

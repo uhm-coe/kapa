@@ -7,8 +7,11 @@ module Kapa::FormBase
     belongs_to :term
     belongs_to :attachable, :polymorphic => true
     has_one :transition_point
-    validates_presence_of :type
+    has_many :user_assignments, :as => :assignable
+    has_many :users, :through => :user_assignments
 
+
+    validates_presence_of :type
     serialize :dept, Kapa::CsvSerializer
   end
 
@@ -43,7 +46,7 @@ module Kapa::FormBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      forms = Kapa::Form.eager_load([:person]).order("forms.submitted_at DESC")
+      forms = Kapa::Form.eager_load({:users => :person}, :person).order("forms.submitted_at DESC")
       forms = forms.where("forms.term_id" => filter.term_id) if filter.form_term_id.present?
       forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
