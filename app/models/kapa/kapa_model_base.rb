@@ -56,6 +56,19 @@ module Kapa::KapaModelBase
     self.class.hashids.encode(id)
   end
 
+  def accseible??(user)
+    case user.access_scope(self.class.name.tableize)
+      when 30
+        return true
+      when 20
+        return user.depts.any? {|dept| self.dept.include?(dept)} or self.user_assigments.where(:user_id => user.id).first
+      when 10
+        return self.user_assigments.where(:user_id => user.id).first
+      else
+        return false
+    end
+  end
+
   class_methods do
     def selections
       [["Not Defined!", "ND"]]
