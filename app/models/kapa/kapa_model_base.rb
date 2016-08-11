@@ -61,7 +61,7 @@ module Kapa::KapaModelBase
       when 30
         return true
       when 20
-        return user.depts.any? {|dept| self.dept.include?(dept)} or self.user_assigments.where(:user_id => user.id).first
+        return (user.depts.any? {|dept| self.dept.include?(dept)} or self.user_assigments.where(:user_id => user.id).first)
       when 10
         return self.user_assigments.where(:user_id => user.id).first
       else
