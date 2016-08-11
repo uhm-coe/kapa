@@ -56,7 +56,7 @@ module Kapa::KapaModelBase
     self.class.hashids.encode(id)
   end
 
-  def accseible??(user)
+  def accseible?(user)
     case user.access_scope(self.class.name.tableize)
       when 30
         return true
