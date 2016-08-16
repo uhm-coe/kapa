@@ -91,7 +91,7 @@ module Kapa::TransitionPointsControllerBase
 
   def filter_defaults
     super.merge({
-      :type => "admission"
+      :transition_point_type => "admission"
     })
   end
 end
