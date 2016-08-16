@@ -114,8 +114,6 @@ module Kapa::TransitionPointBase
        :category_desc => [:category_desc],
        :priority_desc => [:priority_desc],
        :status_desc => [:status_desc],
-       :user_primary => [:user_primary, :person, :full_name],
-       :user_secondary => [:user_secondary, :person, :full_name],
        :action => [:last_transition_action, :action],
        :action_desc => [:last_transition_action, :action_desc],
        :action_date => [:last_transition_action, :action_date]}
