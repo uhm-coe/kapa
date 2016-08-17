@@ -88,7 +88,7 @@ module Kapa::PersonsControllerBase
   def sync
     @person = Kapa::Person.find(params[:id])
     key = params[:key]
-    @person_verified = Kapa::Person.import(key)
+    @person_verified = Kapa::Person.lookup(key)
 
     if @person_verified
       @person.id_number = @person_verified.id_number
@@ -96,7 +96,7 @@ module Kapa::PersonsControllerBase
       @person.email_alt = @person_verified.email_alt
       @person.first_name = @person_verified.first_name
       @person.last_name = @person_verified.last_name
-      flash[:success] = "Record was updated from UH Directory.  Please check the name and click save to use the new record."
+      flash.now[:success] = "Record was updated from UH Directory. Please check the name and click save to use the new record."
     end
     render :partial => "kapa/persons/person_form", :layout => false
   end

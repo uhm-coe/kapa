@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get '/error' => 'user_sessions#error', :as => :error
     resource :user_session
     get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
+    get 'persons/sync(/:id)' => 'persons#sync', :as => :persons_sync
     resources :persons, &extra_actions
     resources :curriculums, &extra_actions
     resources :transition_points, &extra_actions
