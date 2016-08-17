@@ -99,7 +99,8 @@ module Kapa::PersonBase
   def active_curriculums(options = {})
     curriculums = self.curriculums
     curriculums = curriculums.includes(:program) if options[:includes] == :program
-    curriculums = curriculums.order(:id => :desc).select { |c| c.deserialize(:journey, :as => OpenStruct).active == "Y" }
+    curriculums = curriculums.order(options[:order]) if options[:order].present?
+    curriculums = curriculums.select { |c| c.deserialize(:journey, :as => OpenStruct).active == "Y" }
     return curriculums
   end
 
