@@ -70,10 +70,10 @@ module Kapa::TransitionPointBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      transition_points = Kapa::TransitionPoint.eager_load([{:users => :person}, :curriculum, {:curriculum => [:program, :person]}, :last_transition_action]).order("persons.last_name, persons.first_name")
+      transition_points = Kapa::TransitionPoint.eager_load({:curriculum => [:program, :person]}, :last_transition_action, {:users => :person}).order("persons.last_name, persons.first_name")
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
-      transition_points = transition_points.where("transition_points.type" => filter.type.to_s) if filter.type.present?
+      transition_points = transition_points.where("transition_points.type" => filter.transition_point_type.to_s) if filter.transition_point_type.present?
       transition_points = transition_points.where("curriculums.program_id" => filter.program_id) if filter.program_id.present?
       transition_points = transition_points.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       transition_points = transition_points.where("curriculums.major_primary" => filter.major) if filter.major.present?

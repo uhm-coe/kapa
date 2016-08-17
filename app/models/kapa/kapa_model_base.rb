@@ -56,6 +56,19 @@ module Kapa::KapaModelBase
     self.class.hashids.encode(id)
   end
 
+  def accseible?(user)
+    case user.access_scope(self.class.name.tableize)
+      when 30
+        return true
+      when 20
+        return (user.depts.any? {|dept| self.dept.include?(dept)} or self.user_assigments.where(:user_id => user.id).first)
+      when 10
+        return self.user_assigments.where(:user_id => user.id).first
+      else
+        return false
+    end
+  end
+
   class_methods do
     def selections
       [["Not Defined!", "ND"]]
@@ -90,7 +103,7 @@ module Kapa::KapaModelBase
       hash.each_pair do |key, value|
         values = value.is_a?(Array) ? value : [value]
         values = values.delete_if { |v| v.blank? }
-        values.each { |v| conditions[0] << " or find_in_set(?, #{key}) > 0" if v.present? }
+        values.each { |v| conditions[0] << " or find_in_set(?, replace(#{key}, ' ', '')) > 0" if v.present? }
         conditions.concat(values)
       end
       conditions[0] << " or #{exception}" if exception

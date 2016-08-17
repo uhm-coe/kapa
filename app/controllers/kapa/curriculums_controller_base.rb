@@ -13,7 +13,7 @@ module Kapa::CurriculumsControllerBase
 
   def update
     @curriculum = Kapa::Curriculum.find(params[:id])
-    @curriculum.attributes = curriculum_params
+    @curriculum.attributes = curriculum_params if params[:curriculum]
     @curriculum.update_serialized_attributes!(:_ext, params[:curriculum_ext]) if params[:curriculum_ext].present?
     @curriculum.update_serialized_attributes(:journey, params[:journey]) if params[:journey].present?
 
