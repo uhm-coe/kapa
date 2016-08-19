@@ -14,7 +14,7 @@ module Kapa::CurriculumBase
                                            from transition_points t
                                            inner join terms tm on tm.id = t.term_id
                                            where t.curriculum_id = transition_points.curriculum_id
-                                           order by tm.sequence desc
+                                           order by tm.sequence desc, t.id desc
                                            limit 1)")},
             :class_name => "TransitionPoint"
     has_many :user_assignments, :as => :assignable
@@ -74,10 +74,10 @@ module Kapa::CurriculumBase
   class_methods do
     def search(options ={})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      curriculums = Kapa::Curriculum.eager_load([{:users => :person}, {:last_transition_point => :last_transition_action} , :program, :person]).order("persons.last_name, persons.first_name")
-      #TODO filter admitted studnets .where("transition_actions.action" => ['1','2'])
+      curriculums = Kapa::Curriculum.eager_load([{:users => :person}, {:transition_points => :last_transition_action} , :program, :person]).order("persons.last_name, persons.first_name")
+      curriculums = curriculums.where("transition_points.type" => "admission")
+      curriculums = curriculums.where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
-      curriculums = curriculums.where("transition_points.type" => filter.entrance_type.to_s) if filter.entrance_type.present?
       curriculums = curriculums.where("program_id" => filter.program_id) if filter.program_id.present?
       curriculums = curriculums.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       curriculums = curriculums.where("curriculums.major_primary" => filter.major) if filter.major.present?
