@@ -24,7 +24,7 @@ module Kapa::PersonsControllerBase
   def update
     @person = Kapa::Person.find(params[:id])
 
-    if params[:person_id_verified]
+    if params[:person_id_verified].present?
       @person_verified = Kapa::Person.find(params[:person_id_verified])
       @person_verified.merge(@person, :include_associations => true)
       flash[:success] = "Person was successfully merged."
