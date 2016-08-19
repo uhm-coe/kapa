@@ -117,7 +117,10 @@ module Kapa::UserBase
       ldap.search(:base => base, :filter => filter) do |entry|
         dn = entry.dn
       end
-      ldap.bind(:method => :simple, :dn => dn, :password => password)
+      logger.debug "*DEBUG* #{dn}"
+      m = ldap.bind(:method => :simple, :dn => dn, :password => password)
+      logger.error "*DEBUG* #{ldap.get_operation_result}"
+      m
     else
       #Use Authlogic authentication for local users.
       valid_password?(password)

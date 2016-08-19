@@ -10,12 +10,12 @@ module Kapa::AdvisingSessionsControllerBase
 
   def new
     @person = Kapa::Person.find(params[:id])
-
     @curriculums = @person.curriculums
     previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
-    @advising_session = Kapa::AdvisingSession.new
+    @advising_session =  @person.advising_sessions.build
     @advising_session.person_id = @person.id
     @advising_session.session_date = Date.today
+    @advising_session.user_ids = [@current_user.id]
     if previous_advising
       @advising_session.curriculum_id = previous_advising.curriculum_id
       @advising_session.category = previous_advising.category
@@ -30,13 +30,10 @@ module Kapa::AdvisingSessionsControllerBase
     @advising_session.attributes = advising_session_params
     @advising_session.dept = @current_user.primary_dept
     @person = @advising_session.person
-
     unless @advising_session.save
       flash[:danger] = error_message_for(@advising_session)
       redirect_to new_kapa_advising_session_path(:id => @person) and return false
     end
-    @advising_session.users << @current_user
-
     flash[:success] = "Advising record was successfully created."
     redirect_to kapa_advising_session_path(:id => @advising_session)
   end
