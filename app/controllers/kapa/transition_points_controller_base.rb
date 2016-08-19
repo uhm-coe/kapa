@@ -89,9 +89,9 @@ module Kapa::TransitionPointsControllerBase
     params.require(:transition_point).permit(:term_id, :type, :category, :priority, :status, :note, :curriculum_id, :user_ids => [])
   end
 
-  def filter_defaults
-    super.merge({
-      :transition_point_type => "admission"
-    })
-  end
+  #def filter_defaults
+  #  super.merge({
+  #    :transition_point_type => "admission"
+  #  })
+  #end
 end
