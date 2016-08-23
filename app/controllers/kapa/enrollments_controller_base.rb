@@ -39,7 +39,7 @@ module Kapa::EnrollmentsControllerBase
     else
       flash[:danger] = @enrollment.errors.full_messages.join(", ")
     end
-    redirect_to kapa_curriculum_path(:id => @enrollment.curriculum, :anchor => :enrollments)
+    redirect_to kapa_enrollment_path(:id => @enrollment)
   end
 
   def index
