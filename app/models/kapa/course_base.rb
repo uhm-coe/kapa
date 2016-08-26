@@ -29,11 +29,19 @@ module Kapa::CourseBase
     return Kapa::Term.find(term_id).description if term_id.present?
   end
 
+  def scores(assessment_rubric)
+    table = ActiveSupport::OrderedHash.new
+    self.course_registrations.each do |r|
+      table.update Kapa::AssessmentScore.scores(Kapa::CourseRegistration.where(:id => r.id), assessment_rubric)
+    end
+    return table
+  end
+
   def progress
     number_of_fields_total = 0
     number_of_fields_filled = 0
     self.assessment_rubrics.each do |ar|
-      table = table_for(ar)
+      table = scores(ar)
       number_of_fields_total += table.size
       number_of_fields_filled += table.values.delete_if { |r| r.blank? }.size
     end
