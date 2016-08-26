@@ -2,8 +2,10 @@ module Kapa::CoursesControllerBase
   extend ActiveSupport::Concern
 
   def show
-#    session[:filter_course][:assessment_rubric_id] = nil if request.get? and params[:format] != "file"
-    @filter = filter((request.get? and params[:format] != "file") ? {:assessment_rubric_id => nil} : {})
+    @filter = filter
+    if request.get? and params[:format] != "file"
+      @filter.assessment_rubric_id = params[:filter].present? ? params[:filter][:assessment_rubric_id] : nil
+    end
     @course = Kapa::Course.find(params[:id])
     @course_ext = @course.ext
     @assessment_rubrics = @course.assessment_rubrics
@@ -96,8 +98,8 @@ module Kapa::CoursesControllerBase
     errors = 0
     file = params[:data][:import_file]
     CSV.foreach(file.path, :headers => true) do |row|
-      course = Kapa::Course.find_by(:subject => row["subject"], :number => row["number"], :term_id => row["term_id"])
-      course = Kapa::Course.new(:subject => row["subject"], :number => row["number"], :term_id => row["term_id"]) if course.blank?
+      course = Kapa::Course.find_by(:subject => row["subject"], :number => row["number"], :section => row["section"], :term_id => row["term_id"])
+      course = Kapa::Course.new(:subject => row["subject"], :number => row["number"], :section => row["section"], :term_id => row["term_id"]) if course.blank?
       course.crn = row["crn"]
       course.title = row["title"]
       course.instructor = row["instructor"]
