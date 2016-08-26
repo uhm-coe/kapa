@@ -81,7 +81,7 @@ module Kapa::TransitionPointsControllerBase
     send_data Kapa::TransitionPoint.to_csv(:filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "#{@filter.name}_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
+              :filename => "#{@filter.transition_point_type}_#{Kapa::Term.find(@filter.term_id).description if @filter.term_id.present?}.csv"
   end
 
   private
@@ -89,9 +89,9 @@ module Kapa::TransitionPointsControllerBase
     params.require(:transition_point).permit(:term_id, :type, :category, :priority, :status, :note, :curriculum_id, :user_ids => [])
   end
 
-  def filter_defaults
-    super.merge({
-      :transition_point_type => "admission"
-    })
-  end
+  #def filter_defaults
+  #  super.merge({
+  #    :transition_point_type => "admission"
+  #  })
+  #end
 end

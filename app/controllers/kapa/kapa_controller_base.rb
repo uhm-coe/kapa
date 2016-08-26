@@ -129,6 +129,7 @@ module Kapa::KapaControllerBase
     {:key => "",
      :active => 1,
      :property => :major,
+     :transition_point_type => "admission",
      :date_start => Date.today,
      :date_end => Date.today,
      :term_id => Kapa::Term.current_term.id,

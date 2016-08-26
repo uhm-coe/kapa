@@ -6,7 +6,6 @@
         <div class="col-sm-6">
           <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
           <%= f.program_select :program_id, :include_blank => "Any", :depts => @current_user.depts, :value => :id %>
-          <%= f.property_select :transition_point_type, :name => :transition_point, :conditions => "category = 'entrance'" %>
           <%= f.property_select :major_primary, :name => :major, :include_blank => "Any", :depts => @current_user.depts %>
           <%= f.history_select :cohort, :model_class => Kapa::Curriculum, :model_mathod => :cohort, :include_blank => "Any" %>
         </div>
@@ -39,6 +38,7 @@
       <th>ID</th>
       <th>Name</th>
       <th>Program</th>
+      <th>Cohort</th>
       <th>Last Transition Point</th>
       <th>Last Action</th>
       <th><%=t(:kapa_global_user_ids) %></th>
@@ -48,12 +48,13 @@
     <tbody>
     <% for curriculum in @curriculums %>
       <tr>
-        <td><%= curriculum.person.id_number %></td>
-        <td><%= link_to_if @current_user.read?(:kapa_persons), abbr(curriculum.person.full_name), kapa_person_path(:id => curriculum.person) %></td>
-        <td><%= abbr curriculum.code_desc, curriculum.code %></td>
-        <td><%= h curriculum.rsend(:last_transition_point, :type_desc) %></td>
-        <td><%= h curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
-        <td><%= h curriculum.rsend(:users, :first, :person, :last_name) %></td>
+        <td><%=curriculum.person.id_number %></td>
+        <td><%=link_to_if @current_user.read?(:kapa_persons), abbr(curriculum.person.full_name), kapa_person_path(:id => curriculum.person) %></td>
+        <td><%=abbr curriculum.code_desc, curriculum.code %></td>
+        <td><%=curriculum.cohort %></td>
+        <td><%=curriculum.rsend(:last_transition_point, :type_desc) %></td>
+        <td><%=curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
+        <td><%=curriculum.rsend(:users, :first, :person, :last_name) %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => curriculum}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>
