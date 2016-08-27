@@ -18,7 +18,7 @@ module Kapa::FacultyAwardBase
       awards = awards.column_matches("faculty_awards.name" => filter.name) if filter.name.present?
       awards = awards.column_matches("faculty_awards.affiliation" => filter.affiliation) if filter.affiliation.present?
       awards = awards.where("faculty_awards.context" => filter.context) if filter.context.present?
-      awards = awards.where(:award_date => filter.award_date_start..filter.award_date_end) if filter.award_date_start.present? and filter.award_date_end.present?
+      awards = awards.where(:award_date => filter.award_date_start.to_date..filter.award_date_end.to_date) if filter.award_date_start.present? and filter.award_date_end.present?
       return awards
     end
 

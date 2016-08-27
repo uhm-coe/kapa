@@ -35,7 +35,7 @@ module Kapa::FacultyPublicationBase
       publications = Kapa::FacultyPublication.eager_load([:person, :authors]).order("faculty_publications.title")
       publications = publications.column_matches("faculty_publications.title" => filter.title) if filter.title.present?
       publications = publications.where("faculty_publications.type" => filter.publication_type) if filter.publiction_type.present?
-      publications = publications.where(:published_date => filter.published_date_start..filter.published_date_end) if filter.published_date_start.present? and filter.published_date_end.present?
+      publications = publications.where(:published_date => filter.published_date_start.to_date..filter.published_date_end.to_date) if filter.published_date_start.present? and filter.published_date_end.present?
       publications = publications.column_matches(:keyword => filter.keyword) if filter.keyword.present?
       return publications
     end

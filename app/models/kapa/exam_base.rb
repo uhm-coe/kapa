@@ -56,7 +56,7 @@ module Kapa::ExamBase
            :contry => extract_value(113, 115)}
       self.serialize(:examinee_contact, examinee_contact)
       if self.person.nil?
-        p = Kapa::Person.first(:conditions => ["last_name like ? and birth_date = ?", examinee_profile[:last_name], examinee_profile[:birth_date]])
+        p = Kapa::Person.where("last_name like ? and birth_date = ?", examinee_profile[:last_name], examinee_profile[:birth_date]).first
         if p
           self.person = p
           self.status = 'M'
@@ -137,7 +137,7 @@ module Kapa::ExamBase
       exams = Kapa::Exam.eager_load({:users => :person}, :person, :exam_scores).order("report_date DESC, persons.last_name, persons.first_name")
       exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
-      exams = exams.where(:report_date => filter.exam_date_start..filter.exam_date_end) if filter.exam_date_start.present? and filter.exam_date_end.present?
+      exams = exams.where(:report_date => filter.exam_date_start.to_date..filter.exam_date_end.to_date) if filter.exam_date_start.present? and filter.exam_date_end.present?
 
       case filter.user.access_scope
         when 30
@@ -148,8 +148,8 @@ module Kapa::ExamBase
           exams = exams.assigned_scope(filter.user.id)
         else
           exams = exams.none
-      end      
-      
+      end
+
       return exams
     end
   end
