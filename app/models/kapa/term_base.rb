@@ -32,9 +32,9 @@ module Kapa::TermBase
       self.where("code > ?", self.current_term.code).order("code").first
     end
 
-    def terms_ids_by_range(start_term_id, end_term_id)
-      self.where(:code => Kapa::Term.find(start_term_id).code..Kapa::Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
-    end
+    #def terms_ids_by_range(start_term_id, end_term_id)
+    #  self.where(:code => Kapa::Term.find(start_term_id).code..Kapa::Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
+    #end
 
     def lookup_description(id)
       term = Kapa::Term.find_by_id(id)
