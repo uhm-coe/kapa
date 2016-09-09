@@ -3,7 +3,7 @@ class AddBibtexFields < ActiveRecord::Migration
     change_table :faculty_publications, :bulk => true do |t|
       t.string "category"
       t.string "annote"
-      t.text "auther"
+      t.text "author"
       t.string "how_published"
       t.string "journal"
       t.string "key"

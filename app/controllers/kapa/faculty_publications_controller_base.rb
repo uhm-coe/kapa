@@ -19,9 +19,9 @@ module Kapa::FacultyPublicationsControllerBase
 
   def create
     @person = Kapa::Person.find(params[:id])
-    @publication = Kapa::FacultyPublication.new(publication_params)
+    @publication = @person.faculty_publications.build(publication_params)
     @publication.attributes = publication_params
-    @publication.person = @person
+    @publication.parse(params[:publication][:bibtex]) if params[:publication][:bibtex]
 
     unless @publication.save
       flash[:danger] = error_message_for(@publication)
@@ -79,6 +79,6 @@ module Kapa::FacultyPublicationsControllerBase
 
   private
   def publication_params
-    params.require(:publication).permit(:person_id, :dept, :pages, :abstract, :published_date, :location, :publisher, :type, :keyword, :venue, :vol, :num_of_vol, :creator, :title, :month, :year, :document_identifier, :editor, :book_title, :book_chapter, :featured, :organization, :edition, :document_location, :research_location, :institution, :thumbnail)
+    params.require(:publication).permit(:person_id, :dept, :pages, :abstract, :published_date, :location, :publisher, :type, :keyword, :venue, :vol, :num_of_vol, :creator, :title, :month, :year, :document_identifier, :editor, :book_title, :book_chapter, :featured, :organization, :edition, :document_location, :research_location, :institution, :thumbnail, :bibtex)
   end
 end

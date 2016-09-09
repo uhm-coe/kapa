@@ -9,6 +9,7 @@
     <div class="col-sm-8">
       <%= bootstrap_form_for :publication, :url => kapa_faculty_publications_path(:id => @person) do |f| %>
         <%= f.property_select :type, :name => :publication_type, :label => "Publication Type" %>
+        <%= f.text_area :bibtex %>
         <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
       <% end %>
     </div>

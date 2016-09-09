@@ -29,6 +29,35 @@ module Kapa::FacultyPublicationBase
     end
   end
 
+  def parse(bibtex_string)
+    bibtex = BibTeX.parse(bibtex_string)
+    entry = bibtex[-1]
+    self.location = entry.[](:address)
+    self.annote = entry.[](:annote)
+    self.author = entry.[](:author)
+    self.book_title = entry.[](:booktitle)
+    self.book_chapter = entry.[](:chapter)
+    self.crossref = entry.[](:crossref)
+    self.edition = entry.[](:edition)
+    self.editor = entry.[](:editor)
+    self.how_published = entry.[](:howpublished)
+    self.institution = entry.[](:institution)
+    self.journal = entry.[](:journal)
+    self.key = entry.[](:key)
+    self.month = entry.[](:month)
+    self.note = entry.[](:note)
+    self.issue_number = entry.[](:number)
+    self.organization = entry.[](:organization)
+    self.pages = entry.[](:pages)
+    self.publisher = entry.[](:publisher)
+    self.school = entry.[](:school)
+    self.series = entry.[](:series)
+    self.type = entry.[](:type)
+    self.title = entry.[](:title)
+    self.vol = entry.[](:volume)
+    self.year = entry.[](:year)
+  end
+
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
