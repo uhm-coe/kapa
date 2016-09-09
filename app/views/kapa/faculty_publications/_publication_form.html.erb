@@ -20,12 +20,15 @@
       </div>
 
       <%= f.text_field :title, :label => "Title" %>
+      <span id="title_help" class="help-block">
+        Use sentence style capitalization.
+      </span>
       <%= f.text_field :keyword, :label => "Keywords" %>
       <span id="keyword_help" class="help-block">
         list of keywords, separated by commas
       </span>
       <%= f.text_area :abstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
-      <%= f.property_select :dept, :label => t(:kapa_global_dept) %>
+      <%= f.property_select :dept, :label => t(:kapa_global_dept), :include_blank => true, :selected => @publication.dept || @current_user.primary_dept %>
     </div>
 
     <div class="col-sm-4">
