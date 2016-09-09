@@ -54,6 +54,11 @@ module Kapa::FacultyPublicationsControllerBase
         redirect_to kapa_faculty_publication_path(:id => @publication) and return false
       end
 
+      if @publication.authors.empty?
+        flash[:success] = "Publication was successfully updated. Please assign authors to this publication."
+        redirect_to kapa_faculty_publication_path(:id => @publication, :anchor => "author") and return true
+      end
+
       flash[:success] = "Publication was successfully updated."
       redirect_to kapa_faculty_publication_path(:id => @publication)
     end
