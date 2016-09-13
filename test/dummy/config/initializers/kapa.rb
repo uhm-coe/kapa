@@ -1,8 +1,5 @@
 # Be sure to restart your server when you modify this file.
 
-# Location of storing attachment files
-Rails.configuration.attachment_root = "/home/vagrant/attachments"
-
 # Location of your public key to encrypt database fields
 Rails.configuration.public_key = "#{Rails.root}/config/kapa.pub"
 
