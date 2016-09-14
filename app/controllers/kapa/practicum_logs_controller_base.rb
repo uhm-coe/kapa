@@ -52,6 +52,6 @@ module Kapa::PracticumLogsControllerBase
 
   private
   def practicum_log_params
-    params.require(:practicum_log).permit(:practicum_placement_id, :log_date, :type, :task, :category, :status, :user_id, :note)
+    params.require(:practicum_log).permit(:practicum_placement_id, :log_date, :type, :duration, :frequency, :category, :status, :user_id, :note,  :task => [], :method => [] )
   end
 end

@@ -63,7 +63,9 @@ module Kapa::KapaHelper
 
     if options[:lock]
       tag = content_tag(:p, @current_user.person.full_name, :class => "form-control-static")
-      tag << hidden_field(object_name, method, :value => @current_user.id, :name => "#{object_name}[#{method}][]")
+      name = "#{object_name}[#{method}]"
+      name << "[]" if html_options[:multiple]
+      tag << hidden_field(object_name, method, :value => @current_user.id, :name => name)
     else
       model_select(object_name, method, options, html_options)
     end

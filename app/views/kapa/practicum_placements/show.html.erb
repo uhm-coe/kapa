@@ -93,7 +93,8 @@
               <tr>
                 <th>Date</th>
                 <th>Type</th>
-                <th>Minutes/Dulation</th>
+                <th>Minutes</th>
+                <th>Frequency</th>
                 <th>Supported by</th>
                 <th></th>
               </tr>
@@ -108,7 +109,10 @@
                     <%=practicum_log.type_desc %>
                   </td>
                   <td>
-                    <%=practicum_log.task_desc %>
+                    <%=practicum_log.duration %>
+                  </td>
+                  <td>
+                    <%=practicum_log.frequency %>
                   </td>
                   <td>
                     <%=practicum_log.user.person.full_name if practicum_log.user %>
