@@ -5,6 +5,8 @@ module Kapa::PracticumLogBase
     belongs_to :practicum_placement
     belongs_to :user
     validates_presence_of :log_date
+    serialize :task, Kapa::CsvSerializer
+    serialize :method, Kapa::CsvSerializer
   end
 
   def type_desc

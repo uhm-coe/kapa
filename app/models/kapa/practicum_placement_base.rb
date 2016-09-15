@@ -12,6 +12,8 @@ module Kapa::PracticumPlacementBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
+#    serialize :supervisor, Kapa::CsvSerializer
+
     validates_presence_of :person_id, :start_term_id, :end_term_id
   end
 
@@ -37,6 +39,7 @@ module Kapa::PracticumPlacementBase
       placements = Kapa::PracticumPlacement.eager_load({:users => :person}, :person, :practicum_site).order("persons.last_name, persons.first_name")
       placements = placements.where("? between practicum_placements.start_term_id and practicum_placements.end_term_id", filter.term_id) if filter.term_id.present?
       placements = placements.where("practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
+      placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope
         when 30
