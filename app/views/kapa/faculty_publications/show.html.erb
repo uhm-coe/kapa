@@ -23,7 +23,7 @@
       <div id="publication_tab" class="tab-pane">
         <%= bootstrap_form_for :publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :multipart => true} do |f| %>
           <%= render :partial => "publication_form", :locals => {:f => f} %>
-          <div class="row"><%= render :partial => "/kapa/layouts/controls" if @current_user.write? %></div>
+          <div class="row"><%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_faculty_publication_path(:id => @publication)} if @current_user.write? %></div>
         <% end %>
       </div>
 
