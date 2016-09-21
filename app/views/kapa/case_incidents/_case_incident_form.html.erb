@@ -1,5 +1,5 @@
-<%= bootstrap_fields_for :case_incident do |f| %>
-  <%= bootstrap_fields_for :case_incident_ext do |e| %>
+<%=bootstrap_fields_for :case_incident do |f| %>
+  <%=bootstrap_fields_for :case_incident_ext do |e| %>
   <div class="row">
     <div class="col-sm-6">
       <%=f.datetime_picker :incident_occurred_at, :label => "Incident Date Time" %>

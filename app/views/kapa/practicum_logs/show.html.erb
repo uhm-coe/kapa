@@ -2,7 +2,7 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%= link_to "", kapa_practicum_placement_path(:id => @practicum_placement, :anchor => :practicum_logs), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_practicum_placement_path(:id => @practicum_placement, :anchor => :practicum_logs), :class => "glyphicon glyphicon-chevron-left" %>
     Log <%=@practicum_log.log_date%>
   </h4>
 

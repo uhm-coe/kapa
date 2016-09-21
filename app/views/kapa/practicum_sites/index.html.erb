@@ -5,7 +5,7 @@
       <%=f.text_field :name %>
       <%=f.property_select :district, :include_blank => "Any" %>
       <%=f.property_select :area_group, :include_blank => "Any", :label => "Area" %>
-      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 

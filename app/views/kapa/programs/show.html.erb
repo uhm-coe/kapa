@@ -1,8 +1,8 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
-    <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%= h @program.description %>
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@program.description %>
   </h4>
 
   <div class="tabs">
@@ -13,9 +13,9 @@
 
     <div class="tab-content">
       <div id="program_profile_tab" class="tab-pane">
-        <%= bootstrap_form_for :program, :url => kapa_program_path(:id => @program), :html => {:method => :put} do |f| %>
-          <%= render :partial => "program_form" %>
-          <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_program_path(:id => @program)} if @current_user.write? %>
+        <%=bootstrap_form_for :program, :url => kapa_program_path(:id => @program), :html => {:method => :put} do |f| %>
+          <%=render :partial => "program_form" %>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_program_path(:id => @program)} if @current_user.write? %>
         <% end %>
       </div>
 
@@ -26,14 +26,14 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#program_offer_<%= @program_offer.id %>"><span class="strong"><%= h "#{@program.code}/#{@program_offer.description}" %></span></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#program_offer_<%=@program_offer.id %>"><span class="strong"><%="#{@program.code}/#{@program_offer.description}" %></span></a>
                 </h3>
               </div>
-              <div id="program_offer_<%= @program_offer.id %>" class="panel-collapse collapse<%= ' in' if params[:offer_panel] == @program_offer.id.to_s || (params[:offer_panel].nil? && index == 0) %>">
+              <div id="program_offer_<%=@program_offer.id %>" class="panel-collapse collapse<%=' in' if params[:offer_panel] == @program_offer.id.to_s || (params[:offer_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <%= bootstrap_form_for :program_offer, :url => kapa_program_offer_path(:id => @program_offer, :anchor => :offers, :offer_panel => program_offer.id), :html => {:method => :put} do |f| %>
-                    <%= render :partial => "program_offer_form" %>
-                    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_program_offer_path(:id => @program_offer, :anchor => :offers)} if @current_user.write? %>
+                  <%=bootstrap_form_for :program_offer, :url => kapa_program_offer_path(:id => @program_offer, :anchor => :offers, :offer_panel => program_offer.id), :html => {:method => :put} do |f| %>
+                    <%=render :partial => "program_offer_form" %>
+                    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_program_offer_path(:id => @program_offer, :anchor => :offers)} if @current_user.write? %>
                   <% end %>
                 </div>
               </div>
@@ -46,12 +46,12 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#new_program_offer"><span class="new">New Availability</span></a>
               </h3>
             </div>
-            <div id="new_program_offer" class="panel-collapse collapse<%= ' in' if @program_offers.length == 0 %>">
+            <div id="new_program_offer" class="panel-collapse collapse<%=' in' if @program_offers.length == 0 %>">
               <div class="panel-body">
                 <% @program_offer = Kapa::ProgramOffer.new %>
-                <%= bootstrap_form_for :program_offer, :url => kapa_program_offers_path(:id => @program, :anchor => :offers) do |f| %>
-                  <%= render :partial => "program_offer_form", :locals => {:f => f} %>
-                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+                <%=bootstrap_form_for :program_offer, :url => kapa_program_offers_path(:id => @program, :anchor => :offers) do |f| %>
+                  <%=render :partial => "program_offer_form", :locals => {:f => f} %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
                 <% end %>
               </div>
             </div>

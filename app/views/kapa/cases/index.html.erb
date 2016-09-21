@@ -1,17 +1,17 @@
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :url => kapa_cases_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_cases_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-sm-6">
-          <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
-          <%= f.property_select :case_type, :include_blank => "Any", :name => :case_type %>
-          <%= f.property_select :case_status, :name => :case_status, :include_blank => "Any" %>
+          <%=f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
+          <%=f.property_select :case_type, :include_blank => "Any", :name => :case_type %>
+          <%=f.property_select :case_status, :name => :case_status, :include_blank => "Any" %>
         </div>
         <div class="col-sm-6">
-          <%= f.text_field :case_id, :label => "Case Number" %>
-          <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
-          <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+          <%=f.text_field :case_id, :label => "Case Number" %>
+          <%=f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+          <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
         </div>
       </div>
     <% end %>
@@ -46,17 +46,17 @@
     <tbody>
     <% for @case in @cases %>
       <tr>
-        <td><%= @case.case_number %></td>
-        <td><%= @case.case_name %></td>
-        <td><%= h @case.reported_at %></td>
-        <td><%= h @case.last_case_action.action_desc if @case.last_case_action %></td>
-        <td><%= h @case.status_desc %></td>
-        <td><%= h @case.dept %></td>
-        <td class="right"><%= link_to "Show", {:action => :show, :id => @case}, :class => "btn btn-default btn-xs" %></td>
+        <td><%=@case.case_number %></td>
+        <td><%=@case.case_name %></td>
+        <td><%=@case.reported_at %></td>
+        <td><%=@case.last_case_action.action_desc if @case.last_case_action %></td>
+        <td><%=@case.status_desc %></td>
+        <td><%=@case.dept %></td>
+        <td class="right"><%=link_to "Show", {:action => :show, :id => @case}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%= will_paginate @cases, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @cases, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

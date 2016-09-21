@@ -2,8 +2,8 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="https://www.google.com/jsapi"></script>
-  <%= javascript_include_tag "kapa/reports" %>
-  <%= stylesheet_link_tag "kapa/reports", :media => "all" %>
+  <%=javascript_include_tag "kapa/reports" %>
+  <%=stylesheet_link_tag "kapa/reports", :media => "all" %>
 
   <script>
     google.load("visualization", "1", {packages: ["corechart", "charteditor"]});
@@ -43,25 +43,25 @@
 
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_report_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <% @parameters.each_value do |p| %>
         <% @parameter = OpenStruct.new(p) %>
 
         <% if @parameter.active == "Y" %>
           <% case @parameter.type %>
 <% when "text_field" %>
-            <%= f.text_field(:test, :label => @parameter.label) %>
+            <%=f.text_field(:test, :label => @parameter.label) %>
           <% when "property_select" %>
-            <%= f.property_select(@parameter.name, :name => @parameter.property_name, :label => @parameter.label, :include_blank => "Any") %>
+            <%=f.property_select(@parameter.name, :name => @parameter.property_name, :label => @parameter.label, :include_blank => "Any") %>
           <% when "term_select", "program_select" %>
-            <%= f.term_select(@parameter.name, :label => @parameter.label, :include_blank => "Any") %>
+            <%=f.term_select(@parameter.name, :label => @parameter.label, :include_blank => "Any") %>
           <% when "user_select" %>
-            <%= f.user_select(@parameter.name, :label => @parameter.label, :include_blank => "Any", :depts => @current_user.depts) %>
+            <%=f.user_select(@parameter.name, :label => @parameter.label, :include_blank => "Any", :depts => @current_user.depts) %>
           <% when "date_picker" %>
-            <%= f.date_picker(@parameter.name, :label => @parameter.label) %>
+            <%=f.date_picker(@parameter.name, :label => @parameter.label) %>
           <% when "check_box" %>
-            <%= f.check_box(@parameter.name, {:label => @parameter.label}, "Y", "N") %>
+            <%=f.check_box(@parameter.name, {:label => @parameter.label}, "Y", "N") %>
           <% end %>
         <% end %>
 
@@ -73,8 +73,8 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
-    <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%= @dataset.name %>
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@dataset.name %>
   </h4>
 
   <div class="row">

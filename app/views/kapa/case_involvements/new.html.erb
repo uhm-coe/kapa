@@ -4,7 +4,7 @@
 
 <% content_for(:box1) do %>
   <h4 class="section-header divider">
-    <%= link_to "", kapa_case_path(:id => @case), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_case_path(:id => @case), :class => "glyphicon glyphicon-chevron-left" %>
     New Person
   </h4>
   <%=bootstrap_form_for :case_involvement, :url => kapa_case_involvements_path(:case_id => @case) do |f| %>

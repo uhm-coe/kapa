@@ -1,8 +1,8 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
-    <%= link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%= h @dataset.name %>
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@dataset.name %>
   </h4>
 
   <div class="tabs">
@@ -14,18 +14,18 @@
 
     <div class="tab-content">
       <div id="dataset_profile_tab" class="tab-pane">
-        <%= bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
-          <%= render :partial => "dataset_form" %>
-          <%= render :layout => "/kapa/layouts/controls" do %>
+        <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
+          <%=render :partial => "dataset_form" %>
+          <%=render :layout => "/kapa/layouts/controls" do %>
           <% end if @current_user.write? %>
         <% end %>
       </div>
 
       <div id="query_tab" class="tab-pane">
-        <%= bootstrap_form_for :dataset, :url => kapa_datasets_load_path(:id => @dataset, :anchor => :query), :html => {:multipart => true, :method => :put} do |f| %>
-          <%= render :partial => "query_form" %>
-          <%= f.submit "Load", :class => "btn btn-default" %>
-          <%= link_to "Feed", kapa_datasets_feed_path(:id => @dataset), :class => "btn btn-default" %>
+        <%=bootstrap_form_for :dataset, :url => kapa_datasets_load_path(:id => @dataset, :anchor => :query), :html => {:multipart => true, :method => :put} do |f| %>
+          <%=render :partial => "query_form" %>
+          <%=f.submit "Load", :class => "btn btn-default" %>
+          <%=link_to "Feed", kapa_datasets_feed_path(:id => @dataset), :class => "btn btn-default" %>
       <% end %>
       </div>
 
@@ -37,15 +37,15 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%= parameter_id %>"><span class="strong"><%= parameter_id %>
-                    . <%= @parameter.name %></span></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#parameter_<%=parameter_id %>"><span class="strong"><%=parameter_id %>
+                    . <%=@parameter.name %></span></a>
                 </h3>
               </div>
-              <div id="parameter_<%= parameter_id %>" class="panel-collapse collapse">
+              <div id="parameter_<%=parameter_id %>" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <%= bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset, :parameter_id => parameter_id, :anchor => :parameters), :html => {:method => :put} do |f| %>
-                    <%= render :partial => "parameter_form" %>
-                    <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+                  <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset, :parameter_id => parameter_id, :anchor => :parameters), :html => {:method => :put} do |f| %>
+                    <%=render :partial => "parameter_form" %>
+                    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
                   <% end %>
                 </div>
               </div>
@@ -62,9 +62,9 @@
 
             <div id="new_parameter" class="panel-collapse collapse">
               <div class="panel-body">
-                <%= bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset, :anchor => :parameters), :html => {:method => :put} do |f| %>
-                  <%= render :partial => "parameter_form" %>
-                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+                <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset, :anchor => :parameters), :html => {:method => :put} do |f| %>
+                  <%=render :partial => "parameter_form" %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
                 <% end %>
               </div>
             </div>

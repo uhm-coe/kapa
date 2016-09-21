@@ -1,4 +1,4 @@
-<%= bootstrap_fields_for :transition_point do |t| %>
+<%=bootstrap_fields_for :transition_point do |t| %>
   <div class="row">
     <div class="col-sm-6">
       <%=t.term_select :term_id, :label => "Term" %>
@@ -13,5 +13,5 @@
     </div>
   </div>
 
-  <%= t.hidden_field :curriculum_id %>
+  <%=t.hidden_field :curriculum_id %>
 <% end %>

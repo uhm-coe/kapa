@@ -3,10 +3,10 @@
     <div class="col-sm-6">
       <div class="row">
         <div class="col-sm-6">
-          <%= f.term_select :start_term_id %>
+          <%=f.term_select :start_term_id %>
         </div>
         <div class="col-sm-6">
-          <%= f.term_select :end_term_id %>
+          <%=f.term_select :end_term_id %>
         </div>
       </div>
       <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => true, :label => {:text => "Program"} %>

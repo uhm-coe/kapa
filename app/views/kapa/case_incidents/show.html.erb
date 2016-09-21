@@ -4,7 +4,7 @@
 
 <% content_for(:box1) do %>
   <h4 class="section-header divider">
-    <%= link_to "", kapa_case_path(:id => @case, :anchor => "case_incidents"), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_case_path(:id => @case, :anchor => "case_incidents"), :class => "glyphicon glyphicon-chevron-left" %>
     <%=@case.case_number %> Incident
   </h4>
 
@@ -45,7 +45,7 @@
                   </td>
                   <td class="right">
                     <%#=popover_button "", case_violation.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
-                    <%= link_to "Show", kapa_case_violation_path(:id => case_violation), :class => "btn btn-default btn-xs" %>
+                    <%=link_to "Show", kapa_case_violation_path(:id => case_violation), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>

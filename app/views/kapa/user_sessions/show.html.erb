@@ -24,9 +24,9 @@
     </div>
 
     <div class="col-md-4 right-col">
-      <h3>Hi <%= @current_user.person.first_name %> <%= @current_user.person.last_name %>,</h3>
+      <h3>Hi <%=@current_user.person.first_name %> <%=@current_user.person.last_name %>,</h3>
 
-      <p>Your last login was <%= @current_user.updated_at %>.</p>
+      <p>Your last login was <%=@current_user.updated_at %>.</p>
     </div>
   </div>
 <% end %>

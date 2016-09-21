@@ -1,60 +1,60 @@
 <% content_for(:dialog) do %>
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_publication_type_dialog", :modal_title => "Change Publication Type", :modal_form_id => "change_publication_type_form" } do %>
-    <%= bootstrap_form_for(:publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :id => "change_publication_type_form"}) do |t| %>
-      <%= f.property_select :type, :name => :publication_type, :label => "Publication Type" %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "change_publication_type_dialog", :modal_title => "Change Publication Type", :modal_form_id => "change_publication_type_form" } do %>
+    <%=bootstrap_form_for(:publication, :url => kapa_faculty_publication_path(:id => @publication), :html => {:method => :put, :id => "change_publication_type_form"}) do |t| %>
+      <%=f.property_select :type, :name => :publication_type, :label => "Publication Type" %>
     <% end %>
   <% end %>
 <% end %>
 
-<%= bootstrap_fields_for :publication do |f| %>
+<%=bootstrap_fields_for :publication do |f| %>
 
   <div class="row">
     <div class="col-sm-4">
       <div class="form-group">
-        <%= label :type, :description, "Publication Type" %>
-        <p class="form-control-static"><span><%= Kapa::Property.lookup_description(:publication_type, @publication.type) %></span>
+        <%=label :type, :description, "Publication Type" %>
+        <p class="form-control-static"><span><%=Kapa::Property.lookup_description(:publication_type, @publication.type) %></span>
           <% if @current_user.manage? %>
             <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_publication_type_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
           <% end %>
         </p>
       </div>
 
-      <%= f.text_field :title, :label => "Title" %>
+      <%=f.text_field :title, :label => "Title" %>
       <span id="title_help" class="help-block">
         Use sentence style capitalization.
       </span>
-      <%= f.text_field :institution, :label => "Institution", :placeholder => "College of Education, University of Hawaii at Manoa" %>
-      <%= f.text_field :research_location, :label => "Research Location", :placeholder => "Honolulu, United States of America" %>
+      <%=f.text_field :institution, :label => "Institution", :placeholder => "College of Education, University of Hawaii at Manoa" %>
+      <%=f.text_field :research_location, :label => "Research Location", :placeholder => "Honolulu, United States of America" %>
       <span id="research_location_help" class="help-block">
         "Honolulu, United States of America" for most COE members. Change if the author's city of residence is different, e.g. Pago Pago, American Samoa.
       </span>
-      <%= f.property_select :dept, :label => t(:kapa_global_dept), :include_blank => true, :selected => @publication.dept || @current_user.primary_dept %>
-      <%= f.date_picker :published_date, :label => "Publication Date" %>
-      <%= f.text_field :document_location, :label => "Document URL" %>
+      <%=f.property_select :dept, :label => t(:kapa_global_dept), :include_blank => true, :selected => @publication.dept || @current_user.primary_dept %>
+      <%=f.date_picker :published_date, :label => "Publication Date" %>
+      <%=f.text_field :document_location, :label => "Document URL" %>
       <span id="document_location_help" class="help-block">
         A URL where the publication can be found, e.g. http://books.google.com/books?isbn=141295746X.
 
         Note that authors, per UHM's 2012 Open Access Policy, should submit works to UHM Library's ScholarSpace, receiving a URL for that can be used here.
       </span>
-      <%= f.text_field :document_identifier, :label => "Document Identifier" %>
+      <%=f.text_field :document_identifier, :label => "Document Identifier" %>
       <span id="documentidentifier_help" class="help-block">
         The DOI or ISBN number for publications that have one, e.g. 978-1412957465 (13-digit ISBN), 141295746X (10-digit ISBN), or 10.1007/BF02504547 (DOI).
       </span>
     </div>
     <div class="col-sm-4">
-      <%= f.text_field :keyword, :label => "Keywords" %>
+      <%=f.text_field :keyword, :label => "Keywords" %>
       <span id="keyword_help" class="help-block">
         list of keywords, separated by commas
       </span>
-      <%= f.text_area :abstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
+      <%=f.text_area :abstract, {:label => "Abstract", :cols => 54, :rows => 20} %>
       <span id="abstract_help" class="help-block">
         Copy the entire abstract from a publication and paste it into this field (plain text only).
       </span>
 
-      <%= f.file_field :thumbnail, :label => "Cover image" %>
+      <%=f.file_field :thumbnail, :label => "Cover image" %>
       <% if @publication.thumbnail.exists? %>
         <div class="alert fade in alert-info">
-          You have already uploaded a cover image named <strong><%= @publication.thumbnail_file_name %></strong>. To replace it, choose a new file above.
+          You have already uploaded a cover image named <strong><%=@publication.thumbnail_file_name %></strong>. To replace it, choose a new file above.
         </div>
       <% end %>
       <span id="thumbnail_help" class="help-block">
@@ -68,162 +68,162 @@
     </div>
 
     <div class="col-sm-4">
-      <%= f.hidden_field :person_id  %>
+      <%=f.hidden_field :person_id  %>
       <% if @publication.type == "book" %>
         <!-- Book -->
-        <%= f.text_field :vol, :label => "Volume" %>
+        <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
           The numeric volume number of this journal or book, if applicable, e.g. "4".
 
           If a numeric series within the volume is used by the journal, indicate it in parenthesis like this: "4(2)". In this example, 4 is the volume number, 2 is the series number within volume 4.
         </span>
-        <%= f.text_field :pages, :label => "Pages" %>
+        <%=f.text_field :pages, :label => "Pages" %>
         <span id="pages_help" class="help-block">
           The page numbers of the publication occurs on. A numeric range with a dash between first and last number, or the single page number occurring, e.g. "34-56" or "118".
         </span>
-        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%=f.text_field :publisher, :label => "Publisher" %>
         <span id="publisher_help" class="help-block">
           The name of a book or book chapter’s publisher, e.g. "Prentice Hall".
         </span>
-        <%= f.text_field :location, :label => "Publisher Location" %>
+        <%=f.text_field :location, :label => "Publisher Location" %>
         <span id="location_help" class="help-block">
           City and country of the publisher, e.g. "Honolulu, United States of America".
         </span>
-        <%= f.text_field :editor, :label => "Editor" %>
+        <%=f.text_field :editor, :label => "Editor" %>
         <span id="editor_help" class="help-block">
           The first and last name of the publication's editor, if applicable, e.g. "James McDonald". If there are multiple editors, separate their names with a comma.
         </span>
-        <%= f.text_field :edition, :label => "Edition" %>
+        <%=f.text_field :edition, :label => "Edition" %>
         <span id="edition_help" class="help-block">
           The edition number of a book, e.g. "5" for the fifth edition.
         </span>
 
       <% elsif @publication.type == "book_chapter" %>
         <!-- Book Chapter -->
-        <%= f.text_field :vol, :label => "Volume" %>
+        <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
           The numeric volume number of this journal or book, if applicable, e.g. "4".
 
           If a numeric series within the volume is used by the journal, indicate it in parenthesis like this: "4(2)". In this example, 4 is the volume number, 2 is the series number within volume 4.
         </span>
-        <%= f.text_field :pages, :label => "Pages" %>
+        <%=f.text_field :pages, :label => "Pages" %>
         <span id="pages_help" class="help-block">
           The page numbers of the publication occurs on. A numeric range with a dash between first and last number, or the single page number occurring, e.g. "34-56" or "118".
         </span>
-        <%= f.text_field :book_title, :label => "Book Title" %>
+        <%=f.text_field :book_title, :label => "Book Title" %>
         <span id="book_title_help" class="help-block">
           The title of the book in which this chapter was published.
         </span>
-        <%= f.text_field :book_chapter, :label => "Book Chapter" %>
+        <%=f.text_field :book_chapter, :label => "Book Chapter" %>
         <span id="book_title_help" class="help-block">
           The title of the chapter within the book.
         </span>
-        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%=f.text_field :publisher, :label => "Publisher" %>
         <span id="publisher_help" class="help-block">
           The name of a book or book chapter’s publisher, e.g. "Prentice Hall".
         </span>
-        <%= f.text_field :location, :label => "Publisher Location" %>
+        <%=f.text_field :location, :label => "Publisher Location" %>
         <span id="location_help" class="help-block">
           City and country of the publisher, e.g. "Honolulu, United States of America".
         </span>
-        <%= f.text_field :editor, :label => "Editor" %>
+        <%=f.text_field :editor, :label => "Editor" %>
         <span id="editor_help" class="help-block">
           The first and last name of the publication's editor, if applicable, e.g. "James McDonald". If there are multiple editors, separate their names with a comma.
         </span>
-        <%= f.text_field :edition, :label => "Edition" %>
+        <%=f.text_field :edition, :label => "Edition" %>
         <span id="edition_help" class="help-block">
           The edition number of a book, e.g. "5" for the fifth edition.
         </span>
 
       <% elsif @publication.type == "conference_proceedings" %>
         <!-- Conference Proceedings -->
-        <%= f.text_field :vol, :label => "Volume" %>
+        <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
           The numeric volume number of this journal or book, if applicable, e.g. "4".
 
           If a numeric series within the volume is used by the journal, indicate it in parenthesis like this: "4(2)". In this example, 4 is the volume number, 2 is the series number within volume 4.
         </span>
-        <%= f.text_field :pages, :label => "Pages" %>
+        <%=f.text_field :pages, :label => "Pages" %>
         <span id="pages_help" class="help-block">
           The page numbers of the publication occurs on. A numeric range with a dash between first and last number, or the single page number occurring, e.g. "34-56" or "118".
         </span>
-        <%= f.text_field :venue, :label => "Conference Name" %>
+        <%=f.text_field :venue, :label => "Conference Name" %>
         <span id="venue_help" class="help-block">
           The full title of the conference from which proeedings are compiled.
         </span>
-        <%= f.text_field :location, :label => "Conference Location" %>
+        <%=f.text_field :location, :label => "Conference Location" %>
         <span id="location_help" class="help-block">
           City and country of the conference or presentation event, e.g. "Honolulu, United States of America".
         </span>
-        <%= f.text_field :organization, :label => "Society/Organization running conference" %>
+        <%=f.text_field :organization, :label => "Society/Organization running conference" %>
         <span id="organization_help" class="help-block">
           The organization holding a conference or publishing its proceedings.
         </span>
 
       <% elsif @publication.type == "journal_article" %>
         <!-- Journal Article -->
-        <%= f.text_field :vol, :label => "Volume" %>
+        <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
           The numeric volume number of this journal or book, if applicable, e.g. "4".
 
           If a numeric series within the volume is used by the journal, indicate it in parenthesis like this: "4(2)". In this example, 4 is the volume number, 2 is the series number within volume 4.
         </span>
-        <%= f.text_field :pages, :label => "Pages" %>
+        <%=f.text_field :pages, :label => "Pages" %>
         <span id="pages_help" class="help-block">
           The page numbers of the publication occurs on. A numeric range with a dash between first and last number, or the single page number occurring, e.g. "34-56" or "118".
         </span>
-        <%= f.text_field :venue, :label => "Journal Name" %>
+        <%=f.text_field :venue, :label => "Journal Name" %>
         <span id="venue_help" class="help-block">
           The title of the journal in which this article was published.
         </span>
-        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%=f.text_field :publisher, :label => "Publisher" %>
         <span id="publisher_help" class="help-block">
           The name of a book or book chapter’s publisher, e.g. "Prentice Hall".
         </span>
-        <%= f.text_field :organization, :label => "Organization/Society publishing journal" %>
+        <%=f.text_field :organization, :label => "Organization/Society publishing journal" %>
         <span id="organization_help" class="help-block">
           The organization publishing the journal.
         </span>
 
       <% elsif @publication.type == "multimedia_contribution" %>
         <!-- Multimedia Contribution -->
-        <%= f.text_field :vol, :label => "Volume" %>
+        <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
           The numeric volume number of this journal or book, if applicable, e.g. "4".
 
           If a numeric series within the volume is used by the journal, indicate it in parenthesis like this: "4(2)". In this example, 4 is the volume number, 2 is the series number within volume 4.
         </span>
-        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%=f.text_field :publisher, :label => "Publisher" %>
         <span id="publisher_help" class="help-block">
           The name of a book or book chapter’s publisher, e.g. "Prentice Hall".
         </span>
 
       <% elsif @publication.type == "presentation" %>
         <!-- Presentation -->
-        <%= f.text_field :venue, :label => "Event at which presented" %>
+        <%=f.text_field :venue, :label => "Event at which presented" %>
         <span id="venue_help" class="help-block">
           The event at which a presentation occurred.
         </span>
-        <%= f.text_field :location, :label => "Location of presentation" %>
+        <%=f.text_field :location, :label => "Location of presentation" %>
         <span id="location_help" class="help-block">
           City and country of the conference or presentation event, e.g. "Honolulu, United States of America".
         </span>
-        <%= f.text_field :organization, :label => "Organization presented to" %>
+        <%=f.text_field :organization, :label => "Organization presented to" %>
         <span id="organization_help" class="help-block">
           The organization to which the presentation was given.
         </span>
 
       <% elsif @publication.type == "report" %>
         <!-- Report -->
-        <%= f.text_field :publisher, :label => "Publisher" %>
+        <%=f.text_field :publisher, :label => "Publisher" %>
         <span id="publisher_help" class="help-block">
           The name of a book or book chapter’s publisher, e.g. "Prentice Hall".
         </span>
-        <%= f.text_field :location, :label => "Publisher Location" %>
+        <%=f.text_field :location, :label => "Publisher Location" %>
         <span id="location_help" class="help-block">
           City and country of the publisher, e.g. "Honolulu, United States of America".
         </span>
-        <%= f.text_field :pages, :label => "Pages" %>
+        <%=f.text_field :pages, :label => "Pages" %>
         <span id="pages_help" class="help-block">
           The page numbers of the publication occurs on. A numeric range with a dash between first and last number, or the single page number occurring, e.g. "34-56" or "118".
         </span>

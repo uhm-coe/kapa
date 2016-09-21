@@ -16,13 +16,13 @@
     <tbody>
     <% @datasets.each do |dataset| %>
       <tr>
-        <td><%= dataset.id %></td>
-        <td><%= dataset.name %></td>
-        <td><%= dataset.datasource %></td>
-        <td><%= dataset.loaded_at %></td>
-        <td><%= dataset.record_count %></td>
+        <td><%=dataset.id %></td>
+        <td><%=dataset.name %></td>
+        <td><%=dataset.datasource %></td>
+        <td><%=dataset.loaded_at %></td>
+        <td><%=dataset.record_count %></td>
         <td class="right">
-          <%= link_to "Show", kapa_report_path(dataset), :class => 'btn btn-default btn-xs' %>
+          <%=link_to "Show", kapa_report_path(dataset), :class => 'btn btn-default btn-xs' %>
         </td>
       </tr>
     <% end %>

@@ -1,5 +1,5 @@
 <% if Kapa::File.inline_content_types.include? file.content_type %>
-  <%= content_tag :iframe, :src => kapa_file_url(:id => file, :format => :file, :inline => true), :width => "100%", :height => 1070, :frameborder => 0 do %>
+  <%=content_tag :iframe, :src => kapa_file_url(:id => file, :format => :file, :inline => true), :width => "100%", :height => 1070, :frameborder => 0 do %>
     [Your browser does not support iframe, or has been configured not to display inline frames.
      You can access <%=link_to "the document", kapa_file_url(:id => file, :format => :file) %>
      via a link though.]

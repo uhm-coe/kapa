@@ -1,18 +1,18 @@
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :url => kapa_faculty_publications_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_faculty_publications_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-sm-6">
-          <%= f.text_field :title, :label => "Title" %>
-          <%= f.property_select :publication_type, :name => :publication_type, :label => "Type", :include_blank => "Any" %>
-          <%= f.text_field :keyword, :label => "Keyword" %>
-          <%= f.text_field :author, :label => "Author" %>
+          <%=f.text_field :title, :label => "Title" %>
+          <%=f.property_select :publication_type, :name => :publication_type, :label => "Type", :include_blank => "Any" %>
+          <%=f.text_field :keyword, :label => "Keyword" %>
+          <%=f.text_field :author, :label => "Author" %>
         </div>
         <div class="col-sm-6">
-          <%= f.date_picker :published_date_start, :label => "Publication Date Start" %>
-          <%= f.date_picker :published_date_end, :label => "Publication Date End" %>
-          <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+          <%=f.date_picker :published_date_start, :label => "Publication Date Start" %>
+          <%=f.date_picker :published_date_end, :label => "Publication Date End" %>
+          <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
         </div>
       </div>
     <% end %>
@@ -46,12 +46,12 @@
     <tbody>
       <% for publication in @publications %>
         <tr>
-          <td><%= publication.person.id_number if publication.person %></td>
-          <td><%= link_to abbr(publication.person.full_name), kapa_person_path(:id => publication.person) if publication.person %></td>
-          <td><%= Kapa::Property.lookup_description(:publication_type, publication.type) %>
-          <td><%= abbr publication.title, 60 %></td>
-          <td><%= publication.published_date %></td>
-          <td><%= publication.faculty_publication_authors.length.to_i %></td>
+          <td><%=publication.person.id_number if publication.person %></td>
+          <td><%=link_to abbr(publication.person.full_name), kapa_person_path(:id => publication.person) if publication.person %></td>
+          <td><%=Kapa::Property.lookup_description(:publication_type, publication.type) %>
+          <td><%=abbr publication.title, 60 %></td>
+          <td><%=publication.published_date %></td>
+          <td><%=publication.faculty_publication_authors.length.to_i %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => publication}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

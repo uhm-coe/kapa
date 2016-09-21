@@ -1,14 +1,14 @@
 <% practicum_log = @practicum_log.new_record? ? "practicum_log" : "practicum_log[]" %>
-<%= bootstrap_fields_for practicum_log do |a| %>
+<%=bootstrap_fields_for practicum_log do |a| %>
   <div class="row">
     <div class="col-sm-6">
       <%=a.date_picker :log_date, :label => "Log Date" %>
-      <%= a.property_select :type, :name => :practicum_log_type, :include_blank => true %>
-      <%= a.property_select :task, :name => :practicum_log_task, :include_blank => true %>
-      <%= a.user_select :user_id, :include_blank => true, :label => "Logged by", :locked => !@current_user.manage? %>
+      <%=a.property_select :type, :name => :practicum_log_type, :include_blank => true %>
+      <%=a.property_select :task, :name => :practicum_log_task, :include_blank => true %>
+      <%=a.user_select :user_id, :include_blank => true, :label => "Logged by", :locked => !@current_user.manage? %>
     </div>
     <div class="col-sm-6">
-      <%= a.text_area "note",  {:cols => 54, :rows => 40} %>
+      <%=a.text_area "note",  {:cols => 54, :rows => 40} %>
     </div>
   </div>
 <% end %>

@@ -14,18 +14,18 @@
 <% end %>
 
 <% content_for(:dialog) do %>
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "move_transition_point_dialog", :modal_title => "Move Transition Point to Different Curriculum", :modal_form_id => "move_transition_point_form"} do %>
-    <%= bootstrap_form_for(:transition_point, :url => kapa_transition_point_path(:id => @transition_point), :html => {:method => :put, :id => "move_transition_point_form"}) do |t| %>
-      <%= t.select :curriculum_id, @curriculums.collect { |c| ["#{c.code_desc} - #{@transition_point.term_desc}", c.id] }, :label => "Program" %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "move_transition_point_dialog", :modal_title => "Move Transition Point to Different Curriculum", :modal_form_id => "move_transition_point_form"} do %>
+    <%=bootstrap_form_for(:transition_point, :url => kapa_transition_point_path(:id => @transition_point), :html => {:method => :put, :id => "move_transition_point_form"}) do |t| %>
+      <%=t.select :curriculum_id, @curriculums.collect { |c| ["#{c.code_desc} - #{@transition_point.term_desc}", c.id] }, :label => "Program" %>
     <% end %>
   <% end %>
 <% end %>
 
 <% content_for(:box1) do %>
-  <%= render :partial => "/kapa/persons/person_detail" %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to @curriculum.code_desc, kapa_curriculum_path(:id => @curriculum) %> - <%= @transition_point.type_desc %>
+    <%=link_to @curriculum.code_desc, kapa_curriculum_path(:id => @curriculum) %> - <%=@transition_point.type_desc %>
   </h4>
 
   <div class="tabs">
@@ -34,15 +34,15 @@
       <li><a href="#assessment_tab" data-toggle="tab">Assessment</a></li>
       <li><a href="#actions_tab" data-toggle="tab">Actions</a></li>
       <% if @transition_point.form_id.present? %>
-        <li><%= link_to "Form", kapa_form_path(:id => @transition_point.form), :target => "_blank" %></li>
+        <li><%=link_to "Form", kapa_form_path(:id => @transition_point.form), :target => "_blank" %></li>
       <% end %>
     </ul>
 
     <div class="tab-content">
       <div id="transition_point_tab" class="tab-pane">
-        <%= bootstrap_form_for :transition_point, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :transition_point), :html => {:method => :put} do %>
-          <%= render :partial => "transition_point_form" %>
-          <%= render :layout => "/kapa/layouts/controls" do %>
+        <%=bootstrap_form_for :transition_point, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :transition_point), :html => {:method => :put} do %>
+          <%=render :partial => "transition_point_form" %>
+          <%=render :layout => "/kapa/layouts/controls" do %>
             <%=button_to_link "Move", nil, "data-toggle" => "modal", "data-target" => "#move_transition_point_dialog", :icon => "glyphicon-move" if @current_user.manage? %>
           <% end if @current_user.write? %>
         <% end %>
@@ -51,14 +51,14 @@
       <div id="assessment_tab" class="tab-pane">
         <div class="row">
           <div class="col-sm-6">
-            <%= bootstrap_form_for :filter, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :assessment), :html => {:method => :get, :id => "assessment_form"} do |f| %>
-              <%= f.select(:assessment_rubric_id, @assessment_rubrics.collect { |r| [r.title, "0#{r.id}"] }, {}, {:minWidth => "600"}) %>
+            <%=bootstrap_form_for :filter, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :assessment), :html => {:method => :get, :id => "assessment_form"} do |f| %>
+              <%=f.select(:assessment_rubric_id, @assessment_rubrics.collect { |r| [r.title, "0#{r.id}"] }, {}, {:minWidth => "600"}) %>
             <% end %>
           </div>
         </div>
-        <%= bootstrap_form_for :assessment_score, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :assessment), :html => {:method => :put} do |f| %>
-          <%= render :partial => "assessment_form" %>
-          <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <%=bootstrap_form_for :assessment_score, :url => kapa_transition_point_path(:id => @transition_point, :anchor => :assessment), :html => {:method => :put} do |f| %>
+          <%=render :partial => "assessment_form" %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
 
@@ -70,15 +70,15 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#transition_action_<%= @transition_action.id %>"><span class="strong"><%= format_date @transition_action.action_date %>
-                    - <%= h @transition_action.action_desc %> <%= h @transition_action.action_specify %></span></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#transition_action_<%=@transition_action.id %>"><span class="strong"><%=format_date @transition_action.action_date %>
+                    - <%=@transition_action.action_desc %> <%=@transition_action.action_specify %></span></a>
                 </h3>
               </div>
-              <div id="transition_action_<%= @transition_action.id %>" class="panel-collapse collapse<%= ' in' if params[:action_panel] == @transition_action.id.to_s || (params[:action_panel].nil? && index == 0) %>">
+              <div id="transition_action_<%=@transition_action.id %>" class="panel-collapse collapse<%=' in' if params[:action_panel] == @transition_action.id.to_s || (params[:action_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <%= bootstrap_form_for :transition_action, :url => kapa_transition_action_path(:id => @transition_action, :anchor => :actions, :action_panel => @transition_action.id), :html => {:method => :put} do |f| %>
-                    <%= render :partial => "transition_action_form" %>
-                    <%= render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_transition_action_path(:id => @transition_action, :anchor => :actions)} if @current_user.write?(:kapa_transition_actions) %>
+                  <%=bootstrap_form_for :transition_action, :url => kapa_transition_action_path(:id => @transition_action, :anchor => :actions, :action_panel => @transition_action.id), :html => {:method => :put} do |f| %>
+                    <%=render :partial => "transition_action_form" %>
+                    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_transition_action_path(:id => @transition_action, :anchor => :actions)} if @current_user.write?(:kapa_transition_actions) %>
                   <% end %>
                 </div>
               </div>
@@ -92,12 +92,12 @@
               </h3>
             </div>
 
-            <div id="new_transition_action" class="panel-collapse collapse<%= ' in' if @transition_actions.length == 0 %>">
+            <div id="new_transition_action" class="panel-collapse collapse<%=' in' if @transition_actions.length == 0 %>">
               <div class="panel-body">
                 <% @transition_action = @transition_point.transition_actions.build(:action_date => Date.today) %>
-                <%= bootstrap_form_for :transition_action, :url => kapa_transition_actions_path(:id => @transition_point, :anchor => :actions) do %>
-                  <%= render :partial => "transition_action_form" %>
-                  <%= render :partial => "/kapa/layouts/controls" if @current_user.write?(:kapa_transition_actions) %>
+                <%=bootstrap_form_for :transition_action, :url => kapa_transition_actions_path(:id => @transition_point, :anchor => :actions) do %>
+                  <%=render :partial => "transition_action_form" %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.write?(:kapa_transition_actions) %>
                 <% end %>
               </div>
             </div>

@@ -1,10 +1,10 @@
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :url => kapa_properties_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.history_select :name, :model_class => Kapa::Property, :model_method => :name %>
-      <%= f.select :active, [["Active", "1"], ["In-Active", "0"]], :include_blank => "Any" %>
-      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_properties_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.history_select :name, :model_class => Kapa::Property, :model_method => :name %>
+      <%=f.select :active, [["Active", "1"], ["In-Active", "0"]], :include_blank => "Any" %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
@@ -16,7 +16,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%= button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
@@ -36,17 +36,17 @@
     <tbody>
     <% for property in @properties %>
       <tr>
-        <td><%= h property.code %></td>
-        <td><%= h property.description %></td>
-        <td><%= abbr property.category, 20 %></td>
-        <td><%= h property.dept.join(", ") %></td>
-        <td><%= h property.sequence %></td>
-        <td><%= h property.active %></td>
-        <td class="right"><%= link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>
+        <td><%=property.code %></td>
+        <td><%=property.description %></td>
+        <td><%=abbr property.category, 20 %></td>
+        <td><%=property.dept.join(", ") %></td>
+        <td><%=property.sequence %></td>
+        <td><%=property.active %></td>
+        <td class="right"><%=link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%= will_paginate @properties, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @properties, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

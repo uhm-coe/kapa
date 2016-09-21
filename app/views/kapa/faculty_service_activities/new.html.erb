@@ -1,14 +1,14 @@
 <% content_for(:box1) do %>
-  <%= render :partial => "/kapa/persons/person_detail" %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
     New Service Activity
   </h4>
 
   <div class="row">
-    <%= bootstrap_form_for :service_activity, :url => kapa_faculty_service_activities_path(:id => @person), :html => {:multipart => true} do |f| %>
-      <%= render :partial => "service_activity_form", :locals => {:f => f} %>
-      <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+    <%=bootstrap_form_for :service_activity, :url => kapa_faculty_service_activities_path(:id => @person), :html => {:multipart => true} do |f| %>
+      <%=render :partial => "service_activity_form", :locals => {:f => f} %>
+      <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
     <% end %>
   </div>
 <% end %>

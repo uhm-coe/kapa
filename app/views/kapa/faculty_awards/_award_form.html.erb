@@ -1,16 +1,16 @@
-<%= bootstrap_fields_for :award do |f| %>
+<%=bootstrap_fields_for :award do |f| %>
 
   <div class="col-sm-6">
-    <%= f.text_field :name, :label => "Award Name" %>
-    <%= f.date_picker :award_date, :label => "Award Date" %>
+    <%=f.text_field :name, :label => "Award Name" %>
+    <%=f.date_picker :award_date, :label => "Award Date" %>
 
-    <%= f.text_field :affiliation, :label => "Affiliation" %>
+    <%=f.text_field :affiliation, :label => "Affiliation" %>
     <span id="affiliation_help" class="help-block">
       Organization making the award
     </span>
 
-    <%= f.select :context, [["University", "university"], ["Professional", "professional"], ["Community", "community"]], :label => "Context" %>
-    <%= f.text_field :url, :label => "Award URL" %>
+    <%=f.select :context, [["University", "university"], ["Professional", "professional"], ["Community", "community"]], :label => "Context" %>
+    <%=f.text_field :url, :label => "Award URL" %>
     <span id="affiliation_help" class="help-block">
       Link to information about the award
     </span>
@@ -20,19 +20,19 @@
   <div class="col-sm-6">
     <% if @award && @award.image.exists? %>
       <p>
-        You have already uploaded an image named <strong><%= @award.image_file_name %></strong>. To replace it, choose a new file below.
+        You have already uploaded an image named <strong><%=@award.image_file_name %></strong>. To replace it, choose a new file below.
       </p>
     <% end %>
-   <%= f.file_field :image, :label => "Image" %>
+   <%=f.file_field :image, :label => "Image" %>
     <span id="thumbnail_help" class="help-block">
       <p>
         Descriptive image for web site presentation (.jpg, .gif, or .png).
       </p>
       </p>
     </span>
-    <%= f.text_area :description, {:label => "Awarding organization's description of the award", :rows => 6} %>
-    <%= f.select :public, [["Yes", "Y"], ["No", "N"]], {:label => "Display publicly"} %>
-    <%= f.hidden_field :person_id  %>
+    <%=f.text_area :description, {:label => "Awarding organization's description of the award", :rows => 6} %>
+    <%=f.select :public, [["Yes", "Y"], ["No", "N"]], {:label => "Display publicly"} %>
+    <%=f.hidden_field :person_id  %>
   </div>
 
 <% end %>

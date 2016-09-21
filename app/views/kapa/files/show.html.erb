@@ -2,7 +2,7 @@
 
   <h3><%=@person.full_name if @person %> <%=format_date @file.date %></h3>
 
-  <%= render :partial => "file_container", :locals => {:file => @file} %>
+  <%=render :partial => "file_container", :locals => {:file => @file} %>
   <p class="text-center">
     <%=button_to_link "Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download" %>
     <% if @current_user.write? %>
@@ -13,13 +13,13 @@
 
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_file_dialog", :modal_title => "Edit file property", :modal_form_id => "edit_file_form"} do %>
-    <%= bootstrap_form_for(:file, :url => kapa_file_path(:id => @file), :html => {:method => :put, :id => "edit_file_form"}) do |f| %>
-      <%= f.text_area :note, :text => "Note", :size => "5x7" %>
+    <%=bootstrap_form_for(:file, :url => kapa_file_path(:id => @file), :html => {:method => :put, :id => "edit_file_form"}) do |f| %>
+      <%=f.text_area :note, :text => "Note", :size => "5x7" %>
       <div class="row form-block">
         <div class="col-sm-6">
-          <%= f.text_field :name %>
-          <%= f.text_field :dept, :label => t(:kapa_global_dept) if @current_user.manage? :kapa_files %>
-          <%= f.check_box :public, {:label => "Share document"}, "Y", "N" %>
+          <%=f.text_field :name %>
+          <%=f.text_field :dept, :label => t(:kapa_global_dept) if @current_user.manage? :kapa_files %>
+          <%=f.check_box :public, {:label => "Share document"}, "Y", "N" %>
         </div>
       </div>
     <% end %>

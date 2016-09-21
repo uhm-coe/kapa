@@ -1,4 +1,4 @@
-<%= bootstrap_fields_for :case_communication do |a| %>
+<%=bootstrap_fields_for :case_communication do |a| %>
   <div class="row">
     <div class="col-sm-6">
       <%=a.select :person_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.person_id]}, :include_blank => true %>

@@ -25,15 +25,15 @@
     <tbody>
     <% @datasets.each do |dataset| %>
       <tr>
-        <td><%= dataset.id %></td>
-        <td><%= dataset.name %></td>
-        <td><%= dataset.datasource %></td>
-        <td><%= dataset.category %></td>
-        <td><%= dataset.cache_id %></td>
-        <td><%= dataset.record_count %></td>
-        <td><%= dataset.loaded_at %></td>
+        <td><%=dataset.id %></td>
+        <td><%=dataset.name %></td>
+        <td><%=dataset.datasource %></td>
+        <td><%=dataset.category %></td>
+        <td><%=dataset.cache_id %></td>
+        <td><%=dataset.record_count %></td>
+        <td><%=dataset.loaded_at %></td>
         <td class="right">
-          <%= link_to "Show", kapa_dataset_path(dataset), :class => 'btn btn-default btn-xs' %>
+          <%=link_to "Show", kapa_dataset_path(dataset), :class => 'btn btn-default btn-xs' %>
         </td>
       </tr>
     <% end %>

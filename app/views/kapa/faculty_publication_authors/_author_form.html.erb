@@ -21,20 +21,20 @@
   </script>
 <% end %>
 
-<%= bootstrap_fields_for :author do |f| %>
-  <%= f.select :type, [["Internal", "internal"], ["External", "external"]] %>
+<%=bootstrap_fields_for :author do |f| %>
+  <%=f.select :type, [["Internal", "internal"], ["External", "external"]] %>
   <div id="author-person">
-    <%= f.person_select :person_id, {:label => "Author", :depts => @current_user.depts, :include_blank => "Select a person..."} %>
+    <%=f.person_select :person_id, {:label => "Author", :depts => @current_user.depts, :include_blank => "Select a person..."} %>
   </div>
   <div class="row" id="author-name">
     <div class="col-sm-5">
-      <%= f.text_field :last_name, {:label => "Last Name"} %>
+      <%=f.text_field :last_name, {:label => "Last Name"} %>
     </div>
     <div class="col-sm-5">
-      <%= f.text_field :first_name, {:label => "First Name"} %>
+      <%=f.text_field :first_name, {:label => "First Name"} %>
     </div>
     <div class="col-sm-2">
-      <%= f.text_field :middle_initial, {:label => "MI"} %>
+      <%=f.text_field :middle_initial, {:label => "MI"} %>
     </div>
   </div>
 <% end %>

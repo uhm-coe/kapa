@@ -1,11 +1,11 @@
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :url => kapa_forms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.property_select :form_type, :name => :form, :include_blank => "Any", :label => "Form" %>
-      <%= f.term_select :form_term_id, :include_blank => "Any" %>
-      <%= f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => "Any", :label => "Lock" %>
-      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_forms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.property_select :form_type, :name => :form, :include_blank => "Any", :label => "Form" %>
+      <%=f.term_select :form_term_id, :include_blank => "Any" %>
+      <%=f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => "Any", :label => "Lock" %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
@@ -38,18 +38,18 @@
     <tbody>
     <% for form in @forms %>
       <tr>
-        <td><%= form.person.id_number if form.person %></td>
-        <td><%= link_to abbr(form.person.full_name), kapa_person_path(:id => form.person) if form.person %></td>
-        <td><%= h form.name %></td>
-        <td><%= time_ago_in_words form.updated_at if form.updated_at %> ago</td>
-        <td><%= format_date form.submitted_at %></td>
-        <td><%= h form.lock %></td>
-        <td><%= h form.dept.join(", ") %></td>
-        <td class="right"><%= link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+        <td><%=form.person.id_number if form.person %></td>
+        <td><%=link_to abbr(form.person.full_name), kapa_person_path(:id => form.person) if form.person %></td>
+        <td><%=form.name %></td>
+        <td><%=time_ago_in_words form.updated_at if form.updated_at %> ago</td>
+        <td><%=format_date form.submitted_at %></td>
+        <td><%=form.lock %></td>
+        <td><%=form.dept.join(", ") %></td>
+        <td class="right"><%=link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%= will_paginate @forms, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @forms, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

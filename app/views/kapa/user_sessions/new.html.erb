@@ -24,10 +24,10 @@
     </div>
 
     <div class="col-md-4 right-col">
-      <%= bootstrap_form_for(:user_session, :url => kapa_user_session_path, :html => {:method => :post}) do |f| %>
-        <%= f.text_field :uid, :label => "Username" %>
-        <%= f.password_field :password %>
-        <%= f.submit "Login", :class => "btn btn-primary btn-lg" %>
+      <%=bootstrap_form_for(:user_session, :url => kapa_user_session_path, :html => {:method => :post}) do |f| %>
+        <%=f.text_field :uid, :label => "Username" %>
+        <%=f.password_field :password %>
+        <%=f.submit "Login", :class => "btn btn-primary btn-lg" %>
       <% end %>
     </div>
   </div>

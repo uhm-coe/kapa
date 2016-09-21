@@ -93,7 +93,7 @@
                <td><%=d.type%></td>
                <td><%=d.name%></td>
                <td><%=format_date d.date %></td>
-               <td class="right"><%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+               <td class="right"><%=link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
              </tr>
            <% end %>
           </table>
@@ -257,13 +257,13 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#awards_detail">
-            Awards (<%= @awards.length %>)
+            Awards (<%=@awards.length %>)
           </a>
         </h4>
       </div>
       <div id="awards_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= button_to_link "New Award", new_kapa_faculty_award_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Award", new_kapa_faculty_award_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Award Name</th>
@@ -273,9 +273,9 @@
             </tr>
             <% for award in @awards %>
               <tr>
-                <td><%= abbr award.name, 25 %></td>
-                <td><%= abbr award.affiliation, 25 %></td>
-                <td><%= award.context %></td>
+                <td><%=abbr award.name, 25 %></td>
+                <td><%=abbr award.affiliation, 25 %></td>
+                <td><%=award.context %></td>
                 <td class="right"><%=link_to "Show", kapa_faculty_award_path(:id => award), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
@@ -291,13 +291,13 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#publications_detail">
-            Publications (<%= @publications.length %>)
+            Publications (<%=@publications.length %>)
           </a>
         </h4>
       </div>
       <div id="publications_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= button_to_link "New Publication", new_kapa_faculty_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Publication", new_kapa_faculty_publication_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Type</th>
@@ -308,10 +308,10 @@
             </tr>
             <% for publication in @publications %>
               <tr>
-                <td><%= Kapa::Property.lookup_description(:publication_type, publication.type) %></td>
-                <td><%= abbr publication.title, 60 %></td>
-                <td><%= publication.published_date %></td>
-                <td><%= abbr publication.author_names, 40 %></td>
+                <td><%=Kapa::Property.lookup_description(:publication_type, publication.type) %></td>
+                <td><%=abbr publication.title, 60 %></td>
+                <td><%=publication.published_date %></td>
+                <td><%=abbr publication.author_names, 40 %></td>
                 <td class="right"><%=link_to "Show", kapa_faculty_publication_path(:id=> publication), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
@@ -327,13 +327,13 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion" href="#service_activities_detail">
-            Service Activities (<%= @service_activities.length %>)
+            Service Activities (<%=@service_activities.length %>)
           </a>
         </h4>
       </div>
       <div id="service_activities_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%= button_to_link "New Service Activity", new_kapa_faculty_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Service Activity", new_kapa_faculty_service_activity_path(:id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Type</th>
@@ -344,10 +344,10 @@
             </tr>
             <% for service_activity in @service_activities %>
               <tr>
-                <td><%= Kapa::Property.lookup_description(:service_type, service_activity.service_type) %></td>
-                <td><%= abbr service_activity.name, 25 %></td>
-                <td><%= abbr service_activity.affiliation, 25 %></td>
-                <td><%= service_activity.context %></td>
+                <td><%=Kapa::Property.lookup_description(:service_type, service_activity.service_type) %></td>
+                <td><%=abbr service_activity.name, 25 %></td>
+                <td><%=abbr service_activity.affiliation, 25 %></td>
+                <td><%=service_activity.context %></td>
                 <td class="right"><%=link_to "Show", kapa_faculty_service_activity_path(:id => service_activity), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>

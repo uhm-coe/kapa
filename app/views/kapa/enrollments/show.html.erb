@@ -1,5 +1,5 @@
 <% content_for(:box1) do %>
-  <%= render :partial => "/kapa/persons/person_detail" %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
     <%=link_to "", kapa_curriculum_path(:id => @curriculum), :class => "glyphicon glyphicon-chevron-left" %>
@@ -13,9 +13,9 @@
 
     <div class="tab-content">
       <div id="enrollment_tab" class="tab-pane">
-        <%= bootstrap_form_for :enrollment, :url => kapa_enrollment_path(:id => @enrollment), :html => {:method => :put} do |f| %>
-          <%= render :partial => "enrollment_form"%>
-          <%= render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <%=bootstrap_form_for :enrollment, :url => kapa_enrollment_path(:id => @enrollment), :html => {:method => :put} do |f| %>
+          <%=render :partial => "enrollment_form"%>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
         <% end %>
       </div>
 

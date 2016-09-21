@@ -4,14 +4,14 @@
     <%=bootstrap_form_for(:filter, :url => kapa_advising_sessions_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <div class="row">
         <div class="col-sm-6">
-          <%= f.date_picker :date_start, "Start Date" %>
-          <%= f.date_picker :date_end, "End Date" %>
-          <%= f.property_select :task, :include_blank => "Any", :name => :advising_task %>
+          <%=f.date_picker :date_start, "Start Date" %>
+          <%=f.date_picker :date_end, "End Date" %>
+          <%=f.property_select :task, :include_blank => "Any", :name => :advising_task %>
         </div>
         <div class="col-sm-6">
-          <%= f.property_select :interest, :include_blank => "Any", :name => :advising_interest, :label => "Area of Interest" %>
-          <%= f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
-          <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+          <%=f.property_select :interest, :include_blank => "Any", :name => :advising_interest, :label => "Area of Interest" %>
+          <%=f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+          <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
         </div>
       </div>
     <% end %>
@@ -48,7 +48,7 @@
         <tr>
           <td><%=advising_session.person.id_number %></td>
           <td><%=link_to_if @current_user.read?(:kapa_persons), abbr(advising_session.person.full_name), kapa_person_path(:id => advising_session.person) %></td>
-          <td><%= advising_session.term_desc %></td>
+          <td><%=advising_session.term_desc %></td>
           <td><%=format_date advising_session.session_date %></td>
           <td><%=abbr advising_session.task.to_s, 25 %></td>
           <td><%=abbr advising_session.interest.to_s, 25 %></td>

@@ -1,4 +1,4 @@
-<%= bootstrap_fields_for :case_violation do |f| %>
+<%=bootstrap_fields_for :case_violation do |f| %>
   <div class="row">
     <div class="col-sm-6">
       <%=f.select :case_involvement_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.id]} %>

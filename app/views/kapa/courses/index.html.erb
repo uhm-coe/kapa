@@ -1,10 +1,10 @@
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :url => kapa_courses_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
-      <%= f.text_field :name, :label => "Course name" %>
-      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_courses_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.term_select :term_id, :include_blank => "Any", :label => "Term" %>
+      <%=f.text_field :name, :label => "Course name" %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
@@ -12,7 +12,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Courses (<%= @filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
+  <h3>Courses (<%=@filter.term_id.present? ? Kapa::Term.find(@filter.term_id).description : "Any Terms" %>)</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -35,16 +35,16 @@
     <tbody>
     <% for course in @courses %>
       <tr>
-        <td><%= h course.name %></td>
-        <td><%= h course.crn %></td>
-        <td><%= h course.title %></td>
-        <td><%= h course.instructor %></td>
-        <td><%= h course.course_registrations.length.to_i %></td>
-        <td class="right"><%= link_to "Show", kapa_course_path(:id => course), :class => "btn btn-default btn-xs" %></td>
+        <td><%=course.name %></td>
+        <td><%=course.crn %></td>
+        <td><%=course.title %></td>
+        <td><%=course.instructor %></td>
+        <td><%=course.course_registrations.length.to_i %></td>
+        <td class="right"><%=link_to "Show", kapa_course_path(:id => course), :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%= will_paginate @courses, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @courses, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

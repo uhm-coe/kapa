@@ -1,11 +1,11 @@
 <% content_for(:box1) do %>
   <h4 class="section-header divider">
-    <%= link_to "", params[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", params[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
     User Assignment
   </h4>
 
-  <%= bootstrap_form_for(:user_assignment, :url => kapa_user_assignment_path(:id => @user_assignment, :return_path => params[:return_path]), :html => {:method => :put}) do %>
-    <%= render :partial => "user_assignment_form" %>
-    <%= render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_user_assignment_path(:id => @user_assignment, :return_path => params[:return_path])} if @current_user.write? %>
+  <%=bootstrap_form_for(:user_assignment, :url => kapa_user_assignment_path(:id => @user_assignment, :return_path => params[:return_path]), :html => {:method => :put}) do %>
+    <%=render :partial => "user_assignment_form" %>
+    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_user_assignment_path(:id => @user_assignment, :return_path => params[:return_path])} if @current_user.write? %>
   <% end %>
 <% end %>

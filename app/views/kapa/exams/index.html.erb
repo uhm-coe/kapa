@@ -1,19 +1,19 @@
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%= bootstrap_form_for(:filter, :url => kapa_exams_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.text_field :name, :label => "Name" %>
-      <%= f.date_picker :birth_date, :label => "Birth Date" %>
-      <%= f.date_picker :exam_date_start, :label => "Report Date Start" %>
-      <%= f.date_picker :exam_date_end, :label => "Report Date End" %>
-      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_exams_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.text_field :name, :label => "Name" %>
+      <%=f.date_picker :birth_date, :label => "Birth Date" %>
+      <%=f.date_picker :exam_date_start, :label => "Report Date Start" %>
+      <%=f.date_picker :exam_date_end, :label => "Report Date End" %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Test Scores", :modal_form_id => "import_exam_form"} do %>
-    <%= bootstrap_form_for(:data, :url => import_kapa_exams_path, :html => {:multipart => true, :id => "import_exam_form"}) do |f| %>
-      <%= f.property_select :type, :name => :exam %></p>
-      <%= f.file_field :import_file %></p>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Test Scores", :modal_form_id => "import_exam_form"} do %>
+    <%=bootstrap_form_for(:data, :url => import_kapa_exams_path, :html => {:multipart => true, :id => "import_exam_form"}) do |f| %>
+      <%=f.property_select :type, :name => :exam %></p>
+      <%=f.file_field :import_file %></p>
     <% end %>
   <% end %>
 
@@ -48,18 +48,18 @@
     <tbody>
     <% for exam in @exams %>
       <tr>
-        <td><%= exam.person.id_number %></td>
-        <td><%= link_to abbr(exam.person.full_name), kapa_person_path(:id => exam.person) %></td>
-        <td><%= format_date exam.person.birth_date %></td>
-        <td><%= format_date exam.name %></td>
-        <td><%= format_date exam.report_date %></td>
-        <td><%= h exam.exam_scores.length %></td>
-        <td><%= h exam.dept %></td>
-        <td class="right"><%= link_to "Show", {:action => :show, :id => exam}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+        <td><%=exam.person.id_number %></td>
+        <td><%=link_to abbr(exam.person.full_name), kapa_person_path(:id => exam.person) %></td>
+        <td><%=format_date exam.person.birth_date %></td>
+        <td><%=format_date exam.name %></td>
+        <td><%=format_date exam.report_date %></td>
+        <td><%=exam.exam_scores.length %></td>
+        <td><%=exam.dept %></td>
+        <td class="right"><%=link_to "Show", {:action => :show, :id => exam}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%= will_paginate @exams, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @exams, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

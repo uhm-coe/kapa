@@ -64,7 +64,7 @@
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
-    <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+    <%=bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
       <%=f.file_field :data, :label => "File to upload" %>
       <%=f.select :person_id, @case_involvements.collect {|i| [i.person.full_name_ordered, i.person_id]}, :include_blank => true %>
       <%=f.hidden_field :attachable_type, :value => @case.class.name %>
@@ -73,7 +73,7 @@
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
-    <%= bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
+    <%=bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => "documents", :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
       <%=f.property_select :type, :name => :form %>
       <%=f.hidden_field :attachable_type, :value => @case.class.name %>
       <%=f.hidden_field :attachable_id, :value => @case.id %>
@@ -81,7 +81,7 @@
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "case_id_dialog", :modal_title => "Select a document", :modal_form_id => "custom_case_form"} do %>
-    <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} , :html => {:id => "custom_case_form"} do |f| %>
+    <%=bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} , :html => {:id => "custom_case_form"} do |f| %>
       <%=f.text_field :case_number_alt, :label => "Custom case number" %>
       <%=f.text_field :case_name, :label => "Custom case name" %>
     <% end %>
@@ -107,7 +107,7 @@
 
     <div class="tab-content">
       <div id="case_tab" class="tab-pane">
-        <%= bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} do %>
+        <%=bootstrap_form_for :case, :url => kapa_case_path(:id => @case, :anchor => :case), :html => {:method => :put} do %>
           <%=render :partial => "case_form" %>
           <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_case_path(:id => @case)} if @current_user.write? %>
         <% end %>
@@ -148,7 +148,7 @@
                   </td>
                   <td class="right">
                     <%=popover_button "", case_involvement.note, :icon => "glyphicon-comment", :class => "btn-default btn-xs" %>
-                    <%= link_to "Show", kapa_case_involvement_path(:id => case_involvement), :class => "btn btn-default btn-xs" %>
+                    <%=link_to "Show", kapa_case_involvement_path(:id => case_involvement), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>
@@ -209,7 +209,7 @@
                <td><%=d.person.full_name_ordered if d.person%></td>
                <td><%=format_date d.date %></td>
                <td class="right">
-                 <%= link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %>
+                 <%=link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %>
                </td>
              </tr>
            <% end %>
@@ -276,7 +276,7 @@
                     <%=user_assignment.due_at %>
                   </td>
                   <td class="right">
-                    <%= link_to "Show", kapa_user_assignment_path(:id => user_assignment, :return_path => url_for(:anchor => "assignments", :only_path => true)), :class => "btn btn-default btn-xs" %>
+                    <%=link_to "Show", kapa_user_assignment_path(:id => user_assignment, :return_path => url_for(:anchor => "assignments", :only_path => true)), :class => "btn btn-default btn-xs" %>
                   </td>
                 </tr>
               <% end %>

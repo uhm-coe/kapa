@@ -2,17 +2,17 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_users_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%= f.text_field :user_key, :size => 20, :label => "Name or UID" %>
-      <%= f.select :status, Rails.configuration.user_status, {:include_blank => "Any", :label => "User Status"} %>
-      <%= f.select :category, Rails.configuration.user_categories, :include_blank => "Any" %>
-      <%= f.property_select :dept, :include_blank => "Any" %>
-      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+      <%=f.text_field :user_key, :size => 20, :label => "Name or UID" %>
+      <%=f.select :status, Rails.configuration.user_status, {:include_blank => "Any", :label => "User Status"} %>
+      <%=f.select :category, Rails.configuration.user_categories, :include_blank => "Any" %>
+      <%=f.property_select :dept, :include_blank => "Any" %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import User Data", :modal_form_id => "import_user_form"} do %>
     <%=bootstrap_form_for(:data, :url => import_kapa_users_path, :html => {:multipart => true, :id => "import_user_form"}) do |f|%>
-      <%= f.file_field :import_file %>
+      <%=f.file_field :import_file %>
     <% end %>
   <% end %>
 

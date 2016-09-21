@@ -4,7 +4,7 @@
 
 <% content_for(:box1) do %>
   <h4 class="section-header divider">
-    <%= link_to "", kapa_case_incident_path(:id => @case_incident, :anchor => "case_violations"), :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_case_incident_path(:id => @case_incident, :anchor => "case_violations"), :class => "glyphicon glyphicon-chevron-left" %>
     <%=@case.case_number %> Violation
   </h4>
 
