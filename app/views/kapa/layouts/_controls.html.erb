@@ -4,7 +4,6 @@
   <% end %>
   <%=yield %>
   <% unless defined? hide_update %>
-    <button class="btn btn-default" name="commit" type="reset" data-cancel=true><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Cancel</button>
     <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save</button>
   <% end %>
 </p>
