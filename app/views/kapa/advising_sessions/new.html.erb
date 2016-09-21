@@ -7,8 +7,15 @@
 
   <div>
     <%=bootstrap_form_for :advising_session, :url => kapa_advising_sessions_path do |f| %>
-      <%=render :partial => "session_form", :locals => {:f => f} %>
-      <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%=f.date_picker :session_date, :label => "Date" %>
+        </div>
+        <div class="col-sm-6">
+          <%=f.property_select :type, :name => :advising_type, :label => "Type" %>
+        </div>
+        <%=f.hidden_field :person_id %>
+       <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
     <% end %>
   </div>
 <% end %>

@@ -1,10 +1,10 @@
 <p class="text-center">
-  <% unless defined? hide_update %>
-    <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>
-    <button class="btn btn-default" name="commit" type="reset"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Cancel</button>
-  <% end %>
   <% if defined? delete_path %>
-    <%=button_to_link "Delete", delete_path, :method => :delete, "data-confirm" => "Proceed with deletion?", :icon => "glyphicon-trash" %>
+    <%=button_to_link "Delete", delete_path, :method => :delete, "data-confirm" => "Proceed with deletion?", :class => "btn-danger", :icon => "glyphicon-remove" %>
   <% end %>
   <%= yield %>
+  <% unless defined? hide_update %>
+    <button class="btn btn-default" name="commit" type="reset" data-cancel=true><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Cancel</button>
+    <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save</button>
+  <% end %>
 </p>

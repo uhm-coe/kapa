@@ -52,6 +52,10 @@ module Kapa::KapaModelBase
     self.deserialize(:_ext, :as => OpenStruct)
   end
 
+  def update_ext(attributes)
+    self.update_serialized_attributes(:_ext, attributes) if attributes.present?
+  end
+
   def to_param
     self.class.hashids.encode(id)
   end

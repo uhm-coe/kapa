@@ -25,6 +25,11 @@ jQuery(document).ready(function ($) {
     $(form_id).trigger('reset');
   });
 
+  $('button[data-cancel]').click(function () {
+    window.history.back();
+  });
+
+
   $('.datepicker').datetimepicker({
     format: 'MM/DD/YYYY'
   }).on('changeDate',function (e) {
