@@ -36,11 +36,11 @@
 
     <% for person in @persons %>
       <tr>
-        <td><%=h person.id%></td>
-        <td><%=h person.id_number%></td>
-        <td><%=h person.email %></td>
-        <td><%=h person.first_name%></td>
-        <td><%=h person.last_name%></td>
+        <td><%=person.id%></td>
+        <td><%=person.id_number%></td>
+        <td><%=person.email %></td>
+        <td><%=person.first_name%></td>
+        <td><%=person.last_name%></td>
       </tr>
     <% end %>
   </table>
@@ -55,7 +55,7 @@
 
       <% for unmatched_id in @unmatched_ids %>
         <tr>
-          <td><%=h unmatched_id %></td>
+          <td><%=unmatched_id %></td>
         </tr>
       <% end %>
     </table>

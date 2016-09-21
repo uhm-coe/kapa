@@ -47,12 +47,12 @@
     <tbody>
       <% for user in @users %>
         <tr>
-          <td><%=h user.uid %></td>
-          <td><%=h user.person.full_name if user.person %></td>
-          <td><%=h user.category %></td>
-          <td><%=h user.status_desc %></td>
-          <td><%=h user.primary_dept %></td>
-          <td><%=h user.dept.join(", ") %></td>
+          <td><%=user.uid %></td>
+          <td><%=user.person.full_name if user.person %></td>
+          <td><%=user.category %></td>
+          <td><%=user.status_desc %></td>
+          <td><%=user.primary_dept %></td>
+          <td><%=user.dept.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

@@ -32,7 +32,7 @@
       <% for person in @persons %>
         <tr>
           <td><%=person.id_number %></td>
-          <td><%=h person.full_name %></td>
+          <td><%=person.full_name %></td>
           <td><%=abbr person.other_name, 30 %></td>
           <td><%=mail_to person.email %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>

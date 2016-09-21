@@ -11,9 +11,9 @@
   <tbody>
     <% for user in @users %>
       <tr>
-        <td><%=h user.uid %></td>
-        <td><%=h user.category %></td>
-        <td><%=h user.status_desc %></td>
+        <td><%=user.uid %></td>
+        <td><%=user.category %></td>
+        <td><%=user.status_desc %></td>
         <td><%=format_datetime user.updated_at %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => user}, :class => "btn btn-default btn-xs" %></td>
       </tr>

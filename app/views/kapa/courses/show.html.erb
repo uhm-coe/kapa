@@ -98,7 +98,7 @@
   <%=bootstrap_form_for :filter, :url => kapa_course_path(:id => @course), :html => {:method => :get}  do |f| %>
     <h4 class="section-header">
       <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-      <%=h @course.name %> - <%=h @course.term_desc %>
+      <%=@course.name %> - <%=@course.term_desc %>
     </h4>
     <div class="row">
       <div class="col-sm-6">

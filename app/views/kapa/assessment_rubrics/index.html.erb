@@ -42,9 +42,9 @@
         <tr>
           <td><%=abbr assessment_rubric.title, 50 %></td>
           <td><%=abbr assessment_rubric.program.join(", "), 23 %></td>
-          <td><%=h assessment_rubric.effective_term %></td>
-          <td><%=h assessment_rubric.assessment_criterions.length.to_i %></td>
-          <td><%=h assessment_rubric.dept.join(", ") %></td>
+          <td><%=assessment_rubric.effective_term %></td>
+          <td><%=assessment_rubric.assessment_criterions.length.to_i %></td>
+          <td><%=assessment_rubric.dept.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => assessment_rubric}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

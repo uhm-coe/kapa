@@ -36,12 +36,12 @@
     <tbody>
       <% for program in @programs %>
         <tr>
-          <td><%=h program.code %></td>
-          <td><%=h program.description %></td>
+          <td><%=program.code %></td>
+          <td><%=program.description %></td>
           <td><%=abbr program.category, 20 %></td>
-          <td><%=h program.dept.join(", ") %></td>
-          <td><%=h program.sequence %></td>
-          <td><%=h program.active %></td>
+          <td><%=program.dept.join(", ") %></td>
+          <td><%=program.sequence %></td>
+          <td><%=program.active %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => program}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

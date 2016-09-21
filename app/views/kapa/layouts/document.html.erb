@@ -36,7 +36,7 @@
     <%=javascript_include_tag "kapa/kapa" %>
     <%=yield :head %>
 
-    <title><%=h "#{@person.full_name}/" if @person%><%=h @title %></title>
+    <title><%="#{@person.full_name}/" if @person%><%=@title %></title>
   </head>
 
   <body>

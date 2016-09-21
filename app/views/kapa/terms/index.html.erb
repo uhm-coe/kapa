@@ -37,12 +37,12 @@
     <tbody>
       <% for term in @terms %>
         <tr>
-          <td><%=h term.code %></td>
-          <td><%=h term.description %></td>
-          <td><%=h term.start_date %></td>
-          <td><%=h term.end_date %></td>
-          <td><%=h term.sequence %></td>
-          <td><%=h term.active %></td>
+          <td><%=term.code %></td>
+          <td><%=term.description %></td>
+          <td><%=term.start_date %></td>
+          <td><%=term.end_date %></td>
+          <td><%=term.sequence %></td>
+          <td><%=term.active %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => term}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

@@ -48,13 +48,13 @@
     <tbody>
       <% for practicum_site in @practicum_sites %>
         <tr>
-          <td><%=h practicum_site.code %></td>
+          <td><%=practicum_site.code %></td>
           <td><%=abbr practicum_site.name, practicum_site.name_short %></td>
-          <td><%=h practicum_site.district %></td>
-          <td><%=h practicum_site.area %></td>
-          <td><%=h practicum_site.category %></td>
-          <td><%=h practicum_site.grades %></td>
-          <td><%=h practicum_site.practicum_placements.length.to_i if practicum_site.practicum_placements.present? %></td>
+          <td><%=practicum_site.district %></td>
+          <td><%=practicum_site.area %></td>
+          <td><%=practicum_site.category %></td>
+          <td><%=practicum_site.grades %></td>
+          <td><%=practicum_site.practicum_placements.length.to_i if practicum_site.practicum_placements.present? %></td>
           <td class="right"><%=link_to "Show", kapa_practicum_site_path(:id => practicum_site), :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

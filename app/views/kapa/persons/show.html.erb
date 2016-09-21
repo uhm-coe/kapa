@@ -50,9 +50,9 @@
                 </tr>
                 <% for transition_point in curriculum.transition_points.eager_load(:last_transition_action, :term).order("terms.sequence DESC, transition_points.id DESC") %>
                   <tr>
-                    <td><%=h transition_point.term_desc %></td>
-                    <td><%=h transition_point.type_desc %></td>
-                    <td><%=h transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
+                    <td><%=transition_point.term_desc %></td>
+                    <td><%=transition_point.type_desc %></td>
+                    <td><%=transition_point.last_transition_action.action_desc if transition_point.last_transition_action %></td>
                     <td class="right"><%=link_to "Show", kapa_transition_point_path(:id => transition_point), :class => "btn btn-default btn-xs" %></td>
                   </tr>
                 <% end %>
@@ -126,10 +126,10 @@
             </tr>
             <% for advising_session in @advising_sessions %>
               <tr>
-                <td><%=h advising_session.term_desc %></td>
+                <td><%=advising_session.term_desc %></td>
                 <td><%=format_date advising_session.session_date %></td>
-                <td><%=h advising_session.type.to_s.capitalize %></td>
-                <td><%=h advising_session.task.to_s.capitalize %></td>
+                <td><%=advising_session.type.to_s.capitalize %></td>
+                <td><%=advising_session.task.to_s.capitalize %></td>
                 <td><%=abbr advising_session.note, 30 %></td>
                 <td class="right"><%=link_to "Show", kapa_advising_session_path(:id => advising_session), :class => "btn btn-default btn-xs" %></td>
               </tr>
@@ -164,12 +164,12 @@
             </tr>
             <% for @case_involvement in @case_involvements %>
               <tr>
-                <td><%=h @case_involvement.case.case_number %></td>
-                <td><%=h @case_involvement.case.name %></td>
-                <td><%=h @case_involvement.case.reported_at %></td>
-                <td><%=h @case_involvement.type_desc %></td>
-                <td><%=h @case_involvement.case.status_desc %></td>
-                <td><%=h 0 %></td>
+                <td><%=@case_involvement.case.case_number %></td>
+                <td><%=@case_involvement.case.name %></td>
+                <td><%=@case_involvement.case.reported_at %></td>
+                <td><%=@case_involvement.type_desc %></td>
+                <td><%=@case_involvement.case.status_desc %></td>
+                <td><%=0 %></td>
                 <td class="right"><%=link_to "Show", kapa_case_path(:id => @case_involvement.case), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>
@@ -202,8 +202,8 @@
             </tr>
             <% for course_registration in @course_registrations %>
               <tr>
-                <td><%=h "#{course_registration.term_desc}" %></td>
-                <td><%=h "#{course_registration.course.name}" %></td>
+                <td><%="#{course_registration.term_desc}" %></td>
+                <td><%="#{course_registration.course.name}" %></td>
                 <td><%=abbr "#{course_registration.course.title}", 50 %></td>
                 <td><%=abbr "#{course_registration.course.instructor}", 50 %></td>
                 <td class="right"><%=link_to "Show", kapa_course_registration_path(:id => course_registration), :class => "btn btn-default btn-xs" %></td>
