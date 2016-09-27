@@ -23,6 +23,7 @@
       <span id="title_help" class="help-block">
         Use sentence style capitalization.
       </span>
+      <%=f.static :citation, :content => @publication.citation %>
       <%=f.text_field :institution, :label => "Institution", :placeholder => "College of Education, University of Hawaii at Manoa" %>
       <%=f.text_field :research_location, :label => "Research Location", :placeholder => "Honolulu, United States of America" %>
       <span id="research_location_help" class="help-block">

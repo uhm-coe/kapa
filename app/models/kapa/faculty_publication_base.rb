@@ -57,6 +57,44 @@ module Kapa::FacultyPublicationBase
     self.year = entry.[](:year)
   end
 
+  def to_bibtex
+    bib = BibTeX::Bibliography.new
+    bib << BibTeX::Entry.new({
+              bibtex_type: self.type,
+              bibtex_key: self.id,
+              location: self.location,
+              annote: self.annote,
+              author: self.author,
+              booktitle: self.book_title,
+              chapter: self.book_chapter,
+              crossref: self.crossref,
+              edition: self.edition,
+              editor: self.editor,
+              howpublished: self.how_published,
+              institution: self.institution,
+              journal: self.journal,
+              key: self.key,
+              month: self.month,
+              note:  self.note,
+              number: self.issue_number,
+              organization: self.organization,
+              pages: self.pages,
+              publisher: self.publisher,
+              school: self.school,
+              series: self.series,
+              title: self.title,
+              volume: self.vol,
+              year: self.year
+            })
+    return bib
+  end
+
+  def citation(options = {style: "apa", format: "html", locale: "en"})
+   cp = CiteProc::Processor.new(options)
+    cp.import(self.to_bibtex.to_citeproc)
+    cp.render(:bibliography, id: self.id).first.html_safe
+  end
+
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
