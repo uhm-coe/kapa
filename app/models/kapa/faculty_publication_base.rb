@@ -52,7 +52,6 @@ module Kapa::FacultyPublicationBase
     self.publisher = entry.[](:publisher)
     self.school = entry.[](:school)
     self.series = entry.[](:series)
-    self.type = entry.[](:type)
     self.title = entry.[](:title)
     self.vol = entry.[](:volume)
     self.year = entry.[](:year)

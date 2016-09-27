@@ -98,7 +98,7 @@
           The edition number of a book, e.g. "5" for the fifth edition.
         </span>
 
-      <% elsif @publication.type == "book_chapter" %>
+      <% elsif @publication.type == "inbook" %>
         <!-- Book Chapter -->
         <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
@@ -135,7 +135,7 @@
           The edition number of a book, e.g. "5" for the fifth edition.
         </span>
 
-      <% elsif @publication.type == "conference_proceedings" %>
+      <% elsif @publication.type == "inproceedings" %>
         <!-- Conference Proceedings -->
         <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
@@ -160,7 +160,7 @@
           The organization holding a conference or publishing its proceedings.
         </span>
 
-      <% elsif @publication.type == "journal_article" %>
+      <% elsif @publication.type == "article" %>
         <!-- Journal Article -->
         <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
@@ -185,7 +185,7 @@
           The organization publishing the journal.
         </span>
 
-      <% elsif @publication.type == "multimedia_contribution" %>
+      <% elsif @publication.type == "multimedia" %>
         <!-- Multimedia Contribution -->
         <%=f.text_field :vol, :label => "Volume" %>
         <span id="vol_help" class="help-block">
