@@ -34,7 +34,11 @@ module Kapa::KapaControllerBase
       @current_user = @current_user_session.user
       @current_user.request = request
     else
-      flash[:info] = "Please log in to continue."
+      if flash[:danger].present?
+        flash[:danger] = flash[:danger]
+      else
+        flash[:info] = "Please log in to continue."
+      end
       redirect_to(new_kapa_user_session_path) and return
     end
     unless @current_user_session and @current_user and @current_user.status >= 30

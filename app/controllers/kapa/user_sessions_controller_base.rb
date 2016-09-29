@@ -19,7 +19,7 @@ module Kapa::UserSessionsControllerBase
     reset_session
     session = Kapa::UserSession.new(params[:user_session])
     unless session.save
-      flash[:danger] = "Invalid user/password combination!"
+      flash[:danger] = "Username/password do not match!"
       redirect_to kapa_root_path and return false
     end
     redirect_to kapa_root_path
