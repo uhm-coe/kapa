@@ -22,6 +22,7 @@ module Kapa::CaseBase
     has_many :users, :through => :user_assignments
     has_many :files, :as => :attachable
     has_many :forms, :as => :attachable
+    has_many :texts, :as => :attachable
 
     serialize :category, Kapa::CsvSerializer
     validates :reported_at, :type, :case_name, :presence => true, :on => :update
@@ -83,6 +84,7 @@ module Kapa::CaseBase
     documents = []
     documents += self.files.eager_load(:person)
     documents += self.forms.eager_load(:person)
+    documents += self.texts.eager_load(:person)
     return documents
   end
 

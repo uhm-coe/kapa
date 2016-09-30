@@ -22,7 +22,6 @@ module Kapa::CaseActionsControllerBase
   def create
     @case = Kapa::Case.find(params[:case_id])
     @action = @case.case_actions.build(case_action_params)
-#    @action.users << @current_user
 
     if @action.save
       flash[:success] = "Action was successfully created."
@@ -42,7 +41,7 @@ module Kapa::CaseActionsControllerBase
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_case_path(:id => @action.case_id, :anchor => params[:anchor], :action_panel => params[:action_panel])
+    redirect_to kapa_case_path(:id => @action.case, :anchor => params[:anchor], :action_panel => params[:action_panel])
   end
 
   def destroy

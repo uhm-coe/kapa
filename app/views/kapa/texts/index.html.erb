@@ -1,0 +1,51 @@
+<% content_for(:dialog) do %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_text"} do %>
+    <%= bootstrap_form_for(:filter, :url => kapa_texts_path, :html => {:method => :get, :id => "filter_text"}) do |f| %>
+      <%= f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => "Any", :label => "Lock" %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Documents</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table id="text_list" class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Person</th>
+      <th>Title</th>
+      <th>Last Update</th>
+      <th>Submitted</th>
+      <th><%=t(:kapa_global_dept) %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for text in @texts %>
+      <tr>
+        <td><%= text.person.id_number if text.person %></td>
+        <td><%= link_to abbr(text.person.full_name), kapa_person_path(:id => text.person) if text.person %></td>
+        <td><%= h text.title %></td>
+        <td><%= time_ago_in_words text.updated_at if text.updated_at %> ago</td>
+        <td><%= format_date text.submitted_at %></td>
+        <td><%= h text.dept.join(", ") %></td>
+        <td class="right"><%= link_to "Show", {:action => :show, :id => text}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%= will_paginate @texts, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>

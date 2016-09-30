@@ -55,12 +55,13 @@ module Kapa::KapaHelper
     options[:model_class] = Kapa::Term
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
+    model_select(object_name, method, options, html_options)
   end
 
   def user_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::User
     options[:model_options] = options
-
+    options[:selected] ||= @current_user.id
     if options[:lock]
       tag = content_tag(:p, @current_user.person.full_name, :class => "form-control-static")
       name = "#{object_name}[#{method}]"
@@ -79,6 +80,12 @@ module Kapa::KapaHelper
 
   def program_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::Program
+    options[:model_options] = options
+    model_select(object_name, method, options, html_options)
+  end
+
+  def text_template_select(object_name, method, options = {}, html_options = {})
+    options[:model_class] = Kapa::TextTemplate
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end
@@ -154,18 +161,22 @@ module Kapa::KapaHelper
       return "File"
      elsif document.is_a? Kapa::Form
       return "Form"
+     elsif document.is_a? Kapa::Text
+      return "Text Document"
      elsif document.is_a? Kapa::Exam
       return "Test"
      end
   end
 
-  def document_path(document)
+  def document_path(document, options = {})
      if document.is_a? Kapa::File
-      return kapa_file_path(:id => document)
+       return kapa_file_path(options.merge(:id => document))
      elsif document.is_a? Kapa::Form
-      return kapa_form_path(:id => document)
+       return kapa_form_path(options.merge(:id => document))
+     elsif document.is_a? Kapa::Text
+       return kapa_text_path(options.merge(:id => document))
      elsif document.is_a? Kapa::Exam
-      return kapa_exam_path(:id => document)
+       return kapa_exam_path(options.merge(:id => document))
      end
   end
 

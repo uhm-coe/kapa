@@ -11,6 +11,7 @@
 //= require bootstrap-datetimepicker
 //= require bootstrap-multiselect
 //= require dragula
+//= require summernote
 
 jQuery(document).ready(function ($) {
 

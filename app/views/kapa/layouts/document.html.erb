@@ -47,7 +47,7 @@
         </div>
       </div>
       <% if content_for?(:box1) %>
-        <div class="header col-md-8 col-md-offset-2 text-center"><h1><%=@title%></h1></div>
+        <div class="header col-md-8 col-md-offset-2"><h1><%=@title%></h1></div>
         <div class="row">
           <div class="well col-md-8 col-md-offset-2">
             <%=yield :box1 %>
@@ -68,7 +68,6 @@
       <% end %>
 
       <footer>
-        <p class="col-lg-8 col-lg-offset-2 text-center"><%=t :kapa_footer_html, :year => Date.today.year %></p>
       </footer>
     </div>
   </body>

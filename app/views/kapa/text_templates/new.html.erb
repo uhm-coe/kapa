@@ -1,0 +1,15 @@
+<% content_for(:box1) do %>
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Text Document Template
+  </h4>
+
+  <div class="row">
+    <div class="col-sm-8">
+    <%=bootstrap_form_for :text_template, :url => kapa_text_templates_path do |f| %>
+      <%=f.text_field :title %>
+      <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+    <% end %>
+    </div>
+  </div>
+<% end %>

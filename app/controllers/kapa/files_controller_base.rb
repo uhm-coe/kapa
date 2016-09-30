@@ -70,7 +70,7 @@ module Kapa::FilesControllerBase
     else
       flash[:danger] = error_message_for(@file)
     end
-    render(:js => "close();")
+    render(:text => "<script>close();</script>")
   end
 
   def file_param

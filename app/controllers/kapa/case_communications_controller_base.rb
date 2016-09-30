@@ -59,7 +59,7 @@ module Kapa::CaseCommunicationsControllerBase
 
   private
   def case_communication_params
-    params.require(:case_communication).permit(:case_id, :category, :contacted_at, :created_at, :id, :note, :person_id, :sequence, :status, :type, :updated_at)
+    params.require(:case_communication).permit(:case_id, :category, :contacted_at, :created_at, :id, :note, :person_id, :sequence, :user_id, :status, :type, :updated_at)
   end
 
   def case_communication_ext_params
