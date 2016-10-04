@@ -15,25 +15,4 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
-
-#  s.add_dependency 'rails', '~> 4.2.0'
-  s.add_dependency 'authlogic', '~> 3.4.0'
-  s.add_dependency 'american_date'
-  s.add_dependency 'paperclip', '~> 3.0'
-  s.add_dependency 'fastercsv'
-  s.add_dependency 'mysql2', '~> 0.3.18'
-  s.add_dependency 'net-ldap', '~> 0.13.0'
-  s.add_dependency 'sequel'
-  s.add_dependency 'will_paginate', '~> 3.0'
-  s.add_dependency 'will_paginate-bootstrap'
-  s.add_dependency 'uglifier'
-  s.add_dependency 'jquery-rails'
-  s.add_dependency 'therubyracer'
-  s.add_dependency 'momentjs-rails', '>= 2.9.0'
-  s.add_dependency 'sass-rails'
-  s.add_dependency 'bootstrap-sass'
-  s.add_dependency 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
-  s.add_dependency 'bootstrap-multiselect-rails'
-  s.add_dependency 'dragula-rails'
-  s.add_dependency 'rails-csv-fixtures'
 end

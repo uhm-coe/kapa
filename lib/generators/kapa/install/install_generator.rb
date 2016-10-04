@@ -14,26 +14,31 @@ class Kapa::InstallGenerator < Rails::Generators::Base
     inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
   end
   
-  def install_gemfiles
-    inject_into_file "#{Rails.root}/Gemfile", "gem 'authlogic', '~> 3.4.0'\n", :after => /^(gem kapa)/
-#    inject_into_file "#{Rails.root}/Gemfile", "gem 'american_date'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'paperclip', '~> 3.0'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'fastercsv'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'mysql2', '~> 0.3.18'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'net-ldap', '~> 0.13.0'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'sequel'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'will_paginate', '~> 3.0'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'will_paginate-bootstrap'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'uglifier'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'jquery-rails'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'therubyracer'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'momentjs-rails', '>= 2.9.0'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'sass-rails'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'bootstrap-sass'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'bootstrap-multiselect-rails'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'dragula-rails'\n"
-    #inject_into_file "#{Rails.root}/Gemfile", "gem 'rails-csv-fixtures'\n"
+  def add_gem_dependencies
+    gem 'rails', '~> 4.2.3'
+    gem 'rails-csv-fixtures', :github => 'bfolkens/rails-csv-fixtures'
+    gem 'rake'
+    gem 'activerecord-session_store'
+    gem 'authlogic', '~> 3.4.0'
+    gem 'american_date'
+    gem 'paperclip', '~> 3.0'
+    gem 'fastercsv'
+    gem 'mysql2', '~> 0.3.18'
+    gem 'net-ldap', '~> 0.13.0'
+    gem 'sequel'
+    gem 'will_paginate', '~> 3.0'
+    gem 'will_paginate-bootstrap'
+    gem 'uglifier'
+    gem 'jquery-rails'
+    gem 'therubyracer'
+    gem 'momentjs-rails', '>= 2.9.0'
+    gem 'sass-rails'
+    gem 'bootstrap-sass'
+    gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
+    gem 'bootstrap-multiselect-rails'
+    gem 'dragula-rails'
+    gem 'hashids'
+    gem 'summernote-rails'
   end
 
   def install_locale
