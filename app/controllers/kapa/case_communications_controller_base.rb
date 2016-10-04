@@ -43,7 +43,7 @@ module Kapa::CaseCommunicationsControllerBase
     else
       flash[:danger] = error_message_for @action
     end
-    redirect_to kapa_case_path(:id => @action.case_id, :anchor => params[:anchor], :action_panel => params[:action_panel])
+    redirect_to kapa_case_path(:id => @action.case, :anchor => params[:anchor])
   end
 
   def destroy
