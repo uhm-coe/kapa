@@ -1,7 +1,7 @@
 <% content_for(:dialog) do %>
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "apply_role_dialog", :modal_title => "Apply Role", :modal_form_id => "apply_role_form"} do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_permission_dialog", :modal_title => "Edit Permissions", :modal_form_id => "apply_role_form"} do %>
     <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
-      <%=f.select :role, Rails.configuration.roles.keys %>
+      <%=render :partial => "permission_form", :locals => {:f => f} %>
     <% end %>
   <% end %>
 <% end %>
@@ -17,7 +17,6 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#permission_tab" data-toggle="tab">Permissions</a></li>
       <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
       <li><a href="#other_accounts_tab" data-toggle="tab">Other Accounts</a></li>
     </ul>
@@ -26,17 +25,9 @@
       <div id="user_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :user, :url => kapa_user_path(:id => @user), :html => {:method => :put} do |f| %>
           <%=render :partial => "user_form", :locals => {:f => f} %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-        <% end %>
-      </div>
-
-      <div id="permission_tab" class="tab-pane">
-        <p class="text-right">
-          <%=button_to_link "Apply Role", nil, {:icon => "glyphicon-plus", "data-toggle" => "modal", "data-target" => "#apply_role_dialog"} if @current_user.write? %>
-        </p>
-        <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put}  do |f| %>
-          <%=render :partial => "permission_form", :locals => {:f => f} %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+          <%=render :layout => "/kapa/layouts/controls" do %>
+            <%=button_to_link "Permissions", nil, {:icon => "glyphicon-edit", "data-toggle" => "modal", "data-target" => "#edit_permission_dialog"} if @current_user.write? %>
+          <% end if @current_user.write? %>
         <% end %>
       </div>
 

@@ -18,15 +18,14 @@ module Kapa::UsersControllerBase
 
   def update
     @user = Kapa::User.find params[:id]
+    @permission = @user.deserialize(:permission, :as => OpenStruct)
     @user.attributes = user_params if params[:user]
     @user.update_serialized_attributes!(:_ext, params[:user_ext]) if params[:user_ext].present?
-    if params[:permission]
-      if params[:permission][:role]
-        @user.apply_role(params[:permission][:role])
-        @user.update_serialized_attributes!(:permission, :role => params[:permission][:role])
-      else
-        @user.serialize(:permission, params[:permission])
-      end
+    if params[:permission][:role] and params[:permission][:role] != @permission.role
+      @user.apply_role(params[:permission][:role])
+      @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
+    elsif params[:permission]
+      @user.update_serialized_attributes(:permission, params[:permission])
     end
     if @user.save
       flash[:success] = "User was successfully updated."

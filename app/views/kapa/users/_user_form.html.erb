@@ -9,6 +9,9 @@
     <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
     <%=f.property_select :primary_dept, :name => :dept, :label => "Primary #{t(:kapa_global_dept)}", :include_blank => true %>
     <%=f.text_field :position %>
+    <%=bootstrap_fields_for(:permission) do |p| %>
+      <%=p.select :role, Rails.configuration.roles.keys %>
+    <% end %>
   </div>
 </div>
 <%=f.hidden_field :person_id %>
