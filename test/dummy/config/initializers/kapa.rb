@@ -50,4 +50,5 @@ Rails.configuration.available_routes = %w{
   kapa_cases
   kapa_case_persons
   kapa_case_actions
+  kapa_notifications
 }

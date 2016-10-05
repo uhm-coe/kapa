@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :enrollments, &extra_actions
     resources :files, &extra_actions
     resources :forms, &extra_actions
+    resources :notifications, &extra_actions
     resources :texts, &extra_actions
     resources :text_templates, &extra_actions
     resources :exams, &extra_actions
