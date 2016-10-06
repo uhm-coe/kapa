@@ -15,6 +15,7 @@ class Kapa::InstallGenerator < Rails::Generators::Base
   end
   
   def add_gem_dependencies
+    puts "Adding gem dependencies..."
     gem 'rails', '~> 4.2.3'
     gem 'rails-csv-fixtures', :github => 'bfolkens/rails-csv-fixtures'
     gem 'rake'
