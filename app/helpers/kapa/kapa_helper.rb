@@ -61,7 +61,6 @@ module Kapa::KapaHelper
   def user_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::User
     options[:model_options] = options
-    options[:selected] ||= @current_user.id
     if options[:lock]
       tag = content_tag(:p, @current_user.person.full_name, :class => "form-control-static")
       name = "#{object_name}[#{method}]"

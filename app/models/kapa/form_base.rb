@@ -12,7 +12,7 @@ module Kapa::FormBase
 
 
     validates_presence_of :type
-    serialize :dept, Kapa::CsvSerializer
+
   end
 
   def term_desc

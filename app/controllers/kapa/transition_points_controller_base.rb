@@ -73,6 +73,7 @@ module Kapa::TransitionPointsControllerBase
 
   def index
     @filter = filter(:type => "admission")
+    logger.debug "*DEBUG* #{@filter.inspect}"
     @transition_points = Kapa::TransitionPoint.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 

@@ -21,6 +21,8 @@ module Kapa::TransitionPointBase
     validates_presence_of :curriculum_id, :term_id, :type
 
     before_save :update_status_timestamp
+
+    serialize :dept, Kapa::CsvSerializer
   end
 
   def update_status_timestamp
