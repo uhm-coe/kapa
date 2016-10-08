@@ -14,7 +14,7 @@ module Kapa::FormsControllerBase
     @person = @form.person
     @form.attributes = form_param
     @form.update_serialized_attributes!(:_ext, params[:form_ext]) if params[:form_ext].present?
-    params.to_h.each_pair do |k, v|
+    params.permit!.to_h.each_pair do |k, v|
       unless k =~ /(utf8)|(_method)|(authenticity_token)|(form)|(commit)|(controller)|(action)|(id)/
         @form.serialize(k.to_sym, v)
       end
