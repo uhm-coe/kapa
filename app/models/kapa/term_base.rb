@@ -14,6 +14,10 @@ module Kapa::TermBase
     self.id = self.code.to_i if self.code =~ /\A[-+]?[0-9]+\z/
   end
 
+  def next_term
+    Kapa::Term.where("code > ?", self.code).order("code").first
+  end
+
   class_methods do
 
     def selections(options = {})
