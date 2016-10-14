@@ -8,6 +8,7 @@
     <div class="col-sm-6">
       <%=f.property_select :distribution, {:conditions => {:code => @program.available_distribution}}, {} %>
       <%=f.property_select :available_major, {:name => :major,:include_code => true, :label => "Available Majors", :conditions => {:code => @program.available_major}}, {:multiple => true} %>
+      <%=f.check_box :active, {}, 1, 0 %>
     </div>
   </div>
 <% end %>

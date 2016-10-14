@@ -22,7 +22,7 @@ module Kapa::PracticumLogsControllerBase
 
   def new
     @practicum_placement = Kapa::PracticumPlacement.find(params[:practicum_placement_id])
-    @practicum_log = @practicum_placement.practicum_logs.build(:log_date => Date.today)
+    @practicum_log = @practicum_placement.practicum_logs.build(:log_date => Date.today, :user_id => @current_user.id)
     @person = @practicum_placement.person
   end
 

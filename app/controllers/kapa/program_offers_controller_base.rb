@@ -38,6 +38,6 @@ module Kapa::ProgramOffersControllerBase
   end
 
   def program_offer_params
-    params.require(:program_offer).permit(:description, :distribution, :start_term_id, :end_term_id, :available_major=>[])
+    params.require(:program_offer).permit(:description, :distribution, :start_term_id, :end_term_id, :active, :available_major=>[])
   end
 end
