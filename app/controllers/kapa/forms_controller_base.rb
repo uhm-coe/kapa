@@ -5,6 +5,7 @@ module Kapa::FormsControllerBase
     @form = Kapa::Form.find params[:id]
     @form_ext = @form.ext
     @person = @form.person
+    @person_ext = @person.ext
     @title = @form.type_desc
     render :layout => "/kapa/layouts/document"
   end

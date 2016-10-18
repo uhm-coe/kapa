@@ -36,6 +36,7 @@ module Kapa::EnrollmentBase
       enrollments = enrollments.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       enrollments = enrollments.where("curriculums.major_primary" => filter.major) if filter.major.present?
       enrollments = enrollments.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
+      enrollments = enrollments.where("curriculums.location" => filter.location) if filter.location.present?
       enrollments = enrollments.where("enrollments.subcohort" => filter.subcohort) if filter.subcohort.present?
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
 

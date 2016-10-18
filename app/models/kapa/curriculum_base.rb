@@ -82,6 +82,7 @@ module Kapa::CurriculumBase
       curriculums = curriculums.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       curriculums = curriculums.where("curriculums.major_primary" => filter.major) if filter.major.present?
       curriculums = curriculums.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
+      curriculums = curriculums.where("curriculums.location" => filter.location) if filter.location.present?
       curriculums = curriculums.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope

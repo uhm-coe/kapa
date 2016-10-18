@@ -6,6 +6,7 @@ module Kapa::ExamsControllerBase
     @exam_ext = @exam.ext
     @exam_scores = @exam.exam_scores
     @person = @exam.person
+    @person_ext = @person.ext
     @title = @exam.type_desc
     render :layout => "/kapa/layouts/document"
   end

@@ -10,6 +10,7 @@ module Kapa::FilesControllerBase
     @file = Kapa::File.find(params[:id])
     @file_ext = @file.ext
     @person = @file.person
+    @person_ext = @person.ext
     @title = @file.name
 
     respond_to do |format|

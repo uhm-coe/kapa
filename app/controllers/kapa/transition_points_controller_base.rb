@@ -12,6 +12,7 @@ module Kapa::TransitionPointsControllerBase
     @programs = Kapa::Program.where(:active => true)
     @transition_actions = @transition_point.transition_actions
     @person = @curriculum.person
+    @person_ext = @person.ext
 
     @curriculums = @person.curriculums
     @assessment_rubrics = @transition_point.assessment_rubrics

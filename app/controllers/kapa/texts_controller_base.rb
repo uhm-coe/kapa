@@ -5,6 +5,7 @@ module Kapa::TextsControllerBase
     @text = Kapa::Text.find(params[:id])
     @text_ext = @text.ext
     @person = @text.person
+    @person_ext = @person.ext
     @title = @text.title
     render :layout => "/kapa/layouts/document"
   end

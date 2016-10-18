@@ -3,6 +3,7 @@ module Kapa::AdvisingSessionsControllerBase
 
   def new
     @person = Kapa::Person.find(params[:person_id])
+    @person_ext = @person.ext
     @advising_session =  @person.advising_sessions.build
     @advising_session.session_date = Date.today
     @advising_session.user_ids = [@current_user.id]

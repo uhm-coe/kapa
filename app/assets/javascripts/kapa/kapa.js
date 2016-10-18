@@ -55,8 +55,9 @@ jQuery(document).ready(function ($) {
   });
 
   $('[multiple="multiple"]').multiselect({
-    numberDisplayed: 3,
+    numberDisplayed: 1,
     enableCaseInsensitiveFiltering: true,
+    includeSelectAllOption: true,
     buttonContainer: '<div class="btn-group kapa-multiselect-btn-group"></div>',
     buttonClass: 'btn btn-default kapa-multiselect-btn'
   });

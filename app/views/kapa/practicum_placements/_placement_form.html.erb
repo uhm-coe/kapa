@@ -18,7 +18,7 @@
           <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#change_mentor_dialog"><span class="glyphicon glyphicon-pencil"></span></button>
         </p>
       </div>
-      <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
+      <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids)}, {:multiple => true} %>
     </div>
     <div class="col-sm-6">
       <%=f.text_area :note, {:cols => 54, :rows => 20} %>

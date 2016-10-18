@@ -80,6 +80,7 @@ module Kapa::TransitionPointBase
       transition_points = transition_points.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
       transition_points = transition_points.where("curriculums.major_primary" => filter.major) if filter.major.present?
       transition_points = transition_points.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
+      transition_points = transition_points.where("curriculums.location" => filter.location) if filter.location.present?
       transition_points = transition_points.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope

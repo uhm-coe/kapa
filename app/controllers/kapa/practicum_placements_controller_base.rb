@@ -6,6 +6,7 @@ module Kapa::PracticumPlacementsControllerBase
     @practicum_placement_ext = @practicum_placement.ext
     @practicum_logs = @practicum_placement.practicum_logs
     @person = @practicum_placement.person
+    @person_ext = @person.ext
     @mentors = Kapa::Person.where("persons.id in (SELECT distinct mentor_person_id FROM practicum_placements)").order("persons.last_name, persons.first_name")
     @curriculums = @person.curriculums
     @practicum_sites = Kapa::PracticumSite.select("id, name_short")

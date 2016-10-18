@@ -6,8 +6,7 @@
       <%=f.text_field :sequence %>
       <%=f.property_select :category, :name => :enrollment_category, :include_blank => true %>
       <%=f.property_select :status, :name => :enrollment_status, :include_blank => true %>
-      <%=f.property_select :dept, :name => :dept, :label => t(:kapa_global_dept), :include_blank => true %>
-      <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
+      <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids)}, {:multiple => true} %>
     </div>
     <div class="col-sm-6">
       <%=f.text_area :note, {:cols => 54, :rows => 20} %>

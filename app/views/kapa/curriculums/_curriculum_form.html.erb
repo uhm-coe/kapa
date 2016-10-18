@@ -26,7 +26,7 @@
       <%=f.property_select :track, {:include_blank => true, :program => @program} %>
       <%=f.property_select :distribution, {:label =>"Program Distribution", :program => @program} %>
       <%=f.property_select :location, {:include_blank => true, :label =>"Program Location"} %>
-      <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
+      <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids)}, {:multiple => true} %>
     </div>
   </div>
   <%=f.hidden_field :person_id %>

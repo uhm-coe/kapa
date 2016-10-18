@@ -5,7 +5,7 @@ module Kapa::EnrollmentsControllerBase
     @enrollment = Kapa::Enrollment.find(params[:id])
     @curriculum = @enrollment.curriculum
     @person = @enrollment.person
-
+    @person_ext = @person.ext
   end
 
   def new

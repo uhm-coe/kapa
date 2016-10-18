@@ -6,6 +6,7 @@ module Kapa::PracticumLogsControllerBase
     @practicum_log_ext = @practicum_log.ext
     @practicum_placement = @practicum_log.practicum_placement
     @person = @practicum_placement.person
+    @person_ext = @person.ext
   end
 
   def update

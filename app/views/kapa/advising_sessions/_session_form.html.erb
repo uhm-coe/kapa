@@ -10,7 +10,7 @@
     <%=f.property_select :interest, {:name => :advising_interest, :include_blank => true} %></p>
     <%=f.property_select :category, {:name => :advising_category} %></p>
     <%=f.property_select :location, {:include_blank => true} %></p>
-    <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
+    <%=f.user_select :user_ids, {:label => t(:kapa_global_user_ids)}, {:multiple => true} %>
   </div>
 
   <div class="col-sm-6">

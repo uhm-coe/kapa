@@ -9,6 +9,7 @@ module Kapa::CurriculumsControllerBase
     @transition_points = @curriculum.transition_points
     @enrollments = @curriculum.enrollments
     @person = @curriculum.person
+    @person_ext = @person.ext
   end
 
   def update

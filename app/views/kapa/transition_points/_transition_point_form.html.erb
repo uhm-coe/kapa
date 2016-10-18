@@ -5,7 +5,7 @@
       <%=t.property_select :category, :name => "#{@transition_point.type}_category", :include_blank => true %>
       <%=t.property_select :priority, :name => "#{@transition_point.type}_priority", :include_blank => true %>
       <%=t.property_select :status, :name => "#{@transition_point.type}_status", :include_blank => true %>
-      <%=t.user_select :user_ids, {:label => t(:kapa_global_user_ids), :depts => @current_user.depts}, {:multiple => true} %>
+      <%=t.user_select :user_ids, {:label => t(:kapa_global_user_ids)}, {:multiple => true} %>
     </div>
 
     <div class="col-sm-6">
