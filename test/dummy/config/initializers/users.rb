@@ -34,7 +34,9 @@ Rails.configuration.roles["Adviser"] = {
     kapa_exams: '20',
     kapa_exams_scope: '20',
     kapa_advising_sessions: '20',
-    kapa_advising_sessions_scope: '20'
+    kapa_advising_sessions_scope: '20',
+    kapa_notifications: '20',
+    kapa_notifications_scope: '10'
 }
 
 instructor_permission = {}
@@ -42,4 +44,6 @@ instructor_permission["kapa_courses"] = '20'
 instructor_permission["kapa_courses_scope"] = '20'
 instructor_permission["kapa_course_registrations"] = '20'
 instructor_permission["kapa_course_registrations_scope"] = '20'
+instructor_permission["kapa_notifications"] = '20'
+instructor_permission["kapa_notifications_scope"] = '10'
 Rails.configuration.roles["Instructor"] = instructor_permission

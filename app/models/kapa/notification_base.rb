@@ -28,13 +28,13 @@ module Kapa::NotificationBase
     self.save
   end
 
+  def set_message!(options = {})
+    options[:template] ||= self.type
+    self.body = Kapa::KapaController.new.render_to_string :partial => "/notifications/#{options[:template]}", :locals => options[:locals]
+    self.save!
+  end
+
   def send_email!
-    begin
-      # email = UserMailer.build(:to => "#{self.user.person.full_name_ordered} <brysonkm@hawaii.edu>", :subject => self.title, :body => self.body)
-      # email.deliver_now
-    rescue StandardError => e
-      logger.debug(e)
-    end
   end
 
   class_methods do
