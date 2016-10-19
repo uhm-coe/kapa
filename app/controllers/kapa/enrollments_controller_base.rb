@@ -20,7 +20,7 @@ module Kapa::EnrollmentsControllerBase
     @curriculum = @person.curriculums.find(params[:enrollment][:curriculum_id])
 
     @enrollment = @curriculum.enrollments.build(enrollment_params)
-    @enrollment.dept = @current_user.primary_dept
+    @enrollment.dept = [@current_user.primary_dept]
     unless @enrollment.save
       flash[:danger] = @enrollment.errors.full_messages.join(", ")
       redirect_to new_kapa_enrollment_path(:id => @curriculum) and return false

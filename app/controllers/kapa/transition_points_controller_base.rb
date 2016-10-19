@@ -62,7 +62,7 @@ module Kapa::TransitionPointsControllerBase
     @curriculum = @person.curriculums.find(params[:transition_point][:curriculum_id])
 
     @transition_point = @curriculum.transition_points.build(transition_point_params)
-    @transition_point.dept = @current_user.primary_dept
+    @transition_point.dept = [@current_user.primary_dept]
     @transition_point.active = true
     unless @transition_point.save
       flash[:danger] = @transition_point.errors.full_messages.join(", ")

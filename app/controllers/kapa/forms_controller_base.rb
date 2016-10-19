@@ -31,7 +31,7 @@ module Kapa::FormsControllerBase
 
   def create
     @form = Kapa::Form.new(form_param)
-    @form.dept = @current_user.primary_dept
+    @form.dept = [@current_user.primary_dept]
 
     unless @form.save
       flash[:danger] = error_message_for(@form)

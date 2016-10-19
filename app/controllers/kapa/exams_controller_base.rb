@@ -47,7 +47,7 @@ module Kapa::ExamsControllerBase
     end
 
     import_file.open.each do |line|
-      exam = Kapa::Exam.new(:raw => line, :dept => @current_user.primary_dept, :type => params[:data][:type])
+      exam = Kapa::Exam.new(:raw => line, :dept => [@current_user.primary_dept], :type => params[:data][:type])
 
       unless exam.check_format
         flash[:warning] = "Invalid file format!"
