@@ -136,7 +136,7 @@ module Kapa::ExamBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      exams = Kapa::Exam.eager_load(:person, :exam_scores).order("report_date DESC, persons.last_name, persons.first_name")
+      exams = Kapa::Exam.eager_load(:person, :exam_scores, {:users => :person}).order("report_date DESC, persons.last_name, persons.first_name")
       exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
       exams = exams.where(:report_date => filter.exam_date_start.to_date..filter.exam_date_end.to_date) if filter.exam_date_start.present? and filter.exam_date_end.present?

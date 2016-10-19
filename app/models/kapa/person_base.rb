@@ -48,12 +48,12 @@ module Kapa::PersonBase
     end
   end
 
-  def documents
-    #TODO add public or dept conditions
+  def documents(user = nil)
+    filter = {:user => user}
     documents = []
-    documents += self.files
-    documents += self.forms
-    documents += self.exams
+    documents += self.files.search(:filter => filter)
+    documents += self.forms.search(:filter => filter)
+    documents += self.exams.search(:filter => filter)
   end
 
   def full_name(option = nil)

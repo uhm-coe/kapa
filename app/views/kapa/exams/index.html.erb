@@ -21,7 +21,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Tests</h3>
+  <h3>Praxis Score Reports</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -54,7 +54,7 @@
         <td><%=format_date exam.name %></td>
         <td><%=format_date exam.report_date %></td>
         <td><%=exam.exam_scores.length %></td>
-        <td><%=exam.dept %></td>
+        <td><%=exam.dept.join(", ") %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => exam}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>
