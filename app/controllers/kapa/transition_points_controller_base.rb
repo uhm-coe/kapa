@@ -88,7 +88,7 @@ module Kapa::TransitionPointsControllerBase
 
   private
   def transition_point_params
-    params.require(:transition_point).permit(:term_id, :type, :category, :priority, :status, :note, :curriculum_id, :user_ids => [])
+    params.require(:transition_point).permit(:term_id, :type, :category, :priority, :status, :note, :assessment_note, :curriculum_id, :user_ids => [])
   end
 
   #def filter_defaults
