@@ -22,7 +22,8 @@ module Kapa::AdvisingSessionsControllerBase
     @advising_session = Kapa::AdvisingSession.new
     @advising_session.attributes = advising_session_params
     @advising_session.update_ext(params[:advising_session_ext])
-    @advising_session.dept = @current_user.primary_dept
+    @advising_session.dept = [@current_user.primary_dept]
+    @advising_session.user_ids = [@current_user.id]
     unless @advising_session.save
       flash[:danger] = error_message_for(@advising_session)
       redirect_to new_kapa_advising_session_path(:id => @advising_session.person) and return false

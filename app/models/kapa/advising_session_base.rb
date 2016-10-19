@@ -24,7 +24,7 @@ module Kapa::AdvisingSessionBase
       advising_sessions = advising_sessions.where(:interest => filter.interest) if filter.interest.present?
       advising_sessions = advising_sessions.assigned_scope(filter.user_id) if filter.user_id.present?
 
-      case filter.user.access_scope(:kapa_adising_sessions)
+      case filter.user.access_scope(:kapa_advising_sessions)
         when 30
           # Do nothing
         when 20
