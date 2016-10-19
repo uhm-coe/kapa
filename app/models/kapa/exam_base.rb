@@ -141,7 +141,7 @@ module Kapa::ExamBase
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
       exams = exams.where(:report_date => filter.exam_date_start.to_date..filter.exam_date_end.to_date) if filter.exam_date_start.present? and filter.exam_date_end.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_exams)
         when 30
           # do nothing
         when 20

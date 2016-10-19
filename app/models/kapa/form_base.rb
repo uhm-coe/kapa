@@ -51,7 +51,7 @@ module Kapa::FormBase
       forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_forms)
         when 30
           # do nothing
         when 20
