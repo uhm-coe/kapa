@@ -35,15 +35,15 @@ module Kapa::FileBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
+      logger.debug "*DEBUG* #{options}"
       files = Kapa::File.eager_load({:users => :person}, :person).order("files.created_at DESC").limit(500)
       files = files.column_matches("name" => filter.name) if filter.name.present?
-#      files = files.depts_scope(filter.user.depts, "public = 'Y'")
 
       case filter.user.access_scope(:kapa_files)
         when 30
           # do nothing
         when 20
-          files = files.depts_scope(filter.user.depts)
+          files = files.depts_scope(filter.user.depts, "public = 'Y'")
         when 10
           files = files.assigned_scope(filter.user.id)
         else

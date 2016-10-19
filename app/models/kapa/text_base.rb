@@ -51,7 +51,7 @@ module Kapa::TextBase
       texts = texts.where("texts.type" => filter.text_type.to_s) if filter.text_type.present?
       texts = texts.where("texts.lock" => filter.lock) if filter.lock.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_texts)
         when 30
           # do nothing
         when 20

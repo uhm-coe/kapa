@@ -48,12 +48,11 @@ module Kapa::PersonBase
     end
   end
 
-  def documents(user = nil)
-    filter = {:user => user}
+  def documents(options = {})
     documents = []
-    documents += self.files.search(:filter => filter)
-    documents += self.forms.search(:filter => filter)
-    documents += self.exams.search(:filter => filter)
+    documents += self.files.search(options)
+    documents += self.forms.search(options)
+    documents += self.exams.search(options)
   end
 
   def full_name(option = nil)

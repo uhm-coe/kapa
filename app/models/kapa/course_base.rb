@@ -60,7 +60,7 @@ module Kapa::CourseBase
       courses = courses.where("courses.term_id" => filter.term_id) if filter.term_id.present?
       courses = courses.where("courses.subject" => filter.subject) if filter.subject.present?
       courses = courses.where("concat(courses.subject, courses.number, '-', courses.section) like ?", "%#{filter.name}%") #if filter.name.present?
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_courses)
         when 30
           # Do nothing
         when 20

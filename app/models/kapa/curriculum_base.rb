@@ -85,7 +85,7 @@ module Kapa::CurriculumBase
       curriculums = curriculums.where("curriculums.location" => filter.location) if filter.location.present?
       curriculums = curriculums.assigned_scope(filter.user_id) if filter.user_id.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_curriculums)
         when 30
           # do nothing
         when 20

@@ -46,7 +46,7 @@ module Kapa::PracticumPlacementBase
       placements = placements.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
       placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_practicum_placements)
         when 30
           # do nothing
         when 20

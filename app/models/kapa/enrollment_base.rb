@@ -30,7 +30,7 @@ module Kapa::EnrollmentBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      enrollments = Kapa::Enrollment.eager_load([:person, {:curriculum => :program}], {:users => :person}).order("persons.last_name, persons.first_name")
+      enrollments = Kapa::Enrollment.eager_load([:person, {:curriculum => :program}], {:users => :person}, :term).order("persons.last_name, persons.first_name")
       enrollments = enrollments.where("enrollments.term_id" => filter.term_id) if filter.term_id.present?
       enrollments = enrollments.where("curriculums.program_id" => filter.program_id) if filter.program_id.present?
       enrollments = enrollments.where("curriculums.distribution" => filter.distribution) if filter.distribution.present?
@@ -40,7 +40,7 @@ module Kapa::EnrollmentBase
       enrollments = enrollments.where("enrollments.subcohort" => filter.subcohort) if filter.subcohort.present?
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_enrollments)
         when 30
           # do nothing
         when 20
