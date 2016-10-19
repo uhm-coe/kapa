@@ -90,6 +90,14 @@ module Kapa::KapaControllerBase
     render(:js => script)
   end
 
+  def default_url_options(options={})
+    if Rails.env.production?
+      options.merge(:protocol => "https")
+    else
+      options
+    end
+  end
+
   protected
   #  def local_request?
   #    false
