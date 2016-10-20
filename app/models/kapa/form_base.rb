@@ -55,7 +55,7 @@ module Kapa::FormBase
         when 30
           # do nothing
         when 20
-          forms = forms.depts_scope(filter.user.depts)
+          forms = forms.depts_scope(filter.user.depts, filter.user.id, "public = 'Y'")
         when 10
           forms = forms.assigned_scope(filter.user.id)
         else

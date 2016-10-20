@@ -43,7 +43,7 @@ module Kapa::FileBase
         when 30
           # do nothing
         when 20
-          files = files.depts_scope(filter.user.depts, "public = 'Y'")
+          files = files.depts_scope(filter.user.depts, filter.user.id, "public = 'Y'")
         when 10
           files = files.assigned_scope(filter.user.id)
         else

@@ -145,7 +145,7 @@ module Kapa::ExamBase
         when 30
           # do nothing
         when 20
-          exams = exams.depts_scope(filter.user.depts)
+          exams = exams.depts_scope(filter.user.depts, filter.user.id, "public = 'Y'")
         when 10
           exams = exams.assigned_scope(filter.user.id)
         else
