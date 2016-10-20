@@ -16,7 +16,7 @@ module Kapa::FormBase
   end
 
   def term_desc
-    return term_id.blank? or term_id == 0 ? "No term chosen" : Kapa::Term.find(term_id).description
+    return (term_id.blank? or term_id == 0) ? "No term chosen" : Kapa::Term.find(term_id).description
   end
 
   def type_desc
