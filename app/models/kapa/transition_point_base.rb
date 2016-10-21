@@ -59,9 +59,13 @@ module Kapa::TransitionPointBase
 
   def assessment_rubrics
     rubrics = Kapa::AssessmentRubric.eager_load(:assessment_criterions)
-    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Kapa::Term.find(self.term_id).code])
-    rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
-    rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
+    if self.term_id
+      rubrics = rubrics.where(["? between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id", self.term_id])
+      rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
+      rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
+    else
+      rubrics = rubrics.none
+    end
     if rubrics.blank?
       return [Kapa::AssessmentRubric.new(:title => "Not Defined")]
     else

@@ -14,7 +14,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if @current_user.manage? %>
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if @current_user.write? %>
     </div>
   </div>
 
