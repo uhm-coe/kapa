@@ -63,11 +63,11 @@ module Kapa::KapaModelBase
 
   def accessible?(user)
 
-    unless user.read?(model_name)
+    unless user.read?(kapa_model_name)
       return false
     end
 
-    case user.access_scope(model_name)
+    case user.access_scope(kapa_model_name)
       when 30
         return true
       when 20
@@ -79,7 +79,7 @@ module Kapa::KapaModelBase
     end
   end
 
-  def model_name
+  def kapa_model_name
     self.class.name.tableize.sub("/", "_")
   end
 
