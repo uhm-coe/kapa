@@ -123,6 +123,7 @@ module Kapa::TransitionPointBase
        :status_desc => [:status_desc],
        :action => [:last_transition_action, :action],
        :action_desc => [:last_transition_action, :action_desc],
+       :action_specify => [:last_transition_action, :action_specify],
        :action_date => [:last_transition_action, :action_date]}
     end
   end
