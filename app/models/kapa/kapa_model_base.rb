@@ -62,7 +62,7 @@ module Kapa::KapaModelBase
   end
 
   def accessible?(user)
-    unless read?(user)
+    unless user.check_permission(10, kapa_model_name)
       return false
     end
 

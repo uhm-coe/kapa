@@ -128,7 +128,7 @@ module Kapa::UserBase
 
   class_methods do
     def selections(options = {})
-      users = where(:status => 30)
+      users = where("length(primary_dept) > 0")
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|
