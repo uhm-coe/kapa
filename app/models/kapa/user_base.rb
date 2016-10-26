@@ -25,6 +25,7 @@ module Kapa::UserBase
       c.crypted_password_field = :hashed_password
       c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
+      c.logged_in_timeout = 12.hours
     end
   end
 

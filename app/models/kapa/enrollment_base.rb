@@ -39,6 +39,7 @@ module Kapa::EnrollmentBase
       enrollments = enrollments.where("curriculums.location" => filter.location) if filter.location.present?
       enrollments = enrollments.where("enrollments.subcohort" => filter.subcohort) if filter.subcohort.present?
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
+      enrollments = enrollments.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope(:kapa_enrollments)
         when 30

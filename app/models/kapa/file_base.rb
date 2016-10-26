@@ -24,6 +24,10 @@ module Kapa::FileBase
     end
   end
 
+  def type_desc
+    "File"
+  end
+
   def file_size
     data_file_size
   end

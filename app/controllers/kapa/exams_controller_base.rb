@@ -76,6 +76,6 @@ module Kapa::ExamsControllerBase
 
   private
   def exam_params
-    params.require(:exam).permit(:dept, :note, :person_id, :public, :raw, :report_date, :report_number, :status, :type)
+    params.require(:exam).permit(:dept, :note, :person_id, :public, :raw, :report_date, :report_number, :status, :type, :public)
   end
 end
