@@ -5,7 +5,7 @@ module Kapa::TextsControllerBase
     @text = Kapa::Text.find(params[:id])
     @text_ext = @text.ext
     @person = @text.person
-    @person_ext = @person.ext
+    @person_ext = @person.ext if @person
     @title = @text.title
     render :layout => "/kapa/layouts/document"
   end
@@ -44,7 +44,7 @@ module Kapa::TextsControllerBase
       redirect_to kapa_text_path(:id => @text) and return false
     end
     flash[:success] = "Document was successfully deleted."
-    render(:text => "<script>close();</script>")
+    render(:text => "<script>window.onunload = window.opener.location.reload(); close();</script>")
   end
 
   def index
