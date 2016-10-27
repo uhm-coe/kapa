@@ -26,12 +26,6 @@ Rails.application.routes.draw do
     resources :exams, &extra_actions
     resources :reports, &extra_actions
     resources :advising_sessions, &extra_actions
-    resources :cases, &extra_actions
-    resources :case_incidents, &extra_actions
-    resources :case_involvements, &extra_actions
-    resources :case_violations, &extra_actions
-    resources :case_actions, &extra_actions
-    resources :case_communications, &extra_actions
     resources :courses, &extra_actions
     resources :course_registrations, &extra_actions
     get 'practicum_placements/get_mentor(/:id)' => 'practicum_placements#get_mentor', :as => :practicum_placements_get_mentor
@@ -49,11 +43,6 @@ Rails.application.routes.draw do
     resources :assessment_criterions, &extra_actions
     put 'datasets/load(/:id)' => 'datasets#load_data', :as => :datasets_load
     get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
-    resources :datasets, &extra_actions
-    resources :faculty_publications, &extra_actions
-    resources :faculty_publication_authors
-    resources :faculty_service_activities, &extra_actions
-    resources :faculty_awards, &extra_actions
   end
 
 end

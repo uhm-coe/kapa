@@ -12,8 +12,6 @@ module Kapa::PersonBase
     has_many :files
     has_many :exams
     has_many :advising_sessions
-    has_many :case_involvements
-    has_many :cases, :through => :case_involvements
     has_many :practicum_placements
     has_many :course_registrations
 
@@ -159,7 +157,8 @@ module Kapa::PersonBase
         persons = persons.column_matches("cur_phone" => filter.key, "per_phone" => filter.key, "mobile_phone" => filter.key)
       elsif filter.key =~ /\w+,\s*\w+/
         keys = filter.key.split(/,\s*/)
-        persons = persons.column_matches(:last_name => keys[0], :first_name => keys[1])
+        persons = persons.column_matches(:last_name => keys[0])
+        persons = persons.column_matches(:first_name => keys[1])
       else
         persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
       end
