@@ -49,11 +49,6 @@ Rails.application.routes.draw do
     resources :assessment_criterions, &extra_actions
     put 'datasets/load(/:id)' => 'datasets#load_data', :as => :datasets_load
     get 'datasets/feed(/:id)' => 'datasets#feed', :as => :datasets_feed
-    resources :datasets, &extra_actions
-    resources :faculty_publications, &extra_actions
-    resources :faculty_publication_authors
-    resources :faculty_service_activities, &extra_actions
-    resources :faculty_awards, &extra_actions
   end
 
 end
