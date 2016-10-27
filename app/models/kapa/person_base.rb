@@ -12,13 +12,8 @@ module Kapa::PersonBase
     has_many :files
     has_many :exams
     has_many :advising_sessions
-    has_many :case_involvements
-    has_many :cases, :through => :case_involvements
     has_many :practicum_placements
     has_many :course_registrations
-    has_many :faculty_publications
-    has_many :faculty_service_activities
-    has_many :faculty_awards
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create
