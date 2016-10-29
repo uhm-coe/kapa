@@ -31,22 +31,19 @@ module Kapa::KapaControllerBase
 
   def validate_login
     @current_user_session = Kapa::UserSession.find
-    if @current_user_session
-      @current_user = @current_user_session.user
-      @current_user.request = request
-    else
-      if flash[:danger].present?
-        flash[:danger] = flash[:danger]
-      else
-        flash[:info] = "Please log in to continue."
-      end
+    unless @current_user_session
+      flash[:info] = "Please log in to continue."
       redirect_to(new_kapa_user_session_path) and return
     end
+
+    @current_user = @current_user_session.user
     unless @current_user_session and @current_user and @current_user.status >= 30
       @current_user_session.destroy if @current_user_session
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(new_kapa_user_session_path) and return
     end
+
+    @current_user.request = request
   end
 
   def check_read_permission
