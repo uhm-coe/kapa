@@ -76,8 +76,13 @@ module Kapa::ExamBase
           shift = (i - 1) * 42
           subject = extract_value(455, 458, shift)
           if not subject.blank? and subject =~ /^[0-9]+/
+            if extract_value(445, 454, shift).present?
+              test_date = Date.strptime(extract_value(445, 454, shift), '%m/%d/%Y')
+            else
+              test_date = nil
+            end
             exam_score = self.exam_scores.build(
-                {:taken_date => Date.strptime(extract_value(445, 454, shift), '%m/%d/%Y'),
+                {:taken_date => test_date,
                  :subject => extract_value(455, 458, shift),
                  :score => extract_value(459, 462, shift),
                  :required_score => "#{extract_value(463, 465, shift)}#{extract_value(473, 476, shift)}",

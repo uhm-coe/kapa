@@ -7,14 +7,6 @@ module Kapa::AdvisingSessionsControllerBase
     @advising_session =  @person.advising_sessions.build
     @advising_session.session_date = Date.today
     @advising_session.user_ids = [@current_user.id]
-    previous_advising = @person.advising_sessions.order("session_date DESC, id DESC").first
-    if previous_advising
-      @advising_session.curriculum_id = previous_advising.curriculum_id
-      @advising_session.category = previous_advising.category
-      @advising_session.interest = previous_advising.interest
-      @advising_session.current_field = previous_advising.current_field
-      @advising_session.location = previous_advising.location
-    end
     @curriculums = @person.curriculums
   end
 
@@ -24,6 +16,14 @@ module Kapa::AdvisingSessionsControllerBase
     @advising_session.update_ext(params[:advising_session_ext])
     @advising_session.dept = [@current_user.primary_dept]
     @advising_session.user_ids = [@current_user.id]
+    previous_advising = @advising_session.person.advising_sessions.order("session_date DESC, id DESC").first
+    if previous_advising
+      @advising_session.curriculum_id = previous_advising.curriculum_id
+      @advising_session.category = previous_advising.category
+      @advising_session.interest = previous_advising.interest
+      @advising_session.current_field = previous_advising.current_field
+      @advising_session.location = previous_advising.location
+    end
     unless @advising_session.save
       flash[:danger] = error_message_for(@advising_session)
       redirect_to new_kapa_advising_session_path(:id => @advising_session.person) and return false

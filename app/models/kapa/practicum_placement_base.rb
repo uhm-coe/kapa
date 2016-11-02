@@ -63,7 +63,7 @@ module Kapa::PracticumPlacementBase
     def csv_format
       {:id_number => [:person, :id_number],
        :last_name => [:person, :last_name],
-       :first_name => [:person, :last_name],
+       :first_name => [:person, :first_name],
        :email => [:person, :email],
        :type => [:type],
        :start_term => [:start_term_desc],
