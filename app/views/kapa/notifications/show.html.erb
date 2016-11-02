@@ -1,0 +1,24 @@
+<% content_for(:title) do %>
+  Notification: <%= @notification.title %>
+<% end %>
+
+<% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail" %>
+
+  <h4 class="section-header divider">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    Notification: <%= @notification.title %>
+  </h4>
+
+  <p>
+    <%= @notification.body.html_safe %>
+  </p>
+
+  <hr>
+
+  <p>
+    <% if @notification.read? %>
+      <em>Read at <%= @notification.read_at %></em>
+    <% end %>
+  </p>
+<%end%>
