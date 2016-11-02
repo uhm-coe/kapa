@@ -12,7 +12,7 @@
         <div class="col-sm-6">
           <%=f.property_select :status, :name => :admission_status, :include_blank => "Any" %>
           <%=f.property_select :distribution, :name => :distribution, :include_blank => "Any" %>
-          <%=f.user_select :user_id, :include_blank => "Any", :depts => @current_user.depts %>
+          <%=f.user_select :user_id, {:include_blank => "Any", :depts => @current_user.depts}, {:class => "search-select"} %>
           <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
         </div>
       </div>

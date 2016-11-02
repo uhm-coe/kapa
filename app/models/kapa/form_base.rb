@@ -16,7 +16,7 @@ module Kapa::FormBase
   end
 
   def term_desc
-    return term_id.blank? ? "No term chosen" : Kapa::Term.find(term_id).description
+    return (term_id.blank? or term_id == 0) ? "No term chosen" : Kapa::Term.find(term_id).description
   end
 
   def type_desc
@@ -55,7 +55,7 @@ module Kapa::FormBase
         when 30
           # do nothing
         when 20
-          forms = forms.depts_scope(filter.user.depts)
+          forms = forms.depts_scope(filter.user.depts, filter.user.id, "public = 'Y'")
         when 10
           forms = forms.assigned_scope(filter.user.id)
         else

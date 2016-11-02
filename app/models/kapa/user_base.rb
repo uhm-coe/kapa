@@ -26,6 +26,7 @@ module Kapa::UserBase
       c.crypted_password_field = :hashed_password
       c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
+      c.logged_in_timeout = 12.hours
     end
   end
 
@@ -129,7 +130,7 @@ module Kapa::UserBase
 
   class_methods do
     def selections(options = {})
-      users = where(:status => 30)
+      users = where("length(primary_dept) > 0")
       users = users.depts_scope(options[:depts]) if options[:depts].present?
       users = users.where(options[:conditions]) if options[:conditions].present?
       users.eager_load(:person).collect do |u|

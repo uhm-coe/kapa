@@ -12,6 +12,7 @@ module Kapa::KapaControllerBase
     after_filter :remember_last_index, :only => :index
     after_filter :put_timestamp
     helper :all
+    helper_method :read?, :write?, :maange?
   end
 
   def check_if_route_is_enabled
@@ -90,6 +91,14 @@ module Kapa::KapaControllerBase
     render(:js => script)
   end
 
+  def default_url_options(options={})
+    if Rails.env.production?
+      options.merge(:protocol => "https")
+    else
+      options
+    end
+  end
+
   protected
   #  def local_request?
   #    false
@@ -113,6 +122,18 @@ module Kapa::KapaControllerBase
     message = errors.join(", ")
     options[:sub].each_pair { |pattern, replacement| message.gsub!(pattern, replacement) } if options[:sub]
     return message
+  end
+
+  def read?(name = controller_name)
+    @current_user.check_permission(10, name)
+  end
+
+  def write?(name = controller_name)
+    @current_user.check_permission(20, name)
+  end
+
+  def manage?(name = controller_name)
+    @current_user.check_permission(30, name)
   end
 
   def controller_name

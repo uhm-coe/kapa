@@ -3,6 +3,8 @@
   <div class="row">
     <div class="col-sm-6">
       <%=f.term_select :term_id %>
+      <%=f.text_field :cohort %>
+      <%=f.text_field :subcohort %>
       <%=f.text_field :sequence %>
       <%=f.property_select :category, :name => :enrollment_category, :include_blank => true %>
       <%=f.property_select :status, :name => :enrollment_status, :include_blank => true %>

@@ -36,7 +36,7 @@ module Kapa::PracticumPlacementBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      placements = Kapa::PracticumPlacement.eager_load({:users => :person}, :person, :practicum_site, :curriculum).order("persons.last_name, persons.first_name")
+      placements = Kapa::PracticumPlacement.eager_load({:users => :person}, :person, :practicum_site, :curriculum).order("people_practicum_placements.last_name, people_practicum_placements.first_name")
       placements = placements.where("? between practicum_placements.start_term_id and practicum_placements.end_term_id", filter.term_id) if filter.term_id.present?
       placements = placements.where("type" => filter.placement_type) if filter.placement_type.present?
       placements = placements.where("practicum_site_id" => filter.practicum_site_id) if filter.practicum_site_id.present?
@@ -46,7 +46,7 @@ module Kapa::PracticumPlacementBase
       placements = placements.where("curriculums.cohort" => filter.cohort) if filter.cohort.present?
       placements = placements.assigned_scope(filter.user_id) if filter.user_id.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_practicum_placements)
         when 30
           # do nothing
         when 20

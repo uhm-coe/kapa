@@ -9,6 +9,8 @@ module Kapa::UsersControllerBase
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
     @person = @user.person
+    @roles = Rails.configuration.roles.keys
+    @roles << @permission.role if @roles.exclude?(@permission.role)
   end
 
   def new
@@ -21,7 +23,7 @@ module Kapa::UsersControllerBase
     @permission = @user.deserialize(:permission, :as => OpenStruct)
     @user.attributes = user_params if params[:user]
     @user.update_serialized_attributes!(:_ext, params[:user_ext]) if params[:user_ext].present?
-    if params[:permission][:role] and params[:permission][:role] != @permission.role
+    if params[:permission][:role] and Rails.configuration.roles.keys.include?(params[:permission][:role])
       @user.apply_role(params[:permission][:role])
       @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
     elsif params[:permission]
@@ -36,33 +38,24 @@ module Kapa::UsersControllerBase
   end
 
   def create
-    @person = Kapa::Person.new(person_params)
-    case params[:mode]
-    when "promote"
-      @person_verified = Kapa::Person.lookup(params[:person][:id_number])
-      @person_verified.merge(@person)
-      @person = @person_verified
-      flash[:success] = "Person was successfully imported."
-
-    when "consolidate"
-      @person_verified = Kapa::Person.lookup(params[:person][:id_number])
-      @person_verified.merge(@person)
-      @person = @person_verified
-      flash[:success] = "Records were successfully consolidated."
+    if params[:person_id_verified].present?
+      @person = Kapa::Person.find(params[:person_id_verified])
     else
-      flash[:success] = "Person was successfully created."
+      @person = Kapa::Person.new(person_params)
     end
+
+    @person.attributes = person_params
+    @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
 
     unless @person.save
       flash[:success] = nil
-      flash[:danger] = "Failed to save this record."
+      flash[:danger] = error_messages_for(@person)
       redirect_to new_kapa_user_path and return false
     end
 
+    #Set default uid
     if not @person.email.blank?
       uid = @person.email.split("@").first
-    elsif not @person.id_number.blank?
-      uid = @person.id_number
     else
       uid = @person.id
     end

@@ -17,8 +17,8 @@
                         alert('Person was verified with the external directory.  Please check the name and save this record.');
                       }
                       else if(data['action'] == 'merge') {
-                        alert('This person already exists in this system.  You will be redirect to the person record.');
-                        window.location.href = data['redirect_path']
+                        $('#person_id_verified').val(data['person_id_verified'])
+                        alert('This person already exists in this system.  Please check the name and save this record..');
                       }
                       else if(data['action'] == 'alert') {
                         $('#person_id_number').val('');
@@ -50,7 +50,7 @@
   New User
 </h4>
 
-<%=bootstrap_form_for :person, :url => kapa_users_path do %>
+<%=bootstrap_form_for :user, :url => kapa_users_path do %>
   <div id="person_form">
     <%=render :partial => "/kapa/persons/person_form" %>
   </div>

@@ -59,9 +59,13 @@ module Kapa::TransitionPointBase
 
   def assessment_rubrics
     rubrics = Kapa::AssessmentRubric.eager_load(:assessment_criterions)
-    rubrics = rubrics.where(["? between (select code from terms where id = assessment_rubrics.start_term_id) and (select code from terms where id = assessment_rubrics.end_term_id)", Kapa::Term.find(self.term_id).code])
-    rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
-    rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
+    if self.term_id
+      rubrics = rubrics.where(["? between assessment_rubrics.start_term_id and assessment_rubrics.end_term_id", self.term_id])
+      rubrics = rubrics.column_contains("assessment_rubrics.transition_point" => self.type)
+      rubrics = rubrics.column_contains("assessment_rubrics.program" => self.curriculum.program.code).order("assessment_rubrics.title, assessment_criterions.criterion")
+    else
+      rubrics = rubrics.none
+    end
     if rubrics.blank?
       return [Kapa::AssessmentRubric.new(:title => "Not Defined")]
     else
@@ -72,7 +76,7 @@ module Kapa::TransitionPointBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      transition_points = Kapa::TransitionPoint.eager_load({:curriculum => [:program, :person]}, :last_transition_action, {:users => :person}).order("persons.last_name, persons.first_name")
+      transition_points = Kapa::TransitionPoint.eager_load({:curriculum => [:program, :person]}, :last_transition_action, {:users => :person}, :term).order("persons.last_name, persons.first_name")
       transition_points = transition_points.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?
       transition_points = transition_points.where("transition_points.status" => filter.status) if filter.status.present?
       transition_points = transition_points.where("transition_points.type" => filter.transition_point_type.to_s) if filter.transition_point_type.present?
@@ -83,7 +87,7 @@ module Kapa::TransitionPointBase
       transition_points = transition_points.where("curriculums.location" => filter.location) if filter.location.present?
       transition_points = transition_points.assigned_scope(filter.user_id) if filter.user_id.present?
 
-      case filter.user.access_scope
+      case filter.user.access_scope(:kapa_transition_points)
         when 30
           # Do nothing
         when 20
@@ -119,6 +123,7 @@ module Kapa::TransitionPointBase
        :status_desc => [:status_desc],
        :action => [:last_transition_action, :action],
        :action_desc => [:last_transition_action, :action_desc],
+       :action_specify => [:last_transition_action, :action_specify],
        :action_date => [:last_transition_action, :action_date]}
     end
   end

@@ -61,17 +61,25 @@ module Kapa::KapaModelBase
     self.class.hashids.encode(id)
   end
 
-  def accseible?(user)
-    case user.access_scope(self.class.name.tableize)
+  def accessible?(user)
+    unless user.check_permission(10, kapa_model_name)
+      return false
+    end
+
+    case user.access_scope(kapa_model_name)
       when 30
         return true
       when 20
-        return (user.depts.any? {|dept| self.dept.include?(dept)} or self.user_assigments.where(:user_id => user.id).first)
+        return (user.dept.any? {|dept| self.dept.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
       when 10
-        return self.user_assigments.where(:user_id => user.id).first
+        return self.user_assignments.exists?(:user_id => user.id)
       else
         return false
     end
+  end
+
+  def kapa_model_name
+    self.class.name.tableize.sub("/", "_")
   end
 
   class_methods do
@@ -115,8 +123,11 @@ module Kapa::KapaModelBase
       where(conditions)
     end
 
-    def depts_scope(depts, user_id = nil)
-      exception = "user_assignments.user_id = #{user_id}" if user_id
+    def depts_scope(depts, user_id = nil, extra_exception = nil)
+      if user_id
+        exception = "user_assignments.user_id = #{user_id}"
+        exception << " or #{extra_exception}" if extra_exception
+      end
       self.column_contains({"#{self.table_name}.dept" => depts}, exception)
     end
 
