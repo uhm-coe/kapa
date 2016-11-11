@@ -8,9 +8,16 @@ module Kapa::PracticumPlacementBase
     belongs_to :mentor,
                :class_name => "Person",
                :foreign_key => "mentor_person_id"
+    belongs_to :supervisor_primary,
+               :class_name => "User",
+               :foreign_key => "supervisor_primary_user_id"
+    belongs_to :supervisor_secondary,
+               :class_name => "User",
+               :foreign_key => "supervisor_secondary_user_id"
     has_many :practicum_logs, -> {order("practicum_logs.log_date DESC")}
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
+
 
 #    serialize :supervisor, Kapa::CsvSerializer
 
