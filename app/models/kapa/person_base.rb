@@ -44,6 +44,7 @@ module Kapa::PersonBase
   end
 
   def documents(options = {})
+    options[:filter] ||= {:user => Kapa::UserSession.find.user}
     documents = []
     documents += self.files.search(options)
     documents += self.forms.search(options)
