@@ -48,8 +48,8 @@
             </div>
             <div id="new_assessment_criterion" class="panel-collapse collapse<%=' in' if @assessment_criterions.length == 0 %>">
               <div class="panel-body">
-                <% @assessment_criterion = Kapa::AssessmentCriterion.new %>
-                <%=bootstrap_form_for :assessment_criterion, :url => kapa_assessment_criterions_path(:id => @assessment_rubric, :anchor => :criterions) do |f| %>
+                <% @assessment_criterion = @assessment_rubric.assessment_criterions.build %>
+                <%=bootstrap_form_for :assessment_criterion, :url => kapa_assessment_criterions_path(:assessmnet_rubiiid => @assessment_rubric, :anchor => :criterions) do |f| %>
                   <%=render :partial => "criterion_form" %>
                   <%=render :partial => "/kapa/layouts/controls" if @current_user.write? :kapa_assessment_criterions %>
                 <% end %>

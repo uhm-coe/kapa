@@ -1,4 +1,5 @@
 <%=bootstrap_fields_for "assessment_criterion" do |f| %>
+  <%=f.hidden_field :assessment_rubric_id %>
   <div class="row">
     <div class="col-sm-6">
       <%=f.text_field :criterion, :label => "Criterion Label" %>
@@ -7,7 +8,7 @@
 
     <div class="col-sm-6">
       <%=f.text_field :standard %>
-      <%=f.select :type, [["Select", "select"], ["Text Field", "text"]], {:label => "Score Type"} %>
+      <%=f.select :type, [["Default", "default"], ["Select", "select"], ["Text Field", "text"]], {:label => "Score Type"} %>
       <%=f.text_field :type_option, :label => "Score Type Option" %>
     </div>
   </div>
