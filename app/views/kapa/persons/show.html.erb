@@ -114,7 +114,7 @@
       </div>
       <div id="advising_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right"><%=button_to_link "New Advising Session", new_kapa_advising_session_path(:id => @person), :icon => "glyphicon-plus" %></p>
+          <p class="text-right"><%=button_to_link "New Advising Session", new_kapa_advising_session_path(:person_id => @person), :icon => "glyphicon-plus" %></p>
           <table class="table table-hover">
             <tr>
               <th>Term</th>
