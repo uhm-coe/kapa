@@ -13,6 +13,7 @@ module Kapa::AdvisingSessionsControllerBase
   def create
     @advising_session = Kapa::AdvisingSession.new
     @advising_session.attributes = advising_session_params
+    @advising_session.term = Kapa::Term.from_date(@advising_session.session_date)
     @advising_session.update_ext(params[:advising_session_ext])
     @advising_session.dept = [@current_user.primary_dept]
     @advising_session.user_ids = [@current_user.id]
