@@ -196,6 +196,7 @@ module Kapa::KapaHelper
     html_options["data-content"] = content
     html_options["data-toggle"] = "popover"
     html_options["data-trigger"] = "focus"
+    html_options["data-html"] = true
     html_options["data-placement"] = "top" if html_options["data-placement"].nil?
     html_options[:title] = html_options[:title] if html_options[:title]
     button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)

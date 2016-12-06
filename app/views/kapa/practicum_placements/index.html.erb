@@ -39,7 +39,6 @@
         <th>Name</th>
         <th>Program</th>
         <th>Type</th>
-        <th>Terms</th>
         <th>Site</th>
         <th><%=t(:kapa_global_user_ids) %></th>
       </tr>
@@ -51,7 +50,6 @@
           <td><%=link_to_if @current_user.read?(:kapa_persons), abbr(practicum_placement.person.full_name), kapa_person_path(:id => practicum_placement.person, :anchor => :practicum)%></td>
           <td><%=abbr(practicum_placement.curriculum.code_desc, practicum_placement.curriculum.code) if practicum_placement.curriculum %></td>
           <td><%=practicum_placement.type %></td>
-          <td><%=practicum_placement.effective_term_desc %></td>
           <td><%=link_to practicum_placement.practicum_site.name_short, kapa_practicum_site_path(:id => practicum_placement.practicum_site) if practicum_placement.practicum_site %></td>
           <td><%=practicum_placement.rsend(:users, :first, :person, :last_name) %></td>
           <td class="right"><%=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement), :class => "btn btn-default btn-xs" %></td>
