@@ -13,16 +13,11 @@
    menu_items["Document"].push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
    menu_items["Advising"] = []
    menu_items["Advising"].push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
-   menu_items["Advising"].push ["Cases", kapa_cases_path] if @current_user.read?(:kapa_cases)
    menu_items["Course"] = []
    menu_items["Course"].push ["Rosters", kapa_courses_path] if @current_user.read?(:kapa_courses)
    menu_items["Placement"] = []
    menu_items["Placement"].push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
    menu_items["Placement"].push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
-   menu_items["Faculty"] = []
-   menu_items["Faculty"].push ["Publications", kapa_faculty_publications_path] if @current_user.read?(:kapa_faculty_publications)
-   menu_items["Faculty"].push ["Service Activities", kapa_faculty_service_activities_path] if @current_user.read?(:kapa_faculty_service_activities)
-   menu_items["Faculty"].push ["Awards", kapa_faculty_awards_path] if @current_user.read?(:kapa_faculty_awards)
    menu_items["Administration"] = []
    menu_items["Administration"].push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
