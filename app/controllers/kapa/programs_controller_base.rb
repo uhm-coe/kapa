@@ -64,7 +64,7 @@ module Kapa::ProgramsControllerBase
 
   private
   def program_params
-    params.require(:program).permit(:code, :description, :description_short, :category, :dept, :active, :degree, :major, :distribution, :track,
-                                    :available_major => [], :available_distribution => [], :available_track => [], :user_ids => [])
+    params.require(:program).permit(:code, :description, :description_short, :category, :active, :degree, :major, :distribution, :track,
+                                    :available_major => [], :available_distribution => [], :available_track => [], :dept => [], :user_ids => [])
   end
 end

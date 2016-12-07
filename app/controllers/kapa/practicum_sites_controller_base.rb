@@ -5,7 +5,7 @@ module Kapa::PracticumSitesControllerBase
     @practicum_site = Kapa::PracticumSite.find(params[:id])
     @practicum_site_ext = @practicum_site.ext
     @site_contact = @practicum_site.site_contact
-    @practicum_placements = @practicum_site.practicum_placements.order("start_term_id DESC")
+    @practicum_placements = @practicum_site.practicum_placements.order("term_id DESC")
   end
 
   def new
