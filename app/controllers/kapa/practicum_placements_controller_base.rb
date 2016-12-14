@@ -23,7 +23,7 @@ module Kapa::PracticumPlacementsControllerBase
   def create
     @person = Kapa::Person.find(params[:id])
     @practicum_placement = @person.practicum_placements.build(practicum_placement_params)
-    logger.debug "*DEBUG  #{@person.inspect}"
+    @practicum_placement.dept = [@current_user.primary_dept]
     if @practicum_placement.save
       flash[:success] = "Placement record was successfully created."
     else
