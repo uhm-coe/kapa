@@ -23,27 +23,30 @@ namespace :kapa do
       password = db_config[Rails.env]['password']
       host = db_config[Rails.env]['host']
       database = db_config[Rails.env]['database']
-      table = ENV['table']
       timestamp = Time.now.strftime('-%Y%m%d-%H%M%S') unless ENV['timestamp'] == "no"
       directory = ENV['directory'] ||= "#{Rails.root}/db/backup"
-      filename = "#{database}-#{table.nil? ? "backup" : table}#{timestamp}.sql"
+      filename = "#{database}-backup#{timestamp}.sql"
       FileUtils.mkdir_p(directory)
 
       command = 'mysqldump'
       command += ' --add-drop-table'
       command += ' --default-character-set=utf8'
-      command += " -u #{user}"
-      command += " -h #{host}" unless host.blank?
-      command += " -p#{password}" unless password.blank?
+      command += " --user=#{user}"
+      command += " --host=#{host}" unless host.blank?
+      command += " --password='#{password}'" unless password.blank?
       command += " #{database}"
-      command += " #{table}"  unless table.blank?
       command += " > '#{directory}/#{filename}'"
       sh command
 
     end
 
-    desc 'Restores the database from a file in db/backup. Specify the buckup file name, i.e., file=kapa_p-dump-20110101-xxxxxx.sql'
+    desc 'Restores the database from a file in db/backup. Specify the full path to the buckup file, i.e., file=/srv/backup/kapa_p-dump-20110101-xxxxxx.sql'
     task :restore => :environment do
+
+      if ENV['file'].nil?
+        puts "Please provide the full path to the backup file, i.e., file=/srv/backup/kapa_p-dump-20110101-xxxxxx.sql"
+        next
+      end
 
       db_config = Rails.configuration.database_configuration
       user = db_config[Rails.env]['username']
@@ -52,17 +55,12 @@ namespace :kapa do
       database = db_config[Rails.env]['database']
       directory = ENV['directory'] ||= "#{Rails.root}/db/backup"
       filename = ENV['file']
-      if filename.nil?
-        filename = Dir.entries(directory).select {|f| f.include? "#{database}-backup"}.sort.last
-        puts "File name was not specified.  Would you like to restore database from #{filename}? (y/N)"
-        return if $stdin.gets.chomp.to_s.upcase != "Y"
-      end
       command = 'mysql'
-      command += " -u #{user}"
-      command += " -h #{host}" unless host.blank?
-      command += " -p#{password}" unless password.blank?
+      command += " --user=#{user}"
+      command += " --host=#{host}" unless host.blank?
+      command += " --password='#{password}'" unless password.blank?
       command += " #{database}"
-      command += " < '#{directory}/#{filename}'"
+      command += " < '#{filename}'"
       sh command
 
     end

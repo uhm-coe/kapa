@@ -27,6 +27,10 @@ module Kapa::EnrollmentBase
     return Kapa::Property.lookup_description(:enrollment_category, category)
   end
 
+  def status_desc
+    return Kapa::Property.lookup_description(:enrollment_status, status)
+  end
+
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
@@ -39,6 +43,7 @@ module Kapa::EnrollmentBase
       enrollments = enrollments.where("curriculums.location" => filter.location) if filter.location.present?
       enrollments = enrollments.where("enrollments.subcohort" => filter.subcohort) if filter.subcohort.present?
       enrollments = enrollments.where("enrollments.category" => filter.category) if filter.category.present?
+      enrollments = enrollments.where("enrollments.status" => filter.status) if filter.status.present?
       enrollments = enrollments.assigned_scope(filter.user_id) if filter.user_id.present?
 
       case filter.user.access_scope(:kapa_enrollments)
@@ -77,7 +82,7 @@ module Kapa::EnrollmentBase
        :assignee_1_uid => [:users, :first, :uid],
        :assignee_1_last_name => [:users, :first, :person, :last_name],
        :assignee_1_first_name => [:users, :first, :person, :first_name],
-       :assignee_2_uid => [:users, :second, :person, :uid],
+       :assignee_2_uid => [:users, :second, :uid],
        :assignee_2_last_name => [:users, :second, :person, :last_name],
        :assignee_2_first_name => [:users, :second, :person, :first_name],
        :created_at => [:created_at],

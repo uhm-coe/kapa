@@ -15,15 +15,12 @@
         <%=bootstrap_form_for :practicum_placement, :url => kapa_practicum_placements_path(:id => @person) do |f| %>
           <div class="row">
             <div class="col-sm-3">
-              <%=f.term_select :start_term_id %>
+              <%=f.term_select :term_id %>
             </div>
-            <div class="col-sm-3">
-              <%=f.term_select :end_term_id %>
-            </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <%=f.select :curriculum_id, @curriculums.collect {|c| ["#{c.code_desc}", c.id]}, :include_blank => "N/A", :label => "Program" %>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
               <%=f.property_select :type, :name => :placement_type %>
             </div>
           </div>

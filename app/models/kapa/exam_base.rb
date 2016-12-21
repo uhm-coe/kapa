@@ -76,8 +76,13 @@ module Kapa::ExamBase
           shift = (i - 1) * 42
           subject = extract_value(455, 458, shift)
           if not subject.blank? and subject =~ /^[0-9]+/
+            if extract_value(445, 454, shift).present?
+              test_date = Date.strptime(extract_value(445, 454, shift), '%m/%d/%Y')
+            else
+              test_date = nil
+            end
             exam_score = self.exam_scores.build(
-                {:taken_date => Date.strptime(extract_value(445, 454, shift), '%m/%d/%Y'),
+                {:taken_date => test_date,
                  :subject => extract_value(455, 458, shift),
                  :score => extract_value(459, 462, shift),
                  :required_score => "#{extract_value(463, 465, shift)}#{extract_value(473, 476, shift)}",
@@ -137,7 +142,13 @@ module Kapa::ExamBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       exams = Kapa::Exam.eager_load(:person, :exam_scores, {:users => :person}).order("report_date DESC, persons.last_name, persons.first_name")
-      exams = exams.where("persons.last_name || ', ' || persons.first_name like ?", "%#{filter.name}%") if filter.name.present?
+      if filter.name.present? and filter.name =~ /\w+,\s*\w+/
+        keys = filter.name.split(/,\s*/)
+        exams = exams.column_matches("persons.last_name" => keys[0])
+        exams = exams.column_matches("persons.first_name" => keys[1])
+      else
+        exams = exams.column_matches("persons.first_name" => filter.name, "persons.last_name" => filter.name, "persons.other_name" => filter.name) if filter.name.present?
+      end
       exams = exams.where("persons.birth_date" => filter.birth_date) if filter.birth_date.present?
       exams = exams.where(:report_date => filter.exam_date_start.to_date..filter.exam_date_end.to_date) if filter.exam_date_start.present? and filter.exam_date_end.present?
 

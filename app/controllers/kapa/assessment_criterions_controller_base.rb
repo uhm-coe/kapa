@@ -11,7 +11,7 @@ module Kapa::AssessmentCriterionsControllerBase
     else
       flash[:danger] = @assessment_criterion.errors.full_messages.join(", ")
     end
-    redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :anchor => params[:anchor], :criterion_panel => params[:criterion_panel])
+    redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric, :anchor => params[:anchor], :criterion_panel => params[:criterion_panel])
   end
 
   def create
@@ -23,25 +23,25 @@ module Kapa::AssessmentCriterionsControllerBase
     else
       flash[:danger] = @assessment_criterion.errors.full_messages.join(", ")
     end
-    redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :anchor => params[:anchor], :criterion_panel => @assessment_criterion.id)
+    redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric, :anchor => params[:anchor], :criterion_panel => @assessment_criterion.id)
   end
 
   def destroy
     @assessment_criterion = Kapa::AssessmentCriterion.find(params[:id])
     unless @assessment_criterion.assessment_scores.blank?
       flash[:warning] = "Criterion cannot be deleted since there are associated score entries."
-      redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :anchor => params[:anchor]) and return false
+      redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric, :anchor => params[:anchor]) and return false
     end
     unless @assessment_criterion.destroy
       flash[:danger] = @assessment_criterion.errors.full_messages.join(", ")
-      redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :anchor => params[:anchor]) and return false
+      redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric, :anchor => params[:anchor]) and return false
     end
     flash[:success] = "Criterion was successfully deleted."
-    redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric_id, :anchor => params[:anchor])
+    redirect_to kapa_assessment_rubric_path(:id => @assessment_criterion.assessment_rubric, :anchor => params[:anchor])
   end
 
   private
   def assessment_criterion_params
-    params.require(:assessment_criterion).permit(:criterion, :criterion_desc, :standard, :type, :type_option)
+    params.require(:assessment_criterion).permit(:assessment_rubric_id, :criterion, :criterion_desc, :standard, :type, :type_option)
   end
 end

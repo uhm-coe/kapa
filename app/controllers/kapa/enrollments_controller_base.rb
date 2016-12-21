@@ -4,7 +4,7 @@ module Kapa::EnrollmentsControllerBase
   def show
     @enrollment = Kapa::Enrollment.find(params[:id])
     @curriculum = @enrollment.curriculum
-    @person = @enrollment.person
+    @person = @curriculum.person
     @person_ext = @person.ext
   end
 
@@ -20,6 +20,7 @@ module Kapa::EnrollmentsControllerBase
     @curriculum = @person.curriculums.find(params[:enrollment][:curriculum_id])
 
     @enrollment = @curriculum.enrollments.build(enrollment_params)
+    @enrollment.person = @person
     @enrollment.dept = [@current_user.primary_dept]
     unless @enrollment.save
       flash[:danger] = @enrollment.errors.full_messages.join(", ")

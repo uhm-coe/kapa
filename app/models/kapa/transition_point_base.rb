@@ -110,6 +110,7 @@ module Kapa::TransitionPointBase
        :cur_postal_code => [:curriculum, :person, :cur_postal_code],
        :cur_phone => [:curriculum, :person, :cur_phone],
        :email => [:curriculum, :person, :email],
+       :email_alt => [:curriculum, :person, :email_alt],
        :program_desc => [:curriculum, :program, :description],
        :track_desc => [:curriculum, :track_desc],
        :major_primary_desc => [:curriculum, :major_primary_desc],

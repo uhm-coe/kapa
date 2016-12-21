@@ -36,6 +36,10 @@ module Kapa::TermBase
       self.where("code > ?", self.current_term.code).order("code").first
     end
 
+    def from_date(date)
+      Kapa::Term.where("? between start_date and end_date", date).last
+    end
+
     #def terms_ids_by_range(start_term_id, end_term_id)
     #  self.where(:code => Kapa::Term.find(start_term_id).code..Kapa::Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
     #end
