@@ -155,7 +155,8 @@ module Kapa::KapaModelBase
 
     def to_table(options = {})
       objects = self.search(options)
-      keys = self.csv_format.keys
+      excluded_keys = options[:exclude] || []
+      keys = self.csv_format.keys.delete_if {|key| excluded_keys.include?(key)}
       table = []
       table << keys
       objects.each do |o|
