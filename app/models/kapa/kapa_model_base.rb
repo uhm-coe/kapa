@@ -153,6 +153,17 @@ module Kapa::KapaModelBase
       end
     end
 
+    def to_table(options = {})
+      objects = self.search(options)
+      keys = self.csv_format.keys
+      table = []
+      table << keys
+      objects.each do |o|
+        table << keys.collect {|k| o.rsend(*csv_format[k]) }
+      end
+      return table
+    end
+
     def csv_format
       #This method should be implemented in subclasses to define csv data.
       {}
