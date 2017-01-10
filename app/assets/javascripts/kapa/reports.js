@@ -5,4 +5,5 @@
 // the compiled file.
 //
 //= require pivottable
+//= require pivottable/gchart_renderers
 
