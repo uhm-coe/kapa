@@ -125,7 +125,11 @@ module Kapa::TransitionPointBase
        :action => [:last_transition_action, :action],
        :action_desc => [:last_transition_action, :action_desc],
        :action_specify => [:last_transition_action, :action_specify],
-       :action_date => [:last_transition_action, :action_date]}
+       :action_date => [:last_transition_action, :action_date],
+       :asignee1 => [:users, :first, :person, :full_name],
+       :asignee2 => [:users, :second, :person, :full_name],
+       :asignee3 => [:users, :third, :person, :full_name]
+       }
     end
   end
 
