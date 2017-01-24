@@ -111,6 +111,8 @@ module Kapa::TransitionPointBase
        :cur_phone => [:curriculum, :person, :cur_phone],
        :email => [:curriculum, :person, :email],
        :email_alt => [:curriculum, :person, :email_alt],
+       :ssn => [:curriculum, :person, :ssn],
+       :ssn_agreement => [:curriculum, :person, :ssn_agreement],
        :program_desc => [:curriculum, :program, :description],
        :track_desc => [:curriculum, :track_desc],
        :major_primary_desc => [:curriculum, :major_primary_desc],
