@@ -142,21 +142,11 @@ module Kapa::KapaControllerBase
 
   def filter(options = {})
     name = :filter
-    session[name] = filter_defaults if session[name].nil?
+    session[name] = Rails.configuration.filter_defaults if session[name].nil?
     session[name].update(params[:filter]) if params[:filter].present?
     session[name].update(options) if options.present?
     filter = OpenStruct.new(session[name])
     filter.user = @current_user
     return filter
-  end
-
-  def filter_defaults
-    {:key => "",
-     :active => 1,
-     :property => :major,
-     :transition_point_type => "admission",
-     :date_start => Date.today,
-     :date_end => Date.today,
-     :per_page => Rails.configuration.items_per_page}
   end
 end

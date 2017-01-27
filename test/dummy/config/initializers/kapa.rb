@@ -52,3 +52,13 @@ Rails.configuration.available_routes = %w{
   kapa_case_actions
   kapa_notifications
 }
+
+Rails.configuration.filter_defaults = {
+   :key => "",
+   :active => 1,
+   :property => :major,
+   :transition_point_type => "admission",
+   :date_start => Date.today,
+   :date_end => Date.today,
+   :per_page => Rails.configuration.items_per_page}
+}
