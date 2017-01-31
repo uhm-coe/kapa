@@ -107,7 +107,9 @@ module Kapa::UserBase
   end
 
   def apply_role(name)
-    self.serialize(:permission, Rails.configuration.roles[name])
+    role_permission = Rails.configuration.roles[name]
+    role_permission.merge!(:role => name) if role_permission
+    self.serialize(:permission, role_permission)
   end
 
   def valid_credential?(password)

@@ -12,7 +12,7 @@ module Kapa::KapaControllerBase
     after_filter :remember_last_index, :only => :index
     after_filter :put_timestamp
     helper :all
-    helper_method :read?, :write?, :maange?
+    helper_method :read?, :write?, :manage?
   end
 
   def check_if_route_is_enabled
