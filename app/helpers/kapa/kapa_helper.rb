@@ -202,6 +202,10 @@ module Kapa::KapaHelper
     button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)
   end
 
+  def beta?
+    Rails.application.secrets.release != "live"
+  end
+
   private
   def next_id(prefix, index)
     i = @scores.keys.index(index)
