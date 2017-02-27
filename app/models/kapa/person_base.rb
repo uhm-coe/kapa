@@ -168,12 +168,17 @@ module Kapa::PersonBase
     end
 
     def lookup(key)
-      filter = OpenStruct.new(:key => key)
-      #Key must be unique attribute.
-      unless filter.key =~ Regexp.new(Rails.configuration.regex_id_number) or filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
+      #Lookup function finds a single record using a key, so the key must be an unique attribute.
+      unless key =~ Regexp.new(Rails.configuration.regex_id_number) or key =~ Regexp.new(Rails.configuration.regex_email, true)
         return false
       end
-      person = self.search(:filter => filter).first
+
+      if key =~ Regexp.new(Rails.configuration.regex_id_number)
+        person = Kapa::Person.find_by(:status => "V", :id_number => key)
+      elsif key =~ Regexp.new(Rails.configuration.regex_email, true)
+        person = Kapa::Person.find_by(:status => "V", :email => key)
+      end
+
       if person.blank?
         person_remote = Kapa::Person.lookup_remote(key)
 
@@ -188,9 +193,9 @@ module Kapa::PersonBase
         end
 
         return person_remote
+      else
+        return person
       end
-
-      return person
     end
 
     def lookup_remote(key)

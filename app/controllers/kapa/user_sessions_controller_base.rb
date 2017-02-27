@@ -17,7 +17,7 @@ module Kapa::UserSessionsControllerBase
   end
 
   def create
-    session = Kapa::UserSession.new(params[:user_session])
+    session = Kapa::UserSession.new(user_session_params)
     unless session.save
       flash[:danger] = "Username/password do not match!"
       redirect_to :action => :new and return false
@@ -31,5 +31,9 @@ module Kapa::UserSessionsControllerBase
   end
 
   def error
+  end
+
+  def user_session_params
+    params.require(:user_session).permit(:uid, :password)
   end
 end

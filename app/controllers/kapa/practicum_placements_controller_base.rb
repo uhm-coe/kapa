@@ -99,6 +99,6 @@ module Kapa::PracticumPlacementsControllerBase
 
   private
   def practicum_placement_params
-    params.require(:practicum_placement).permit(:term_id, :person_id, :mentor_person_id, :curriculum_id, :practicum_site_id, :type, :category, :note, :user_ids => [])
+    params.require(:practicum_placement).permit(:term_id, :person_id, :mentor_person_id, :supervisor_primary_user_id, :supervisor_secondary_user_id, :curriculum_id, :practicum_site_id, :type, :category, :note, :user_ids => [])
   end
 end

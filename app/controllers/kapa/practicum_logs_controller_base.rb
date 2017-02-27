@@ -51,6 +51,14 @@ module Kapa::PracticumLogsControllerBase
     redirect_to kapa_practicum_placement_path(:id => @practicum_log.practicum_placement, :anchor => params[:anchor])
   end
 
+  def export
+    @filter = filter
+    send_data Kapa::PracticumLog.to_csv(:filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "placement_logs_#{Kapa::Term.find(@filter.term_id).description}_#{Date.today}.csv"
+  end
+
   private
   def practicum_log_params
     params.require(:practicum_log).permit(:practicum_placement_id, :log_date, :type, :duration, :frequency, :category, :status, :user_id, :note,  :task => [], :method => [] )
