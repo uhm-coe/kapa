@@ -173,9 +173,9 @@ module Kapa::PersonBase
       end
 
       if key =~ Regexp.new(Rails.configuration.regex_id_number)
-        person = Kapa::Person.where(:status => "V", :id_number => key).first
+        person = Kapa::Person.find_by(:status => "V", :id_number => key)
       elsif key =~ Regexp.new(Rails.configuration.regex_email, true)
-        person = Kapa::Person.where(:status => "V", :email => key).first
+        person = Kapa::Person.find_by(:status => "V", :email => key)
       end
 
       if person.blank?
