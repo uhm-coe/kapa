@@ -70,7 +70,8 @@ module Kapa::KapaModelBase
       when 30
         return true
       when 20
-        return (user.dept.any? {|dept| self.dept.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
+        depts = self.dept.is_a?(Array) ? self.dept : [self.dept]
+        return (user.dept.any? {|dept| depts.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
       when 10
         return self.user_assignments.exists?(:user_id => user.id)
       else
