@@ -12,7 +12,7 @@ module Kapa::KapaControllerBase
     after_filter :remember_last_index, :only => :index
     after_filter :put_timestamp
     helper :all
-    helper_method :read?, :write?, :manage?
+    helper_method :read?, :write?, :manage?, :access_all?, :access_dept?, :access_assigned?
   end
 
   def check_if_route_is_enabled
@@ -134,6 +134,18 @@ module Kapa::KapaControllerBase
 
   def manage?(name = controller_name)
     @current_user.check_permission(30, name)
+  end
+
+  def access_all?(name = controller_name)
+    @current_user.access_scope(name) >= 30
+  end
+
+  def access_dept?(name = controller_name)
+    @current_user.access_scope(name) >= 20
+  end
+
+  def access_assigned?(name = controller_name)
+    @current_user.access_scope(name) >= 10
   end
 
   def controller_name
