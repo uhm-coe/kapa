@@ -58,7 +58,7 @@ module Kapa::EnrollmentsControllerBase
 
   private
   def enrollment_params
-    params.require(:enrollment).permit(:term_id, :sequence, :category, :status, :dept,
+    params.require(:enrollment).permit(:term_id, :cohort, :subcohort, :sequence, :category, :status, :dept,
                                        :note, :curriculum_id, :user_ids => [])
   end
 

@@ -61,7 +61,7 @@ module Kapa::CurriculumsControllerBase
   private
   def curriculum_params
     params.require(:curriculum).permit(:program_id, :second_degree, :track, :distribution, :location, :major_primary,
-                                       :major_secondary, :person_id, :term_id, :note, :user_ids => [])
+                                       :major_secondary, :person_id, :term_id ,:cohort, :note, :user_ids => [])
   end
 
 end
