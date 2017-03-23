@@ -6,6 +6,14 @@ module Kapa::AssessmentScoreBase
     belongs_to :assessment_scorable, :polymorphic => true
   end
 
+  def rating_desc
+    if self.assessment_criterion.type == "select" and self.assessment_criterion.type_option
+      return Kapa::Property.lookup_description(assessment_criterion.type_option, self.rating)
+    else
+      return self.rating
+    end
+  end
+
   class_methods do
     def scores(assessment_scorables, assessment_rubric)
       #initialize table first
