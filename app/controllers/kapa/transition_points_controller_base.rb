@@ -2,7 +2,7 @@ module Kapa::TransitionPointsControllerBase
   extend ActiveSupport::Concern
 
   def show
-    session[:filter_main][:assessment_rubric_id] = nil if session[:filter_main] and request.get?
+    session[:filter][:assessment_rubric_id] = nil if session[:filter] and request.get?
     @filter = filter
 
     @transition_point = Kapa::TransitionPoint.find(params[:id])
