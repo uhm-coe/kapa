@@ -13,33 +13,14 @@ Kapa::User.delete_all
 #Load sample data
 fixtures = %w(
   properties
-  programs
-  program_offers
-  terms
   persons
-  curriculums
-  advising_sessions
-  transition_points
-  transition_actions
-  courses
-  course_registrations
-  enrollments
-  practicum_placements
-  practicum_sites
-  datasets
 ).each do |f|
   ActiveRecord::FixtureSet.create_fixtures("#{Kapa::Engine.root}/test/fixtures", f)
 end
 
-#Create a sample user on each role
-Rails.configuration.roles.each_key do |name|
-  person = Kapa::Person.create(:last_name => name, :first_name => "User")
-  user = person.users.create(:uid => name.downcase, :category => "local", :status => 30)
-  user.password = name.downcase
-  user.apply_role(name)
-  user.save!
-end
-
-[Kapa::AdvisingSession].each do |c|
-  c.update_all(:session_date => Date.today)
-end
+#Create admin user
+person = Kapa::Person.create(:last_name => "Admin", :first_name => "User")
+user = person.users.create(:uid => "admin", :category => "local", :status => 30)
+user.password = "admin"
+user.apply_role("Admin")
+user.save!

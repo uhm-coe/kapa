@@ -1,0 +1,48 @@
+---
+- name: Install required packages
+  apt: pkg=build-essential,git-core,apt-transport-https,vim,curl,gnupg state=latest update_cache=yes cache_valid_time=3600
+  become: yes
+
+- name: Add Phusion repository
+  copy: src=/vagrant/provision/passenger.list dest=/etc/apt/sources.list.d/passenger.list owner=root mode=0600
+  become: yes
+
+- name: Add public key for Phusion repository
+  shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+  become: yes
+
+- name: Install Passenger/Apache
+  apt: pkg=apache2,libapache2-mod-passenger state=latest update_cache=yes
+  become: yes
+
+- name: Disable default virtual host
+  shell: a2dissite 000-default
+  become: yes
+
+- name: Add custom virtual host
+  template: src=/vagrant/provision/apache-vhost.conf.j2 dest=/etc/apache2/sites-available/vagrant.conf
+  become: yes
+
+- name: Enable custom virtual host
+  shell: a2ensite vagrant
+  become: yes
+
+- name: Restart apache
+  service: name=apache2 state=restarted
+  become: yes
+
+#- name: Install mysql {{mysql_version}}
+#  shell: creates=/usr/sbin/mysqld echo "mysql-server-{{mysql_version}} mysql-server/root_password password {{mysql_password}}" | debconf-set-selections;echo "mysql-server-{{mysql_version}} mysql-server/root_password_again password {{mysql_password}}" | debconf-set-selections;apt-get -y install mysql-server-{{mysql_version}}
+#  become: yes
+
+- name: Install mysql
+  apt: pkg=mysql-server-{{mysql_version}},libmysqlclient-dev state=latest update_cache=yes
+  become: yes
+
+- name: Update mysql config to allow remote connections
+  shell: sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
+  become: yes
+
+- name: Restart mysql
+  service: name=mysql state=restarted
+  become: yes
