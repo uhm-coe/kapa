@@ -5,7 +5,6 @@ module Kapa::KapaModelBase
     self.abstract_class = true
     self.inheritance_column = nil
     serialize :yml, Hash
-    serialize :dept, Kapa::CsvSerializer
   end
 
   def deserialize(name, options = {})
