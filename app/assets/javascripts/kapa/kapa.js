@@ -77,7 +77,9 @@ jQuery(document).ready(function ($) {
   });
 
   $('[data-toggle="popover"]').popover();
-  $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip({
+      html: true
+  });
 
   $("a[rel~=popover], .has-popover").popover();
   $("a[rel~=tooltip], .has-tooltip").tooltip();
