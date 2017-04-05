@@ -15,14 +15,15 @@ module Kapa::PracticumPlacementsControllerBase
   def new
     @person = Kapa::Person.find(params[:person_id])
     @curriculums = @person.curriculums
-    default_curriculum = @curriculums.first.id if @curriculums.present?
-    @practicum_placement = @person.practicum_placements.build(:start_term_id => Kapa::Term.current_term, :end_term_id => Kapa::Term.current_term, :curriculum_id => default_curriculum)
+    default_curriculum_id = params[:curriculum_id] ? params[:curriculum_id] : @curriculums.first
+    default_term_id = params[:term_id] ? params[:term_id] : Kapa::Term.current_term.id
+    @practicum_placement = @person.practicum_placements.build(:term_id => default_term_id, :curriculum_id => default_curriculum_id)
   end
 
   def create
     @person = Kapa::Person.find(params[:id])
     @practicum_placement = @person.practicum_placements.build(practicum_placement_params)
-    logger.debug "*DEBUG  #{@person.inspect}"
+    @practicum_placement.dept = [@current_user.primary_dept]
     if @practicum_placement.save
       flash[:success] = "Placement record was successfully created."
     else
@@ -98,6 +99,6 @@ module Kapa::PracticumPlacementsControllerBase
 
   private
   def practicum_placement_params
-    params.require(:practicum_placement).permit(:start_term_id, :end_term_id, :person_id, :mentor_person_id, :curriculum_id, :practicum_site_id, :type, :category, :note, :user_ids => [])
+    params.require(:practicum_placement).permit(:term_id, :person_id, :mentor_person_id, :supervisor_primary_user_id, :supervisor_secondary_user_id, :curriculum_id, :practicum_site_id, :type, :category, :note, :user_ids => [])
   end
 end

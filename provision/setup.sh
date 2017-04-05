@@ -4,10 +4,19 @@ export PYTHONUNBUFFERED=1
 export ANSIBLE_FORCE_COLOR=1
 
 if ! [ `which ansible` ]; then
+  if [ -f /etc/redhat-release ]; then
+    sudo yum install -y epel-release yum-utils > /dev/null
+    sudo yum-config-manager --enable epel > /dev/null
+    sudo yum install -y ansible > /dev/null
+  fi
+
+  if [ -f /etc/lsb-release ]; then
     sudo apt-get update -y > /dev/null
-    sudo apt-get install -y ansible > /dev/null
-    echo "cd /vagrant" >> .bashrc
+    sudo apt-get -y install python-pip > /dev/null
+    sudo pip install markupsafe > /dev/null
+    sudo pip install ansible > /dev/null
+  fi
 fi
 
-ansible-playbook -i "localhost," -c local /vagrant/provision/rails-devserver.yml
+ansible-playbook -i "localhost," -c local /vagrant/provision/setup-devserver.yml
 

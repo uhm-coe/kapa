@@ -16,34 +16,3 @@ Rails.configuration.roles["None"] = Rails.configuration.available_routes.each_wi
   permission["#{route}"] = '0'
   permission["#{route}_scope"] = '0'
 }
-Rails.configuration.roles["Adviser"] = {
-    kapa_persons: '20',
-    kapa_persons_scope: '20',
-    kapa_curriculums: '20',
-    kapa_curriculums_scope: '20',
-    kapa_transition_points: '20',
-    kapa_transition_points_scope: '20',
-    kapa_transition_actions: '20',
-    kapa_transition_actions_scope: '20',
-    kapa_enrollments: '20',
-    kapa_enrollments_scope: '20',
-    kapa_files: '20',
-    kapa_files_scope: '20',
-    kapa_forms: '20',
-    kapa_forms_scope: '20',
-    kapa_exams: '20',
-    kapa_exams_scope: '20',
-    kapa_advising_sessions: '20',
-    kapa_advising_sessions_scope: '20',
-    kapa_notifications: '20',
-    kapa_notifications_scope: '10'
-}
-
-instructor_permission = {}
-instructor_permission["kapa_courses"] = '20'
-instructor_permission["kapa_courses_scope"] = '20'
-instructor_permission["kapa_course_registrations"] = '20'
-instructor_permission["kapa_course_registrations_scope"] = '20'
-instructor_permission["kapa_notifications"] = '20'
-instructor_permission["kapa_notifications_scope"] = '10'
-Rails.configuration.roles["Instructor"] = instructor_permission

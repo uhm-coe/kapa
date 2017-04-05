@@ -10,26 +10,30 @@ module Kapa::UserSessionsControllerBase
   end
 
   def new
+    Kapa::UserSession.find.destroy if Kapa::UserSession.find
   end
 
   def show
   end
 
   def create
-    reset_session
-    session = Kapa::UserSession.new(params[:user_session])
+    session = Kapa::UserSession.new(user_session_params)
     unless session.save
       flash[:danger] = "Username/password do not match!"
-      redirect_to kapa_root_path and return false
+      redirect_to :action => :new and return false
     end
     redirect_to kapa_root_path
   end
 
   def destroy
-    Kapa::UserSession.find.destroy if Kapa::UserSession.find
-    redirect_to kapa_root_path
+    flash[:info] = "You are successfully logged out."
+    redirect_to :action => :new
   end
 
   def error
+  end
+
+  def user_session_params
+    params.require(:user_session).permit(:uid, :password)
   end
 end

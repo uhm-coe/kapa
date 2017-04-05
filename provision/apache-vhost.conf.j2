@@ -1,9 +1,8 @@
 ServerName localhost
 <VirtualHost *:80>
-        DocumentRoot /vagrant/spec/dummy/public
+        DocumentRoot /vagrant/test/dummy/public
         RailsEnv development
-        PassengerUserSwitching on
-        PassengerDefaultUser vagrant
+        PassengerRuby /usr/local/rvm/gems/ruby-{{ruby_version}}/wrappers/ruby
         PassengerMaxPoolSize 1
         <Directory /vagrant/test/dummy/public>
                 Allow from all

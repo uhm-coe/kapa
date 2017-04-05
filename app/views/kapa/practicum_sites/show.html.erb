@@ -34,7 +34,7 @@
               <th>ID</th>
               <th>Name</th>
               <th>Mentor</th>
-              <th>Terms</th>
+              <th>Term</th>
               <th></th>
             </tr>
           </thead>
@@ -44,7 +44,7 @@
                 <td><%=practicum_placement.person.id_number %></td>
                 <td><%=abbr practicum_placement.person.full_name%></td>
                 <td><%=practicum_placement.mentor.full_name if practicum_placement.mentor.present? %></td>
-                <td><%=practicum_placement.effective_term_desc %></td>
+                <td><%=practicum_placement.term_desc %></td>
                 <td class="right"><%#=link_to "Show", kapa_practicum_placement_path(:id => practicum_placement), :class => "btn btn-default btn-xs" %></td>
               </tr>
             <% end %>

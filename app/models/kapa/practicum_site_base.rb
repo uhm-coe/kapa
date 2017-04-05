@@ -34,7 +34,7 @@ module Kapa::PracticumSiteBase
       {:site_code => [:code],
        :area_group => [:area_group],
        :district => [:district],
-       :level_from => [:level_fro],
+       :level_from => [:level_from],
        :level_to => [:level_to],
        :category => [:category],
        :name => [:name],

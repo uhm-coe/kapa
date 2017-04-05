@@ -69,7 +69,8 @@ module Kapa::KapaModelBase
       when 30
         return true
       when 20
-        return (user.dept.any? {|dept| self.dept.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
+        depts = self.dept.is_a?(Array) ? self.dept : [self.dept]
+        return (user.dept.any? {|dept| depts.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
       when 10
         return self.user_assignments.exists?(:user_id => user.id)
       else
@@ -150,6 +151,18 @@ module Kapa::KapaModelBase
           csv << keys.collect {|k| o.rsend(*csv_format[k]) }
         end
       end
+    end
+
+    def to_table(options = {})
+      objects = self.search(options)
+      excluded_keys = options[:exclude] || []
+      keys = self.csv_format.keys.delete_if {|key| excluded_keys.include?(key)}
+      table = []
+      table << keys
+      objects.each do |o|
+        table << keys.collect {|k| o.rsend(*csv_format[k]) }
+      end
+      return table
     end
 
     def csv_format

@@ -1,0 +1,64 @@
+---
+- hosts: all
+  vars:
+    ruby_version: 2.2.1
+    mysql_version: 5.5
+    mysql_user: vagrant
+    mysql_password: vagrant
+  tasks:
+    - include: ubuntu1404.yml
+      when: ansible_os_family == "Debian"
+
+    - include: centos7.yml
+      when: ansible_os_family == "RedHat"
+
+    - name: Set mysql root pasword
+      shell: /usr/bin/mysqladmin -u root password '{{mysql_password}}'
+      become: yes
+      ignore_errors: yes
+
+    - name: Add a mysql user {{mysql_user}} for local access
+      shell: mysql --user=root --password='{{mysql_password}}' -e "GRANT ALL PRIVILEGES ON *.* TO '{{mysql_user}}'@'localhost' IDENTIFIED BY '{{mysql_password}}' WITH GRANT OPTION;"
+
+    - name: Add a mysql user {{mysql_user}} for remote access
+      shell: mysql --user=root --password='{{mysql_password}}' -e "GRANT ALL PRIVILEGES ON *.* TO '{{mysql_user}}'@'10.10.10.1' IDENTIFIED BY '{{mysql_password}}' WITH GRANT OPTION;"
+
+    - name: Restart mysql
+      service: name=mysql state=restarted
+      become: yes
+
+    - name: Install RVM PGP key
+      shell: "curl -sSL https://rvm.io/mpapis.asc | gpg --import -"
+      become: true
+
+    - name: Download RVM installer
+      get_url: url="https://get.rvm.io" dest="/tmp/rvm-installer.sh"
+
+    - name: Set executable RVM installer
+      file: path="/tmp/rvm-installer.sh" mode=0755
+
+    - name: Install RVM
+      command: /tmp/rvm-installer.sh --path /usr/local/rvm stable creates=/usr/local/rvm
+      become: yes
+
+    - name: Set RVM autolibs
+      command: /usr/local/rvm/bin/rvm autolibs 3
+      become: yes
+
+    - name: Add current user to RVM group
+      shell: usermod -a -G rvm vagrant
+      become: yes
+
+    - name: Install ruby wtih RVM
+      command: /usr/local/rvm/bin/rvm install {{ruby_version}} creates=/usr/local/rvm/gems/ruby-{{ruby_version}}
+      become: yes
+
+    - name: Set default ruby version
+      lineinfile: dest=/etc/profile.d/Z50_rvm_default.sh state=present regexp='^rvm use' line='rvm use {{ruby_version}}' create=yes
+      become: yes
+
+    - name: Suppress Ruby warnings
+      lineinfile: dest=/home/vagrant/.bash_profile regexp='^export RUBYOPT' line='export RUBYOPT=W0' create=yes
+
+    - name: Automitically cd to /vagrant
+      lineinfile: dest=~/.bash_profile state=present regexp='^cd' line='cd /vagrant' create=yes

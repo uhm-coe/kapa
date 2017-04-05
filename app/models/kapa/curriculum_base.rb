@@ -56,7 +56,7 @@ module Kapa::CurriculumBase
   end
 
   def code
-    texts = [program.degree]
+    texts = [program.code]
     texts.push major_primary if major_primary.present?
     texts.push distribution if distribution.present?
     texts.push track if track.present?
@@ -64,7 +64,7 @@ module Kapa::CurriculumBase
   end
 
   def code_desc
-    texts = [program.degree]
+    texts = [program.code]
     texts.push major_primary_desc if major_primary_desc.present?
     texts.push distribution_desc if distribution_desc.present?
     texts.push track_desc if track_desc.present?

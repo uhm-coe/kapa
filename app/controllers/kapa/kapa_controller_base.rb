@@ -12,7 +12,7 @@ module Kapa::KapaControllerBase
     after_filter :remember_last_index, :only => :index
     after_filter :put_timestamp
     helper :all
-    helper_method :read?, :write?, :maange?
+    helper_method :read?, :write?, :manage?, :access_all?, :access_dept?, :access_assigned?
   end
 
   def check_if_route_is_enabled
@@ -31,22 +31,22 @@ module Kapa::KapaControllerBase
 
   def validate_login
     @current_user_session = Kapa::UserSession.find
-    if @current_user_session
-      @current_user = @current_user_session.user
-      @current_user.request = request
-    else
-      if flash[:danger].present?
-        flash[:danger] = flash[:danger]
-      else
-        flash[:info] = "Please log in to continue."
-      end
+    unless @current_user_session
+      flash[:info] = "Please log in to continue."
       redirect_to(new_kapa_user_session_path) and return
     end
-    unless @current_user_session and @current_user and @current_user.status >= 30
-      @current_user_session.destroy if @current_user_session
+
+    @current_user = @current_user_session.user
+    unless @current_user_session and @current_user
+      flash[:info] = "Your session has expired! Please log in to continue."
+      redirect_to(new_kapa_user_session_path) and return
+    end
+
+    unless @current_user.status >= 30
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(new_kapa_user_session_path) and return
     end
+    @current_user.request = request
   end
 
   def check_read_permission
@@ -136,30 +136,29 @@ module Kapa::KapaControllerBase
     @current_user.check_permission(30, name)
   end
 
+  def access_all?(name = controller_name)
+    @current_user.access_scope(name) >= 30
+  end
+
+  def access_dept?(name = controller_name)
+    @current_user.access_scope(name) >= 20
+  end
+
+  def access_assigned?(name = controller_name)
+    @current_user.access_scope(name) >= 10
+  end
+
   def controller_name
     params[:controller].gsub("/", "_")
   end
 
   def filter(options = {})
     name = :filter
-    session[name] = filter_defaults if session[name].nil?
+    session[name] = Rails.configuration.filter_defaults if session[name].nil?
     session[name].update(params[:filter]) if params[:filter].present?
     session[name].update(options) if options.present?
     filter = OpenStruct.new(session[name])
     filter.user = @current_user
     return filter
-  end
-
-  def filter_defaults
-    {:key => "",
-     :active => 1,
-     :property => :major,
-     :transition_point_type => "admission",
-     :date_start => Date.today,
-     :date_end => Date.today,
-     :term_id => Kapa::Term.current_term.id,
-     :start_term_id => Kapa::Term.current_term.id,
-     :end_term_id => Kapa::Term.current_term.id,
-     :per_page => Rails.configuration.items_per_page}
   end
 end

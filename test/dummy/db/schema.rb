@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723000000) do
+ActiveRecord::Schema.define(version: 20170227231950) do
 
   create_table "advising_sessions", force: :cascade do |t|
     t.integer  "person_id",     limit: 4,        null: false
@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
     t.text     "yml",               limit: 65535
     t.text     "xml",               limit: 65535
+    t.integer  "user_id",           limit: 4
   end
 
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
@@ -428,6 +429,26 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
   add_index "forms", ["term_id"], name: "index_forms_on_term_id", using: :btree
   add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id",         limit: 4
+    t.integer  "attachable_id",   limit: 4
+    t.string   "attachable_type", limit: 255
+    t.string   "type",            limit: 255
+    t.string   "title",           limit: 255
+    t.text     "body",            limit: 65535
+    t.string   "sequence",        limit: 255
+    t.boolean  "read",                          default: false
+    t.boolean  "email_sent",                    default: false
+    t.text     "yml",             limit: 65535
+    t.text     "xml",             limit: 65535
+    t.datetime "read_at"
+    t.datetime "email_sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "persons", force: :cascade do |t|
     t.string   "id_number",       limit: 255
@@ -492,8 +513,7 @@ ActiveRecord::Schema.define(version: 20140723000000) do
 
   create_table "practicum_placements", force: :cascade do |t|
     t.integer  "person_id",         limit: 4
-    t.integer  "start_term_id",     limit: 4
-    t.integer  "end_term_id",       limit: 4
+    t.integer  "term_id",           limit: 4
     t.integer  "curriculum_id",     limit: 4
     t.integer  "practicum_site_id", limit: 4
     t.integer  "mentor_person_id",  limit: 4
@@ -509,11 +529,10 @@ ActiveRecord::Schema.define(version: 20140723000000) do
   end
 
   add_index "practicum_placements", ["curriculum_id"], name: "index_practicum_placements_on_curriculum_id", using: :btree
-  add_index "practicum_placements", ["end_term_id"], name: "index_practicum_placements_on_end_term_id", using: :btree
   add_index "practicum_placements", ["mentor_person_id"], name: "index_practicum_placements_on_mentor_person_id", using: :btree
   add_index "practicum_placements", ["person_id"], name: "index_practicum_placements_on_person_id", using: :btree
   add_index "practicum_placements", ["practicum_site_id"], name: "index_practicum_placements_on_practicum_site_id", using: :btree
-  add_index "practicum_placements", ["start_term_id"], name: "index_practicum_placements_on_start_term_id", using: :btree
+  add_index "practicum_placements", ["term_id"], name: "index_practicum_placements_on_start_term_id", using: :btree
 
   create_table "practicum_sites", force: :cascade do |t|
     t.string   "code",       limit: 255
@@ -629,6 +648,42 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.datetime "updated_at"
   end
 
+  create_table "text_templates", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.text     "body",       limit: 65535
+    t.string   "type",       limit: 255
+    t.string   "sequence",   limit: 255
+    t.string   "category",   limit: 255
+    t.boolean  "active",                   default: true
+    t.string   "dept",       limit: 255
+    t.text     "yml",        limit: 65535
+    t.text     "xml",        limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "texts", force: :cascade do |t|
+    t.integer  "person_id",        limit: 4
+    t.integer  "attachable_id",    limit: 4
+    t.string   "attachable_type",  limit: 255
+    t.integer  "text_template_id", limit: 4
+    t.string   "title",            limit: 255
+    t.text     "body",             limit: 65535
+    t.string   "sequence",         limit: 255
+    t.string   "category",         limit: 255
+    t.string   "status",           limit: 255
+    t.string   "dept",             limit: 255
+    t.text     "note",             limit: 65535
+    t.text     "yml",              limit: 65535
+    t.text     "xml",              limit: 65535
+    t.datetime "submitted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "texts", ["person_id"], name: "index_texts_on_person_id", using: :btree
+  add_index "texts", ["text_template_id"], name: "index_texts_on_text_template_id", using: :btree
+
   create_table "timestamps", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.string   "path",       limit: 255
@@ -636,6 +691,8 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "agent",      limit: 255
     t.datetime "created_at"
   end
+
+  add_index "timestamps", ["user_id"], name: "index_timestamps_on_user_id", using: :btree
 
   create_table "transition_actions", force: :cascade do |t|
     t.integer  "transition_point_id", limit: 4
@@ -715,6 +772,12 @@ ActiveRecord::Schema.define(version: 20140723000000) do
     t.string   "perishable_token",    limit: 255,                  null: false
     t.integer  "login_count",         limit: 4,        default: 0, null: false
     t.integer  "failed_login_count",  limit: 4,        default: 0, null: false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip",    limit: 255
+    t.string   "last_login_ip",       limit: 255
+    t.string   "password_salt",       limit: 255
   end
 
   add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree

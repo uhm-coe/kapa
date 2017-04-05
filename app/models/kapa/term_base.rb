@@ -29,11 +29,15 @@ module Kapa::TermBase
     end
 
     def current_term
-      Kapa::Term.where("? between start_date and end_date", Date.today).last or Kapa::Term.find_by_code("201630")
+      Kapa::Term.where("? between start_date and end_date", Date.today).last or Kapa::Term.last
     end
 
     def next_term
       self.where("code > ?", self.current_term.code).order("code").first
+    end
+
+    def from_date(date)
+      Kapa::Term.where("? between start_date and end_date", date).last
     end
 
     #def terms_ids_by_range(start_term_id, end_term_id)

@@ -9,6 +9,7 @@ module Kapa::UsersControllerBase
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
     @person = @user.person
+    @person_ext = @person.ext
     @roles = Rails.configuration.roles.keys
     @roles << @permission.role if @roles.exclude?(@permission.role)
   end

@@ -158,7 +158,8 @@ module Kapa::PersonBase
         persons = persons.column_matches("cur_phone" => filter.key, "per_phone" => filter.key, "mobile_phone" => filter.key)
       elsif filter.key =~ /\w+,\s*\w+/
         keys = filter.key.split(/,\s*/)
-        persons = persons.column_matches(:last_name => keys[0], :first_name => keys[1])
+        persons = persons.column_matches(:last_name => keys[0])
+        persons = persons.column_matches(:first_name => keys[1])
       else
         persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
       end
@@ -167,12 +168,17 @@ module Kapa::PersonBase
     end
 
     def lookup(key)
-      filter = OpenStruct.new(:key => key)
-      #Key must be unique attribute.
-      unless filter.key =~ Regexp.new(Rails.configuration.regex_id_number) or filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
+      #Lookup function finds a single record using a key, so the key must be an unique attribute.
+      unless key =~ Regexp.new(Rails.configuration.regex_id_number) or key =~ Regexp.new(Rails.configuration.regex_email, true)
         return false
       end
-      person = self.search(:filter => filter).first
+
+      if key =~ Regexp.new(Rails.configuration.regex_id_number)
+        person = Kapa::Person.find_by(:status => "V", :id_number => key)
+      elsif key =~ Regexp.new(Rails.configuration.regex_email, true)
+        person = Kapa::Person.find_by(:status => "V", :email => key)
+      end
+
       if person.blank?
         person_remote = Kapa::Person.lookup_remote(key)
 
@@ -187,9 +193,9 @@ module Kapa::PersonBase
         end
 
         return person_remote
+      else
+        return person
       end
-
-      return person
     end
 
     def lookup_remote(key)

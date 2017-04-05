@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
 
+# Declare your gem's dependencies in kapa.gemspec.
+# Bundler will treat runtime dependencies like base dependencies, and
+# development dependencies will be added by default to the :development group.
+gemspec
+
 #KAPA dependencies
 gem 'rails', '~> 4.2.3'
 gem 'rails-csv-fixtures', :github => 'bfolkens/rails-csv-fixtures'
@@ -25,6 +30,6 @@ gem 'bootstrap-multiselect-rails'
 gem 'dragula-rails'
 gem 'hashids'
 gem 'summernote-rails'
-
-#Project specific gems
+gem 'rails-assets-jquery', '1.12.4', source: 'https://rails-assets.org'
+gem 'rails-assets-pivottable', source: 'https://rails-assets.org'
 #gem 'whenever', :require => false
