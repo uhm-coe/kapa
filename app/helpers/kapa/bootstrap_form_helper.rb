@@ -89,6 +89,7 @@ module Kapa::BootstrapFormHelper
           label_tag = ""
         else
           label_tag = @template.content_tag(:label, label_options[:text], :class => [label_options[:class], "control-label"].join(" "), :for => "#{@object_name}_#{method}")
+          label_tag << " #{@template.content_tag(:a, "<i class='glyphicon glyphicon-info-sign'></i>".html_safe, :class => "kapa-tooltip", "data-toggle" => "tooltip", "data-placement" => "right", :title => options[:tooltip])}".html_safe if options[:tooltip]
         end
 
         if options[:hint]
@@ -98,12 +99,7 @@ module Kapa::BootstrapFormHelper
         if name =~ /(check_box)|(radio_button)/
           @template.content_tag(:div, "#{tag} #{label_tag}".html_safe)
         else
-          if options[:div]
-            content = "#{label_tag} #{@template.content_tag(:div, tag.html_safe, options[:div])}"
-          else
-            content = "#{label_tag}#{tag}"
-          end
-          @template.content_tag(:div, content.html_safe, :class => "form-group")
+          @template.content_tag(:div, "#{label_tag}#{tag}".html_safe, :class => "form-group")
         end
       end
     end
