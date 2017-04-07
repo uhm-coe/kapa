@@ -46,17 +46,17 @@ module Kapa::BootstrapFormHelper
         case name.to_s
           when /(field$)|(area$)|(picker$)/
             options = args.first.is_a?(Hash) ? args.first : {}
-            tag = @template.send(name, @object_name, method, options.merge(:class => "form-control #{options[:class]}"))
+            tag = @template.send(name, @object_name, method, clean_options(options).merge(:class => "form-control #{options[:class]}"))
 
           when "select"
             options = args.second.is_a?(Hash) ? args.second : {}
             html_options = args.third.is_a?(Hash) ? args.third : {}
-            tag = @template.send(name, @object_name, method, args.first, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
+            tag = @template.send(name, @object_name, method, args.first, clean_options(options), html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select", "person_select", "date_select", "text_template_select"
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, options, html_options.merge(:class => "form-control #{html_options[:class]}"))
+            tag = @template.send(name, @object_name, method, clean_options(options), html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "check_box"
             options = args.first.is_a?(Hash) ? args.first : {}
@@ -71,7 +71,7 @@ module Kapa::BootstrapFormHelper
 
           when "static"
             options = args.first.is_a?(Hash) ? args.first : {}
-            tag = @template.content_tag(:p, options[:content], :class => "form-control-static #{options[:class]}")
+            tag = @template.content_tag(:p, options[:content].to_s.html_safe, :class => "form-control-static #{options[:class]}")
           else
             tag = @template.send(name, @object_name, method, *args)
         end
@@ -89,7 +89,10 @@ module Kapa::BootstrapFormHelper
           label_tag = ""
         else
           label_tag = @template.content_tag(:label, label_options[:text], :class => [label_options[:class], "control-label"].join(" "), :for => "#{@object_name}_#{method}")
-          label_tag << " #{@template.content_tag(:a, "<i class='glyphicon glyphicon-info-sign'></i>".html_safe, :class => "kapa-tooltip", "data-toggle" => "tooltip", "data-placement" => "right", :title => options[:tooltip])}".html_safe if options[:tooltip]
+        end
+
+        if options[:tooltip]
+          label_tag << " #{@template.content_tag(:a, @template.content_tag(:i, nil, :class => "glyphicon glyphicon-info-sign"), "data-toggle" => "tooltip", "data-placement" => "right", :title => options[:tooltip])}".html_safe
         end
 
         if options[:hint]
@@ -99,7 +102,11 @@ module Kapa::BootstrapFormHelper
         if name =~ /(check_box)|(radio_button)/
           @template.content_tag(:div, "#{tag} #{label_tag}".html_safe)
         else
-          @template.content_tag(:div, "#{label_tag}#{tag}".html_safe, :class => "form-group")
+          if options[:addon]
+            @template.content_tag(:div, "#{label_tag} #{@template.content_tag(:div, "#{tag} #{options[:addon]}".html_safe, :class => "input-group")}".html_safe, :class => "form-group")
+          else
+            @template.content_tag(:div, "#{label_tag}#{tag}".html_safe, :class => "form-group")
+          end
         end
       end
     end
@@ -107,6 +114,11 @@ module Kapa::BootstrapFormHelper
     helpers = %w{text_field password_field text_area file_field check_box radio_button select static model_select property_select term_select program_select history_select user_select date_picker datetime_picker person_select date_select text_template_select}
     helpers.each do |name|
       build_label_field(name)
+    end
+
+    private
+    def clean_options(options)
+      options.select {|key, value| %w{label hint tooltip addon}.exclude?(key.to_s)  }
     end
   end
 end
