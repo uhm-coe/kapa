@@ -5,7 +5,7 @@ module Kapa::TransitionPointBase
     belongs_to :curriculum
     belongs_to :term
     belongs_to :form
-    has_many :transition_actions
+    has_many :transition_actions, -> {order("sequence desc, action_date desc, id desc")}
     has_one :last_transition_action,
             -> { where("transition_actions.id = (select a.id
                                                  from transition_actions a
