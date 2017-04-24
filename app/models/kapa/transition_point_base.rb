@@ -5,7 +5,7 @@ module Kapa::TransitionPointBase
     belongs_to :curriculum
     belongs_to :term
     belongs_to :form
-    has_many :transition_actions
+    has_many :transition_actions, -> {order("sequence desc, action_date desc, id desc")}
     has_one :last_transition_action,
             -> { where("transition_actions.id = (select a.id
                                                  from transition_actions a
@@ -71,6 +71,17 @@ module Kapa::TransitionPointBase
     else
       return rubrics
     end
+  end
+
+  def assessment_score(assessment_criterion_id)
+    @assessment_scores_cache = self.assessment_scores.eager_load(:assessment_criterion => :assessment_rubric) if @assessment_scores_cache.nil?
+    return @assessment_scores_cache.find {|s| s.assessment_criterion_id = assessment_criterion_id}
+  end
+
+  def assessment_score_by_name(title, criterion)
+#    self.assessment_scores.eager_load(:assessment_criterion => :assessment_rubric).where("assessment_rubrics.title" => title, "assessment_criterions.criterion" => criterion).first
+    @assessment_scores_cache = self.assessment_scores.eager_load(:assessment_criterion => :assessment_rubric) if @assessment_scores_cache.nil?
+    return @assessment_scores_cache.find {|s| s.rsend(:assessment_criterion, :assessment_rubric, :title) == title and s.rsend(:assessment_criterion, :criterion) == criterion}
   end
 
   class_methods do

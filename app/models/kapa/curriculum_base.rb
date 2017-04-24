@@ -17,6 +17,15 @@ module Kapa::CurriculumBase
                                            order by tm.sequence desc, t.id desc
                                            limit 1)")},
             :class_name => "TransitionPoint"
+    has_one :last_enrollment,
+            -> { where("enrollments.id =
+                                          (select e.id
+                                           from enrollments e
+                                           inner join terms tm on tm.id = e.term_id
+                                           where e.curriculum_id = enrollments.curriculum_id
+                                           order by tm.sequence desc, e.id desc
+                                           limit 1)")},
+            :class_name => "Enrollment"
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
@@ -58,6 +67,7 @@ module Kapa::CurriculumBase
   def code
     texts = [program.code]
     texts.push major_primary if major_primary.present?
+    texts.push major_secondary if major_secondary.present?
     texts.push distribution if distribution.present?
     texts.push track if track.present?
     return texts.join("/")
@@ -66,6 +76,7 @@ module Kapa::CurriculumBase
   def code_desc
     texts = [program.code]
     texts.push major_primary_desc if major_primary_desc.present?
+    texts.push major_secondary_desc if major_secondary_desc.present?
     texts.push distribution_desc if distribution_desc.present?
     texts.push track_desc if track_desc.present?
     return texts.join("/")
@@ -74,7 +85,7 @@ module Kapa::CurriculumBase
   class_methods do
     def search(options ={})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      curriculums = Kapa::Curriculum.eager_load([{:users => :person}, {:transition_points => :last_transition_action} , :program, :person]).order("persons.last_name, persons.first_name")
+      curriculums = Kapa::Curriculum.eager_load([{:users => :person}, {:transition_points => :last_transition_action}, :last_enrollment, :program, :person]).order("persons.last_name, persons.first_name")
       curriculums = curriculums.where("transition_points.type" => "admission")
       curriculums = curriculums.where("transition_actions.action" => ['1','2'])
       curriculums = curriculums.where("transition_points.term_id" => filter.term_id) if filter.term_id.present?

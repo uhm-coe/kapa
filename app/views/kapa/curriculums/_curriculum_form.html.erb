@@ -20,6 +20,7 @@
       <%=f.property_select :second_degree, {:include_blank => true} %>
       <%=f.property_select :major_primary, {:name => :major, :label => "Primary Major/Concentration", :include_code => true, :program => @program} %>
       <%=f.property_select :major_secondary, {:name => :major, :label => "Secondary Major/Concentration", :include_code => true, :include_blank => true} %>
+      <%=f.static :cohort, :content => @curriculum.cohort %>
     </div>
 
     <div class="col-sm-6">

@@ -39,8 +39,8 @@
       <th>Name</th>
       <th>Program</th>
       <th>Cohort</th>
+      <th>Last Enrollment</th>
       <th>Last Transition Point</th>
-      <th>Last Action</th>
       <th><%=t(:kapa_global_user_ids) %></th>
       <th></th>
     </tr>
@@ -52,8 +52,8 @@
         <td><%=link_to_if @current_user.read?(:kapa_persons), abbr(curriculum.person.full_name), kapa_person_path(:id => curriculum.person) %></td>
         <td><%=abbr curriculum.code_desc, curriculum.code %></td>
         <td><%=curriculum.cohort %></td>
-        <td><%=curriculum.rsend(:last_transition_point, :type_desc) %></td>
-        <td><%=curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
+        <td><%=curriculum.rsend(:last_enrollment, :term_desc) %>/<%=curriculum.rsend(:last_enrollment, :status_desc) %></td>
+        <td><%=curriculum.rsend(:last_transition_point, :type_desc) %>/<%=curriculum.rsend(:last_transition_point, :last_transition_action, :action_desc) %></td>
         <td><%=curriculum.rsend(:users, :first, :person, :last_name) %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => curriculum}, :class => "btn btn-default btn-xs" %></td>
       </tr>
