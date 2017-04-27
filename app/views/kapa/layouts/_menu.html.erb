@@ -5,7 +5,6 @@
    menu_items["Document"].push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
    menu_items["Document"].push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
    menu_items["Administration"] = []
-   menu_items["Administration"].push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
    menu_items["Administration"].push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
    menu_items["Administration"].push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)

@@ -206,6 +206,32 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
+    create_table "programs", force: :cascade do |t|
+      t.string "code", limit: 255, null: false
+      t.string "description", limit: 255
+      t.string "description_short", limit: 255
+      t.string "degree", limit: 255
+      t.string "major", limit: 255
+      t.string "track", limit: 255
+      t.string "distribution", limit: 255
+      t.string "location", limit: 255
+      t.string "available_major", limit: 255
+      t.string "available_track", limit: 255
+      t.string "available_distribution", limit: 255
+      t.string "available_location", limit: 255
+      t.string "category", limit: 255
+      t.integer "sequence", limit: 4
+      t.boolean "active", default: true
+      t.string "dept", limit: 255
+      t.text "yml", limit: 65535
+      t.text "xml", limit: 65535
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    add_index "programs", ["code"], name: "index_programs_on_code", using: :btree
+    add_index "programs", ["degree"], name: "index_programs_on_degree", using: :btree
+
     create_table "timestamps", force: :cascade do |t|
       t.integer "user_id", limit: 4
       t.string "path", limit: 255
