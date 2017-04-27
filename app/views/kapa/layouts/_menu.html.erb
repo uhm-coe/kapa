@@ -1,28 +1,13 @@
 <%
  if @current_user
    menu_items = {}
-   menu_items["Program"] = []
-   menu_items["Program"].push ["Candidates", kapa_curriculums_path] if @current_user.read? (:kapa_curriculums)
-   menu_items["Program"].push ["Transition Points", kapa_transition_points_path] if @current_user.read?(:kapa_transition_points)
-   menu_items["Program"].push ["Enrollments", kapa_enrollments_path] if @current_user.read?(:kapa_enrollments)
-   menu_items["Program"].push ["Programs", kapa_programs_path] if @current_user.manage?(:kapa_programs)
    menu_items["Document"] = []
    menu_items["Document"].push ["Files", kapa_files_path] if @current_user.read?(:kapa_files)
    menu_items["Document"].push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
-   menu_items["Document"].push ["Tests", kapa_exams_path] if @current_user.read?(:kapa_exams)
-   menu_items["Document"].push ["Reports", kapa_reports_path] if @current_user.read?(:kapa_reports)
-   menu_items["Advising"] = []
-   menu_items["Advising"].push ["Sessions", kapa_advising_sessions_path] if @current_user.read?(:kapa_advising_sessions)
-   menu_items["Course"] = []
-   menu_items["Course"].push ["Rosters", kapa_courses_path] if @current_user.read?(:kapa_courses)
-   menu_items["Placement"] = []
-   menu_items["Placement"].push ["Placements", kapa_practicum_placements_path] if @current_user.read?(:kapa_practicum_placements)
-   menu_items["Placement"].push ["Sites", kapa_practicum_sites_path] if @current_user.read?(:kapa_practicum_sites)
    menu_items["Administration"] = []
    menu_items["Administration"].push ["Terms", kapa_terms_path] if @current_user.manage?(:kapa_terms)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
    menu_items["Administration"].push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
-   menu_items["Administration"].push ["Datasets", kapa_datasets_path] if @current_user.manage?(:kapa_datasets)
    menu_items["Administration"].push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)
  end
 %>

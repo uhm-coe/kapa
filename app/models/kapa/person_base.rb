@@ -5,20 +5,12 @@ module Kapa::PersonBase
     self.table_name = :persons
     serialize :type, Kapa::CsvSerializer
 
-    has_many :curriculums
-    has_many :enrollments
     has_many :users
     has_many :forms
     has_many :files
-    has_many :exams
-    has_many :advising_sessions
-    has_many :practicum_placements
-    has_many :course_registrations
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create
-    #  validates_length_of :ssn, :is => 9, :allow_blank => true
-    #  validates_numericality_of :ssn, :allow_blank => true
 
     before_save :format_fields, :format_ssn
   end
@@ -48,7 +40,6 @@ module Kapa::PersonBase
     documents = []
     documents += self.files.search(options)
     documents += self.forms.search(options)
-    documents += self.exams.search(options)
   end
 
   def full_name(option = nil)
@@ -89,14 +80,6 @@ module Kapa::PersonBase
 
   def deleted?
     return self.status == "D"
-  end
-
-  def active_curriculums(options = {})
-    curriculums = self.curriculums
-    curriculums = curriculums.includes(:program) if options[:includes] == :program
-    curriculums = curriculums.order(options[:order]) if options[:order].present?
-    curriculums = curriculums.select { |c| c.deserialize(:journey, :as => OpenStruct).active == "Y" }
-    return curriculums
   end
 
   def merge(another_person, options = {})

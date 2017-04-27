@@ -18,35 +18,19 @@ Rails.configuration.available_routes = %w{
   kapa_persons
   kapa_files
   kapa_forms
-  kapa_reports
   kapa_assessment_rubrics
   kapa_assessment_criterions
   kapa_users
   kapa_user_assignments
   kapa_notifications
-  kapa_datasets
   kapa_properties
-  kapa_exams
-  kapa_curriculums
-  kapa_transition_points
-  kapa_transition_actions
-  kapa_enrollments
-  kapa_advising_sessions
-  kapa_courses
-  kapa_course_registrations
-  kapa_practicum_placements
-  kapa_practicum_logs
-  kapa_practicum_sites
-  kapa_programs
-  kapa_program_offers
   kapa_terms
 }
 
 Rails.configuration.filter_defaults = {
    :key => "",
    :active => 1,
-   :property => "major",
-   :transition_point_type => "admission",
+   :property => "dept",
    :date_start => Date.today,
    :date_end => Date.today,
    :per_page => Rails.configuration.items_per_page
