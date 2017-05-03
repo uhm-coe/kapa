@@ -54,6 +54,18 @@ jQuery(document).ready(function ($) {
       }
   });
 
+  $('.timepicker').datetimepicker({
+    format: 'hh:mm A'
+  }).on('changeDate',function (e) {
+      $(this).datetimepicker('hide');
+  }).on('keydown', function (e) {
+      if (e.keyCode === 8) { // If backspace key is pressed
+        e.preventDefault(); // Disable "back button" action; stay on the page
+        $(this).find('.form-control').val(''); // Clear date in the input field
+        $(this).datetimepicker('hide'); // Dismiss the calendar
+      }
+  });
+
   $('[multiple="multiple"]').multiselect({
     numberDisplayed: 1,
     enableCaseInsensitiveFiltering: true,
