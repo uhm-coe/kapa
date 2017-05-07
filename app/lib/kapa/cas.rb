@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Kapa::Cas
 
   def self.login_url(return_url)
@@ -20,4 +22,7 @@ class Kapa::Cas
     return body.split(/\n/)
   end
 
+  def self.defined?
+    Rails.configuration.respond_to?(:cas_host)
+  end
 end

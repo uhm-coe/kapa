@@ -12,9 +12,10 @@ Rails.application.routes.draw do
     root :to => 'user_sessions#show', :as => :root
     get '/error' => 'user_sessions#error', :as => :error
     resource :user_session
+    get 'user_session/validate' => 'user_sessions#validate'
+    resources :persons, &extra_actions
     get 'persons/lookup(/:id)' => 'persons#lookup', :as => :persons_lookup
     get 'persons/sync(/:id)' => 'persons#sync', :as => :persons_sync
-    resources :persons, &extra_actions
     resources :files, &extra_actions
     resources :forms, &extra_actions
     resources :texts, &extra_actions

@@ -8,9 +8,10 @@
     }
 
     .right-col {
-      padding: 120px 0 0 0;
+      padding: 200px 0 0 0;
       float: none;
       display: inline-block;
+      align-items: bottom;
     }
   </style>
 <% end %>
@@ -24,11 +25,20 @@
     </div>
 
     <div class="col-md-4 right-col">
-      <%=bootstrap_form_for(:user_session, :url => kapa_user_session_path, :html => {:method => :post}) do |f| %>
-        <%=f.text_field :uid, :label => "Username" %>
-        <%=f.password_field :password %>
-        <%=f.submit "Login", :class => "btn btn-primary btn-lg" %>
-      <% end %>
+      <p class="text-center">
+        <%=button_to_link "Log in with CAS", Kapa::Cas.login_url(kapa_user_session_validate_url), :class => "btn btn-primary btn-lg" if Kapa::Cas.defined? %>
+        <%=button_to_link "Log in manually", nil, "data-toggle" => "modal", "data-target" => "#login_dialog", :class => "btn btn-default btn-lg"  if beta? %>
+      </p>
+    </div>
     </div>
   </div>
+<% end %>
+
+<% content_for(:dialog) do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "login_dialog", :modal_title => "Login", :modal_form_id => "login_form"} do %>
+    <%=bootstrap_form_for(:user_session, :url => kapa_user_session_path, :html => {:method => :post, :id => "login_form"}) do |f| %>
+      <%=f.text_field :uid, :label => "Username" %>
+      <%=f.password_field :password %>
+    <% end %>
+  <% end if beta? %>
 <% end %>
