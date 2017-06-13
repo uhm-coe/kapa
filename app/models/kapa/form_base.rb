@@ -71,10 +71,11 @@ module Kapa::FormBase
        :first_name => [:person, :first_name],
        :cur_street => [:person, :cur_street],
        :cur_city => [:person, :cur_city],
-       :cur_state => [:person, :cur_stateperson, :contact, :cur_state],
+       :cur_state => [:person, :cur_state],
        :cur_postal_code => [:person, :cur_postal_code],
        :cur_phone => [:person, :cur_phone],
        :email => [:person, :email],
+       :email_alt => [:person, :email_alt],
        :updated => [:updated_at],
        :submitted => [:submitted_at],
        :lock =>[:lock]}
