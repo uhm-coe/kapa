@@ -35,6 +35,15 @@ module Kapa::UserSessionsControllerBase
     end
   end
 
+  def cas
+    if Kapa::Cas.defined?
+      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url) and return
+    else
+      flash[:alert] = "CAS configration error"
+      redirect_to :action => :new and return
+    end
+  end
+
   def error
   end
 
