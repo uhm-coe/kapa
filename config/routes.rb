@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   namespace :kapa do
 
     root :to => 'user_sessions#show', :as => :root
+    get '/logout' => 'user_sessions#destroy', :as => :logout
     get '/error' => 'user_sessions#error', :as => :error
+    get '/cas' => 'user_sessions#cas', :as => :cas
     resource :user_session
     get 'user_session/validate' => 'user_sessions#validate'
     resources :persons, &extra_actions
