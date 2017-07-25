@@ -20,6 +20,12 @@ jQuery(document).ready(function ($) {
     $($(this).attr('data-submit')).submit();
   });
 
+  $('.modal-dialog').keypress(function(e){
+    if(e.which == 13) {
+      $(this).find("#modal_submit").click();
+    }
+  });
+
   // Reset a form if data-reset attribute is set
   $('button[data-reset]').click(function () {
     var form_id = $(this).attr('data-reset');

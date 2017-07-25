@@ -110,7 +110,7 @@ module Kapa::KapaControllerBase
       render_notice and return false
     else
       flash[:danger] = "We are sorry, but something went wrong."
-      redirect_to(Rails.configuration.routing_mode == "student" ? student_kapa_error_path : kapa_error_path) and return false
+      redirect_to(kapa_error_path) and return false
     end
   end
 

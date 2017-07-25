@@ -22,15 +22,56 @@ module Kapa::UserSessionsControllerBase
       flash[:danger] = "Username/password do not match!"
       redirect_to :action => :new and return false
     end
+    success
     redirect_to kapa_root_path
   end
 
   def destroy
     flash[:info] = "You are successfully logged out."
-    redirect_to :action => :new
+    if Kapa::Cas.defined?
+      redirect_to Kapa::Cas.logout_url(new_kapa_user_session_url) and return
+    else
+      redirect_to :action => :new and return
+    end
+  end
+
+  def cas
+    if Kapa::Cas.defined?
+      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url) and return
+    else
+      flash[:alert] = "CAS configration error"
+      redirect_to :action => :new and return
+    end
   end
 
   def error
+  end
+
+  def success
+  end
+
+  def validate
+    unless Kapa::Cas.defined? and params[:ticket]
+      flash[:alert] = "Error during CAS authentication (CAS configration error)."
+      redirect_to :action => :new and return false
+    end
+
+    @cas_results = Kapa::Cas.validate(params[:ticket], kapa_user_session_validate_url)
+    if @cas_results[0] == "yes"
+      uid = @cas_results[1]
+      user = Kapa::User.find_by(:uid => uid, :category => "ldap", :status => 30)
+      if user
+        Kapa::UserSession.create(user, true)
+        success
+        redirect_to(:action => :show)
+      else
+        flash[:alert] = "#{uid} is not an authorized user."
+        redirect_to(:action => :new) and return false
+      end
+    else
+      flash[:alert] = "Error during CAS authentication (Unable to validate the ticket)."
+      redirect_to(:action => :new) and return false
+    end
   end
 
   def user_session_params

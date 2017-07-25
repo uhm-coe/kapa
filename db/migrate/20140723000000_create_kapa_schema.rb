@@ -1,32 +1,6 @@
 class CreateKapaSchema < ActiveRecord::Migration
   def change
 
-    create_table "advising_sessions", force: :cascade do |t|
-      t.integer "person_id", limit: 4, null: false
-      t.integer "curriculum_id", limit: 4
-      t.integer "term_id", limit: 4
-      t.string "type", limit: 255
-      t.date "session_date"
-      t.text "note", limit: 16777215
-      t.string "task", limit: 255
-      t.string "action", limit: 255
-      t.string "specify", limit: 255
-      t.string "current_field", limit: 255
-      t.string "interest", limit: 255
-      t.string "location", limit: 255
-      t.string "category", limit: 255
-      t.string "dept", limit: 255
-      t.text "yml", limit: 16777215
-      t.text "xml", limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "advising_sessions", ["curriculum_id"], name: "index_advising_sessions_on_curriculum_id", using: :btree
-    add_index "advising_sessions", ["person_id"], name: "index_advisings_on_person_id", using: :btree
-    add_index "advising_sessions", ["session_date"], name: "index_advisings_on_inquiry_date", using: :btree
-    add_index "advising_sessions", ["task"], name: "index_advisings_on_task", using: :btree
-
     create_table "assessment_criterions", force: :cascade do |t|
       t.string "criterion", limit: 255
       t.text "criterion_desc", limit: 65535
@@ -75,64 +49,6 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
 
-    create_table "course_registrations", force: :cascade do |t|
-      t.integer "course_id", limit: 4
-      t.integer "person_id", limit: 4
-      t.string "status", limit: 255
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "course_registrations", ["course_id", "person_id"], name: "index_assessment_course_registrations_on_course_id_and_person_id", unique: true, using: :btree
-
-    create_table "courses", force: :cascade do |t|
-      t.string "crn", limit: 150
-      t.string "subject", limit: 255
-      t.string "number", limit: 255
-      t.string "section", limit: 255
-      t.string "title", limit: 255
-      t.string "instructor", limit: 255
-      t.integer "credits", limit: 4
-      t.string "status", limit: 255
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.string "dept", limit: 255
-      t.integer "term_id", limit: 4
-      t.integer "credits", limit: 4
-    end
-
-    add_index "courses", ["term_id", "crn"], name: "index_courses_on_term_id_and_crn", unique: true, using: :btree
-    add_index "courses", ["term_id"], name: "index_courses_on_term_id", using: :btree
-
-    create_table "curriculums", force: :cascade do |t|
-      t.integer "person_id", limit: 4, null: false
-      t.integer "program_id", limit: 4, null: false
-      t.integer "term_id", limit: 4
-      t.string "second_degree", limit: 255
-      t.string "major_primary", limit: 255
-      t.string "major_secondary", limit: 255
-      t.string "track", limit: 255
-      t.string "distribution", limit: 255
-      t.string "location", limit: 255
-      t.string "cohort", limit: 255
-      t.string "status", limit: 255
-      t.boolean "active", default: false
-      t.string "dept", limit: 255
-      t.text "note", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "curriculums", ["dept"], name: "index_curriculums_on_dept", using: :btree
-    add_index "curriculums", ["person_id"], name: "index_curriculums_on_person_id", using: :btree
-    add_index "curriculums", ["program_id"], name: "index_curriculums_on_program_id", using: :btree
-
     create_table "datasets", force: :cascade do |t|
       t.string "name", limit: 255
       t.string "description", limit: 255
@@ -150,68 +66,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.text "yml", limit: 65535
       t.text "xml", limit: 65535
     end
-
-    create_table "enrollments", force: :cascade do |t|
-      t.integer "curriculum_id", limit: 4
-      t.integer "term_id", limit: 4
-      t.string "sequence", limit: 255
-      t.string "category", limit: 255
-      t.string "status", limit: 255
-      t.text "note", limit: 65535
-      t.string "dept", limit: 255
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "enrollments", ["curriculum_id"], name: "index_enrollments_on_curriculum_id", using: :btree
-    add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id", using: :btree
-
-    create_table "exam_scores", force: :cascade do |t|
-      t.integer "exam_id", limit: 4
-      t.string "subject", limit: 255
-      t.date "taken_date"
-      t.integer "required_score", limit: 4
-      t.integer "score", limit: 4
-      t.integer "category_points_01", limit: 4
-      t.integer "category_points_02", limit: 4
-      t.integer "category_points_03", limit: 4
-      t.integer "category_points_04", limit: 4
-      t.integer "category_points_05", limit: 4
-      t.integer "category_points_06", limit: 4
-      t.integer "category_points_07", limit: 4
-      t.integer "category_points_08", limit: 4
-      t.integer "category_points_09", limit: 4
-      t.integer "category_points_10", limit: 4
-      t.string "status", limit: 255
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "exam_scores", ["exam_id"], name: "index_exam_scores_on_exam_id", using: :btree
-
-    create_table "exams", force: :cascade do |t|
-      t.integer "person_id", limit: 4
-      t.integer "attachable_id", limit: 4
-      t.string "attachable_type", limit: 255
-      t.string "report_number", limit: 255
-      t.date "report_date"
-      t.string "status", limit: 255
-      t.string "public", limit: 255, default: "Y"
-      t.text "note", limit: 65535
-      t.text "raw", limit: 65535
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.string "dept", limit: 255
-      t.string "type", limit: 255
-    end
-
-    add_index "exams", ["person_id"], name: "index_exams_on_person_id", using: :btree
 
     create_table "files", force: :cascade do |t|
       t.integer "person_id", limit: 4
@@ -305,114 +159,6 @@ class CreateKapaSchema < ActiveRecord::Migration
     add_index "persons", ["id_number"], name: "index_persons_on_id_number", unique: true, using: :btree
     add_index "persons", ["status"], name: "index_persons_on_status", using: :btree
 
-    create_table "practicum_logs", force: :cascade do |t|
-      t.integer "practicum_placement_id", limit: 4
-      t.date "log_date"
-      t.string "type", limit: 255
-      t.string "category", limit: 255
-      t.string "task", limit: 255
-      t.string "status", limit: 255
-      t.integer "length", limit: 4
-      t.integer "user_id", limit: 4
-      t.text "note", limit: 65535
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    create_table "practicum_placements", force: :cascade do |t|
-      t.integer "person_id", limit: 4
-      t.integer "start_term_id", limit: 4
-      t.integer "end_term_id", limit: 4
-      t.integer "curriculum_id", limit: 4
-      t.integer "practicum_site_id", limit: 4
-      t.integer "mentor_person_id", limit: 4
-      t.text "note", limit: 65535
-      t.string "type", limit: 255
-      t.string "category", limit: 255
-      t.string "status", limit: 255
-      t.string "dept", limit: 255
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "practicum_placements", ["curriculum_id"], name: "index_practicum_placements_on_curriculum_id", using: :btree
-    add_index "practicum_placements", ["end_term_id"], name: "index_practicum_placements_on_end_term_id", using: :btree
-    add_index "practicum_placements", ["mentor_person_id"], name: "index_practicum_placements_on_mentor_person_id", using: :btree
-    add_index "practicum_placements", ["person_id"], name: "index_practicum_placements_on_person_id", using: :btree
-    add_index "practicum_placements", ["practicum_site_id"], name: "index_practicum_placements_on_practicum_site_id", using: :btree
-    add_index "practicum_placements", ["start_term_id"], name: "index_practicum_placements_on_start_term_id", using: :btree
-
-    create_table "practicum_sites", force: :cascade do |t|
-      t.string "code", limit: 255
-      t.string "name", limit: 255
-      t.string "name_short", limit: 255
-      t.string "level_from", limit: 255
-      t.string "level_to", limit: 255
-      t.string "url", limit: 255
-      t.string "district", limit: 255
-      t.string "area", limit: 255
-      t.string "area_group", limit: 255
-      t.string "category", limit: 255
-      t.string "status", limit: 255
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "practicum_sites", ["code"], name: "index_practicum_sites_on_code", using: :btree
-
-    create_table "program_offers", force: :cascade do |t|
-      t.integer "program_id", limit: 4, null: false
-      t.integer "start_term_id", limit: 4
-      t.integer "end_term_id", limit: 4
-      t.string "description", limit: 255
-      t.string "description_short", limit: 255
-      t.string "major", limit: 255
-      t.string "available_major", limit: 255
-      t.string "distribution", limit: 255
-      t.string "available_distribution", limit: 255
-      t.integer "sequence", limit: 4
-      t.boolean "active", default: true
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "program_offers", ["end_term_id"], name: "index_program_offers_on_end_term_id", using: :btree
-    add_index "program_offers", ["start_term_id"], name: "index_program_offers_on_start_term_id", using: :btree
-
-    create_table "programs", force: :cascade do |t|
-      t.string "code", limit: 255, null: false
-      t.string "description", limit: 255
-      t.string "description_short", limit: 255
-      t.string "degree", limit: 255
-      t.string "major", limit: 255
-      t.string "track", limit: 255
-      t.string "distribution", limit: 255
-      t.string "location", limit: 255
-      t.string "available_major", limit: 255
-      t.string "available_track", limit: 255
-      t.string "available_distribution", limit: 255
-      t.string "available_location", limit: 255
-      t.string "category", limit: 255
-      t.integer "sequence", limit: 4
-      t.boolean "active", default: true
-      t.string "dept", limit: 255
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "programs", ["code"], name: "index_programs_on_code", using: :btree
-    add_index "programs", ["degree"], name: "index_programs_on_degree", using: :btree
-
     create_table "properties", force: :cascade do |t|
       t.string "name", limit: 255
       t.string "code", limit: 255
@@ -460,6 +206,32 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
+    create_table "programs", force: :cascade do |t|
+      t.string "code", limit: 255, null: false
+      t.string "description", limit: 255
+      t.string "description_short", limit: 255
+      t.string "degree", limit: 255
+      t.string "major", limit: 255
+      t.string "track", limit: 255
+      t.string "distribution", limit: 255
+      t.string "location", limit: 255
+      t.string "available_major", limit: 255
+      t.string "available_track", limit: 255
+      t.string "available_distribution", limit: 255
+      t.string "available_location", limit: 255
+      t.string "category", limit: 255
+      t.integer "sequence", limit: 4
+      t.boolean "active", default: true
+      t.string "dept", limit: 255
+      t.text "yml", limit: 65535
+      t.text "xml", limit: 65535
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    add_index "programs", ["code"], name: "index_programs_on_code", using: :btree
+    add_index "programs", ["degree"], name: "index_programs_on_degree", using: :btree
+
     create_table "timestamps", force: :cascade do |t|
       t.integer "user_id", limit: 4
       t.string "path", limit: 255
@@ -467,53 +239,6 @@ class CreateKapaSchema < ActiveRecord::Migration
       t.string "agent", limit: 255
       t.datetime "created_at"
     end
-
-    create_table "transition_actions", force: :cascade do |t|
-      t.integer "transition_point_id", limit: 4
-      t.string "type", limit: 255
-      t.string "action", limit: 255
-      t.string "action_specify", limit: 255
-      t.date "action_date"
-      t.string "note", limit: 255
-      t.integer "sequence", limit: 4, default: 99
-      t.integer "user_id", limit: 4
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "transition_actions", ["action"], name: "index_transition_actions_on_action", using: :btree
-    add_index "transition_actions", ["transition_point_id"], name: "index_transition_actions_on_transition_point_id", using: :btree
-
-    create_table "transition_points", force: :cascade do |t|
-      t.integer "curriculum_id", limit: 4, null: false
-      t.integer "form_id", limit: 4
-      t.integer "term_id", limit: 4
-      t.string "type", limit: 255, default: "", null: false
-      t.string "status", limit: 255
-      t.string "category", limit: 255
-      t.string "priority", limit: 255
-      t.integer "user_primary_id", limit: 4
-      t.integer "user_secondary_id", limit: 4
-      t.string "dept", limit: 255
-      t.boolean "active", default: false
-      t.text "note", limit: 65535
-      t.text "assessment_note", limit: 65535
-      t.datetime "status_updated_at"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "transition_points", ["curriculum_id"], name: "index_transition_points_on_curriculum_id", using: :btree
-    add_index "transition_points", ["term_id"], name: "index_transition_points_on_term_id", using: :btree
-    add_index "transition_points", ["dept"], name: "index_transition_points_on_dept", using: :btree
-    add_index "transition_points", ["form_id"], name: "index_transition_points_on_form_id", using: :btree
-    add_index "transition_points", ["status"], name: "index_transition_points_on_status", using: :btree
-    add_index "transition_points", ["status_updated_at"], name: "index_transition_points_on_status_updated_at", using: :btree
-    add_index "transition_points", ["type"], name: "index_transition_points_on_type", using: :btree
 
     create_table "user_assignments", force: :cascade do |t|
       t.integer "user_id", limit: 4
@@ -552,112 +277,5 @@ class CreateKapaSchema < ActiveRecord::Migration
 
     add_index "users", ["person_id"], name: "index_users_on_person_id", using: :btree
     add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
-
-    create_table "case_actions", force: :cascade do |t|
-      t.integer "case_id", limit: 4
-      t.integer "person_id", limit: 4
-      t.string "type", limit: 255
-      t.string "action", limit: 255
-      t.string "action_specify", limit: 255
-      t.date "action_date"
-      t.string "note", limit: 255
-      t.integer "sequence", limit: 4, default: 99
-      t.integer "user_id", limit: 4
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "case_actions", ["action"]
-    add_index "case_actions", ["case_id"]
-
-    create_table "cases", force: :cascade do |t|
-      t.string "type", limit: 255, default: "", null: false
-      t.string "case_number_alt", limit: 255
-      t.string "case_name", limit: 255
-      t.string "status", limit: 255
-      t.string "category", limit: 255
-      t.string "priority", limit: 255
-      t.datetime "incident_occurred_at"
-      t.string "dept", limit: 255
-      t.boolean "active", default: true
-      t.text "note", limit: 65535
-      t.datetime "reported_at"
-      t.datetime "closed_at"
-      t.datetime "will_close_at"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.datetime "status_updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "cases", ["dept"]
-    add_index "cases", ["status"]
-    add_index "cases", ["type"]
-
-    create_table "case_incidents", force: :cascade do |t|
-      t.integer "case_id"
-      t.string "type", limit: 255, default: "", null: false
-      t.string "location", limit: 255
-      t.string "location_detail", limit: 255
-      t.datetime "incident_occurred_at"
-      t.text "note", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.datetime "status_updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    create_table "case_involvements", force: :cascade do |t|
-      t.integer "case_id"
-      t.integer "person_id", limit: 4
-      t.string "type", limit: 255
-      t.string "affiliation", limit: 255
-      t.string "bargaining_unit", limit: 255
-      t.string "job_title", limit: 255
-      t.string "category", limit: 255
-      t.string "status", limit: 255
-      t.integer "sequence"
-      t.text "note", limit: 16777215
-      t.text "yml", limit: 16777215
-      t.text "xml", limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "case_involvements", ["person_id", "case_id"], name: "index_case_involvements_on_person_id_and_case_id", using: :btree
-
-    create_table "case_communications", force: :cascade do |t|
-      t.integer "case_id"
-      t.integer "person_id", limit: 4
-      t.datetime "contacted_at"
-      t.string "type", limit: 255
-      t.string "category", limit: 255
-      t.string "status", limit: 255
-      t.integer "sequence"
-      t.integer "user_id", limit: 4
-      t.text "note", limit: 16777215
-      t.text "yml", limit: 16777215
-      t.text "xml", limit: 16777215
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
-    add_index "case_communications", ["person_id", "case_id"], name: "index_case_communications_on_person_id_and_case_id", using: :btree
-
-    create_table "case_violations", force: :cascade do |t|
-      t.integer "case_incident_id"
-      t.integer "case_involvement_id"
-      t.string "type", limit: 255, default: "", null: false
-      t.string "policy", limit: 255
-      t.text "note", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
   end
 end

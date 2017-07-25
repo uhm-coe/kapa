@@ -78,7 +78,7 @@ module Kapa::BootstrapFormHelper
 
         if options[:label].kind_of?(Hash)
           label_options = options[:label]
-          label_options[:text] = method.to_s.titleize if options[:text].blank?
+          label_options[:text] = method.to_s.titleize if label_options[:text].blank?
         elsif options[:label].kind_of?(String)
           label_options = {:text => options[:label]}
         else
