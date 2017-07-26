@@ -13,13 +13,13 @@ KAPA provides consolidated information tools to organize office records includin
 
 ### Getting Started with KAPA App
 
-  1. Create a new Ruby on Rails Application.
+  1. Install Rails 4.2.x and create a new Ruby on Rails Application.
   ```
   gem install rails -v 4.2.5 --no-rdoc --no-ri
-  rails new your_app -d mysql --skip
+  rails new your_app -d mysql
   ```
 
-  12. Add following lines to your ```Gemfile```
+  2. Add the following line to your ```Gemfile```
   ```
   gem 'kapa', :github => "uhm-coe/kapa"
   ```
@@ -34,8 +34,10 @@ KAPA provides consolidated information tools to organize office records includin
 
   3. Setup MySQL database
  
-  Current KAPA engine requires MySQL 5.5.  Update your config/database.yml and 
-  run ```rake kapa:db:setup``` to generate initial database schema.
+  Current KAPA engine requires MySQL database.  Update your config/database.yml and run the following command to generate initial database schema.
+  ```
+  rake kapa:db:setup
+  ``` 
 
   4. Go to KAPA Admin Console to start applocation development.
 
