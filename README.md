@@ -73,7 +73,7 @@ KAPA provides consolidated information tools to organize office records includin
   end
   ```
 
-###License
+### License
 
 Licensed under the GNU GPL v3.
 Copyright: College of Education, University of Hawaiʻi at Mānoa
