@@ -1,8 +1,8 @@
-#KAPA
+# KAPA
 
 KAPA provides consolidated information tools to organize office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc....  Tools are distributed as [Rails Engine](http://guides.rubyonrails.org/engines.html) so that developers can easily customize designs and functions to fit your organizational needs.
 
-##Features
+## Features
 - Identity Management with LDAP support
 - Electronic Documents (file attachments, forms, and text documents)
 - User and Task Management
