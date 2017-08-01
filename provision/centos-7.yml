@@ -27,7 +27,7 @@
   template: src=/vagrant/provision/apache-vhost.conf.j2 dest=/etc/httpd/conf.d/vagrant.conf
   become: yes
 
-- name: Restart apache
+- name: Restart Passenger/Apache
   service: name=httpd state=restarted
   become: yes
 
@@ -43,6 +43,11 @@
   - mysql-devel
   become: yes
 
-- name: Start mysql
+- name: Start MySQL
   service: name=mysql state=started
   become: yes
+
+- name: Set MySQL root pasword
+  shell: /usr/bin/mysqladmin -u root password '{{mysql_password}}'
+  become: yes
+  ignore_errors: yes

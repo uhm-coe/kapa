@@ -1,0 +1,65 @@
+---
+- name: Install required packages
+  apt: pkg=build-essential,git-core,apt-transport-https,vim,curl,gnupg state=latest update_cache=yes cache_valid_time=3600
+  become: yes
+
+- name: Add public key for Yarn
+  shell: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  become: yes
+
+- name: Add Yarn repository
+  lineinfile: dest=/etc/apt/sources.list.d/yarn.list state=present regexp='^deb' line='deb https://dl.yarnpkg.com/debian/ stable main' create=yes owner=root mode=0600
+  become: yes
+
+- name: Install Yarn
+  apt: pkg=yarn state=latest update_cache=yes
+  become: yes
+
+- name: Add public key for Phusion repository
+  shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+  become: yes
+
+- name: Add Phusion repository
+  lineinfile: dest=/etc/apt/sources.list.d/passenger.list state=present regexp='^deb' line='deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main' create=yes owner=root mode=0600
+  become: yes
+
+- name: Install Passenger/Apache
+  apt: pkg=apache2,libapache2-mod-passenger state=latest update_cache=yes
+  become: yes
+
+- name: Disable default virtual host
+  shell: a2dissite 000-default
+  become: yes
+
+- name: Add custom virtual host
+  template: src=/vagrant/provision/apache-vhost.conf.j2 dest=/etc/apache2/sites-available/vagrant.conf
+  become: yes
+
+- name: Enable custom virtual host
+  shell: a2ensite vagrant
+  become: yes
+
+- name: Restart apache
+  service: name=apache2 state=restarted
+  become: yes
+
+- name: Set MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_password | quote}}' vtype='password'
+  become: yes
+
+- name: Confirm MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_password | quote}}' vtype='password'
+  become: yes
+
+- name: Install MySQL
+  apt: pkg=mysql-server,libmysqlclient-dev state=latest update_cache=yes
+  become: yes
+
+- name: Update MySQL config to allow remote connections
+  replace: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp='^bind-address' replace='#bind-address'
+  become: yes
+
+- name: Restart MySQL
+  service: name=mysql state=restarted
+  become: yes
+
