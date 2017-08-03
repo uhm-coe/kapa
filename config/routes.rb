@@ -20,10 +20,10 @@ Rails.application.routes.draw do
     get 'persons/sync(/:id)' => 'persons#sync', :as => :persons_sync
     resources :files, &extra_actions
     resources :forms, &extra_actions
+    resources :form_templates, &extra_actions
+    resources :form_fields, &extra_actions
     resources :texts, &extra_actions
     resources :text_templates, &extra_actions
-    resources :assessment_rubrics, &extra_actions
-    resources :assessment_criterions, &extra_actions
     resources :properties, &extra_actions
     resources :users, &extra_actions
     resources :user_assignments, &extra_actions

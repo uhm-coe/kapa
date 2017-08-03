@@ -6,9 +6,9 @@
    menu_items["Document"].push ["Forms", kapa_forms_path] if @current_user.read?(:kapa_forms)
    menu_items["Document"].push ["Text Documents", kapa_texts_path] if @current_user.read?(:kapa_texts)
    menu_items["Administration"] = []
-   menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
-   menu_items["Administration"].push ["Assessments", kapa_assessment_rubrics_path] if @current_user.manage?(:kapa_assessment_rubrics)
+   menu_items["Administration"].push ["Form Templates", kapa_form_templates_path] if @current_user.manage?(:kapa_form_templates)
    menu_items["Administration"].push ["Text Templates", kapa_text_templates_path] if @current_user.manage?(:kapa_text_templates)
+   menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
    menu_items["Administration"].push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)
  end
 %>

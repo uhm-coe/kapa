@@ -1,7 +1,7 @@
 <% content_for(:dialog) do %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%=bootstrap_form_for(:filter, :url => kapa_assessment_rubrics_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+    <%=bootstrap_form_for(:filter, :url => kapa_form_templates_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%=f.text_field :title %>
       <div class="form-group">
         <label for="filter_program">Program</label>
@@ -38,18 +38,18 @@
       </tr>
     </thead>
     <tbody>
-      <% for assessment_rubric in @assessment_rubrics %>
+      <% for form_template in @form_templates %>
         <tr>
-          <td><%=abbr assessment_rubric.title, 50 %></td>
-          <td><%=abbr assessment_rubric.program.join(", "), 23 %></td>
-          <td><%=assessment_rubric.effective_term %></td>
-          <td><%=assessment_rubric.assessment_criterions.length.to_i %></td>
-          <td><%=assessment_rubric.dept.join(", ") %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => assessment_rubric}, :class => "btn btn-default btn-xs" %></td>
+          <td><%=abbr form_template.title, 50 %></td>
+          <td><%=abbr form_template.program.join(", "), 23 %></td>
+          <td><%=form_template.effective_term %></td>
+          <td><%=form_template.form_fields.length.to_i %></td>
+          <td><%=form_template.dept.join(", ") %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => form_template}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div class="text-center"><%=will_paginate @assessment_rubrics, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%=will_paginate @form_templates, :renderer => BootstrapPagination::Rails %></div>
 
 <% end %>

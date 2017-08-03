@@ -1,10 +1,10 @@
-module Kapa::AssessmentCriterionBase
+module Kapa::FormFieldBase
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :assessment_rubric
-    has_many :assessment_scores
-    validates_uniqueness_of :criterion, :scope => :assessment_rubric_id
+    belongs_to :form_template
+    has_many :form_details
+    validates_uniqueness_of :criterion, :scope => :form_template_id
     validates_presence_of :criterion
     before_save :format_fields
   end

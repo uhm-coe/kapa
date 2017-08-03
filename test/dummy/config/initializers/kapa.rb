@@ -18,10 +18,10 @@ Rails.configuration.available_routes = %w{
   kapa_persons
   kapa_files
   kapa_forms
+  kapa_form_templates
+  kapa_form_fields
   kapa_texts
   kapa_text_templates
-  kapa_assessment_rubrics
-  kapa_assessment_criterions
   kapa_users
   kapa_user_assignments
   kapa_notifications

@@ -2,14 +2,13 @@ module Kapa::FormBase
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :form_template
     belongs_to :file
     belongs_to :person
     belongs_to :term
     belongs_to :attachable, :polymorphic => true
-    has_one :transition_point
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
-
 
     validates_presence_of :type
 
