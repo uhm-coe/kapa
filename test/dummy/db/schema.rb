@@ -11,55 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227231950) do
-
-  create_table "assessment_criterions", force: :cascade do |t|
-    t.string   "criterion",            limit: 255
-    t.text     "criterion_desc",       limit: 65535
-    t.text     "criterion_html",       limit: 65535
-    t.string   "standard",             limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "assessment_rubric_id", limit: 4
-    t.text     "yml",                  limit: 65535
-    t.text     "xml",                  limit: 65535
-    t.string   "type",                 limit: 255,   default: "default", null: false
-    t.string   "type_option",          limit: 255
-  end
-
-  create_table "assessment_rubrics", force: :cascade do |t|
-    t.integer  "start_term_id",    limit: 4
-    t.integer  "end_term_id",      limit: 4
-    t.string   "title",            limit: 255
-    t.string   "course",           limit: 255
-    t.string   "reference_url",    limit: 255
-    t.string   "dept",             limit: 255
-    t.text     "yml",              limit: 65535
-    t.text     "xml",              limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "program",          limit: 255
-    t.string   "assessment_type",  limit: 255
-    t.string   "transition_point", limit: 255
-  end
-
-  add_index "assessment_rubrics", ["course"], name: "index_assessment_rubrics_on_course", using: :btree
-  add_index "assessment_rubrics", ["end_term_id"], name: "index_assessment_rubrics_on_end_term_id", using: :btree
-  add_index "assessment_rubrics", ["start_term_id"], name: "index_assessment_rubrics_on_start_term_id", using: :btree
-
-  create_table "assessment_scores", force: :cascade do |t|
-    t.string   "assessment_scorable_type", limit: 255
-    t.integer  "assessment_scorable_id",   limit: 4
-    t.integer  "assessment_criterion_id",  limit: 4
-    t.string   "rating",                   limit: 255
-    t.string   "rated_by",                 limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "yml",                      limit: 65535
-    t.text     "xml",                      limit: 65535
-  end
-
-  add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
+ActiveRecord::Schema.define(version: 20170803024727) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -103,24 +55,76 @@ ActiveRecord::Schema.define(version: 20170227231950) do
 
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
 
-  create_table "forms", force: :cascade do |t|
-    t.string   "type",            limit: 255
-    t.integer  "person_id",       limit: 4
-    t.integer  "term_id",         limit: 4
-    t.integer  "file_id",         limit: 4
-    t.integer  "attachable_id",   limit: 4
-    t.string   "attachable_type", limit: 255
-    t.datetime "submitted_at"
-    t.string   "submit_ip",       limit: 255
-    t.string   "lock",            limit: 255,      default: "N"
-    t.text     "note",            limit: 16777215
-    t.string   "public",          limit: 255,      default: "Y"
-    t.integer  "version",         limit: 4
-    t.string   "dept",            limit: 255
+  create_table "form_details", force: :cascade do |t|
+    t.integer  "form_template_field_id", limit: 4
+    t.string   "field_data",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "yml",             limit: 16777215
-    t.text     "xml",             limit: 16777215
+    t.text     "yml",                    limit: 65535
+    t.text     "xml",                    limit: 65535
+    t.integer  "form_id",                limit: 4,     null: false
+  end
+
+  add_index "form_details", ["form_template_field_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
+
+  create_table "form_template", force: :cascade do |t|
+    t.integer  "start_term_id",    limit: 4
+    t.integer  "end_term_id",      limit: 4
+    t.string   "title",            limit: 255
+    t.string   "course",           limit: 255
+    t.string   "reference_url",    limit: 255
+    t.string   "dept",             limit: 255
+    t.text     "yml",              limit: 65535
+    t.text     "xml",              limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "program",          limit: 255
+    t.string   "assessment_type",  limit: 255
+    t.string   "transition_point", limit: 255
+    t.string   "type",             limit: 255
+    t.string   "template_path",    limit: 255
+  end
+
+  add_index "form_template", ["course"], name: "index_form_template_on_course", using: :btree
+  add_index "form_template", ["end_term_id"], name: "index_form_template_on_end_term_id", using: :btree
+  add_index "form_template", ["start_term_id"], name: "index_form_template_on_start_term_id", using: :btree
+
+  create_table "form_template_fields", force: :cascade do |t|
+    t.string   "field_label",      limit: 255
+    t.text     "field_desc",       limit: 65535
+    t.text     "field_html",       limit: 65535
+    t.string   "field_category",   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "form_template_id", limit: 4
+    t.text     "yml",              limit: 65535
+    t.text     "xml",              limit: 65535
+    t.string   "type",             limit: 255,   default: "default", null: false
+    t.string   "type_option",      limit: 255
+    t.boolean  "required"
+    t.boolean  "hide"
+  end
+
+  create_table "forms", force: :cascade do |t|
+    t.string   "type",             limit: 255
+    t.integer  "person_id",        limit: 4
+    t.integer  "term_id",          limit: 4
+    t.integer  "file_id",          limit: 4
+    t.integer  "attachable_id",    limit: 4
+    t.string   "attachable_type",  limit: 255
+    t.datetime "submitted_at"
+    t.string   "submit_ip",        limit: 255
+    t.string   "lock",             limit: 255,      default: "N"
+    t.text     "note",             limit: 16777215
+    t.string   "public",           limit: 255,      default: "Y"
+    t.integer  "version",          limit: 4
+    t.string   "dept",             limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "yml",              limit: 16777215
+    t.text     "xml",              limit: 16777215
+    t.integer  "form_template_id", limit: 4
+    t.string   "submitted_by",     limit: 255
   end
 
   add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
