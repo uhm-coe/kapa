@@ -67,11 +67,12 @@ ActiveRecord::Schema.define(version: 20170803024727) do
 
   add_index "form_details", ["form_field_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
 
-  create_table "form_template", force: :cascade do |t|
+  create_table "form_templates", force: :cascade do |t|
     t.string   "type",             limit: 255
-    t.string   "template_path",    limit: 255
     t.string   "title",            limit: 255
     t.string   "reference_url",    limit: 255
+    t.string   "template_path",    limit: 255
+    t.text     "note",    limit: 255
     t.string   "dept",             limit: 255
     t.text     "yml",              limit: 65535
     t.text     "xml",              limit: 65535
@@ -82,12 +83,11 @@ ActiveRecord::Schema.define(version: 20170803024727) do
     t.string   "transition_point", limit: 255
     t.integer  "start_term_id",    limit: 4
     t.integer  "end_term_id",      limit: 4
-    t.string   "assessment_type",  limit: 255
   end
 
-  add_index "form_template", ["course"], name: "index_form_template_on_course", using: :btree
-  add_index "form_template", ["end_term_id"], name: "index_form_template_on_end_term_id", using: :btree
-  add_index "form_template", ["start_term_id"], name: "index_form_template_on_start_term_id", using: :btree
+  add_index "form_templates", ["course"], name: "index_form_template_on_course", using: :btree
+  add_index "form_templates", ["end_term_id"], name: "index_form_template_on_end_term_id", using: :btree
+  add_index "form_templates", ["start_term_id"], name: "index_form_template_on_start_term_id", using: :btree
 
   create_table "form_fields", force: :cascade do |t|
     t.string   "label",      limit: 255

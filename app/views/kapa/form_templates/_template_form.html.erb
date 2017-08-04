@@ -1,0 +1,13 @@
+<%=bootstrap_fields_for :form_template do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :title %>
+      <%=f.select :type, [["Simple", "simple"],["Complex", "complex"]], :label => "Template Type" %>
+      <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=f.text_area :note, :size => "5x7" %>
+    </div>
+  </div>
+<% end %>

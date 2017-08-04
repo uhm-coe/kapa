@@ -3,12 +3,6 @@
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_form_templates_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%=f.text_field :title %>
-      <div class="form-group">
-        <label for="filter_program">Program</label>
-        <%=program_select :filter, :program, {:include_blank => "Any"}, :class => "form-control" %>
-      </div>
-      <%=f.property_select :course, {:name => :assessment_course, :include_blank => "Any"} %>
-      <%=f.property_select :transition_point, :include_blank => "Any" %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
@@ -17,7 +11,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Assessments</h3>
+  <h3>Form Templates</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -29,10 +23,9 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>Type</th>
         <th>Title</th>
-        <th>Program</th>
-        <th>Effective</th>
-        <th>Criteria</th>
+        <th>Fields</th>
         <th><%=t(:kapa_global_dept) %></th>
         <th></th>
       </tr>
@@ -40,9 +33,8 @@
     <tbody>
       <% for form_template in @form_templates %>
         <tr>
+          <td><%=form_template.type.to_s.capitalize %></td>
           <td><%=abbr form_template.title, 50 %></td>
-          <td><%=abbr form_template.program.join(", "), 23 %></td>
-          <td><%=form_template.effective_term %></td>
           <td><%=form_template.form_fields.length.to_i %></td>
           <td><%=form_template.dept.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => form_template}, :class => "btn btn-default btn-xs" %></td>

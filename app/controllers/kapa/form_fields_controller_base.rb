@@ -11,7 +11,7 @@ module Kapa::FormFieldsControllerBase
     else
       flash[:danger] = @form_field.errors.full_messages.join(", ")
     end
-    redirect_to kapa_form_template_path(:id => @form_field.form_template, :anchor => params[:anchor], :criterion_panel => params[:criterion_panel])
+    redirect_to kapa_form_template_path(:id => @form_field.form_template, :anchor => params[:anchor], :label_panel => params[:label_panel])
   end
 
   def create
@@ -23,7 +23,7 @@ module Kapa::FormFieldsControllerBase
     else
       flash[:danger] = @form_field.errors.full_messages.join(", ")
     end
-    redirect_to kapa_form_template_path(:id => @form_field.form_template, :anchor => params[:anchor], :criterion_panel => @form_field.id)
+    redirect_to kapa_form_template_path(:id => @form_field.form_template, :anchor => params[:anchor], :label_panel => @form_field.id)
   end
 
   def destroy
@@ -42,6 +42,6 @@ module Kapa::FormFieldsControllerBase
 
   private
   def form_field_params
-    params.require(:form_field).permit(:form_template_id, :criterion, :criterion_desc, :standard, :type, :type_option)
+    params.require(:form_field).permit(:form_template_id, :label, :label_desc, :category, :type, :type_option)
   end
 end

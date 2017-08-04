@@ -3,7 +3,8 @@ class RenameAssessmentRubrics < ActiveRecord::Migration
     change_table :assessment_rubrics, :bulk => true do |t|
       t.string :type
       t.string :template_path
+      t.text :note
     end
-    rename_table :assessment_rubrics, :form_template
+    rename_table :assessment_rubrics, :form_templates
   end
 end

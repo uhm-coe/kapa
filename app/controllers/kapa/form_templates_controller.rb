@@ -1,3 +1,3 @@
 class Kapa::FormTemplatesController < Kapa::KapaController
-  include Kapa::AssessmentRubricsControllerBase
+  include Kapa::FormTemplatesControllerBase
 end
