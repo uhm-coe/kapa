@@ -10,7 +10,7 @@ module Kapa::FormBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    validates_presence_of :type
+    validates_presence_of :form_template_id
 
   end
 
@@ -18,8 +18,8 @@ module Kapa::FormBase
     return (term_id.blank? or term_id == 0) ? "No term chosen" : Kapa::Term.find(term_id).description
   end
 
-  def type_desc
-    return Kapa::Property.lookup_description(:form, type)
+  def type
+    return "Form"
   end
 
   def lock?
@@ -36,9 +36,9 @@ module Kapa::FormBase
 
   def name
     if self.term_id.blank?
-      type_desc
+      self.form_template.title
     else
-      "#{type_desc} (#{term_desc})"
+      "#{self.form_template.title} (#{term_desc})"
     end
   end
 

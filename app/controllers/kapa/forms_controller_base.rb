@@ -4,9 +4,10 @@ module Kapa::FormsControllerBase
   def show
     @form = Kapa::Form.find params[:id]
     @form_ext = @form.ext
+    @form_template = @form.form_template
     @person = @form.person
     @person_ext = @person.ext
-    @title = @form.type_desc
+    @title = @form.form_template.title
     render :layout => "/kapa/layouts/document"
   end
 
@@ -67,6 +68,6 @@ module Kapa::FormsControllerBase
 
   private
   def form_param
-    params.require(:form).permit(:type, :person_id, :attachable_id, :attachable_type, :lock, :note, :public)
+    params.require(:form).permit(:form_template_id, :person_id, :attachable_id, :attachable_type, :lock, :note, :public)
   end
 end

@@ -2,7 +2,20 @@
 
   <h3><%=@person.full_name if @person %> <%=@form.term_desc %></h3>
   <%=bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
-    <%=render :partial => "#{@form.type}_form", :locals => {:context => :kapa} %>
+
+    <% if @form_template.type == "complex" %>
+      <%=render :partial => "#{@form.type}_form", :locals => {:context => :kapa} %>
+    <% else %>
+      <%=bootstrap_fields_for :form_data do |f| %>
+        <% @form_template.form_fields.each do |form_field| %>
+          <% if form_field.type == "text" %>
+            <%=f.text_field form_field.label %>
+          <% elsif form_field.type == "select" %>
+            <%=f.property_select form_field.label, :name => form_field.type_option %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
     <%=hidden_field :form, :person_id %>
     <%=hidden_field :form, :type %>
 

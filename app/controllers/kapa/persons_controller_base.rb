@@ -4,6 +4,8 @@ module Kapa::PersonsControllerBase
   def show
     @person = Kapa::Person.find(params[:id])
     @person_ext = @person.ext
+    @documents = @person.documents
+    @form_templates = Kapa::FormTemplate.all
   end
 
   def new

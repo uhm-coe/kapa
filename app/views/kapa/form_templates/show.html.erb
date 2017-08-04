@@ -8,7 +8,7 @@
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
-      <li><a href="#fields_tab" data-toggle="tab">Fields</a></li>
+      <% if @form_template.type == "simple" %><li><a href="#fields_tab" data-toggle="tab">Fields</a></li><% end %>
     </ul>
 
     <div class="tab-content">
@@ -20,58 +20,44 @@
       </div>
 
       <div id="fields_tab" class="tab-pane">
-        <% if @form_template.type == "simple" %>
 
-          <div id="accordion" class="panel-group">
-            <% @form_fields.each_with_index do |form_field, index| %>
-              <% @form_field = form_field %>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#form_field_<%=@form_field.id %>"><span class="strong"><%=@form_field.label %></span></a>
-                  </h3>
-                </div>
-                <div id="form_field_<%=@form_field.id %>" class="panel-collapse collapse<%=' in' if params[:field_panel] == form_field.id.to_s || (params[:field_panel].nil? && index == 0) %>">
-                  <div class="panel-body">
-                    <%=bootstrap_form_for :form_field, :url => kapa_form_field_path(:id => @form_field, :anchor => :fields, :field_panel => form_field.id), :html => {:method => :put} do |f| %>
-                      <%=render :partial => "field_form" %>
-                      <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_field_path(:id => @form_field, :anchor => :fields)} if @current_user.write? :kapa_form_fields %>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-
+        <div id="accordion" class="panel-group">
+          <% @form_fields.each_with_index do |form_field, index| %>
+            <% @form_field = form_field %>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#new_form_field"><span class="new">New Field</span></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#form_field_<%=@form_field.id %>"><span class="strong"><%=@form_field.label %></span></a>
                 </h3>
               </div>
-              <div id="new_form_field" class="panel-collapse collapse<%=' in' if @form_fields.length == 0 %>">
+              <div id="form_field_<%=@form_field.id %>" class="panel-collapse collapse<%=' in' if params[:field_panel] == form_field.id.to_s || (params[:field_panel].nil? && index == 0) %>">
                 <div class="panel-body">
-                  <% @form_field = @form_template.form_fields.build %>
-                  <%=bootstrap_form_for :form_field, :url => kapa_form_fields_path(:form_template_id => @form_template, :anchor => :fields) do |f| %>
+                  <%=bootstrap_form_for :form_field, :url => kapa_form_field_path(:id => @form_field, :anchor => :fields, :field_panel => form_field.id), :html => {:method => :put} do |f| %>
                     <%=render :partial => "field_form" %>
-                    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? :kapa_form_fields %>
+                    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_field_path(:id => @form_field, :anchor => :fields)} if @current_user.write? :kapa_form_fields %>
                   <% end %>
                 </div>
               </div>
             </div>
-          </div>
-        <% else %>
-
-          <%=bootstrap_form_for :form_template, :url => kapa_form_template_path(:id => @form_template), :html => {:method => :put} do |f| %>
-            <%=bootstrap_fields_for :form_template do |f| %>
-              <div class="row">
-                <div class="col-sm-12">
-                  <%=f.text_field :template_path if @form_template.type == "complex" %>
-                </div>
-              </div>
-            <% end %>            <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_template_path(:id => @form_template)} if @current_user.write? %>
           <% end %>
 
-        <% end %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#new_form_field"><span class="new">New Field</span></a>
+              </h3>
+            </div>
+            <div id="new_form_field" class="panel-collapse collapse<%=' in' if @form_fields.length == 0 %>">
+              <div class="panel-body">
+                <% @form_field = @form_template.form_fields.build %>
+                <%=bootstrap_form_for :form_field, :url => kapa_form_fields_path(:form_template_id => @form_template, :anchor => :fields) do |f| %>
+                  <%=render :partial => "field_form" %>
+                  <%=render :partial => "/kapa/layouts/controls" if @current_user.write? :kapa_form_fields %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
 
