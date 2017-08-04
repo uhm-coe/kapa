@@ -16,7 +16,7 @@ module Kapa::FormTemplatesControllerBase
     @form_template.attributes = form_template_params
     @form_template.update_serialized_attributes!(:_ext, params[:form_template_ext]) if params[:form_template_ext].present?
     if @form_template.save
-      flash[:success] = "Rubric was successfully updated."
+      flash[:success] = "Form Template was successfully updated."
     else
       flash[:danger] = @form_template.errors.full_messages.join(", ")
     end
@@ -30,21 +30,21 @@ module Kapa::FormTemplatesControllerBase
       flash[:danger] = @form_template.errors.full_messages.join(", ")
       redirect_to new_kapa_form_template_path and return false
     end
-    flash[:success] = "Rubric was successfully created."
+    flash[:success] = "Form Template was successfully created."
     redirect_to kapa_form_template_path(:id => @form_template)
   end
 
   def destroy
     @form_template = Kapa::FormTemplate.find(params[:id])
     unless @form_template.form_fields.blank?
-      flash[:danger] = "Rubric can not be deleted since it contains one or more criteria."
+      flash[:danger] = "Form Template can not be deleted since it contains one or more fields."
       redirect_to kapa_form_template_path(:id => @form_template) and return false
     end
     unless @form_template.destroy
       flash[:danger] = @form_template.errors.full_messages.join(", ")
       redirect_to kapa_form_template_path(:id => @form_template) and return false
     end
-    flash[:success] = "Rubric was successfully deleted."
+    flash[:success] = "Form Template was successfully deleted."
     redirect_to kapa_form_templates_path
   end
 
