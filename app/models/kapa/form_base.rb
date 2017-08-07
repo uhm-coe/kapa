@@ -3,19 +3,17 @@ module Kapa::FormBase
 
   included do
     belongs_to :form_template
-    belongs_to :file
     belongs_to :person
     belongs_to :term
     belongs_to :attachable, :polymorphic => true
+    has_many :files, :as => :attachable
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
-
     validates_presence_of :form_template_id
-
   end
 
   def term_desc
-    return (term_id.blank? or term_id == 0) ? "No term chosen" : Kapa::Term.find(term_id).description
+    return Kapa::Property.lookup_description(:term, self.term)
   end
 
   def type
@@ -35,7 +33,7 @@ module Kapa::FormBase
   end
 
   def name
-    if self.term_id.blank?
+    if self.term.blank?
       self.form_template.title
     else
       "#{self.form_template.title} (#{term_desc})"
@@ -46,7 +44,7 @@ module Kapa::FormBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       forms = Kapa::Form.eager_load({:users => :person}, :person).order("forms.submitted_at DESC")
-      forms = forms.where("forms.term_id" => filter.term_id) if filter.form_term_id.present?
+      forms = forms.where("forms.term" => filter.term) if filter.form_term.present?
       forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
 

@@ -2,8 +2,8 @@ module Kapa::FormDetailBase
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :form
     belongs_to :form_field
-    belongs_to :assessment_scorable, :polymorphic => true
   end
 
   def rating_desc

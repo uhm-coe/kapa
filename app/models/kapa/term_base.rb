@@ -40,8 +40,8 @@ module Kapa::TermBase
       Kapa::Term.where("? between start_date and end_date", date).last
     end
 
-    #def terms_ids_by_range(start_term_id, end_term_id)
-    #  self.where(:code => Kapa::Term.find(start_term_id).code..Kapa::Term.find(end_term_id).code).order(:sequence).collect { |t| t.id }
+    #def terms_ids_by_range(start_term, end_term)
+    #  self.where(:code => Kapa::Term.find(start_term).code..Kapa::Term.find(end_term).code).order(:sequence).collect { |t| t.id }
     #end
 
     def lookup_description(id)

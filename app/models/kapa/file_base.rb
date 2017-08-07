@@ -2,7 +2,6 @@ module Kapa::FileBase
   extend ActiveSupport::Concern
 
   included do
-    has_many :forms
     belongs_to :person
     belongs_to :attachable, :polymorphic => true
     has_many :user_assignments, :as => :assignable

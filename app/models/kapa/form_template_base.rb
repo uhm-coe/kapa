@@ -11,7 +11,7 @@ module Kapa::FormTemplateBase
   end
 
   def effective_term
-    "#{Kapa::Term.find(self.start_term_id).description} - #{Kapa::Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
+    "#{Kapa::Property.lookup_description(:term, self.start_term)} - #{Kapa::Property.lookup_description(:term, self.end_term)}" if self.start_term.present? and self.end_term.present?
   end
 
   class_methods do
