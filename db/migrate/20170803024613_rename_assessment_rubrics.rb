@@ -4,6 +4,8 @@ class RenameAssessmentRubrics < ActiveRecord::Migration
       t.string :type
       t.string :template_path
       t.text :note
+      t.boolean :attachment
+      t.boolean :active, :default => 1
     end
     rename_table :assessment_rubrics, :form_templates
   end

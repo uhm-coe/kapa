@@ -2,7 +2,7 @@
 
 
 #Location of attachment files
-Rails.configuration.attachment_root = Rails.env.production? ? "/srv/attachments" : "/home/vagrant/attachments"
+Rails.configuration.attachment_root = Rails.env.production? ? "/srv/attachments" : "/home/ubuntu/attachments"
 
 # Directory structure of attachment files
 Paperclip::Attachment.default_options[:path] = "#{Rails.configuration.attachment_root}/:class/:attachment/:id_partition/:style.:extension"

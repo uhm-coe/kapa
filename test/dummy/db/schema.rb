@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803024727) do
+ActiveRecord::Schema.define(version: 20170807213532) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -56,44 +56,38 @@ ActiveRecord::Schema.define(version: 20170803024727) do
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
 
   create_table "form_details", force: :cascade do |t|
-    t.integer  "form_id",                limit: 4,     null: false
+    t.integer  "form_id",       limit: 4,     null: false
     t.integer  "form_field_id", limit: 4
-    t.text     "value",             limit: 255
+    t.text     "value",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "yml",                    limit: 65535
-    t.text     "xml",                    limit: 65535
+    t.text     "yml",           limit: 65535
+    t.text     "xml",           limit: 65535
   end
 
   add_index "form_details", ["form_field_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
 
-  create_table "form_templates", force: :cascade do |t|
-    t.string   "type",             limit: 255
-    t.string   "title",            limit: 255
-    t.string   "reference_url",    limit: 255
-    t.string   "template_path",    limit: 255
-    t.text     "note",    limit: 255
-    t.string   "dept",             limit: 255
-    t.text     "yml",              limit: 65535
-    t.text     "xml",              limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "program",          limit: 255
-    t.string   "course",           limit: 255
-    t.string   "transition_point", limit: 255
-    t.integer  "start_term_id",    limit: 4
-    t.integer  "end_term_id",      limit: 4
-  end
-
-  add_index "form_templates", ["course"], name: "index_form_template_on_course", using: :btree
-  add_index "form_templates", ["end_term_id"], name: "index_form_template_on_end_term_id", using: :btree
-  add_index "form_templates", ["start_term_id"], name: "index_form_template_on_start_term_id", using: :btree
-
   create_table "form_fields", force: :cascade do |t|
-    t.string   "label",      limit: 255
+    t.string   "label",            limit: 255
     t.text     "label_desc",       limit: 65535
     t.text     "label_html",       limit: 65535
-    t.string   "category",   limit: 255
+    t.string   "category",         limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "form_template_id", limit: 4
+    t.text     "yml",              limit: 65535
+    t.text     "xml",              limit: 65535
+    t.string   "type",             limit: 255,   default: "default", null: false
+    t.string   "type_option",      limit: 255
+    t.boolean  "required"
+    t.boolean  "active",                         default: true
+  end
+
+  create_table "form_template_fields", force: :cascade do |t|
+    t.string   "field_label",      limit: 255
+    t.text     "field_desc",       limit: 65535
+    t.text     "field_html",       limit: 65535
+    t.string   "field_category",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "form_template_id", limit: 4
@@ -105,10 +99,34 @@ ActiveRecord::Schema.define(version: 20170803024727) do
     t.boolean  "hide"
   end
 
+  create_table "form_templates", force: :cascade do |t|
+    t.string   "title",            limit: 255
+    t.string   "reference_url",    limit: 255
+    t.string   "dept",             limit: 255
+    t.text     "yml",              limit: 65535
+    t.text     "xml",              limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "program",          limit: 255
+    t.string   "course",           limit: 255
+    t.string   "transition_point", limit: 255
+    t.string   "start_term",       limit: 255
+    t.string   "end_term",         limit: 255
+    t.string   "type",             limit: 255
+    t.string   "template_path",    limit: 255
+    t.text     "note",             limit: 65535
+    t.boolean  "attachment"
+    t.boolean  "active",                         default: true
+  end
+
+  add_index "form_templates", ["course"], name: "index_form_template_on_course", using: :btree
+  add_index "form_templates", ["end_term"], name: "index_form_template_on_end_term_id", using: :btree
+  add_index "form_templates", ["start_term"], name: "index_form_template_on_start_term_id", using: :btree
+
   create_table "forms", force: :cascade do |t|
     t.string   "type",             limit: 255
     t.integer  "person_id",        limit: 4
-    t.integer  "term_id",          limit: 4
+    t.string   "term",             limit: 255
     t.integer  "file_id",          limit: 4
     t.integer  "attachable_id",    limit: 4
     t.string   "attachable_type",  limit: 255
@@ -128,7 +146,7 @@ ActiveRecord::Schema.define(version: 20170803024727) do
   end
 
   add_index "forms", ["person_id"], name: "index_forms_on_person_id", using: :btree
-  add_index "forms", ["term_id"], name: "index_forms_on_term_id", using: :btree
+  add_index "forms", ["term"], name: "index_forms_on_term", using: :btree
   add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
   create_table "notifications", force: :cascade do |t|

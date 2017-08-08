@@ -55,6 +55,6 @@ module Kapa::FormTemplatesControllerBase
 
   private
   def form_template_params
-    params.require(:form_template).permit(:title, :type, :dept, :reference_url, :note, :start_term, :end_term, :program=>[], :course=>[], :transition_point=>[])
+    params.require(:form_template).permit(:title, :type, :dept, :reference_url, :note, :attachment, :start_term, :end_term, :program=>[], :course=>[], :transition_point=>[])
   end
 end
