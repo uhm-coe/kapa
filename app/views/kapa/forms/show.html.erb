@@ -8,10 +8,14 @@
     <% else %>
       <%=bootstrap_fields_for :form_data do |f| %>
         <% @form_template.form_fields.each do |form_field| %>
-          <% if form_field.type == "text" %>
+          <% if form_field.type == "text_field" %>
             <%=f.text_field form_field.label %>
-          <% elsif form_field.type == "select" %>
+          <% elsif form_field.type == "text_area" %>
+            <%=f.text_area form_field.label %>
+          <% elsif form_field.type == "property_select" %>
             <%=f.property_select form_field.label, :name => form_field.type_option %>
+          <% elsif form_field.type == "csv_select" %>
+            <%=f.select form_field.label, form_field.type_option.to_s.split(/,\s*/) %>
           <% end %>
         <% end %>
       <% end %>

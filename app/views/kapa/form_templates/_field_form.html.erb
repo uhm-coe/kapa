@@ -3,11 +3,11 @@
   <div class="row">
     <div class="col-sm-6">
       <%=f.text_field :label, :label => "Label" %>
-      <%=f.text_area  :label_desc, :size => "35x5", :label => "Lebel Description" %>
+      <%=f.text_area  :label_desc, :size => "35x5", :label => "Lebel Helper Text" %>
     </div>
 
     <div class="col-sm-6">
-      <%=f.select :type, [["Default", "default"], ["Select", "select"], ["Text Field", "text"]], {:label => "Field Type"} %>
+      <%=f.select :type, [["Single-line Text", "text_field"], ["Multi-Line Text", "text_area"], ["Select (Propeties)", "property_select"], ["Select (Comma-separated values)", "csv_select"]], {:label => "Field Type"} %>
       <%=f.text_field :type_option, :label => "Field Type Option" %>
       <%=f.text_field :category %>
     </div>
