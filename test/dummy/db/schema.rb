@@ -56,16 +56,16 @@ ActiveRecord::Schema.define(version: 20170807213532) do
   add_index "files", ["person_id"], name: "index_files_on_person_id", using: :btree
 
   create_table "form_details", force: :cascade do |t|
-    t.integer  "form_id",       limit: 4,     null: false
-    t.integer  "form_field_id", limit: 4
-    t.text     "value",         limit: 255
+    t.integer  "form_field_id", limit: 4,     null: false
+    t.text     "value",         limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "yml",           limit: 65535
     t.text     "xml",           limit: 65535
+    t.integer  "form_id",       limit: 4,     null: false
   end
 
-  add_index "form_details", ["form_field_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
+  add_index "form_details", ["form_id", "form_field_id"], name: "index_form_details_on_form_id_and_form_field_id", unique: true, using: :btree
 
   create_table "form_fields", force: :cascade do |t|
     t.string   "label",            limit: 255

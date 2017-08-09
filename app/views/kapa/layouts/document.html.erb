@@ -41,13 +41,12 @@
 
   <body>
     <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <%=bootstrap_flash %>
-        </div>
+
+      <div class="header col-md-8 col-md-offset-2" style="padding-top: 30px">
+        <%=bootstrap_flash %>
       </div>
+
       <% if content_for?(:box1) %>
-        <div class="header col-md-8 col-md-offset-2"></div>
         <div class="row">
           <div class="well col-md-8 col-md-offset-2">
             <%=yield :box1 %>

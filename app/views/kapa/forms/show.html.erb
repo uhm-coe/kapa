@@ -1,8 +1,15 @@
 <% content_for(:box1) do %>
 
   <h3 class="center"><%=@form.name %></h3>
-  <h4 class="right"><%=@person.full_name %></h4>
-  <h4 class="right">Form ID: <%=@form.id %></h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <h4>Form ID: <%=@form.id %></h4>
+    </div>
+    <div class="col-sm-6">
+      <h4><%=@person.full_name %> (<%=@person.id_number %>)</h4>
+    </div>
+  </div>
+
   <%=bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
 
     <% if @form_template.type == "complex" %>

@@ -7,9 +7,11 @@ module Kapa::FormBase
     belongs_to :term
     belongs_to :attachable, :polymorphic => true
     has_many :files, :as => :attachable
+    has_many :form_details
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
     validates_presence_of :form_template_id
+    after_save :update_form_details
   end
 
   def term_desc
@@ -37,6 +39,20 @@ module Kapa::FormBase
       self.form_template.title
     else
       "#{self.form_template.title} (#{term_desc})"
+    end
+  end
+
+  def update_form_details
+    if self.form_template.type == "simple"
+      self.form_details.destroy_all
+      field_ids = {}
+      self.form_template.form_fields.each do |f|
+        field_ids[f.label] = f.id
+      end
+      logger.debug "*DEBUG* #{field_ids.inspect}"
+      self.deserialize(:_ext).each_pair do |label, value|
+        self.form_details.create(:form_field_id => field_ids[label.to_s], :value => value)
+      end
     end
   end
 
