@@ -1,14 +1,18 @@
 <% content_for(:box1) do %>
 
-  <h3><%=@person.full_name if @person %> <%=@form.term_desc %></h3>
+  <h3 class="center"><%=@form.name %></h3>
+  <h4 class="right"><%=@person.full_name %></h4>
+  <h4 class="right">Form ID: <%=@form.id %></h4>
   <%=bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
 
     <% if @form_template.type == "complex" %>
-      <%=render :partial => "#{@form.type}_form", :locals => {:context => :kapa} %>
+      <%=render :partial => @form_template.template_path, :locals => {:context => :kapa} %>
     <% else %>
-      <%=bootstrap_fields_for :form_data do |f| %>
+      <%=bootstrap_fields_for :form_ext do |f| %>
         <% @form_template.form_fields.each do |form_field| %>
-          <% if form_field.type == "text_field" %>
+          <% if form_field.type == "section" %>
+            <%=content_tag :legend, form_field.label %>
+          <% elsif form_field.type == "text_field" %>
             <%=f.text_field form_field.label %>
           <% elsif form_field.type == "text_area" %>
             <%=f.text_area form_field.label %>
@@ -22,29 +26,39 @@
     <% end %>
     <%=hidden_field :form, :person_id %>
     <%=hidden_field :form, :type %>
-  <% end %>
 
-  <% if @form_template.attachment %>
-    <legend>File Attachments</legend>
-      <p class="text-right">
+    <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} do %>
+      <%=button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_form_dialog", :icon => "glyphicon-wrench" %>
+    <% end if write? %>
+
+    <% if @form_template.attachment %>
+      <legend>File Attachments</legend>
+      <p class="right">
         <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
       </p>
-    <table class="table table-hover">
-     <tr>
-       <th>Type</th>
-       <th>Name</th>
-       <th>Date</th>
-       <th></th>
-     </tr>
-     <% @form.files.sort_by {|d| d.created_at}.reverse_each do |d| %>
-       <tr>
-         <td><%=d.type%></td>
-         <td><%=d.name%></td>
-         <td><%=format_date d.date %></td>
-         <td class="right"><%=link_to "Show", kapa_file_path(:id => d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
-       </tr>
-     <% end %>
-    </table>
+
+      <table class="table table-hover">
+        <thead>
+         <tr>
+           <th>Type</th>
+           <th>Name</th>
+           <th>Date</th>
+           <th></th>
+         </tr>
+        </thead>
+        <tbody>
+         <% @form.files.sort_by {|d| d.created_at}.reverse_each do |d| %>
+           <tr>
+             <td><%=d.type%></td>
+             <td><%=d.name%></td>
+             <td><%=format_date d.date %></td>
+             <td class="right"><%=link_to "Show", kapa_file_path(:id => d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+           </tr>
+         <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
   <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>

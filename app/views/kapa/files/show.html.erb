@@ -1,6 +1,9 @@
 <% content_for(:box1) do %>
 
-  <h3><%=@person.full_name if @person %> <%=format_date @file.date %></h3>
+  <h3 class="center"><%=@file.name %></h3>
+  <h4 class="right"><%=@person.full_name %></h4>
+  <h4 class="right">File ID: <%=@file.id %></h4>
+
 
   <%=render :partial => "file_container", :locals => {:file => @file} %>
   <p class="text-center">

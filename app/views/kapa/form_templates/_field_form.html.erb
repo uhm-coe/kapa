@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-sm-6">
-      <%=f.select :type, [["Single-line Text", "text_field"], ["Multi-Line Text", "text_area"], ["Select (Propeties)", "property_select"], ["Select (Comma-separated values)", "csv_select"]], {:label => "Field Type"} %>
+      <%=f.select :type, [["Single-line Text", "text_field"], ["Multi-Line Text", "text_area"], ["Select (Propeties)", "property_select"], ["Select (Comma-separated values)", "csv_select"], ["Section Header", "section"]], {:label => "Field Type"} %>
       <%=f.text_field :type_option, :label => "Field Type Option" %>
       <%=f.text_field :category %>
     </div>

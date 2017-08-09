@@ -7,7 +7,6 @@ module Kapa::FormsControllerBase
     @form_template = @form.form_template
     @person = @form.person
     @person_ext = @person.ext
-    @title = @form.form_template.title
     render :layout => "/kapa/layouts/document"
   end
 
@@ -32,7 +31,7 @@ module Kapa::FormsControllerBase
 
   def create
     @form = Kapa::Form.new(form_param)
-    @form.dept = [@current_user.primary_dept]
+    @form.dept = @form.form_template.dept
 
     unless @form.save
       flash[:danger] = error_message_for(@form)

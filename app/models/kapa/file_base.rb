@@ -23,7 +23,7 @@ module Kapa::FileBase
     end
   end
 
-  def type_desc
+  def type
     "File"
   end
 
@@ -38,7 +38,6 @@ module Kapa::FileBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      logger.debug "*DEBUG* #{options}"
       files = Kapa::File.eager_load({:users => :person}, :person).order("files.created_at DESC").limit(500)
       files = files.column_matches("name" => filter.name) if filter.name.present?
 
