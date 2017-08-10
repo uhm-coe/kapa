@@ -5,6 +5,11 @@ module Kapa::FormTemplatesControllerBase
     @form_template = Kapa::FormTemplate.find(params[:id])
     @form_template_ext = @form_template.ext
     @form_fields = @form_template.form_fields
+    @field_selections = {:text_field => "Single-line Text",
+                         :text_area => "Multi-Line Text",
+                         :property_select => "Select (Propeties)",
+                         :csv_select => "Select (Comma-separated values)",
+                         :section => "Section Header"}
   end
 
   def new
