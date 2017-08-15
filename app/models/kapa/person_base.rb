@@ -6,8 +6,9 @@ module Kapa::PersonBase
     serialize :type, Kapa::CsvSerializer
 
     has_many :users
-    has_many :forms
     has_many :files
+    has_many :forms
+    has_many :texts
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create
@@ -40,6 +41,7 @@ module Kapa::PersonBase
     documents = []
     documents += self.files.search(options)
     documents += self.forms.search(options)
+    documents += self.texts.search(options)
   end
 
   def full_name(option = nil)

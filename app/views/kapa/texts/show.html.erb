@@ -1,25 +1,8 @@
 <% content_for(:head) do %>
+  <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
-      $('#editor').summernote({
-        height: 600,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'italic', 'underline', 'clear']],
-//          ['fontname', ['fontname']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          ['table', ['table']],
-          ['insert', ['link', 'hr']],
-          ['view', ['fullscreen', 'codeview']],
-          ['help', ['help']]
-        ]
-      });
-
-      $('#text_form').submit(function(event) {
-        $('#text_body').val($('#editor').summernote('code'));
-      });
+        CKEDITOR.replace('editor');
     });
   </script>
 <% end %>

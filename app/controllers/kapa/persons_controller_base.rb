@@ -6,6 +6,7 @@ module Kapa::PersonsControllerBase
     @person_ext = @person.ext
     @documents = @person.documents
     @form_templates = Kapa::FormTemplate.all
+    @text_templates = Kapa::TextTemplate.all
   end
 
   def new

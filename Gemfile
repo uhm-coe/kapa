@@ -29,7 +29,6 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 gem 'bootstrap-multiselect-rails'
 gem 'dragula-rails'
 gem 'hashids'
-gem 'summernote-rails'
 gem 'rails-assets-jquery', '1.12.4', source: 'https://rails-assets.org'
 gem 'rails-assets-pivottable', source: 'https://rails-assets.org'
 #gem 'whenever', :require => false

@@ -14,6 +14,10 @@ module Kapa::TextBase
     after_create :set_default_contents, :replace_variables
   end
 
+  def type
+    return "Text Document"
+  end
+
   def type_desc
     return Kapa::Property.lookup_description(:text, type)
   end

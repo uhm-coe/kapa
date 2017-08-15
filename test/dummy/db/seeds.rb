@@ -14,6 +14,7 @@ Kapa::User.delete_all
 fixtures = %w(
   properties
   persons
+  text_templates
 ).each do |f|
   ActiveRecord::FixtureSet.create_fixtures("#{Kapa::Engine.root}/test/fixtures", f)
 end
