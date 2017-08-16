@@ -1,11 +1,11 @@
 /*
- *= require dragula
- */
-// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+ *= require bootstrap-multiselect/dist/css/bootstrap-multiselect
+ *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker
+ *= require dragula/dist/dragula
+*/
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "bootstrap-datetimepicker";
-@import "bootstrap-multiselect";
 
 .section-header {
   padding-bottom: 9px;

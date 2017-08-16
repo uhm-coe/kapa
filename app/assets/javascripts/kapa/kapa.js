@@ -5,12 +5,12 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery_ujs
-//= require moment
+//= require rails-ujs/lib/assets/compiled/rails-ujs
 //= require bootstrap-sprockets
-//= require bootstrap-datetimepicker
-//= require bootstrap-multiselect
-//= require dragula
+//= require bootstrap-multiselect/dist/js/bootstrap-multiselect
+//= require moment/min/moment-with-locales
+//= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
+//= require dragula/dist/dragula
 
 jQuery(document).ready(function ($) {
 

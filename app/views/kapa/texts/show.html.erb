@@ -1,16 +1,26 @@
 <% content_for(:head) do %>
-  <script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        CKEDITOR.replace('editor');
-    });
-  </script>
+  <style type="text/css">
+ 		/* Minimal styling to center the editor in this sample */
+ 		body {
+ 			padding: 30px;
+ 			display: flex;
+ 			align-items: center;
+ 			text-align: center;
+ 		}
+ 		.container {
+ 			margin: 0 auto;
+ 		}
+ 	</style>
+
+  <script src="https://cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script>
+  <%=javascript_include_tag "kapa/document_editor" %>
+
 <% end %>
 
 <% content_for(:box1) do %>
 
   <%=bootstrap_form_for :text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "text_form"} do |f| %>
-    <div id="editor"><%=@text.body.to_s.html_safe %></div>
+    <%=f.text_area :body, :id => "editor" %>
     <%=f.hidden_field :body %>
     <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_path(:id => @text, :return_path => params[:return_path])} do %>
       <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_text_dialog", :icon => "glyphicon-wrench" %>

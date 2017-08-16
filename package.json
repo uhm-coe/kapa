@@ -1,0 +1,12 @@
+{
+  "name": "kapa",
+  "private": true,
+  "dependencies": {
+    "bootstrap-multiselect": "^0.9.13-1",
+    "dragula": "^3.7.2",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "jquery": "1.12.4",
+    "pivottable": "^2.14.0",
+    "rails-ujs": "^5.1.3"
+  }
+}

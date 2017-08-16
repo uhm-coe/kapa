@@ -3,15 +3,12 @@
   <h3><%=@file.name %></h3>
   <div class="row">
     <div class="col-sm-6">
-      <h4>Form ID: <%=@form.id %></h4>
+      <h4>File ID: <%=@file.id %></h4>
     </div>
     <div class="col-sm-6">
       <h4><%="#{@person.full_name} (#{@person.id_number})" if @person %></h4>
     </div>
   </div>
-  <h4 class="right"><%=@person.full_name %></h4>
-  <h4 class="right">File ID: <%=@file.id %></h4>
-
 
   <%=render :partial => "file_container", :locals => {:file => @file} %>
   <p class="text-center">
