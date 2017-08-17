@@ -6,7 +6,8 @@ module Kapa::TextsControllerBase
     @text_ext = @text.ext
     @person = @text.person
     @person_ext = @person.ext if @person
-    @title = @text.title
+    @document_title = @text.title
+    @document_id = @text.id
     render :layout => "/kapa/layouts/document"
   end
 

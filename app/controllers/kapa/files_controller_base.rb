@@ -11,7 +11,8 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @title = @file.name
+    @document_title = @file.name
+    @document_id = @file.id
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}

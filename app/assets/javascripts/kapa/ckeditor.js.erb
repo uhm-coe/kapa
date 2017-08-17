@@ -1,3 +1,11 @@
+// This is a manifest file that'll be compiled into including all the files listed below.
+// Add new JavaScript/Coffee code in separate files in this directory and they'll automatically
+// be included in the compiled file accessible from http://example.com/assets/application.js
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+// = require ckeditor/init
+
 jQuery(document).ready(function($) {
   CKEDITOR.replace( 'editor', {
         // Define the toolbar: http://docs.ckeditor.com/#!/guide/dev_toolbar
@@ -41,7 +49,7 @@ jQuery(document).ready(function($) {
         height: 800,
         // An array of stylesheets to style the WYSIWYG area.
         // Note: it is recommended to keep your own styles in a separate file in order to make future updates painless.
-        contentsCss: [ 'https://cdn.ckeditor.com/4.6.1/full-all/contents.css', '/mystyles.css' ],
+        contentsCss: [ 'https://cdn.ckeditor.com/4.6.1/full-all/contents.css', '<%=stylesheet_path "kapa/ckeditor" %>' ],
         // This is optional, but will let us define multiple different styles for multiple editors using the same CSS file.
         bodyClass: 'document-editor',
         // Reduce the list of block elements listed in the Format dropdown to the most commonly used.
