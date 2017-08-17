@@ -3,7 +3,7 @@
   <%=render :partial => "file_container", :locals => {:file => @file} %>
 
   <div class="text-center">
-    <%=button_to_link "Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download" %>
+    <%=button_to_link "Download File", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download" %>
   </div>
 
 <% end %>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="text-center">
-      <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save</button>
+      <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Properties</button>
       <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="glyphicon glyphicon-option-vertical"></span> More <span class="caret"></span>
