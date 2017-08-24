@@ -17,6 +17,7 @@ module Kapa::UserSessionsControllerBase
   end
 
   def create
+    register(params[:user_session][:uid])
     session = Kapa::UserSession.new(user_session_params)
     unless session.save
       flash[:danger] = "Username/password do not match!"
@@ -44,12 +45,6 @@ module Kapa::UserSessionsControllerBase
     end
   end
 
-  def error
-  end
-
-  def success
-  end
-
   def validate
     unless Kapa::Cas.defined? and params[:ticket]
       flash[:alert] = "Error during CAS authentication (CAS configration error)."
@@ -59,6 +54,7 @@ module Kapa::UserSessionsControllerBase
     @cas_results = Kapa::Cas.validate(params[:ticket], kapa_user_session_validate_url)
     if @cas_results[0] == "yes"
       uid = @cas_results[1]
+      register(uid)
       user = Kapa::User.find_by(:uid => uid, :category => "ldap", :status => 30)
       if user
         Kapa::UserSession.create(user, true)
@@ -72,6 +68,17 @@ module Kapa::UserSessionsControllerBase
       flash[:alert] = "Error during CAS authentication (Unable to validate the ticket)."
       redirect_to(:action => :new) and return false
     end
+  end
+
+  def error
+  end
+
+  def success
+  end
+
+  private
+  def register()
+    #Implement this method for auto user registration
   end
 
   def user_session_params
