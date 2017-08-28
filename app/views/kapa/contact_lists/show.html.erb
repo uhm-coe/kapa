@@ -1,0 +1,11 @@
+<% content_for(:box1) do %>
+  <h4 class="section-header divider">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    Contact List
+  </h4>
+
+  <%=bootstrap_form_for(:contact_list, :url => kapa_contact_list_path(:id => @contact_list), :html => {:method => :put}) do %>
+    <%=render :partial => "contact_list_form" %>
+    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_contact_list_path(:id => @contact_list, :return_path => params[:return_path])} if @current_user.write? %>
+  <% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<%=bootstrap_fields_for :contact_list do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :name %>
+      <%=f.text_area :description %>
+      <%=f.user_select :contact_list_member_ids, {:label => "Contact List Members"}, {:multiple => true} %>
+    </div>
+    <div class="col-sm-6">
+    </div>
+  </div>
+<% end %>

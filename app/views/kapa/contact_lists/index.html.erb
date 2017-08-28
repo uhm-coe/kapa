@@ -1,0 +1,38 @@
+<% content_for(:dialog) do %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Contact Lists</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if @current_user.write? %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Members</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @contact_lists.each do |contact_list| %>
+        <tr>
+          <td><%=contact_list.name %></td>
+          <td><%=abbr contact_list.description, 50 %></td>
+          <td><%=contact_list.members.size %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => contact_list}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>
