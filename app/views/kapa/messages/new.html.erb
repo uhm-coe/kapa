@@ -1,0 +1,11 @@
+<% content_for(:box1) do %>
+  <h4 class="section-header divider">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    New Message
+  </h4>
+
+  <%=bootstrap_form_for :message, :url => kapa_messages_path do |f| %>
+    <%=render :partial => "message_form" %>
+    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+  <% end %>
+<%end%>

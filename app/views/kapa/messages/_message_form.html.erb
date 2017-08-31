@@ -1,0 +1,11 @@
+<%=bootstrap_fields_for :message do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :title %>
+      <%=f.text_area :body %>
+      <%=f.hidden_field :person_id %>
+    </div>
+    <div class="col-sm-6">
+    </div>
+  </div>
+<% end %>

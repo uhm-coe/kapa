@@ -58,5 +58,39 @@
     </div>
     <% end %>
 
+    <% if @current_user.read?(:kapa_messages) %>
+    <% @messages = @person.messages %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#message_detail">
+            Messages (<%=@messages.length%>)
+          </a>
+        </h4>
+      </div>
+      <div id="message_detail" class="panel-collapse collapse">
+        <div class="panel-body">
+          <p class="text-right">
+            <%=button_to_link "New Message", new_kapa_message_path(:id => @person), :icon => "glyphicon-plus" %>
+          </p>
+          <table class="table table-hover">
+           <tr>
+             <th>Title</th>
+             <th>Date</th>
+             <th></th>
+           </tr>
+           <% @messages.reverse_each do |m| %>
+             <tr>
+               <td><%=m.title%></td>
+               <td><%=format_date m.created_at %></td>
+               <td class="right"><%=link_to "Show", kapa_message_path(m), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+             </tr>
+           <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
   </div>
 <% end %>

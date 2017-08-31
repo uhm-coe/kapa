@@ -1,0 +1,37 @@
+<% content_for(:dialog) do %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Messages</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @messages.each do |message| %>
+        <tr>
+          <td><%=message.person.full_name_ordered %></td>
+          <td><%=abbr message.title, 30 %></td>
+          <td><%=message.status %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => message}, :class => "btn btn-default btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>

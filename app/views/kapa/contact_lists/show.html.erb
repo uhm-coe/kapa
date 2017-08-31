@@ -4,8 +4,22 @@
     Contact List
   </h4>
 
-  <%=bootstrap_form_for(:contact_list, :url => kapa_contact_list_path(:id => @contact_list), :html => {:method => :put}) do %>
-    <%=render :partial => "contact_list_form" %>
-    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_contact_list_path(:id => @contact_list, :return_path => params[:return_path])} if @current_user.write? %>
-  <% end %>
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#contact_list_tab" data-toggle="tab">Contact List</a></li>
+      <li><a href="#members_tab" data-toggle="tab">List Members</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="contact_list_tab" class="tab-pane">
+        <%=bootstrap_form_for(:contact_list, :url => kapa_contact_list_path(:id => @contact_list), :html => {:method => :put}) do %>
+          <%=render :partial => "contact_list_form" %>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_contact_list_path(:id => @contact_list, :return_path => params[:return_path])} if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="members_tab" class="tab-pane">
+      </div>
+    </div>
+  </div>
 <% end %>

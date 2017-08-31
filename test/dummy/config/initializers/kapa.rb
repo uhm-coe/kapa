@@ -27,6 +27,10 @@ Rails.configuration.available_routes = %w{
   kapa_notifications
   kapa_properties
   kapa_terms
+  kapa_messages
+  kapa_bulk_messages
+  kapa_contact_lists
+  kapa_contact_list_members
 }
 
 Rails.configuration.filter_defaults = {
