@@ -107,6 +107,7 @@ module Kapa::UserBase
 
   def apply_role(name)
     self.serialize(:permission, Rails.configuration.roles[name])
+    self.update_serialized_attributes(:permission, :role => name)
   end
 
   def valid_credential?(password)

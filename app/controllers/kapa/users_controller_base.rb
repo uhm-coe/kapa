@@ -25,7 +25,6 @@ module Kapa::UsersControllerBase
     @user.update_serialized_attributes!(:_ext, params[:user_ext]) if params[:user_ext].present?
     if params[:permission][:role] and Rails.configuration.roles.keys.include?(params[:permission][:role])
       @user.apply_role(params[:permission][:role])
-      @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
     elsif params[:permission]
       @user.update_serialized_attributes(:permission, params[:permission])
     end
