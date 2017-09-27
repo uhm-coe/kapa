@@ -10,6 +10,7 @@
       <%=f.text_field :standard %>
       <%=f.select :type, [["Default", "default"], ["Select", "select"], ["Text Field", "text"]], {:label => "Score Type"} %>
       <%=f.text_field :type_option, :label => "Score Type Option" %>
+      <%=f.check_box :active, {}, 1, 0 %>
     </div>
   </div>
 <% end %>

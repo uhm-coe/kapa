@@ -42,6 +42,6 @@ module Kapa::AssessmentCriterionsControllerBase
 
   private
   def assessment_criterion_params
-    params.require(:assessment_criterion).permit(:assessment_rubric_id, :criterion, :criterion_desc, :standard, :type, :type_option)
+    params.require(:assessment_criterion).permit(:assessment_rubric_id, :criterion, :criterion_desc, :active, :standard, :type, :type_option)
   end
 end

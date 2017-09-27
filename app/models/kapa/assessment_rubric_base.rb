@@ -10,6 +10,10 @@ module Kapa::AssessmentRubricBase
     validates_presence_of :title
   end
 
+  def active_criterions
+    self.assessment_criterions.where(:active => 1)
+  end
+
   def effective_term
     "#{Kapa::Term.find(self.start_term_id).description} - #{Kapa::Term.find(self.end_term_id).description}" if self.start_term_id.present? and self.end_term_id.present?
   end

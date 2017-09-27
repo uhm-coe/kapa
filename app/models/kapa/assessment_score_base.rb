@@ -19,7 +19,7 @@ module Kapa::AssessmentScoreBase
       #initialize table first
       scores = ActiveSupport::OrderedHash.new
       assessment_scorables.each do |s|
-        assessment_rubric.assessment_criterions.each do |c|
+        assessment_rubric.active_criterions.each do |c|
           index = "#{s.id}_#{c.id}"
           scores[index] = ""
         end
