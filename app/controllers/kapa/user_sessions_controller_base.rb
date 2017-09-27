@@ -76,7 +76,7 @@ module Kapa::UserSessionsControllerBase
   end
 
   private
-  def register()
+  def register(uid)
     #Implement this method for auto user registration
   end
 
