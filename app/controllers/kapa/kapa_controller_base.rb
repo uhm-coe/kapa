@@ -4,6 +4,7 @@ module Kapa::KapaControllerBase
   included do
     layout "/kapa/layouts/kapa"
     protect_from_forgery
+    before_filter :sanitize_params
     before_filter :check_if_route_is_enabled
     before_filter :validate_login
     before_filter :check_id_format, :only => :show
@@ -13,6 +14,15 @@ module Kapa::KapaControllerBase
     after_filter :put_timestamp
     helper :all
     helper_method :read?, :write?, :manage?, :access_all?, :access_dept?, :access_assigned?
+  end
+
+  def sanitize_params
+    params.each_pair do |key1, value1|
+      value1.each_pair do |key2, value2|
+        #Remove blank elements on multi-select values
+        params[key1][key2] = value2.delete_if {|v| v.blank?} if value2.is_a? Array
+      end if value1.is_a? Hash
+    end
   end
 
   def check_if_route_is_enabled
@@ -155,22 +165,10 @@ module Kapa::KapaControllerBase
   def filter(options = {})
     name = :filter
     session[name] = Rails.configuration.filter_defaults if session[name].nil?
-    session[name].update(sanitize_hash(params[:filter])) if params[:filter].present?
-    session[name].update(sanitize_hash(options)) if options.present?
+    session[name].update(params[:filter]) if params[:filter].present?
+    session[name].update(options) if options.present?
     filter = OpenStruct.new(session[name])
     filter.user = @current_user
     return filter
-  end
-
-  def sanitize_hash(hash)
-    new_hash = {}
-    hash.each_pair do |key, value|
-      if value.is_a? Array
-        new_hash[key] = value.delete_if {|v| v.blank?}
-      else
-        new_hash[key] = value
-      end
-    end
-    return new_hash
   end
 end
