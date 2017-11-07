@@ -123,8 +123,7 @@ module Kapa::UsersControllerBase
   end
 
   def person_params
-    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :ssn, :ssn_agreement,
-                                   :email, :first_name, :other_name, :title, :gender, :status)
+    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :email, :first_name, :other_name, :title, :gender, :status)
   end
 
 end
