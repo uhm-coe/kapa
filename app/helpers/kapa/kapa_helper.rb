@@ -115,12 +115,20 @@ module Kapa::KapaHelper
 
   def datetime_picker(object_name, method, options = {})
     input_tag = text_field(object_name, method, options)
-    icon_tag = "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>"
-    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => options[:date_only] ? "input-group date datepicker" : "input-group date datetimepicker")
+    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datetimepicker")
   end
 
   def date_picker(object_name, method, options = {})
-    datetime_picker(object_name, method, options.merge(:date_only => true))
+    input_tag = text_field(object_name, method, options)
+    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datepicker")
+  end
+
+  def time_picker(object_name, method, options = {})
+    input_tag = text_field(object_name, method, options)
+    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-time"), :class => "input-group-addon")
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date timepicker")
   end
 
   def format_date(date)
