@@ -5,29 +5,23 @@ module Kapa::KapaHelper
     model_class = options[:model_class]
     selections = model_class.selections(options[:model_options])
 
-    object = instance_variable_get("@#{object_name}".delete("[]"))
-    if html_options[:multiple] or options[:exclude_current_value]
+    if options[:selected]
+      current_value = options[:selected]
+    elsif html_options[:multiple] or options[:exclude_current_value]
       current_value = nil
+      #do not change options[:selected]
     else
+      object = instance_variable_get("@#{object_name}".delete("[]"))
       current_value = object.send("#{method}") if object
+      options[:selected] = current_value if current_value.present?
     end
+
     selection = selections.select { |c| c[1].to_s == current_value.to_s }.first
-    # If the current value exists in the db but is not in the selections
-    # (i.e., because an Property had been deactivated),
-    # add it to the selections or else the first selection will be selected by default
+    # If the current value exists in the db but is not in the selections because of deactivated properties
+    # add it to the selections so that the value will apear in the selection (description will not be displayed)
     if selection.blank? and current_value.present? and not options[:grouped]
       selections.push([current_value, current_value])
     end
-
-    if options[:selected].blank? and current_value.present?
-      options[:selected] = current_value
-    end
-
-    #if html_options[:multiple]
-    #  html_options[:name] = "#{object_name}[#{method}][]"
-    #  html_options[:class] = "kapa-multiselect"
-    #  options[:selected] = options[:selected].split(/,\s*/) if options[:selected].present? and options[:selected].is_a? (String)
-    #end
 
     if options[:locked]
       if selection
