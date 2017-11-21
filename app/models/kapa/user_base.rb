@@ -4,12 +4,13 @@ module Kapa::UserBase
   included do
     @available_keys = {}
     attr_accessor :request, :email
-    serialize :dept, Kapa::CsvSerializer
 
     belongs_to :person
     has_many :notifications
     has_many :user_assignments
     has_many :user_timestamps
+
+    serialize :dept, Kapa::CsvSerializer
 
     validates_format_of :email, :with => /@/, :message => "is not a valid format", :allow_blank => true
     validates_uniqueness_of :uid

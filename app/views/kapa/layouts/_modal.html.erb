@@ -10,7 +10,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" id="modal_close" class="btn btn-default" data-dismiss="modal">Close</button>
-        <% if defined? modal_form_id %>
+        <% if local_assigns[:modal_form_id] %>
           <button type="button" id="modal_submit" class="btn btn-primary" data-submit="#<%=modal_form_id%>">OK</button>
         <% end %>
       </div>
