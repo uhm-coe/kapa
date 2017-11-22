@@ -13,7 +13,7 @@ module Kapa::PersonBase
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create
 
-    before_save :format_fields, :format_ssn
+    before_save :format_fields
   end
 
 
@@ -25,14 +25,6 @@ module Kapa::PersonBase
        self.[]=(k, v.to_s.split(' ').map { |w| w.capitalize }.join(' ')) if k =~ /(street$)|(city$)/
        self.[]=(k, v.to_s.upcase) if k =~ /(state$)/
      end
-    end
-  end
-
-  def format_ssn
-    ssn_formatted = self.ssn.gsub(/\D/, "") if self.ssn
-    unless ssn_formatted.blank?
-      self.ssn_crypted = Kapa::Person.encrypt(ssn_formatted)
-      self.ssn = "X" * ssn_formatted.length
     end
   end
 

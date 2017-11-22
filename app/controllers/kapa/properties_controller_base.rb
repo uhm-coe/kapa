@@ -44,6 +44,6 @@ module Kapa::PropertiesControllerBase
   end
 
   def property_params
-    params.require(:property).permit(:name, :code, :description, :description_short, :category, :dept, :sequence, :active)
+    params.require(:property).permit(:name, :code, :description, :description_short, :category, :sequence, :active, :dept => [])
   end
 end
