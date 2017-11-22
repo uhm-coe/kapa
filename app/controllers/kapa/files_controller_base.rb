@@ -72,7 +72,7 @@ module Kapa::FilesControllerBase
     else
       flash[:danger] = error_message_for(@file)
     end
-    render(:text => "<script>window.onunload = window.opener.location.reload(); close();</script>")
+    redirect_to params[:return_path] || session[:return_path]
   end
 
   def file_param

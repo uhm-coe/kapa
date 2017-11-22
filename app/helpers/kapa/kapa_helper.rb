@@ -51,10 +51,9 @@ module Kapa::KapaHelper
   end
 
   def term_select(object_name, method, options = {}, html_options = {})
-    options[:name] ||= method
-    options[:model_class] = Kapa::Term
+    options[:name] = :term
+    options[:model_class] = Kapa::Property
     options[:model_options] = options
-    model_select(object_name, method, options, html_options)
     model_select(object_name, method, options, html_options)
   end
 

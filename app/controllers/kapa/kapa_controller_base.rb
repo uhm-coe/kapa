@@ -9,7 +9,7 @@ module Kapa::KapaControllerBase
     before_filter :check_id_format, :only => :show
     before_filter :check_read_permission
     before_filter :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
-    after_filter :remember_last_index, :only => :index
+    after_filter :set_return_path, :only => :index
     after_filter :put_timestamp
     helper :all
     helper_method :read?, :write?, :manage?, :access_all?, :access_dept?, :access_assigned?
@@ -63,8 +63,8 @@ module Kapa::KapaControllerBase
     end
   end
 
-  def remember_last_index
-    session[:last_index] = request.fullpath
+  def set_return_path
+    session[:return_path] = request.original_url
   end
 
   def put_timestamp

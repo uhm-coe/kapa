@@ -7,6 +7,7 @@ module Kapa::PersonsControllerBase
     @documents = @person.documents
     @form_templates = Kapa::FormTemplate.all
     @text_templates = Kapa::TextTemplate.all
+    session[:return_path] = kapa_person_path(:id => @person)
   end
 
   def new
