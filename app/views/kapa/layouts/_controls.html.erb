@@ -16,7 +16,7 @@
   <%=yield %>
 
   <% unless local_assigns[:hide_update] or local_assigns[:hide_save] %>
-    <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save</button>
+    <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <%=local_assigns[:save_text] || "Save" %></button>
   <% end %>
 
 </div>

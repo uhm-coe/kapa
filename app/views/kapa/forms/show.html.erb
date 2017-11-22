@@ -24,11 +24,15 @@
       <%= hidden_field :form, :person_id %>
       <%= hidden_field :form, :type %>
 
+      <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} if @current_user.write? %>
+
+
 
       <% if @form_template.attachment %>
 
         <legend>File Attachments</legend>
         <p class="right">
+          <%=button_to_link "Add File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
         </p>
 
         <table class="table table-hover">
@@ -53,12 +57,6 @@
         </table>
       <% end %>
 
-        <div class="text-center">
-          <button class="btn btn-primary" name="commit" type="submit">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Form
-          </button>
-          <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
-        </div>
       </div>
 
     <% end %>
