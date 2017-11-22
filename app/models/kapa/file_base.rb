@@ -9,6 +9,8 @@ module Kapa::FileBase
     has_many :users, :through => :user_assignments
 
     has_attached_file :data
+    validates_attachment_content_type :data, :content_type =>  ["application/pdf", "application/x-pdf", "audio/mpeg", "image/gif", "image/jpeg", "image/png", "text/plain"]
+
     serialize :dept, Kapa::CsvSerializer
   end
 
