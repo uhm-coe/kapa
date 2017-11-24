@@ -40,6 +40,7 @@ module Kapa::FilesControllerBase
       flash[:success] = "Document was successfully updated."
     else
       flash[:danger] = error_message_for(@file)
+      logger.error "*ERROR* File upload error: #{@file.inspect}"
     end
     redirect_to kapa_person_path(:id => @person, :artifacts_modal => "show")
   end
@@ -56,6 +57,7 @@ module Kapa::FilesControllerBase
     @file.dept = [@current_user.primary_dept]
     unless @file.save
       flash[:danger] = error_message_for(@file)
+      logger.error "*ERROR* File upload error: #{@file.inspect}"
       redirect_to params[:return_path] and return false
     end
 
