@@ -24,7 +24,7 @@
       <%= hidden_field :form, :person_id %>
       <%= hidden_field :form, :type %>
 
-      <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} if @current_user.write? %>
+      <%#=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} if @current_user.write? %>
 
 
 
@@ -32,7 +32,7 @@
 
         <legend>File Attachments</legend>
         <p class="right">
-          <%=button_to_link "Add File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+          <%#=button_to_link "Add File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
         </p>
 
         <table class="table table-hover">
@@ -82,7 +82,8 @@
       <%= f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if @current_user.manage? :kapa_files %>
     </div>
 
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} if @current_user.write? %>
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path]), :more_actions => [link_to("Add File", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus")]} if @current_user.write? %>
 
   <% end %>
 <% end %>
+z

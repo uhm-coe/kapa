@@ -13,7 +13,7 @@ module Kapa::TextBase
   end
 
   def type
-    return "Text Document"
+    return "Text Doc"
   end
 
   def type_desc

@@ -162,7 +162,7 @@ module Kapa::KapaHelper
      elsif document.is_a? Kapa::Form
       return "Form"
      elsif document.is_a? Kapa::Text
-      return "Text Document"
+      return "Text Doc"
      elsif document.is_a? Kapa::Exam
       return "Test"
      end

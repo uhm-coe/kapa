@@ -50,7 +50,7 @@
               <h4>Document ID: <%=@document_id %></h4>
             </div>
             <div class="col-sm-6">
-              <h4><%="#{@person.full_name} (#{@person.id_number})" if @person %></h4>
+              <h4><%=@person.full_name if @person %></h4>
             </div>
           </div>
         </div>
