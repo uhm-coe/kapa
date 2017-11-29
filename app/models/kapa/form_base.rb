@@ -11,8 +11,6 @@ module Kapa::FormBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-#    serialize :dept, Kapa::CsvSerializer
-
     validates_presence_of :form_template_id
     after_save :update_form_details
   end

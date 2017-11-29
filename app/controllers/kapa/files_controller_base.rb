@@ -76,6 +76,6 @@ module Kapa::FilesControllerBase
   end
 
   def file_param
-    params.require(:file).permit(:person_id, :attachable_id, :attachable_type, :data, :name, :lock, :note, :public)
+    params.require(:file).permit(:person_id, :attachable_id, :attachable_type, :data, :name, :lock, :note, :public, :dept, :depts => [])
   end
 end

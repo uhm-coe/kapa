@@ -26,6 +26,7 @@
         <th>Type</th>
         <th>Title</th>
         <th>Active</th>
+        <th><%=t(:kapa_global_dept).pluralize %></th>
         <th></th>
       </tr>
     </thead>
@@ -35,6 +36,7 @@
           <td><%=text_template.type %></td>
           <td><%=text_template.title %></td>
           <td><%=text_template.active %></td>
+          <td><%=text_template. text.depts.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => text_template}, :class => "btn btn-default btn-xs", :target => "_brank" %></td>
         </tr>
       <% end %>

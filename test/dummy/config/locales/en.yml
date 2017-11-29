@@ -7,7 +7,7 @@ en:
   kapa_welcome_html: "<h1>Welcome</h1>
                       <p>KAPA Admin Console is an administrative UI to organize office records including personal information, electronic documents, calendars, tasks, messaging, etc...</p>
                       <p>This highly customizable UI provides a set of tools to support various workflow functions and services in your office.</p>"
-  kapa_global_dept: "Depts"
+  kapa_global_dept: "Dept"
   kapa_global_user_ids: "Assignee"
-  kapa_login_cas: "Login with CAS"
-  kapa_login_local: "Login manually"
+  kapa_login_cas: "Continue with CAS"
+  kapa_login_local: "Login"

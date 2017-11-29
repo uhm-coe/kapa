@@ -2,10 +2,6 @@ module Kapa::FormTemplateBase
   extend ActiveSupport::Concern
 
   included do
-    serialize :dept, Kapa::CsvSerializer
-    serialize :course, Kapa::CsvSerializer
-    serialize :program, Kapa::CsvSerializer
-    serialize :transition_point, Kapa::CsvSerializer
     has_many :form_fields, -> {order("form_fields.label")}, :dependent => :destroy
     validates_presence_of :title, :type
   end

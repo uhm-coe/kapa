@@ -10,8 +10,6 @@ module Kapa::UserBase
     has_many :user_assignments
     has_many :user_timestamps
 
-    serialize :dept, Kapa::CsvSerializer
-
     validates_format_of :email, :with => /@/, :message => "is not a valid format", :allow_blank => true
     validates_uniqueness_of :uid
     validates_presence_of :uid, :person_id
@@ -47,10 +45,6 @@ module Kapa::UserBase
     self.user_timestamps.create(:path => @request.path,
                                 :remote_ip => @request.remote_ip,
                                 :agent => @request.env['HTTP_USER_AGENT'].downcase)
-  end
-
-  def depts
-    self.dept
   end
 
   def status_desc

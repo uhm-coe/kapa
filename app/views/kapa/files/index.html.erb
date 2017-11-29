@@ -27,7 +27,7 @@
       <th>Name</th>
       <th>File Name</th>
       <th>Uploaded</th>
-      <th><%=t(:kapa_global_dept) %></th>
+      <th><%=t(:kapa_global_dept).pluralize %></th>
       <th></th>
     </tr>
     </thead>
@@ -38,7 +38,7 @@
         <td><%=link_to abbr(file.person.full_name), kapa_person_path(:id => file.person) if file.person %></td>
         <td><%=file.name %></td>
         <td><%=format_date file.updated_at %></td>
-        <td><%=file.dept.join(", ") %></td>
+        <td><%=file.depts.join(", ") %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => file}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>

@@ -5,7 +5,7 @@
       <%=f.text_field :user_key, :size => 20, :label => "Name or UID" %>
       <%=f.select :status, Rails.configuration.user_status, {:include_blank => "Any", :label => "User Status"} %>
       <%=f.select :category, Rails.configuration.user_categories, :include_blank => "Any" %>
-      <%=f.property_select :depts, {:label => t(:kapa_global_dept), :include_blank => "Any"}, :multiple => true if @current_user.manage? %>
+      <%=f.property_select :depts, {:label => t(:kapa_global_dept).pluralize, :include_blank => "Any"}, :multiple => true if @current_user.manage? %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
@@ -41,7 +41,7 @@
         <th>Role</th>
         <th>Status</th>
         <th><%="Primary #{t(:kapa_global_dept)}"%></th>
-        <th><%="#{t(:kapa_global_dept)}(s)"%></th>
+        <th><%="#{t(:kapa_global_dept).pluralize.pluralize}"%></th>
         <th></th>
       </tr>
     </thead>
@@ -54,7 +54,7 @@
           <td><%=user.deserialize(:permission, :as => OpenStruct).role %></td>
           <td><%=user.status_desc %></td>
           <td><%=user.primary_dept %></td>
-          <td><%=user.dept.join(", ") %></td>
+          <td><%=user.depts.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

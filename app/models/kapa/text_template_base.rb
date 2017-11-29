@@ -3,8 +3,6 @@ module Kapa::TextTemplateBase
 
   included do
     has_many :texts
-
-    serialize :dept, Kapa::CsvSerializer
   end
 
   class_methods do

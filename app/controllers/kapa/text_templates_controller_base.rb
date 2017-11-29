@@ -54,6 +54,6 @@ module Kapa::TextTemplatesControllerBase
   end
 
   def text_template_params
-    params.require(:text_template).permit(:type, :title, :body, :active)
+    params.require(:text_template).permit(:type, :title, :body, :active, :dept, :depts => [])
   end
 end

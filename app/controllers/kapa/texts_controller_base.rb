@@ -63,6 +63,6 @@ module Kapa::TextsControllerBase
 
   private
   def text_param
-    params.require(:text).permit(:person_id, :attachable_id, :attachable_type, :text_template_id, :title, :body, :status, :lock, :note)
+    params.require(:text).permit(:person_id, :attachable_id, :attachable_type, :text_template_id, :title, :body, :status, :lock, :note, :dept, :depts => [])
   end
 end

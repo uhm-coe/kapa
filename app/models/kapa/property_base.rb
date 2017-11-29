@@ -5,7 +5,6 @@ module Kapa::PropertyBase
     self.table_name = :properties
     validates_uniqueness_of :code, :scope => :name
     validates_presence_of :name, :code
-    serialize :dept, Kapa::CsvSerializer
   end
 
   class_methods do

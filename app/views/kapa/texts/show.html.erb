@@ -26,7 +26,7 @@
     <div class="row form-block">
         <%=f.text_area :note, :text => "Note", :size => "5x7" %>
         <%=f.text_field :title %>
-        <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept)}, :multiple => true if @current_user.manage? :kapa_texts %>
+        <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if @current_user.manage? :kapa_texts %>
     </div>
 
     <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_path(:id => @text, :return_path => params[:return_path])} if @current_user.write? %>

@@ -27,9 +27,9 @@
       <th>Key</th>
       <th>Value</th>
       <th>Category</th>
-      <th><%=t(:kapa_global_dept) %></th>
       <th>Sequence</th>
       <th>Active</th>
+      <th><%=t(:kapa_global_dept).pluralize %></th>
       <th></th>
     </tr>
     </thead>
@@ -39,9 +39,9 @@
         <td><%=property.code %></td>
         <td><%=property.description %></td>
         <td><%=abbr property.category, 20 %></td>
-        <td><%=property.dept.join(", ") %></td>
         <td><%=property.sequence %></td>
         <td><%=property.active %></td>
+        <td><%=property.depts.join(", ") %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <% end %>

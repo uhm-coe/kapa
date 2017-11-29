@@ -8,8 +8,6 @@ module Kapa::TextBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    serialize :dept, Kapa::CsvSerializer
-
     #validates_presence_of :text_template_id
     after_create :set_default_contents, :replace_variables
   end

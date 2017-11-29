@@ -79,7 +79,7 @@
     <div class="row form-block">
       <%= f.text_area :note, :size => "5x7" %>
       <%= f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
-      <%= f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept)}, :multiple => true if @current_user.manage? :kapa_files %>
+      <%= f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if @current_user.manage? :kapa_files %>
     </div>
 
     <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} if @current_user.write? %>

@@ -88,14 +88,6 @@ module Kapa::KapaModelBase
     self.class.name.tableize.sub("/", "_")
   end
 
-  def dept_desc
-    if self.dept.is_a? Array
-      self.dept.delete_if {|d| d.blank?}.join(", ")
-    else
-      self.dept
-    end
-  end
-
   def depts
     self.dept.to_s.split(/,\s*/)
   end

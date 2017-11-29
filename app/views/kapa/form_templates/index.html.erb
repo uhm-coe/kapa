@@ -26,7 +26,7 @@
         <th>Type</th>
         <th>Title</th>
         <th>Fields</th>
-        <th><%=t(:kapa_global_dept) %></th>
+        <th><%=t(:kapa_global_dept).pluralize %></th>
         <th></th>
       </tr>
     </thead>
@@ -36,7 +36,7 @@
           <td><%=form_template.type.to_s.capitalize %></td>
           <td><%=abbr form_template.title, 50 %></td>
           <td><%=form_template.form_fields.length.to_i %></td>
-          <td><%=form_template.dept.join(", ") %></td>
+          <td><%=form_template.depts.join(", ") %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => form_template}, :class => "btn btn-default btn-xs" %></td>
         </tr>
       <% end %>

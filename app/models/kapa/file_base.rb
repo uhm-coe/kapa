@@ -9,8 +9,6 @@ module Kapa::FileBase
 
     has_attached_file :data
     validates_attachment_content_type :data, :content_type => Rails.configuration.attachment_content_types
-
-    serialize :dept, Kapa::CsvSerializer
   end
 
   def url(*args)
