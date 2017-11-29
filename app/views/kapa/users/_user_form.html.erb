@@ -6,8 +6,8 @@
     <%=f.select :status, Rails.configuration.user_status, :label => "User Status" %>
   </div>
   <div class="col-sm-6">
-    <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
-    <%=f.property_select :primary_dept, :name => :dept, :label => "Primary #{t(:kapa_global_dept)}", :include_blank => true %>
+    <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
+    <%=f.property_select :primary_dept, :name => :dept, :label => "Primary Dept", :include_blank => true %>
     <%=f.text_field :position %>
     <%=bootstrap_fields_for(:permission) do |p| %>
       <%=p.select :role, @roles, :include_blank => true %>

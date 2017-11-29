@@ -3,7 +3,7 @@
     <div class="col-sm-6">
       <%=f.text_field :title %>
       <%=f.select :type, [["Simple", "simple"],["Complex", "complex"]], :label => "Template Type" %>
-      <%=f.property_select :dept, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
+      <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept)}, {:multiple => true} %>
       <%=f.check_box :attachment, {}, 1, 0 %>
     </div>
 

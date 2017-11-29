@@ -2,9 +2,13 @@ module Kapa::PersonsControllerBase
   extend ActiveSupport::Concern
 
   def show
+    options= {:filter => {:user => @current_user}}
     @person = Kapa::Person.find(params[:id])
     @person_ext = @person.ext
-    @documents = @person.documents
+    @documents = []
+    @documents += @person.files.search(options)
+    @documents += @person.forms.search(options)
+    @documents += @person.texts.search(options)
     @form_templates = Kapa::FormTemplate.all
     @text_templates = Kapa::TextTemplate.all
     session[:return_path] = kapa_person_path(:id => @person)

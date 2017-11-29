@@ -5,6 +5,12 @@ module Kapa::KapaModelBase
     self.abstract_class = true
     self.inheritance_column = nil
     serialize :yml, Hash
+    attr_writer :depts
+    before_save :serialize_depts
+  end
+
+  def serialize_depts
+    self.dept = @depts.delete_if {|v| v.blank?}.join(",") if self.has_attribute?(:dept) and @depts
   end
 
   def deserialize(name, options = {})
@@ -88,7 +94,10 @@ module Kapa::KapaModelBase
     else
       self.dept
     end
+  end
 
+  def depts
+    self.dept.to_s.split(/,\s*/)
   end
 
   class_methods do
@@ -152,26 +161,30 @@ module Kapa::KapaModelBase
     end
 
     def to_csv(options = {})
-      objects = self.search(options)
-      keys = self.csv_format.keys
-      CSV.generate do |csv|
-        csv << keys
-        objects.each do |o|
-          csv << keys.collect {|k| o.rsend(*csv_format[k]) }
-        end
-      end
+      options[:as] = :csv
+      options[:format]= self.csv_format
+      to_table(options)
     end
 
     def to_table(options = {})
+      options[:as] = :array if options[:as].blank?
       objects = self.search(options)
       excluded_keys = options[:exclude] || []
-      keys = self.csv_format.keys.delete_if {|key| excluded_keys.include?(key)}
-      table = []
-      table << keys
-      objects.each do |o|
-        table << keys.collect {|k| o.rsend(*csv_format[k]) }
+      keys = options[:format].keys.delete_if {|key| excluded_keys.include?(key)}
+      if options[:as].to_s == "array"
+        table = []
+        table << keys
+        objects.each do |o|
+          table << keys.collect {|k| o.rsend(*csv_format[k]) }
+        end
+      elsif options[:as].to_s == "csv"
+        CSV.generate do |csv|
+          csv << keys
+          objects.each do |o|
+            csv << keys.collect {|k| o.rsend(*csv_format[k]) }
+          end
+        end
       end
-      return table
     end
 
     def csv_format

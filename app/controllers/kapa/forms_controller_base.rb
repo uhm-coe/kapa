@@ -69,6 +69,6 @@ module Kapa::FormsControllerBase
 
   private
   def form_param
-    params.require(:form).permit(:form_template_id, :person_id, :attachable_id, :attachable_type, :lock, :note, :public, :dept => [])
+    params.require(:form).permit(:form_template_id, :person_id, :attachable_id, :attachable_type, :lock, :note, :public, :dept, :depts => [])
   end
 end
