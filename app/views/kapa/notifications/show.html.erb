@@ -6,7 +6,7 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
     Notification: <%= @notification.title %>
   </h4>
 

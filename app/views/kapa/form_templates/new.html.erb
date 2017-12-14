@@ -1,7 +1,7 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
-    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
     New Form
   </h4>
 

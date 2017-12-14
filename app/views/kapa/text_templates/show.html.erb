@@ -1,34 +1,30 @@
 <% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      $('#editor').summernote({
-        height: 600,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'italic', 'underline', 'clear']],
-//          ['fontname', ['fontname']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          ['table', ['table']],
-          ['insert', ['link', 'hr']],
-          ['view', ['fullscreen', 'codeview']],
-          ['help', ['help']]
-        ]
-      });
 
-      $('#text_template_form').submit(function(event) {
-        $('#text_template_body').val($('#editor').summernote('code'));
-      });
-    });
-  </script>
+  <%=javascript_include_tag "kapa/ckeditor" %>
+
 <% end %>
 
 <% content_for(:box1) do %>
 
+  <h4 class="section-header">
+    <%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@text_template.title %>
+  </h4>
+
+  <div class="text-right">
+     <div class="btn-group">
+       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="glyphicon glyphicon-option-vertical"></span>
+       </button>
+       <ul class="dropdown-menu">
+         <li><%=link_to("Delete", kapa_text_template_path(:id => @text_template), :method => :delete, "data-confirm" => "Are you sure you want to delete?")%></li>
+       </ul>
+     </div>
+   </div>
+
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
-    <div id="editor"><%=@text_template.body.to_s.html_safe %></div>
-    <%=f.hidden_field :body %>
+    <%=f.text_area :body, :id => "editor", :label => :no %>
+
     <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => params[:return_path])} do %>
       <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_text_template_dialog", :icon => "glyphicon-wrench" %>
     <% end if @current_user.write? %>

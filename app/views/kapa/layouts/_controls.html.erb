@@ -1,26 +1,9 @@
-<%
-  more_actions = local_assigns[:more_actions] || []
-  more_actions << link_to("Delete", delete_path, :method => :delete, "data-confirm" => "Are you sure you want to delete?") if local_assigns[:delete_path]
-%>
-
-<div class="text-center">
-
-  <% if more_actions.present? %>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="glyphicon glyphicon-option-vertical"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <% more_actions.each do |more_action| %>
-        <li><%=more_action%></li>
-      <% end %>
-    </ul>
-  </div>
-  <% end %>
+<hr/>
+<div class="col-sm-12 text-center">
 
   <%=yield %>
 
-  <% unless local_assigns[:hide_cancel] %><%=button_to_link "Cancel", local_assigns[:return_path] || session[:return_path], "data-confirm" => "Are you sure you want to discard changes?", :icon => "glyphicon-ban-circle" %><% end %>
+  <% unless local_assigns[:hide_cancel] %><%=button_to_link "Cancel", session[:return_path], "data-confirm" => "Are you sure you want to discard changes?", :icon => "glyphicon-ban-circle" %><% end %>
 
   <% unless local_assigns[:hide_update] or local_assigns[:hide_save] %>
     <button class="btn btn-primary" name="commit" type="submit"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> <%=local_assigns[:save_text] || "Save" %></button>
