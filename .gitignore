@@ -1,6 +1,7 @@
-#Rails temp files
+#Temp files
 log/*
 tmp/*
+node_modules/*
 test/dummy/log
 test/dummy/tmp
 test/dummy/public/assets/*
