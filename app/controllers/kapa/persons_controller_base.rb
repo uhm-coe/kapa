@@ -2,8 +2,16 @@ module Kapa::PersonsControllerBase
   extend ActiveSupport::Concern
 
   def show
+    options= {:filter => {:user => @current_user}}
     @person = Kapa::Person.find(params[:id])
     @person_ext = @person.ext
+    @documents = []
+    @documents += @person.files.search(options)
+    @documents += @person.forms.search(options)
+    @documents += @person.texts.search(options)
+    @form_templates = Kapa::FormTemplate.all
+    @text_templates = Kapa::TextTemplate.all
+    session[:return_path] = kapa_person_path(:id => @person)
   end
 
   def new
@@ -103,6 +111,6 @@ module Kapa::PersonsControllerBase
 
   private
   def person_params
-    params.require(:person).permit(:birth_date, :business_phone, :created_at, :cur_city, :cur_phone, :cur_postal_code, :cur_state, :cur_street, :dept, :email, :email_alt, :ethnicity, :ets_id, :fax, :first_name, :gender, :id, :id_number, :last_name, :middle_initial, :mobile_phone, :note, :other_name, :per_city, :per_phone, :per_postal_code, :per_state, :per_street, :source, :ssn, :ssn_agreement, :ssn_crypted, :status, :title, :type, :uid, :updated_at)
+    params.require(:person).permit(:birth_date, :business_phone, :created_at, :cur_city, :cur_phone, :cur_postal_code, :cur_state, :cur_street, :dept, :email, :email_alt, :ethnicity, :ets_id, :fax, :first_name, :gender, :id, :id_number, :last_name, :middle_initial, :mobile_phone, :note, :other_name, :per_city, :per_phone, :per_postal_code, :per_state, :per_street, :source, :status, :title, :type, :uid, :updated_at, :dept, :depts => [])
   end
 end

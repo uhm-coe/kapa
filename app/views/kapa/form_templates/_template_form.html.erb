@@ -1,0 +1,15 @@
+<%=bootstrap_fields_for :form_template do |f| %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :title %>
+      <%=f.select :type, [["Simple", "simple"],["Complex", "complex"]], :label => "Template Type" %>
+      <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
+      <%=f.check_box :attachment, {}, 1, 0 %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=f.text_field :template_path if @form_template.type == "complex" %>
+      <%=f.text_area :note, :size => "5x7" %>
+    </div>
+  </div>
+<% end %>

@@ -4,7 +4,6 @@ module Kapa::UserBase
   included do
     @available_keys = {}
     attr_accessor :request, :email
-    serialize :dept, Kapa::CsvSerializer
 
     belongs_to :person
     has_many :notifications
@@ -46,10 +45,6 @@ module Kapa::UserBase
     self.user_timestamps.create(:path => @request.path,
                                 :remote_ip => @request.remote_ip,
                                 :agent => @request.env['HTTP_USER_AGENT'].downcase)
-  end
-
-  def depts
-    self.dept
   end
 
   def status_desc

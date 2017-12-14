@@ -9,3 +9,5 @@ en:
                       <p>This highly customizable UI provides a set of tools to support various workflow functions and services in your office.</p>"
   kapa_global_dept: "Dept"
   kapa_global_user_ids: "Assignee"
+  kapa_login_cas: "Continue with CAS"
+  kapa_login_local: "Login"

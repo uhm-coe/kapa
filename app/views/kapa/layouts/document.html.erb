@@ -36,32 +36,39 @@
     <%=javascript_include_tag "kapa/kapa" %>
     <%=yield :head %>
 
-    <title><%="#{@person.full_name}/" if @person%><%=@title %></title>
+    <title><%="#{@person.full_name}/" if @person%><%=@document_title %></title>
   </head>
 
   <body>
     <div class="container">
+
       <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <%=bootstrap_flash %>
+        <div class="header col-md-9 ">
+          <h3><%=@document_title  %></h3>
+          <div class="row">
+            <div class="col-sm-6">
+              <h4>Document ID: <%=@document_id %></h4>
+            </div>
+            <div class="col-sm-6">
+              <h4><%=@person.full_name if @person %></h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
         </div>
       </div>
-      <% if content_for?(:box1) %>
-        <div class="header col-md-8 col-md-offset-2"><h1><%=@title%></h1></div>
-        <div class="row">
-          <div class="well col-md-8 col-md-offset-2">
-            <%=yield :box1 %>
-          </div>
-        </div>
-      <% end %>
 
-      <% if content_for?(:box2) %>
-        <div class="row">
-          <div class="well col-lg-8 col-lg-offset-2">
-            <%=yield :box2 %>
-          </div>
+      <div class="row">
+        <div class="col-md-9">
+          <%=bootstrap_flash %>
+          <%=yield :main if content_for?(:main) %>
         </div>
-      <% end %>
+
+        <div class="col-md-3">
+          <%=yield :sidebar if content_for?(:sidebar) %>
+        </div>
+      </div>
 
       <% if content_for?(:dialog) %>
         <%=yield :dialog %>

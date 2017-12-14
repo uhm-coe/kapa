@@ -6,21 +6,23 @@ module Kapa::PersonBase
     serialize :type, Kapa::CsvSerializer
 
     has_many :users
-    has_many :forms
     has_many :files
     has_many :messages
+    has_many :forms
+    has_many :texts
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create
 
-    before_save :format_fields, :format_ssn
+    before_save :sanitize_attributes
   end
 
 
-  def format_fields
+  def sanitize_attributes
     self.id_number = nil if self.id_number.blank?
     self.attributes().each_pair do |k, v|
      if v
+       self.[]=(k, v.to_s.downcase) if k =~ /(email$)/
        self.[]=(k, v.gsub(/\D/, "")) if k =~ /(phone$)/
        self.[]=(k, v.to_s.split(' ').map { |w| w.capitalize }.join(' ')) if k =~ /(street$)|(city$)/
        self.[]=(k, v.to_s.upcase) if k =~ /(state$)/
@@ -28,20 +30,14 @@ module Kapa::PersonBase
     end
   end
 
-  def format_ssn
-    ssn_formatted = self.ssn.gsub(/\D/, "") if self.ssn
-    unless ssn_formatted.blank?
-      self.ssn_crypted = Kapa::Person.encrypt(ssn_formatted)
-      self.ssn = "X" * ssn_formatted.length
-    end
-  end
-
-  def documents(options = {})
-    options[:filter] ||= {:user => Kapa::UserSession.find.user}
-    documents = []
-    documents += self.files.search(options)
-    documents += self.forms.search(options)
-  end
+  #depreciated! Add code to controllers to find associated docuemnts.
+  # def documents(options = {})
+  #   options[:filter] ||= {:user => Kapa::UserSession.find.user}
+  #   documents = []
+  #   documents += self.files.search(options)
+  #   documents += self.forms.search(options)
+  #   documents += self.texts.search(options)
+  # end
 
   def full_name(option = nil)
     if option == :ordered

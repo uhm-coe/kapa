@@ -4,9 +4,11 @@ module Kapa::FormsControllerBase
   def show
     @form = Kapa::Form.find params[:id]
     @form_ext = @form.ext
+    @form_template = @form.form_template
     @person = @form.person
     @person_ext = @person.ext
-    @title = @form.type_desc
+    @document_title = @form.name
+    @document_id = @form.id
     render :layout => "/kapa/layouts/document"
   end
 
@@ -31,7 +33,7 @@ module Kapa::FormsControllerBase
 
   def create
     @form = Kapa::Form.new(form_param)
-    @form.dept = [@current_user.primary_dept]
+    @form.dept = @form.form_template.dept
 
     unless @form.save
       flash[:danger] = error_message_for(@form)
@@ -67,6 +69,6 @@ module Kapa::FormsControllerBase
 
   private
   def form_param
-    params.require(:form).permit(:type, :person_id, :attachable_id, :attachable_type, :lock, :note, :public)
+    params.require(:form).permit(:form_template_id, :person_id, :attachable_id, :attachable_type, :lock, :note, :public, :dept, :depts => [])
   end
 end

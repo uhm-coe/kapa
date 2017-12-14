@@ -6,7 +6,8 @@ module Kapa::TextsControllerBase
     @text_ext = @text.ext
     @person = @text.person
     @person_ext = @person.ext if @person
-    @title = @text.title
+    @document_title = @text.title
+    @document_id = @text.id
     render :layout => "/kapa/layouts/document"
   end
 
@@ -62,6 +63,6 @@ module Kapa::TextsControllerBase
 
   private
   def text_param
-    params.require(:text).permit(:person_id, :attachable_id, :attachable_type, :text_template_id, :title, :body, :status, :lock, :note)
+    params.require(:text).permit(:person_id, :attachable_id, :attachable_type, :text_template_id, :title, :body, :status, :lock, :note, :dept, :depts => [])
   end
 end

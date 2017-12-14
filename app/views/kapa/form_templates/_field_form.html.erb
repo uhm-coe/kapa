@@ -1,0 +1,15 @@
+<%=bootstrap_fields_for "form_field" do |f| %>
+  <%=f.hidden_field :form_template_id %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%=f.text_field :label, :label => "Label" %>
+      <%=f.text_area  :label_desc, :size => "35x5", :label => "Lebel Helper Text" %>
+    </div>
+
+    <div class="col-sm-6">
+      <%=f.select :type, @field_selections.collect {|key, value| [value, key] }, {:label => "Field Type"} %>
+      <%=f.text_field :type_option, :label => "Field Type Option" %>
+      <%=f.text_field :category %>
+    </div>
+  </div>
+<% end %>

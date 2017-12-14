@@ -11,7 +11,7 @@
 
 <% content_for(:box1) do %>
 
-  <h3>Documents</h3>
+  <h3>Text Docs</h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -28,7 +28,7 @@
       <th>Title</th>
       <th>Last Update</th>
       <th>Submitted</th>
-      <th><%=t(:kapa_global_dept) %></th>
+      <th><%=t(:kapa_global_dept).pluralize %></th>
       <th></th>
     </tr>
     </thead>
@@ -40,7 +40,7 @@
         <td><%= h text.title %></td>
         <td><%= time_ago_in_words text.updated_at if text.updated_at %> ago</td>
         <td><%= format_date text.submitted_at %></td>
-        <td><%= h text.dept.join(", ") %></td>
+        <td><%= h text.depts.join(", ") %></td>
         <td class="right"><%= link_to "Show", {:action => :show, :id => text}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>

@@ -22,7 +22,6 @@
 
   <div class="panel-group" id="accordion">
     <% if @current_user.read?(:kapa_files) %>
-    <% @documents = @person.documents %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -36,6 +35,7 @@
           <p class="text-right">
             <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
             <%=button_to_link "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" %>
+            <%=button_to_link "New Text Doc", nil, "data-toggle" => "modal", "data-target" => "#text_dialog", :icon => "glyphicon-plus" %>
           </p>
           <table class="table table-hover">
            <tr>
@@ -49,7 +49,7 @@
                <td><%=d.type%></td>
                <td><%=d.name%></td>
                <td><%=format_date d.date %></td>
-               <td class="right"><%=link_to "Show", document_path(d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+               <td class="right"><%=link_to "Show", document_path(d), :class => "btn btn-default btn-xs" %></td>
              </tr>
            <% end %>
           </table>
@@ -93,4 +93,26 @@
     <% end %>
 
   </div>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+    <%=bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:anchor => :document, :only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+      <%=f.file_field :data, :label => "File to upload" %>
+      <%=f.hidden_field :person_id, :value => @person.id %>
+    <% end %>
+  <% end %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "form_dialog", :modal_title => "Select a form", :modal_form_id => "new_form_form"} do %>
+    <%=bootstrap_form_for :form, :url => kapa_forms_path(:id => @person, :return_path => url_for(:anchor => :document, :only_path => true)), :html => {:id => "new_form_form"} do |f| %>
+      <%=f.select :form_template_id, @form_templates.collect {|t| [t.title, t.id]} %>
+      <%=f.hidden_field :person_id, :value => @person.id %>
+    <% end %>
+  <% end %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "text_dialog", :modal_title => "Select a template", :modal_form_id => "new_text_form"} do %>
+    <%= bootstrap_form_for :text, :url => kapa_texts_path(:return_path => url_for(:anchor => :document, :only_path => true)), :html => {:id => "new_text_form"} do |f| %>
+      <%=f.select :text_template_id, @text_templates.collect {|t| [t.title, t.id]}, {:label => "Template"} %>
+      <%=f.hidden_field :person_id, :value => @person.id %>
+    <% end %>
+  <% end %>
+
 <% end %>

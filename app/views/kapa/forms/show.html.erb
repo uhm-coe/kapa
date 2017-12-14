@@ -1,33 +1,89 @@
-<% content_for(:box1) do %>
+<% content_for(:main) do %>
+  <div class="well">
+    <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
 
-  <h3><%=@person.full_name if @person %> <%=@form.term_desc %></h3>
-  <%=bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
-    <%=render :partial => "#{@form.type}_form", :locals => {:context => :kapa} %>
-    <%=hidden_field :form, :person_id %>
-    <%=hidden_field :form, :type %>
-
-    <% if @form.file %>
-      <legend>File</legend>
-      <%=render :partial => "/kapa/files/file_container", :locals => {:file => @form.file} %>
-    <% end %>
-
-    <%=render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} do %>
-      <%=button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_form_dialog", :icon => "glyphicon-wrench" %>
-      <% if @form.file %>
-        <%=button_to_link "View File", kapa_file_path(:id => @form.file), :icon => "glyphicon-search" %>
-        <%=button_to_link "Download File", kapa_file_path(:id => @form.file, :format => :file), :icon => "glyphicon-download" %>
+      <% if @form_template.type == "complex" %>
+        <%= render :partial => @form_template.template_path, :locals => {:context => :kapa} %>
+      <% else %>
+        <%= bootstrap_fields_for :form_ext do |f| %>
+          <% @form_template.form_fields.each do |form_field| %>
+            <% if form_field.type == "section" %>
+              <%= content_tag :legend, form_field.label %>
+            <% elsif form_field.type == "text_field" %>
+              <%= f.text_field form_field.label %>
+            <% elsif form_field.type == "text_area" %>
+              <%= f.text_area form_field.label %>
+            <% elsif form_field.type == "property_select" %>
+              <%= f.property_select form_field.label, :name => form_field.type_option %>
+            <% elsif form_field.type == "csv_select" %>
+              <%= f.select form_field.label, form_field.type_option.to_s.split(/,\s*/) %>
+            <% end %>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end if @current_user.write? %>
-  <% end %>
+      <%= hidden_field :form, :person_id %>
+      <%= hidden_field :form, :type %>
 
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form property", :modal_form_id => "edit_form_form"} do %>
-    <%=bootstrap_form_for(:form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => "edit_form_form"}) do |f| %>
-      <%=f.text_area :note, :label => "Note", :size => "5x7" %>
-      <div class="row form-block">
-        <div class="col-sm-4">
-          <%=f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
-        </div>
+      <%#=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} if @current_user.write? %>
+
+
+
+      <% if @form_template.attachment %>
+
+        <legend>File Attachments</legend>
+        <p class="right">
+          <%#=button_to_link "Add File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" %>
+        </p>
+
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @form.files.sort_by { |d| d.created_at }.reverse_each do |d| %>
+            <tr>
+              <td><%= d.type %></td>
+              <td><%= d.name %></td>
+              <td><%= format_date d.date %></td>
+              <td class="right"><%= link_to "Show", kapa_file_path(:id => d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
       </div>
+
     <% end %>
+
+    <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+      <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
+        <%= f.file_field :data, :label => "File to upload" %>
+        <%= f.hidden_field :attachable_type, :value => @form.class.name %>
+        <%= f.hidden_field :attachable_id, :value => @form.id %>
+        <%= f.hidden_field :person_id, :value => @form.person_id %>
+      <% end %>
+    <% end %>
+
+<% end %>
+
+<% content_for(:sidebar) do %>
+
+  <%= bootstrap_form_for(:form, :url => kapa_form_path(:id => @form), :html => {:method => :put}) do |f| %>
+
+    <div class="row form-block">
+      <%= f.text_area :note, :size => "5x7" %>
+      <%= f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
+      <%= f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if @current_user.manage? :kapa_files %>
+    </div>
+
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path]), :more_actions => [link_to("Add File", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus")]} if @current_user.write? %>
+
   <% end %>
 <% end %>
+z

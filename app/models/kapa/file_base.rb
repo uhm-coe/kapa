@@ -2,14 +2,13 @@ module Kapa::FileBase
   extend ActiveSupport::Concern
 
   included do
-    has_many :forms
     belongs_to :person
     belongs_to :attachable, :polymorphic => true
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
     has_attached_file :data
-    serialize :dept, Kapa::CsvSerializer
+    validates_attachment_content_type :data, :content_type => Rails.configuration.attachment_content_types
   end
 
   def url(*args)
@@ -24,7 +23,7 @@ module Kapa::FileBase
     end
   end
 
-  def type_desc
+  def type
     "File"
   end
 
@@ -39,7 +38,6 @@ module Kapa::FileBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      logger.debug "*DEBUG* #{options}"
       files = Kapa::File.eager_load({:users => :person}, :person).order("files.created_at DESC").limit(500)
       files = files.column_matches("name" => filter.name) if filter.name.present?
 

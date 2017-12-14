@@ -11,7 +11,8 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @title = @file.name
+    @document_title = @file.name
+    @document_id = @file.id
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}
@@ -71,10 +72,10 @@ module Kapa::FilesControllerBase
     else
       flash[:danger] = error_message_for(@file)
     end
-    render(:text => "<script>window.onunload = window.opener.location.reload(); close();</script>")
+    redirect_to params[:return_path] || session[:return_path]
   end
 
   def file_param
-    params.require(:file).permit(:person_id, :attachable_id, :attachable_type, :data, :name, :lock, :note, :public)
+    params.require(:file).permit(:person_id, :attachable_id, :attachable_type, :data, :name, :lock, :note, :public, :dept, :depts => [])
   end
 end

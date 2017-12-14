@@ -2,7 +2,6 @@ module Kapa::PropertyBase
   extend ActiveSupport::Concern
 
   included do
-    serialize :dept, Kapa::CsvSerializer
     self.table_name = :properties
     validates_uniqueness_of :code, :scope => :name
     validates_presence_of :name, :code

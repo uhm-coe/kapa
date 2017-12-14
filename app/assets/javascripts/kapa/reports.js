@@ -4,6 +4,5 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require pivottable
-//= require pivottable/gchart_renderers
-
+//= require pivottable/dist/pivot
+//= require pivottable/dist/gchart_renderers

@@ -3,7 +3,6 @@ module Kapa::TextTemplateBase
 
   included do
     has_many :texts
-
   end
 
   class_methods do

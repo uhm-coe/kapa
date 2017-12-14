@@ -1,37 +1,35 @@
 <% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      $('#editor').summernote({
-        height: 600,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'italic', 'underline', 'clear']],
-//          ['fontname', ['fontname']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          ['table', ['table']],
-          ['insert', ['link', 'hr']],
-          ['view', ['fullscreen', 'codeview']],
-          ['help', ['help']]
-        ]
-      });
 
-      $('#text_form').submit(function(event) {
-        $('#text_body').val($('#editor').summernote('code'));
-      });
-    });
-  </script>
+  <%=javascript_include_tag "kapa/ckeditor" %>
+
 <% end %>
 
-<% content_for(:box1) do %>
+<% content_for(:main) do %>
 
   <%=bootstrap_form_for :text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "text_form"} do |f| %>
-    <div id="editor"><%=@text.body.to_s.html_safe %></div>
-    <%=f.hidden_field :body %>
-    <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_path(:id => @text, :return_path => params[:return_path])} do %>
-      <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_text_dialog", :icon => "glyphicon-wrench" %>
-    <% end if @current_user.write? %>
+    <%=f.text_area :body, :id => "editor", :label => :no %>
+
+    <div class="text-center">
+      <button class="btn btn-primary" name="commit" type="submit">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Document
+      </button>
+    </div>
+
   <% end %>
 
+<% end %>
+
+<% content_for(:sidebar) do %>
+
+  <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put}) do |f| %>
+
+    <div class="row form-block">
+        <%=f.text_area :note, :text => "Note", :size => "5x7" %>
+        <%=f.text_field :title %>
+        <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if @current_user.manage? :kapa_texts %>
+    </div>
+
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_path(:id => @text, :return_path => params[:return_path])} if @current_user.write? %>
+
+  <% end %>
 <% end %>

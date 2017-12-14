@@ -14,6 +14,7 @@ Kapa::User.delete_all
 fixtures = %w(
   properties
   persons
+  text_templates
 ).each do |f|
   ActiveRecord::FixtureSet.create_fixtures("#{Kapa::Engine.root}/test/fixtures", f)
 end
@@ -24,3 +25,5 @@ user = person.users.create(:uid => "admin", :category => "local", :status => 30)
 user.password = "admin"
 user.apply_role("Admin")
 user.save!
+
+Kapa::FormTemplate.create(:title => "Sample Form Template", :type => "simple")

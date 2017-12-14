@@ -2,25 +2,25 @@ module Kapa::FormBase
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :file
+    belongs_to :form_template
     belongs_to :person
     belongs_to :term
     belongs_to :attachable, :polymorphic => true
-    has_one :transition_point
+    has_many :files, :as => :attachable
+    has_many :form_details
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-
-    validates_presence_of :type
-
+    validates_presence_of :form_template_id
+    after_save :update_form_details
   end
 
   def term_desc
-    return (term_id.blank? or term_id == 0) ? "No term chosen" : Kapa::Term.find(term_id).description
+    return Kapa::Property.lookup_description(:term, self.term)
   end
 
-  def type_desc
-    return Kapa::Property.lookup_description(:form, type)
+  def type
+    return "Form"
   end
 
   def lock?
@@ -36,10 +36,24 @@ module Kapa::FormBase
   end
 
   def name
-    if self.term_id.blank?
-      type_desc
+    if self.term.blank?
+      self.form_template.title
     else
-      "#{type_desc} (#{term_desc})"
+      "#{self.form_template.title} (#{term_desc})"
+    end
+  end
+
+  def update_form_details
+    if self.form_template.type == "simple"
+      self.form_details.destroy_all
+      field_ids = {}
+      self.form_template.form_fields.each do |f|
+        field_ids[f.label] = f.id
+      end
+      logger.debug "*DEBUG* #{field_ids.inspect}"
+      self.deserialize(:_ext).each_pair do |label, value|
+        self.form_details.create(:form_field_id => field_ids[label.to_s], :value => value)
+      end
     end
   end
 
@@ -47,7 +61,7 @@ module Kapa::FormBase
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       forms = Kapa::Form.eager_load({:users => :person}, :person).order("forms.submitted_at DESC")
-      forms = forms.where("forms.term_id" => filter.term_id) if filter.form_term_id.present?
+      forms = forms.where("forms.term" => filter.term) if filter.form_term.present?
       forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
 
