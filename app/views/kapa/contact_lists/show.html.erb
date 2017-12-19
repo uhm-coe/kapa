@@ -19,6 +19,22 @@
       </div>
 
       <div id="members_tab" class="tab-pane">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @contact_list.members.each do |member| %>
+              <tr>
+                <td><%=member.person.full_name_ordered %></td>
+                <td class="right"><%=link_to "Show", kapa_person_path(:action => :show, :id => member.person, :anchor => :messages), :class => "btn btn-default btn-xs" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

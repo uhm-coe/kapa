@@ -3,6 +3,7 @@
     <div class="col-sm-6">
       <%=f.text_field :title %>
       <%=f.text_area :body %>
+      <%=f.property_select :status, :name => :yes_no %>
       <%=f.hidden_field :person_id %>
     </div>
     <div class="col-sm-6">

@@ -5,7 +5,16 @@
   </h4>
 
   <%=bootstrap_form_for :contact_list, :url => kapa_contact_lists_path do |f| %>
-    <%=render :partial => "contact_list_form" %>
+    <%=bootstrap_fields_for :contact_list do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%=f.text_field :name %>
+          <%=f.text_area :description %>
+        </div>
+        <div class="col-sm-6">
+        </div>
+      </div>
+    <% end %>
     <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
   <% end %>
 <%end%>

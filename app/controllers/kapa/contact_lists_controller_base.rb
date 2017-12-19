@@ -57,6 +57,6 @@ module Kapa::ContactListsControllerBase
 
   private
   def contact_list_params
-    params.require(:contact_list).permit(:name, :description, :note, :contact_list_member_ids => [])
+    params.require(:contact_list).permit(:name, :description, :note, :person_ids => [])
   end
 end

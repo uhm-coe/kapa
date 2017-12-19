@@ -7,9 +7,12 @@ module Kapa::PersonBase
 
     has_many :users
     has_many :files
-    has_many :messages
     has_many :forms
     has_many :texts
+
+    has_many :messages
+    has_many :contact_list_members
+    has_many :contact_lists, :through => :contact_list_members
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create

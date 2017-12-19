@@ -59,7 +59,6 @@
     <% end %>
 
     <% if @current_user.read?(:kapa_messages) %>
-    <% @messages = @person.messages %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -77,12 +76,14 @@
            <tr>
              <th>Title</th>
              <th>Date</th>
+             <th>Status</th>
              <th></th>
            </tr>
            <% @messages.reverse_each do |m| %>
              <tr>
                <td><%=m.title%></td>
                <td><%=format_date m.created_at %></td>
+               <td><%=m.status %></td>
                <td class="right"><%=link_to "Show", kapa_message_path(m), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
              </tr>
            <% end %>
