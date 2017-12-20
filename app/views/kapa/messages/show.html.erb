@@ -1,6 +1,8 @@
 <% content_for(:box1) do %>
+  <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
+
   <h4 class="section-header divider">
-    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", kapa_person_path(:action => :show, :id => @person), :class => "glyphicon glyphicon-chevron-left" %>
     Message
   </h4>
 
