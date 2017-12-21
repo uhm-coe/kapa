@@ -1,0 +1,44 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#editor').summernote({
+        height: 600,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'italic', 'underline', 'clear']],
+//          ['fontname', ['fontname']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['table', ['table']],
+          ['insert', ['link', 'hr']],
+          ['view', ['fullscreen', 'codeview']],
+          ['help', ['help']]
+        ]
+      });
+
+      $('#message_template_form').submit(function(event) {
+        $('#message_template_body').val($('#editor').summernote('code'));
+      });
+    });
+  </script>
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <%=bootstrap_form_for :message_template, :url => kapa_message_template_path(:id => @message_template), :html => {:method => :put, :id => "message_template_form"} do |f| %>
+    <div id="editor"><%=@message_template.body.to_s.html_safe %></div>
+    <%=f.hidden_field :body %>
+    <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_message_template_path(:id => @message_template, :return_path => params[:return_path])} do %>
+      <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_message_template_dialog", :icon => "glyphicon-wrench" %>
+    <% end if @current_user.write? %>
+  <% end %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_message_template_dialog", :modal_title => "Edit template property", :modal_form_id => "edit_message_template_form"} do %>
+    <%=bootstrap_form_for(:message_template, :url => kapa_message_template_path(:id => @message_template), :html => {:method => :put, :id => "edit_message_template_form"}) do |f| %>
+      <%= f.text_field :title %>
+      <%= f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
+    <% end %>
+  <% end %>
+
+<% end %>

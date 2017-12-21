@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     resources :users, &extra_actions
     resources :user_assignments, &extra_actions
     resources :messages, &extra_actions
+    get 'messages/send(/:id)' => 'messages#send_message', :as => :messages_send
     resources :bulk_messages, &extra_actions
+    resources :message_templates, &extra_actions
     resources :contact_lists, &extra_actions
     resources :contact_list_members, &extra_actions
   end

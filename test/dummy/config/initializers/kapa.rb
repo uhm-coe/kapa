@@ -31,6 +31,7 @@ Rails.configuration.available_routes = %w{
   kapa_bulk_messages
   kapa_contact_lists
   kapa_contact_list_members
+  kapa_message_templates
 }
 
 Rails.configuration.filter_defaults = {

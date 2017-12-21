@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170819111900) do
+ActiveRecord::Schema.define(version: 20171220002651) do
 
   create_table "bulk_messages", force: :cascade do |t|
-    t.string   "title",        limit: 255
+    t.string   "name",         limit: 255
+    t.string   "subject",      limit: 255
     t.text     "body",         limit: 65535
     t.datetime "delivered_at"
     t.datetime "scheduled_at"
@@ -169,12 +170,31 @@ ActiveRecord::Schema.define(version: 20170819111900) do
   add_index "forms", ["term"], name: "index_forms_on_term", using: :btree
   add_index "forms", ["type"], name: "index_forms_on_type", using: :btree
 
+  create_table "message_templates", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.text     "body",       limit: 65535
+    t.string   "type",       limit: 255
+    t.string   "sequence",   limit: 255
+    t.string   "category",   limit: 255
+    t.boolean  "active",                   default: true
+    t.string   "dept",       limit: 255
+    t.text     "yml",        limit: 65535
+    t.text     "xml",        limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.integer  "person_id",           limit: 4
     t.integer  "message_template_id", limit: 4
     t.integer  "bulk_message_id",     limit: 4
-    t.string   "title",               limit: 255
+    t.integer  "attachable_id",       limit: 4
+    t.string   "attachable_type",     limit: 255
+    t.string   "name",                limit: 255
+    t.string   "subject",             limit: 255
     t.text     "body",                limit: 65535
+    t.datetime "delivered_at"
+    t.datetime "scheduled_at"
     t.string   "status",              limit: 255,   default: "N"
     t.string   "dept",                limit: 255
     t.text     "yml",                 limit: 65535

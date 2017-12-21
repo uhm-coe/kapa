@@ -13,6 +13,7 @@
    menu_items["Administration"] = []
    menu_items["Administration"].push ["Form Builder", kapa_form_templates_path] if @current_user.manage?(:kapa_form_templates)
    menu_items["Administration"].push ["Text Doc Templates", kapa_text_templates_path] if @current_user.manage?(:kapa_text_templates)
+   menu_items["Administration"].push ["Message Templates", kapa_message_templates_path] if @current_user.manage?(:kapa_message_templates)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if @current_user.manage?(:kapa_properties)
    menu_items["Administration"].push ["Users", kapa_users_path] if @current_user.manage?(:kapa_users)
  end

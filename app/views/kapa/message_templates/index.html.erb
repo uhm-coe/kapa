@@ -1,0 +1,47 @@
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_text"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_message_templates_path, :html => {:method => :get, :id => "filter_text"}) do |f| %>
+      <%= f.select :active, [["Active", "1"],["In-Active","0"]], :include_blank => "Any" %>
+      <%= f.select :per_page, Rails.configuration.items_per_page_selections %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Message Templates</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Title</th>
+        <th>Active</th>
+        <th><%=t(:kapa_global_dept).pluralize %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for message_template in @message_templates %>
+        <tr>
+          <td><%=message_template.type %></td>
+          <td><%=message_template.title %></td>
+          <td><%=message_template.active %></td>
+          <td><%=message_template.depts.join(", ") %></td>
+          <td class="right"><%=link_to "Show", {:action => :show, :id => message_template}, :class => "btn btn-default btn-xs", :target => "_brank" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%=will_paginate @message_templates, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>
