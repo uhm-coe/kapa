@@ -17,7 +17,8 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Title</th>
+        <th>Name</th>
+        <th>Subject</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -26,7 +27,8 @@
       <% @messages.each do |message| %>
         <tr>
           <td><%=message.person.full_name_ordered %></td>
-          <td><%=abbr message.title, 30 %></td>
+          <td><%=abbr message.name, 30 %></td>
+          <td><%=abbr message.subject, 30 %></td>
           <td><%=message.status %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => message}, :class => "btn btn-default btn-xs" %></td>
         </tr>

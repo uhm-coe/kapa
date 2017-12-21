@@ -7,8 +7,9 @@
 <%=bootstrap_fields_for :message do |f| %>
   <div class="row">
     <div class="col-sm-6">
-      <%=f.text_field :title %>
+      <%=f.text_field :name %>
       <%=f.property_select :status, :name => :yes_no %>
+      <%=f.text_field :subject %>
       <%=f.hidden_field :person_id %>
     </div>
   </div>

@@ -6,7 +6,6 @@ module Kapa::MessagesControllerBase
     @message_ext = @message.ext
     @person = @message.person
     @person_ext = @person.ext if @person
-    @title = @message.title
   end
 
   def update
@@ -64,8 +63,14 @@ module Kapa::MessagesControllerBase
               :filename => "messages_#{filter.type}.csv"
   end
 
+  def send_message
+    @message = Kapa::Message.find(params[:id])
+    @message.send_message!
+    redirect_to params[:return_path]
+  end
+
   private
   def message_params
-    params.require(:message).permit(:person_id, :attachable_id, :attachable_type, :text_template_id, :title, :body, :status, :lock, :note)
+    params.require(:message).permit(:person_id, :attachable_id, :attachable_type, :message_template_id, :name, :subject, :body, :status, :delivered_at, :scheduled_at)
   end
 end

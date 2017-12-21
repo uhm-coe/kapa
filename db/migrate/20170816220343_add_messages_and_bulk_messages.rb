@@ -4,8 +4,13 @@ class AddMessagesAndBulkMessages < ActiveRecord::Migration
       t.integer :person_id
       t.integer :message_template_id
       t.integer :bulk_message_id
-      t.string :title
+      t.integer :attachable_id
+      t.string :attachable_type
+      t.string :name
+      t.string :subject
       t.text :body
+      t.datetime :delivered_at
+      t.datetime :scheduled_at
       t.string :status, :default => "N"
       t.string :dept
       t.text :yml
@@ -16,7 +21,9 @@ class AddMessagesAndBulkMessages < ActiveRecord::Migration
     add_index :messages, :person_id
 
     create_table :bulk_messages, :force => true do |t|
-      t.string :title
+      t.integer :message_template_id
+      t.string :name
+      t.string :subject
       t.text :body
       t.datetime :delivered_at
       t.datetime :scheduled_at
