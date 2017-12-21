@@ -11,6 +11,7 @@ module Kapa::PersonsControllerBase
     @documents += @person.texts.search(options)
     @form_templates = Kapa::FormTemplate.all
     @text_templates = Kapa::TextTemplate.all
+    @message_templates = Kapa::MessageTemplate.all
     @messages = @person.messages
     session[:return_path] = kapa_person_path(:id => @person)
   end

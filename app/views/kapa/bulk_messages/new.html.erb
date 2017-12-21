@@ -5,7 +5,13 @@
   </h4>
 
   <%=bootstrap_form_for :bulk_message, :url => kapa_bulk_messages_path do |f| %>
-    <%=render :partial => "bulk_message_form" %>
+    <%=bootstrap_fields_for :bulk_message do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%=f.select :message_template_id, Kapa::MessageTemplate.all.collect {|t| [t.title, t.id]}, {:label => "Template", :include_blank => "Blank Email"} %>
+        </div>
+      </div>
+    <% end %>
     <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
   <% end %>
 <%end%>

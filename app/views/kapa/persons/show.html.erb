@@ -70,21 +70,21 @@
       <div id="message_detail" class="panel-collapse collapse">
         <div class="panel-body">
           <p class="text-right">
-            <%=button_to_link "New Message", new_kapa_message_path(:id => @person), :icon => "glyphicon-plus" %>
+            <%=button_to_link "New Message", nil, "data-toggle" => "modal", "data-target" => "#message_dialog", :icon => "glyphicon-plus" %>
           </p>
           <table class="table table-hover">
            <tr>
-             <th>Title</th>
+             <th>Subject</th>
              <th>Date</th>
              <th>Status</th>
              <th></th>
            </tr>
            <% @messages.reverse_each do |m| %>
              <tr>
-               <td><%=m.title%></td>
+               <td><%=m.subject%></td>
                <td><%=format_date m.created_at %></td>
                <td><%=m.status %></td>
-               <td class="right"><%=link_to "Show", kapa_message_path(m), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+               <td class="right"><%=link_to "Show", kapa_message_path(m), :class => "btn btn-default btn-xs" %></td>
              </tr>
            <% end %>
           </table>
@@ -112,6 +112,13 @@
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "text_dialog", :modal_title => "Select a template", :modal_form_id => "new_text_form"} do %>
     <%= bootstrap_form_for :text, :url => kapa_texts_path(:return_path => url_for(:anchor => :document, :only_path => true)), :html => {:id => "new_text_form"} do |f| %>
       <%=f.select :text_template_id, @text_templates.collect {|t| [t.title, t.id]}, {:label => "Template"} %>
+      <%=f.hidden_field :person_id, :value => @person.id %>
+    <% end %>
+  <% end %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "message_dialog", :modal_title => "Select a template", :modal_form_id => "new_message_form"} do %>
+    <%= bootstrap_form_for :message, :url => kapa_messages_path(:return_path => url_for(:anchor => :message, :only_path => true)), :html => {:id => "new_message_form"} do |f| %>
+      <%=f.select :message_template_id, @message_templates.collect {|t| [t.title, t.id]}, {:label => "Template", :include_blank => "Blank Email"} %>
       <%=f.hidden_field :person_id, :value => @person.id %>
     <% end %>
   <% end %>
