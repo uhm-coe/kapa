@@ -8,7 +8,6 @@ module Kapa::BulkMessagesControllerBase
 
   def update
     @bulk_message = Kapa::BulkMessage.find(params[:id])
-    @person = @bulk_message.person
     @bulk_message.attributes = bulk_message_params
     @bulk_message.update_serialized_attributes!(:_ext, params[:bulk_message_ext]) if params[:bulk_message_ext].present?
 
@@ -61,6 +60,6 @@ module Kapa::BulkMessagesControllerBase
 
   private
   def bulk_message_params
-    params.require(:bulk_message).permit(:attachable_id, :attachable_type, :title, :body, :status, :note)
+    params.require(:bulk_message).permit(:attachable_id, :attachable_type, :name, :subject, :body, :status, :note)
   end
 end

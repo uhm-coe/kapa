@@ -2,6 +2,7 @@ module Kapa::MessageTemplateBase
   extend ActiveSupport::Concern
 
   included do
+    has_many :bulk_messages
     has_many :messages
   end
 

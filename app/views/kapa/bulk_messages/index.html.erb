@@ -17,7 +17,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Title</th>
+        <th>Name</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -25,7 +25,7 @@
     <tbody>
       <% @bulk_messages.each do |bulk_message| %>
         <tr>
-          <td><%=abbr bulk_message.title, 30 %></td>
+          <td><%=abbr bulk_message.name, 30 %></td>
           <td><%=bulk_message.status %></td>
           <td class="right"><%=link_to "Show", {:action => :show, :id => bulk_message}, :class => "btn btn-default btn-xs" %></td>
         </tr>
