@@ -6,8 +6,40 @@
     Message
   </h4>
 
-  <%=bootstrap_form_for :message, :url => kapa_message_path(:id => @message), :html => {:method => :put} do |f| %>
-    <%=render :partial => "message_form" %>
-    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-  <% end %>
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#message_tab" data-toggle="tab">Message</a></li>
+      <li><a href="#send_tab" data-toggle="tab">Send</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="message_tab" class="tab-pane">
+        <%=bootstrap_form_for :message, :url => kapa_message_path(:id => @message), :html => {:method => :put} do |f| %>
+          <%=render :partial => "message_form" %>
+          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="send_tab" class="tab-pane">
+        <%=bootstrap_form_for :message, :url => kapa_message_path(:id => @message), :html => {:method => :put} do |f| %>
+          <p>
+            Last delivered: <%= format_datetime @message.delivered_at || "Never" %>
+          </p>
+          <div class="row">
+            <div class="col-sm-6">
+              <h4>Send now</h4>
+              <p>
+                <%=button_to_link "Send", {:action => :send_message, :id => @message, :return_path => kapa_message_path(:action => :show, :id => @message)}, :icon => "glyphicon-send", :class => "btn-primary", "data-confirm" => "Are you sure you want to send now?" %>
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <h4>Schedule delivery</h4>
+              <%=f.datetime_picker :scheduled_at, :label => "Date & Time" %>
+              <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <%end%>

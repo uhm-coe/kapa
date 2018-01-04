@@ -4,8 +4,52 @@
     Bulk Message
   </h4>
 
-  <%=bootstrap_form_for :bulk_message, :url => kapa_bulk_message_path(:id => @bulk_message), :html => {:method => :put} do |f| %>
-    <%=render :partial => "bulk_message_form" %>
-    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
-  <% end %>
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li><a href="#bulk_message_tab" data-toggle="tab">Bulk Message</a></li>
+      <li><a href="#recipients_tab" data-toggle="tab">Recipients</a></li>
+      <li><a href="#send_tab" data-toggle="tab">Sending Options</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="bulk_message_tab" class="tab-pane">
+        <%=bootstrap_form_for :bulk_message, :url => kapa_bulk_message_path(:id => @bulk_message), :html => {:method => :put} do |f| %>
+          <%=render :partial => "bulk_message_form" %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_bulk_message_path(:id => @bulk_message, :return_path => params[:return_path])} if @current_user.write? %>
+        <% end %>
+      </div>
+
+      <div id="recipients_tab" class="tab-pane">
+        <%=bootstrap_form_for :bulk_message, :url => kapa_bulk_message_path(:id => @bulk_message), :html => {:method => :put} do |f| %>
+          <%=bootstrap_fields_for :bulk_message_ext do |e| %>
+            <div class="row">
+              <div class="col-sm-6">
+                <%=e.select :contact_list_ids, Kapa::ContactList.all.map { |list| [ list.name, list.id ] }, {:label => "Contact Lists"}, {:multiple => true} %>
+                <%=e.person_select :person_ids, {:label => "People"}, {:multiple => true} %>
+                <%=f.hidden_field :id %>
+              </div>
+            </div>
+            <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_bulk_message_path(:id => @bulk_message, :return_path => params[:return_path])} if @current_user.write? %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div id="send_tab" class="tab-pane">
+        <%=bootstrap_form_for :bulk_message, :url => kapa_bulk_message_path(:id => @bulk_message), :html => {:method => :put} do |f| %>
+          <%=bootstrap_fields_for :bulk_message do |f| %>
+            <div class="row">
+              <div class="col-sm-6">
+                <h4>Send now</h4>
+              </div>
+              <div class="col-sm-6">
+                <h4>Schedule delivery</h4>
+                <%=f.datetime_picker :delivered_at, :label => "Date & Time" %>
+              </div>
+            </div>
+          <% end %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_bulk_message_path(:id => @bulk_message, :return_path => params[:return_path])} if @current_user.write? %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <%end%>
