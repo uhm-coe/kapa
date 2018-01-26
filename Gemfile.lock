@@ -101,7 +101,7 @@ GEM
     minitest (5.11.1)
     multi_json (1.13.1)
     mysql2 (0.3.21)
-    net-ldap (0.13.0)
+    net-ldap (0.16.1)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
@@ -194,7 +194,7 @@ DEPENDENCIES
   hashids
   kapa!
   mysql2 (~> 0.3.18)
-  net-ldap (~> 0.13.0)
+  net-ldap (~> 0.16.0)
   paperclip
   rails (~> 4.2.3)
   rails-csv-fixtures!
@@ -207,4 +207,4 @@ DEPENDENCIES
   will_paginate-bootstrap
 
 BUNDLED WITH
-   1.15.3
+   1.16.1
