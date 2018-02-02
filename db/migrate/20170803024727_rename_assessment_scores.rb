@@ -1,4 +1,4 @@
-class RenameAssessmentScores < ActiveRecord::Migration
+class RenameAssessmentScores < ActiveRecord::Migration[4.2]
   def change
     add_column :assessment_scores, :form_id, :integer, :null => false
     change_column_null :assessment_scores, :assessment_criterion_id, false

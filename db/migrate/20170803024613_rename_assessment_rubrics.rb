@@ -1,4 +1,4 @@
-class RenameAssessmentRubrics < ActiveRecord::Migration
+class RenameAssessmentRubrics < ActiveRecord::Migration[4.2]
   def change
     change_table :assessment_rubrics, :bulk => true do |t|
       t.string :type

@@ -1,4 +1,4 @@
-class ChangeTermIdToTerm < ActiveRecord::Migration
+class ChangeTermIdToTerm < ActiveRecord::Migration[4.2]
   def change
     change_column :form_templates, :start_term_id, :string
     change_column :form_templates, :end_term_id, :string

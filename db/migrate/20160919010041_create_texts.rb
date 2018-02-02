@@ -1,4 +1,4 @@
-class CreateTexts < ActiveRecord::Migration
+class CreateTexts < ActiveRecord::Migration[4.2]
 
   def change
     create_table "texts", :force => true do |t|

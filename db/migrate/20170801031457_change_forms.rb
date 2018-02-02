@@ -1,4 +1,4 @@
-class ChangeForms < ActiveRecord::Migration
+class ChangeForms < ActiveRecord::Migration[4.2]
   def change
     change_table :forms, :bulk => true do |t|
       t.integer :form_template_id

@@ -4,14 +4,14 @@ module Kapa::KapaControllerBase
   included do
     layout "/kapa/layouts/kapa"
     protect_from_forgery
-    before_filter :sanitize_params
-    before_filter :check_if_route_is_enabled
-    before_filter :validate_login
-    before_filter :check_id_format, :only => :show
-    before_filter :check_read_permission
-    before_filter :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
-    after_filter :set_return_path, :only => :index
-    after_filter :put_timestamp
+    before_action :sanitize_params
+    before_action :check_if_route_is_enabled
+    before_action :validate_login
+    before_action :check_id_format, :only => :show
+    before_action :check_read_permission
+    before_action :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
+    after_action :set_return_path, :only => :index
+    after_action :put_timestamp
     helper :all
     helper_method :read?, :write?, :manage?, :access_all?, :access_dept?, :access_assigned?
   end

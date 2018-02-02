@@ -6,8 +6,8 @@ source 'https://rubygems.org'
 gemspec
 
 #KAPA dependencies
-gem 'rails', '~> 4.2.3'
-gem 'rails-csv-fixtures', :github => 'bfolkens/rails-csv-fixtures'
+gem 'rails', '~> 5.1.0'
+gem 'rails-csv-fixtures', :github => 'felixbuenemann/rails-csv-fixtures', :branch => 'rails-5.1-support'
 gem 'rake'
 gem 'activerecord-session_store'
 gem 'authlogic'

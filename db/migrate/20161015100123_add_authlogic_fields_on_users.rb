@@ -1,4 +1,4 @@
-class AddAuthlogicFieldsOnUsers < ActiveRecord::Migration
+class AddAuthlogicFieldsOnUsers < ActiveRecord::Migration[4.2]
 
   def change
     change_table :users, :bulk => true do |t|
