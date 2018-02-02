@@ -165,7 +165,7 @@ module Kapa::KapaControllerBase
   def filter(options = {})
     name = :filter
     session[name] = Rails.configuration.filter_defaults if session[name].nil?
-    session[name].update(params[:filter]) if params[:filter].present?
+    session[name].update(params.require(:filter).permit) if params[:filter].present?
     session[name].update(options) if options.present?
     filter = OpenStruct.new(session[name])
     filter.user = @current_user

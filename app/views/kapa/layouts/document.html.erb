@@ -43,7 +43,7 @@
     <div class="container">
 
       <div class="row">
-        <div class="header col-md-9 ">
+        <div class="col-md-9 ">
           <h3><%=@document_title  %></h3>
           <div class="row">
             <div class="col-sm-6">
@@ -53,16 +53,11 @@
               <h4><%=@person.full_name if @person %></h4>
             </div>
           </div>
-        </div>
 
-        <div class="col-md-3">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-9">
-          <%=bootstrap_flash %>
-          <%=yield :main if content_for?(:main) %>
+          <div id="main">
+            <%=bootstrap_flash %>
+            <%=yield :main if content_for?(:main) %>
+          </div>
         </div>
 
         <div class="col-md-3">
