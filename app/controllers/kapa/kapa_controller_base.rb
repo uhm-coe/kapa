@@ -74,8 +74,6 @@ module Kapa::KapaControllerBase
          failed_permission = "export" unless export?
      end
 
-     logger.debug "*DEBUG* #{params[:action]} faild?: #{failed_permission}"
-
      if failed_permission
        flash[:danger] = "You do not have a #{failed_permission} permission on #{controller_name}."
        redirect_to(kapa_error_path) and return false

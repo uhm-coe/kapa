@@ -28,7 +28,7 @@ module Kapa::UsersControllerBase
       @user.apply_role(params[:permission][:role])
       @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
     elsif params[:permission]
-      @user.update_serialized_attributes(:permission, params[:permission])
+      @user.update_serialized_attributes(:permission, params.require(:permission).permit!)
     end
     if @user.save
       flash[:success] = "User was successfully updated."

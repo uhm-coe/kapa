@@ -32,16 +32,16 @@ module Kapa::KapaModelBase
     self.save!
   end
 
-  def update_serialized_attributes(name, hash)
+  def update_serialized_attributes(name, attributes)
     value = self.deserialize(name)
-    hash.each_pair do |k, v|
+    attributes.to_h.each_pair do |k, v|
       value[k.to_sym] = v
-    end if hash.is_a?(Hash)
+    end
     self.serialize(name, value)
   end
 
-  def update_serialized_attributes!(name, value)
-    self.update_serialized_attributes(name, value)
+  def update_serialized_attributes!(name, attributes)
+    self.update_serialized_attributes(name, attributes)
     self.save!
   end
 
@@ -54,13 +54,17 @@ module Kapa::KapaModelBase
     value
   end
 
-  # def description(name)
-  #   return Kapa::Property.lookup_description(name, self.send(name))
-  # end
-  #
-  # def description_short(name)
-  #   return Kapa::Property.lookup_description_short(name, self.send(name))
-  # end
+  def attr_desc(name, property_name = name)
+    return Kapa::Property.lookup_description(property_name, self.send(name))
+  end
+
+  def attr_desc_short(name, property_name = name)
+    return Kapa::Property.lookup_description_short(property_name, self.send(name))
+  end
+
+  def attr_category(name, property_name = name)
+    return Kapa::Property.lookup_category(property_name, self.send(name))
+  end
 
   def ext
     self.deserialize(:_ext, :as => OpenStruct)
