@@ -55,7 +55,6 @@ module Kapa::KapaControllerBase
       flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(new_kapa_user_session_path) and return
     end
-    @current_user.request = request
   end
 
   def check_permission
@@ -85,11 +84,9 @@ module Kapa::KapaControllerBase
   end
 
   def put_timestamp
-    user = @current_user ? @current_user : @current_student_user
-    if user
-      user.request = request if user.request.nil?
-      user.put_timestamp
-    end
+    @current_user.user_timestamps.create(:path => request.path,
+                                         :remote_ip => request.remote_ip,
+                                         :agent => request.env['HTTP_USER_AGENT'].downcase)
   end
 
   def redirect_to(options = {}, response_status = {})
@@ -117,16 +114,11 @@ module Kapa::KapaControllerBase
   end
 
   protected
-  #  def local_request?
-  #    false
-  #  end
-
   def rescue_action_in_public(exception)
+    flash[:danger] = t(:kapa_error_message_default)
     if request.xhr?
-      flash[:danger] = "We are sorry, but something went wrong."
       render_notice and return false
     else
-      flash[:danger] = "We are sorry, but something went wrong."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -139,6 +131,10 @@ module Kapa::KapaControllerBase
     message = errors.join(", ")
     options[:sub].each_pair { |pattern, replacement| message.gsub!(pattern, replacement) } if options[:sub]
     return message
+  end
+
+  def controller_name
+    params[:controller].gsub("/", "_")
   end
 
   def read?(name = controller_name)
@@ -179,10 +175,6 @@ module Kapa::KapaControllerBase
 
   def access_assigned?(name = controller_name)
     @current_user.access_scope(name) >= 10
-  end
-
-  def controller_name
-    params[:controller].gsub("/", "_")
   end
 
   def filter(options = {})

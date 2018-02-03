@@ -3,7 +3,7 @@ module Kapa::UserBase
 
   included do
     @available_keys = {}
-    attr_accessor :request, :email
+    attr_accessor :email
 
     belongs_to :person
     has_many :notifications
@@ -41,12 +41,6 @@ module Kapa::UserBase
     self.person.update_attribute(:email_alt, self.uid) if local?
   end
 
-  def put_timestamp
-    self.user_timestamps.create(:path => @request.path,
-                                :remote_ip => @request.remote_ip,
-                                :agent => @request.env['HTTP_USER_AGENT'].downcase)
-  end
-
   def status_desc
     user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
     user_status[0] if user_status
@@ -68,11 +62,7 @@ module Kapa::UserBase
     return self.permission.send(name).include?(code)
   end
 
-  def controller_name
-    @request.params[:controller].split("/").join("_")
-  end
-
-  def access_scope(name = controller_name, condition = nil)
+  def access_scope(name, condition = nil)
     permission = self.permission
     permission.send("#{name}_scope").to_i
   end
