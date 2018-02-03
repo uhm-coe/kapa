@@ -3,8 +3,8 @@ module Kapa::FormBase
 
   included do
     belongs_to :form_template
-    belongs_to :person
-    belongs_to :attachable, :polymorphic => true
+    belongs_to :person, :optional => true
+    belongs_to :attachable, :polymorphic => true, :optional => true
     has_many :files, :as => :attachable
     has_many :form_details
     has_many :user_assignments, :as => :assignable

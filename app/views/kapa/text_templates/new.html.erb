@@ -8,7 +8,7 @@
     <div class="col-sm-8">
     <%=bootstrap_form_for :text_template, :url => kapa_text_templates_path do |f| %>
       <%=f.text_field :title %>
-      <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+      <%=render :partial => "/kapa/layouts/controls" if update? %>
     <% end %>
     </div>
   </div>

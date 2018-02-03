@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>Route</th>
-        <th>Access Level</th>
+        <th>Permissions</th>
         <th>Data Scope</th>
       </tr>
     </thead>
@@ -11,7 +11,7 @@
       <% Rails.configuration.available_routes.each do |o| %>
         <tr>
           <td><h5><%=o %></h5></td>
-          <td><%=f.select "#{o}", Rails.configuration.user_levels, {:label => :no} %></td>
+          <td><%=f.text_field "#{o}", {:label => :no} %></td>
           <td><%=f.select "#{o}_scope", Rails.configuration.user_scopes, {:label => :no}, {} %></td>
         </tr>
       <% end %>

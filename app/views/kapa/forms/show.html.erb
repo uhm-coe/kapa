@@ -79,10 +79,10 @@
     <div class="row form-block">
       <%= f.text_area :note, :size => "5x7" %>
       <%= f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
-      <%= f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if @current_user.manage? :kapa_files %>
+      <%= f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if manage? :kapa_files %>
     </div>
 
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:hide_cancel => true, :delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path]), :more_actions => [link_to("Add File", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus")]} if @current_user.write? %>
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:hide_cancel => true, :delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path]), :more_actions => [link_to("Add File", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus")]} update? %>
 
   <% end %>
 <% end %>

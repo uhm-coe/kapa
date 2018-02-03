@@ -54,6 +54,14 @@ module Kapa::KapaModelBase
     value
   end
 
+  # def description(name)
+  #   return Kapa::Property.lookup_description(name, self.send(name))
+  # end
+  #
+  # def description_short(name)
+  #   return Kapa::Property.lookup_description_short(name, self.send(name))
+  # end
+
   def ext
     self.deserialize(:_ext, :as => OpenStruct)
   end

@@ -1,0 +1,58 @@
+id,type,title,body,active
+1,Sample,Sample Letter,"<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=""utf-8"">
+  <meta name=""viewport"" content=""width=device-width, initial-scale=1"">
+  <title>Appointment of Investigator</title>
+  <link rel=""stylesheet"" href=""style.css"">
+</head>
+<body>
+
+
+    <p>
+        MEMORANDUM University of Hawaii Community College Case No. [case_number]
+    </p>
+
+    <p>
+        Office of the Chancellor
+    </p>
+
+    <div class=""document-date"">
+        [form_submitted_date]
+    </div>
+
+    <div class=""recipient"">
+        TO: [assignee_name] <br>
+        [assignee_title] <br>
+        [assignee_office_department]
+    </div>
+
+    <div class=""sender"">
+        FROM: [assignee_name] <br>
+        [assignee_title] <br>
+        [assignee_office_department]
+    </div>
+
+    <p>
+        SUBJECT: APPOINTMENT AS FACT-FINDERS
+    </p>
+
+    <p>
+        I am appointing you to serve as fact-finders to conduct an investigation into a complaint that [campus] [person_affiliation] [person_name], [person_job_title], of [person_office_department] engaged in behavior that may have violated University of Hawaii policies and procedures.
+    </p>
+
+    <p>
+        The specific allegations of possible misconduct by [person_name], include but are not limited to the following: [incident_description]; and other related violations, as may be determined.
+    </p>
+
+    <p>
+        Please conduct your fact-finding through the review of all applicable records, documents, interviews with the relevant parties, and appropriate witnesses and submit a report to me of your findings.  Upon completion of the investigation and review of the report, I will make a decision on whether or not the evidence supports the allegations and what, if any, appropriate action should be taken.
+    </p>
+
+    <p>
+        Thank you for your assistance in this matter.
+    </p>
+
+</body>
+</html>",1

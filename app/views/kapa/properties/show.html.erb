@@ -26,7 +26,7 @@
         </div>
         <%=bootstrap_form_for :property, :url => kapa_property_path(:id => @property), :html => {:method => :put} do |f| %>
           <%=render :partial => "property_form", :locals => {:f => f} %>
-          <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+          <%=render :partial => "/kapa/layouts/controls" if update? %>
         <% end %>
       </div>
     </div>

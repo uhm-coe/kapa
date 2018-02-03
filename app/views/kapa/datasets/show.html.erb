@@ -17,7 +17,7 @@
         <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
           <%=render :partial => "dataset_form" %>
           <%=render :layout => "/kapa/layouts/controls" do %>
-          <% end if @current_user.write? %>
+          <% end if update? %>
         <% end %>
       </div>
 
@@ -45,7 +45,7 @@
                 <div class="panel-body">
                   <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset, :parameter_id => parameter_id, :anchor => :parameters), :html => {:method => :put} do |f| %>
                     <%=render :partial => "parameter_form" %>
-                    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+                    <%=render :partial => "/kapa/layouts/controls" if update? %>
                   <% end %>
                 </div>
               </div>
@@ -64,7 +64,7 @@
               <div class="panel-body">
                 <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset, :anchor => :parameters), :html => {:method => :put} do |f| %>
                   <%=render :partial => "parameter_form" %>
-                  <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+                  <%=render :partial => "/kapa/layouts/controls" if update? %>
                 <% end %>
               </div>
             </div>

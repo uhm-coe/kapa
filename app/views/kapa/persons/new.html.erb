@@ -54,7 +54,7 @@
     <div id="person_form">
       <%=render :partial => "kapa/persons/person_form" %>
     </div>
-    <%=render :partial => "/kapa/layouts/controls" if @current_user.write? %>
+    <%=render :partial => "/kapa/layouts/controls" if update? %>
   <% end %>
 
 <% end %>

@@ -9,14 +9,14 @@ module Kapa::PropertyBase
 
   class_methods do
     @@description_cache = ActiveSupport::OrderedHash.new
-    @@description_detail_cache = ActiveSupport::OrderedHash.new
+    @@description_short_cache = ActiveSupport::OrderedHash.new
     @@category_cache = ActiveSupport::OrderedHash.new
 
     def refresh_cache
       @@description_cache.clear
       Kapa::Property.all.each { |v| @@description_cache["#{v.name}_#{v.code}"] = v.description }
-      @@description_detail_cache.clear
-      Kapa::Property.all.each { |v| @@description_detail_cache["#{v.name}_#{v.code}"] = v.description_short }
+      @@description_short_cache.clear
+      Kapa::Property.all.each { |v| @@description_short_cache["#{v.name}_#{v.code}"] = v.description_short }
       @@category_cache.clear
       Kapa::Property.all.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
     end
@@ -52,9 +52,9 @@ module Kapa::PropertyBase
       return @@description_cache["#{name}_#{code}"] ||= default_value
     end
 
-    def lookup_description_detail(name, code, default_value = code)
-      refresh_cache if @@description_detail_cache.empty?
-      return @@description_detail_cache["#{name}_#{code}"] ||= default_value
+    def lookup_description_short(name, code, default_value = code)
+      refresh_cache if @@description_short_cache.empty?
+      return @@description_short_cache["#{name}_#{code}"] ||= default_value
     end
 
     def lookup_category(name, code, default_value = code)

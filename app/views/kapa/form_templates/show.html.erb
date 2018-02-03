@@ -27,7 +27,7 @@
       <div id="rubric_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :form_template, :url => kapa_form_template_path(:id => @form_template), :html => {:method => :put} do |f| %>
           <%=render :partial => "template_form", :locals => {:f => f} %>
-          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_template_path(:id => @form_template)} if @current_user.write? %>
+          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_template_path(:id => @form_template)} if update? %>
         <% end %>
       </div>
 
@@ -46,7 +46,7 @@
                 <div class="panel-body">
                   <%=bootstrap_form_for :form_field, :url => kapa_form_field_path(:id => @form_field, :anchor => :fields, :field_panel => form_field.id), :html => {:method => :put} do |f| %>
                     <%=render :partial => "field_form" %>
-                    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_field_path(:id => @form_field, :anchor => :fields)} if @current_user.write? :kapa_form_fields %>
+                    <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_field_path(:id => @form_field, :anchor => :fields)} if update?(:kapa_form_fields) %>
                   <% end %>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                 <% @form_field = @form_template.form_fields.build %>
                 <%=bootstrap_form_for :form_field, :url => kapa_form_fields_path(:form_template_id => @form_template, :anchor => :fields) do |f| %>
                   <%=render :partial => "field_form" %>
-                  <%=render :partial => "/kapa/layouts/controls" if @current_user.write? :kapa_form_fields %>
+                  <%=render :partial => "/kapa/layouts/controls" if update? :kapa_form_fields %>
                 <% end %>
               </div>
             </div>

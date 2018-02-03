@@ -3,8 +3,8 @@ module Kapa::TextBase
 
   included do
     belongs_to :text_template
-    belongs_to :person
-    belongs_to :attachable, :polymorphic => true
+    belongs_to :person, :optional => true
+    belongs_to :attachable, :polymorphic => true, :optional => true
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 

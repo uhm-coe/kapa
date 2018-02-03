@@ -27,7 +27,7 @@
 
     <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => params[:return_path])} do %>
       <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_text_template_dialog", :icon => "glyphicon-wrench" %>
-    <% end if @current_user.write? %>
+    <% end if update? %>
   <% end %>
 
   <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_text_template_dialog", :modal_title => "Edit template property", :modal_form_id => "edit_text_template_form"} do %>

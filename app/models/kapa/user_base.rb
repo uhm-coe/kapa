@@ -64,41 +64,17 @@ module Kapa::UserBase
     self.deserialize(:permission, :as => OpenStruct)
   end
 
-  def check_permission(level, name, options = {})
-    return self.permission.send(name).to_i >= level
+  def check_permission(name, code)
+    return self.permission.send(name).include?(code)
   end
 
   def controller_name
     @request.params[:controller].split("/").join("_")
   end
 
-  def read?(name = controller_name, options = {})
-    check_permission(10, name, options)
-  end
-
-  def write?(name = controller_name, options = {})
-    check_permission(20, name, options)
-  end
-
-  def manage?(name = controller_name, options = {})
-    check_permission(30, name, options)
-  end
-
   def access_scope(name = controller_name, condition = nil)
     permission = self.permission
     permission.send("#{name}_scope").to_i
-  end
-
-  def access_all?(name = controller_name)
-    access_scope(name) >= 30
-  end
-
-  def access_dept?(name = controller_name)
-    access_scope(name) >= 20
-  end
-
-  def access_assigned?(name = controller_name)
-    access_scope(name) >= 10
   end
 
   def apply_role(name)

@@ -8,12 +8,11 @@ module Kapa::KapaControllerBase
     before_action :check_if_route_is_enabled
     before_action :validate_login
     before_action :check_id_format, :only => :show
-    before_action :check_read_permission
-    before_action :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
+    before_action :check_permission
     after_action :set_return_path, :only => :index
     after_action :put_timestamp
     helper :all
-    helper_method :read?, :write?, :manage?, :access_all?, :access_dept?, :access_assigned?
+    helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :manage?, :access_all?, :access_dept?, :access_assigned?
   end
 
   def sanitize_params
@@ -59,18 +58,28 @@ module Kapa::KapaControllerBase
     @current_user.request = request
   end
 
-  def check_read_permission
-    unless @current_user.read?(controller_name)
-      flash[:danger] = "You do not have a read permission on #{controller_name}."
-      redirect_to(kapa_error_path) and return false
-    end
-  end
+  def check_permission
+     case params[:action]
+       when "show", "index"
+         failed_permission = "read" unless read?
+       when "update"
+         failed_permission = "update" unless update?
+       when "new", "create"
+         failed_permission = "create" unless create?
+       when "destroy"
+         failed_permission = "destroy" unless destroy?
+       when "import"
+         failed_permission = "import" unless import?
+       when "export"
+         failed_permission = "export" unless export?
+     end
 
-  def check_write_permission
-    unless @current_user.write?(controller_name)
-      flash[:danger] = "You do not have a write permission on #{controller_name}."
-      redirect_to(kapa_error_path) and return false
-    end
+     logger.debug "*DEBUG* #{params[:action]} faild?: #{failed_permission}"
+
+     if failed_permission
+       flash[:danger] = "You do not have a #{failed_permission} permission on #{controller_name}."
+       redirect_to(kapa_error_path) and return false
+     end
   end
 
   def set_return_path
@@ -135,15 +144,31 @@ module Kapa::KapaControllerBase
   end
 
   def read?(name = controller_name)
-    @current_user.check_permission(10, name)
+    @current_user.check_permission(name, "R")
   end
 
-  def write?(name = controller_name)
-    @current_user.check_permission(20, name)
+  def update?(name = controller_name)
+    @current_user.check_permission(name, "U")
+  end
+
+  def create?(name = controller_name)
+    @current_user.check_permission(name, "C")
+  end
+
+  def destroy?(name = controller_name)
+    @current_user.check_permission(name, "D")
+  end
+
+  def export?(name = controller_name)
+    @current_user.check_permission(name, "E")
+  end
+
+  def import?(name = controller_name)
+    @current_user.check_permission(name, "I")
   end
 
   def manage?(name = controller_name)
-    @current_user.check_permission(30, name)
+    @current_user.check_permission(name, "M")
   end
 
   def access_all?(name = controller_name)
@@ -165,7 +190,7 @@ module Kapa::KapaControllerBase
   def filter(options = {})
     name = :filter
     session[name] = Rails.configuration.filter_defaults if session[name].nil?
-    session[name].update(params.require(:filter).permit) if params[:filter].present?
+    session[name].update(params.require(:filter).permit!) if params[:filter].present?
     session[name].update(options) if options.present?
     filter = OpenStruct.new(session[name])
     filter.user = @current_user

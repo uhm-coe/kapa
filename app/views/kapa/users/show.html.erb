@@ -38,8 +38,8 @@
         <%=bootstrap_form_for :user, :url => kapa_user_path(:id => @user), :html => {:method => :put} do |f| %>
           <%=render :partial => "user_form", :locals => {:f => f} %>
           <%=render :layout => "/kapa/layouts/controls" do %>
-            <%=button_to_link "Permissions", nil, {:icon => "glyphicon-edit", "data-toggle" => "modal", "data-target" => "#edit_permission_dialog"} if @current_user.write? %>
-          <% end if @current_user.write? %>
+            <%=button_to_link "Permissions", nil, {:icon => "glyphicon-edit", "data-toggle" => "modal", "data-target" => "#edit_permission_dialog"} %>
+          <% end if update? %>
         <% end %>
       </div>
 

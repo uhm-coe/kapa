@@ -5,7 +5,7 @@
       <%=f.text_field :user_key, :size => 20, :label => "Name or UID" %>
       <%=f.select :status, Rails.configuration.user_status, {:include_blank => "Any", :label => "User Status"} %>
       <%=f.select :category, Rails.configuration.user_categories, :include_blank => "Any" %>
-      <%=f.property_select :depts, {:label => t(:kapa_global_dept).pluralize, :include_blank => "Any"}, :multiple => true if @current_user.manage? %>
+      <%=f.property_select :depts, {:label => t(:kapa_global_dept).pluralize, :include_blank => "Any"}, :multiple => true if manage? %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
@@ -25,8 +25,8 @@
   <div class="row">
     <div class="col-sm-12 text-right">
 
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if @current_user.write? %>
-      <% if @current_user.manage?%><button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button><% end %>
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
+      <% if import? %><button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button><% end %>
       <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>

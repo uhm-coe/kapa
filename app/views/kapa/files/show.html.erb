@@ -15,10 +15,10 @@
     <div class="row form-block">
         <%=f.text_area :note, :text => "Note", :size => "5x7" %>
         <%=f.text_field :name %>
-        <%=f.property_select :depts, :name => :dept, :label => t(:kapa_global_dept).pluralize if @current_user.manage? :kapa_files %>
+        <%=f.property_select :depts, :name => :dept, :label => t(:kapa_global_dept).pluralize if manage? :kapa_files %>
     </div>
 
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_file_path(:id => @file, :return_path => params[:return_path])} if @current_user.write? %>
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_file_path(:id => @file, :return_path => params[:return_path])} if destroy? %>
 
   <% end %>
 

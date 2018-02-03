@@ -47,7 +47,7 @@
 
 <h3>
   <%=button_to_link "", "#person_detail_panel", "data-toggle" => "collapse", "aria-expanded" => false, "aria-controls" => "person_detail_panel", :icon => "glyphicon-user" %></li>
-  <%=link_to_if @current_user.read?(:kapa_persons), @person.full_name, kapa_person_path(:action => :show, :id => @person) %>
+  <%=link_to_if read?(:kapa_persons), @person.full_name, kapa_person_path(:action => :show, :id => @person) %>
 </h3>
 
 <div class="collapse" id="person_detail_panel">
@@ -114,10 +114,10 @@
   <%=bootstrap_form_for :person, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
     <%=render :partial => "kapa/persons/person_form" %>
   <% end %>
-<% end if @current_user.read? :kapa_persons %>
+<% end if read? :kapa_persons %>
 
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_contact_modal", :modal_title => "Contacts", :modal_form_id => "contact_form"} do %>
   <%=bootstrap_form_for :contact, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "contact_form"} do %>
     <%=render :partial => "kapa/persons/contact_form" %>
   <% end %>
-<% end if @current_user.read? :kapa_persons %>
+<% end if read? :kapa_persons %>
