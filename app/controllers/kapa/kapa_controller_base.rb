@@ -5,10 +5,9 @@ module Kapa::KapaControllerBase
     layout "/kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
-    before_action :check_if_route_is_enabled
-    before_action :validate_login
-    before_action :check_id_format, :only => :show
-    before_action :check_permission
+    before_action :validate_url
+    before_action :validate_user
+    before_action :validate_permission
     after_action :set_return_path, :only => :index
     after_action :put_timestamp
     helper :all
@@ -24,21 +23,19 @@ module Kapa::KapaControllerBase
     end
   end
 
-  def check_if_route_is_enabled
+  def validate_url
     unless Rails.configuration.available_routes.include?(controller_name)
       flash[:danger] = "#{controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
-  end
 
-  def check_id_format
-    if params[:id].to_s.match(/^[0-9]+$/)
+    if params[:action] == "show"  and params[:id].to_s.match(/^[0-9]+$/)
       flash[:danger] = "Invalid ID format."
       redirect_to(kapa_error_path) and return false
     end
   end
 
-  def validate_login
+  def validate_user
     @current_user_session = Kapa::UserSession.find
     unless @current_user_session
       flash[:info] = "Please log in to continue."
@@ -57,7 +54,7 @@ module Kapa::KapaControllerBase
     end
   end
 
-  def check_permission
+  def validate_permission
      case params[:action]
        when "show", "index"
          failed_permission = "read" unless read?
@@ -103,14 +100,6 @@ module Kapa::KapaControllerBase
       script << "jQuery('##{i}').html('#{flash[i].gsub("'", "\\\\'")} (#{DateTime.now.strftime("%H:%M:%S")})').effect('#{options[:effect]}');\n" if not flash[i].blank?
     end
     render(:js => script)
-  end
-
-  def default_url_options(options={})
-    if Rails.env.production?
-      options.merge(:protocol => "https")
-    else
-      options
-    end
   end
 
   protected

@@ -11,3 +11,4 @@ en:
   kapa_global_user_ids: "Assignee"
   kapa_login_cas: "Continue with CAS"
   kapa_login_local: "Login"
+  kapa_error_message_default: "We're sorry, but something went wrong."
