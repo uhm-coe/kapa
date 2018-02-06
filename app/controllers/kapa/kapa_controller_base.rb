@@ -83,7 +83,7 @@ module Kapa::KapaControllerBase
   def put_timestamp
     @current_user.user_timestamps.create(:path => request.path,
                                          :remote_ip => request.remote_ip,
-                                         :agent => request.env['HTTP_USER_AGENT'].downcase)
+                                         :agent => request.env['HTTP_USER_AGENT'].downcase) if @current_user
   end
 
   def redirect_to(options = {}, response_status = {})

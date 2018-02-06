@@ -12,10 +12,8 @@ module Kapa::FormBase
 
     validates_presence_of :form_template_id
     after_save :update_form_details
-  end
 
-  def term_desc
-    return Kapa::Property.lookup_description(:term, self.term)
+    property_lookup :term
   end
 
   def type

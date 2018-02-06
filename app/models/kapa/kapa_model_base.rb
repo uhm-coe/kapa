@@ -207,5 +207,19 @@ module Kapa::KapaModelBase
     def hashids
       Hashids.new("#{table_name}#{Rails.application.secrets.hashid_salt}", 10)
     end
+
+    def property_lookup(attr_name, options = {:property => attr_name})
+      if options[:map].present?
+        options[:map].each_pair do |key, value|
+         define_method("#{attr_name}_#{key}") do
+           Kapa::Property.send("lookup_#{value}", *[options[:property], self.send(attr_name)])
+         end
+        end
+      else
+        define_method("#{attr_name}_desc") do
+          Kapa::Property.send("lookup_description", *[options[:property], self.send(attr_name)])
+        end
+      end
+    end
   end
 end
