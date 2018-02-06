@@ -86,7 +86,9 @@
       <%= f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
     </div>
 
-    <%=render(:partial => "/kapa/layouts/controls", :locals => {:hide_cancel => true}) if update? %>
+    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true}) do %>
+      <%=button_to_link "Cancel", nil%>
+    <% end if update? %>
   <% end %>
 
 <% end %>

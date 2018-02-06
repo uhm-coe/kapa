@@ -180,7 +180,7 @@ module Kapa::KapaHelper
      end
   end
 
-  def button_to_link(name = nil, options = nil, html_options = nil, &block)
+  def button_to_link(name = nil, options = {}, html_options = {}, &block)
     options = "javascript:void(0)" if options.nil?
     name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
     if html_options[:class]
