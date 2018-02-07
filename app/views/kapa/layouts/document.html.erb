@@ -43,25 +43,33 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-md-9 ">
+        <div class="col-md-9">
+
           <h3><%=@document_title  %></h3>
+
           <div class="row">
+
             <div class="col-sm-6">
               <h4>Document ID: <%=@document_id %></h4>
             </div>
+
             <div class="col-sm-6">
               <h4><%=@person.full_name if @person %></h4>
             </div>
+
           </div>
 
           <div id="main">
             <%=bootstrap_flash %>
             <%=yield :main if content_for?(:main) %>
           </div>
+
         </div>
 
         <div class="col-md-3">
-          <%=yield :sidebar if content_for?(:sidebar) %>
+
+            <%=yield :sidebar if content_for?(:sidebar) %>
+
         </div>
       </div>
 

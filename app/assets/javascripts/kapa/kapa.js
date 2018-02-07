@@ -35,6 +35,9 @@ jQuery(document).ready(function ($) {
     window.history.back();
   });
 
+  $('[data-close]').click(function () {
+    window.close();
+  });
 
   $('.datepicker').datetimepicker({
     format: 'MM/DD/YYYY'

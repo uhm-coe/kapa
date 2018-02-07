@@ -23,13 +23,22 @@
 
   <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put}) do |f| %>
 
-    <div class="row form-block">
-        <%=f.text_area :note, :text => "Note", :size => "5x7" %>
-        <%=f.text_field :title %>
-        <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if manage? :kapa_texts %>
-    </div>
+    <%=f.text_area :note, :text => "Note", :size => "5x7" %>
+    <%=f.text_field :title %>
+    <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if manage? :kapa_texts %>
 
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_path(:id => @text, :return_path => params[:return_path])} if update? %>
+    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true}) do %>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-option-vertical"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><%=link_to("Add an attachemnt", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog")%></li>
+          <% if destroy?%><li><%=link_to("Delete this file", kapa_text_path(:id => @text, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?")%></li><% end %>
+        </ul>
+      </div>
+      <%=button_to_link "Cancel", nil, "data-close" => true %>
+    <% end %>
 
   <% end %>
 <% end %>
