@@ -28,10 +28,6 @@ module Kapa::TextBase
     self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
   end
 
-  def name
-    self.title
-  end
-
   def date
     self.submitted_at
   end

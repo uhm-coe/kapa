@@ -23,8 +23,8 @@
 
   <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put}) do |f| %>
 
-    <%=f.text_area :note, :text => "Note", :size => "5x7" %>
     <%=f.text_field :title %>
+    <%=f.text_area :note, :text => "Note", :size => "5x7" %>
     <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if manage? :kapa_texts %>
 
     <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true}) do %>

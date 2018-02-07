@@ -11,7 +11,7 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @document_title = @file.name
+    @document_title = @file.title
     @document_id = @file.id
 
     respond_to do |format|

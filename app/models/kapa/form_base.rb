@@ -32,7 +32,7 @@ module Kapa::FormBase
     self.submitted_at
   end
 
-  def name
+  def title
     if self.term.blank?
       self.form_template.title
     else
