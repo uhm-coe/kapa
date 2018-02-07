@@ -11,30 +11,14 @@
     <%=@text_template.title %>
   </h4>
 
-  <div class="text-right">
-     <div class="btn-group">
-       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <span class="glyphicon glyphicon-option-vertical"></span>
-       </button>
-       <ul class="dropdown-menu">
-         <li><%=link_to("Delete", kapa_text_template_path(:id => @text_template), :method => :delete, "data-confirm" => "Are you sure you want to delete?")%></li>
-       </ul>
-     </div>
-   </div>
-
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
+    <%=f.text_field :title %>
+    <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
     <%=f.text_area :body, :id => "editor", :label => :no %>
 
-    <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => params[:return_path])} do %>
-      <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_text_template_dialog", :icon => "glyphicon-wrench" %>
-    <% end if update? %>
-  <% end %>
-
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_text_template_dialog", :modal_title => "Edit template property", :modal_form_id => "edit_text_template_form"} do %>
-    <%=bootstrap_form_for(:text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "edit_text_template_form"}) do |f| %>
-      <%= f.text_field :title %>
-      <%= f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
-    <% end %>
+    <% more_actions = [] %>
+    <% more_actions << link_to("Delete", kapa_text_template_path(:id => @text_template, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
   <% end %>
 
 <% end %>

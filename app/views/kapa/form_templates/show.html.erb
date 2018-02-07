@@ -13,21 +13,12 @@
 
     <div class="tab-content">
 
-      <div class="text-right">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-option-vertical"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><%=link_to("Delete", kapa_form_template_path(:id => @form_template), :method => :delete, "data-confirm" => "Are you sure you want to delete?")%></li>
-          </ul>
-        </div>
-      </div>
-
       <div id="rubric_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :form_template, :url => kapa_form_template_path(:id => @form_template), :html => {:method => :put} do |f| %>
           <%=render :partial => "template_form", :locals => {:f => f} %>
-          <%=render :partial => '/kapa/layouts/controls', :locals => {:delete_path => kapa_form_template_path(:id => @form_template)} if update? %>
+          <% more_actions = [] %>
+          <% more_actions << link_to("Delete", kapa_form_template_path(:id => @form_template, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
         <% end %>
       </div>
 
