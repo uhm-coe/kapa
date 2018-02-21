@@ -35,29 +35,28 @@
 
     <%=javascript_include_tag "kapa/kapa" %>
     <%=yield :head %>
-
     <title><%="#{@person.full_name}/" if @person%><%=@document_title %></title>
   </head>
 
   <body>
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+
+        <div class="navbar-header">
+          <p class="navbar-brand" href="#"><%=@document_title  %></p>
+        </div>
+        <p class="navbar-text">Document ID: <%=@document_id %></p>
+        <p class="navbar-text"><%=@person.full_name if @person %></p>
+
+      </div>
+    </div>
+
+
     <div class="container">
 
       <div class="row">
         <div class="col-md-9">
-
-          <h3><%=@document_title  %></h3>
-
-          <div class="row">
-
-            <div class="col-sm-6">
-              <h4>Document ID: <%=@document_id %></h4>
-            </div>
-
-            <div class="col-sm-6">
-              <h4><%=@person.full_name if @person %></h4>
-            </div>
-
-          </div>
 
           <div id="main">
             <%=bootstrap_flash %>

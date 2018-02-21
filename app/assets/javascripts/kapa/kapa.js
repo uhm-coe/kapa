@@ -36,7 +36,9 @@ jQuery(document).ready(function ($) {
   });
 
   $('[data-close]').click(function () {
-    window.close();
+    if(confirm("Are you sure you want to close this window?")) {
+      window.close();
+    }
   });
 
   $('.datepicker').datetimepicker({

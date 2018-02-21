@@ -8,13 +8,6 @@
 
   <%=bootstrap_form_for :text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "text_form"} do |f| %>
     <%=f.text_area :body, :id => "editor", :label => :no %>
-
-    <div class="text-center">
-      <button class="btn btn-primary" name="commit" type="submit">
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save Document
-      </button>
-    </div>
-
   <% end %>
 
 <% end %>

@@ -27,6 +27,7 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
+      <th>Title</th>
       <th>Form</th>
       <th>Last Update</th>
       <th>Submitted</th>
@@ -40,7 +41,7 @@
       <tr>
         <td><%=form.person.id_number if form.person %></td>
         <td><%=link_to abbr(form.person.full_name), kapa_person_path(:id => form.person) if form.person %></td>
-        <td><%=form.name %></td>
+        <td><%=form.title %></td>
         <td><%=time_ago_in_words form.updated_at if form.updated_at %> ago</td>
         <td><%=format_date form.submitted_at %></td>
         <td><%=form.lock %></td>
