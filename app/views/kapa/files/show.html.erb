@@ -14,7 +14,7 @@
 
     <% more_actions = [] %>
     <% more_actions << link_to("Download", kapa_file_path(:id => @file, :format => :file)) %>
-    <% more_actions << link_to("Delete this file", kapa_file_path(:id => @file, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
+    <% more_actions << link_to("Delete", kapa_file_path(:id => @file, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
     <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true, :more_actions => more_actions}) do %>
       <%=button_to_link "Cancel", nil, "data-close" => true %>
     <% end if update? %>

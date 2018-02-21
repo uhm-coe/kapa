@@ -1,77 +1,77 @@
 name,code,description,description_short,category,regexp,sequence,active,dept,yml,xml
-academic_period,0,Not assigned,,,,,1,,"--- {}
+term,0,Not assigned,,,,,1,,"--- {}
 
 ",
-academic_period,1,To be deleted,,,,,1,,"--- {}
+term,1,To be deleted,,,,,1,,"--- {}
 
 ",
-academic_period,199710,Fall 1996,,,,1,1,,,
-academic_period,199730,Spring 1997,,,,2,1,,,
-academic_period,199740,Summer 1997,,,,3,1,,,
-academic_period,199810,Fall 1997,,,,4,1,,,
-academic_period,199830,Spring 1998,,,,5,1,,,
-academic_period,199840,Summer 1998,,,,6,1,,,
-academic_period,199910,Fall 1998,,,,7,1,,,
-academic_period,199930,Spring 1999,,,,8,1,,,
-academic_period,199940,Summer 1999,,,,9,1,,,
-academic_period,200010,Fall 1999,,,,10,1,,,
-academic_period,200030,Spring 2000,,,,11,1,,,
-academic_period,200040,Summer 2000,,,,12,1,,,
-academic_period,200110,Fall 2000,,,,13,1,,,
-academic_period,200130,Spring 2001,,,,14,1,,,
-academic_period,200140,Summer 2001,,,,15,1,,,
-academic_period,200210,Fall 2001,,,,16,1,,,
-academic_period,200230,Spring 2002,,,,17,1,,,
-academic_period,200240,Summer 2002,,,,18,1,,,
-academic_period,200310,Fall 2002,,,,19,1,,,
-academic_period,200330,Spring 2003,,,,20,1,,,
-academic_period,200340,Summer 2003,,,,21,1,,,
-academic_period,200410,Fall 2003,,,,22,1,,,
-academic_period,200430,Spring 2004,,,,23,1,,,
-academic_period,200440,Summer 2004,,,,24,1,,,
-academic_period,200510,Fall 2004,,,,25,1,,,
-academic_period,200530,Spring 2005,,,,26,1,,,
-academic_period,200540,Summer 2005,,,,27,1,,,
-academic_period,200610,Fall 2005,,,,28,1,,,
-academic_period,200630,Spring 2006,,,,29,1,,,
-academic_period,200640,Summer 2006,,,,30,1,,,
-academic_period,200710,Fall 2006,,,,31,1,,,
-academic_period,200730,Spring 2007,,,,32,1,,,
-academic_period,200740,Summer 2007,,,,33,1,,,
-academic_period,200810,Fall 2007,,,,34,1,,,
-academic_period,200830,Spring 2008,,,,35,1,,,
-academic_period,200840,Summer 2008,,,,36,1,,,
-academic_period,200910,Fall 2008,,,,37,1,,,
-academic_period,200930,Spring 2009,,,,38,1,,,
-academic_period,200940,Summer 2009,,,,39,1,,,
-academic_period,201010,Fall 2009,,,,40,1,,,
-academic_period,201030,Spring 2010,,,,41,1,,,
-academic_period,201040,Summer 2010,,,,42,1,,,
-academic_period,201110,Fall 2010,,,,43,1,,,
-academic_period,201130,Spring 2011,,,,44,1,,,
-academic_period,201140,Summer 2011,,,,45,1,,,
-academic_period,201210,Fall 2011,,,,46,1,,,
-academic_period,201230,Spring 2012,,,,47,1,,,
-academic_period,201240,Summer 2012,,,,48,1,,,
-academic_period,201310,Fall 2012,,,,49,1,,"--- {}
+term,199710,Fall 1996,,,,1,1,,,
+term,199730,Spring 1997,,,,2,1,,,
+term,199740,Summer 1997,,,,3,1,,,
+term,199810,Fall 1997,,,,4,1,,,
+term,199830,Spring 1998,,,,5,1,,,
+term,199840,Summer 1998,,,,6,1,,,
+term,199910,Fall 1998,,,,7,1,,,
+term,199930,Spring 1999,,,,8,1,,,
+term,199940,Summer 1999,,,,9,1,,,
+term,200010,Fall 1999,,,,10,1,,,
+term,200030,Spring 2000,,,,11,1,,,
+term,200040,Summer 2000,,,,12,1,,,
+term,200110,Fall 2000,,,,13,1,,,
+term,200130,Spring 2001,,,,14,1,,,
+term,200140,Summer 2001,,,,15,1,,,
+term,200210,Fall 2001,,,,16,1,,,
+term,200230,Spring 2002,,,,17,1,,,
+term,200240,Summer 2002,,,,18,1,,,
+term,200310,Fall 2002,,,,19,1,,,
+term,200330,Spring 2003,,,,20,1,,,
+term,200340,Summer 2003,,,,21,1,,,
+term,200410,Fall 2003,,,,22,1,,,
+term,200430,Spring 2004,,,,23,1,,,
+term,200440,Summer 2004,,,,24,1,,,
+term,200510,Fall 2004,,,,25,1,,,
+term,200530,Spring 2005,,,,26,1,,,
+term,200540,Summer 2005,,,,27,1,,,
+term,200610,Fall 2005,,,,28,1,,,
+term,200630,Spring 2006,,,,29,1,,,
+term,200640,Summer 2006,,,,30,1,,,
+term,200710,Fall 2006,,,,31,1,,,
+term,200730,Spring 2007,,,,32,1,,,
+term,200740,Summer 2007,,,,33,1,,,
+term,200810,Fall 2007,,,,34,1,,,
+term,200830,Spring 2008,,,,35,1,,,
+term,200840,Summer 2008,,,,36,1,,,
+term,200910,Fall 2008,,,,37,1,,,
+term,200930,Spring 2009,,,,38,1,,,
+term,200940,Summer 2009,,,,39,1,,,
+term,201010,Fall 2009,,,,40,1,,,
+term,201030,Spring 2010,,,,41,1,,,
+term,201040,Summer 2010,,,,42,1,,,
+term,201110,Fall 2010,,,,43,1,,,
+term,201130,Spring 2011,,,,44,1,,,
+term,201140,Summer 2011,,,,45,1,,,
+term,201210,Fall 2011,,,,46,1,,,
+term,201230,Spring 2012,,,,47,1,,,
+term,201240,Summer 2012,,,,48,1,,,
+term,201310,Fall 2012,,,,49,1,,"--- {}
 
 ",
-academic_period,201330,Spring 2013,,,,50,1,,"--- {}
+term,201330,Spring 2013,,,,50,1,,"--- {}
 
 ",
-academic_period,201340,Summer 2013,,,,51,1,,"--- {}
+term,201340,Summer 2013,,,,51,1,,"--- {}
 
 ",
-academic_period,201410,Fall 2013,,,,52,1,,"--- {}
+term,201410,Fall 2013,,,,52,1,,"--- {}
 
 ",
-academic_period,201430,Spring 2014,,,,53,1,,,
-academic_period,201440,Summer 2014,,,,54,1,,,
-academic_period,201510,Fall 2014,,,,55,1,,,
-academic_period,201530,Spring 2015,,,,56,1,,,
-academic_period,201540,Summer 2015,,,,57,1,,,
-academic_period,201610,Fall 2015,,,,59,1,,,
-academic_period,999999,The End of Time,,,,,1,,"--- {}
+term,201430,Spring 2014,,,,53,1,,,
+term,201440,Summer 2014,,,,54,1,,,
+term,201510,Fall 2014,,,,55,1,,,
+term,201530,Spring 2015,,,,56,1,,,
+term,201540,Summer 2015,,,,57,1,,,
+term,201610,Fall 2015,,,,59,1,,,
+term,999999,The End of Time,,,,,1,,"--- {}
 ",
 admission_action,1,Admitted,,admissible,,3,1,,"--- {}
 ",
@@ -99,7 +99,7 @@ admission_status,I,AP Incomplete,,,,7,1,,,
 admission_status,L,Letter Sent,,,,2,1,,,
 admission_status,P,Review in progress,,,,4,1,,,
 admission_status,R,RSVP Complete,,,,1,1,,,
-admission_status,S,CC Submitted	,,,,1,1,,,
+admission_status,S,CC Submitted,,,,,1,1,,
 admission_status,W,Self Withdrew,,,,0,0,,,
 advising_action,Answered Question,Answered Question,,,,0,1,,,
 advising_action,Forwarded to:,Forwarded to:,,,,0,1,,,
@@ -540,18 +540,18 @@ assessment_rating,N,No evidence,,,,,1,,,
 attending_status,FT,Full-Time,,,,0,1,,,
 attending_status,PT,Part-Time,,,,0,1,,,
 cc_program,ECED-AS,AS in Early Childhood Education,,,,,1,,,
-cc_program,ED-AA-KAP,	AA (Elementary Ed/Special Ed Dual Prep Track) from Kapiolani CC,,,,,1,,"--- {}
+cc_program,ED-AA-KAP,,AA (Elementary Ed/Special Ed Dual Prep Track) from Kapiolani CC,,,,,1,,"--- {}
 
-",
+"
 cc_program,HSER-AS-MAU,AS in Human Services - Early Childhood Education from Maui College,,,,,1,,"--- {}
 
 ",
 cc_program,LBRT-AA,AA in Liberal Arts from a UH System CC,,,,1,1,,"--- {}
 
 ",
-cc_program,TCH-AA-LEE,	AA in Teaching from Leeward CC,,,,,1,,"--- {}
+cc_program,TCH-AA-LEE,,AA in Teaching from Leeward CC,,,,,1,,"--- {}
 
-",
+"
 content_area,ECE,ECE,,,,10,1,,,
 content_area,GEN,GEN,,,,9,1,,,
 content_area,SEC,SEC,,,,7,1,,,
