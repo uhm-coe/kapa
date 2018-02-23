@@ -61,6 +61,10 @@ class Kapa::InstallGenerator < Rails::Generators::Base
     directory("test/fixtures", "#{Rails.root}/test/fixtures")
   end
 
+  def add_routes
+    route "root :to => redirect('/kapa')"
+  end
+
   private
   def copy_from_dummy(file_path)
     copy_file("test/dummy/#{file_path}", "#{Rails.root}/#{file_path}")

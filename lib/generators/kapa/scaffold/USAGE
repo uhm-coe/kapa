@@ -1,0 +1,8 @@
+Description:
+    Copy a file from Kapa::Engine to your application for customizing controllers, models, views, etc...
+
+Example:
+    rails g kapa:cp app/views/kapa/layouts/kapa.html.erb
+
+    This will create: kapa.html.erb in app/views/kapa/layouts on your application.
+    You can modify the file to override the default behavior of the engine.
