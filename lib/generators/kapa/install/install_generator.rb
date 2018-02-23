@@ -6,7 +6,6 @@ class Kapa::InstallGenerator < Rails::Generators::Base
   def install_initializers
     puts "Installing initializers..."
 
-    copy_from_dummy("config/initializers/assets.rb")
     copy_from_dummy("config/initializers/attachments.rb")
     copy_from_dummy("config/initializers/cas.rb")
     copy_from_dummy("config/initializers/datasources.rb")
@@ -22,25 +21,29 @@ class Kapa::InstallGenerator < Rails::Generators::Base
   
   def add_gem_dependencies
     puts "Adding gem dependencies..."
-    gem 'rails-csv-fixtures', github: 'bfolkens/rails-csv-fixtures'
+    gem 'rails-csv-fixtures', :github => 'felixbuenemann/rails-csv-fixtures', :branch => 'rails-5.1-support'
+    gem 'rake'
     gem 'activerecord-session_store'
-    gem 'authlogic', '~> 3.4.0'
+    gem 'authlogic'
     gem 'american_date'
-    gem 'paperclip', '~> 3.0'
+    gem 'paperclip'
     gem 'fastercsv'
-    gem 'net-ldap', '~> 0.13.0'
+    gem 'mysql2'
+    gem 'net-ldap'
     gem 'sequel'
-    gem 'will_paginate', '~> 3.0'
-    gem 'will_paginate-bootstrap'
-    gem 'momentjs-rails', '>= 2.9.0'
-    gem 'bootstrap-sass'
-    gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
-    gem 'bootstrap-multiselect-rails'
-    gem 'dragula-rails'
     gem 'hashids'
-    gem 'summernote-rails'
-    gem 'rails-assets-jquery', '1.12.4', source: 'https://rails-assets.org'
-    gem 'rails-assets-pivottable', source: 'https://rails-assets.org'
+    gem 'will_paginate'
+    gem 'will_paginate-bootstrap'
+    gem 'uglifier'
+    gem 'therubyracer'
+    gem 'sass-rails'
+    gem 'bootstrap-sass'
+    gem 'ckeditor'
+  end
+
+  def install_yarn_dependencies
+    puts "Installing yarn dependencies..."
+    copy_file("package.json", "#{Rails.root}/package.json")
   end
 
   def install_locale

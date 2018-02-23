@@ -4,7 +4,7 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery
+//= require jquery/dist/jquery.min
 //= require rails-ujs/lib/assets/compiled/rails-ujs
 //= require bootstrap-sprockets
 //= require bootstrap-multiselect/dist/js/bootstrap-multiselect
