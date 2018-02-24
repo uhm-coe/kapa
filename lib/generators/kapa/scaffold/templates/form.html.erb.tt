@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm-6">
+    <%%=f.text_field :name %>
+    <%%=f.text_field :code, :label => "Key" %>
+    <%%=f.text_field :description, :label => "Value" %>
+    <%%=f.text_field :description_short, :label => "Abbr Value" %>
+  </div>
+
+  <div class="col-sm-6">
+    <%%=f.text_field :category %>
+    <%%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
+    <%%=f.text_field :sequence %>
+    <%%=f.check_box :active, {}, 1, 0 %>
+  </div>
+</div>
