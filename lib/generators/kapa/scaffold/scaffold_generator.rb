@@ -10,14 +10,12 @@ class Kapa::ScaffoldGenerator < Rails::Generators::NamedBase
 
   source_root File.expand_path('../templates', __FILE__)
 
-  invoke 'active_record:migration'
-
-  def create_model_file
-    template "model.rb", File.join("app/models", class_path, "#{file_name}.rb")
+  def invoke_active_record_model
+    Rails::Generators.invoke 'active_record:model', [file_path, "--no-test-framework", "--parent=Kapa::KapaModel" ]
   end
 
   def copy_controller_file
-    template "controller.rb", File.join("app/controllers", "#{controller_file_name}_controller.rb")
+    template "controller.rb", File.join("app/controllers", "#{file_path}_controller.rb")
   end
 
-  end
+end
