@@ -1,6 +1,10 @@
 # KAPA
 
-KAPA provides consolidated information tools to organize office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc....  Tools are distributed as [Rails Engine](http://guides.rubyonrails.org/engines.html) so that developers can easily customize designs and functions to fit your organizational needs.
+KAPA is a framework to build office database system and provides tools to organize various office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc....  
+
+This framework is distributed as [Rails Engine](http://guides.rubyonrails.org/engines.html) so that developers can easily customize designs and functions to fit your organizational needs.  
+
+KAPA works as an essential codebase, and you can add business objects for your organization.  For example, academic institutions may want to add Course, Registration, and Assignment to keep track of assessments.  Please check [this page](https://dcdc.coe.hawaii.edu/kapa/) to see the examples of applications developed with KAPA.
 
 ## Features
 - Identity Management with LDAP support
@@ -13,9 +17,9 @@ KAPA provides consolidated information tools to organize office records includin
 
 ### Getting Started with KAPA App
 
-  1. Install Rails 4.2.x and create a new Ruby on Rails Application.
+  1. Install Rails 5.1.x and create a new Ruby on Rails Application with MySQL Support.
   ```
-  gem install rails -v 4.2.5 --no-rdoc --no-ri
+  gem install rails
   rails new your_app -d mysql
   ```
 
@@ -36,13 +40,14 @@ KAPA provides consolidated information tools to organize office records includin
  
   Current KAPA engine requires MySQL database.  Update your config/database.yml and run the following command to generate initial database schema.
   ```
-  rake kapa:db:setup
+  rake db:migrate
+  rake db:seed
   ``` 
 
-  4. Go to KAPA Admin Console to start applocation development.
+  4. Start webserver and login to the system.
 
-  Open your browser and go to ```application_root/kapa```.
-  You can find default username and password in db/seed.rb
+  Start webserver and ppen your browser and go to applcaiton root, i.e.,  ```http://localhost:3000```.
+  You should be able to login with username=admin, password=admin.  The default username and password is defined in db/seed.rb
 
 ### Customizing KAPA App
   Any code in KAPA Engine including controllers, models, and views can be modified/extended in your application.   You can use ```rails g kapa:cp``` command to copy engine source code to your application.
