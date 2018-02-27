@@ -1,10 +1,7 @@
 <%% content_for(:dialog) do %>
 
   <%%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
-    <%%=bootstrap_form_for(:filter, :url => kapa_properties_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%%=f.history_select :name, {:model_class => Kapa::Property, :model_method => :name}, {:class => "search-select"} %>
-      <%%=f.select :active, [["Active", "1"], ["In-Active", "0"]], :include_blank => "Any" %>
-      <%%=f.select :per_page, Rails.configuration.items_per_page_selections %>
+    <%%=bootstrap_form_for(:filter, :url => {:action => :index}, :html => {:method => :get, :id => "filter_form"}) do |f| %>
     <%% end %>
   <%% end %>
 
@@ -12,7 +9,7 @@
 
 <%% content_for(:box1) do %>
 
-  <h3>Properties</h3>
+  <h3><%=plural_name.humanize %></h3>
 
   <div class="row">
     <div class="col-sm-12 text-right">
@@ -24,29 +21,22 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Key</th>
-      <th>Value</th>
-      <th>Category</th>
-      <th>Sequence</th>
-      <th>Active</th>
-      <th><%%=t(:kapa_global_dept).pluralize %></th>
-      <th></th>
+    <% attributes_names.each do |name| %>
+      <th><%=name.humanize%></th>
+    <% end %>
     </tr>
     </thead>
     <tbody>
-    <%% for property in @properties %>
+    <%% for <%= singular_name %> in @<%=plural_name %> %>
       <tr>
-        <td><%%=property.code %></td>
-        <td><%%=property.description %></td>
-        <td><%%=abbr property.category, 20 %></td>
-        <td><%%=property.sequence %></td>
-        <td><%%=property.active %></td>
-        <td><%%=property.depts.join(", ") %></td>
-        <td class="right"><%%=link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>
+        <% attributes_names.each do |name| %>
+          <td><%%=<%="#{singular_name}.#{name}"%> %></td>
+        <% end %>
+        <td class="right"><%%=link_to "Show", {:action => :show, :id => <%= singular_name %>}, :class => "btn btn-default btn-xs" %></td>
       </tr>
     <%% end %>
     </tbody>
   </table>
-  <div class="text-center"><%%=will_paginate @properties, :renderer => BootstrapPagination::Rails %></div>
+  <div class="text-center"><%%=will_paginate  @<%=plural_name %>, :renderer => BootstrapPagination::Rails %></div>
 
 <%% end %>

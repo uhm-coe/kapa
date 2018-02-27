@@ -2,19 +2,19 @@
 
   <h4 class="section-header">
     <%%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
-    New System Property
+    <%= singular_name.humanize %>
   </h4>
 
   <div class="tabs">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#property_tab" data-toggle="tab">Properties</a></li>
+      <li class="active"><a href="#main_tab" data-toggle="tab">Main</a></li>
     </ul>
 
     <div class="tab-content">
-      <div id="property_tab" class="tab-pane active">
-        <%%=bootstrap_form_for :property, :url => kapa_properties_path do |f| %>
-          <%%=render :partial => "property_form", :locals => {:f => f} %>
-          <%%=render :partial => "/kapa/layouts/controls" if update? %>
+      <div id="main_tab" class="tab-pane active">
+        <%%=bootstrap_form_for :<%= singular_name%>, :url => <%=plural_table_name%>_path do |f| %>
+          <%%=render :partial => "<%= singular_name%>_form" %>
+          <%%=render :partial => "/kapa/layouts/controls" if create? %>
         <%% end %>
       </div>
     </div>

@@ -9,30 +9,30 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
   def index
     @filter = filter
     @modal = true if @filter.name.blank?
-    @<%= plural_table_name %> = <%= orm_class.new(class_name).name %>.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+    @<%= plural_name %> = <%= orm_class.new(class_name).name %>.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
   # GET <%= route_url %>/1
   def show
-    @<%= singular_table_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
-    @<%= singular_table_name %>_ext = @<%= singular_table_name %>.ext
+    @<%= singular_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
+    @<%= singular_name %>_ext = @<%= singular_name %>.ext
   end
 
   # GET <%= route_url %>/new
   def new
     @filter = filter
-    @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
+    @<%= singular_name %> = <%= orm_class.build(class_name) %>
   end
 
   # POST <%= route_url %>
   def create
-    @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
-    @<%= singular_table_name %>.attributes= <%= singular_table_name %>_params
-    @<%= singular_table_name %>.update_serialized_attributes!(:_ext, <%= singular_table_name %>_ext_params) if params[:<%= singular_table_name %>_ext].present?
+    @<%= singular_name %> = <%= orm_class.build(class_name) %>
+    @<%= singular_name %>.attributes= <%= singular_name %>_params
+    @<%= singular_name %>.update_serialized_attributes!(:_ext, <%= singular_name %>_ext_params) if params[:<%= singular_name %>_ext].present?
 
-    if @<%= singular_table_name %>.save
-      flash[:success] = "<%= singular_table_name.humanize %> was successfully created."
-      redirect_to <%= singular_table_name %>_path(:id => @<%= singular_table_name %>)
+    if @<%= singular_name %>.save
+      flash[:success] = "<%= singular_name.humanize %> was successfully created."
+      redirect_to <%= singular_table_name %>_path(:id => @<%= singular_name %>)
     else
       flash[:danger] = error_message_for(@property)
       redirect_to new_<%= singular_table_name %>_path and return false
@@ -41,37 +41,37 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
 
   # PATCH/PUT <%= route_url %>/1
   def update
-    @<%= singular_table_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
-    @<%= singular_table_name %>.attributes= <%= singular_table_name %>_params
-    @<%= singular_table_name %>.update_serialized_attributes!(:_ext, <%= singular_table_name %>_ext_params) if params[:<%= singular_table_name %>_ext].present?
+    @<%= singular_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
+    @<%= singular_name %>.attributes= <%= singular_name %>_params
+    @<%= singular_name %>.update_serialized_attributes!(:_ext, <%= singular_name %>_ext_params) if params[:<%= singular_name %>_ext].present?
 
-    if @<%= singular_table_name %>
-      flash[:success] = "<%= singular_table_name.humanize %> was successfully updated."
+    if @<%= singular_name %>
+      flash[:success] = "<%= singular_name.humanize %> was successfully updated."
     else
-      flash[:danger] = error_message_for(@<%= singular_table_name %>)
+      flash[:danger] = error_message_for(@<%= singular_name %>)
     end
-    redirect_to <%= singular_table_name %>_path(:id => @<%= singular_table_name %>)
+    redirect_to <%= singular_table_name %>_path(:id => @<%= singular_name %>)
   end
 
   # DELETE <%= route_url %>/1
   def destroy
-    @<%= singular_table_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
+    @<%= singular_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
 
-    if @<%= singular_table_name %>.destroy
-      flash[:success] = "<%= singular_table_name.humanize %> was successfully deleted."
+    if @<%= singular_name %>.destroy
+      flash[:success] = "<%= singular_name.humanize %> was successfully deleted."
     else
-      flash[:danger] = error_message_for(@<%= singular_table_name %>)
+      flash[:danger] = error_message_for(@<%= singular_name %>)
     end
     redirect_to params[:return_path] || session[:return_path]
   end
 
   private
   # Only allow a trusted parameter "white list" through.
-  def <%= "#{singular_table_name}_params" %>
+  def <%= "#{singular_name}_params" %>
     <%- if attributes_names.empty? -%>
-    params.fetch(:<%= singular_table_name %>, {})
+    params.fetch(:<%= singular_name %>, {})
     <%- else -%>
-    params.require(:<%= singular_table_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
+    params.require(:<%= singular_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
     <%- end -%>
   end
 end
