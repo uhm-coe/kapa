@@ -5,6 +5,8 @@ node_modules/*
 test/dummy/log
 test/dummy/tmp
 test/dummy/public/assets/*
+provision/*
+Vagrantfile
 
 #Do not commit the secret file!
 test/dummy/config/secrets.yml
