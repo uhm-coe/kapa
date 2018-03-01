@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 #KAPA dependencies
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.1.5'
 gem 'rails-csv-fixtures', :github => 'felixbuenemann/rails-csv-fixtures', :branch => 'rails-5.1-support'
 gem 'rake'
 gem 'activerecord-session_store'
@@ -21,7 +21,6 @@ gem 'hashids'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'uglifier'
-gem 'therubyracer'
 gem 'sass-rails'
 gem 'bootstrap-sass'
 gem 'ckeditor'

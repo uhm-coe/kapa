@@ -5,7 +5,7 @@ en:
   kapa_brand: "KAPA"
   kapa_footer_html: "&copy; College of Education, University of Hawaiʻi at Mānoa %{year}"
   kapa_welcome_html: "<h1>Welcome</h1>
-                      <p>KAPA Admin Console is an administrative UI to organize office records including personal information, electronic documents, calendars, tasks, messaging, etc...</p>
+                      <p>KAPA a framework to build a database application system to organize office records including personal information, electronic documents, calendars, tasks, messaging, etc...</p>
                       <p>This highly customizable UI provides a set of tools to support various workflow functions and services in your office.</p>"
   kapa_global_dept: "Dept"
   kapa_global_user_ids: "Assignee"

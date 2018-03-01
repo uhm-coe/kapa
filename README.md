@@ -20,34 +20,34 @@ KAPA works as an essential codebase, and you can add business objects for your o
   1. Install Rails 5.1.x and create a new Ruby on Rails Application with MySQL Support.
   ```
   gem install rails
-  rails new your_app -d mysql
+  rails new your_app --database=mysql --skip-turbolinks
   ```
 
-  2. Add the following line to your ```Gemfile```
+  2. Add the following line to your ```Gemfile``` and run ```bundle install``` to isntall gems.
   ```
   gem 'kapa', :github => "uhm-coe/kapa"
+  bundle install
   ```
-  Don't forget to run ```bundle update``` to update your gems!
 
-  2. Install configuration files
+  3. Install configuration files
 
-  Run the following command to install required files to run the application.
+  Run the following command to install required cofnigration to run KAPA application.
   ```
   rails g kapa:install
   ``` 
 
-  3. Setup MySQL database
+  4. Setup MySQL database
  
-  Current KAPA engine requires MySQL database.  Update your config/database.yml and run the following command to generate initial database schema.
+  KAPA engine requires MySQL database.  Update your config/database.yml and run the following command to generate initial database schema.
   ```
   rake db:migrate
   rake db:seed
   ``` 
 
-  4. Start webserver and login to the system.
+  5. Start your web server and login to the system.
 
-  Start webserver and ppen your browser and go to applcaiton root, i.e.,  ```http://localhost:3000```.
-  You should be able to login with username=admin, password=admin.  The default username and password is defined in db/seed.rb
+  Start web server and open your web browser to navigate to the applcaiton root, i.e.,  ```http://localhost:3000``` on your web browser.  You should see the the welcome screen of KAPA.
+  Login with username=admin, password=admin (The default username and password are defined in db/seed.rb).
 
 ### Customizing KAPA App
   Any code in KAPA Engine including controllers, models, and views can be modified/extended in your application.   You can use ```rails g kapa:cp``` command to copy engine source code to your application.
