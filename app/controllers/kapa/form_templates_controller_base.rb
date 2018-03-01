@@ -4,7 +4,7 @@ module Kapa::FormTemplatesControllerBase
   def show
     @form_template = Kapa::FormTemplate.find(params[:id])
     @form_template_ext = @form_template.ext
-    @form_fields = @form_template.form_fields
+    @form_template_fields = @form_template.form_template_fields
     @field_selections = {:text_field => "Single-line Text",
                          :text_area => "Multi-Line Text",
                          :property_select => "Select (Propeties)",
@@ -41,7 +41,7 @@ module Kapa::FormTemplatesControllerBase
 
   def destroy
     @form_template = Kapa::FormTemplate.find(params[:id])
-    unless @form_template.form_fields.blank?
+    unless @form_template.form_template_fields.blank?
       flash[:danger] = "Form Template can not be deleted since it contains one or more fields."
       redirect_to kapa_form_template_path(:id => @form_template) and return false
     end

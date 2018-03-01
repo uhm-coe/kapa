@@ -1,8 +1,6 @@
 # KAPA
 
-KAPA is a framework to build office database system and provides tools to organize various office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc....  
-
-This framework is distributed as [Rails Engine](http://guides.rubyonrails.org/engines.html) so that developers can easily customize designs and functions to fit your organizational needs.  
+KAPA is a [Rails Engine](http://guides.rubyonrails.org/engines.html) to build office database system and provides tools to organize various office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc....  
 
 KAPA works as an essential codebase, and you can add business objects for your organization.  For example, academic institutions may want to add Course, Registration, and Assignment to keep track of assessments.  Please check [this page](https://dcdc.coe.hawaii.edu/kapa/) to see the examples of applications developed with KAPA.
 

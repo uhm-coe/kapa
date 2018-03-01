@@ -6,12 +6,12 @@ module Kapa::FormBase
     belongs_to :person, :optional => true
     belongs_to :attachable, :polymorphic => true, :optional => true
     has_many :files, :as => :attachable
-    has_many :form_details
+    has_many :form_fields
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
     validates_presence_of :form_template_id
-    after_save :update_form_details
+    after_save :update_form_fields
 
     property_lookup :term
   end
@@ -40,16 +40,16 @@ module Kapa::FormBase
     end
   end
 
-  def update_form_details
+  def update_form_fields
     if self.form_template.type == "simple"
-      self.form_details.destroy_all
+      self.form_fields.destroy_all
       field_ids = {}
-      self.form_template.form_fields.each do |f|
+      self.form_template.form_template_fields.each do |f|
         field_ids[f.label] = f.id
       end
       logger.debug "*DEBUG* #{field_ids.inspect}"
       self.deserialize(:_ext).each_pair do |label, value|
-        self.form_details.create(:form_field_id => field_ids[label.to_s], :value => value)
+        self.form_fields.create(:form_template_field_id => field_ids[label.to_s], :value => value)
       end
     end
   end

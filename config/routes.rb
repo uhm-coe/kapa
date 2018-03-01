@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :files, &extra_actions
     resources :forms, &extra_actions
     resources :form_templates, &extra_actions
-    resources :form_fields, &extra_actions
+    resources :form_template_fields, &extra_actions
     resources :texts, &extra_actions
     resources :text_templates, &extra_actions
     resources :properties, &extra_actions

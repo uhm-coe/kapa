@@ -2,7 +2,7 @@ namespace :kapa do
   namespace :admin do
 
     desc 'Reapply user roles.'
-    task :user_role => :environment do
+    task :reset_role => :environment do
 
       Kapa::User.where(:status => "30").each do |user|
         permission = user.deserialize(:permission, :as => OpenStruct)
