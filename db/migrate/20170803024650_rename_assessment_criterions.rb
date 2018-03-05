@@ -7,6 +7,7 @@ class RenameAssessmentCriterions < ActiveRecord::Migration[4.2]
       t.rename :criterion_html, :label_html
       t.rename :standard, :category
       t.boolean :required
+      t.integer :sequence, :default => 0
     end
     rename_table :assessment_criterions, :form_template_fields
   end

@@ -16,12 +16,20 @@ module Kapa::FormsControllerBase
     @form = Kapa::Form.find params[:id]
     @person = @form.person
     @form.attributes = form_param
-    @form.update_serialized_attributes!(:_ext, params[:form_ext]) if params[:form_ext].present?
-    params.permit!.to_h.each_pair do |k, v|
-      unless k =~ /(utf8)|(_method)|(authenticity_token)|(form)|(commit)|(controller)|(action)|(id)/
-        @form.serialize(k.to_sym, v)
+    @form.update_serialized_attributes(:_ext, params.require(:form_ext).permit!) if params[:form_ext].present?
+
+    #Save ramdom form attributes for complex form templates.
+    params.keys.each do |key|
+      unless key =~ /(utf8)|(_method)|(authenticity_token)|(form)|(form_ext)|(commit)|(controller)|(action)|(id)/
+        @form.serialize(key.to_sym, params.require(key).permit!)
       end
     end
+
+    # params.permit!.to_h.each_pair do |k, v|
+    #   unless k =~ /(utf8)|(_method)|(authenticity_token)|(form)|(commit)|(controller)|(action)|(id)/
+    #     @form.serialize(k.to_sym, v)
+    #   end
+    # end
 
     if @form.save
       flash[:success] = "Form was successfully updated."

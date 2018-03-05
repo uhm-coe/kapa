@@ -3,13 +3,15 @@
   <div class="row">
     <div class="col-sm-6">
       <%=f.text_field :label, :label => "Label" %>
-      <%=f.text_area  :label_desc, :size => "35x5", :label => "Lebel Helper Text" %>
+      <%=f.text_area  :label_desc, :size => "35x2", :label => "Lebel Helper Text" %>
+      <%=f.text_field :category %>
     </div>
 
     <div class="col-sm-6">
       <%=f.select :type, @field_selections.collect {|key, value| [value, key] }, {:label => "Field Type"} %>
       <%=f.text_field :type_option, :label => "Field Type Option" %>
-      <%=f.text_field :category %>
+      <%=f.text_field :sequence %>
+      <%=f.check_box :active, {}, 1, 0 %>
     </div>
   </div>
 <% end %>

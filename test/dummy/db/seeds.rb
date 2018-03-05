@@ -26,4 +26,11 @@ user.password = "admin"
 user.apply_role("Admin")
 user.save!(validate: false)
 
-Kapa::FormTemplate.create(:title => "Sample Form Template", :type => "simple")
+Kapa::FormTemplate.delete_all
+form_template = Kapa::FormTemplate.create(:title => "Sample Form", :type => "simple")
+form_template.form_template_fields.create(:label => "Name", :sequence => 1, :type => "text_field")
+form_template.form_template_fields.create(:label => "Email", :sequence => 2, :type => "text_field")
+form_template.form_template_fields.create(:label => "Phone", :sequence => 3, :type => "text_field")
+form_template.form_template_fields.create(:label => "Preferred contact", :sequence => 4, :type => "csv_select", :type_option => "Email, Phone")
+form_template.form_template_fields.create(:label => "Department", :sequence => 5, :type => "property_select", :type_option => "dept")
+form_template.form_template_fields.create(:label => "Comment", :sequence => 6, :type => "text_area")

@@ -2,7 +2,7 @@ module Kapa::FormTemplateBase
   extend ActiveSupport::Concern
 
   included do
-    has_many :form_template_fields, -> {order("form_template_fields.label")}, :dependent => :destroy
+    has_many :form_template_fields, -> {order("form_template_fields.sequence, form_template_fields.label")}, :dependent => :destroy
     validates_presence_of :title, :type
   end
 
