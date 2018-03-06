@@ -11,8 +11,8 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @document_title = @file.document_title
-    @document_id = @file.id
+    @document_title = @file.title
+    @document_id = @file.document_id
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}
@@ -34,7 +34,7 @@ module Kapa::FilesControllerBase
     if params[:file][:data]
       @file.name = @file.data_file_name.humanize
       @file.uploaded_by = @current_user.uid
-      @file.dept = [@current_user.primary_dept]
+      @file.dept = @current_user.primary_dept
     end
 
     if @file.save

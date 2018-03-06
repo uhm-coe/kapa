@@ -43,6 +43,7 @@
              <th>Type</th>
              <th>Title</th>
              <th>Date</th>
+             <th><%=t(:kapa_global_dept).pluralize %></th>
              <th></th>
            </tr>
            <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
@@ -51,6 +52,7 @@
                <td><%=d.type%></td>
                <td><%=d.title%></td>
                <td><%=format_date d.date %></td>
+               <td><%=d.depts.join(", ") %></td>
                <td class="right"><%=link_to "Show", document_path(d), :class => "btn btn-default btn-xs", :target => "_blank" %></td>
              </tr>
            <% end %>

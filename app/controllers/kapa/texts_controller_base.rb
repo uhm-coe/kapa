@@ -27,7 +27,7 @@ module Kapa::TextsControllerBase
 
   def create
     @text = Kapa::Text.new(text_param)
-    @text.dept = [@current_user.primary_dept]
+    @text.dept = @current_user.primary_dept
 
     unless @text.save
       flash[:danger] = error_message_for(@text)
