@@ -39,6 +39,7 @@
           </p>
           <table class="table table-hover">
            <tr>
+             <th>Document ID</th>
              <th>Type</th>
              <th>Title</th>
              <th>Date</th>
@@ -46,6 +47,7 @@
            </tr>
            <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
              <tr>
+               <td><%=d.document_id%></td>
                <td><%=d.type%></td>
                <td><%=d.title%></td>
                <td><%=format_date d.date %></td>

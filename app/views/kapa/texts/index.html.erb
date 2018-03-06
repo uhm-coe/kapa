@@ -23,10 +23,10 @@
   <table id="text_list" class="table table-striped">
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Person</th>
+      <th>Document ID</th>
       <th>Title</th>
-      <th>Last Update</th>
+      <th>Person</th>
+      <th>Last Updated</th>
       <th>Submitted</th>
       <th><%=t(:kapa_global_dept).pluralize %></th>
       <th></th>
@@ -35,9 +35,9 @@
     <tbody>
     <% for text in @texts %>
       <tr>
-        <td><%= text.person.id_number if text.person %></td>
-        <td><%= link_to abbr(text.person.full_name), kapa_person_path(:id => text.person) if text.person %></td>
+        <td><%= text.document_id%></td>
         <td><%= h text.title %></td>
+        <td><%= link_to abbr(text.person.full_name), kapa_person_path(:id => text.person) if text.person %></td>
         <td><%= time_ago_in_words text.updated_at if text.updated_at %> ago</td>
         <td><%= format_date text.submitted_at %></td>
         <td><%= h text.depts.join(", ") %></td>

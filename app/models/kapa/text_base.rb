@@ -12,6 +12,10 @@ module Kapa::TextBase
     after_create :set_default_contents, :replace_variables
   end
 
+  def document_id
+    "TX" + self.id.to_s.rjust(8, '0')
+  end
+
   def type
     return "Text Doc"
   end

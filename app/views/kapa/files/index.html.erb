@@ -23,9 +23,9 @@
   <table id="form_list" class="table table-striped">
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>File Name</th>
+      <th>Document ID</th>
+      <th>Title</th>
+      <th>Person</th>
       <th>Uploaded</th>
       <th><%=t(:kapa_global_dept).pluralize %></th>
       <th></th>
@@ -34,9 +34,9 @@
     <tbody>
     <% for file in @files %>
       <tr>
-        <td><%=file.person.id_number if file.person %></td>
-        <td><%=link_to abbr(file.person.full_name), kapa_person_path(:id => file.person) if file.person %></td>
+        <td><%=file.document_id %></td>
         <td><%=file.name %></td>
+        <td><%=link_to abbr(file.person.full_name), kapa_person_path(:id => file.person) if file.person %></td>
         <td><%=format_date file.updated_at %></td>
         <td><%=file.depts.join(", ") %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => file}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>

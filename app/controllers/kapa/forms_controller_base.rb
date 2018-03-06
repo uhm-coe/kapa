@@ -8,7 +8,7 @@ module Kapa::FormsControllerBase
     @person = @form.person
     @person_ext = @person.ext
     @document_title = @form.title
-    @document_id = @form.id
+    @document_id = @form.document_id
     render :layout => "/kapa/layouts/document"
   end
 
@@ -69,10 +69,28 @@ module Kapa::FormsControllerBase
 
   def export
     @filter = filter
-    send_data Kapa::Form.to_csv(:filter => @filter),
+    format = {
+      :document_id => [:document_id],
+      :title => [:title],
+      :id_number => [:person, :id_number],
+      :last_name => [:person, :last_name],
+      :first_name => [:person, :first_name],
+      :cur_street => [:person, :cur_street],
+      :cur_city => [:person, :cur_city],
+      :cur_state => [:person, :cur_state],
+      :cur_postal_code => [:person, :cur_postal_code],
+      :cur_phone => [:person, :cur_phone],
+      :email => [:person, :email],
+      :email_alt => [:person, :email_alt],
+      :updated => [:updated_at],
+      :submitted => [:submitted_at],
+      :lock =>[:lock]
+    }
+
+    send_data Kapa::Form.to_table(:filter => @filter, :as => :csv, :format => format),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "forms_#{filter.type}.csv"
+              :filename => "forms_#{Date.today}.csv"
   end
 
   private

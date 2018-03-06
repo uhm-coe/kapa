@@ -7,7 +7,7 @@ module Kapa::TextsControllerBase
     @person = @text.person
     @person_ext = @person.ext if @person
     @document_title = @text.title
-    @document_id = @text.id
+    @document_id = @text.document_id
     render :layout => "/kapa/layouts/document"
   end
 
@@ -54,11 +54,31 @@ module Kapa::TextsControllerBase
   end
 
   def export
-    @filter = filter
-    send_data Kapa::Text.to_csv(:filter => @filter),
-              :type => "application/csv",
-              :disposition => "inline",
-              :filename => "texts_#{filter.type}.csv"
+    def export
+      @filter = filter
+      format = {
+        :document_id => [:document_id],
+        :title => [:title],
+        :id_number => [:person, :id_number],
+        :last_name => [:person, :last_name],
+        :first_name => [:person, :first_name],
+        :cur_street => [:person, :cur_street],
+        :cur_city => [:person, :cur_city],
+        :cur_state => [:person, :cur_state],
+        :cur_postal_code => [:person, :cur_postal_code],
+        :cur_phone => [:person, :cur_phone],
+        :email => [:person, :email],
+        :email_alt => [:person, :email_alt],
+        :updated => [:updated_at],
+        :submitted => [:submitted_at],
+        :lock =>[:lock]
+      }
+
+      send_data Kapa::Text.to_table(:filter => @filter, :as => :csv, :format => format),
+                :type => "application/csv",
+                :disposition => "inline",
+                :filename => "texts_#{Date.today}.csv"
+    end
   end
 
   private

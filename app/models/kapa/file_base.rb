@@ -11,6 +11,10 @@ module Kapa::FileBase
     validates_attachment_content_type :data, :content_type => Rails.configuration.attachment_content_types
   end
 
+  def document_id
+    "F" + self.id.to_s.rjust(9, '0')
+  end
+
   def url(*args)
     data.url(*args)
   end

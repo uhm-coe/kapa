@@ -11,7 +11,7 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @document_title = @file.title
+    @document_title = @file.document_title
     @document_id = @file.id
 
     respond_to do |format|
@@ -73,6 +73,30 @@ module Kapa::FilesControllerBase
       flash[:danger] = error_message_for(@file)
     end
     redirect_to params[:return_path] || session[:return_path]
+  end
+
+  def export
+    @filter = filter
+    format = {
+      :document_id => [:document_id],
+      :title => [:title],
+      :id_number => [:person, :id_number],
+      :last_name => [:person, :last_name],
+      :first_name => [:person, :first_name],
+      :cur_street => [:person, :cur_street],
+      :cur_city => [:person, :cur_city],
+      :cur_state => [:person, :cur_state],
+      :cur_postal_code => [:person, :cur_postal_code],
+      :cur_phone => [:person, :cur_phone],
+      :email => [:person, :email],
+      :email_alt => [:person, :email_alt],
+      :updated => [:updated_at]
+    }
+
+    send_data Kapa::File.to_table(:filter => @filter, :as => :csv, :format => format),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "files_#{Date.today}.csv"
   end
 
   def file_param
