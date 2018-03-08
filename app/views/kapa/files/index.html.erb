@@ -28,6 +28,7 @@
       <th>Person</th>
       <th>Uploaded</th>
       <th><%=t(:kapa_global_dept).pluralize %></th>
+      <th>Status</th>
       <th></th>
     </tr>
     </thead>
@@ -39,6 +40,7 @@
         <td><%=link_to abbr(file.person.full_name), kapa_person_path(:id => file.person) if file.person %></td>
         <td><%=format_date file.updated_at %></td>
         <td><%=file.depts.join(", ") %></td>
+        <td><%=file.status_desc %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => file}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>

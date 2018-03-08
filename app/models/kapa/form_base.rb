@@ -14,6 +14,7 @@ module Kapa::FormBase
     after_save :update_form_fields
 
     property_lookup :term
+    property_lookup :status
   end
 
   def document_id
@@ -24,24 +25,24 @@ module Kapa::FormBase
     return "Form"
   end
 
-  def lock?
-    lock == "Y"
-  end
-
-  def submit
-    self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
-  end
-
-  def date
-    self.submitted_at
-  end
-
   def title
     if self.term.blank?
       self.form_template.title
     else
       "#{self.form_template.title} (#{term_desc})"
     end
+  end
+
+  def date
+    self.submitted_at
+  end
+
+  def lock?
+    lock == "Y"
+  end
+
+  def submit
+    self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
   end
 
   def update_form_fields

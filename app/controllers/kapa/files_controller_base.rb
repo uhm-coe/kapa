@@ -54,7 +54,7 @@ module Kapa::FilesControllerBase
     @file = Kapa::File.new(file_param)
     @file.name = @file.data_file_name if @file.name.blank?
     @file.uploaded_by = @current_user.uid
-    @file.dept = [@current_user.primary_dept]
+    @file.dept = @current_user.primary_dept
     unless @file.save
       flash[:danger] = error_message_for(@file)
       redirect_to params[:return_path] and return false

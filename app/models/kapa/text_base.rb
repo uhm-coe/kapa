@@ -8,6 +8,8 @@ module Kapa::TextBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
+    property_lookup :status
+
     #validates_presence_of :text_template_id
     after_create :set_default_contents, :replace_variables
   end
@@ -20,8 +22,16 @@ module Kapa::TextBase
     return "Text Doc"
   end
 
-  def type_desc
-    return Kapa::Property.lookup_description(:text, type)
+  def title
+    self.title
+  end
+
+  def date
+    self.submitted_at
+  end
+
+  def status
+
   end
 
   def lock?
@@ -30,10 +40,6 @@ module Kapa::TextBase
 
   def submit
     self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
-  end
-
-  def date
-    self.submitted_at
   end
 
   def set_default_contents

@@ -7,12 +7,25 @@ module Kapa::FileBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
+    property_lookup :status
     has_attached_file :data
     validates_attachment_content_type :data, :content_type => Rails.configuration.attachment_content_types
   end
 
   def document_id
     "F" + self.id.to_s.rjust(9, '0')
+  end
+
+  def type
+    "File"
+  end
+
+  def title
+    self.name
+  end
+
+  def date
+    self.updated_at
   end
 
   def url(*args)
@@ -27,20 +40,8 @@ module Kapa::FileBase
     end
   end
 
-  def type
-    "File"
-  end
-
-  def title
-    self.name
-  end
-
   def file_size
     data_file_size
-  end
-
-  def date
-    self.updated_at
   end
 
   class_methods do

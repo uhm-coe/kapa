@@ -32,6 +32,7 @@
       <th>Submitted</th>
       <th>Lock</th>
       <th><%=t(:kapa_global_dept).pluralize %></th>
+      <th>Status</th>
       <th></th>
     </tr>
     </thead>
@@ -45,6 +46,7 @@
         <td><%=format_date form.submitted_at %></td>
         <td><%=form.lock %></td>
         <td><%=form.depts.join(", ") %></td>
+        <td><%=form.status_desc %></td>
         <td class="right"><%=link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
       </tr>
     <% end %>
