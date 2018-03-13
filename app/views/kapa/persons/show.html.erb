@@ -21,7 +21,7 @@
   <%=render :partial => "/kapa/persons/person_detail", :locals => {:uri => {:action => :show, :id => @person}} %>
 
   <div class="panel-group" id="accordion">
-    <% if read?(:kapa_files) %>
+    <% if read?(:kapa_files) or read?(:kapa_forms) or read?(:kapa_texts)%>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">

@@ -57,21 +57,21 @@ module Kapa::KapaControllerBase
   def validate_permission
      case params[:action]
        when "show", "index"
-         failed_permission = "read" unless read?
+         permission = :read
        when "update"
-         failed_permission = "update" unless update?
+         permission = :update
        when "new", "create"
-         failed_permission = "create" unless create?
+         permission = :create
        when "destroy"
-         failed_permission = "destroy" unless destroy?
+         permission = :destroy
        when "import"
-         failed_permission = "import" unless import?
+         permission = :import
        when "export"
-         failed_permission = "export" unless export?
+         permission = :export
      end
 
-     if failed_permission
-       flash[:danger] = "You do not have a #{failed_permission} permission on #{controller_name}."
+     unless self.send("#{permission}?")
+       flash[:danger] = "You do not have a #{permission} permission on #{controller_name}."
        redirect_to(kapa_error_path) and return false
      end
   end

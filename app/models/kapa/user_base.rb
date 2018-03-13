@@ -59,12 +59,13 @@ module Kapa::UserBase
   end
 
   def check_permission(name, code)
-    return self.permission.send(name).include?(code)
+    return false unless Rails.configuration.available_routes.include?(name.to_s)
+    self.permission.send(name).include?(code)
   end
 
   def access_scope(name, condition = nil)
-    permission = self.permission
-    permission.send("#{name}_scope").to_i
+    return false unless Rails.configuration.available_routes.include?(name.to_s)
+    self.permission.send("#{name}_scope").to_i
   end
 
   def apply_role(name)
