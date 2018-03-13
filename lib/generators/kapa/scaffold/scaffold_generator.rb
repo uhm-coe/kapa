@@ -17,6 +17,7 @@ class Kapa::ScaffoldGenerator < Rails::Generators::NamedBase
 
   def generate_model
     @model_options[0] = "create_#{plural_name}"
+    @model_options << "dept:string"
     @model_options << "yml:text"
     @model_options << "json:text"
     @model_options << "--timestamps"

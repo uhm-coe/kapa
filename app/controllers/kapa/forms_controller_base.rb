@@ -69,7 +69,19 @@ module Kapa::FormsControllerBase
 
   def export
     @filter = filter
-    format = {
+    send_data Kapa::Form.to_table(:as => :csv, :filter => @filter, :format => export_format),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "forms_#{Date.today}.csv"
+  end
+
+  private
+  def form_param
+    params.require(:form).permit(:form_template_id, :person_id, :attachable_id, :attachable_type, :lock, :note, :public, :dept, :depts => [])
+  end
+
+  def export_format
+    {
       :document_id => [:document_id],
       :title => [:title],
       :id_number => [:person, :id_number],
@@ -86,15 +98,5 @@ module Kapa::FormsControllerBase
       :submitted => [:submitted_at],
       :lock =>[:lock]
     }
-
-    send_data Kapa::Form.to_table(:filter => @filter, :as => :csv, :format => format),
-              :type => "application/csv",
-              :disposition => "inline",
-              :filename => "forms_#{Date.today}.csv"
-  end
-
-  private
-  def form_param
-    params.require(:form).permit(:form_template_id, :person_id, :attachable_id, :attachable_type, :lock, :note, :public, :dept, :depts => [])
   end
 end
