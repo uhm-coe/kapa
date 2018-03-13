@@ -60,7 +60,7 @@ module Kapa::UserBase
 
   def check_permission(name, code)
     return false unless Rails.configuration.available_routes.include?(name.to_s)
-    self.permission.send(name).include?(code)
+    self.permission.send(name).to_s.include?(code)
   end
 
   def access_scope(name, condition = nil)
@@ -71,6 +71,7 @@ module Kapa::UserBase
   def apply_role(name)
     role_permission = Rails.configuration.roles[name]
     role_permission.merge!(:role => name) if role_permission
+    logger.debug "*DEBUG* #{role_permission.inspect}"
     self.serialize(:permission, role_permission)
   end
 

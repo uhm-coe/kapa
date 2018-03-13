@@ -9,7 +9,7 @@ namespace :kapa do
         puts "user: #{user.uid}, role: #{permission.role}"
         if permission.role and Rails.configuration.roles.keys.include?(permission.role)
           user.apply_role(permission.role)
-          user.save
+          user.save!
         end
       end
     end
