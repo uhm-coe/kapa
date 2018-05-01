@@ -48,19 +48,19 @@ eonasdan-bootstrap-datetimepicker@^4.17.47:
     moment-timezone "^0.4.0"
 
 fullcalendar@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.7.0.tgz#74309943790a0085647ef7671c81c852f68b4a28"
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.9.0.tgz#b608a9989f3416f0b1d526c6bdfeeaf2ac79eda5"
   dependencies:
     jquery "2 - 3"
-    moment "^2.9.0"
+    moment "^2.20.1"
 
-"jquery@2 - 3", jquery@>=1.9.0, "jquery@^1.8.3 || ^2.0 || ^3.0":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
-
-jquery@^3.3.1:
+"jquery@2 - 3", jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
+jquery@>=1.9.0, "jquery@^1.8.3 || ^2.0 || ^3.0":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 moment-timezone@^0.4.0:
   version "0.4.1"
@@ -72,9 +72,9 @@ moment-timezone@^0.4.0:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
-moment@^2.9.0:
-  version "2.19.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
+moment@^2.20.1:
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
 
 pivottable@^2.14.0:
   version "2.14.0"
