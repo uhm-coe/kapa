@@ -109,6 +109,22 @@ jQuery(document).ready(function ($) {
 
   // Fullcalendar initialization with options and callbacks
   $('#calendar').fullCalendar({
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay,listWeek'
+    },
+    fixedWeekCount: false,
+    height: 736,
+    editable: true,
+    selectable: true,
+    selectHelper: true,
+    timezone: 'US/Hawaii',
+    nowIndicator: true,
+    displayEventEnd: true,
+    events: "/events.json",
+    select: function(start, end) {
 
+    }
   });
 });

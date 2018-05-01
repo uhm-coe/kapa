@@ -90,6 +90,9 @@ GEM
     hashids (1.0.4)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
+    jbuilder (2.7.0)
+      activesupport (>= 4.2.0)
+      multi_json (>= 1.2)
     loofah (2.2.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -194,6 +197,7 @@ DEPENDENCIES
   ckeditor
   fastercsv
   hashids
+  jbuilder
   kapa!
   mysql2
   net-ldap
