@@ -11,6 +11,7 @@
 //= require moment/min/moment-with-locales
 //= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
 //= require dragula/dist/dragula
+//= require fullcalendar/dist/fullcalendar
 
 jQuery(document).ready(function ($) {
 
@@ -105,4 +106,9 @@ jQuery(document).ready(function ($) {
 
   $("a[rel~=popover], .has-popover").popover();
   $("a[rel~=tooltip], .has-tooltip").tooltip();
+
+  // Fullcalendar initialization with options and callbacks
+  $('#calendar').fullCalendar({
+
+  });
 });
