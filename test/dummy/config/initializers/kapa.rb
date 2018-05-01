@@ -27,6 +27,7 @@ Rails.configuration.available_routes = %w{
   kapa_notifications
   kapa_properties
   kapa_terms
+  kapa_calendar_events
 }
 
 Rails.configuration.filter_defaults = {

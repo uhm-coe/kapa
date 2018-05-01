@@ -1,6 +1,6 @@
 module Kapa::CalendarEventsControllerBase
   extend ActiveSupport::Concern
-  before_action :set_event, only [:show, :edit, :update, :destroy]
+  # before_action :set_event, only [:show, :edit, :update, :destroy]
 
   def index
     @event = Kapa::CalendarEvent.where(start: params[:start]..params[:end])

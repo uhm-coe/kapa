@@ -1,0 +1,24 @@
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
+    New Form
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#rubric_profile_tab" data-toggle="tab">Profile</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="rubric_profile_tab" class="tab-pane active">
+        <%=bootstrap_form_for :form_template, :url => kapa_calendar_events_path do |f| %>
+          <%=render :partial => "template_form", :locals => {:f => f} %>
+          <%=render :partial => "/kapa/layouts/controls" if update? %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>
