@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :properties, &extra_actions
     resources :users, &extra_actions
     resources :user_assignments, &extra_actions
+    resources :calendar_events, &extra_actions
   end
 
 end

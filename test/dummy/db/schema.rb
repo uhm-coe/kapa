@@ -12,7 +12,23 @@
 
 ActiveRecord::Schema.define(version: 20170819111900) do
 
-  create_table "datasets", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "calendar_events", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "person_id"
+    t.string "title"
+    t.string "dow"
+    t.boolean "repeat", default: false
+    t.datetime "start"
+    t.datetime "end"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text "uuid"
+    t.text "note"
+    t.text "yml"
+    t.text "xml"
+    t.index ["person_id"], name: "index_calendar_events_on_person_id"
+  end
+
+  create_table "datasets", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "description"
     t.string "type"
@@ -30,7 +46,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.text "xml"
   end
 
-  create_table "files", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "files", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "person_id"
     t.integer "attachable_id"
     t.string "attachable_type"
@@ -53,18 +69,18 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["person_id"], name: "index_files_on_person_id"
   end
 
-  create_table "form_details", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.integer "form_field_id", null: false
+  create_table "form_fields", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "form_template_field_id", null: false
     t.text "value"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text "yml"
     t.text "xml"
     t.integer "form_id", null: false
-    t.index ["form_id", "form_field_id"], name: "index_form_details_on_form_id_and_form_field_id", unique: true
+    t.index ["form_id", "form_template_field_id"], name: "index_form_fields_on_form_id_and_form_template_field_id", unique: true
   end
 
-  create_table "form_fields", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "form_template_fields", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "label"
     t.text "label_desc"
     t.text "label_html"
@@ -76,28 +92,16 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.text "xml"
     t.string "type", default: "default", null: false
     t.string "type_option"
-    t.boolean "required"
     t.boolean "active", default: true
-  end
-
-  create_table "form_template_fields", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string "field_label"
-    t.text "field_desc"
-    t.text "field_html"
-    t.string "field_category"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "form_template_id"
-    t.text "yml"
-    t.text "xml"
-    t.string "type", default: "default", null: false
-    t.string "type_option"
     t.boolean "required"
-    t.boolean "hide"
+    t.integer "sequence", default: 0
   end
 
-  create_table "form_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "form_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "start_term"
+    t.string "end_term"
     t.string "title"
+    t.string "course"
     t.string "reference_url"
     t.string "dept"
     t.text "yml"
@@ -105,21 +109,18 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "program"
-    t.string "course"
+    t.string "assessment_type"
     t.string "transition_point"
-    t.string "start_term"
-    t.string "end_term"
     t.string "type"
     t.string "template_path"
     t.text "note"
     t.boolean "attachment"
-    t.boolean "active", default: true
-    t.index ["course"], name: "index_form_template_on_course"
-    t.index ["end_term"], name: "index_form_template_on_end_term_id"
-    t.index ["start_term"], name: "index_form_template_on_start_term_id"
+    t.index ["course"], name: "index_form_templates_on_course"
+    t.index ["end_term"], name: "index_form_templates_on_end_term"
+    t.index ["start_term"], name: "index_form_templates_on_start_term"
   end
 
-  create_table "forms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "forms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "type"
     t.integer "person_id"
     t.string "term"
@@ -139,12 +140,13 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.text "xml", limit: 16777215
     t.integer "form_template_id"
     t.string "submitted_by"
+    t.string "status"
     t.index ["person_id"], name: "index_forms_on_person_id"
     t.index ["term"], name: "index_forms_on_term"
     t.index ["type"], name: "index_forms_on_type"
   end
 
-  create_table "notifications", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "notifications", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
     t.integer "attachable_id"
     t.string "attachable_type"
@@ -163,7 +165,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "persons", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "persons", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "id_number"
     t.string "ets_id"
     t.string "uid"
@@ -208,7 +210,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["status"], name: "index_persons_on_status"
   end
 
-  create_table "programs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "programs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "code", null: false
     t.string "description"
     t.string "description_short"
@@ -233,7 +235,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["degree"], name: "index_programs_on_degree"
   end
 
-  create_table "properties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "properties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "code"
     t.string "description"
@@ -250,7 +252,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["name", "code"], name: "index_properties_on_name_and_code", unique: true
   end
 
-  create_table "sessions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "sessions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at"
@@ -259,7 +261,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "terms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "terms", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "code"
     t.string "description"
     t.string "description_short"
@@ -278,7 +280,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.datetime "updated_at"
   end
 
-  create_table "text_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "text_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title"
     t.text "body"
     t.string "type"
@@ -292,7 +294,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.datetime "updated_at"
   end
 
-  create_table "texts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "texts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "person_id"
     t.integer "attachable_id"
     t.string "attachable_type"
@@ -313,7 +315,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["text_template_id"], name: "index_texts_on_text_template_id"
   end
 
-  create_table "timestamps", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "timestamps", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
     t.string "path"
     t.string "remote_ip"
@@ -322,7 +324,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["user_id"], name: "index_timestamps_on_user_id"
   end
 
-  create_table "user_assignments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "user_assignments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "user_id"
     t.integer "assignable_id"
     t.string "assignable_type"
@@ -335,7 +337,7 @@ ActiveRecord::Schema.define(version: 20170819111900) do
     t.index ["user_id", "assignable_id", "assignable_type"], name: "index_user_assignments_on_user_id_and_assignable_id"
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "uid"
     t.string "hashed_password"
     t.string "dept"

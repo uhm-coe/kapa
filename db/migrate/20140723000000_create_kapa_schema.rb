@@ -67,6 +67,23 @@ class CreateKapaSchema < ActiveRecord::Migration[4.2]
       t.text "xml", limit: 65535
     end
 
+    create_table "calendar_events", force: :cascade do |t|
+      t.integer "person_id", limit: 4
+      t.string "title", limit: 255
+      t.string "dow", limit: 255
+      t.boolean "repeat", default: false
+      t.datetime "start"
+      t.datetime "end"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.text "uuid", limit: 65535
+      t.text "note", limit: 65535
+      t.text "yml", limit: 65535
+      t.text "xml", limit: 65535
+    end
+
+    add_index "calendar_events", ["person_id"], name: "index_calendar_events_on_person_id", using: :btree
+
     create_table "files", force: :cascade do |t|
       t.integer "person_id", limit: 4
       t.integer "attachable_id", limit: 4

@@ -10,6 +10,9 @@
    menu_items["Administration"].push ["Text Doc Templates", kapa_text_templates_path] if manage?(:kapa_text_templates)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if manage?(:kapa_properties)
    menu_items["Administration"].push ["Users", kapa_users_path] if manage?(:kapa_users)
+   menu_items["Calendar"] = []
+   menu_items["Calendar"].push ["Events", kapa_form_templates_path] if manage?(:kapa_form_templates)
+   menu_items["Calendar"].push ["Properties", kapa_properties_path] if manage?(:kapa_properties)
  end
 %>
 

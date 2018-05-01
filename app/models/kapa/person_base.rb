@@ -9,6 +9,7 @@ module Kapa::PersonBase
     has_many :files
     has_many :forms
     has_many :texts
+    has_many :calendar_events
 
     validates_uniqueness_of :id_number, :allow_nil => false, :message => "is already used.", :scope => :status, :if => :verified?
     validates_presence_of :last_name, :first_name, :on => :create
