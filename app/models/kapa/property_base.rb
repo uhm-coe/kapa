@@ -22,7 +22,7 @@ module Kapa::PropertyBase
       Kapa::Property.all.each { |v| @@category_cache["#{v.name}_#{v.code}"] = v.category }
     end
 
-    def self.selections(options = {})
+    def selections(options = {})
       properties = where(:active => true, :name => options[:name].to_s)
       properties = properties.depts_scope(options[:depts]) if options[:depts].present?
       properties = properties.where(options[:conditions]) if options[:conditions].present?
