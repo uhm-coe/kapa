@@ -173,6 +173,7 @@ module Kapa::KapaModelBase
           table << keys.collect {|k| o.rsend(*format[k]) }
         end
       end
+      return table
     end
 
     def csv_format
