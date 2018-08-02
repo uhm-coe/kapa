@@ -87,6 +87,7 @@ module Kapa::PersonsControllerBase
 
   def sync
     @person = Kapa::Person.find(params[:id])
+    @person_ext = @person.ext
     key = params[:key]
     @person_remote = Kapa::Person.lookup_remote(key)
 
