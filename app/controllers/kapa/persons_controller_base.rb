@@ -40,7 +40,7 @@ module Kapa::PersonsControllerBase
       end
       flash[:success] = "Person was successfully updated."
     end
-    redirect_to kapa_person_path(:id => @person)
+    redirect_to(params[:return_path] || kapa_person_path(:id => @person))
   end
 
   def index
