@@ -144,7 +144,10 @@ module Kapa::KapaModelBase
 
     def to_csv(options = {})
       objects = self.search(options)
-      keys = self.csv_format.keys
+      format = options[:format] ? options[:format] : self.csv_format
+      excluded_keys = options[:exclude] || []
+      keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
+
       CSV.generate do |csv|
         csv << keys
         objects.each do |o|
