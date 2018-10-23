@@ -1,6 +1,15 @@
 <% content_for(:head) do %>
 
-  <%=javascript_include_tag "kapa/ckeditor" %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      tinymce.init({
+        selector: '#editor',
+        theme: 'modern',
+        height: 600,
+        plugins: "code",
+      });
+    });
+  </script>
 
 <% end %>
 
@@ -13,8 +22,8 @@
 
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
     <%=f.text_field :title %>
-    <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
-    <%=f.text_area :body, :id => "editor", :label => :no %>
+    <%=f.text_area :body, :id => "editor" %>
+    <%= f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
 
     <% more_actions = [] %>
     <% more_actions << link_to("Delete", kapa_text_template_path(:id => @text_template, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
