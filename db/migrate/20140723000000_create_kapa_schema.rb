@@ -1,54 +1,6 @@
 class CreateKapaSchema < ActiveRecord::Migration[4.2]
   def change
 
-    create_table "assessment_criterions", force: :cascade do |t|
-      t.string "criterion", limit: 255
-      t.text "criterion_desc", limit: 65535
-      t.text "criterion_html", limit: 65535
-      t.string "standard", limit: 255
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.integer "assessment_rubric_id", limit: 4
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.string "type", limit: 255, default: "default", null: false
-      t.string "type_option", limit: 255
-    end
-
-    create_table "assessment_rubrics", force: :cascade do |t|
-      t.integer "start_term_id", limit: 4
-      t.integer "end_term_id", limit: 4
-      t.string "title", limit: 255
-      t.string "course", limit: 255
-      t.string "reference_url", limit: 255
-      t.string "dept", limit: 255
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.string "program", limit: 255
-      t.string "assessment_type", limit: 255
-      t.string "transition_point", limit: 255
-    end
-
-    add_index "assessment_rubrics", ["course"], name: "index_assessment_rubrics_on_course", using: :btree
-    add_index "assessment_rubrics", ["end_term_id"], name: "index_assessment_rubrics_on_end_term_id", using: :btree
-    add_index "assessment_rubrics", ["start_term_id"], name: "index_assessment_rubrics_on_start_term_id", using: :btree
-
-    create_table "assessment_scores", force: :cascade do |t|
-      t.string "assessment_scorable_type", limit: 255
-      t.integer "assessment_scorable_id", limit: 4
-      t.integer "assessment_criterion_id", limit: 4
-      t.string "rating", limit: 255
-      t.string "rated_by", limit: 255
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.text "yml", limit: 65535
-      t.text "xml", limit: 65535
-    end
-
-    add_index "assessment_scores", ["assessment_scorable_type", "assessment_scorable_id", "assessment_criterion_id"], name: "index_assessment_scores_on_scorable_and_criterion_id", unique: true, using: :btree
-
     create_table "datasets", force: :cascade do |t|
       t.string "name", limit: 255
       t.string "description", limit: 255

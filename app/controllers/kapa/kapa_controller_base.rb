@@ -24,7 +24,7 @@ module Kapa::KapaControllerBase
   end
 
   def validate_url
-    unless Rails.configuration.available_routes.include?(controller_name)
+    unless Rails.configuration.available_routes.include?(controller_name.to_s)
       flash[:danger] = "#{controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
@@ -70,7 +70,7 @@ module Kapa::KapaControllerBase
          permission = :export?
      end
 
-     unless self.send(permission)
+     if permission and not self.send(permission)
        flash[:danger] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
        redirect_to(kapa_error_path) and return false
      end
@@ -123,7 +123,8 @@ module Kapa::KapaControllerBase
   end
 
   def controller_name
-    params[:controller].gsub("/", "_")
+    @controller_name = params[:controller].gsub("/", "_").to_sym if @controller_name.nil?
+    return @controller_name
   end
 
   def read?(name = controller_name)

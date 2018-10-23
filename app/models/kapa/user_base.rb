@@ -70,9 +70,10 @@ module Kapa::UserBase
 
   def apply_role(name)
     role_permission = Rails.configuration.roles[name]
-    role_permission.merge!(:role => name) if role_permission
-    logger.debug "*DEBUG* #{role_permission.inspect}"
-    self.serialize(:permission, role_permission)
+    if role_permission
+      role_permission.merge!(:role => name)
+      self.serialize(:permission, role_permission)
+    end
   end
 
   def valid_credential?(password)

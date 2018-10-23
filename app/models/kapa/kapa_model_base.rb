@@ -165,32 +165,31 @@ module Kapa::KapaModelBase
     end
 
     def to_csv(options = {})
-      options[:as] = :csv
-      options[:format]= self.csv_format
-      to_table(options)
+      objects = self.search(options)
+      format = options[:format] ? options[:format] : self.csv_format
+      excluded_keys = options[:exclude] || []
+      keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
+
+      CSV.generate do |csv|
+        csv << keys
+        objects.each do |o|
+          csv << keys.collect {|k| o.rsend(*csv_format[k]) }
+        end
+      end
     end
 
     def to_table(options = {})
-      options[:as] = :array if options[:as].blank?
       objects = self.search(options)
-      format = options[:format]
+      format = options[:format] ? options[:format] : self.csv_format
       excluded_keys = options[:exclude] || []
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
-      if options[:as].to_s == "array"
-        table = []
-        table << keys
-        objects.each do |o|
-          table << keys.collect {|k| o.rsend(*format[k]) }
-        end
-      elsif options[:as].to_s == "csv"
-        logger.debug "*DEBUG* csv"
-        CSV.generate do |csv|
-          csv << keys
-          objects.each do |o|
-            csv << keys.collect {|k| o.rsend(*format[k])}
-          end
-        end
+
+      table = []
+      table << keys
+      objects.each do |o|
+        table << keys.collect {|k| o.rsend(*format[k]) }
       end
+      return table
     end
 
     def csv_format
@@ -204,6 +203,10 @@ module Kapa::KapaModelBase
       else
         super(id)
       end
+    end
+
+    def find_by_hashid(id)
+      find_by_id(hashids.decode(id).first)
     end
 
     def hashids
