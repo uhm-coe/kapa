@@ -20,9 +20,9 @@ module Kapa::PersonBase
     self.id_number = nil if self.id_number.blank?
     self.attributes().each_pair do |k, v|
      if v
-       self.[]=(k, v.gsub(/\D/, "")) if k =~ /(phone$)/
-       self.[]=(k, v.to_s.split(' ').map { |w| w.capitalize }.join(' ')) if k =~ /(street$)|(city$)/
-       self.[]=(k, v.to_s.upcase) if k =~ /(state$)/
+       self.[]=(k, v.gsub(/\D/, "")) if k =~ /(_phone$)/
+       self.[]=(k, v.to_s.split(' ').map { |w| w.capitalize }.join(' ')) if k =~ /(_street$)|(_city$)/
+       self.[]=(k, v.to_s.upcase) if k =~ /(_state$)/
      end
     end
   end
