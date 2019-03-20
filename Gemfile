@@ -7,7 +7,7 @@ gemspec
 
 #KAPA dependencies
 gem 'rails', '~> 4.2.3'
-gem 'rails-csv-fixtures', :github => 'bfolkens/rails-csv-fixtures'
+gem 'rails-csv-fixtures'
 gem 'rake'
 gem 'activerecord-session_store'
 gem 'authlogic', '~> 3.4.0'

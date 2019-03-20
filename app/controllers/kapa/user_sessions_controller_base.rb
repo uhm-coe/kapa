@@ -2,11 +2,11 @@ module Kapa::UserSessionsControllerBase
   extend ActiveSupport::Concern
 
   included do
-    skip_before_filter :check_if_route_is_enabled
-    skip_before_filter :validate_login
-    skip_before_filter :check_read_permission
-    skip_before_filter :check_write_permission
-    before_filter :validate_login, :only => :show
+    skip_before_action :check_if_route_is_enabled
+    skip_before_action :validate_login
+    skip_before_action :check_read_permission
+    skip_before_action :check_write_permission
+    before_action :validate_login, :only => :show
   end
 
   def new
