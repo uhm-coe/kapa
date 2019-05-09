@@ -21,7 +21,7 @@ module Kapa::KapaControllerBase
       value1.each_pair do |key2, value2|
         #Remove blank elements on multi-select values
         params[key1][key2] = value2.delete_if {|v| v.blank?} if value2.is_a? Array
-      end if value1.is_a? Hash
+      end if value1.is_a?(ActionController::Parameters)
     end
   end
 
