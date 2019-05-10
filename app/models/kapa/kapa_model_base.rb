@@ -30,15 +30,19 @@ module Kapa::KapaModelBase
     value = self.deserialize(name)
     #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
     #However, it should not be used to store values which change application behaviors. 
-    hash = attributes.permit!.to_h if attributes.is_a?(ActionController::Parameters)
+    if attributes.is_a?(ActionController::Parameters)
+      hash = attributes.permit!.to_h
+    else
+      hash = attributes.to_h
+    end
     hash.each_pair do |k, v|
       value[k.to_sym] = v
     end if hash.is_a?(Hash)
     self.serialize(name, value)
   end
 
-  def update_serialized_attributes!(name, value)
-    self.update_serialized_attributes(name, value)
+  def update_serialized_attributes!(name, attributes)
+    self.update_serialized_attributes(name, attributes)
     self.save!
   end
 
