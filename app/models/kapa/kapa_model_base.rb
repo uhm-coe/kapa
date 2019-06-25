@@ -63,6 +63,11 @@ module Kapa::KapaModelBase
     self.update_serialized_attributes(:_ext, attributes) if attributes.present?
   end
 
+  def update_ext!(attributes)
+    update_ext(attributes)
+    self.save!
+  end
+
   def to_param
     self.class.hashids.encode(id)
   end
