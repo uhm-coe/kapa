@@ -23,7 +23,13 @@ namespace :kapa do
       password = db_config[Rails.env]['password']
       host = db_config[Rails.env]['host']
       database = db_config[Rails.env]['database']
-      timestamp = Time.now.strftime('-%Y%m%d-%H%M%S') unless ENV['timestamp'] == "no"
+      if ENV['timestamp'] == "no"
+        timestamp = ""
+      elsif ENV['timestamp'].present?
+        timestamp = Time.now.strftime("-#{ENV['timestamp']}") 
+      else
+        timestamp = Time.now.strftime('-%Y%m%d-%H%M%S') 
+      end
       directory = ENV['directory'] ||= "#{Rails.root}/db/backup"
       filename = "#{database}-backup#{timestamp}.sql"
       FileUtils.mkdir_p(directory)
