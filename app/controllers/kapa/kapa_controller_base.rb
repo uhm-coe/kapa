@@ -163,11 +163,10 @@ module Kapa::KapaControllerBase
   end
 
   def filter(options = {})
-    name = :filter
-    session[name] = Rails.configuration.filter_defaults if session[name].nil?
-    session[name].update(params.require(:filter).permit!) if params[:filter].present?
-    session[name].update(options) if options.present?
-    filter = OpenStruct.new(session[name])
+    @current_user.update_serialized_attributes(:filter, params[:filter]) if params[:filter].present?
+    @current_user.update_serialized_attributes(:filter, options) if options.present?
+    @current_user.save
+    filter = @current_user.deserialize(:filter, :as => OpenStruct)
     filter.user = @current_user
     return filter
   end
