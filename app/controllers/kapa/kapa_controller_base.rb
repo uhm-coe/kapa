@@ -74,7 +74,7 @@ module Kapa::KapaControllerBase
   end
 
   def remember_last_index
-    session[:last_index] = request.fullpath
+    session[:last_index] = request.fullpath.gsub( /\?.*/, "" )
   end
 
   def put_timestamp
