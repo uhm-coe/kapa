@@ -163,12 +163,20 @@ module Kapa::KapaControllerBase
   end
 
   def filter(options = {})
-    @current_user.update_serialized_attributes(:filter, params[:filter]) if params[:filter].present?
-    @current_user.update_serialized_attributes(:filter, options) if options.present?
-    @current_user.save
-    filter = @current_user.deserialize(:filter, :as => OpenStruct)
+    if Rails.configuration.try(:filter_save)
+      @current_user.serialize(:filter, Rails.configuration.filter_defaults) if @current_user.deserialize(:filter).blank?
+      @current_user.update_serialized_attributes(:filter, params[:filter]) if params[:filter].present?
+      @current_user.update_serialized_attributes(:filter, options) if options.present?
+      @current_user.save
+      filter = @current_user.deserialize(:filter, :as => OpenStruct)
+    else
+      session[:filter] = Rails.configuration.filter_defaults if session[:filter].nil?
+      session[:filter].update(params.require(:filter).permit!) if params[:filter].present?
+      session[:filter].update(options) if options.present?
+      filter = OpenStruct.new(session[:filter])
+    end  
     filter.user = @current_user
     return filter
   end
-
+  
 end
