@@ -29,4 +29,6 @@ Rails.application.routes.draw do
     resources :user_assignments, &extra_actions
   end
 
+  #catch-all route for 404 requests
+  match '*path', via: :all, to: 'kapa/user_sessions#error_404'
 end

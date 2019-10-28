@@ -71,10 +71,14 @@ module Kapa::UserSessionsControllerBase
     end
   end
 
+  def success
+  end
+
   def error
   end
 
-  def success
+  def error_404
+    render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found
   end
 
   private
