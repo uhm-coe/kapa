@@ -77,10 +77,6 @@ module Kapa::UserSessionsControllerBase
   def error
   end
 
-  def error_404
-    render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found
-  end
-
   private
   def register(uid)
     #Implement this method for auto user registration
