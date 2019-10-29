@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   end
 
   #catch-all route for 404 requests
-  match '*path', via: :all, to: 'application#error_404'
+  match '*path', via: :all, to: 'application#error_404' if Rails.configuration.try(:catch_all_route)
 end
