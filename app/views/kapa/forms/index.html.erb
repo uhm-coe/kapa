@@ -3,7 +3,7 @@
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_forms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%=f.property_select :form_type, :name => :form, :include_blank => "Any", :label => "Form" %>
-      <%=f.term_select :form_term_id, :include_blank => "Any" %>
+      <%=f.term_select :term_id, :include_blank => "Any" %>
       <%=f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => "Any", :label => "Lock" %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
