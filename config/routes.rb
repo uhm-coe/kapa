@@ -29,6 +29,5 @@ Rails.application.routes.draw do
     resources :user_assignments, &extra_actions
   end
 
-  #catch-all route for 404 (not found) requests
-  match '*path', via: :all, to: 'application#error_404' if Rails.configuration.try(:catch_all_route)
+
 end
