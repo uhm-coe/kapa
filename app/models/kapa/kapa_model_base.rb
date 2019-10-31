@@ -20,13 +20,13 @@ module Kapa::KapaModelBase
     #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
     #However, it should not be used to store values which change application behaviors. 
     if value.is_a?(ActionController::Parameters)
-      hash = value.permit!.to_hash
-    else
-      hash = value.to_h
+      value = value.permit!.to_hash
+    elsif value.is_a?(Hash)
+      value = value.to_h
     end
-    
+
     self.yml = Hash.new if self.yml.blank?
-    self.yml[name] = hash if hash
+    self.yml[name] = value if value
   end
 
   def serialize!(name, value)
