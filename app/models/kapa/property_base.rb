@@ -22,27 +22,32 @@ module Kapa::PropertyBase
     end
 
     def selections(options = {})
-      properties = where(:active => true, :name => options[:name])
+      properties = where(:active => true, :name => options[:name].to_s)
       properties = properties.depts_scope(options[:depts]) if options[:depts].present?
       properties = properties.where(options[:conditions]) if options[:conditions].present?
-      properties = properties.order("sequence DESC, code, description")
+      value_method = options[:value_method] ? options[:value_method] : :code
+      text_method = options[:text_method] ? options[:text_method] : :description
+      group_method = options[:group_method] ? options[:group_method] : :category
+      order = options[:order] ? options[:order] : "sequence DESC, code, description"
+
+      properties = properties.order(order)
       if options[:grouped]
         grouped_properties = {}
-        properties.group_by(&:category).each do |category, items|
+        properties.group_by(&group_method).each do |category, items|
           grouped_properties[category] = items.collect do |v|
             description = ""
-            description << "#{v.code}/" if options[:include_code]
-            description << v.description
-            [description, v.code]
+            description << "#{v.send(value_method)}/" if options[:include_code] or options[:include_value]
+            description << v.send(text_method)
+            [description, v.send(value_method)]
           end
         end
         grouped_properties
       else
         properties.collect do |v|
           description = ""
-          description << "#{v.code}/" if options[:include_code]
-          description << v.description
-          [description, v.code]
+          description << "#{v.send(value_method)}/" if options[:include_code] or options[:include_value]
+          description << v.send(text_method)
+          [description, v.send(value_method)]
         end
       end
     end

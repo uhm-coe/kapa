@@ -48,7 +48,7 @@ module Kapa::PersonsControllerBase
       end
       flash[:success] = "Person was successfully updated."
     end
-    redirect_to kapa_person_path(:id => @person)
+    redirect_to(params[:return_path] || kapa_person_path(:id => @person))
   end
 
   def index
@@ -95,16 +95,19 @@ module Kapa::PersonsControllerBase
 
   def sync
     @person = Kapa::Person.find(params[:id])
+    @person_ext = @person.ext
     key = params[:key]
-    @person_verified = Kapa::Person.lookup(key)
+    @person_remote = Kapa::Person.lookup_remote(key)
 
-    if @person_verified
-      @person.id_number = @person_verified.id_number
-      @person.email = @person_verified.email
-      @person.email_alt = @person_verified.email_alt
-      @person.first_name = @person_verified.first_name
-      @person.last_name = @person_verified.last_name
-      flash.now[:success] = "Record was updated from UH Directory. Please check the name and click save to use the new record."
+    if @person_remote
+      @person.id_number = @person_remote.id_number if @person_remote.id_number
+      @person.email = @person_remote.email if @person_remote.email
+      @person.email_alt = @person_remote.email_alt if @person_remote.email_alt
+      @person.first_name = @person_remote.first_name if @person_remote.first_name
+      @person.last_name = @person_remote.last_name if @person_remote.last_name
+      flash.now[:success] = "Record was updated from the remote source. Please check the name and click save to use the new record."
+    else
+      flash.now[:success] = "System was unable to update this record with the remote resource."
     end
     render :partial => "kapa/persons/person_form", :layout => false
   end

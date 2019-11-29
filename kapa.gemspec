@@ -11,8 +11,26 @@ Gem::Specification.new do |s|
   s.email       = ["sishelp@hawaii.edu"]
   s.homepage    = "https://coe.hawaii.edu"
   s.summary     = "Academic Records Engine"
-  s.description = "KAPA provides a framework to organize student academic records including advising, documents, courses, transition points, field placements, etc..."
-
+  s.description = "KAPA provides consolidated information tools to organize office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc.... Tools are distributed as Rails Engine so that developers can easily customize designs and functions to fit your organizational needs."
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
+
+  s.add_dependency 'rails', '~> 5.2.0'
+  s.add_dependency 'authlogic', '~> 4.4.2'
+#  s.add_dependency 'activerecord-session_store'
+#  s.add_dependency 'rails-csv-fixtures'
+#  s.add_dependency 'rake'
+  s.add_dependency 'american_date'
+  s.add_dependency 'paperclip'
+  s.add_dependency 'fastercsv'
+  s.add_dependency 'mysql2'
+  s.add_dependency 'net-ldap'
+  s.add_dependency 'sequel'
+  s.add_dependency 'hashids'
+  s.add_dependency 'will_paginate'
+  s.add_dependency 'will_paginate-bootstrap'
+  s.add_dependency 'uglifier'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'bootstrap-sass'
+
 end
