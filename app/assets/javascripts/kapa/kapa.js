@@ -11,7 +11,6 @@
 //= require moment/min/moment-with-locales
 //= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
 //= require dragula/dist/dragula
-//= require tinymce/tinymce
 
 jQuery(document).ready(function ($) {
 
