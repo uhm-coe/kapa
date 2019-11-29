@@ -23,7 +23,7 @@ module Kapa::UsersControllerBase
     @user = Kapa::User.find params[:id]
     @permission = @user.deserialize(:permission, :as => OpenStruct)
     @user.attributes = user_params if params[:user]
-    @user.update_serialized_attributes!(:_ext, params[:user_ext]) if params[:user_ext].present?
+    @user.update_serialized_attributes!(:_ext, params[:user_ext].permit!) if params[:user_ext].present?
     if params[:permission][:role] and Rails.configuration.roles.keys.include?(params[:permission][:role])
       @user.apply_role(params[:permission][:role])
       @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
