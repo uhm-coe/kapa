@@ -44,13 +44,6 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
-  def term_select(object_name, method, options = {}, html_options = {})
-    options[:name] = :term
-    options[:model_class] = Kapa::Property
-    options[:model_options] = options
-    model_select(object_name, method, options, html_options)
-  end
-
   def user_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::User
     options[:model_options] = options
@@ -70,32 +63,10 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
-  def program_select(object_name, method, options = {}, html_options = {})
-    options[:model_class] = Kapa::Program
-    options[:model_options] = options
-    model_select(object_name, method, options, html_options)
-  end
-
   def text_template_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::TextTemplate
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
-  end
-
-  def score_select(object_name, index, options = {}, html_options = {})
-    if (options[:type] == "text")
-      options[:size] = options[:type_option]
-      text_field(object_name, index, options)
-    elsif (options[:type] == "select")
-      options[:name] = options[:type_option]
-      options[:include_blank] = true
-      options[:selected] = options[:value]
-      property_select(object_name, index, options, html_options.merge(:class => "form-control"))
-    else
-      options[:include_blank] = true
-      options[:selected] = options[:value]
-      select(object_name, index, [["Target", "2"], ["Acceptable", "1"], ["Unacceptable", "0"], ["No Evidence", "N"]], options, html_options.merge(:class => "form-control"))
-    end
   end
 
   def history_select(object_name, method, options = {}, html_options = {})
