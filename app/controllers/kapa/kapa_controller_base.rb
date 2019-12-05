@@ -60,7 +60,7 @@ module Kapa::KapaControllerBase
      case params[:action]
        when "show", "index"
          permission = :read?
-       when "update"
+       when "edit", "update"
          permission = :update?
        when "new", "create"
          permission = :create?

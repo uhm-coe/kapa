@@ -9,7 +9,7 @@
 //= require summernote/dist/summernote
 
 jQuery(document).ready(function($) {
-  $('#editor').summernote({
+  $('.editor').summernote({
     height: 600,
     toolbar: [
       ['style', ['style']],
