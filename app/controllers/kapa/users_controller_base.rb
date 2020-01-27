@@ -50,7 +50,7 @@ module Kapa::UsersControllerBase
 
     unless @person.save
       flash[:success] = nil
-      flash[:danger] = error_messages_for(@person)
+      flash[:danger] = error_message_for(@person)
       redirect_to new_kapa_user_path and return false
     end
 
