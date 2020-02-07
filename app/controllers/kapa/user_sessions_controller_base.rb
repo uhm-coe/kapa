@@ -9,7 +9,8 @@ module Kapa::UserSessionsControllerBase
   end
 
   def new
-    Kapa::UserSession.find.destroy if Kapa::UserSession.find
+    Kapa::UserSession.find.try(:destroy)
+    reset_session
   end
 
   def show
@@ -26,6 +27,7 @@ module Kapa::UserSessionsControllerBase
   end
 
   def destroy
+    @current_user.serialize!(:filter, {}) if Rails.configuration.try(:filter_save)
     flash[:info] = "You are successfully logged out."
     if Kapa::Cas.defined?
       redirect_to Kapa::Cas.logout_url(new_kapa_user_session_url) and return
@@ -68,10 +70,10 @@ module Kapa::UserSessionsControllerBase
     end
   end
 
-  def error
+  def success
   end
 
-  def success
+  def error
   end
 
   private

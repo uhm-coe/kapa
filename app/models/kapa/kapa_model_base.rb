@@ -23,6 +23,14 @@ module Kapa::KapaModelBase
   end
 
   def serialize(name, value)
+    #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
+    #However, it should not be used to store values which change application behaviors. 
+    if value.is_a?(ActionController::Parameters)
+      value = value.permit!.to_hash
+    elsif value.is_a?(Hash)
+      value = value.to_h
+    end
+
     self.yml = Hash.new if self.yml.blank?
     self.yml[name] = value if value
   end
@@ -34,7 +42,14 @@ module Kapa::KapaModelBase
 
   def update_serialized_attributes(name, attributes)
     value = self.deserialize(name)
-    attributes.to_h.each_pair do |k, v|
+    #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
+    #However, it should not be used to store values which change application behaviors. 
+    if attributes.is_a?(ActionController::Parameters)
+      hash = attributes.permit!.to_hash
+    else
+      hash = attributes.to_h
+    end
+    hash.each_pair do |k, v|
       value[k.to_sym] = v
     end
     self.serialize(name, value)
@@ -72,6 +87,11 @@ module Kapa::KapaModelBase
 
   def update_ext(attributes)
     self.update_serialized_attributes(:_ext, attributes) if attributes.present?
+  end
+
+  def update_ext!(attributes)
+    update_ext(attributes)
+    self.save!
   end
 
   def to_param
@@ -184,10 +204,19 @@ module Kapa::KapaModelBase
       excluded_keys = options[:exclude] || []
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
-      table = []
-      table << keys
-      objects.each do |o|
-        table << keys.collect {|k| o.rsend(*format[k]) }
+      if options[:as].to_s == "csv"
+        CSV.generate do |csv|
+          csv << keys
+          objects.each do |o|
+            csv << keys.collect {|k| o.rsend(*format[k])}
+          end
+        end
+      else
+        table = []
+        table << keys
+        objects.each do |o|
+          table << keys.collect {|k| o.rsend(*format[k]) }
+        end
       end
       return table
     end

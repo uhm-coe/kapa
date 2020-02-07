@@ -26,6 +26,12 @@ module Kapa::UserBase
       c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
       c.logged_in_timeout = 12.hours
+
+      #Please note that this method cannot be overridden in user.rb on your app.
+      #App specific custome authlogic configration shoud be made in config/initializers/authlogic.rb.
+      Rails.configuration.acts_as_authentic_options.each_pair do |key, value|
+        c.send(key, value)
+      end if Rails.configuration.respond_to?(:acts_as_authentic_options)
     end
   end
 
@@ -121,6 +127,7 @@ module Kapa::UserBase
        :first_name => [:person, :first_name],
        :position => [:position],
        :primary_dept => [:primary_dept],
+       :role => [:permission, :role],
        :status => [:status],
        :dept => [:dept, [:join, ","]],
        :category => [:category]}

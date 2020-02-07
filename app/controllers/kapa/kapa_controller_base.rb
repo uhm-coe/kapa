@@ -5,10 +5,12 @@ module Kapa::KapaControllerBase
     layout "/kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
-    before_action :validate_url
-    before_action :validate_user
-    before_action :validate_permission
-    after_action :set_return_path, :only => :index
+    before_action :check_if_route_is_enabled
+    before_action :validate_login
+    before_action :check_id_format, :only => :show
+    before_action :check_read_permission
+    before_action :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
+    after_action :remember_last_index, :only => :index
     after_action :put_timestamp
     helper :all
     helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :manage?, :access_all?, :access_dept?, :access_assigned?
@@ -19,7 +21,7 @@ module Kapa::KapaControllerBase
       value1.each_pair do |key2, value2|
         #Remove blank elements on multi-select values
         params[key1][key2] = value2.delete_if {|v| v.blank?} if value2.is_a? Array
-      end if value1.is_a? Hash
+      end if value1.is_a?(ActionController::Parameters)
     end
   end
 
@@ -76,8 +78,8 @@ module Kapa::KapaControllerBase
      end
   end
 
-  def set_return_path
-    session[:return_path] = request.original_url
+  def remember_last_index
+    session[:last_index] = request.fullpath.gsub( /\?.*/, "" )
   end
 
   def put_timestamp
@@ -168,12 +170,20 @@ module Kapa::KapaControllerBase
   end
 
   def filter(options = {})
-    name = :filter
-    session[name] = Rails.configuration.filter_defaults if session[name].nil?
-    session[name].update(params.require(:filter).permit!) if params[:filter].present?
-    session[name].update(options) if options.present?
-    filter = OpenStruct.new(session[name])
+    if Rails.configuration.try(:filter_save)
+      @current_user.serialize(:filter, Rails.configuration.filter_defaults) if @current_user.deserialize(:filter).blank?
+      @current_user.update_serialized_attributes(:filter, params[:filter]) if params[:filter].present?
+      @current_user.update_serialized_attributes(:filter, options) if options.present?
+      @current_user.save
+      filter = @current_user.deserialize(:filter, :as => OpenStruct)
+    else
+      session[:filter] = Rails.configuration.filter_defaults if session[:filter].nil?
+      session[:filter].update(params.require(:filter).permit!) if params[:filter].present?
+      session[:filter].update(options) if options.present?
+      filter = OpenStruct.new(session[:filter])
+    end  
     filter.user = @current_user
     return filter
   end
+  
 end

@@ -16,12 +16,14 @@ module Kapa::KapaHelper
       options[:selected] = current_value if current_value.present?
     end
 
-    selection = selections.select { |c| c[1].to_s == current_value.to_s }.first
-    # If the current value exists in the db but is not in the selections because of deactivated properties
-    # add it to the selections so that the value will apear in the selection (description will not be displayed)
-    if selection.blank? and current_value.present? and not options[:grouped]
-      selections.push([current_value, current_value])
-    end
+    if not options[:grouped]
+      selection = selections.select { |c| c[1].to_s == current_value.to_s }.first
+      # If the current value exists in the db but is not in the selections because of deactivated properties
+      # add it to the selections so that the value will apear in the selection (description will not be displayed)
+      if selection.blank? and current_value.present?
+        selections.push([current_value, current_value])
+      end
+    end  
 
     if options[:locked]
       if selection
@@ -39,13 +41,6 @@ module Kapa::KapaHelper
 
   def property_select(object_name, method, options = {}, html_options = {})
     options[:name] ||= method
-    options[:model_class] = Kapa::Property
-    options[:model_options] = options
-    model_select(object_name, method, options, html_options)
-  end
-
-  def term_select(object_name, method, options = {}, html_options = {})
-    options[:name] = :term
     options[:model_class] = Kapa::Property
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
@@ -70,11 +65,11 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
-  def program_select(object_name, method, options = {}, html_options = {})
-    options[:model_class] = Kapa::Program
-    options[:model_options] = options
-    model_select(object_name, method, options, html_options)
-  end
+  # def program_select(object_name, method, options = {}, html_options = {})
+  #   options[:model_class] = Kapa::Program
+  #   options[:model_options] = options
+  #   model_select(object_name, method, options, html_options)
+  # end
 
   def text_template_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::TextTemplate
@@ -82,21 +77,21 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
-  def score_select(object_name, index, options = {}, html_options = {})
-    if (options[:type] == "text")
-      options[:size] = options[:type_option]
-      text_field(object_name, index, options)
-    elsif (options[:type] == "select")
-      options[:name] = options[:type_option]
-      options[:include_blank] = true
-      options[:selected] = options[:value]
-      property_select(object_name, index, options, html_options.merge(:class => "form-control"))
-    else
-      options[:include_blank] = true
-      options[:selected] = options[:value]
-      select(object_name, index, [["Target", "2"], ["Acceptable", "1"], ["Unacceptable", "0"], ["No Evidence", "N"]], options, html_options.merge(:class => "form-control"))
-    end
-  end
+  # def score_select(object_name, index, options = {}, html_options = {})
+  #   if (options[:type] == "text")
+  #     options[:size] = options[:type_option]
+  #     text_field(object_name, index, options)
+  #   elsif (options[:type] == "select")
+  #     options[:name] = options[:type_option]
+  #     options[:include_blank] = true
+  #     options[:selected] = options[:value]
+  #     property_select(object_name, index, options, html_options.merge(:class => "form-control"))
+  #   else
+  #     options[:include_blank] = true
+  #     options[:selected] = options[:value]
+  #     select(object_name, index, [["Target", "2"], ["Acceptable", "1"], ["Unacceptable", "0"], ["No Evidence", "N"]], options, html_options.merge(:class => "form-control"))
+  #   end
+  # end
 
   def history_select(object_name, method, options = {}, html_options = {})
     model_class = options[:model_class]
@@ -180,8 +175,8 @@ module Kapa::KapaHelper
      end
   end
 
-  def button_to_link(name = nil, options = {}, html_options = {}, &block)
-    options = "javascript:void(0)" if options.nil?
+  def button_to_link(name = nil, options = nil, html_options = nil, &block)
+    options = "#" if options.nil?
     name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
     if html_options[:class]
       html_options[:class] = "btn #{html_options[:class]}"
