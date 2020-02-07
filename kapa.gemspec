@@ -11,8 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["sishelp@hawaii.edu"]
   s.homepage    = "https://coe.hawaii.edu"
   s.summary     = "Academic Records Engine"
-  s.description = "KAPA provides a framework to organize student academic records including advising, documents, courses, transition points, field placements, etc..."
-
+  s.description = "KAPA provides consolidated information tools to organize office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc.... Tools are distributed as Rails Engine so that developers can easily customize designs and functions to fit your organizational needs."
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
@@ -29,7 +28,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
   s.add_dependency 'bootstrap-sass'
-  s.add_dependency 'therubyracer'
-  s.add_dependency 'ckeditor'
 
 end

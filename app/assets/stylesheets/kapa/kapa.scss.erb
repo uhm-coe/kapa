@@ -3,9 +3,11 @@
  *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker
  *= require dragula/dist/dragula
 */
-
+<% Rails.logger.debug "*debug* #{Rails.configuration.theme}"%>
 @import "bootstrap-sprockets";
+@import "bootswatch/<%=Rails.configuration.theme %>/variables";
 @import "bootstrap";
+@import "bootswatch/<%=Rails.configuration.theme %>/bootswatch";
 
 .section-header {
   padding-bottom: 9px;

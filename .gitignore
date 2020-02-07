@@ -5,6 +5,7 @@ node_modules/*
 test/dummy/log
 test/dummy/tmp
 test/dummy/public/assets/*
+provision/*
 
 #Do not commit the secret file!
 test/dummy/config/secrets.yml

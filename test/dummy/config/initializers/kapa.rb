@@ -13,6 +13,9 @@ Rails.configuration.items_per_page = 20
 # Selections for pagination on list views
 Rails.configuration.items_per_page_selections = [10, 20, 30, 40, 50]
 
+# Configure bootswatch theme (Run rake tmp:cache:clear after updating this)
+Rails.configuration.theme = "cerulean"
+
 # Available routes
 Rails.configuration.available_routes = %w{
   kapa_persons
