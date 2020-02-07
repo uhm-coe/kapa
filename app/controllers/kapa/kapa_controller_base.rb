@@ -5,11 +5,9 @@ module Kapa::KapaControllerBase
     layout "/kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
-    before_action :check_if_route_is_enabled
-    before_action :validate_login
-    before_action :check_id_format, :only => :show
-    before_action :check_read_permission
-    before_action :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
+    before_action :validate_url
+    before_action :validate_user
+    before_action :validate_permission
     after_action :remember_last_index, :only => :index
     after_action :put_timestamp
     helper :all
