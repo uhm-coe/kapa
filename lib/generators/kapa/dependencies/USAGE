@@ -1,0 +1,6 @@
+Description:
+    Add gem and yarn dependencies for KAPA application
+
+Example:
+    rails generate kapa:dependencies
+

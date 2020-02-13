@@ -17,27 +17,6 @@ class Kapa::InstallGenerator < Rails::Generators::Base
     copy_from_dummy("config/initializers/users.rb")
     inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
   end
-  
-  def add_gem_dependencies
-    puts "Adding gem dependencies..."
-    gem 'rails-csv-fixtures', :github => 'felixbuenemann/rails-csv-fixtures', :branch => 'rails-5.1-support'
-    gem 'activerecord-session_store'
-    gem 'whenever', :require => false
-  end
-
-  def install_yarn_dependencies
-    puts "Installing yarn dependencies..."
-  #  copy_file("package.json", "#{Rails.root}/package.json")
-    run "yarn add jquery"
-    run "yarn add rails-ujs"
-    run "yarn add dragula"
-    run "yarn add pivottable"
-    run "yarn add fullcalendar"
-    run "yarn add bootstrap-multiselect"
-    run "yarn add eonasdan-bootstrap-datetimepicker"
-    run "yarn add summernote"
-    run "yarn add codemirror"
-  end
 
   def install_locale
     puts "Installing default locale..."
@@ -56,6 +35,10 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
   def add_routes
     route "root :to => redirect('/kapa')"
+  end
+
+  def install_dependencies
+    generate "kapa:dependencies"
   end
 
   private
