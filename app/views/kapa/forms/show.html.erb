@@ -1,6 +1,8 @@
 <% content_for(:main) do %>
   <div class="well">
-    <legend>Form</legend>
+    <legend>
+       Document ID: <%=@document_id %> / <%=@person.full_name if @person %> 
+    </legend>
 
     <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
 
@@ -8,9 +10,6 @@
         <%= render :partial => @form_template.template_path, :locals => {:context => :kapa} %>
       <% else %>
         <%= bootstrap_fields_for :form_ext do |f| %>
-          <%=render(:partial => "/kapa/layouts/controls") %>
-
-
           <% @form_template.form_template_fields.each do |form_template_field| %>
             <% if form_template_field.type == "section" %>
               <%= content_tag :legend, form_template_field.label %>
@@ -52,36 +51,32 @@
             </tbody>
           </table>
       <% end %>
+
+    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => false}) do %>
+      <li><%=link_to("Edit form properties", "#", "data-toggle" => "modal", "data-target" => "#edit_form_dialog") %></li>
+      <li><%=link_to("Add an attachemnt", "#", "data-toggle" => "modal", "data-target" => "#add_attachment_dialog") %></li>
+      <li><%=link_to("Delete", kapa_form_path(:id => @form, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
+    <% end if update? %>
     </div>
   <% end %>
 
-<% end %>
-
-<% content_for(:sidebar) do %>
-
-  <div class="text-right">
-
-  </div>
-
-  <%= bootstrap_form_for(:form, :url => kapa_form_path(:id => @form), :html => {:method => :put}) do |f| %>
-
-    <%= f.text_area :note, :size => "5x7" %>
-    <%= f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
-    <%= f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
-
-    <% more_actions = [] %>
-    <% more_actions << link_to("Add an attachemnt", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog") %>
-    <% more_actions << link_to("Delete", kapa_form_path(:id => @form, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true, :more_actions => more_actions}) do %>
-      <%=button_to_link "Cancel", nil, "data-close" => true %>
-    <% end if update? %>
-  <% end %>
 
 <% end %>
 
 <% content_for(:dialog) do %>
 
-  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "document_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form property", :modal_form_id => "edit_form_form"} do %>
+    <%=bootstrap_form_for(:form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => "edit_form_form"}) do |f| %>
+      <%=f.text_area :note, :label => "Note", :size => "5x7" %>
+      <div class="row form-block">
+        <div class="col-sm-4">
+          <%=f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_attachment_dialog", :modal_title => "Select a document", :modal_form_id => "new_document_form"} do %>
     <%= bootstrap_form_for :file, :url => kapa_files_path(:id => @person, :return_path => url_for(:only_path => true)), :html => {:multipart => true, :id => "new_document_form"} do |f| %>
       <%= f.file_field :data, :label => "File to upload" %>
       <%= f.hidden_field :attachable_type, :value => @form.class.name %>

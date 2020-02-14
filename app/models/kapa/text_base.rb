@@ -22,10 +22,6 @@ module Kapa::TextBase
     return "Text Doc"
   end
 
-  def title
-    self.title
-  end
-
   def date
     self.submitted_at
   end
