@@ -15,7 +15,7 @@
 jQuery(document).ready(function ($) {
 
   // Submit a form if data-submit attribute is set
-  $('button[data-submit]').click(function () {
+  $('[data-submit]').click(function () {
     $($(this).attr('data-submit')).submit();
   });
 

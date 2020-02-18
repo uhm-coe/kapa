@@ -1,10 +1,28 @@
 <% content_for(:main) do %>
+
+  <div class="text-right">
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-option-vertical"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><%=link_to("Edit form properties", "#", "data-toggle" => "modal", "data-target" => "#edit_form_dialog") %></li>
+        <li><%=link_to("Add an attachemnt", "#", "data-toggle" => "modal", "data-target" => "#add_attachment_dialog") %></li>
+        <li><%=link_to("Delete", kapa_form_path(:id => @form, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
+      </ul>
+    </div>
+    <%=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%=button_to_link("Update", "#", "data-submit" => "#update_form_form", :icon => "glyphicon-ok-circle") %>
+
+  </div>  
+
   <div class="well">
     <legend>
        Document ID: <%=@document_id %> / <%=@person.full_name if @person %> 
     </legend>
 
-    <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put} do %>
+    <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => :update_form_form} do %>
 
       <% if @form_template.type == "complex" %>
         <%= render :partial => @form_template.template_path, :locals => {:context => :kapa} %>
@@ -52,11 +70,6 @@
           </table>
       <% end %>
 
-    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => false}) do %>
-      <li><%=link_to("Edit form properties", "#", "data-toggle" => "modal", "data-target" => "#edit_form_dialog") %></li>
-      <li><%=link_to("Add an attachemnt", "#", "data-toggle" => "modal", "data-target" => "#add_attachment_dialog") %></li>
-      <li><%=link_to("Delete", kapa_form_path(:id => @form, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
-    <% end if update? %>
     </div>
   <% end %>
 
