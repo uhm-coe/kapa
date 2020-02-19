@@ -8,6 +8,8 @@ module Kapa::TextsControllerBase
     @person_ext = @person.ext if @person
     @document_title = @text.title
     @document_id = @text.document_id
+    @document_date = @text.date
+
     render :layout => "/kapa/layouts/document"
   end
 

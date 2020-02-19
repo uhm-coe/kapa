@@ -9,6 +9,7 @@ module Kapa::FormsControllerBase
     @person_ext = @person.ext
     @document_title = @form.title
     @document_id = @form.document_id
+    @document_date = @form.date
     render :layout => "/kapa/layouts/document"
   end
 

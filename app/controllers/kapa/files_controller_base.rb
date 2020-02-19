@@ -13,6 +13,7 @@ module Kapa::FilesControllerBase
     @person_ext = @person.ext
     @document_title = @file.title
     @document_id = @file.document_id
+    @document_date = @file.date
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}

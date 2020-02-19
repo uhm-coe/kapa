@@ -17,20 +17,7 @@
 
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <dl class="dl-horizontal">
-        <dt><strong>Document ID:</strong></dt>
-        <dd><%=@document_id %></dd>
-      </dl>
-    </div>
-    <div class="col-md-6">
-      <dl class="dl-horizontal">
-        <dt><strong>Name:</strong></dt>
-        <dd><%=@person.full_name if @person %></dd>
-      </dl>  
-    </div>
-  </div>
+  <hr/>
 
   <div class="well">
     <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => :update_form_form} do %>
