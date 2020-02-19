@@ -9,6 +9,9 @@ module Kapa::FormTemplatesControllerBase
                          :text_area => "Multi-Line Text",
                          :property_select => "Select (Propeties)",
                          :csv_select => "Select (Comma-separated values)",
+                         :date_picker => "Date Select",
+                         :time_picker => "Time Select",
+                         :datetime_picker => "Date Time Select",
                          :section => "Section Header"}
   end
 

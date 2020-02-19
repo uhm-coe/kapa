@@ -15,7 +15,9 @@
     <%=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
     <%=button_to_link("Update", "#", "data-submit" => "#update_form_form", :icon => "glyphicon-ok-circle") %>
 
-  </div>  
+  </div>
+
+  <hr>
 
   <div class="well">
     <legend>
@@ -34,11 +36,17 @@
             <% elsif form_template_field.type == "text_field" %>
               <%= f.text_field form_template_field.label %>
             <% elsif form_template_field.type == "text_area" %>
-              <%= f.text_area form_template_field.label %>
+              <%= f.text_area form_template_field.label, :rows => 10 %>
             <% elsif form_template_field.type == "property_select" %>
               <%= f.property_select form_template_field.label, :name => form_template_field.type_option %>
             <% elsif form_template_field.type == "csv_select" %>
               <%= f.select form_template_field.label, form_template_field.type_option.to_s.split(/,\s*/) %>
+            <% elsif form_template_field.type == "date_picker" %>
+              <%= f.date_picker form_template_field.label %>
+            <% elsif form_template_field.type == "time_picker" %>
+              <%= f.time_picker form_template_field.label %>
+            <% elsif form_template_field.type == "datetime_picker" %>
+              <%= f.datetime_picker form_template_field.label %>              
             <% end %>
           <% end %>
         <% end %>

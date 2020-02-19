@@ -22,6 +22,8 @@
     <%=button_to_link("Update", "#", "data-submit" => "#update_text_form", :icon => "glyphicon-ok-circle") %>
   </div>
 
+  <hr>
+
   <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "update_text_form"}) do |f| %>
     <%=f.text_area(:body, :id => "editor", :label => :no) %>
   <% end %>

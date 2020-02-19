@@ -32,11 +32,19 @@
       </div>
       <div id="document_detail" class="panel-collapse collapse">
         <div class="panel-body">
-          <p class="text-right">
-            <%=button_to_link "New File", nil, "data-toggle" => "modal", "data-target" => "#document_dialog", :icon => "glyphicon-plus" if create?(:kapa_files) %>
-            <%=button_to_link "New Form", nil, "data-toggle" => "modal", "data-target" => "#form_dialog", :icon => "glyphicon-plus" if create?(:kapa_forms) %>
-            <%=button_to_link "New Text Doc", nil, "data-toggle" => "modal", "data-target" => "#text_dialog", :icon => "glyphicon-plus" if create?(:kapa_texts) %>
-          </p>
+          <div class="text-right">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-plus"></span>
+                New Document
+              </button>
+              <ul class="dropdown-menu">
+                <li><%=link_to "New File", "#", "data-toggle" => "modal", "data-target" => "#document_dialog" if create?(:kapa_files) %></li>
+                <li><%=link_to "New Form", "#", "data-toggle" => "modal", "data-target" => "#form_dialog" if create?(:kapa_forms) %></li>
+                <li><%=link_to "New Text Doc", "#", "data-toggle" => "modal", "data-target" => "#text_dialog" if create?(:kapa_texts) %></li>
+              </ul>
+            </div>          
+          </div>
           <table class="table table-hover">
            <tr>
              <th>Type</th>

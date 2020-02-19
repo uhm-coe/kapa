@@ -14,6 +14,8 @@
     <%=button_to_link("Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download") %>
   </div>
 
+  <hr>
+
   <%=render :partial => "file_container", :locals => {:file => @file} %>
 
 <% end %>
