@@ -13,7 +13,7 @@ module Kapa::FileBase
   end
 
   def document_id
-    "F" + self.id.to_s.rjust(9, '0')
+    "FL" + self.id.to_s.rjust(9, '0')
   end
 
   def type

@@ -18,11 +18,24 @@
         <li><%=link_to("Delete", kapa_text_path(:id => @text, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
       </ul>
     </div>
-    <%=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
     <%=button_to_link("Update", "#", "data-submit" => "#update_text_form", :icon => "glyphicon-ok-circle") %>
   </div>
 
-  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt><strong>Document ID:</strong></dt>
+        <dd><%=@document_id %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt><strong>Name:</strong></dt>
+        <dd><%=@person.full_name if @person %></dd>
+      </dl>  
+    </div>
+  </div>
 
   <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "update_text_form"}) do |f| %>
     <%=f.text_area(:body, :id => "editor", :label => :no) %>

@@ -1,0 +1,31 @@
+<% if form_template.type == "complex" %>
+  <%= render :partial => form_template.template_path, :locals => {:context => :kapa} %>
+<% else %>
+  <%= bootstrap_fields_for :form_ext do |f| %>
+    <% form_template.form_template_fields.each do |form_template_field| %>
+      <% 
+        options = {} 
+        options[:hint] = form_template_field.label_desc if form_template_field.label_desc.present?      
+      %>
+      <% if form_template_field.type == "section" %>
+        <%= content_tag :legend, form_template_field.label, options %>
+      <% elsif form_template_field.type == "text_field" %>
+        <%= f.text_field form_template_field.label,options %>
+      <% elsif form_template_field.type == "text_area" %>
+        <%= f.text_area form_template_field.label, options.merge(:rows => 10) %>
+      <% elsif form_template_field.type == "property_select" %>
+        <%= f.property_select form_template_field.label, :name => form_template_field.type_option %>
+      <% elsif form_template_field.type == "csv_select" %>
+        <%= f.select form_template_field.label, form_template_field.type_option.to_s.split(/,\s*/), options %>
+      <% elsif form_template_field.type == "date_picker"%>
+        <%= f.date_picker form_template_field.label, options %>
+      <% elsif form_template_field.type == "time_picker"%>
+        <%= f.time_picker form_template_field.label, options %>
+      <% elsif form_template_field.type == "datetime_picker"%>
+        <%= f.datetime_picker form_template_field.label, options %>              
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+<%= hidden_field :form, :person_id %>
+<%= hidden_field :form, :type %>

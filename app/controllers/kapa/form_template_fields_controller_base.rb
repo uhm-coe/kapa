@@ -42,6 +42,6 @@ module Kapa::FormTemplateFieldsControllerBase
 
   private
   def form_template_field_params
-    params.require(:form_template_field).permit(:form_template_id, :label, :label_desc, :category, :type, :type_option)
+    params.require(:form_template_field).permit(:form_template_id, :label, :label_desc, :category, :type, :type_option, :sequence)
   end
 end

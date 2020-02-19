@@ -12,47 +12,30 @@
         <li><%=link_to("Delete", kapa_form_path(:id => @form, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
       </ul>
     </div>
-    <%=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
     <%=button_to_link("Update", "#", "data-submit" => "#update_form_form", :icon => "glyphicon-ok-circle") %>
 
   </div>
 
-  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt><strong>Document ID:</strong></dt>
+        <dd><%=@document_id %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt><strong>Name:</strong></dt>
+        <dd><%=@person.full_name if @person %></dd>
+      </dl>  
+    </div>
+  </div>
 
   <div class="well">
-    <legend>
-       Document ID: <%=@document_id %> / <%=@person.full_name if @person %> 
-    </legend>
-
     <%= bootstrap_form_for :form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => :update_form_form} do %>
 
-      <% if @form_template.type == "complex" %>
-        <%= render :partial => @form_template.template_path, :locals => {:context => :kapa} %>
-      <% else %>
-        <%= bootstrap_fields_for :form_ext do |f| %>
-          <% @form_template.form_template_fields.each do |form_template_field| %>
-            <% if form_template_field.type == "section" %>
-              <%= content_tag :legend, form_template_field.label %>
-            <% elsif form_template_field.type == "text_field" %>
-              <%= f.text_field form_template_field.label %>
-            <% elsif form_template_field.type == "text_area" %>
-              <%= f.text_area form_template_field.label, :rows => 10 %>
-            <% elsif form_template_field.type == "property_select" %>
-              <%= f.property_select form_template_field.label, :name => form_template_field.type_option %>
-            <% elsif form_template_field.type == "csv_select" %>
-              <%= f.select form_template_field.label, form_template_field.type_option.to_s.split(/,\s*/) %>
-            <% elsif form_template_field.type == "date_picker" %>
-              <%= f.date_picker form_template_field.label %>
-            <% elsif form_template_field.type == "time_picker" %>
-              <%= f.time_picker form_template_field.label %>
-            <% elsif form_template_field.type == "datetime_picker" %>
-              <%= f.datetime_picker form_template_field.label %>              
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <%= hidden_field :form, :person_id %>
-      <%= hidden_field :form, :type %>
+      <%=render :partial => "form_container", :locals => {:form_template => @form.form_template} %>
 
       <% if @form.files.present? %>
           <legend>Attachments</legend>

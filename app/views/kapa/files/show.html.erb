@@ -10,11 +10,24 @@
         <li><%=link_to("Delete", kapa_file_path(:id => @file)) if destroy? %></li>
       </ul>
     </div>
-    <%=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
     <%=button_to_link("Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download") %>
   </div>
 
-  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt><strong>Document ID:</strong></dt>
+        <dd><%=@document_id %></dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="dl-horizontal">
+        <dt><strong>Name:</strong></dt>
+        <dd><%=@person.full_name if @person %></dd>
+      </dl>  
+    </div>
+  </div>
 
   <%=render :partial => "file_container", :locals => {:file => @file} %>
 

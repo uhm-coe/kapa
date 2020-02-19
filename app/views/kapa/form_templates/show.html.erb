@@ -52,7 +52,7 @@
             </div>
             <div id="new_form_template_field" class="panel-collapse collapse<%=' in' if @form_template_fields.length == 0 %>">
               <div class="panel-body">
-                <% @form_template_field = @form_template.form_template_fields.build %>
+                <% @form_template_field = @form_template.form_template_fields.build(:sequence => @form_template.form_template_fields.length + 1)%>
                 <%=bootstrap_form_for :form_template_field, :url => kapa_form_template_fields_path(:form_template_id => @form_template, :anchor => :fields) do |f| %>
                   <%=render :partial => "field_form" %>
                   <%=render :partial => "/kapa/layouts/controls" if update? :kapa_form_template_fields %>
