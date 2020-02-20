@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF</title>
+  <%= wicked_pdf_stylesheet_link_tag "kapa/kapa" %>
+  <%= wicked_pdf_stylesheet_link_tag "kapa/pdf" %>
+</head>
+<body>
+  <div class="row header">
+    <div class="col-xs-6">
+      <%= wicked_pdf_image_tag "kapa/left-MAN.png", :width => "200px" %>
+    </div>
+    <div class="col-xs-6 text-right"><strong>College of Education</strong><br>Office of Student Academic Services</div>
+  </div>
+
+  <%= @text.body.to_s.html_safe %>
+
+  <div class="text-right footer">
+    <p>
+      1776 University Avenue, Every Hall Room 126<br>
+      Honolulu, Hawaiʻi 96822<br>
+      Telephone: (808) 956-7849<br>
+      Fax: (808) 956-4271<br>
+    </p>
+    <p>
+      An Equal Opportunity/Affirmative Action Institution
+    </p>
+  </div>
+</body>
+</html>

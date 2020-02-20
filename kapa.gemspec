@@ -28,5 +28,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
   s.add_dependency 'bootstrap-sass'
-
 end

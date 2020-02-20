@@ -3,6 +3,15 @@
   <%= stylesheet_link_tag "kapa/editor" %>
   <%= javascript_include_tag "kapa/editor" %>
   
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#create_pdf_button').click(function () {
+        $('#pdf').val("Y");
+        $('#update_text_form').submit();
+      });
+    });
+  </script>
+
 <% end %>
 
 <% content_for(:main) do %>
@@ -14,18 +23,43 @@
       </button>
       <ul class="dropdown-menu">
         <li><%=link_to("Edit text properties", "#", "data-toggle" => "modal", "data-target" => "#edit_text_dialog") %></li>
-        <li><%=link_to("Add an attachemnt", "#", "data-toggle" => "modal", "data-target" => "#document_dialog") %></li>
         <li><%=link_to("Delete", kapa_text_path(:id => @text, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
       </ul>
     </div>
     <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%=button_to_link("Create PDF", "#", :icon => "glyphicon-plus", :id => "create_pdf_button") %>
     <%=button_to_link("Update", "#", "data-submit" => "#update_text_form", :icon => "glyphicon-ok-circle") %>
   </div>
 
   <hr/>
 
   <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "update_text_form"}) do |f| %>
+    <%=hidden_field_tag :pdf, nil, :id => "pdf" %>
     <%=f.text_area(:body, :id => "editor", :label => :no) %>
+  <% end %>
+
+  <% if @text.files.present? %>
+      <legend>Generated PDFs</legend>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Created at</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @text.files.sort_by { |d| d.created_at }.reverse_each do |d| %>
+          <tr>
+            <td><%= d.type %></td>
+            <td><%= d.name %></td>
+            <td><%= d.date %></td>
+            <td class="right"><%= link_to "Show", kapa_file_path(:id => d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
   <% end %>
 
 <% end %>

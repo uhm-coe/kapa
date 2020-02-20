@@ -24,6 +24,22 @@ module Kapa::TextsControllerBase
     else
       flash[:danger] = error_message_for(@text)
     end
+
+    if params[:pdf] == "Y"
+      html = render_to_string("/kapa/text_templates/letter", :layout => nil, :locals => {:@text => @text})
+      #logger.debug "*DEBUG* #{html}"
+      pdf_contents = WickedPdf.new.pdf_from_string(html)
+      @file = Kapa::File.new
+      @file.name = "#{@text.title}.pdf"
+      @file.data = StringIO.new(pdf_contents)
+      @file.data_file_name = @file.name
+      @file.data_content_type = "application/pdf"
+      @file.attachable = @text
+      @file.person = @person if @person
+      unless @file.save
+        logger.debug(error_message_for(@file))
+      end
+    end  
     redirect_to kapa_text_path(:id => @text)
   end
 
