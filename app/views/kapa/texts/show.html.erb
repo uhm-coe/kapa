@@ -6,8 +6,10 @@
   <script type="text/javascript">
     jQuery(document).ready(function($) {
       $('#create_pdf_button').click(function () {
-        $('#pdf').val("Y");
-        $('#update_text_form').submit();
+        if(confirm("Are you sure you want to generate PDF from the current edit?")) {
+          $('#pdf').val("Y");
+          $('#update_text_form').submit();
+        }
       });
     });
   </script>
