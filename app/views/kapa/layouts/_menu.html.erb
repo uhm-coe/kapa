@@ -4,10 +4,10 @@
    menu_items["Document"] = []
    menu_items["Document"].push ["Files", kapa_files_path] if read?(:kapa_files)
    menu_items["Document"].push ["Forms", kapa_forms_path] if read?(:kapa_forms)
-   menu_items["Document"].push ["Text Docs", kapa_texts_path] if read?(:kapa_texts)
+   menu_items["Document"].push ["Letters", kapa_texts_path] if read?(:kapa_texts)
    menu_items["Administration"] = []
    menu_items["Administration"].push ["Form Builder", kapa_form_templates_path] if manage?(:kapa_form_templates)
-   menu_items["Administration"].push ["Text Doc Templates", kapa_text_templates_path] if manage?(:kapa_text_templates)
+   menu_items["Administration"].push ["Letter Templates", kapa_text_templates_path] if manage?(:kapa_text_templates)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if manage?(:kapa_properties)
    menu_items["Administration"].push ["Users", kapa_users_path] if manage?(:kapa_users)
  end

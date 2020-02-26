@@ -6,7 +6,7 @@ KAPA works as an essential codebase, and you can add business objects for your o
 
 ## Features
 - Identity Management with LDAP support
-- Electronic Documents (file attachments, forms, and text documents)
+- Electronic Documents (file attachments, forms, and letters)
 - User and Task Management
 - System Administration
 - Calendars and Events (Under development)

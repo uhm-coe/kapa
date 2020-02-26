@@ -26,7 +26,7 @@ module Kapa::TextTemplatesControllerBase
   end
 
   def new
-    @text_template = Kapa::TextTemplate.new
+    @text_template = Kapa::TextTemplate.new(:template_path => "/kapa/text_templates/default")
   end
 
   def create
@@ -53,6 +53,6 @@ module Kapa::TextTemplatesControllerBase
   end
 
   def text_template_params
-    params.require(:text_template).permit(:type, :title, :body, :active, :dept, :depts => [])
+    params.require(:text_template).permit(:type, :title, :body, :active, :template_path, :dept, :depts => [])
   end
 end

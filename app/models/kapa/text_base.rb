@@ -16,11 +16,11 @@ module Kapa::TextBase
   end
 
   def document_id
-    "TX" + self.id.to_s.rjust(8, '0')
+    "LT" + self.id.to_s.rjust(8, '0')
   end
 
   def type
-    return "Text Doc"
+    return "Letter"
   end
 
   def date

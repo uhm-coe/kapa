@@ -4,18 +4,17 @@ id,type,title,body,active
 <head>
   <meta charset=""utf-8"">
   <meta name=""viewport"" content=""width=device-width, initial-scale=1"">
-  <title>Appointment of Investigator</title>
-  <link rel=""stylesheet"" href=""style.css"">
+  <title>Sample letter</title>
 </head>
 <body>
 
 
     <p>
-        MEMORANDUM University of Hawaii Community College Case No. [case_number]
+        MEMORANDUM University of Hawaii at Manoa College of Education
     </p>
 
     <p>
-        Office of the Chancellor
+        Office of Student Academic Services
     </p>
 
     <div class=""document-date"">
@@ -23,35 +22,27 @@ id,type,title,body,active
     </div>
 
     <div class=""recipient"">
-        TO: [assignee_name] <br>
-        [assignee_title] <br>
-        [assignee_office_department]
+        TO: [person_name] <br>
+        [person_title] <br>
+        [person_department]
     </div>
 
     <div class=""sender"">
-        FROM: [assignee_name] <br>
-        [assignee_title] <br>
-        [assignee_office_department]
+        FROM: [current_user_name] <br>
+        [current_user_title] <br>
+        [current_user_department]
     </div>
 
     <p>
-        SUBJECT: APPOINTMENT AS FACT-FINDERS
+        SUBJECT: Sample letter
     </p>
 
     <p>
-        I am appointing you to serve as fact-finders to conduct an investigation into a complaint that [campus] [person_affiliation] [person_name], [person_job_title], of [person_office_department] engaged in behavior that may have violated University of Hawaii policies and procedures.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam quam nulla porttitor massa id neque aliquam vestibulum. Faucibus ornare suspendisse sed nisi lacus sed viverra. Aliquam vestibulum morbi blandit cursus risus at ultrices. Eget nunc scelerisque viverra mauris in aliquam. Lobortis feugiat vivamus at augue eget. Hendrerit dolor magna eget est. Interdum consectetur libero id faucibus nisl tincidunt. Aenean pharetra magna ac placerat vestibulum lectus mauris ultrices. Vitae semper quis lectus nulla at volutpat diam ut. Interdum velit euismod in pellentesque massa placerat duis. Dui accumsan sit amet nulla. Neque aliquam vestibulum morbi blandit cursus risus. Id cursus metus aliquam eleifend mi in nulla posuere sollicitudin. Amet porttitor eget dolor morbi. Elementum sagittis vitae et leo duis ut diam quam.
     </p>
 
     <p>
-        The specific allegations of possible misconduct by [person_name], include but are not limited to the following: [incident_description]; and other related violations, as may be determined.
-    </p>
-
-    <p>
-        Please conduct your fact-finding through the review of all applicable records, documents, interviews with the relevant parties, and appropriate witnesses and submit a report to me of your findings.  Upon completion of the investigation and review of the report, I will make a decision on whether or not the evidence supports the allegations and what, if any, appropriate action should be taken.
-    </p>
-
-    <p>
-        Thank you for your assistance in this matter.
+        Auctor urna nunc id cursus metus aliquam. Interdum velit euismod in pellentesque massa placerat duis. Enim nec dui nunc mattis enim. Dui ut ornare lectus sit amet est placerat in egestas. Ipsum nunc aliquet bibendum enim facilisis gravida. Leo vel orci porta non pulvinar. Aliquam eleifend mi in nulla posuere. Ac turpis egestas maecenas pharetra convallis. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim. Tempor id eu nisl nunc mi ipsum faucibus. Faucibus nisl tincidunt eget nullam non nisi. Sit amet dictum sit amet justo donec enim diam vulputate. Facilisi etiam dignissim diam quis. Ut eu sem integer vitae justo eget magna.
     </p>
 
 </body>

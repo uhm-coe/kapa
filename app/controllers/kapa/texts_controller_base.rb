@@ -26,7 +26,7 @@ module Kapa::TextsControllerBase
     end
 
     if params[:pdf] == "Y"
-      html = render_to_string("/kapa/text_templates/letter", :layout => nil, :locals => {:@text => @text})
+      html = render_to_string(@text.text_template.template_path, :layout => nil, :locals => {:@text => @text})
       #logger.debug "*DEBUG* #{html}"
       pdf_contents = WickedPdf.new.pdf_from_string(html)
       @file = Kapa::File.new
