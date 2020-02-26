@@ -1,4 +1,4 @@
-id,type,title,body,active
+id,type,title,body,active,template_path
 1,Sample,Sample Letter,"<!DOCTYPE html>
 <html>
 <head>
@@ -46,4 +46,4 @@ id,type,title,body,active
     </p>
 
 </body>
-</html>",1
+</html>",1,/kapa/text_templates/default
