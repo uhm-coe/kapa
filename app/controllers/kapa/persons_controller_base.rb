@@ -35,10 +35,8 @@ module Kapa::PersonsControllerBase
     if params[:person_id_verified].present?
       @person_verified = Kapa::Person.find(params[:person_id_verified])
       @person_verified.merge(@person, :include_associations => true)
-      @person = @person_verified
       flash[:success] = "Person was successfully merged."
-      # params[:return_path][:anchor] = params[:anchor] if params[:anchor]
-      # redirect_to params[:return_path]
+      redirect_to(kapa_person_path(:id => @person_verified))  #When person is merged, always redirect to the verified person record.
     else
       @person.attributes = person_params
       @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
@@ -47,8 +45,8 @@ module Kapa::PersonsControllerBase
         redirect_to kapa_person_path(:id => @person) and return false
       end
       flash[:success] = "Person was successfully updated."
+      redirect_to(params[:return_path] || kapa_person_path(:id => @person))
     end
-    redirect_to(params[:return_path] || kapa_person_path(:id => @person))
   end
 
   def index
