@@ -82,7 +82,8 @@ module Kapa::KapaControllerBase
   end
 
   def put_timestamp
-    @current_user.user_timestamps.create(:path => request.path,
+    @current_user.user_timestamps.create(:method => request.method,
+                                         :path => request.path,
                                          :remote_ip => request.remote_ip,
                                          :agent => request.env['HTTP_USER_AGENT'].downcase) if @current_user
   end
