@@ -20,4 +20,4 @@
     <% end %>
   </tbody>
 </table>
-<div class="text-center"><%=will_paginate @timestamps, :renderer => BootstrapPagination::Rails %></div>
+<div class="text-center"><%=will_paginate @timestamps, :renderer => BootstrapPagination::Rails, :params => {:anchor => :activity} %></div>

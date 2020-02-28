@@ -86,8 +86,16 @@
 
                 <dt><strong>Gender:</strong></dt>
                 <dd><%=@person.gender %></dd>
-              </dl>
 
+                <% if read?(:kapa_users) %>
+                  <dt><strong>User Accounts:</strong></dt>
+                  <dd>
+                    <% @person.users.each do |user| %>
+                      <%=link_to user.uid, kapa_user_path(:id => user)%><br/>
+                    <% end %>
+                  </dd>
+                <% end %>
+              </dl>
             </div>
 
             <div class="col-sm-6">
