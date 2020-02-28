@@ -16,9 +16,7 @@
       <div id="property_tab" class="tab-pane active">
         <%=bootstrap_form_for :property, :url => kapa_property_path(:id => @property), :html => {:method => :put} do |f| %>
           <%=render :partial => "property_form", :locals => {:f => f} %>
-          <% more_actions = [] %>
-          <% more_actions << link_to("Delete", kapa_property_path(:id => @property), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-          <%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_property_path(:id => @property)} if update? %>
         <% end %>
       </div>
     </div>

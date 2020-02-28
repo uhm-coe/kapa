@@ -39,10 +39,9 @@
       <div id="user_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :user, :url => kapa_user_path(:id => @user), :html => {:method => :put} do |f| %>
           <%=render :partial => "user_form", :locals => {:f => f} %>
-          <% more_actions = [] %>
-          <% more_actions << link_to("Update Permissions", "javascript:void(0)", :id => "edit_permission_link") if manage? %>
-          <% more_actions << link_to("Delete", kapa_user_path(:id => @user), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-          <%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
+          <%=render :layout => "/kapa/layouts/controls", :locals => {:delete_path =>  kapa_user_path(:id => @user)} do %>
+            <li><%=link_to("Permissions", "javascript:void(0)", :id => "edit_permission_link") if manage? %></li>
+          <% end if update? %>
         <% end %>
       </div>
 

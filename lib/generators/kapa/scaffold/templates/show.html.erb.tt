@@ -14,9 +14,7 @@
       <div id="main_tab" class="tab-pane active">
         <%%=bootstrap_form_for :<%=singular_name %>, :url => <%=singular_table_name%>_path(:id => @<%=singular_name %>), :html => {:method => :put} do |f| %>
           <%%=render :partial => "<%=singular_name %>_form", :locals => {:f => f} %>
-          <%% more_actions = [] %>
-          <%% more_actions << link_to("Delete", <%=singular_table_name%>_path(:id => @<%=singular_name %>), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-          <%%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
+          <%%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => <%=singular_table_name%>_path(:id => @<%=singular_name %>)} if update? %>
         <%% end %>
       </div>
     </div>

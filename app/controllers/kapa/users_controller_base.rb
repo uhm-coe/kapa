@@ -39,19 +39,20 @@ module Kapa::UsersControllerBase
   end
 
   def create
-    if params[:person_id_verified].present?
-      @person = Kapa::Person.find(params[:person_id_verified])
-    else
+    if params[:person]
       @person = Kapa::Person.new(person_params)
-    end
-
-    @person.attributes = person_params
-    @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
-
-    unless @person.save
-      flash[:success] = nil
-      flash[:danger] = error_messages_for(@person)
-      redirect_to new_kapa_user_path and return false
+      unless @person.save
+        flash[:danger] = error_message_for(@person)
+        redirect_to new_kapa_user_path and return false
+      end
+    elsif params[:id_number]
+      @person = Kapa::Person.lookup(params[:id_number])
+      unless @person.save
+        flash[:danger] = error_message_for(@person)
+        redirect_to kapa_users_path and return false
+      end
+    elsif params[:person_id]  
+      @person = Kapa::Person.find(params[:person_id]  )
     end
 
     #Set default uid
@@ -65,7 +66,7 @@ module Kapa::UsersControllerBase
     unless @user.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@user)
-      redirect_to new_kapa_user_path and return false
+      redirect_to kapa_users_path and return false
     end
 
     flash[:success] = 'User was successfully created.'

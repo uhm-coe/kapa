@@ -17,9 +17,7 @@
     <%=f.text_area :body, :id => "editor" %>
     <%=f.text_field :template_path %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
-    <% more_actions = [] %>
-    <% more_actions << link_to("Delete", kapa_text_template_path(:id => @text_template, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
+    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)} if update? %>
   <% end %>
 
 <% end %>

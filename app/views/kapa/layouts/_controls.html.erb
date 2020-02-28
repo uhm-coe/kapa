@@ -7,10 +7,10 @@
         <span class="glyphicon glyphicon-option-vertical"></span>
       </button>
       <ul class="dropdown-menu">
+          <%=yield %>
           <% if local_assigns[:delete_path] and destroy? %>
             <li><%=link_to("Delete", local_assigns[:delete_path], :method => :delete, "data-confirm" => "Are you sure you want to delete?") %></li>
           <% end %>
-          <%=yield %>
       </ul>
     </div>
   <% end %>
