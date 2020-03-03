@@ -3,10 +3,12 @@
     jQuery(document).ready(function ($) {
 
       var lookup_person = function(key) {
-        $.getJSON(
-          '<%=kapa_persons_lookup_path(:id => @person.id)%>',
-          {key: key},
-          function(data) {
+        $.ajax({
+          type: 'GET',
+          url: '<%=kapa_persons_lookup_path(:id => @person.id)%>',
+          data: {key: key},
+          dataType: 'json',
+          success: function(data) {
             if(data['person']) {
               $('#person_id_number').val(data['person']['id_number']);
               $('#person_email').val(data['person']['email']);
@@ -17,35 +19,46 @@
 
             if(data['action'] == 'promote') {
               $('#person_alert').addClass('alert alert-success');
-              $('#person_alert').html('Person was verified with the external directory.  Please check the name and save this record.');
+              $('#person_alert').html(data['notice']);
 
             } else if(data['action'] == 'merge') {
               $('#person_id_verified').val(data['person_id_verified'])
               $('#person_alert').addClass('alert alert-success');
-              $('#person_alert').html('This person already exists in this system.  Please check the name and click "OK" to merge this record.');
+              $('#person_alert').html(data['notice']);
 
             } else if(data['action'] == 'alert') {
-              $('#person_id_number').val('');
-              $('#person_email').val('');
               $('#person_alert').addClass('alert alert-danger');
-              $('#person_alert').html('No record was found in the external directory. Please check ID or Email');
+              $('#person_alert').html(data['notice']);
             }
+          },
+          error: function(data) {
+              $('#person_alert').addClass('alert alert-danger');
+              $('#person_alert').html('Unable to process the data lookup.');
           }
-          );
+        });
       }
 
       $('#add_id_number').click(function() {
-          var id_number = prompt("Please enter an ID number");
-          if(id_number != null) {
-            lookup_person(id_number);
-          }
+        lookup_person(prompt("Please enter an ID number"));
       });
 
       $('#add_email').click(function() {
-          var email = prompt("Please enter an E-mail", "<%=Rails.configuration.email_domain if Rails.configuration.respond_to?(:email_domain)%>");
-          if(email  != null) {
-            lookup_person(email);
-          }        
+        lookup_person(prompt("Please enter an E-mail", "<%=Rails.configuration.email_domain if Rails.configuration.respond_to?(:email_domain)%>"));
+      });
+
+      $('#sync_person').click(function() {
+        $('#person_profile_modal').modal('show');
+        $.ajax({
+          type: 'GET',          
+          url: '<%= kapa_persons_sync_path(:id => @person) %>',
+          data: { key: $('#person_id_number').val() },
+          dataType: 'json',
+          success: function(data) {
+            $('#person_alert').addClass('alert alert-success');
+            $('#person_alert').html(data['notice']);
+            $('#person_form_fields').html(data['html']);
+          }
+        });  
       });
     });
   </script>
@@ -69,6 +82,7 @@
               <ul class="dropdown-menu">
                 <li><%=link_to "Personal Profile", "#", "data-toggle" => "modal", "data-target" => "#person_profile_modal" if update?(:kapa_persons) %></li>
                 <li><%=link_to "Contact", "#", "data-toggle" => "modal", "data-target" => "#person_contact_modal" if update?(:kapa_persons)  %></li>
+                <li><%=link_to "Sync", "#", :id => "sync_person" if update?(:kapa_persons) %></li>
               </ul>
             </div>          
           </div>
@@ -134,7 +148,9 @@
 <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "person_profile_modal", :modal_title => "Profile", :modal_form_id => "person_form", :modal_class => "modal-lg"} do %>
   <div role="alert" id="person_alert"></div>
   <%=bootstrap_form_for :person, :url => kapa_person_path(:id => @person, :return_path => request.fullpath), :html => {:method => :put, :id => "person_form"} do %>
-    <%=render :partial => "kapa/persons/person_form" %>
+    <div id="person_form_fields">
+      <%= render :partial => "kapa/persons/person_form" %>
+    </div>
   <% end %>
 <% end if read? :kapa_persons %>
 

@@ -77,18 +77,25 @@ module Kapa::PersonsControllerBase
 
   def lookup
     person = Kapa::Person.lookup(params[:key])
+    json = {}
     if person
       if person.new_record?
-        action = "promote"
+        json[:action] = "promote"
+        json[:person] = person.attributes.slice('id_number', 'first_name', 'last_name', 'status', 'email')
+        json[:notice] = "Person was verified with the external directory.  Please check the name and save this record."
       elsif params[:id] != person.id.to_s
-        action = "merge"
-        person_id_verified = person.id
-        redirect_path = kapa_person_path(:id => person)
+        json[:action] = "merge"
+        json[:person] = person.attributes.slice('id_number', 'first_name', 'last_name', 'status', 'email')
+        json[:person_id_verified] = person.id
+        json[:redirect_path] = kapa_person_path(:id => person)
+        json[:notice] = "This person already exists in this system.  Please check the name and click OK to merge this record."
       end
+      render(:json => json)
     else
-        action = "alert"
+      json[:action] = "alert"
+      json[:notice] = "Unable to find the record in the external directory. Please check ID or Email."
+      render(:json => json, :status => :unprocessable_entity)
     end
-    render(:json => {:person => person, :action => action, :person_id_verified => person_id_verified, :redirect_path => redirect_path})
   end
 
   def sync
@@ -96,18 +103,20 @@ module Kapa::PersonsControllerBase
     @person_ext = @person.ext
     key = params[:key]
     @person_remote = Kapa::Person.lookup_remote(key)
-
+    json = {}
     if @person_remote
       @person.id_number = @person_remote.id_number if @person_remote.id_number
       @person.email = @person_remote.email if @person_remote.email
       @person.email_alt = @person_remote.email_alt if @person_remote.email_alt
       @person.first_name = @person_remote.first_name if @person_remote.first_name
       @person.last_name = @person_remote.last_name if @person_remote.last_name
-      flash.now[:success] = "Record was updated from the remote source. Please check the name and click save to use the new record."
+      json[:html] = render_to_string(:partial => "kapa/persons/person_form")
+      json[:notice] = "Record was updated from the remote source. Please check the records and click OK to save the record."
+      render :json => json
     else
-      flash.now[:success] = "System was unable to update this record with the remote resource."
+      json[:notice] = "System was unable to update this record with the remote resource."
+      render :json => json, :status => :unprocessable_entity
     end
-    render :partial => "kapa/persons/person_form", :layout => false
   end
 
   private
