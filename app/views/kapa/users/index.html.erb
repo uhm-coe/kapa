@@ -1,7 +1,7 @@
 <% content_for(:head) do %>
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
-      function get_table_row(person) {
+      var get_table_row = function(person) {
         console.log(person, person['ldap']);
         var tag = '<tr><td>#full_name</td><td>#email</td><td><div><input type="radio" value="#person_value" name="#person_attribute"><label></div></td></tr>'
         if(person['ldap']) {
