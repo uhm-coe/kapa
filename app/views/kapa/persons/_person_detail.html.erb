@@ -2,46 +2,47 @@
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
 
-      var lookup_person = function(key) {
-          $.getJSON('<%=kapa_persons_lookup_path(:id => @person.id)%>',
-                    {key: key},
-                    function(data) {
-                      if(data['person']) {
-                        $('#person_id_number').val(data['person']['id_number']);
-                        $('#person_email').val(data['person']['email']);
-                        $('#person_last_name').val(data['person']['last_name']);
-                        $('#person_first_name').val(data['person']['first_name']);
-                        $('#person_status').val(data['person']['status']);
-                      }
+      function lookup_person(key) {
+        $.getJSON(
+          '<%=kapa_persons_lookup_path(:id => @person.id)%>',
+          {key: key},
+          function(data) {
+            if(data['person']) {
+              $('#person_id_number').val(data['person']['id_number']);
+              $('#person_email').val(data['person']['email']);
+              $('#person_last_name').val(data['person']['last_name']);
+              $('#person_first_name').val(data['person']['first_name']);
+              $('#person_status').val(data['person']['status']);
+            }
 
-                      if(data['action'] == 'promote') {
-                        $('#person_alert').addClass('alert alert-success');
-                        $('#person_alert').html('Person was verified with the external directory.  Please check the name and save this record.');
+            if(data['action'] == 'promote') {
+              $('#person_alert').addClass('alert alert-success');
+              $('#person_alert').html('Person was verified with the external directory.  Please check the name and save this record.');
 
-                      } else if(data['action'] == 'merge') {
-                        $('#person_id_verified').val(data['person_id_verified'])
-                        $('#person_alert').addClass('alert alert-success');
-                        $('#person_alert').html('This person already exists in this system.  Please check the name and click "OK" to merge this record.');
+            } else if(data['action'] == 'merge') {
+              $('#person_id_verified').val(data['person_id_verified'])
+              $('#person_alert').addClass('alert alert-success');
+              $('#person_alert').html('This person already exists in this system.  Please check the name and click "OK" to merge this record.');
 
-                      } else if(data['action'] == 'alert') {
-                        $('#person_id_number').val('');
-                        $('#person_email').val('');
-                        $('#person_alert').addClass('alert alert-danger');
-                        $('#person_alert').html('No record was found in the external directory. Please check ID or Email');
-                      }
-                    }
-                   );
+            } else if(data['action'] == 'alert') {
+              $('#person_id_number').val('');
+              $('#person_email').val('');
+              $('#person_alert').addClass('alert alert-danger');
+              $('#person_alert').html('No record was found in the external directory. Please check ID or Email');
+            }
+          }
+          );
       }
 
       $('#add_id_number').click(function() {
-          var id_number = prompt("Please enter ID number");
+          var id_number = prompt("Please enter an ID number");
           if(id_number != null) {
             lookup_person(id_number);
           }
       });
 
       $('#add_email').click(function() {
-          var email = prompt("Please enter E-mail", "<%=Rails.configuration.email_domain if Rails.configuration.respond_to?(:email_domain)%>");
+          var email = prompt("Please enter an E-mail", "<%=Rails.configuration.email_domain if Rails.configuration.respond_to?(:email_domain)%>");
           if(email  != null) {
             lookup_person(email);
           }        

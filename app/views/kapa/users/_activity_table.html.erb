@@ -14,7 +14,7 @@
         <td><%=format_datetime timestamp.created_at %></td>
         <td><%=timestamp.method %> <%=timestamp.path %></td>
         <td><%=timestamp.remote_ip %></td>
-        <td><%=abbr timestamp.agent, 10 %></td>
+        <td><%=abbr timestamp.agent, 20 %></td>
         <% if params[:action] == "logs" %><td><%=link_to abbr(timestamp.user.uid, 10), :action => :show, :id => timestamp.user if timestamp.user %></td><% end %>
       </tr>
     <% end %>

@@ -26,12 +26,6 @@ module Kapa::FormsControllerBase
       end
     end
 
-    # params.permit!.to_h.each_pair do |k, v|
-    #   unless k =~ /(utf8)|(_method)|(authenticity_token)|(form)|(commit)|(controller)|(action)|(id)/
-    #     @form.serialize(k.to_sym, v)
-    #   end
-    # end
-
     if @form.save
       flash[:success] = "Form was successfully updated."
     else
@@ -55,11 +49,19 @@ module Kapa::FormsControllerBase
 
   def destroy
     @form = Kapa::Form.find params[:id]
+    @person = @form.person
+    @person_ext = @person.ext
+    @document_title = @form.title
+    @document_id = @form.document_id
+    @document_date = @form.date
+
     unless @form.destroy
       flash[:danger] = error_message_for(@form)
       redirect_to kapa_form_path(:id => @form) and return false
     end
-    flash[:success] = "Form was successfully deleted."
+
+    flash[:success] = "Form was successfully deleted. Please close this tab."
+    render :layout => "/kapa/layouts/document"
   end
 
   def index

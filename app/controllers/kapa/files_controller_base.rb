@@ -69,13 +69,20 @@ module Kapa::FilesControllerBase
 
   def destroy
     @file = Kapa::File.find(params[:id])
+    @file_ext = @file.ext
+    @person = @file.person
+    @person_ext = @person.ext
+    @document_title = @file.title
+    @document_id = @file.document_id
+    @document_date = @file.date
 
-    if @file.destroy
-      flash[:success] = "File was successfully deleted."
-    else
+    unless @file.destroy
       flash[:danger] = error_message_for(@file)
+      redirect_to kapa_file_path(:id => @file) and return false
     end
-    redirect_to params[:return_path] || session[:return_path]
+
+    flash[:success] = "Letter was successfully deleted. Please close this tab."
+    render :layout => "/kapa/layouts/document"
   end
 
   def export

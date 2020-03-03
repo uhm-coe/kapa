@@ -58,12 +58,20 @@ module Kapa::TextsControllerBase
 
   def destroy
     @text = Kapa::Text.find params[:id]
+    @text_ext = @text.ext
+    @person = @text.person
+    @person_ext = @person.ext if @person
+    @document_title = @text.title
+    @document_id = @text.document_id
+    @document_date = @text.date
+
     unless @text.destroy
       flash[:danger] = error_message_for(@text)
       redirect_to kapa_text_path(:id => @text) and return false
     end
-    flash[:success] = "Document was successfully deleted."
-    render(:text => "<script>window.onunload = window.opener.location.reload(); close();</script>")
+
+    flash[:success] = "Letter was successfully deleted. Please close this tab."
+    render :layout => "/kapa/layouts/document"
   end
 
   def index

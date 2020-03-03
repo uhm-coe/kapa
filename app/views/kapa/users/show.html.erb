@@ -28,7 +28,7 @@
     <ul class="nav nav-tabs">
       <li><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
       <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
-      <li><a href="#other_accounts_tab" data-toggle="tab">All Accounts</a></li>
+      <li><a href="#other_accounts_tab" data-toggle="tab">Related Accounts</a></li>
     </ul>
 
     <div class="tab-content">
@@ -40,7 +40,7 @@
         <%=bootstrap_form_for :user, :url => kapa_user_path(:id => @user), :html => {:method => :put} do |f| %>
           <%=render :partial => "user_form", :locals => {:f => f} %>
           <%=render :layout => "/kapa/layouts/controls", :locals => {:delete_path =>  kapa_user_path(:id => @user)} do %>
-            <li><%=link_to("Permissions", "javascript:void(0)", :id => "edit_permission_link") if manage? %></li>
+            <li><%=link_to("Permissions", "#", :id => "edit_permission_link") if manage? %></li>
           <% end if update? %>
         <% end %>
       </div>
