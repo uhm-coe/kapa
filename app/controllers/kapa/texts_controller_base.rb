@@ -26,20 +26,15 @@ module Kapa::TextsControllerBase
     end
 
     if params[:pdf] == "Y"
-      html = render_to_string(@text.text_template.template_path, :layout => nil, :locals => {:@text => @text})
-      #logger.debug "*DEBUG* #{html}"
-      pdf_contents = WickedPdf.new.pdf_from_string(html)
-      @file = Kapa::File.new
-      @file.name = "#{@text.title}.pdf"
-      @file.data = StringIO.new(pdf_contents)
-      @file.data_file_name = @file.name
-      @file.data_content_type = "application/pdf"
-      @file.attachable = @text
-      @file.person = @person if @person
-      unless @file.save
-        logger.debug(error_message_for(@file))
-      end
-    end  
+      flash[:success] = nil
+      begin
+        @text.generate_pdf
+        flash[:success] = "PDF was successfully generated."
+      rescue StandardError => e 
+        logger.error "PDF generation error: #{e.message}"
+        flash[:danger] = "Failed to generate PDF"        
+      end  
+    end
     redirect_to kapa_text_path(:id => @text)
   end
 
