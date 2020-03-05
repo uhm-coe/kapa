@@ -62,7 +62,8 @@ module Kapa::UsersControllerBase
       uid = @person.id
     end
 
-    @user = @person.users.create(:uid => uid)
+    @user = @person.users.build(:uid => uid, :category => @person.verified? ? "ldap" : "local")
+    @user.password = SecureRandom.alphanumeric(20)
     unless @user.save
       flash[:success] = nil
       flash[:danger] = error_message_for(@user)

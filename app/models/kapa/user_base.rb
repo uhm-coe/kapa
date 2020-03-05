@@ -14,6 +14,8 @@ module Kapa::UserBase
     validates_uniqueness_of :uid
     validates_presence_of :uid, :person_id
     validates_presence_of :password, :on => :create, :if => :local?
+    validates :uid, :length => { :minimum => 2, :maximum => 100}
+    validates :password, :length => {:minimum => 8}, :on => :create, :if => :local?
 
     before_validation :use_email_as_uid
     before_save :format_fields
@@ -21,14 +23,12 @@ module Kapa::UserBase
 
     acts_as_authentic do |c|
       c.login_field = :uid
-      c.merge_validates_length_of_login_field_options :within => 2..100
       c.crypted_password_field = :hashed_password
-      c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
       c.logged_in_timeout = 12.hours
 
       #Please note that this method cannot be overridden in user.rb on your app.
-      #App specific custome authlogic configration shoud be made in config/initializers/authlogic.rb.
+      #App specific custome authlogic configration should be made in config/initializers/authlogic.rb.
       Rails.configuration.acts_as_authentic_options.each_pair do |key, value|
         c.send(key, value)
       end if Rails.configuration.respond_to?(:acts_as_authentic_options)
