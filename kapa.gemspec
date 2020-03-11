@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 5.2.0'
+  s.add_dependency 'mysql2'
   s.add_dependency 'authlogic'
   s.add_dependency 'american_date'
   s.add_dependency 'paperclip'
@@ -28,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
   s.add_dependency 'bootstrap-sass'
+  s.add_dependency 'sprockets', '~> 3.7.2'
 end
