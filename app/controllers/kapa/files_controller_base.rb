@@ -39,9 +39,9 @@ module Kapa::FilesControllerBase
     end
 
     if @file.save
-      flash[:success] = "Document was successfully updated."
+      flash[:notice] = "Document was successfully updated."
     else
-      flash[:danger] = error_message_for(@file)
+      flash[:alert] = error_message_for(@file)
       logger.error "*ERROR* File upload error: #{@file.inspect}"
     end
     redirect_to kapa_person_path(:id => @person, :artifacts_modal => "show")
@@ -58,12 +58,12 @@ module Kapa::FilesControllerBase
     @file.uploaded_by = @current_user.uid
     @file.dept = @current_user.primary_dept
     unless @file.save
-      flash[:danger] = error_message_for(@file)
+      flash[:alert] = error_message_for(@file)
       logger.error "*ERROR* File upload error: #{@file.inspect}"
       redirect_to params[:return_path] and return false
     end
 
-    flash[:success] = "File was successfully uploaded."
+    flash[:notice] = "File was successfully uploaded."
     redirect_to params[:return_path]
   end
 
@@ -77,11 +77,11 @@ module Kapa::FilesControllerBase
     @document_date = @file.date
 
     unless @file.destroy
-      flash[:danger] = error_message_for(@file)
+      flash[:alert] = error_message_for(@file)
       redirect_to kapa_file_path(:id => @file) and return false
     end
 
-    flash[:success] = "Letter was successfully deleted. Please close this tab."
+    flash[:notice] = "Letter was successfully deleted. Please close this tab."
     render :layout => "/kapa/layouts/document"
   end
 

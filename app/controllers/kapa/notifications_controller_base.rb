@@ -27,9 +27,9 @@ module Kapa::NotificationsControllerBase
     @notification = Kapa::Notification.find(params[:id])
 
     if @notification.destroy
-      flash[:success] = "Notification was successfully deleted."
+      flash[:notice] = "Notification was successfully deleted."
     else
-      flash[:danger] = error_message_for @notification
+      flash[:alert] = error_message_for @notification
     end
     redirect_to kapa_notifications_path(:action => :index)
   end

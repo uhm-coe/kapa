@@ -24,9 +24,9 @@ module Kapa::FormTemplatesControllerBase
     @form_template.attributes = form_template_params
     @form_template.update_serialized_attributes!(:_ext, params[:form_template_ext]) if params[:form_template_ext].present?
     if @form_template.save
-      flash[:success] = "Form Template was successfully updated."
+      flash[:notice] = "Form Template was successfully updated."
     else
-      flash[:danger] = @form_template.errors.full_messages.join(", ")
+      flash[:alert] = @form_template.errors.full_messages.join(", ")
     end
     redirect_to kapa_form_template_path(:id => @form_template)
   end
@@ -35,24 +35,24 @@ module Kapa::FormTemplatesControllerBase
     @form_template = Kapa::FormTemplate.new
     @form_template.attributes= form_template_params
     unless @form_template.save
-      flash[:danger] = @form_template.errors.full_messages.join(", ")
+      flash[:alert] = @form_template.errors.full_messages.join(", ")
       redirect_to new_kapa_form_template_path and return false
     end
-    flash[:success] = "Form Template was successfully created."
+    flash[:notice] = "Form Template was successfully created."
     redirect_to kapa_form_template_path(:id => @form_template)
   end
 
   def destroy
     @form_template = Kapa::FormTemplate.find(params[:id])
     unless @form_template.form_template_fields.blank?
-      flash[:danger] = "Form Template can not be deleted since it contains one or more fields."
+      flash[:alert] = "Form Template can not be deleted since it contains one or more fields."
       redirect_to kapa_form_template_path(:id => @form_template) and return false
     end
     unless @form_template.destroy
-      flash[:danger] = @form_template.errors.full_messages.join(", ")
+      flash[:alert] = @form_template.errors.full_messages.join(", ")
       redirect_to kapa_form_template_path(:id => @form_template) and return false
     end
-    flash[:success] = "Form Template was successfully deleted."
+    flash[:notice] = "Form Template was successfully deleted."
     redirect_to kapa_form_templates_path
   end
 

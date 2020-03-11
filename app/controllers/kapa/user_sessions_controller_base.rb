@@ -7,10 +7,12 @@ module Kapa::UserSessionsControllerBase
     skip_before_action :validate_permission
     before_action :validate_user, :only => :show
   end
-
+  
   def new
+    message = flash[:alert]
     Kapa::UserSession.find.try(:destroy)
     reset_session
+    flash[:alert] = message
   end
 
   def show
@@ -19,8 +21,8 @@ module Kapa::UserSessionsControllerBase
   def create
     session = Kapa::UserSession.new(user_session_params.to_h)
     unless session.save
-      flash[:danger] = "Username/password do not match!"
-      redirect_to :action => :new and return false
+      flash[:alert] = "Username/password do not match!"
+      redirect_to new_kapa_user_session_path and return
     end
     success
     redirect_to kapa_root_path

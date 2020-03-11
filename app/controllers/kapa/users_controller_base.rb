@@ -31,9 +31,9 @@ module Kapa::UsersControllerBase
       @user.update_serialized_attributes(:permission, params.require(:permission).permit!)
     end
     if @user.save
-      flash[:success] = "User was successfully updated."
+      flash[:notice] = "User was successfully updated."
     else
-      flash[:danger] = error_message_for(@user)
+      flash[:alert] = error_message_for(@user)
     end
     redirect_to kapa_user_path(:id => @user, :anchor => params[:anchor])
   end
@@ -42,13 +42,13 @@ module Kapa::UsersControllerBase
     if params[:person]
       @person = Kapa::Person.new(person_params)
       unless @person.save
-        flash[:danger] = error_message_for(@person)
+        flash[:alert] = error_message_for(@person)
         redirect_to new_kapa_user_path and return false
       end
     elsif params[:id_number]
       @person = Kapa::Person.lookup(params[:id_number])
       unless @person.save
-        flash[:danger] = error_message_for(@person)
+        flash[:alert] = error_message_for(@person)
         redirect_to kapa_users_path and return false
       end
     elsif params[:person_id]  
@@ -65,12 +65,12 @@ module Kapa::UsersControllerBase
     @user = @person.users.build(:uid => uid, :category => @person.verified? ? "ldap" : "local")
     @user.password = SecureRandom.alphanumeric(20)
     unless @user.save
-      flash[:success] = nil
-      flash[:danger] = error_message_for(@user)
+      flash[:notice] = nil
+      flash[:alert] = error_message_for(@user)
       redirect_to kapa_users_path and return false
     end
 
-    flash[:success] = 'User was successfully created.'
+    flash[:notice] = 'User was successfully created.'
     redirect_to :action => :show, :id => @user
   end
 

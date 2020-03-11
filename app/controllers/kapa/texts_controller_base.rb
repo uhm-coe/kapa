@@ -20,19 +20,19 @@ module Kapa::TextsControllerBase
     @text.update_serialized_attributes!(:_ext, params[:text_ext]) if params[:text_ext].present?
 
     if @text.save
-      flash[:success] = "Document was successfully updated."
+      flash[:notice] = "Document was successfully updated."
     else
-      flash[:danger] = error_message_for(@text)
+      flash[:alert] = error_message_for(@text)
     end
 
     if params[:pdf] == "Y"
-      flash[:success] = nil
+      flash[:notice] = nil
       begin
         @text.generate_pdf
-        flash[:success] = "PDF was successfully generated."
+        flash[:notice] = "PDF was successfully generated."
       rescue StandardError => e 
         logger.error "PDF generation error: #{e.message}"
-        flash[:danger] = "Failed to generate PDF"        
+        flash[:alert] = "Failed to generate PDF"        
       end  
     end
     redirect_to kapa_text_path(:id => @text)
@@ -43,11 +43,11 @@ module Kapa::TextsControllerBase
     @text.dept = @current_user.primary_dept
 
     unless @text.save
-      flash[:danger] = error_message_for(@text)
+      flash[:alert] = error_message_for(@text)
       redirect_to(kapa_error_path) and return false
     end
 
-    flash[:success] = "Document was successfully created."
+    flash[:notice] = "Document was successfully created."
     redirect_to params[:return_path]
   end
 
@@ -61,11 +61,11 @@ module Kapa::TextsControllerBase
     @document_date = @text.date
 
     unless @text.destroy
-      flash[:danger] = error_message_for(@text)
+      flash[:alert] = error_message_for(@text)
       redirect_to kapa_text_path(:id => @text) and return false
     end
 
-    flash[:success] = "Letter was successfully deleted. Please close this tab."
+    flash[:notice] = "Letter was successfully deleted. Please close this tab."
     render :layout => "/kapa/layouts/document"
   end
 

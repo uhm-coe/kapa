@@ -21,11 +21,11 @@ module Kapa::PersonsControllerBase
   def create
     @person = Kapa::Person.new(person_params)
     unless @person.save
-      flash[:success] = nil
-      flash[:danger] = error_message_for(@person)
+      flash[:notice] = nil
+      flash[:alert] = error_message_for(@person)
       redirect_to new_kapa_person_path and return false
     end
-    flash[:success] = "Person was successfully created."
+    flash[:notice] = "Person was successfully created."
     redirect_to kapa_person_path(:id => @person)
   end
 
@@ -35,16 +35,16 @@ module Kapa::PersonsControllerBase
     if params[:person_id_verified].present?
       @person_verified = Kapa::Person.find(params[:person_id_verified])
       @person_verified.merge(@person, :include_associations => true)
-      flash[:success] = "Person was successfully merged."
+      flash[:notice] = "Person was successfully merged."
       redirect_to(kapa_person_path(:id => @person_verified))  #When person is merged, always redirect to the verified person record.
     else
       @person.attributes = person_params
       @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
       unless @person.save
-        flash[:danger] = error_message_for(@person)
+        flash[:alert] = error_message_for(@person)
         redirect_to kapa_person_path(:id => @person) and return false
       end
-      flash[:success] = "Person was successfully updated."
+      flash[:notice] = "Person was successfully updated."
       redirect_to(params[:return_path] || kapa_person_path(:id => @person))
     end
   end
@@ -63,7 +63,7 @@ module Kapa::PersonsControllerBase
       if person
         person.save!
         @persons = [person]
-        flash.now[:success] = "The record was imported from #{person.source}."
+        flash.now[:notice] = "The record was imported from #{person.source}."
       else
         flash.now[:warning] = "No record was found."
       end

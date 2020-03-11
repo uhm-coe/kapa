@@ -12,9 +12,9 @@ module Kapa::UserAssignmentsControllerBase
     @user_assignment.update_serialized_attributes!(:_ext, params[:user_assignment_ext]) if params[:user_assignment_ext].present?
 
     if @user_assignment.save
-      flash[:success] = "Assignment was successfully created."
+      flash[:notice] = "Assignment was successfully created."
     else
-      flash[:danger] = error_message_for @@user_assignment
+      flash[:alert] = error_message_for @@user_assignment
     end
     redirect_to params[:return_path]
   end
@@ -27,9 +27,9 @@ module Kapa::UserAssignmentsControllerBase
     @user_assignment = Kapa::UserAssignment.new(user_assignment_params)
 
     if @user_assignment.save
-      flash[:success] = "Assignment was successfully created."
+      flash[:notice] = "Assignment was successfully created."
     else
-      flash[:danger] = error_message_for @@user_assignment
+      flash[:alert] = error_message_for @@user_assignment
     end
     redirect_to params[:return_path]
   end
@@ -38,9 +38,9 @@ module Kapa::UserAssignmentsControllerBase
     @user_assignment = Kapa::UserAssignment.find(params[:id])
 
     if @user_assignment.destroy
-      flash[:success] = "User assignment was successfully deleted."
+      flash[:notice] = "User assignment was successfully deleted."
     else
-      flash[:danger] = error_message_for @user_assignment
+      flash[:alert] = error_message_for @user_assignment
     end
     redirect_to params[:return_path]
   end

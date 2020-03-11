@@ -25,12 +25,12 @@ module Kapa::KapaControllerBase
 
   def validate_url
     unless Rails.configuration.available_routes.include?(controller_name.to_s)
-      flash[:danger] = "#{controller_name} is not available."
+      flash[:alert] = "#{controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
 
     if params[:action] == "show"  and params[:id].to_s.match(/^[0-9]+$/)
-      flash[:danger] = "Invalid ID format."
+      flash[:alert] = "Invalid ID format."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -49,7 +49,7 @@ module Kapa::KapaControllerBase
     end
 
     unless @current_user.status >= 30
-      flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
+      flash[:alert] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(new_kapa_user_session_path) and return
     end
   end
@@ -71,7 +71,7 @@ module Kapa::KapaControllerBase
      end
 
      if permission and not self.send(permission)
-       flash[:danger] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
+       flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
        redirect_to(kapa_error_path) and return false
      end
   end
@@ -106,7 +106,7 @@ module Kapa::KapaControllerBase
 
   protected
   def rescue_action_in_public(exception)
-    flash[:danger] = t(:kapa_error_message_default)
+    flash[:alert] = t(:kapa_error_message_default)
     if request.xhr?
       render_notice and return false
     else

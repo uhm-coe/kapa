@@ -27,9 +27,9 @@ module Kapa::FormsControllerBase
     end
 
     if @form.save
-      flash[:success] = "Form was successfully updated."
+      flash[:notice] = "Form was successfully updated."
     else
-      flash[:danger] = error_message_for(@form)
+      flash[:alert] = error_message_for(@form)
     end
     redirect_to kapa_form_path(:id => @form)
   end
@@ -39,11 +39,11 @@ module Kapa::FormsControllerBase
     @form.dept = @current_user.primary_dept
 
     unless @form.save
-      flash[:danger] = error_message_for(@form)
+      flash[:alert] = error_message_for(@form)
       redirect_to(kapa_error_path) and return false
     end
 
-    flash[:success] = "Form was successfully created."
+    flash[:notice] = "Form was successfully created."
     redirect_to params[:return_path]
   end
 
@@ -56,11 +56,11 @@ module Kapa::FormsControllerBase
     @document_date = @form.date
 
     unless @form.destroy
-      flash[:danger] = error_message_for(@form)
+      flash[:alert] = error_message_for(@form)
       redirect_to kapa_form_path(:id => @form) and return false
     end
 
-    flash[:success] = "Form was successfully deleted. Please close this tab."
+    flash[:notice] = "Form was successfully deleted. Please close this tab."
     render :layout => "/kapa/layouts/document"
   end
 

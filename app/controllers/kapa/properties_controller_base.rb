@@ -18,9 +18,9 @@ module Kapa::PropertiesControllerBase
     @property.update_serialized_attributes!(:_ext, params[:property_ext]) if params[:property_ext].present?
 
     if @property.save
-      flash[:success] = "System property was successfully updated."
+      flash[:notice] = "System property was successfully updated."
     else
-      flash[:danger] = error_message_for(@property)
+      flash[:alert] = error_message_for(@property)
     end
     redirect_to kapa_property_path(:id => @property)
   end
@@ -30,10 +30,10 @@ module Kapa::PropertiesControllerBase
     @property.attributes= property_params
 
     unless @property.save
-      flash[:danger] = error_message_for(@property)
+      flash[:alert] = error_message_for(@property)
       redirect_to new_kapa_property_path and return false
     end
-    flash[:success] = 'System property was successfully created.'
+    flash[:notice] = 'System property was successfully created.'
     redirect_to kapa_property_path(:id => @property, :anchor => params[:anchor])
   end
 

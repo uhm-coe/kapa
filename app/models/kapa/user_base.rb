@@ -14,8 +14,8 @@ module Kapa::UserBase
     validates_uniqueness_of :uid
     validates_presence_of :uid, :person_id
     validates_presence_of :password, :on => :create, :if => :local?
-    validates :uid, :length => { :minimum => 2, :maximum => 100}
-    validates :password, :length => {:minimum => 8}, :on => :create, :if => :local?
+    validates :uid, :length => { :minimum => 2, :maximum => 100}, :if => :local?
+    validates :password, :length => {:minimum => 5}, :on => :create, :if => :local?
 
     before_validation :use_email_as_uid
     before_save :format_fields

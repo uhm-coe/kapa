@@ -20,10 +20,10 @@ module Kapa::DatasetsControllerBase
   def create
     @dataset = Kapa::Dataset.new(dataset_params)
     unless @dataset.save
-      flash[:danger] = @dataset.errors.full_messages.join(", ")
+      flash[:alert] = @dataset.errors.full_messages.join(", ")
       redirect_to new_kapa_dataset_path and return false
     end
-    flash[:success] = "Dataset was successfully created."
+    flash[:notice] = "Dataset was successfully created."
     redirect_to kapa_dataset_path(:id => @dataset)
   end
 
@@ -44,9 +44,9 @@ module Kapa::DatasetsControllerBase
     @dataset.attributes = dataset_params if params[:dataset]
 
     if @dataset.save
-      flash[:success] = "Dataset was successfully updated."
+      flash[:notice] = "Dataset was successfully updated."
     else
-      flash[:danger] = @dataset.errors.full_messages.join(", ")
+      flash[:alert] = @dataset.errors.full_messages.join(", ")
     end
     redirect_to kapa_dataset_path(:id => @dataset, :anchor => params[:anchor], :parameter_panel => params[:parameter_panel])
   end
@@ -64,10 +64,10 @@ module Kapa::DatasetsControllerBase
 
     begin
       @dataset.load
-      flash[:success] = "Dataset was successfully loaded."
+      flash[:notice] = "Dataset was successfully loaded."
 
     rescue Sequel::Error => e
-      flash[:danger] = e.message
+      flash[:alert] = e.message
     end
 
     redirect_to kapa_dataset_path(@dataset, :anchor => params[:anchor])
