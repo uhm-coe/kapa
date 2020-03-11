@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 5.2.0'
-  s.add_dependency 'authlogic', '~> 4.4.2'
+  s.add_dependency 'authlogic'
   s.add_dependency 'american_date'
   s.add_dependency 'paperclip'
   s.add_dependency 'fastercsv'
