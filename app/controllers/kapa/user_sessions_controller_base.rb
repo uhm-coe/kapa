@@ -24,6 +24,7 @@ module Kapa::UserSessionsControllerBase
       flash[:alert] = "Username/password do not match!"
       redirect_to new_kapa_user_session_path and return
     end
+    flash[:alert] = nil
     success
     redirect_to kapa_root_path
   end
