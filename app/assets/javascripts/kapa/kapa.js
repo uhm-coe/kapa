@@ -98,10 +98,6 @@ jQuery(document).ready(function ($) {
     $(e).find('li:eq(' + index + ') a').tab('show')
   });
 
-  $('[required="required"]').each(function(i, e) {
-    label_tag = $(e).parent().find('label').addClass('required');
-  });
-
   $('[data-toggle="popover"]').popover();
   $('[data-toggle="tooltip"]').tooltip({
       html: true

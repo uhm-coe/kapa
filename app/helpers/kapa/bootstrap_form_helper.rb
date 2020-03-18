@@ -88,7 +88,10 @@ module Kapa::BootstrapFormHelper
         if options[:label] == :no
           label_tag = ""
         else
-          label_tag = @template.content_tag(:label, label_options[:text], :class => [label_options[:class], "control-label"].join(" "), :for => "#{@object_name}_#{method}")
+          label_class = "control-label"
+          label_class << " required" if options[:required] or (html_options and html_options[:required])
+          label_class << " #{label_options[:class]}" if label_options[:class]
+          label_tag = @template.content_tag(:label, label_options[:text], :class => label_class, :for => "#{@object_name}_#{method}")
         end
 
         if options[:tooltip]
