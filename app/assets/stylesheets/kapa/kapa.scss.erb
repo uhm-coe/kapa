@@ -3,10 +3,18 @@
  *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker
  *= require dragula/dist/dragula
 */
-@import "bootstrap-sprockets";
 @import "bootswatch/<%=Rails.configuration.theme %>/variables";
-@import "bootstrap";
+@import "bootstrap-sass/assets/stylesheets/bootstrap";
 @import "bootswatch/<%=Rails.configuration.theme %>/bootswatch";
+
+@font-face{
+  font-family:'Glyphicons Halflings';
+  src: font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot");
+  src: font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),
+       font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"),
+       font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"),
+       font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg")
+}
 
 .section-header {
   padding-bottom: 9px;

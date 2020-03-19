@@ -6,7 +6,7 @@
 //
 //= require jquery/dist/jquery.min
 //= require rails-ujs/lib/assets/compiled/rails-ujs
-//= require bootstrap-sprockets
+//= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
 //= require bootstrap-multiselect/dist/js/bootstrap-multiselect
 //= require moment/min/moment-with-locales
 //= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
