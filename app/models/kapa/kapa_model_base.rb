@@ -124,6 +124,24 @@ module Kapa::KapaModelBase
     self.dept.to_s.split(/,\s*/)
   end
 
+  def desc_of(attr_name, options = {})
+    options[:property] = attr_name if options[:property].nil?
+    options[:default] = self.send(attr_name) if options[:default].nil?
+    Kapa::Property.lookup_description(options[:property], self.send(attr_name))
+  end
+
+  def short_desc_of(attr_name, options = {})
+    options[:property] = attr_name if options[:property].nil?
+    options[:default] = self.send(attr_name) if options[:default].nil?
+    Kapa::Property.lookup_description_short(options[:property], self.send(attr_name))
+  end
+
+  def category_of(attr_name, options = {})
+    options[:property] = attr_name if options[:property].nil?
+    options[:default] = self.send(attr_name) if options[:default].nil?
+    Kapa::Property.lookup_category(options[:property], self.send(attr_name))
+  end
+
   class_methods do
     def selections
       [["Not Defined!", "ND"]]
@@ -217,8 +235,8 @@ module Kapa::KapaModelBase
         objects.each do |o|
           table << keys.collect {|k| o.rsend(*format[k]) }
         end
+        return table
       end
-      return table
     end
 
     def csv_format
@@ -240,20 +258,6 @@ module Kapa::KapaModelBase
 
     def hashids
       Hashids.new("#{table_name}#{Rails.application.secrets.hashid_salt}", 10)
-    end
-
-    def property_lookup(attr_name, options = {:property => attr_name})
-      if options[:map].present?
-        options[:map].each_pair do |key, value|
-         define_method("#{attr_name}_#{key}") do
-           Kapa::Property.send("lookup_#{value}", *[options[:property], self.send(attr_name)])
-         end
-        end
-      else
-        define_method("#{attr_name}_desc") do
-          Kapa::Property.send("lookup_description", *[options[:property], self.send(attr_name)])
-        end
-      end
     end
   end
 end
