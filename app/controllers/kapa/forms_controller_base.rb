@@ -49,7 +49,6 @@ module Kapa::FormsControllerBase
       redirect_to kapa_form_path(:id => @form) and return false
     end
     flash[:success] = "Form was successfully deleted."
-    redirect_to kapa_person_path(:id => @form.person, :anchor => :document)
   end
 
   def index
