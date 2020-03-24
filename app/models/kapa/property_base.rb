@@ -83,7 +83,7 @@ module Kapa::PropertyBase
 
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      application_properties = Kapa::Property.all.order("sequence DESC, code")
+      application_properties = Kapa::Property.all.order("name, sequence DESC, code")
       application_properties = application_properties.where("name" => filter.name)  if filter.name.present?
       application_properties = application_properties.where("active" => filter.active) if filter.active.present?
       return application_properties

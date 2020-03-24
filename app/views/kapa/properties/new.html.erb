@@ -1,3 +1,15 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      //Auto completion fields
+      $('#property_name').typeahead({
+        source: <%=@property_names.to_json.html_safe %>,
+        autoSelect: true
+      });
+    });
+  </script>
+<% end %>
+
 <% content_for(:box1) do %>
 
   <h4 class="section-header">

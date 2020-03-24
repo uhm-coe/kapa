@@ -4,12 +4,14 @@ module Kapa::PropertiesControllerBase
   def show
     @property = Kapa::Property.find params[:id]
     @property_ext = @property.ext
+    @property_names = Kapa::Property.select("distinct name").where("length(name) > 0").order('1').collect { |p| p.name }
   end
 
   def new
     @filter = filter
     @property = Kapa::Property.new
     @property.name = @filter.property_name
+    @property_names = Kapa::Property.select("distinct name").where("length(name) > 0").order('1').collect { |p| p.name }
   end
 
   def update
