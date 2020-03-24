@@ -32,4 +32,5 @@ gem 'hashids'
 gem 'summernote-rails'
 gem 'rails-assets-jquery', '1.12.4', source: 'https://rails-assets.org'
 gem 'rails-assets-pivottable', source: 'https://rails-assets.org'
+
 #gem 'whenever', :require => false
