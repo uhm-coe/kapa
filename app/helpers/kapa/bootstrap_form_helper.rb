@@ -41,22 +41,22 @@ module Kapa::BootstrapFormHelper
 
   class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 
-    def self.build_label_field(name)
+    def self.build_form_control(name)
       define_method(name) do |method, *args|
         case name.to_s
           when /(field$)|(area$)|(picker$)/
             options = args.first.is_a?(Hash) ? args.first : {}
-            tag = @template.send(name, @object_name, method, clean_options(options).merge(:class => "form-control #{options[:class]}"))
+            tag = @template.send(name, @object_name, method, sanitize_options(options).merge(:class => "form-control #{options[:class]}"))
 
           when "select"
             options = args.second.is_a?(Hash) ? args.second : {}
             html_options = args.third.is_a?(Hash) ? args.third : {}
-            tag = @template.send(name, @object_name, method, args.first, clean_options(options), html_options.merge(:class => "form-control #{html_options[:class]}"))
+            tag = @template.send(name, @object_name, method, args.first, sanitize_options(options), html_options.merge(:class => "form-control #{html_options[:class]}"))
 
-          when "model_select", "user_select", "property_select", "program_select", "term_select", "history_select", "person_select", "date_select", "text_template_select"
+          when /_select$/ 
             options = args.first.is_a?(Hash) ? args.first : {}
             html_options = args.second.is_a?(Hash) ? args.second : {}
-            tag = @template.send(name, @object_name, method, clean_options(options), html_options.merge(:class => "form-control #{html_options[:class]}"))
+            tag = @template.send(name, @object_name, method, sanitize_options(options), html_options.merge(:class => "form-control #{html_options[:class]}"))
 
           when "check_box"
             options = args.first.is_a?(Hash) ? args.first : {}
@@ -114,13 +114,12 @@ module Kapa::BootstrapFormHelper
       end
     end
 
-    helpers = %w{text_field password_field text_area file_field check_box radio_button select static model_select property_select term_select program_select history_select user_select date_picker datetime_picker time_picker person_select date_select text_template_select}
-    helpers.each do |name|
-      build_label_field(name)
+    Rails.configuration.form_helpers.each do |name|
+      build_form_control(name)
     end
 
     private
-    def clean_options(options)
+    def sanitize_options(options)
       options.select {|key, value| %w{label hint tooltip addon}.exclude?(key.to_s)  }
     end
   end

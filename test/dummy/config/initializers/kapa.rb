@@ -40,3 +40,45 @@ Rails.configuration.filter_defaults = {
    :date_end => Date.today,
    :per_page => Rails.configuration.items_per_page
 }
+
+# Set timezone
+Rails.configuration.time_zone = 'Hawaii'
+
+# Configure bootswatch theme (Run rake tmp:cache:clear after updating this)
+Rails.configuration.theme = "united"
+
+# Bootstrap form helpers (form-controls and labels are automatically defined for the helpers listed below)
+Rails.configuration.form_helpers = %w{
+  text_field
+  password_field
+  color_field
+  date_field
+  datetime_field
+  datetime_local_field
+  email_field
+  month_field
+  number_field
+  range_field
+  search_field
+  telephone_field
+  time_field
+  url_field
+  week_field      
+  file_field
+  text_area
+  date_picker 
+  datetime_picker
+  time_picker 
+  select
+  person_select 
+  text_template_select
+  model_select
+  property_select
+  term_select
+  program_select
+  history_select
+  user_select 
+  check_box
+  radio_button 
+  static
+}
