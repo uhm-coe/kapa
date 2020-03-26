@@ -24,11 +24,14 @@
 
         <div id="accordion" class="panel-group">
           <% @form_template_fields.each_with_index do |form_template_field, index| %>
-            <% @form_template_field = form_template_field %>
+            <% 
+              @form_template_field = form_template_field 
+              @form_template_field_ext = @form_template_field.ext 
+            %>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#form_template_field_<%=@form_template_field.id %>"><span class="strong"><%=@form_template_field.label %></span> - <%=@field_selections[@form_template_field.type.to_sym] %></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#form_template_field_<%=@form_template_field.id %>"><span class="strong"><%=@form_template_field.label %></span> - <%=@form_template_field.type %></a>
                 </h3>
               </div>
               <div id="form_template_field_<%=@form_template_field.id %>" class="panel-collapse collapse">

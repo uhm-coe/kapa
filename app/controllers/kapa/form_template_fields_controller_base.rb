@@ -4,7 +4,7 @@ module Kapa::FormTemplateFieldsControllerBase
   def update
     @form_template_field = Kapa::FormTemplateField.find(params[:id])
     @form_template_field.attributes = form_template_field_params
-    @form_template_field.update_serialized_attributes!(:_ext, params[:form_template_field_ext]) if params[:form_template_field_ext].present?
+    @form_template_field.update_serialized_attributes(:_ext, params[:form_template_field_ext]) if params[:form_template_field_ext].present?
 
     if @form_template_field.save
       flash[:notice] = "Field was successfully updated."

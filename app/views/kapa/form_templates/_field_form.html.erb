@@ -1,17 +1,23 @@
 <%=bootstrap_fields_for "form_template_field" do |f| %>
-  <%=f.hidden_field :form_template_id %>
-  <div class="row">
-    <div class="col-sm-6">
-      <%=f.text_field :label, :label => "Label" %>
-      <%=f.text_area  :label_desc, :size => "35x2", :label => "Lebel Helper Text" %>
-      <%=f.text_field :category %>
-    </div>
+  <%=bootstrap_fields_for "form_template_field_ext" do |e| %>
+    <%=f.hidden_field :form_template_id %>
+    <%=f.hidden_field :form_template_id %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%=f.text_field :name %>
+        <%=f.text_field :label %>
+        <%=f.text_area  :tip, :size => "35x2", :label => "Field Tip" %>
+        <%=f.text_area  :hint, :size => "35x2", :label => "Fild Hint" %>
+        <%=f.text_field :sequence %>
+        <%=f.check_box :active, {}, 1, 0 %>
+      </div>
 
-    <div class="col-sm-6">
-      <%=f.select :type, @field_selections.collect {|key, value| [value, key] }, {:label => "Field Type"} %>
-      <%=f.text_field :type_option, :label => "Field Type Option" %>
-      <%=f.text_field :sequence %>
-      <%=f.check_box :active, {}, 1, 0 %>
+      <div class="col-sm-6">
+        <%=f.select :type, @field_selections, {:label => "Field Type"} %>
+        <%=e.text_field :inlcude_blank, :label => "Field Type Option" %>
+        <%=e.text_field :choices, :label => "Comma-Separated Values" %>
+        <%=e.text_field :proeprty_name %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

@@ -4,7 +4,9 @@ module Kapa::KapaModelBase
   included do
     self.abstract_class = true
     self.inheritance_column = nil
+    @@serialize_field = :yml
     serialize :yml, Hash
+    serialize :json, Hash
     attr_writer :depts
     before_save :serialize_depts
   end
@@ -14,12 +16,12 @@ module Kapa::KapaModelBase
   end
 
   def deserialize(name, options = {})
-    if self.yml.blank? or self.yml[name].blank?
-      object = Hash.new
+    if self.send(@@serialize_field).blank? or self.send(@@serialize_field)[name].blank?
+      value = Hash.new
     else
-      object = self.yml[name]
+      value = self.send(@@serialize_field)[name]
     end
-    options[:as] ? options[:as].new(object) : object.clone
+    options[:as] ? options[:as].new(value) : value.clone
   end
 
   def serialize(name, value)
@@ -31,8 +33,10 @@ module Kapa::KapaModelBase
       value = value.to_h
     end
 
-    self.yml = Hash.new if self.yml.blank?
-    self.yml[name] = value if value
+    new_value = self.send(@@serialize_field)
+    new_value = Hash.new if new_value.blank?
+    new_value[name] = value if value
+    self.update(@@serialize_field => new_value) 
   end
 
   def serialize!(name, value)

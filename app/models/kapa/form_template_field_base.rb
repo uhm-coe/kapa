@@ -10,10 +10,8 @@ module Kapa::FormTemplateFieldBase
   end
 
   def format_fields
-    category.to_s.strip!
     label.to_s.strip!
-    label_desc.to_s.strip!
-    label_desc.to_s.sub!("\n", "")
+    hint.to_s.sub!("\n", "")
+    name = label.underscore #if name.blank?
   end
-
 end

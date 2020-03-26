@@ -10,9 +10,6 @@ module Kapa::FormBase
     has_many :users, :through => :user_assignments
 
     validates_presence_of :form_template_id
-
-    property_lookup :term
-    property_lookup :status
   end
 
   def document_id
@@ -41,6 +38,14 @@ module Kapa::FormBase
 
   def submit
     self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
+  end
+
+  def term_desc
+    self.desc_of(:term)
+  end
+
+  def status_desc
+    self.desc_of(:status)
   end
 
   class_methods do

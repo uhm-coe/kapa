@@ -5,14 +5,7 @@ module Kapa::FormTemplatesControllerBase
     @form_template = Kapa::FormTemplate.find(params[:id])
     @form_template_ext = @form_template.ext
     @form_template_fields = @form_template.form_template_fields
-    @field_selections = {:text_field => "Single-line Text",
-                         :text_area => "Multi-Line Text",
-                         :property_select => "Select (Propeties)",
-                         :csv_select => "Select (Comma-separated values)",
-                         :date_picker => "Date Select",
-                         :time_picker => "Time Select",
-                         :datetime_picker => "Date Time Select",
-                         :section => "Section Header"}
+    @field_selections = Rails.configuration.form_helpers
   end
 
   def new

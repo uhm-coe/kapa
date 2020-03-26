@@ -7,7 +7,6 @@ module Kapa::FileBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    property_lookup :status
     has_attached_file :data
     validates_attachment_content_type :data, :content_type => Rails.configuration.attachment_content_types
   end
@@ -44,6 +43,10 @@ module Kapa::FileBase
     data_file_size
   end
 
+  def status_desc
+    self.desc_of(:status)
+  end
+  
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
