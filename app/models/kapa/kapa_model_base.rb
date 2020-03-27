@@ -9,18 +9,24 @@ module Kapa::KapaModelBase
     before_save :serialize_depts
   end
 
+  def serialize_depts
+    self.dept = @depts.delete_if {|v| v.blank?}.join(",") if self.has_attribute?(:dept) and @depts
+  end
+
   def deserialize(name, options = {})
-    name = name.to_s if self.class.serialize_field.to_s == "json" 
-    if self.send(self.class.serialize_field).blank? or self.send(self.class.serialize_field)[name].blank?
+    name = name.to_s if self.class.serialize_field.to_s == "json"
+    attr_storage = self[self.class.serialize_field]
+    if attr_storage.blank? or attr_storage[name].blank?
       value = Hash.new
     else
-      value = self.send(self.class.serialize_field)[name]
+      value = attr_storage[name]
     end
-    logger.debug "*DEBUG* #{self.send(self.class.serialize_field)}" if self.class.serialize_field.to_s == "json" 
+
     options[:as] ? options[:as].new(value) : value.clone
   end
 
   def serialize(name, value)
+    name = name.to_s if self.class.serialize_field.to_s == "json"
     #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
     #However, it should not be used to store values which change application behaviors. 
     if value.is_a?(ActionController::Parameters)
@@ -29,10 +35,8 @@ module Kapa::KapaModelBase
       value = value.to_h
     end
 
-    new_value = self.send(self.class.serialize_field)
-    new_value = Hash.new if new_value.blank?
-    new_value[name] = value if value
-    self.update(self.class.serialize_field => new_value) 
+    self[self.class.serialize_field] ||= Hash.new
+    self[self.class.serialize_field][name] = value
   end
 
   def serialize!(name, value)
@@ -58,10 +62,6 @@ module Kapa::KapaModelBase
   def update_serialized_attributes!(name, attributes)
     self.update_serialized_attributes(name, attributes)
     self.save!
-  end
-
-  def serialize_depts
-    self.dept = @depts.delete_if {|v| v.blank?}.join(",") if self.has_attribute?(:dept) and @depts
   end
 
   def rsend(*args, &block)
