@@ -4,25 +4,26 @@
   <%= bootstrap_fields_for :form_ext do |f| %>
     <% form_template.form_template_fields.each do |form_template_field| %>
        
-      <%= 
-        options = {} 
+      <%=
+        form_template_field_ext = form_template_field.ext
+        options = {}
+        options[:label] = form_template_field.label      
         options[:hint] = form_template_field.hint if form_template_field.hint.present?      
-        options[:tip] = form_template_field.tip if form_template_field.tip.present?
         options[:required] = form_template_field.required if form_template_field.required.present?      
-        options[:include_blank] = form_template_field.include_blank if form_template_field.include_blank.present?      
+        options[:include_blank] = form_template_field_ext.include_blank if form_template_field_ext.include_blank.present?      
 
         if form_template_field.type == "section" 
-          content_tag(:legend, form_template_field.label, options)
+          content_tag(:legend, form_template_field.name, options)
         elsif form_template_field.type == "text_area"
           options[:rows] = 10
-          f.text_area(form_template_field.label, options)
+          f.text_area(form_template_field.name, options)
         elsif form_template_field.type == "select"
-          f.select(form_template_field.label, form_template_field.type_option.to_s.split(/,\s*/), options)
+          f.select(form_template_field.name, form_template_field_ext.choices.to_s.split(/,\s*/), options)
         elsif form_template_field.type =~ /_select$/ 
-          options[:name] = form_template_field.type_option 
-          f.send(form_template_field.type, [form_template_field.label, options])
+          options[:name] = form_template_field_ext.property_name 
+          f.send(form_template_field.type, *[form_template_field.name, options])
         else
-          f.send(form_template_field.type, [form_template_field.label, options])
+          f.send(form_template_field.type, *[form_template_field.name, options])
         end
       %>
     <% end %>
