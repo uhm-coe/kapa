@@ -5,7 +5,22 @@ module Kapa::FormTemplatesControllerBase
     @form_template = Kapa::FormTemplate.find(params[:id])
     @form_template_ext = @form_template.ext
     @form_template_fields = @form_template.form_template_fields
-    @field_selections = Rails.configuration.form_helpers
+    @field_selections = Rails.configuration.form_helpers.select {|helper| 
+      #Exclude the following form helpers
+      %w{password_field
+         color_field
+         search_field
+         person_select 
+         text_template_select
+         program_select
+         history_select
+         model_select
+         user_select 
+         check_box
+         radio_button 
+         static
+      }.exclude?(helper.to_s)  
+    }
   end
 
   def new
