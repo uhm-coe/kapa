@@ -46,7 +46,7 @@ module Kapa::UserBase
   end
 
   def update_person
-    self.person.update_attribute(:email_alt, self.uid) if local?
+    self.person.update_columns(:email_alt => self.uid) if local?
   end
 
   def status_desc
