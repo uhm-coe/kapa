@@ -4,7 +4,7 @@ module Kapa::UsersControllerBase
   def show
     @user = Kapa::User.find params[:id]
     @user_ext = @user.ext
-    @permission = @user.deserialize(:permission, :as => OpenStruct)
+    @permission = OpenStruct.new(@user.permission)
     params[:anchor] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
@@ -24,11 +24,10 @@ module Kapa::UsersControllerBase
     @permission = @user.deserialize(:permission, :as => OpenStruct)
     @user.attributes = user_params if params[:user]
     @user.update_serialized_attributes!(:_ext, params[:user_ext].permit!) if params[:user_ext].present?
-    if params[:permission][:role] and Rails.configuration.roles.keys.include?(params[:permission][:role])
-      @user.apply_role(params[:permission][:role])
-      @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
-    elsif params[:permission]
-      @user.update_serialized_attributes(:permission, params.require(:permission).permit!)
+    if params[:permission]
+      @user.permission = params.require(:permission).permit!.to_hash
+    elsif params[:user][:role] and Rails.configuration.roles.keys.include?(params[:user][:role])
+      @user.apply_role(params[:user][:role])
     end
     if @user.save
       flash[:notice] = "User was successfully updated."
@@ -125,7 +124,7 @@ module Kapa::UsersControllerBase
   end
 
   def person_params
-    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :email, :first_name, :other_name, :title, :gender, :status, :dept, :depts => [])
+    params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :email, :first_name, :other_name, :title, :gender, :status, :role, :dept, :depts => [])
   end
 
 end

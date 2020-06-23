@@ -5,10 +5,9 @@ namespace :kapa do
     task :reset_role => :environment do
 
       Kapa::User.where(:status => "30").each do |user|
-        permission = user.deserialize(:permission, :as => OpenStruct)
-        puts "user: #{user.uid}, role: #{permission.role}"
-        if permission.role and Rails.configuration.roles.keys.include?(permission.role)
-          user.apply_role(permission.role)
+        puts "user: #{user.uid}, role: #{user.role}"
+        if user.role.present? and Rails.configuration.roles.keys.include?(user.role)
+          user.apply_role(user.role)
           user.save!
         end
       end

@@ -5,6 +5,8 @@ module Kapa::UserBase
     @available_keys = {}
     attr_accessor :email
 
+    serialize :permission, Hash
+
     belongs_to :person
     has_many :notifications
     has_many :user_assignments
@@ -60,25 +62,21 @@ module Kapa::UserBase
     category == "local"
   end
 
-  def permission
-    self.deserialize(:permission, :as => OpenStruct)
-  end
-
   def check_permission(name, code)
     return false unless Rails.configuration.available_routes.include?(name.to_s)
-    self.permission.send(name).to_s.include?(code)
+    self.permission["#{name}"].to_s.include?(code)
   end
 
   def access_scope(name, condition = nil)
     return false unless Rails.configuration.available_routes.include?(name.to_s)
-    self.permission.send("#{name}_scope").to_i
+    self.permission["#{name}_scope"].to_i
   end
 
   def apply_role(name)
     role_permission = Rails.configuration.roles[name]
     if role_permission
-      role_permission.merge!(:role => name)
-      self.serialize(:permission, role_permission)
+      self.role = name
+      self.permission = role_permission
     end
   end
 
@@ -127,7 +125,7 @@ module Kapa::UserBase
        :first_name => [:person, :first_name],
        :position => [:position],
        :primary_dept => [:primary_dept],
-       :role => [:permission, :role],
+       :role => [:role],
        :status => [:status],
        :dept => [:dept, [:join, ","]],
        :category => [:category]}
