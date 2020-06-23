@@ -5,8 +5,6 @@ module Kapa::UserBase
     @available_keys = {}
     attr_accessor :email
 
-    serialize :permission, Hash
-
     belongs_to :person
     has_many :notifications
     has_many :user_assignments
@@ -62,6 +60,10 @@ module Kapa::UserBase
     category == "local"
   end
 
+  def permission
+    Rails.configuration.roles[self.role]
+  end
+
   def check_permission(name, code)
     return false unless Rails.configuration.available_routes.include?(name.to_s)
     self.permission["#{name}"].to_s.include?(code)
@@ -73,10 +75,8 @@ module Kapa::UserBase
   end
 
   def apply_role(name)
-    role_permission = Rails.configuration.roles[name]
-    if role_permission
+    if Rails.configuration.roles.keys.include?(name)
       self.role = name
-      self.permission = role_permission
     end
   end
 

@@ -4,14 +4,12 @@ module Kapa::UsersControllerBase
   def show
     @user = Kapa::User.find params[:id]
     @user_ext = @user.ext
-    @permission = OpenStruct.new(@user.permission)
     params[:anchor] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
     @person = @user.person
     @person_ext = @person.ext
     @roles = Rails.configuration.roles.keys
-    @roles << @permission.role if @roles.exclude?(@permission.role)
   end
 
   def new
@@ -21,14 +19,10 @@ module Kapa::UsersControllerBase
 
   def update
     @user = Kapa::User.find params[:id]
-    @permission = @user.deserialize(:permission, :as => OpenStruct)
     @user.attributes = user_params if params[:user]
     @user.update_serialized_attributes!(:_ext, params[:user_ext].permit!) if params[:user_ext].present?
-    if params[:permission]
-      @user.permission = params.require(:permission).permit!.to_hash
-    elsif params[:user][:role] and Rails.configuration.roles.keys.include?(params[:user][:role])
-      @user.apply_role(params[:user][:role])
-    end
+    @user.apply_role(params[:user][:role]) if params[:user][:role].present?
+    
     if @user.save
       flash[:notice] = "User was successfully updated."
     else
