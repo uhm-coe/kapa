@@ -91,6 +91,7 @@
     <%=bootstrap_form_for(:filter, :url => kapa_users_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%=f.text_field :user_key, :size => 20, :label => "Name or UID" %>
       <%=f.select :status, Rails.configuration.user_status, {:include_blank => "Any", :label => "User Status"} %>
+      <%=f.select :role, Rails.configuration.roles.keys, :include_blank => true %>
       <%=f.select :category, Rails.configuration.user_categories, :include_blank => "Any" %>
       <%=f.property_select :depts, {:label => t(:kapa_global_dept).pluralize, :include_blank => "Any"}, :multiple => true if manage? %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
@@ -138,7 +139,7 @@
           <td><%=user.uid %></td>
           <td><%=user.person.full_name if user.person %></td>
           <td><%=user.category %></td>
-          <td><%=user.deserialize(:permission, :as => OpenStruct).role %></td>
+          <td><%=user.role %></td>
           <td><%=user.status_desc %></td>
           <td><%=user.primary_dept %></td>
           <td><%=user.depts.join(", ") %></td>

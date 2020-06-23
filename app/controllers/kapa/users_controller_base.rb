@@ -9,7 +9,6 @@ module Kapa::UsersControllerBase
     @users = @user.person.users
     @person = @user.person
     @person_ext = @person.ext
-    @roles = Rails.configuration.roles.keys
   end
 
   def new

@@ -9,7 +9,7 @@
     <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
     <%=f.property_select :primary_dept, :name => :dept, :label => "Primary #{t(:kapa_global_dept)}", :include_blank => true %>
     <%=f.text_field :position %>
-    <%=f.select :role, @roles, :include_blank => true %>
+    <%=f.select :role, Rails.configuration.roles.keys, :include_blank => true %>
   </div>
 </div>
 <%=f.hidden_field :person_id %>
