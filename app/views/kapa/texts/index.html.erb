@@ -43,7 +43,7 @@
         <td><%=format_date text.submitted_at %></td>
         <td><%=text.depts.join(", ") %></td>
         <td><%=text.status_desc %></td>
-        <td class="right"><%= link_to "Show", {:action => :show, :id => text}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => text}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank"%></td>
       </tr>
     <% end %>
     </tbody>

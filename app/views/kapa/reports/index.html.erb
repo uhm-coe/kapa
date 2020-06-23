@@ -21,9 +21,7 @@
         <td><%=dataset.datasource %></td>
         <td><%=dataset.loaded_at %></td>
         <td><%=dataset.record_count %></td>
-        <td class="right">
-          <%=link_to "Show", kapa_report_path(dataset), :class => 'btn btn-default btn-xs' %>
-        </td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => dataset}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
       </tr>
     <% end %>
     </tbody>

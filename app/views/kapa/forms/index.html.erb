@@ -46,7 +46,7 @@
         <td><%=form.lock %></td>
         <td><%=form.depts.join(", ") %></td>
         <td><%=form.status_desc %></td>
-        <td class="right"><%=link_to "Show", {:action => :show, :id => form}, {:target => "_blank", :class => "btn btn-default btn-xs"} %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => form}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank"%></td>
       </tr>
     <% end %>
     </tbody>

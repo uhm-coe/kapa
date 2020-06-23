@@ -44,7 +44,7 @@
         <td><%=property.sequence %></td>
         <td><%=property.active %></td>
         <td><%=property.depts.join(", ") %></td>
-        <td class="right"><%=link_to "Show", {:action => :show, :id => property}, :class => "btn btn-default btn-xs" %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => property}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
       </tr>
     <% end %>
     </tbody>

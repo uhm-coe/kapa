@@ -143,7 +143,7 @@
           <td><%=user.status_desc %></td>
           <td><%=user.primary_dept %></td>
           <td><%=user.depts.join(", ") %></td>
-          <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => user}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
         </tr>
       <% end %>
     </tbody>
