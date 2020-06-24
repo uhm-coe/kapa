@@ -48,8 +48,11 @@ module Kapa::UserBase
   end
 
   def status_desc
-    user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
-    user_status[0] if user_status
+    Rails.configuration.user_status[status]
+  end
+
+  def category_desc
+    Rails.configuration.user_categories[category]
   end
 
   def active?
@@ -64,13 +67,11 @@ module Kapa::UserBase
     Rails.configuration.roles[self.role]
   end
 
-  def check_permission(name, code)
-    return false unless Rails.configuration.available_routes.include?(name.to_s)
-    self.permission["#{name}"].to_s.include?(code)
+  def check_permission(name, permission_code)
+    self.permission["#{name}"].to_s.include?(permission_code)
   end
 
   def access_scope(name, condition = nil)
-    return false unless Rails.configuration.available_routes.include?(name.to_s)
     self.permission["#{name}_scope"].to_i
   end
 
