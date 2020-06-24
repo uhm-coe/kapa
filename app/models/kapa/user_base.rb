@@ -23,6 +23,7 @@ module Kapa::UserBase
 
     acts_as_authentic do |c|
       c.login_field = :uid
+      c.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
       c.crypted_password_field = :hashed_password
       c.require_password_confirmation = false
       c.logged_in_timeout = 12.hours

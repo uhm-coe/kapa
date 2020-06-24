@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 5.2.0'
   s.add_dependency 'mysql2'
   s.add_dependency 'authlogic'
+  s.add_dependency 'scrypt'
   s.add_dependency 'american_date'
   s.add_dependency 'paperclip'
   s.add_dependency 'fastercsv'
