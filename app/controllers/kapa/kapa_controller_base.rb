@@ -11,7 +11,7 @@ module Kapa::KapaControllerBase
     after_action :remember_return_path, :only => [:show, :index]
     after_action :put_timestamp
     helper :all
-    helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :manage?, :access_all?, :access_dept?, :access_assigned?
+    helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :summarize?, :manage?, :access_all?, :access_dept?, :access_assigned?
   end
 
   def sanitize_params
@@ -55,25 +55,27 @@ module Kapa::KapaControllerBase
   end
 
   def validate_permission
-     case params[:action]
-       when "show", "index"
-         permission = :read?
-       when "update"
-         permission = :update?
-       when "new", "create"
-         permission = :create?
-       when "destroy"
-         permission = :destroy?
-       when "import"
-         permission = :import?
-       when "export"
-         permission = :export?
-     end
+    case params[:action]
+    when "show", "index"
+      permission = :read?
+    when "update"
+      permission = :update?
+    when "new", "create"
+      permission = :create?
+    when "destroy"
+      permission = :destroy?
+    when "import"
+      permission = :import?
+    when "export"
+      permission = :export?
+    when "summarize"
+      permission = :summarize?
+    end
 
-     if permission and not self.send(permission)
-       flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
-       redirect_to(kapa_error_path) and return false
-     end
+    if permission and not self.send(permission)
+      flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
+      redirect_to(kapa_error_path) and return false
+    end
   end
 
   def remember_return_path
@@ -151,6 +153,10 @@ module Kapa::KapaControllerBase
 
   def import?(name = controller_name)
     @current_user.check_permission(name, "I")
+  end
+
+  def summarize?(name = controller_name)
+    @current_user.check_permission(name, "S")
   end
 
   def manage?(name = controller_name)

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do
       get :export
       post :import
+      get :summarize
     end
   end
 
