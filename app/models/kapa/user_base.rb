@@ -64,16 +64,24 @@ module Kapa::UserBase
     category == "local"
   end
 
-  def permission
-    Rails.configuration.roles[self.role]
+  def init_permission
+    if @permission.nil?
+      if self.role.present? and Rails.configuration.roles[self.role].present?
+        @permission = OpenStruct.new(Rails.configuration.roles[self.role])
+      else
+        @permission = OpenStruct.new
+      end
+    end
   end
 
   def check_permission(name, permission_code)
-    self.permission["#{name}"].to_s.include?(permission_code)
+    init_permission
+    @permission.send("#{name}").to_s.include?(permission_code)
   end
 
   def access_scope(name, condition = nil)
-    self.permission["#{name}_scope"].to_i
+    init_permission
+    @permission.send("#{name}_scope").to_i
   end
 
   def apply_role(name)
