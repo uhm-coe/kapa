@@ -29,7 +29,7 @@ module Kapa::UserBase
       c.logged_in_timeout = 12.hours
 
       #Please note that this method cannot be overridden in user.rb on your app.
-      #App specific custome authlogic configration should be made in config/initializers/authlogic.rb.
+      #App specific custom authlogic configuration should be made in config/initializers/authlogic.rb.
       Rails.configuration.acts_as_authentic_options.each_pair do |key, value|
         c.send(key, value)
       end if Rails.configuration.respond_to?(:acts_as_authentic_options)
