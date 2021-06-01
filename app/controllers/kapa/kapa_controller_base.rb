@@ -165,7 +165,7 @@ module Kapa::KapaControllerBase
   def filter(options = {})
     if Rails.configuration.try(:filter_save)
       @current_user.serialize(:filter, Rails.configuration.filter_defaults) if @current_user.deserialize(:filter).blank?
-      @current_user.update_serialized_attributes(:filter, params[:filter]) if params[:filter].present?
+      @current_user.update_serialized_attributes(:filter, params.require(:filter).permit!) if params[:filter].present?
       @current_user.update_serialized_attributes(:filter, options) if options.present?
       @current_user.save
       filter = @current_user.deserialize(:filter, :as => OpenStruct)
