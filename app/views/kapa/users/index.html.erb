@@ -92,7 +92,7 @@
       <%=f.text_field :user_key, :size => 20, :label => "Name or UID" %>
       <%=f.select :status, Rails.configuration.user_status, {:label => "User Status"}, {:multiple => true} %>
       <%=f.select :category, Rails.configuration.user_categories, {}, {:multiple => true} %>
-      <%=f.property_select :dept, {:label => t(:kapa_global_dept)}, {:multiple => true}  if @current_user.manage? %>
+      <%=f.property_select :dept, {:label => t(:kapa_global_dept)}, {:multiple => true}  if manage? %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
