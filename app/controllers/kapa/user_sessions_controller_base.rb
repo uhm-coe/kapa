@@ -9,10 +9,14 @@ module Kapa::UserSessionsControllerBase
   end
   
   def new
-    message = flash[:alert]
+    flash_clone = flash.clone
     Kapa::UserSession.find.try(:destroy)
     reset_session
-    flash[:alert] = message
+
+    #Restore flash messages
+    flash_clone.keys.each do |key|
+      flash[key] = flash_clone[key]
+    end
   end
 
   def show
@@ -58,7 +62,7 @@ module Kapa::UserSessionsControllerBase
     if @cas_results[0] == "yes"
       uid = @cas_results[1]
       register(uid)
-      user = Kapa::User.find_by(:uid => uid, :category => "ldap", :status => 30)
+      user = Kapa::User.find_by("uid = ? and category = ? and status >= ?", uid, "ldap", 30)
       if user
         Kapa::UserSession.create(user, true)
         success
