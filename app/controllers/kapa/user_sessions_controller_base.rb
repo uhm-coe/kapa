@@ -78,6 +78,7 @@ module Kapa::UserSessionsControllerBase
   end
 
   def success
+    flash.clear
   end
 
   def error
