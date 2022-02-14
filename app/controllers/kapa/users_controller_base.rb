@@ -47,6 +47,15 @@ module Kapa::UsersControllerBase
       @person = Kapa::Person.find(params[:person_id]  )
     end
 
+    @person.attributes = person_params
+    @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
+
+    unless @person.save
+      flash[:success] = nil
+      flash[:danger] = error_message_for(@person)
+      redirect_to new_kapa_user_path and return false
+    end
+
     #Set default uid
     if not @person.email.blank?
       uid = @person.email.split("@").first

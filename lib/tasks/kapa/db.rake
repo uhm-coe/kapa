@@ -42,7 +42,11 @@ namespace :kapa do
       command += " --password='#{password}'" unless password.blank?
       command += " #{database}"
       command += " > '#{directory}/#{filename}'"
-      sh command
+      sh command, verbose: false do |ok, status|
+        unless ok
+          fail "Backup failed with status (#{status.exitstatus})"
+        end
+      end
 
     end
 
@@ -67,7 +71,11 @@ namespace :kapa do
       command += " --password='#{password}'" unless password.blank?
       command += " #{database}"
       command += " < '#{filename}'"
-      sh command
+      sh command, verbose: false do |ok, status|
+        unless ok
+          fail "Restore failed with status (#{status.exitstatus})"
+        end
+      end
 
     end
   end
