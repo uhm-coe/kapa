@@ -51,10 +51,11 @@ module Kapa::FormBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      forms = Kapa::Form.eager_load({:users => :person}, :person).order("forms.submitted_at DESC")
+      forms = Kapa::Form.eager_load({:users => :person}, :person, :form_template).order("forms.submitted_at DESC")
+      forms = forms.where("forms.form_template_id" => filter.form_template_id) if filter.form_template_id.present?
       forms = forms.where("forms.term" => filter.term) if filter.form_term.present?
-      forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
+      forms = forms.depts_scope(filter.user.depts) if filter.depts.present?
 
       case filter.user.access_scope(:kapa_forms)
         when 30

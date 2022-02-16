@@ -67,6 +67,7 @@ module Kapa::FormsControllerBase
   def index
     @filter = filter
     @forms = Kapa::Form.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+    @form_templates = Kapa::FormTemplate.all
   end
 
   def export
