@@ -33,6 +33,7 @@ module Kapa::UsersControllerBase
   def create
     if params[:person]
       @person = Kapa::Person.new(person_params)
+      @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext]
       unless @person.save
         flash[:alert] = error_message_for(@person)
         redirect_to new_kapa_user_path and return false
@@ -44,11 +45,8 @@ module Kapa::UsersControllerBase
         redirect_to kapa_users_path and return false
       end
     elsif params[:person_id]  
-      @person = Kapa::Person.find(params[:person_id]  )
+      @person = Kapa::Person.find(params[:person_id])
     end
-
-    @person.attributes = person_params
-    @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
 
     unless @person.save
       flash[:success] = nil
