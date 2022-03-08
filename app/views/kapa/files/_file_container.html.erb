@@ -6,6 +6,6 @@
   <% end %>
 <% else %>
   <div class="well text-center">
-    A preview is not available for this file. To download this file to your computer, click "Download" below.
+    A preview is not available for this file. To download this file to your computer, <%=link_to "download this file.", kapa_file_url(:id => file, :format => :file) %>
   </div>
 <% end %>
