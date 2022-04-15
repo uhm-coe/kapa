@@ -70,7 +70,7 @@ module Kapa::TextBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      texts = Kapa::Text.eager_load({:users => :person}, :person).order("texts.created_at DESC")
+      texts = Kapa::Text.eager_load({:users => :person}, :person).where(:active => true).order("texts.created_at DESC")
       texts = texts.where("texts.term" => filter.term) if filter.text_term.present?
       texts = texts.where("texts.type" => filter.text_type.to_s) if filter.text_type.present?
       texts = texts.where("texts.lock" => filter.lock) if filter.lock.present?
