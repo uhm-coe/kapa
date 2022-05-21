@@ -256,8 +256,7 @@ module Kapa::KapaModelBase
     end
 
     def csv_format
-      #This method should be implemented in subclasses to define csv data.
-      {}
+      self.attribute_names.each_with_object({}) {|a, h| h[a.to_sym] = [a.to_sym]}
     end
 
     def find(id)

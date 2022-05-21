@@ -71,7 +71,7 @@ module Kapa::FormTemplatesControllerBase
 
   def export
     @filter = filter
-    send_data Kapa::FormTemplate.to_table(:as => :csv, :filter => @filter, :format => export_format),
+    send_data Kapa::FormTemplate.to_table(:as => :csv, :filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
               :filename => "form_templates.csv"
@@ -80,19 +80,5 @@ module Kapa::FormTemplatesControllerBase
   private
   def form_template_params
     params.require(:form_template).permit(:title, :type, :reference_url, :note, :attachment, :template_path, :start_term, :end_term, :dept, :depts => [])
-  end
-
-  def export_format
-    {
-      :id => [:id],  
-      :type => [:type], 
-      :attachment => [:attachment], 
-      :dept => [:dept], 
-      :note => [:note], 
-      :template_path => [:template_path], 
-      :title => [:title], 
-      :yml => [:yml],
-      :json => [:json]
-    }
   end
 end

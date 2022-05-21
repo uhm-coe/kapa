@@ -52,6 +52,14 @@ module Kapa::TextTemplatesControllerBase
     redirect_to kapa_text_templates_path
   end
 
+  def export
+    @filter = filter
+    send_data Kapa::TextTemplate.to_table(:as => :csv, :filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "text_templates.csv"
+  end
+
   def text_template_params
     params.require(:text_template).permit(:type, :title, :body, :active, :template_path, :dept, :depts => [])
   end
