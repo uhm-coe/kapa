@@ -131,17 +131,17 @@ module Kapa::UserBase
       return users
     end
 
-    def csv_format
-      {:uid => [:uid],
-       :id_number => [:person, :id_number],
-       :last_name => [:person, :last_name],
-       :first_name => [:person, :first_name],
-       :position => [:position],
-       :primary_dept => [:primary_dept],
-       :role => [:role],
-       :status => [:status],
-       :dept => [:dept, [:join, ","]],
-       :category => [:category]}
-    end
+    # def csv_format
+    #   {:uid => [:uid],
+    #    :id_number => [:person, :id_number],
+    #    :last_name => [:person, :last_name],
+    #    :first_name => [:person, :first_name],
+    #    :position => [:position],
+    #    :primary_dept => [:primary_dept],
+    #    :role => [:role],
+    #    :status => [:status],
+    #    :dept => [:dept, [:join, ","]],
+    #    :category => [:category]}
+    # end
   end
 end

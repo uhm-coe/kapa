@@ -234,7 +234,12 @@ module Kapa::KapaModelBase
 
     def to_table(options = {})
       objects = self.search(options)
-      format = options[:format] ? options[:format] : self.csv_format(options)
+      if options[:format]
+        format = options[:format]
+      else
+        #default format to dump all columns   
+        format = self.attribute_names.each_with_object({}) {|a, h|  h[a.to_sym] = [a.to_sym]}
+      end
       excluded_keys = options[:exclude] || []
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
@@ -242,7 +247,14 @@ module Kapa::KapaModelBase
         CSV.generate do |csv|
           csv << keys
           objects.each do |o|
-            csv << keys.collect {|k| o.rsend(*format[k])}
+            csv << keys.collect {|k| 
+              value = o.rsend(*format[k])
+              if value.is_a? Array
+                value.join(",")
+              else
+                value
+              end
+            }
           end
         end
       else
@@ -252,17 +264,6 @@ module Kapa::KapaModelBase
           table << keys.collect {|k| o.rsend(*format[k]) }
         end
         return table
-      end
-    end
-
-    def csv_format(options = {})
-      logger.debug "*DEBUG* #{options}"
-      self.attribute_names.each_with_object({}) do |a, h| 
-        if options[:arrays] and a =~ options[:arrays]
-          h[a.to_sym] = [a.to_sym, [:join, ","]]
-        else  
-          h[a.to_sym] = [a.to_sym]
-        end
       end
     end
 

@@ -71,19 +71,19 @@ module Kapa::FormBase
       return forms
     end
 
-    def csv_format
-      {:id_number => [:person, :id_number],
-       :last_name => [:person, :last_name],
-       :first_name => [:person, :first_name],
-       :cur_street => [:person, :cur_street],
-       :cur_city => [:person, :cur_city],
-       :cur_state => [:person, :cur_state],
-       :cur_postal_code => [:person, :cur_postal_code],
-       :cur_phone => [:person, :cur_phone],
-       :email => [:person, :email],
-       :updated => [:updated_at],
-       :submitted => [:submitted_at],
-       :lock =>[:lock]}
-    end
+    # def csv_format
+    #   {:id_number => [:person, :id_number],
+    #    :last_name => [:person, :last_name],
+    #    :first_name => [:person, :first_name],
+    #    :cur_street => [:person, :cur_street],
+    #    :cur_city => [:person, :cur_city],
+    #    :cur_state => [:person, :cur_state],
+    #    :cur_postal_code => [:person, :cur_postal_code],
+    #    :cur_phone => [:person, :cur_phone],
+    #    :email => [:person, :email],
+    #    :updated => [:updated_at],
+    #    :submitted => [:submitted_at],
+    #    :lock =>[:lock]}
+    # end
   end
 end
