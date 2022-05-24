@@ -234,7 +234,7 @@ module Kapa::KapaModelBase
 
     def to_table(options = {})
       objects = self.search(options)
-      format = options[:format] ? options[:format] : self.csv_format
+      format = options[:format] ? options[:format] : self.csv_format(options)
       excluded_keys = options[:exclude] || []
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
@@ -255,8 +255,14 @@ module Kapa::KapaModelBase
       end
     end
 
-    def csv_format
-      self.attribute_names.each_with_object({}) {|a, h| h[a.to_sym] = [a.to_sym]}
+    def csv_format(options = {})
+      self.attribute_names.each_with_object({}) do |a, h| 
+        if options[:arrays] and options[:arrays].include?(a.to_sym)
+          h[a.to_sym] = [a.to_sym, [:join, ","]]
+        else  
+          h[a.to_sym] = [a.to_sym]
+        end
+      end
     end
 
     def find(id)
