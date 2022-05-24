@@ -256,8 +256,9 @@ module Kapa::KapaModelBase
     end
 
     def csv_format(options = {})
+      logger.debug "*DEBUG* #{options}"
       self.attribute_names.each_with_object({}) do |a, h| 
-        if options[:arrays] and options[:arrays].include?(a.to_sym)
+        if options[:arrays] and a =~ options[:arrays]
           h[a.to_sym] = [a.to_sym, [:join, ","]]
         else  
           h[a.to_sym] = [a.to_sym]
