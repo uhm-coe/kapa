@@ -249,7 +249,9 @@ module Kapa::KapaModelBase
           objects.each do |o|
             csv << keys.collect {|k| 
               value = o.rsend(*format[k])
-              if value.is_a? Array
+              if k.to_s == "yml"
+                o.yml_before_type_cast
+              elsif value.is_a? Array
                 value.join(",")
               else
                 value
