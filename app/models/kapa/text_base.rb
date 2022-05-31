@@ -17,11 +17,15 @@ module Kapa::TextBase
     "LT" + self.id.to_s.rjust(8, '0')
   end
 
-  def type
+  def document_type
     return "Letter"
   end
 
-  def date
+  def document_title
+    self.title
+  end
+
+  def document_date
     self.submitted_at
   end
 

@@ -6,9 +6,9 @@ module Kapa::TextsControllerBase
     @text_ext = @text.ext
     @person = @text.person
     @person_ext = @person.ext if @person
-    @document_title = @text.title
+    @document_title = @text.document_title
     @document_id = @text.document_id
-    @document_date = @text.date
+    @document_date = @text.document_date
 
     render :layout => "/kapa/layouts/document"
   end
@@ -56,9 +56,9 @@ module Kapa::TextsControllerBase
     @text_ext = @text.ext
     @person = @text.person
     @person_ext = @person.ext if @person
-    @document_title = @text.title
+    @document_title = @text.document_title
     @document_id = @text.document_id
-    @document_date = @text.date
+    @document_date = @text.document_date
 
     unless @text.destroy
       flash[:alert] = error_message_for(@text)

@@ -43,7 +43,7 @@ class FormTest < ActiveSupport::TestCase
   test "returns submitted_at as date" do
     form = Form.new(:submitted_at => DateTime.now)
     form.save
-    assert_equal form.submitted_at, form.date
+    assert_equal form.submitted_at, form.document_date
   end
 
   test "returns type description as name if term is blank" do

@@ -11,9 +11,9 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @document_title = @file.title
+    @document_title = @file.document_title
     @document_id = @file.document_id
-    @document_date = @file.date
+    @document_date = @file.document_date
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}
@@ -72,9 +72,9 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @document_title = @file.title
+    @document_title = @file.document_title
     @document_id = @file.document_id
-    @document_date = @file.date
+    @document_date = @file.document_date
 
     unless @file.destroy
       flash[:alert] = error_message_for(@file)

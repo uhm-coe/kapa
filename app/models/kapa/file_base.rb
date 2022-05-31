@@ -15,15 +15,15 @@ module Kapa::FileBase
     "FL" + self.id.to_s.rjust(9, '0')
   end
 
-  def type
+  def document_type
     "File"
   end
 
-  def title
+  def document_title
     self.name
   end
 
-  def date
+  def document_date
     self.updated_at
   end
 

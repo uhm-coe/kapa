@@ -7,9 +7,9 @@ module Kapa::FormsControllerBase
     @form_template = @form.form_template
     @person = @form.person
     @person_ext = @person.ext
-    @document_title = @form.title
+    @document_title = @form.document_title
     @document_id = @form.document_id
-    @document_date = @form.date
+    @document_date = @form.document_date
     render :layout => "/kapa/layouts/document"
   end
 
@@ -51,9 +51,9 @@ module Kapa::FormsControllerBase
     @form = Kapa::Form.find params[:id]
     @person = @form.person
     @person_ext = @person.ext
-    @document_title = @form.title
+    @document_title = @form.document_title
     @document_id = @form.document_id
-    @document_date = @form.date
+    @document_date = @form.document_date
 
     unless @form.destroy
       flash[:alert] = error_message_for(@form)

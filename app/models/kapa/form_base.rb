@@ -16,11 +16,11 @@ module Kapa::FormBase
     "FR" + self.id.to_s.rjust(8, '0')
   end
 
-  def type
+  def document_type
     return "Form"
   end
 
-  def title
+  def document_title
     if self.term.blank?
       self.form_template.title
     else
@@ -28,7 +28,7 @@ module Kapa::FormBase
     end
   end
 
-  def date
+  def document_date
     self.submitted_at
   end
 
