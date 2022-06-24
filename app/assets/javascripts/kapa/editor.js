@@ -11,22 +11,23 @@
 jQuery(document).ready(function($) {
 
   $('.editor').each(function(index, elem){
-    textarea = $(elem)
     editor_id = elem.id + '_editor';
+    textarea = $(elem)
     textarea.hide();
     textarea.parent().append('<div id="' + editor_id + '" class="editor_area"></div>');
     var editor = ace.edit(editor_id);
-    editor.setValue(textarea.val());
-    editor.setTheme("ace/theme/chrome")
-    editor.session.setOptions({
+    editor.setOptions({
+      theme: "ace/theme/chrome",
       mode: "ace/mode/liquid",
       tabSize: 2,
       useSoftTabs: true,
-      wrap: true
-    });
+      wrap: true,
+      showPrintMargin: false
+    })
     editor.getSession().on("change", function () {
       textarea.val(editor.getSession().getValue());
     });
+    editor.setValue(textarea.val());
   });
 
   $('button[data-submit="#update_contents_form"]').off('click');
