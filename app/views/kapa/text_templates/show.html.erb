@@ -14,7 +14,7 @@
 
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
     <%=f.text_field :title %>
-    <%=f.text_area :body, :class => "editor", :rows => 30  %>
+    <%=f.text_area :body, :class => "editor", :rows => 30 %>
     <%=f.text_field :template_path %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
     <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)} if update? %>
