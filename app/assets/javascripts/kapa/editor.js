@@ -4,28 +4,28 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require codemirror/lib/codemirror
-//= require codemirror/mode/javascript/javascript
-//= require codemirror/mode/css/css
-//= require codemirror/mode/xml/xml
-//= require codemirror/mode/htmlmixed/htmlmixed
-//= require codemirror/addon/display/autorefresh
-//= require kapa/liquid
+//= require ace-builds/src-noconflict/ace
+//= require ace-builds/src-noconflict/mode-liquid
+//= require ace-builds/src-noconflict/theme-chrome
 
 jQuery(document).ready(function($) {
 
   $('.editor').each(function(index, elem){
-    var cm = CodeMirror.fromTextArea(elem, {
-      lineWrapping: true,
-      mode: "liquid",
-      theme: "default",
+    textarea = $(elem)
+    editor_id = elem.id + '_editor';
+    textarea.hide();
+    textarea.parent().append('<div id="' + editor_id + '" class="editor_area"></div>');
+    var editor = ace.edit(editor_id);
+    editor.setValue(textarea.val());
+    editor.setTheme("ace/theme/chrome")
+    editor.session.setOptions({
+      mode: "ace/mode/liquid",
       tabSize: 2,
-      lineNumbers: true,
-      autoRefresh: true,
+      useSoftTabs: true,
+      wrap: true
     });
-    cm.setSize(null, 800);
-    cm.on('change',function(cm){
-      cm.save();
+    editor.getSession().on("change", function () {
+      textarea.val(editor.getSession().getValue());
     });
   });
 
