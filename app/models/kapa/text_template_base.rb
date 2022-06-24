@@ -9,15 +9,14 @@ module Kapa::TextTemplateBase
     locals = options[:locals] ? options[:locals] : {}
     html = Liquid::Template.parse(self.body, :error_mode => :strict).render(options[:locals].stringify_keys).html_safe
     logger.debug "*DEBUG* #{html}"
-    if options[:layout] 
-      ApplicationController.render(:html => html, :layout => "kapa/layouts/pdf")
+    if self.template_path.present?
+      ApplicationController.render(:html => html, :layout => self.template_path)
     else
       html
     end
   end
 
   def to_pdf(options = {})
-    options[:layout] = "kapa/layouts/pdf" if options[:layout].nil?
     content_html = self.to_html(options)
     content_pdf = WickedPdf.new.pdf_from_string(content_html)
     @file = Kapa::File.new
