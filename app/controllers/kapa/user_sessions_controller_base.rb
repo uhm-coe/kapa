@@ -5,7 +5,7 @@ module Kapa::UserSessionsControllerBase
     skip_before_action :validate_url
     skip_before_action :validate_user
     skip_before_action :validate_permission
-    before_action :validate_user, :only => :show
+    before_action :validate_user, :only => [:show, :destroy]
   end
   
   def new
