@@ -60,6 +60,14 @@ module Kapa::TextTemplatesControllerBase
               :filename => "text_templates.csv"
   end
 
+  def preview
+    @text_template = Kapa::TextTemplate.find(params[:id])
+    send_data WickedPdf.new.pdf_from_string(@text_template.to_html),
+              :type => "application/pdf",
+              :disposition => "inline",
+              :filename => "#{@text_template.title}_preview.pdf"
+  end
+
   def text_template_params
     params.require(:text_template).permit(:type, :title, :body, :active, :template_path, :dept, :depts => [])
   end
