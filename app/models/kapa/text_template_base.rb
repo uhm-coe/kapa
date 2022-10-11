@@ -7,10 +7,10 @@ module Kapa::TextTemplateBase
 
   def to_html(options = {})
     locals = options[:locals] ? options[:locals] : {}
+    locals[:dept] = self.dept if self.dept.present?
     html = Liquid::Template.parse(self.body, :error_mode => :strict).render(locals.stringify_keys).html_safe
-    logger.debug "*DEBUG* #{html}"
     if self.template_path.present?
-      ApplicationController.render(:html => html, :layout => self.template_path)
+      ApplicationController.render(:html => html, :layout => self.template_path, :assigns => locals)
     else
       html
     end
