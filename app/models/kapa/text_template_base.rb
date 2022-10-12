@@ -17,16 +17,18 @@ module Kapa::TextTemplateBase
   end
 
   def to_pdf(options = {})
-    content_html = self.to_html(options)
-    content_pdf = WickedPdf.new.pdf_from_string(content_html)
+    WickedPdf.new.pdf_from_string(self.to_html(options))
+  end
+
+  def to_file(options = {})
     @file = Kapa::File.new
     @file.name = "#{self.title}.pdf"
-    @file.data = StringIO.new(content_pdf)
+    @file.data = StringIO.new(self.to_pdf(options))
     @file.data_file_name = @file.name
     @file.data_content_type = "application/pdf"
     return @file
   end
-
+  
   class_methods do
 
     def selections(options = {})

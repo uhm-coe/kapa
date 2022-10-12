@@ -63,7 +63,7 @@ module Kapa::TextTemplatesControllerBase
   def preview
     @text_template = Kapa::TextTemplate.find(params[:id])
     logger.debug "*DEBUG* #{@text_template.to_html}"
-    send_data WickedPdf.new.pdf_from_string(@text_template.to_html),
+    send_data @text_template.to_pdf,
               :type => "application/pdf",
               :disposition => "inline",
               :filename => "#{@text_template.title}_preview.pdf"
