@@ -59,12 +59,9 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form property", :modal_form_id => "edit_form_form"} do %>
     <%=bootstrap_form_for(:form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => "edit_form_form"}) do |f| %>
+      <%=f.select(:lock, [["Lock", "Y"], ["Unlock", "N"]], {:label => "Lock status"}, :multiple => true) if manage? :kapa_files %>
+      <%=f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
       <%=f.text_area :note, :label => "Note", :size => "5x7" %>
-      <div class="row form-block">
-        <div class="col-sm-4">
-          <%=f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
-        </div>
-      </div>
     <% end %>
   <% end %>
 
