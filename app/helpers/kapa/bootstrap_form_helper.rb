@@ -38,6 +38,10 @@ module Kapa::BootstrapFormHelper
     end
     flash_messages.join("\n").html_safe
   end
+  
+  def tooltip(text)
+    content_tag(:a, content_tag(:i, nil, :class => "glyphicon glyphicon-info-sign"), "data-toggle" => "tooltip", "data-placement" => "right", :title => text)
+  end 
 
   class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 

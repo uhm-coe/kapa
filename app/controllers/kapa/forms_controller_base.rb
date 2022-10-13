@@ -1,6 +1,10 @@
 module Kapa::FormsControllerBase
   extend ActiveSupport::Concern
 
+  included do
+    after_action :ensure_primary_dept_is_included, :only => [:create, :update]
+  end
+
   def show
     @form = Kapa::Form.find params[:id]
     @form_ext = @form.ext
@@ -77,6 +81,13 @@ module Kapa::FormsControllerBase
               :disposition => "inline",
               :filename => "forms_#{Date.today}.csv"
   end
+
+  def ensure_primary_dept_is_included
+    if @form.depts.exclude?(@current_user.primary_dept)
+      @form.depts = @form.depts + [@current_user.primary_dept]
+      @form.save
+    end
+  end  
 
   private
   def form_param
