@@ -57,7 +57,7 @@
             <td><%= d.type %></td>
             <td><%= d.name %></td>
             <td><%= d.date %></td>
-            <td class="right"><%= link_to "Show", kapa_file_path(:id => d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+            <td class="right"><%=button_to_link "", kapa_file_path(:id => d), :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank" %></td>
           </tr>
         <% end %>
         </tbody>

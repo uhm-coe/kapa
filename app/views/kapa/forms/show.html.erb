@@ -8,7 +8,7 @@
       </button>
       <ul class="dropdown-menu">
         <li><%=link_to("Edit form properties", "#", "data-toggle" => "modal", "data-target" => "#edit_form_dialog") %></li>
-        <li><%=link_to("Add an attachemnt", "#", "data-toggle" => "modal", "data-target" => "#add_attachment_dialog") %></li>
+        <% if @form_template.attachment%><li><%=link_to("Add an attachemnt", "#", "data-toggle" => "modal", "data-target" => "#add_attachment_dialog") %></li><% end %>
         <li><%=link_to("Delete", kapa_form_path(:id => @form), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
       </ul>
     </div>
@@ -42,6 +42,7 @@
                 <td><%= d.name %></td>
                 <td><%= format_date d.date %></td>
                 <td class="right"><%= link_to "Show", kapa_file_path(:id => d), :target => "_blank", :class => "btn btn-default btn-xs" %></td>
+                <td class="right"><%=button_to_link "",kapa_file_path(:id => d), :target => "_blank", :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
               </tr>
             <% end %>
             </tbody>
@@ -58,12 +59,9 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_form_dialog", :modal_title => "Edit form property", :modal_form_id => "edit_form_form"} do %>
     <%=bootstrap_form_for(:form, :url => kapa_form_path(:id => @form), :html => {:method => :put, :id => "edit_form_form"}) do |f| %>
+      <%=f.select(:lock, [["Lock", "Y"], ["Unlock", "N"]], {:label => "Lock status"}, :multiple => true) if manage? :kapa_files %>
+      <%=f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
       <%=f.text_area :note, :label => "Note", :size => "5x7" %>
-      <div class="row form-block">
-        <div class="col-sm-4">
-          <%=f.select :lock, [["Lock", "Y"], ["Unlock", "N"]], :label => "Lock status" %>
-        </div>
-      </div>
     <% end %>
   <% end %>
 

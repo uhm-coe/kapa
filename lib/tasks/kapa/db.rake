@@ -12,7 +12,7 @@ namespace :kapa do
     desc 'List all fields in the specified model, i.e., rake db:attr model=kapa/person'
     task :attr => :environment do
       puts ENV['model'].classify.constantize.attribute_names.map(&:to_sym).sort.inspect
-    end
+end
 
 
     desc 'Backups the database to db/backup'

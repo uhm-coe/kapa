@@ -37,7 +37,7 @@
     <% for text in @texts %>
       <tr>
         <td><%=text.document_id%></td>
-        <td><%=h text.title %></td>
+        <td><%=h text.document_title %></td>
         <td><%=link_to abbr(text.person.full_name), kapa_person_path(:id => text.person) if text.person %></td>
         <td><%=time_ago_in_words text.updated_at if text.updated_at %> ago</td>
         <td><%=format_date text.submitted_at %></td>

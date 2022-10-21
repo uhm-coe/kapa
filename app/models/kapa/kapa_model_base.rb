@@ -103,7 +103,7 @@ module Kapa::KapaModelBase
   end
 
   def accessible?(user)
-    unless user.check_permission(10, kapa_model_name)
+    unless user.check_permission(kapa_model_name, "R")
       return false
     end
 
@@ -111,8 +111,8 @@ module Kapa::KapaModelBase
       when 30
         return true
       when 20
-        depts = self.dept.is_a?(Array) ? self.dept : [self.dept]
-        return (user.dept.any? {|dept| depts.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
+#        depts = self.dept.is_a?(Array) ? self.dept : [self.dept]
+        return (user.depts.any? {|dept| depts.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
       when 10
         return self.user_assignments.exists?(:user_id => user.id)
       else
@@ -234,7 +234,12 @@ module Kapa::KapaModelBase
 
     def to_table(options = {})
       objects = self.search(options)
-      format = options[:format] ? options[:format] : self.csv_format
+      if options[:format]
+        format = options[:format]
+      else
+        #default format to dump all columns   
+        format = self.attribute_names.each_with_object({}) {|a, h|  h[a.to_sym] = [a.to_sym]}
+      end
       excluded_keys = options[:exclude] || []
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
@@ -242,7 +247,16 @@ module Kapa::KapaModelBase
         CSV.generate do |csv|
           csv << keys
           objects.each do |o|
-            csv << keys.collect {|k| o.rsend(*format[k])}
+            csv << keys.collect {|k| 
+              value = o.rsend(*format[k])
+              if k.to_s == "yml"
+                o.yml_before_type_cast
+              elsif value.is_a? Array
+                value.join(",")
+              else
+                value
+              end
+            }
           end
         end
       else
@@ -253,11 +267,6 @@ module Kapa::KapaModelBase
         end
         return table
       end
-    end
-
-    def csv_format
-      #This method should be implemented in subclasses to define csv data.
-      {}
     end
 
     def find(id)

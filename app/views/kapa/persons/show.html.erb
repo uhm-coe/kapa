@@ -61,7 +61,7 @@
                <td><%=format_date d.date %></td>
                <td><%=d.depts.join(", ") %></td>
                <td><%=d.status_desc %></td>
-               <td class="right"><%=link_to "Show", document_path(d), :class => "btn btn-default btn-xs", :target => "_blank" %></td>
+               <td class="right"><%=button_to_link "", document_path(d), :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank" %></td>
              </tr>
            <% end %>
           </table>

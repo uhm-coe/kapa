@@ -69,6 +69,14 @@ module Kapa::FormTemplatesControllerBase
     @form_templates = Kapa::FormTemplate.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
+  def export
+    @filter = filter
+    send_data Kapa::FormTemplate.to_table(:as => :csv, :filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "form_templates.csv"
+  end
+
   private
   def form_template_params
     params.require(:form_template).permit(:title, :type, :reference_url, :note, :attachment, :template_path, :start_term, :end_term, :dept, :depts => [])

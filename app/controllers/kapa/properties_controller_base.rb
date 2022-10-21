@@ -45,6 +45,16 @@ module Kapa::PropertiesControllerBase
     @properties = Kapa::Property.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
+
+  def export
+    @filter = filter
+    send_data Kapa::Property.to_table(:as => :csv, :filter => @filter),
+              :type => "application/csv",
+              :disposition => "inline",
+              :filename => "properties.csv"
+  end
+
+  private
   def property_params
     params.require(:property).permit(:name, :code, :description, :description_short, :category, :sequence, :active, :dept, :depts => [])
   end

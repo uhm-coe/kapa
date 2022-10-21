@@ -49,11 +49,13 @@ module Kapa::UserBase
   end
 
   def status_desc
-    Rails.configuration.user_status[status]
+    user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
+    user_status[0] if user_status
   end
 
   def category_desc
-    Rails.configuration.user_categories[category]
+    user_category = Rails.configuration.user_category.select {|s| s[1] == category.to_s}.first
+    user_category[0] if user_category
   end
 
   def active?
@@ -129,17 +131,17 @@ module Kapa::UserBase
       return users
     end
 
-    def csv_format
-      {:uid => [:uid],
-       :id_number => [:person, :id_number],
-       :last_name => [:person, :last_name],
-       :first_name => [:person, :first_name],
-       :position => [:position],
-       :primary_dept => [:primary_dept],
-       :role => [:role],
-       :status => [:status],
-       :dept => [:dept, [:join, ","]],
-       :category => [:category]}
-    end
+    # def csv_format
+    #   {:uid => [:uid],
+    #    :id_number => [:person, :id_number],
+    #    :last_name => [:person, :last_name],
+    #    :first_name => [:person, :first_name],
+    #    :position => [:position],
+    #    :primary_dept => [:primary_dept],
+    #    :role => [:role],
+    #    :status => [:status],
+    #    :dept => [:dept, [:join, ","]],
+    #    :category => [:category]}
+    # end
   end
 end

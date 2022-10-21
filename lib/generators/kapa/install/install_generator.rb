@@ -8,7 +8,6 @@ class Kapa::InstallGenerator < Rails::Generators::Base
 
     copy_from_dummy("config/initializers/attachments.rb")
     copy_from_dummy("config/initializers/cas.rb")
-    copy_from_dummy("config/initializers/datasources.rb")
     copy_from_dummy("config/initializers/filter_parameter_logging.rb")
     copy_from_dummy("config/initializers/kapa.rb")
     copy_from_dummy("config/initializers/ldap.rb")

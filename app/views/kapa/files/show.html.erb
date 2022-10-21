@@ -26,8 +26,8 @@
     <%=bootstrap_form_for(:file, :url => kapa_file_path(:id => @file), :html => {:method => :put, :id => "edit_file_form"}) do |f| %>
 
       <%=f.text_field :name, :label => "Title" %>
+      <%=f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
       <%=f.text_area :note, :text => "Note", :size => "5x7" %>
-      <%= f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
 
     <% end %>
   <% end %>

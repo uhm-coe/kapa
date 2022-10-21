@@ -17,11 +17,15 @@ module Kapa::TextBase
     "LT" + self.id.to_s.rjust(8, '0')
   end
 
-  def type
+  def document_type
     return "Letter"
   end
 
-  def date
+  def document_title
+    self.title
+  end
+
+  def document_date
     self.submitted_at
   end
 
@@ -70,7 +74,7 @@ module Kapa::TextBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      texts = Kapa::Text.eager_load({:users => :person}, :person).order("texts.created_at DESC")
+      texts = Kapa::Text.eager_load({:users => :person}, :person).where(:active => true).order("texts.created_at DESC")
       texts = texts.where("texts.term" => filter.term) if filter.text_term.present?
       texts = texts.where("texts.type" => filter.text_type.to_s) if filter.text_type.present?
       texts = texts.where("texts.lock" => filter.lock) if filter.lock.present?

@@ -16,11 +16,11 @@ module Kapa::FormBase
     "FR" + self.id.to_s.rjust(8, '0')
   end
 
-  def type
+  def document_type
     return "Form"
   end
 
-  def title
+  def document_title
     if self.term.blank?
       self.form_template.title
     else
@@ -28,7 +28,7 @@ module Kapa::FormBase
     end
   end
 
-  def date
+  def document_date
     self.submitted_at
   end
 
@@ -51,10 +51,11 @@ module Kapa::FormBase
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      forms = Kapa::Form.eager_load({:users => :person}, :person).order("forms.submitted_at DESC")
+      forms = Kapa::Form.eager_load({:users => :person}, :person, :form_template).where(:active => true).order("forms.submitted_at DESC")
+      forms = forms.where("forms.form_template_id" => filter.form_template_id) if filter.form_template_id.present?
       forms = forms.where("forms.term" => filter.term) if filter.form_term.present?
-      forms = forms.where("forms.type" => filter.form_type.to_s) if filter.form_type.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
+      forms = forms.depts_scope(filter.user.depts) if filter.depts.present?
 
       case filter.user.access_scope(:kapa_forms)
         when 30
@@ -70,19 +71,19 @@ module Kapa::FormBase
       return forms
     end
 
-    def csv_format
-      {:id_number => [:person, :id_number],
-       :last_name => [:person, :last_name],
-       :first_name => [:person, :first_name],
-       :cur_street => [:person, :cur_street],
-       :cur_city => [:person, :cur_city],
-       :cur_state => [:person, :cur_state],
-       :cur_postal_code => [:person, :cur_postal_code],
-       :cur_phone => [:person, :cur_phone],
-       :email => [:person, :email],
-       :updated => [:updated_at],
-       :submitted => [:submitted_at],
-       :lock =>[:lock]}
-    end
+    # def csv_format
+    #   {:id_number => [:person, :id_number],
+    #    :last_name => [:person, :last_name],
+    #    :first_name => [:person, :first_name],
+    #    :cur_street => [:person, :cur_street],
+    #    :cur_city => [:person, :cur_city],
+    #    :cur_state => [:person, :cur_state],
+    #    :cur_postal_code => [:person, :cur_postal_code],
+    #    :cur_phone => [:person, :cur_phone],
+    #    :email => [:person, :email],
+    #    :updated => [:updated_at],
+    #    :submitted => [:submitted_at],
+    #    :lock =>[:lock]}
+    # end
   end
 end

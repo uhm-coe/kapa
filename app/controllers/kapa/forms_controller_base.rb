@@ -1,15 +1,19 @@
 module Kapa::FormsControllerBase
   extend ActiveSupport::Concern
 
+  included do
+    after_action :ensure_primary_dept_is_included, :only => [:create, :update]
+  end
+
   def show
     @form = Kapa::Form.find params[:id]
     @form_ext = @form.ext
     @form_template = @form.form_template
     @person = @form.person
     @person_ext = @person.ext
-    @document_title = @form.title
+    @document_title = @form.document_title
     @document_id = @form.document_id
-    @document_date = @form.date
+    @document_date = @form.document_date
     render :layout => "/kapa/layouts/document"
   end
 
@@ -36,7 +40,6 @@ module Kapa::FormsControllerBase
 
   def create
     @form = Kapa::Form.new(form_param)
-    @form.dept = @current_user.primary_dept
 
     unless @form.save
       flash[:alert] = error_message_for(@form)
@@ -51,9 +54,9 @@ module Kapa::FormsControllerBase
     @form = Kapa::Form.find params[:id]
     @person = @form.person
     @person_ext = @person.ext
-    @document_title = @form.title
+    @document_title = @form.document_title
     @document_id = @form.document_id
-    @document_date = @form.date
+    @document_date = @form.document_date
 
     unless @form.destroy
       flash[:alert] = error_message_for(@form)
@@ -67,6 +70,7 @@ module Kapa::FormsControllerBase
   def index
     @filter = filter
     @forms = Kapa::Form.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+    @form_templates = Kapa::FormTemplate.all
   end
 
   def export
@@ -76,6 +80,13 @@ module Kapa::FormsControllerBase
               :disposition => "inline",
               :filename => "forms_#{Date.today}.csv"
   end
+
+  def ensure_primary_dept_is_included
+    if @form.depts.exclude?(@current_user.primary_dept)
+      @form.depts = @form.depts + [@current_user.primary_dept]
+      @form.save
+    end
+  end  
 
   private
   def form_param

@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'paperclip'
   s.add_dependency 'fastercsv'
   s.add_dependency 'net-ldap'
-  s.add_dependency 'sequel'
   s.add_dependency 'hashids'
   s.add_dependency 'will_paginate'
   s.add_dependency 'will_paginate-bootstrap'

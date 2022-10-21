@@ -2,7 +2,7 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_forms_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
-      <%=f.property_select :form_type, :name => :form, :include_blank => "Any", :label => "Form" %>
+      <%=f.select :form_template_id, @form_templates.collect {|t| [t.title, t.id]}, :include_blank => "Any", :label => "Form" %>
       <%=f.select :lock, [["Locked", "Y"], ["Unlocked", "N"]], :include_blank => "Any", :label => "Lock" %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
@@ -39,7 +39,7 @@
     <% for form in @forms %>
       <tr>
         <td><%=form.document_id %></td>
-        <td><%=form.title %></td>
+        <td><%=form.document_title %></td>
         <td><%=link_to abbr(form.person.full_name), kapa_person_path(:id => form.person) if form.person %></td>
         <td><%=time_ago_in_words form.updated_at if form.updated_at %> ago</td>
         <td><%=format_date form.submitted_at %></td>

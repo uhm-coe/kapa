@@ -8,16 +8,19 @@
 <% content_for(:box1) do %>
 
   <h4 class="section-header">
-    <%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
     <%=@text_template.title %>
   </h4>
 
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
     <%=f.text_field :title %>
-    <%=f.text_area :body, :id => "editor" %>
-    <%=f.text_field :template_path %>
+    <%=f.text_area :body, :class => "editor" %>
+    <%=f.text_field :template_path, :label => "Layout Path" %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
-    <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)} if update? %>
+    <%=f.property_select :dept %>
+    <%=render(:layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)}) do %>
+      <li><%=link_to "Preview", {:action => :preview, :id => @text_template}, :target => :blank %></li>
+    <% end if update?%>
   <% end %>
 
 <% end %>
