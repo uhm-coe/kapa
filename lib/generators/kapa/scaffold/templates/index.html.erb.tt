@@ -32,7 +32,7 @@
         <% attributes_names.each do |name| %>
           <td><%%=<%="#{singular_name}.#{name}"%> %></td>
         <% end %>
-        <td class="right"><%%=link_to "Show", {:action => :show, :id => <%= singular_name %>}, :class => "btn btn-default btn-xs" %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => <%= singular_name %>}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
       </tr>
     <%% end %>
     </tbody>
