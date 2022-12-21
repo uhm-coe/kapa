@@ -1,4 +1,4 @@
-module Kapa::BootstrapFormHelper
+module Kapa::BootstrapHelper
   ALERT_TYPES = [:success, :info, :warning, :danger] unless const_defined?(:ALERT_TYPES)
 
   def bootstrap_form_for(record, options = {}, &proc)
@@ -41,7 +41,31 @@ module Kapa::BootstrapFormHelper
   
   def tooltip(text)
     content_tag(:a, content_tag(:i, nil, :class => "glyphicon glyphicon-info-sign"), "data-toggle" => "tooltip", "data-placement" => "right", :title => text)
-  end 
+  end
+
+  def button_to_link(name = nil, options = nil, html_options = nil, &block)
+    options = "#" if options.nil?
+    name = "#{content_tag(:span, "", :class => html_options[:icon])} #{name}" if html_options[:icon]
+    if html_options[:class]
+      html_options[:class] = "btn #{html_options[:class]}"
+    else
+      html_options[:class] = "btn btn-light"
+    end
+    html_options[:role] = "button"
+    link_to(name.html_safe, options, html_options, &block)
+  end
+
+  def popover_button(name = nil, content = nil, html_options = nil, &block)
+    html_options[:tabindex] = "0"
+    html_options[:role] = "button"
+    html_options["data-content"] = content
+    html_options["data-toggle"] = "popover"
+    html_options["data-trigger"] = "focus"
+    html_options["data-html"] = true
+    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
+    html_options[:title] = html_options[:title] if html_options[:title]
+    button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)
+  end
 
   class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 

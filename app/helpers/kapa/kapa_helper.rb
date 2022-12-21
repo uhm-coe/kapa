@@ -153,30 +153,6 @@ module Kapa::KapaHelper
      end
   end
 
-  def button_to_link(name = nil, options = nil, html_options = nil, &block)
-    options = "#" if options.nil?
-    name = "#{content_tag(:span, "", :class => html_options[:icon])} #{name}" if html_options[:icon]
-    if html_options[:class]
-      html_options[:class] = "btn #{html_options[:class]}"
-    else
-      html_options[:class] = "btn btn-light"
-    end
-    html_options[:role] = "button"
-    link_to(name.html_safe, options, html_options, &block)
-  end
-
-  def popover_button(name = nil, content = nil, html_options = nil, &block)
-    html_options[:tabindex] = "0"
-    html_options[:role] = "button"
-    html_options["data-content"] = content
-    html_options["data-toggle"] = "popover"
-    html_options["data-trigger"] = "focus"
-    html_options["data-html"] = true
-    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
-    html_options[:title] = html_options[:title] if html_options[:title]
-    button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)
-  end
-
   def beta?
     Rails.application.secrets.release != "live"
   end
