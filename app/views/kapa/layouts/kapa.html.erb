@@ -7,82 +7,56 @@
   <title><%=content_for?(:title) ? yield(:title) : t(:kapa_brand) %></title>
   <%=csrf_meta_tags %>
 
-  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-  <!--[if lt IE 9]>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
-  <![endif]-->
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css" integrity="sha256-+omx7xYvI+/C0kfnQmjAIW8dDbTweWpbYHWzveX4ii4=" crossorigin="anonymous">
   <%=stylesheet_link_tag "kapa/kapa", :media => "all" %>
   <%=stylesheet_link_tag "application", :media => "all" %>
 
-  <!-- For third-generation iPad with high-resolution Retina display: -->
-  <!-- Size should be 144 x 144 pixels -->
-  <%#= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
-
-  <!-- For iPhone with high-resolution Retina display: -->
-  <!-- Size should be 114 x 114 pixels -->
-  <%#= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
-
-  <!-- For first- and second-generation iPad: -->
-  <!-- Size should be 72 x 72 pixels -->
-  <%#= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
-
-  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-  <!-- Size should be 57 x 57 pixels -->
-  <%#= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
-
-  <!-- For all other devices -->
-  <!-- Size should be 32 x 32 pixels -->
-  <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <%=javascript_include_tag "kapa/kapa" %>
   <%=javascript_include_tag "application" %>
   <%=yield :head %>
 </head>
 <body>
 
-<div class="navbar navbar-default navbar-static-top">
-  <div class="container">
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
     <%=link_to t(:kapa_brand), kapa_root_path, :class => "navbar-brand" %>
 
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <div class="navbar-collapse collapse navbar-responsive-collapse" id="menu">
       <% if @current_user %>
-        <ul class="nav navbar-nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <%=render :partial => "kapa/layouts/menu", :locals => {:current_user => @current_user} %>
         </ul>
 
-        <ul class="nav navbar-nav navbar-right">
-          <%= bootstrap_form_for(:filter, :url => kapa_persons_path, :html => {:method => :get, :class => "navbar-form navbar-left", :role => "search"}) do |f| %>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <%= bootstrap_form_for(:filter, :url => kapa_persons_path, :html => {:method => :get, :class => "d-flex", :role => "search"}) do |f| %>
             <div class="input-group">
               <%#=f.text_field :key, :label => :no, :placeholder => "Search Person", "data-toggle" => "tooltip", "data-placement" => "bottom", :title => "ID, Name, Email, or Phone", :class => "form-control"%>
-              <input name="filter[key]" type="text" class="form-control" placeholder = "Search Person" data-toggle = "tooltip" data-placement = "bottom" title = "ID, Name, Email, or Phone">
+              <input name="filter[key]" type="text" class="form-control"" placeholder = "Search Person" data-toggle = "tooltip" data-placement = "bottom" title = "ID, Name, Email, or Phone">
               <%=f.hidden_field :limit, :value => 10 %>
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">
+
+                <button type="submit" class="btn btn-outline-success">Search
                   <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </button>
-              </span>
             </div>
           <% end if read? :kapa_persons and access_dept?(:kapa_persons) %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><%=@current_user.uid %></strong> <b class="caret"></b></a>
+
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><strong><%=@current_user.uid %></strong></a>
             <ul class="dropdown-menu dropdown-menu-right">
-              <li><%= link_to "Logout", kapa_user_session_path, {:method => :delete} %></li>
+              <li><%= link_to "Logout", kapa_user_session_path, {:method => :delete, :class => "dropdown-item"} %></li>
             </ul>
           </li>
         </ul>
       <% end %>
+
     </div>
   </div>
-</div>
+</nav>
 
 <%unless Rails.application.secrets.release == "live" %><div class="alert alert-warning" role="alert">This is a beta system.  Any changes made this database system will be wiped periodically.  Please use for testing and/or training purposes only.</div><% end %>
 
@@ -94,7 +68,7 @@
   </div>
   <% if content_for?(:box1) %>
     <div class="row">
-      <div class="well col-lg-12">
+      <div class="card card-body bg-light">
       <%=yield :box1 %>
       </div>
     </div>
