@@ -110,12 +110,12 @@
   <h3>Users</h3>
 
   <div class="row">
-    <div class="col-sm-12 text-right">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-      <%=button_to_link "New", nil, :icon => "glyphicon-plus", "data-toggle" => "modal", "data-target" => "#add_user_dialog"  if create? %>
-      <% if import? %><button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button><% end %>
-      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
-      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+      <%=button_to_link "New", nil, :icon => "bi-plus", "data-toggle" => "modal", "data-target" => "#add_user_dialog"  if create? %>
+      <% if import? %><button type="button" class="btn btn-light" data-toggle="modal" data-target="#import_dialog">Import</button><% end %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "bi-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "bi-search" %>
     </div>
   </div>
 
@@ -142,7 +142,7 @@
           <td><%=user.status_desc %></td>
           <td><%=user.primary_dept %></td>
           <td><%=user.depts.join(", ") %></td>
-          <td class="right"><%=button_to_link "", {:action => :show, :id => user}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => user}, :icon => "bi-chevron-right", :class => "btn-light btn-xs pull-right" %></td>
         </tr>
       <% end %>
     </tbody>

@@ -3,8 +3,8 @@
   <div class="text-right">
 
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-option-vertical"></span>
+      <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="bi-option-vertical"></span>
       </button>
       <ul class="dropdown-menu">
         <li><%=link_to("Edit form properties", "#", "data-toggle" => "modal", "data-target" => "#edit_form_dialog") %></li>
@@ -12,8 +12,8 @@
         <li><%=link_to("Delete", kapa_form_path(:id => @form), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
       </ul>
     </div>
-    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
-    <%=button_to_link("Update", "#", "data-submit" => "#update_form_form", :icon => "glyphicon-ok-circle") %>
+    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "bi-ban-circle") %>
+    <%=button_to_link("Update", "#", "data-submit" => "#update_form_form", :icon => "bi-ok-circle") %>
 
   </div>
 
@@ -41,7 +41,7 @@
                 <td><%= d.type %></td>
                 <td><%= d.name %></td>
                 <td><%= format_date d.date %></td>
-                <td class="right"><%=button_to_link "",kapa_file_path(:id => d), :target => "_blank", :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
+                <td class="right"><%=button_to_link "",kapa_file_path(:id => d), :target => "_blank", :icon => "bi-chevron-right", :class => "btn-light btn-xs pull-right" %></td>
               </tr>
             <% end %>
             </tbody>

@@ -2,7 +2,7 @@
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", params[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", params[:return_path], :class => "bi-chevron-left" %>
     Notifications
   </h4>
 
@@ -23,7 +23,7 @@
           <td><%=@notification.title %></td>
           <td><%=abbr @notification.body.html_safe, 40 %></td>
           <td><%=@notification.read_at %></td>
-          <td class="right"><%=button_to_link "", {:action => :show, :id => @notification}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => @notification}, :icon => "bi-chevron-right", :class => "btn-light btn-xs pull-right" %></td>
         </tr>
       <% end %>
     </tbody>

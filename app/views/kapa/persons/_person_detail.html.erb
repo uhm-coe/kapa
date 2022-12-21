@@ -65,7 +65,7 @@
 <% end %>
 
 <h3>
-  <%=button_to_link "", "#person_detail_panel", "data-toggle" => "collapse", "aria-expanded" => false, "aria-controls" => "person_detail_panel", :icon => "glyphicon-user" %></li>
+  <%=button_to_link "", "#person_detail_panel", "data-toggle" => "collapse", "aria-expanded" => false, "aria-controls" => "person_detail_panel", :icon => "bi-user" %></li>
   <%=link_to_if read?(:kapa_persons), @person.full_name, kapa_person_path(:action => :show, :id => @person) %>
 </h3>
 
@@ -75,8 +75,8 @@
         <div class="panel-body">
           <div class="text-right">
             <div class="btn-group">
-              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="glyphicon glyphicon-pencil"></span>
+              <button type="button" class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="bi-pencil"></span>
                 Edit Profile
               </button>
               <ul class="dropdown-menu">

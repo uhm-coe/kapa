@@ -15,10 +15,10 @@
   <h3>Properties</h3>
 
   <div class="row">
-    <div class="col-sm-12 text-right">
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
-      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
-      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <%=button_to_link "New", {:action => :new}, :icon => "bi-plus" %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "bi-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "bi-search" %>
     </div>
   </div>
 
@@ -45,7 +45,7 @@
         <td><%=property.sequence %></td>
         <td><%=property.active %></td>
         <td><%=property.depts.join(", ") %></td>
-        <td class="right"><%=button_to_link "", {:action => :show, :id => property}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => property}, :icon => "bi-chevron-right", :class => "btn-light btn-xs pull-right" %></td>
       </tr>
     <% end %>
     </tbody>

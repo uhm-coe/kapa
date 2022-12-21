@@ -13,8 +13,8 @@
   <h3>Search Person: <%=@filter.key%></h3>
 
   <div class="row">
-    <div class="col-sm-12 text-right">
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <%=button_to_link "New", {:action => :new}, :icon => "bi-plus" if create? %>
     </div>
   </div>
 
@@ -35,7 +35,7 @@
           <td><%=person.full_name %></td>
           <td><%=abbr person.other_name, 30 %></td>
           <td><%=mail_to person.email %></td>
-          <td class="right"><%=button_to_link "", {:action => :show, :id => person}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => person}, :icon => "bi-chevron-right", :class => "btn-outline-primary btn-sm pull-right" %></td>
         </tr>
       <% end %>
     </tbody>

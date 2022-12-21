@@ -3,11 +3,11 @@
   <% unless @person.new_record? %>
   <div class="row">
     <div class="col-sm-6">
-        <%= f.text_field :id_number, :readonly => true, :addon => content_tag(:span, content_tag(:button, content_tag(:span, nil, :class => "glyphicon glyphicon-pencil", "aria-hidden" => "true"), :type => "button", :class => "btn btn-default", :id => "add_id_number"), :class => "input-group-btn"), :label => "Campus ID" %>
+        <%= f.text_field :id_number, :readonly => true, :addon => content_tag(:span, content_tag(:button, content_tag(:span, nil, :class => "bi-pencil", "aria-hidden" => "true"), :type => "button", :class => "btn btn-light", :id => "add_id_number"), :class => "input-group-btn"), :label => "Campus ID" %>
     </div>
 
     <div class="col-sm-6">
-        <%= f.text_field :email, :readonly => true, :addon => content_tag(:span, content_tag(:button, content_tag(:span, nil, :class => "glyphicon glyphicon-pencil", "aria-hidden" => "true"), :type => "button", :class => "btn btn-default", :id => "add_email"), :class => "input-group-btn"), :label => "Campus E-mail" %>
+        <%= f.text_field :email, :readonly => true, :addon => content_tag(:span, content_tag(:button, content_tag(:span, nil, :class => "bi-pencil", "aria-hidden" => "true"), :type => "button", :class => "btn btn-light", :id => "add_email"), :class => "input-group-btn"), :label => "Campus E-mail" %>
     </div>
   </div>
   <% end %>

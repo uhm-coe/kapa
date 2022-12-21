@@ -15,9 +15,9 @@
   <h3>Forms</h3>
 
   <div class="row">
-    <div class="col-sm-12 text-right">
-      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
-      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <%=button_to_link "Download", {:action => :export}, :icon => "bi-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "bi-search" %>
     </div>
   </div>
 
@@ -46,7 +46,7 @@
         <td><%=form.lock %></td>
         <td><%=form.depts.join(", ") %></td>
         <td><%=form.status_desc %></td>
-        <td class="right"><%=button_to_link "", {:action => :show, :id => form}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank"%></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => form}, :icon => "bi-chevron-right", :class => "btn-light btn-xs pull-right", :target => "_blank"%></td>
       </tr>
     <% end %>
     </tbody>
