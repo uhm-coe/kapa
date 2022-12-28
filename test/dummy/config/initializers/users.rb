@@ -4,9 +4,10 @@
 Rails.configuration.acts_as_authentic_options = {}
 
 # Define default user levels and scopes
-Rails.configuration.user_scopes = {"10" => "Assigned records", "20" => "Assigned or Dept records", "30" => "All records"}
-Rails.configuration.user_status = {"0" => "No Access", "10" => "Guest", "30" => "User"
-Rails.configuration.user_categories = {"ldap" => "LDAP", "local" => "Local"}
+Rails.configuration.user_levels = [["No Access", "0"], ["Read", "10"], ["Write", "20"], ["Manage", "30"]]
+Rails.configuration.user_scopes = [["Assigned records", "10"], ["Assigned or Dept records", "20"], ["All records", "30"]]
+Rails.configuration.user_status = [["No Access", "0"],["Active Guest" , "10"],["Active User" , "30"], ["Active User (Overridden)" , "40"]]
+Rails.configuration.user_categories = [["LDAP", "ldap"],["Local" , "local"]]
 
 # Define user roles (permissions to each kapa controller)
 # R = Read (index and show)
