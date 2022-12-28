@@ -20,7 +20,7 @@ module Kapa::FilesControllerBase
     @document_date = @file.document_date
 
     respond_to do |format|
-      format.html {render :layout => "/kapa/layouts/document"}
+      format.html {render :layout => "kapa/layouts/document"}
       format.file {
         disposition = params[:inline] ? "inline" : "attachment"
         send_file @file.data.path,
@@ -85,7 +85,7 @@ module Kapa::FilesControllerBase
     end
 
     flash[:notice] = "Letter was successfully deleted. Please close this tab."
-    render :layout => "/kapa/layouts/document"
+    render :layout => "kapa/layouts/document"
   end
 
   def export

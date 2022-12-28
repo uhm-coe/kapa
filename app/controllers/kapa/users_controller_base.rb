@@ -113,7 +113,7 @@ module Kapa::UsersControllerBase
 
   def export
     @filter = filter
-    send_data Kapa::User.to_csv(:filter => @filter),
+    send_data Kapa::User.to_table(:as => :csv, :filter => @filter),
               :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"

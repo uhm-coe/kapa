@@ -34,4 +34,4 @@ id,type,title,body,active,template_path
 
     <p>
         Auctor urna nunc id cursus metus aliquam. Interdum velit euismod in pellentesque massa placerat duis. Enim nec dui nunc mattis enim. Dui ut ornare lectus sit amet est placerat in egestas. Ipsum nunc aliquet bibendum enim facilisis gravida. Leo vel orci porta non pulvinar. Aliquam eleifend mi in nulla posuere. Ac turpis egestas maecenas pharetra convallis. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim. Tempor id eu nisl nunc mi ipsum faucibus. Faucibus nisl tincidunt eget nullam non nisi. Sit amet dictum sit amet justo donec enim diam vulputate. Facilisi etiam dignissim diam quis. Ut eu sem integer vitae justo eget magna.
-    </p>",1,/kapa/text_templates/default
+    </p>",1,kapa/layouts/letter

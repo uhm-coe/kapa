@@ -2,7 +2,7 @@ module Kapa::KapaControllerBase
   extend ActiveSupport::Concern
 
   included do
-    layout "/kapa/layouts/kapa"
+    layout "kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
     before_action :validate_url
