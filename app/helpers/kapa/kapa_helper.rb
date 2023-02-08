@@ -1,4 +1,3 @@
-# Methods added to this helper will be available to all templates in the application.
 module Kapa::KapaHelper
 
   def model_select(object_name, method, options = {}, html_options = {})
@@ -65,33 +64,11 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
-  # def program_select(object_name, method, options = {}, html_options = {})
-  #   options[:model_class] = Kapa::Program
-  #   options[:model_options] = options
-  #   model_select(object_name, method, options, html_options)
-  # end
-
   def text_template_select(object_name, method, options = {}, html_options = {})
     options[:model_class] = Kapa::TextTemplate
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end
-
-  # def score_select(object_name, index, options = {}, html_options = {})
-  #   if (options[:type] == "text")
-  #     options[:size] = options[:type_option]
-  #     text_field(object_name, index, options)
-  #   elsif (options[:type] == "select")
-  #     options[:name] = options[:type_option]
-  #     options[:include_blank] = true
-  #     options[:selected] = options[:value]
-  #     property_select(object_name, index, options, html_options.merge(:class => "form-control"))
-  #   else
-  #     options[:include_blank] = true
-  #     options[:selected] = options[:value]
-  #     select(object_name, index, [["Target", "2"], ["Acceptable", "1"], ["Unacceptable", "0"], ["No Evidence", "N"]], options, html_options.merge(:class => "form-control"))
-  #   end
-  # end
 
   def history_select(object_name, method, options = {}, html_options = {})
     model_class = options[:model_class]
@@ -99,24 +76,6 @@ module Kapa::KapaHelper
     conditions = "#{model_method} is not NULL and #{model_method} <> ''"
     selections = model_class.select("distinct #{model_method}").where(conditions).order('1').collect { |l| l[model_method] }
     select(object_name, method, selections, options, html_options)
-  end
-
-  def datetime_picker(object_name, method, options = {})
-    input_tag = text_field(object_name, method, options)
-    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
-    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datetimepicker")
-  end
-
-  def date_picker(object_name, method, options = {})
-    input_tag = text_field(object_name, method, options)
-    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
-    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datepicker")
-  end
-
-  def time_picker(object_name, method, options = {})
-    input_tag = text_field(object_name, method, options)
-    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-time"), :class => "input-group-addon")
-    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date timepicker")
   end
 
   def format_date(date)
@@ -175,40 +134,4 @@ module Kapa::KapaHelper
      end
   end
 
-  def button_to_link(name = nil, options = nil, html_options = nil, &block)
-    options = "#" if options.nil?
-    name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
-    if html_options[:class]
-      html_options[:class] = "btn #{html_options[:class]}"
-    else
-      html_options[:class] = "btn btn-default"
-    end
-    link_to(name.html_safe, options, html_options, &block)
-  end
-
-  def popover_button(name = nil, content = nil, html_options = nil, &block)
-    html_options[:tabindex] = "0"
-    html_options[:role] = "button"
-    html_options["data-content"] = content
-    html_options["data-toggle"] = "popover"
-    html_options["data-trigger"] = "focus"
-    html_options["data-html"] = true
-    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
-    html_options[:title] = html_options[:title] if html_options[:title]
-    button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)
-  end
-
-  def beta?
-    Rails.application.secrets.release != "live"
-  end
-
-  private
-  def next_id(prefix, index)
-    i = @scores.keys.index(index)
-    if i == @scores.keys.length - 1
-      return "#{prefix}_#{@scores.keys.first}"
-    else
-      return "#{prefix}_#{@scores.keys[i + 1]}"
-    end
-  end
 end
