@@ -9,7 +9,7 @@ module ApplicationControllerBase
 
   def error_404
     unless request.path =~ /^\/apple-touch-icon/
-      logger.error "*404* #{request.method} #{request.path} from #{request.remote_ip} #{Kapa::UserSession.find.try(:user).try(:uid)}"
+      logger.error "The page doesn't exist. #{Kapa::UserSession.find.try(:user).try(:uid)}"
     end
     render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found
   end
