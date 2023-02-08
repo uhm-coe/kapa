@@ -1,5 +1,49 @@
-module Kapa::BootstrapFormHelper
-  ALERT_TYPES = [:success, :info, :warning, :danger] unless const_defined?(:ALERT_TYPES)
+module Kapa::BootstrapHelper
+
+  def button_to_link(name = nil, options = nil, html_options = nil, &block)
+    options = "#" if options.nil?
+    name = "#{content_tag(:span, "", :class => "glyphicon #{html_options[:icon]}")} #{name}" if html_options[:icon]
+    if html_options[:class]
+      html_options[:class] = "btn #{html_options[:class]}"
+    else
+      html_options[:class] = "btn btn-default"
+    end
+    link_to(name.html_safe, options, html_options, &block)
+  end
+
+  def popover_button(name = nil, content = nil, html_options = nil, &block)
+    html_options[:tabindex] = "0"
+    html_options[:role] = "button"
+    html_options["data-content"] = content
+    html_options["data-toggle"] = "popover"
+    html_options["data-trigger"] = "focus"
+    html_options["data-html"] = true
+    html_options["data-placement"] = "top" if html_options["data-placement"].nil?
+    html_options[:title] = html_options[:title] if html_options[:title]
+    button_to_link(name, nil, html_options.merge(:disabled => content.blank?), &block)
+  end
+  
+  def tooltip(text)
+    content_tag(:a, content_tag(:i, nil, :class => "glyphicon glyphicon-info-sign"), "data-toggle" => "tooltip", "data-placement" => "right", :title => text)
+  end 
+
+  def datetime_picker(object_name, method, options = {})
+    input_tag = text_field(object_name, method, options)
+    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datetimepicker")
+  end
+
+  def date_picker(object_name, method, options = {})
+    input_tag = text_field(object_name, method, options)
+    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datepicker")
+  end
+
+  def time_picker(object_name, method, options = {})
+    input_tag = text_field(object_name, method, options)
+    icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-time"), :class => "input-group-addon")
+    content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date timepicker")
+  end
 
   def bootstrap_form_for(record, options = {}, &proc)
     options[:builder] = BootstrapFormBuilder
@@ -22,7 +66,7 @@ module Kapa::BootstrapFormHelper
       type = :success if type == :notice
       type = :danger  if type == :alert
       type = :danger  if type == :error
-      next unless ALERT_TYPES.include?(type)
+      next unless [:success, :info, :warning, :danger].include?(type)
 
       tag_class = options.extract!(:class)[:class]
       tag_options = {
@@ -39,10 +83,6 @@ module Kapa::BootstrapFormHelper
     flash_messages.join("\n").html_safe
   end
   
-  def tooltip(text)
-    content_tag(:a, content_tag(:i, nil, :class => "glyphicon glyphicon-info-sign"), "data-toggle" => "tooltip", "data-placement" => "right", :title => text)
-  end 
-
   class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 
     def self.build_form_control(name)

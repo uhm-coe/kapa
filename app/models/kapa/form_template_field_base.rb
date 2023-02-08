@@ -12,7 +12,7 @@ module Kapa::FormTemplateFieldBase
 
   def format_fields
     self.label.to_s.strip!
-    self.hint.to_s.sub!("\n", "")
+#    self.hint.to_s.gsub!("\n", "")
     self.name = self.label.underscore if self.name.blank?
   end
 end

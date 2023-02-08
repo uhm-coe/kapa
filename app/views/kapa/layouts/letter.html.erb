@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF</title>
+  <%= wicked_pdf_stylesheet_link_tag "pdf" %>
+</head>
+<body>
+  <div class="row header">
+    <div class="col-xs-6">
+      <%#=image_tag t(:kapa_pdf_header), :width => "200px" %>
+    </div>
+    <div class="col-xs-6 text-right">College of Education<br>
+      <strong>
+        <% if @dept == "OSAS" %>
+          Office of Student Academic Services
+        <% elsif@dept == "SPED" %>
+          Department of Special Education
+        <% end %>
+      </strong>
+    </div>
+  </div>
+
+  <%= yield %>
+
+  <div class="text-right footer">
+    <% if @dept == "OSAS" %>
+      <p>
+        1776 University Ave. <br/>
+        Everly Hall Room 126<br/>
+        Honolulu, HI 96822<br/>
+        Telephone: 808-956-7915 or 808-956-7849
+      </p>
+    <% elsif @dept == "SPED" %>
+      <p>
+        1776 University Ave. <br/>
+        West Hall Room 120<br/>
+        Honolulu, HI 96822<br/>
+        Telephone: 808-956-4345
+      </p>
+    <% end %>  
+  </div>
+</body>
+</html>

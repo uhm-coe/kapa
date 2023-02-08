@@ -9,14 +9,14 @@ module Kapa::UserSessionsControllerBase
   end
   
   def new
-    flash_clone = flash.clone
-    Kapa::UserSession.find.try(:destroy)
-    reset_session
+    # flash_clone = flash.clone
+    # Kapa::UserSession.find.try(:destroy)
+    # reset_session
 
-    #Restore flash messages
-    flash_clone.keys.each do |key|
-      flash[key] = flash_clone[key]
-    end
+    # #Restore flash messages
+    # flash_clone.keys.each do |key|
+    #   flash[key] = flash_clone[key]
+    # end
   end
 
   def show

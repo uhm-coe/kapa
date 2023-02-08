@@ -10,7 +10,7 @@ module Kapa::TextsControllerBase
     @document_id = @text.document_id
     @document_date = @text.document_date
 
-    render :layout => "/kapa/layouts/document"
+    render :layout => "kapa/layouts/document"
   end
 
   def update
@@ -66,7 +66,7 @@ module Kapa::TextsControllerBase
     end
 
     flash[:notice] = "Letter was successfully deleted. Please close this tab."
-    render :layout => "/kapa/layouts/document"
+    render :layout => "kapa/layouts/document"
   end
 
   def index
