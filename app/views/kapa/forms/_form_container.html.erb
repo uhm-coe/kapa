@@ -1,0 +1,33 @@
+<% if form_template.type == "complex" %>
+  <%= render :partial => form_template.template_path, :locals => {:context => :kapa} %>
+<% else %>
+  <%= bootstrap_fields_for :form_ext do |f| %>
+    <% form_template.form_template_fields.each do |form_template_field| %>
+       
+      <%=
+        form_template_field_ext = form_template_field.ext
+        options = {}
+        options[:label] = form_template_field.label      
+        options[:hint] = form_template_field.hint if form_template_field.hint.present?      
+        options[:required] = form_template_field.required if form_template_field.required.present?      
+        options[:include_blank] = form_template_field_ext.include_blank if form_template_field_ext.include_blank.present?      
+
+        if form_template_field.type == "section" 
+          content_tag(:legend, form_template_field.name, options)
+        elsif form_template_field.type == "text_area"
+          options[:rows] = 10
+          f.text_area(form_template_field.name, options)
+        elsif form_template_field.type == "select"
+          f.select(form_template_field.name, form_template_field_ext.choices.to_s.split(/,\s*/), options)
+        elsif form_template_field.type =~ /_select$/ 
+          options[:name] = form_template_field_ext.property_name 
+          f.send(form_template_field.type, *[form_template_field.name, options])
+        else
+          f.send(form_template_field.type, *[form_template_field.name, options])
+        end
+      %>
+    <% end %>
+  <% end %>
+<% end %>
+<%= hidden_field :form, :person_id %>
+<%= hidden_field :form, :type %>

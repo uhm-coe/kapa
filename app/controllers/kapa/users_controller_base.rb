@@ -4,14 +4,11 @@ module Kapa::UsersControllerBase
   def show
     @user = Kapa::User.find params[:id]
     @user_ext = @user.ext
-    @permission = @user.deserialize(:permission, :as => OpenStruct)
     params[:anchor] = "activity" if params[:page].present?
     @timestamps = @user.user_timestamps.eager_load(:user => :person).limit(200).order("timestamps.id desc").paginate(:page => params[:page], :per_page => Rails.configuration.items_per_page)
     @users = @user.person.users
     @person = @user.person
     @person_ext = @person.ext
-    @roles = Rails.configuration.roles.keys
-    @roles << @permission.role if @roles.exclude?(@permission.role)
   end
 
   def new
@@ -21,36 +18,39 @@ module Kapa::UsersControllerBase
 
   def update
     @user = Kapa::User.find params[:id]
-    @permission = @user.deserialize(:permission, :as => OpenStruct)
     @user.attributes = user_params if params[:user]
     @user.update_serialized_attributes!(:_ext, params[:user_ext].permit!) if params[:user_ext].present?
-    if params[:permission][:role] and Rails.configuration.roles.keys.include?(params[:permission][:role])
-      @user.apply_role(params[:permission][:role])
-      @user.update_serialized_attributes(:permission, :role => params[:permission][:role])
-    elsif params[:permission]
-      @user.update_serialized_attributes(:permission, params.require(:permission).permit!)
-    end
+    @user.apply_role(params[:user][:role]) if params[:user][:role].present?
+    
     if @user.save
-      flash[:success] = "User was successfully updated."
+      flash[:notice] = "User was successfully updated."
     else
-      flash[:danger] = error_message_for(@user)
+      flash[:alert] = error_message_for(@user)
     end
     redirect_to kapa_user_path(:id => @user, :anchor => params[:anchor])
   end
 
   def create
-    if params[:person_id_verified].present?
-      @person = Kapa::Person.find(params[:person_id_verified])
-    else
+    if params[:person]
       @person = Kapa::Person.new(person_params)
+      @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext]
+      unless @person.save
+        flash[:alert] = error_message_for(@person)
+        redirect_to new_kapa_user_path and return false
+      end
+    elsif params[:id_number]
+      @person = Kapa::Person.lookup(params[:id_number])
+      unless @person.save
+        flash[:alert] = error_message_for(@person)
+        redirect_to kapa_users_path and return false
+      end
+    elsif params[:person_id]  
+      @person = Kapa::Person.find(params[:person_id])
     end
-
-    @person.attributes = person_params
-    @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
 
     unless @person.save
       flash[:success] = nil
-      flash[:danger] = error_messages_for(@person)
+      flash[:danger] = error_message_for(@person)
       redirect_to new_kapa_user_path and return false
     end
 
@@ -61,14 +61,15 @@ module Kapa::UsersControllerBase
       uid = @person.id
     end
 
-    @user = @person.users.create(:uid => uid)
+    @user = @person.users.build(:uid => uid, :category => @person.verified? ? "ldap" : "local")
+    @user.password = SecureRandom.alphanumeric(20)
     unless @user.save
-      flash[:success] = nil
-      flash[:danger] = error_message_for(@user)
-      redirect_to new_kapa_user_path and return false
+      flash[:notice] = nil
+      flash[:alert] = error_message_for(@user)
+      redirect_to kapa_users_path and return false
     end
 
-    flash[:success] = 'User was successfully created.'
+    flash[:notice] = 'User was successfully created.'
     redirect_to :action => :show, :id => @user
   end
 

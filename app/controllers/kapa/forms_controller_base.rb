@@ -1,14 +1,19 @@
 module Kapa::FormsControllerBase
   extend ActiveSupport::Concern
 
+  included do
+    after_action :ensure_primary_dept_is_included, :only => [:create, :update]
+  end
+
   def show
     @form = Kapa::Form.find params[:id]
     @form_ext = @form.ext
     @form_template = @form.form_template
     @person = @form.person
     @person_ext = @person.ext
-    @document_title = @form.title
+    @document_title = @form.document_title
     @document_id = @form.document_id
+    @document_date = @form.document_date
     render :layout => "/kapa/layouts/document"
   end
 
@@ -25,45 +30,47 @@ module Kapa::FormsControllerBase
       end
     end
 
-    # params.permit!.to_h.each_pair do |k, v|
-    #   unless k =~ /(utf8)|(_method)|(authenticity_token)|(form)|(commit)|(controller)|(action)|(id)/
-    #     @form.serialize(k.to_sym, v)
-    #   end
-    # end
-
     if @form.save
-      flash[:success] = "Form was successfully updated."
+      flash[:notice] = "Form was successfully updated."
     else
-      flash[:danger] = error_message_for(@form)
+      flash[:alert] = error_message_for(@form)
     end
     redirect_to kapa_form_path(:id => @form)
   end
 
   def create
     @form = Kapa::Form.new(form_param)
-    @form.dept = @current_user.primary_dept
 
     unless @form.save
-      flash[:danger] = error_message_for(@form)
+      flash[:alert] = error_message_for(@form)
       redirect_to(kapa_error_path) and return false
     end
 
-    flash[:success] = "Form was successfully created."
+    flash[:notice] = "Form was successfully created."
     redirect_to params[:return_path]
   end
 
   def destroy
     @form = Kapa::Form.find params[:id]
+    @person = @form.person
+    @person_ext = @person.ext
+    @document_title = @form.document_title
+    @document_id = @form.document_id
+    @document_date = @form.document_date
+
     unless @form.destroy
-      flash[:danger] = error_message_for(@form)
+      flash[:alert] = error_message_for(@form)
       redirect_to kapa_form_path(:id => @form) and return false
     end
-    flash[:success] = "Form was successfully deleted."
+
+    flash[:notice] = "Form was successfully deleted. Please close this tab."
+    render :layout => "/kapa/layouts/document"
   end
 
   def index
     @filter = filter
     @forms = Kapa::Form.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+    @form_templates = Kapa::FormTemplate.all
   end
 
   def export
@@ -73,6 +80,13 @@ module Kapa::FormsControllerBase
               :disposition => "inline",
               :filename => "forms_#{Date.today}.csv"
   end
+
+  def ensure_primary_dept_is_included
+    if @form.depts.exclude?(@current_user.primary_dept)
+      @form.depts = @form.depts + [@current_user.primary_dept]
+      @form.save
+    end
+  end  
 
   private
   def form_param

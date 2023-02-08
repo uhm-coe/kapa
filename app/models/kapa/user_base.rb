@@ -14,6 +14,8 @@ module Kapa::UserBase
     validates_uniqueness_of :uid
     validates_presence_of :uid, :person_id
     validates_presence_of :password, :on => :create, :if => :local?
+    validates :uid, :length => { :minimum => 2, :maximum => 100}, :if => :local?
+    validates :password, :length => {:minimum => 5}, :on => :create, :if => :local?
 
     before_validation :use_email_as_uid
     before_save :format_fields
@@ -21,14 +23,13 @@ module Kapa::UserBase
 
     acts_as_authentic do |c|
       c.login_field = :uid
-      c.merge_validates_length_of_login_field_options :within => 2..100
+      c.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
       c.crypted_password_field = :hashed_password
-      c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
       c.logged_in_timeout = 12.hours
 
       #Please note that this method cannot be overridden in user.rb on your app.
-      #App specific custome authlogic configration shoud be made in config/initializers/authlogic.rb.
+      #App specific custom authlogic configuration should be made in config/initializers/authlogic.rb.
       Rails.configuration.acts_as_authentic_options.each_pair do |key, value|
         c.send(key, value)
       end if Rails.configuration.respond_to?(:acts_as_authentic_options)
@@ -44,12 +45,17 @@ module Kapa::UserBase
   end
 
   def update_person
-    self.person.update_attribute(:email_alt, self.uid) if local?
+    self.person.update_columns(:email_alt => self.uid) if local?
   end
 
   def status_desc
     user_status = Rails.configuration.user_status.select {|s| s[1] == status.to_s}.first
     user_status[0] if user_status
+  end
+
+  def category_desc
+    user_category = Rails.configuration.user_category.select {|s| s[1] == category.to_s}.first
+    user_category[0] if user_category
   end
 
   def active?
@@ -60,25 +66,29 @@ module Kapa::UserBase
     category == "local"
   end
 
-  def permission
-    self.deserialize(:permission, :as => OpenStruct)
+  def init_permission
+    if @permission.nil?
+      if self.role.present? and Rails.configuration.roles[self.role].present?
+        @permission = OpenStruct.new(Rails.configuration.roles[self.role])
+      else
+        @permission = OpenStruct.new
+      end
+    end
   end
 
-  def check_permission(name, code)
-    return false unless Rails.configuration.available_routes.include?(name.to_s)
-    self.permission.send(name).to_s.include?(code)
+  def check_permission(name, permission_code)
+    init_permission
+    @permission.send("#{name}").to_s.include?(permission_code)
   end
 
   def access_scope(name, condition = nil)
-    return false unless Rails.configuration.available_routes.include?(name.to_s)
-    self.permission.send("#{name}_scope").to_i
+    init_permission
+    @permission.send("#{name}_scope").to_i
   end
 
   def apply_role(name)
-    role_permission = Rails.configuration.roles[name]
-    if role_permission
-      role_permission.merge!(:role => name)
-      self.serialize(:permission, role_permission)
+    if Rails.configuration.roles.keys.include?(name)
+      self.role = name
     end
   end
 
@@ -114,23 +124,24 @@ module Kapa::UserBase
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       users = Kapa::User.eager_load(:person).order("users.uid")
       users = users.where("users.status" => filter.status) if filter.status.present?
+      users = users.where("users.role" => filter.role) if filter.role.present?
       users = users.where("users.category" => filter.category) if filter.category.present?
       users = users.column_contains({"users.dept" => filter.dept}) if filter.dept.present?
       users = users.column_matches("users.uid" => filter.user_key, "persons.last_name" => filter.user_key, "persons.first_name" => filter.user_key) if filter.user_key.present?
       return users
     end
 
-    def csv_format
-      {:uid => [:uid],
-       :id_number => [:person, :id_number],
-       :last_name => [:person, :last_name],
-       :first_name => [:person, :first_name],
-       :position => [:position],
-       :primary_dept => [:primary_dept],
-       :role => [:permission, :role],
-       :status => [:status],
-       :dept => [:dept, [:join, ","]],
-       :category => [:category]}
-    end
+    # def csv_format
+    #   {:uid => [:uid],
+    #    :id_number => [:person, :id_number],
+    #    :last_name => [:person, :last_name],
+    #    :first_name => [:person, :first_name],
+    #    :position => [:position],
+    #    :primary_dept => [:primary_dept],
+    #    :role => [:role],
+    #    :status => [:status],
+    #    :dept => [:dept, [:join, ","]],
+    #    :category => [:category]}
+    # end
   end
 end

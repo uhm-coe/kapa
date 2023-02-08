@@ -35,7 +35,7 @@
           <td><%=person.full_name %></td>
           <td><%=abbr person.other_name, 30 %></td>
           <td><%=mail_to person.email %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => person}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => person}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
         </tr>
       <% end %>
     </tbody>

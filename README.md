@@ -2,16 +2,15 @@
 
 KAPA is a [Rails Engine](http://guides.rubyonrails.org/engines.html) to build office database system and provides tools to organize various office records including personal information, electronic documents, calendars, tasks, messaging/notifications, etc....  
 
-KAPA works as an essential codebase, and you can add business objects for your organization.  For example, academic institutions may want to add Course, Registration, and Assignment to keep track of assessments.  Please check [this page](https://dcdc.coe.hawaii.edu/kapa/) to see the examples of applications developed with KAPA.
+KAPA works as an essential codebase, and you can add business objects for your organization.  For example, academic institutions may want to add models such as Course, Registration, and Assignment to keep track of assessments.  Please check [this page](https://coe.hawaii.edu/assist/work/kapa/) to see the examples of applications developed with KAPA.
 
 ## Features
 - Identity Management with LDAP support
-- Electronic Documents (file attachments, forms, and text documents)
+- Electronic Documents (file attachments, forms, and letters)
 - User and Task Management
 - System Administration
 - Calendars and Events (Under development)
 - Messaging and Notifications (Under development)
-- Data Visualization (Under development)
 
 ### Getting Started with KAPA App
 

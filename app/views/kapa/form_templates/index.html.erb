@@ -16,6 +16,7 @@
   <div class="row">
     <div class="col-sm-12 text-right">
       <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
@@ -37,7 +38,7 @@
           <td><%=abbr form_template.title, 50 %></td>
           <td><%=form_template.form_template_fields.length.to_i %></td>
           <td><%=form_template.depts.join(", ") %></td>
-          <td class="right"><%=link_to "Show", {:action => :show, :id => form_template}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => form_template}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
         </tr>
       <% end %>
     </tbody>

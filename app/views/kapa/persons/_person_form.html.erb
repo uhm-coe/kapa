@@ -1,8 +1,19 @@
 <%=bootstrap_fields_for :person do |f| %>
 
+  <% unless @person.new_record? %>
   <div class="row">
     <div class="col-sm-6">
-      <%=f.text_field :id_number, :size => 10, :readonly => @person.verified?, :class => "id_number", :label => "Campus ID" unless @unverified  %>
+        <%= f.text_field :id_number, :readonly => true, :addon => content_tag(:span, content_tag(:button, content_tag(:span, nil, :class => "glyphicon glyphicon-pencil", "aria-hidden" => "true"), :type => "button", :class => "btn btn-default", :id => "add_id_number"), :class => "input-group-btn"), :label => "Campus ID" %>
+    </div>
+
+    <div class="col-sm-6">
+        <%= f.text_field :email, :readonly => true, :addon => content_tag(:span, content_tag(:button, content_tag(:span, nil, :class => "glyphicon glyphicon-pencil", "aria-hidden" => "true"), :type => "button", :class => "btn btn-default", :id => "add_email"), :class => "input-group-btn"), :label => "Campus E-mail" %>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-6">
       <%=f.text_field :last_name, :size => 30 %>
       <%=f.text_field :middle_initial, :size => 30 %>
       <%=f.date_picker :birth_date, :label => "Birth Date" %>
@@ -10,7 +21,6 @@
     </div>
 
     <div class="col-sm-6">
-      <%=f.text_field :email, :size => 30, :readonly => @person.verified?, :label => "Campus Email" unless @unverified  %>
       <%=f.text_field :first_name, :size => 30 %>
       <%=f.text_field :other_name %>
       <%=f.property_select :gender, :include_blank => true %>

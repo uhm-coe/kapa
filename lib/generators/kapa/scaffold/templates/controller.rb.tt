@@ -31,10 +31,10 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
     @<%= singular_name %>.update_serialized_attributes!(:_ext, <%= singular_name %>_ext_params) if params[:<%= singular_name %>_ext].present?
 
     if @<%= singular_name %>.save
-      flash[:success] = "<%= singular_name.humanize %> was successfully created."
+      flash[:notice] = "<%= singular_name.humanize %> was successfully created."
       redirect_to <%= singular_table_name %>_path(:id => @<%= singular_name %>)
     else
-      flash[:danger] = error_message_for(@property)
+      flash[:alert] = error_message_for(@property)
       redirect_to new_<%= singular_table_name %>_path and return false
     end
   end
@@ -46,9 +46,9 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
     @<%= singular_name %>.update_serialized_attributes!(:_ext, <%= singular_name %>_ext_params) if params[:<%= singular_name %>_ext].present?
 
     if @<%= singular_name %>
-      flash[:success] = "<%= singular_name.humanize %> was successfully updated."
+      flash[:notice] = "<%= singular_name.humanize %> was successfully updated."
     else
-      flash[:danger] = error_message_for(@<%= singular_name %>)
+      flash[:alert] = error_message_for(@<%= singular_name %>)
     end
     redirect_to <%= singular_table_name %>_path(:id => @<%= singular_name %>)
   end
@@ -58,9 +58,9 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
     @<%= singular_name %> = <%= orm_class.new(class_name).name %>.find(params[:id])
 
     if @<%= singular_name %>.destroy
-      flash[:success] = "<%= singular_name.humanize %> was successfully deleted."
+      flash[:notice] = "<%= singular_name.humanize %> was successfully deleted."
     else
-      flash[:danger] = error_message_for(@<%= singular_name %>)
+      flash[:alert] = error_message_for(@<%= singular_name %>)
     end
     redirect_to params[:return_path] || session[:return_path]
   end

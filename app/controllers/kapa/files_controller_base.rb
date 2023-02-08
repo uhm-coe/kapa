@@ -1,6 +1,10 @@
 module Kapa::FilesControllerBase
   extend ActiveSupport::Concern
 
+  included do
+    after_action :ensure_primary_dept_is_included, :only => [:create, :update]
+  end
+
   def index
     @filter = filter
     @files = Kapa::File.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
@@ -11,8 +15,9 @@ module Kapa::FilesControllerBase
     @file_ext = @file.ext
     @person = @file.person
     @person_ext = @person.ext
-    @document_title = @file.title
+    @document_title = @file.document_title
     @document_id = @file.document_id
+    @document_date = @file.document_date
 
     respond_to do |format|
       format.html {render :layout => "/kapa/layouts/document"}
@@ -38,9 +43,9 @@ module Kapa::FilesControllerBase
     end
 
     if @file.save
-      flash[:success] = "Document was successfully updated."
+      flash[:notice] = "Document was successfully updated."
     else
-      flash[:danger] = error_message_for(@file)
+      flash[:alert] = error_message_for(@file)
       logger.error "*ERROR* File upload error: #{@file.inspect}"
     end
     redirect_to kapa_person_path(:id => @person, :artifacts_modal => "show")
@@ -55,26 +60,32 @@ module Kapa::FilesControllerBase
     @file = Kapa::File.new(file_param)
     @file.name = @file.data_file_name if @file.name.blank?
     @file.uploaded_by = @current_user.uid
-    @file.dept = @current_user.primary_dept
     unless @file.save
-      flash[:danger] = error_message_for(@file)
+      flash[:alert] = error_message_for(@file)
       logger.error "*ERROR* File upload error: #{@file.inspect}"
       redirect_to params[:return_path] and return false
     end
 
-    flash[:success] = "File was successfully uploaded."
+    flash[:notice] = "File was successfully uploaded."
     redirect_to params[:return_path]
   end
 
   def destroy
     @file = Kapa::File.find(params[:id])
+    @file_ext = @file.ext
+    @person = @file.person
+    @person_ext = @person.ext
+    @document_title = @file.document_title
+    @document_id = @file.document_id
+    @document_date = @file.document_date
 
-    if @file.destroy
-      flash[:success] = "File was successfully deleted."
-    else
-      flash[:danger] = error_message_for(@file)
+    unless @file.destroy
+      flash[:alert] = error_message_for(@file)
+      redirect_to kapa_file_path(:id => @file) and return false
     end
-    redirect_to params[:return_path] || session[:return_path]
+
+    flash[:notice] = "Letter was successfully deleted. Please close this tab."
+    render :layout => "/kapa/layouts/document"
   end
 
   def export
@@ -99,6 +110,13 @@ module Kapa::FilesControllerBase
               :type => "application/csv",
               :disposition => "inline",
               :filename => "files_#{Date.today}.csv"
+  end
+
+  def ensure_primary_dept_is_included
+    if @file.depts.exclude?(@current_user.primary_dept)
+      @file.depts = @file.depts + [@current_user.primary_dept]
+      @file.save
+    end
   end
 
   def file_param

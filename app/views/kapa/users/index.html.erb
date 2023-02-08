@@ -1,11 +1,98 @@
+<% content_for(:head) do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      var get_table_row = function(person) {
+        console.log(person, person['ldap']);
+        var tag = '<tr><td>#full_name</td><td>#email</td><td><div><input type="radio" value="#person_value" name="#person_attribute"><label></div></td></tr>'
+        if(person['ldap']) {
+          tag = tag.replace('#person_value', person['id_number']);
+          tag = tag.replace('#person_attribute', 'id_number');
+        }
+        else {
+          tag = tag.replace('#person_value', person['person_id']);
+          tag = tag.replace('#person_attribute', 'person_id');
+        }
+        tag = tag.replace('#full_name', person['full_name']);
+        tag = tag.replace('#email', person['email'] ? person['email'] : 'none');
+        return tag
+      }
+
+      $('#search_person_form').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      $('#search_person_form').submit(function( event ) {
+        $("#add_user_dialog #modal_submit").prop("disabled", true);
+        $.getJSON('<%=kapa_persons_path(:format => :json) %>',
+        $('#search_person_form').serialize(),
+        function(data) {
+          $('#persons_search_result thead').html('');
+          $('#persons_search_result tbody').html('');
+          var persons = data['persons'];
+          if(persons.length > 0) {
+            $('#persons_search_result thead').append('<tr><th>Name</th><th>E-mail</th><th>Select</th></tr>');
+            for(i = 0; i < persons.length; i++) {
+              $('#persons_search_result tbody').append(get_table_row(persons[i]));
+            }
+          }
+          else {
+            $('#persons_search_result thead').html('Not found.');
+          }
+        });
+        event.preventDefault();
+      });
+
+      // Disable "OK" button on add person modal if no person is selected
+      var togglePersonModalButtons = function() {
+        var personSelected = ($("input[name='person_id']").val() || $("input[name='id_number']").val());
+        console.log($("input[name='person_id']").val(), $("input[name='id_number']").val(), personSelected)
+        $("#add_user_dialog #modal_submit").prop("disabled", !personSelected);
+      }
+
+      $("#persons_search_result").on("change", "input:radio", togglePersonModalButtons);
+      togglePersonModalButtons();
+    });
+  </script>
+<% end %>
+
 <% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "add_user_dialog", :modal_title => "Select Person", :modal_form_id => "add_user_form" } do %>
+    <%=form_for(:filter, :url => nil, :html => {:id => "search_person_form"}) do |f| %>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="input-group">
+            <%=f.text_field :key, :placeholder => "Search Person: user@hawaii.edu", "data-toggle" => "tooltip", "data-placement" => "bottom", :class => "form-control"%>
+            <%=f.hidden_field :limit, :value => 10 %>
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Search</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <br/>
+    <%=bootstrap_form_for(:user, :url => kapa_users_path, :html => {:id => "add_user_form"}) do |f| %>
+      <table id="persons_search_result" class="table table-striped">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <%=link_to "I will enter a person manually.", new_kapa_user_path %>
+    <% end %>
+  <% end %>
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
     <%=bootstrap_form_for(:filter, :url => kapa_users_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
       <%=f.text_field :user_key, :size => 20, :label => "Name or UID" %>
-      <%=f.select :status, Rails.configuration.user_status, {:include_blank => "Any", :label => "User Status"} %>
-      <%=f.select :category, Rails.configuration.user_categories, :include_blank => "Any" %>
-      <%=f.property_select :depts, {:label => t(:kapa_global_dept).pluralize, :include_blank => "Any"}, :multiple => true if manage? %>
+      <%=f.select :status, Rails.configuration.user_status, {:label => "User Status"}, {:multiple => true} %>
+      <%=f.select :category, Rails.configuration.user_categories, {}, {:multiple => true} %>
+      <%=f.property_select :dept, {:label => t(:kapa_global_dept)}, {:multiple => true}  if manage? %>
       <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
     <% end %>
   <% end %>
@@ -25,7 +112,7 @@
   <div class="row">
     <div class="col-sm-12 text-right">
 
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
+      <%=button_to_link "New", nil, :icon => "glyphicon-plus", "data-toggle" => "modal", "data-target" => "#add_user_dialog"  if create? %>
       <% if import? %><button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button><% end %>
       <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
@@ -51,11 +138,11 @@
           <td><%=user.uid %></td>
           <td><%=user.person.full_name if user.person %></td>
           <td><%=user.category %></td>
-          <td><%=user.deserialize(:permission, :as => OpenStruct).role %></td>
+          <td><%=user.role %></td>
           <td><%=user.status_desc %></td>
           <td><%=user.primary_dept %></td>
           <td><%=user.depts.join(", ") %></td>
-          <td class="right"><%=link_to "Show", {:action => "show", :id => user}, :class => "btn btn-default btn-xs" %></td>
+          <td class="right"><%=button_to_link "", {:action => :show, :id => user}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
         </tr>
       <% end %>
     </tbody>

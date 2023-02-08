@@ -3,9 +3,18 @@
  *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker
  *= require dragula/dist/dragula
 */
+@import "bootswatch/<%=Rails.configuration.theme %>/variables";
+@import "bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bootswatch/<%=Rails.configuration.theme %>/bootswatch";
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@font-face{
+  font-family:'Glyphicons Halflings';
+  src: font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot");
+  src: font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),
+       font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"),
+       font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"),
+       font-url("bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg")
+}
 
 .section-header {
   padding-bottom: 9px;
@@ -53,6 +62,7 @@
 /* Aligns multiselect button text to the left */
 button.kapa-multiselect-btn {
   text-align: left;
+  overflow: hidden;;
 }
 
 /* Fix so that multiselect dropdown is not covered by tab boundaries (see admin/programs/show) */
@@ -84,4 +94,13 @@ ul.multiselect-container.dropdown-menu {
   box-shadow: none;
   background-clip: border-box;
   outline: none;
+}
+
+label.required:after {
+  color: red;
+  content: " *";
+}
+
+.document-title {
+  overflow-wrap: break-word;
 }

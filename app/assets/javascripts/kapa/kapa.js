@@ -4,18 +4,19 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery/dist/jquery.min
-//= require rails-ujs/lib/assets/compiled/rails-ujs
-//= require bootstrap-sprockets
-//= require bootstrap-multiselect/dist/js/bootstrap-multiselect
-//= require moment/min/moment-with-locales
-//= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
+//= require jquery/dist/jquery
 //= require dragula/dist/dragula
+//= require moment/min/moment-with-locales
+//= require rails-ujs/lib/assets/compiled/rails-ujs
+//= require bootstrap-sass/assets/javascripts/bootstrap
+//= require bootstrap-multiselect/dist/js/bootstrap-multiselect
+//= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
+//= require bootstrap-3-typeahead/bootstrap3-typeahead
 
 jQuery(document).ready(function ($) {
 
   // Submit a form if data-submit attribute is set
-  $('button[data-submit]').click(function () {
+  $('[data-submit]').click(function () {
     $($(this).attr('data-submit')).submit();
   });
 

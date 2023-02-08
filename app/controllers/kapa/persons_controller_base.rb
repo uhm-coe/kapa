@@ -21,11 +21,11 @@ module Kapa::PersonsControllerBase
   def create
     @person = Kapa::Person.new(person_params)
     unless @person.save
-      flash[:success] = nil
-      flash[:danger] = error_message_for(@person)
+      flash[:notice] = nil
+      flash[:alert] = error_message_for(@person)
       redirect_to new_kapa_person_path and return false
     end
-    flash[:success] = "Person was successfully created."
+    flash[:notice] = "Person was successfully created."
     redirect_to kapa_person_path(:id => @person)
   end
 
@@ -35,20 +35,18 @@ module Kapa::PersonsControllerBase
     if params[:person_id_verified].present?
       @person_verified = Kapa::Person.find(params[:person_id_verified])
       @person_verified.merge(@person, :include_associations => true)
-      @person = @person_verified
-      flash[:success] = "Person was successfully merged."
-      # params[:return_path][:anchor] = params[:anchor] if params[:anchor]
-      # redirect_to params[:return_path]
+      flash[:notice] = "Person was successfully merged."
+      redirect_to(kapa_person_path(:id => @person_verified))  #When person is merged, always redirect to the verified person record.
     else
       @person.attributes = person_params
       @person.update_serialized_attributes!(:_ext, params[:person_ext]) if params[:person_ext].present?
       unless @person.save
-        flash[:danger] = error_message_for(@person)
+        flash[:alert] = error_message_for(@person)
         redirect_to kapa_person_path(:id => @person) and return false
       end
-      flash[:success] = "Person was successfully updated."
+      flash[:notice] = "Person was successfully updated."
+      redirect_to(params[:return_path] || kapa_person_path(:id => @person))
     end
-    redirect_to(params[:return_path] || kapa_person_path(:id => @person))
   end
 
   def index
@@ -65,7 +63,7 @@ module Kapa::PersonsControllerBase
       if person
         person.save!
         @persons = [person]
-        flash.now[:success] = "The record was imported from #{person.source}."
+        flash.now[:notice] = "The record was imported from #{person.source}."
       else
         flash.now[:warning] = "No record was found."
       end
@@ -79,18 +77,25 @@ module Kapa::PersonsControllerBase
 
   def lookup
     person = Kapa::Person.lookup(params[:key])
+    json = {}
     if person
       if person.new_record?
-        action = "promote"
+        json[:action] = "promote"
+        json[:person] = person.attributes.slice('id_number', 'first_name', 'last_name', 'status', 'email')
+        json[:notice] = "Person was verified with the external directory.  Please check the name and save this record."
       elsif params[:id] != person.id.to_s
-        action = "merge"
-        person_id_verified = person.id
-        redirect_path = kapa_person_path(:id => person)
+        json[:action] = "merge"
+        json[:person] = person.attributes.slice('id_number', 'first_name', 'last_name', 'status', 'email')
+        json[:person_id_verified] = person.id
+        json[:redirect_path] = kapa_person_path(:id => person)
+        json[:notice] = "This person already exists in this system.  Please check the name and click OK to merge this record."
       end
+      render(:json => json)
     else
-        action = "alert"
+      json[:action] = "alert"
+      json[:notice] = "Unable to find the record in the external directory. Please check ID or Email."
+      render(:json => json, :status => :unprocessable_entity)
     end
-    render(:json => {:person => person, :action => action, :person_id_verified => person_id_verified, :redirect_path => redirect_path})
   end
 
   def sync
@@ -98,18 +103,20 @@ module Kapa::PersonsControllerBase
     @person_ext = @person.ext
     key = params[:key]
     @person_remote = Kapa::Person.lookup_remote(key)
-
+    json = {}
     if @person_remote
       @person.id_number = @person_remote.id_number if @person_remote.id_number
       @person.email = @person_remote.email if @person_remote.email
       @person.email_alt = @person_remote.email_alt if @person_remote.email_alt
       @person.first_name = @person_remote.first_name if @person_remote.first_name
       @person.last_name = @person_remote.last_name if @person_remote.last_name
-      flash.now[:success] = "Record was updated from the remote source. Please check the name and click save to use the new record."
+      json[:html] = render_to_string(:partial => "kapa/persons/person_form")
+      json[:notice] = "Record was updated from the remote source. Please check the records and click OK to save the record."
+      render :json => json
     else
-      flash.now[:success] = "System was unable to update this record with the remote resource."
+      json[:notice] = "System was unable to update this record with the remote resource."
+      render :json => json, :status => :unprocessable_entity
     end
-    render :partial => "kapa/persons/person_form", :layout => false
   end
 
   private

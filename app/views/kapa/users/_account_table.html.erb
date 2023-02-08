@@ -15,7 +15,7 @@
         <td><%=user.category %></td>
         <td><%=user.status_desc %></td>
         <td><%=format_datetime user.updated_at %></td>
-        <td class="right"><%=link_to "Show", {:action => :show, :id => user}, :class => "btn btn-default btn-xs" %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => user}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
       </tr>
     <% end %>
   </tbody>

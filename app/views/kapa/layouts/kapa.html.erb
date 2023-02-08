@@ -13,6 +13,7 @@
   <![endif]-->
 
   <%=stylesheet_link_tag "kapa/kapa", :media => "all" %>
+  <%=stylesheet_link_tag "application", :media => "all" %>
 
   <!-- For third-generation iPad with high-resolution Retina display: -->
   <!-- Size should be 144 x 144 pixels -->
@@ -35,6 +36,7 @@
   <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
   <%=javascript_include_tag "kapa/kapa" %>
+  <%=javascript_include_tag "application" %>
   <%=yield :head %>
 </head>
 <body>
@@ -42,9 +44,47 @@
 <div class="navbar navbar-default navbar-static-top">
   <div class="container">
     <%=link_to t(:kapa_brand), kapa_root_path, :class => "navbar-brand" %>
-    <%=render :partial => "kapa/layouts/menu", :locals => {:current_user => @current_user} %>
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+
+    <div class="navbar-collapse collapse navbar-responsive-collapse" id="menu">
+      <% if @current_user %>
+        <ul class="nav navbar-nav">
+          <%=render :partial => "kapa/layouts/menu", :locals => {:current_user => @current_user} %>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <%= bootstrap_form_for(:filter, :url => kapa_persons_path, :html => {:method => :get, :class => "navbar-form navbar-left", :role => "search"}) do |f| %>
+            <div class="input-group">
+              <%#=f.text_field :key, :label => :no, :placeholder => "Search Person", "data-toggle" => "tooltip", "data-placement" => "bottom", :title => "ID, Name, Email, or Phone", :class => "form-control"%>
+              <input name="filter[key]" type="text" class="form-control" placeholder = "Search Person" data-toggle = "tooltip" data-placement = "bottom" title = "ID, Name, Email, or Phone">
+              <%=f.hidden_field :limit, :value => 10 %>
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </button>
+              </span>
+            </div>
+          <% end if read? :kapa_persons and access_dept?(:kapa_persons) %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><%=@current_user.uid %></strong> <b class="caret"></b></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><%= link_to "Logout", kapa_user_session_path, {:method => :delete} %></li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
+    </div>
   </div>
 </div>
+
+<%unless Rails.application.secrets.release == "live" %><div class="alert alert-warning" role="alert">This is a beta system.  Any changes made this database system will be wiped periodically.  Please use for testing and/or training purposes only.</div><% end %>
 
 <div class="container">
   <div class="row">
@@ -55,7 +95,7 @@
   <% if content_for?(:box1) %>
     <div class="row">
       <div class="well col-lg-12">
-        <%=yield :box1 %>
+      <%=yield :box1 %>
       </div>
     </div>
   <% end %>

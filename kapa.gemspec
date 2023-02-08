@@ -16,18 +16,17 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 5.2.0'
-  s.add_dependency 'authlogic', '~> 4.4.2'
+  s.add_dependency 'mysql2'
+  s.add_dependency 'authlogic'
+  s.add_dependency 'scrypt'
   s.add_dependency 'american_date'
   s.add_dependency 'paperclip'
   s.add_dependency 'fastercsv'
   s.add_dependency 'net-ldap'
-  s.add_dependency 'sequel'
   s.add_dependency 'hashids'
   s.add_dependency 'will_paginate'
   s.add_dependency 'will_paginate-bootstrap'
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
-  s.add_dependency 'bootstrap-sass'
-  s.add_dependency 'therubyracer'
-
+  s.add_dependency 'sprockets', '~> 3.7.2'
 end

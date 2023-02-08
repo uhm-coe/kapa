@@ -1,26 +1,8 @@
-<% content_for(:head) do %>
-  <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      $('#edit_permission_link').click(function () {
-        $('#edit_permission_dialog').modal('show');
-      });
-    });
-  </script>
-<% end %>
-
-<% content_for(:dialog) do %>
-  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_permission_dialog", :modal_title => "Edit Permissions", :modal_form_id => "apply_role_form"} do %>
-    <%=bootstrap_form_for :permission, :url => kapa_user_path(:id => @user, :anchor => :permission), :html => {:method => :put, :id => "apply_role_form"}  do |f| %>
-      <%=render :partial => "permission_form", :locals => {:f => f} %>
-    <% end %>
-  <% end %>
-<% end %>
-
 <% content_for(:box1) do %>
   <%=render :partial => "/kapa/persons/person_detail" %>
 
   <h4 class="section-header divider">
-    <%=link_to "", session[:return_path], :class => "glyphicon glyphicon-chevron-left" %>
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
     User Record
   </h4>
 
@@ -28,7 +10,7 @@
     <ul class="nav nav-tabs">
       <li><a href="#user_profile_tab" data-toggle="tab">Profile</a></li>
       <li><a href="#activity_tab" data-toggle="tab">Activities</a></li>
-      <li><a href="#other_accounts_tab" data-toggle="tab">Other Accounts</a></li>
+      <li><a href="#other_accounts_tab" data-toggle="tab">Related Accounts</a></li>
     </ul>
 
     <div class="tab-content">
@@ -39,10 +21,7 @@
       <div id="user_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :user, :url => kapa_user_path(:id => @user), :html => {:method => :put} do |f| %>
           <%=render :partial => "user_form", :locals => {:f => f} %>
-          <% more_actions = [] %>
-          <% more_actions << link_to("Update Permissions", "javascript:void(0)", :id => "edit_permission_link") if manage? %>
-          <% more_actions << link_to("Delete", kapa_user_path(:id => @user), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-          <%=render :partial => "/kapa/layouts/controls", :locals => {:more_actions => more_actions} if update? %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path =>  kapa_user_path(:id => @user)} %>
         <% end %>
       </div>
 

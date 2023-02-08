@@ -5,15 +5,13 @@ module Kapa::KapaControllerBase
     layout "/kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
-    before_action :check_if_route_is_enabled
-    before_action :validate_login
-    before_action :check_id_format, :only => :show
-    before_action :check_read_permission
-    before_action :check_write_permission, :only => [:new, :create, :update, :destroy, :import]
-    after_action :remember_last_index, :only => :index
+    before_action :validate_url
+    before_action :validate_user
+    before_action :validate_permission
+    after_action :remember_return_path, :only => [:show, :index]
     after_action :put_timestamp
     helper :all
-    helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :manage?, :access_all?, :access_dept?, :access_assigned?
+    helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :summarize?, :manage?, :access_all?, :access_dept?, :access_assigned?
   end
 
   def sanitize_params
@@ -27,12 +25,12 @@ module Kapa::KapaControllerBase
 
   def validate_url
     unless Rails.configuration.available_routes.include?(controller_name.to_s)
-      flash[:danger] = "#{controller_name} is not available."
+      flash[:alert] = "#{controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
 
     if params[:action] == "show"  and params[:id].to_s.match(/^[0-9]+$/)
-      flash[:danger] = "Invalid ID format."
+      flash[:alert] = "Invalid ID format."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -51,39 +49,43 @@ module Kapa::KapaControllerBase
     end
 
     unless @current_user.status >= 30
-      flash[:danger] = "You are not authorized to use this system!  Please contact system administrator."
+      flash[:alert] = "You are not authorized to use this system!  Please contact system administrator."
       redirect_to(new_kapa_user_session_path) and return
     end
   end
 
   def validate_permission
-     case params[:action]
-       when "show", "index"
-         permission = :read?
-       when "edit", "update"
-         permission = :update?
-       when "new", "create"
-         permission = :create?
-       when "destroy"
-         permission = :destroy?
-       when "import"
-         permission = :import?
-       when "export"
-         permission = :export?
-     end
+    case params[:action]
+    when "show", "index"
+      permission = :read?
+    when "update"
+      permission = :update?
+    when "new", "create"
+      permission = :create?
+    when "destroy"
+      permission = :destroy?
+    when "import"
+      permission = :import?
+    when "export"
+      permission = :export?
+    when "summarize"
+      permission = :summarize?
+    end
 
-     if permission and not self.send(permission)
-       flash[:danger] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
-       redirect_to(kapa_error_path) and return false
-     end
+    if permission and not self.send(permission)
+      flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
+      redirect_to(kapa_error_path) and return false
+    end
   end
 
-  def remember_last_index
-    session[:last_index] = request.fullpath.gsub( /\?.*/, "" )
+  def remember_return_path
+#    session[:return_path] = request.fullpath.gsub( /\?.*/, "" )
+    session[:return_path] = url_for(:only_path => true)
   end
 
   def put_timestamp
-    @current_user.user_timestamps.create(:path => request.path,
+    @current_user.user_timestamps.create(:method => request.method,
+                                         :path => request.path,
                                          :remote_ip => request.remote_ip,
                                          :agent => request.env['HTTP_USER_AGENT'].downcase) if @current_user
   end
@@ -106,7 +108,7 @@ module Kapa::KapaControllerBase
 
   protected
   def rescue_action_in_public(exception)
-    flash[:danger] = t(:kapa_error_message_default)
+    flash[:alert] = t(:kapa_error_message_default)
     if request.xhr?
       render_notice and return false
     else
@@ -153,6 +155,10 @@ module Kapa::KapaControllerBase
     @current_user.check_permission(name, "I")
   end
 
+  def summarize?(name = controller_name)
+    @current_user.check_permission(name, "S")
+  end
+
   def manage?(name = controller_name)
     @current_user.check_permission(name, "M")
   end
@@ -172,7 +178,7 @@ module Kapa::KapaControllerBase
   def filter(options = {})
     if Rails.configuration.try(:filter_save)
       @current_user.serialize(:filter, Rails.configuration.filter_defaults) if @current_user.deserialize(:filter).blank?
-      @current_user.update_serialized_attributes(:filter, params[:filter]) if params[:filter].present?
+      @current_user.update_serialized_attributes(:filter, params.require(:filter).permit!) if params[:filter].present?
       @current_user.update_serialized_attributes(:filter, options) if options.present?
       @current_user.save
       filter = @current_user.deserialize(:filter, :as => OpenStruct)

@@ -1,7 +1,7 @@
 <table id="activities" class="table table-striped">
   <thead>
     <tr>
-      <th>Date</th>
+      <th>Date & Time</th>
       <th>Action</th>
       <th>Location</th>
       <th>Client</th>
@@ -12,12 +12,12 @@
     <% for timestamp in @timestamps %>
       <tr>
         <td><%=format_datetime timestamp.created_at %></td>
-        <td><%=timestamp.path %></td>
+        <td><%=timestamp.method %> <%=timestamp.path %></td>
         <td><%=timestamp.remote_ip %></td>
-        <td><%=abbr timestamp.agent, 10 %></td>
+        <td><%=abbr timestamp.agent, 20 %></td>
         <% if params[:action] == "logs" %><td><%=link_to abbr(timestamp.user.uid, 10), :action => :show, :id => timestamp.user if timestamp.user %></td><% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-<div class="text-center"><%=will_paginate @timestamps, :renderer => BootstrapPagination::Rails %></div>
+<div class="text-center"><%=will_paginate @timestamps, :renderer => BootstrapPagination::Rails, :params => {:anchor => :activity} %></div>

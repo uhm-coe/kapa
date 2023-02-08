@@ -40,23 +40,30 @@
 
   <body>
 
-    <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
-
-        <div class="navbar-header">
-          <p class="navbar-brand" href="#"><%=@document_title  %></p>
-        </div>
-        <p class="navbar-text">Document ID: <%=@document_id %></p>
-        <p class="navbar-text"><%=@person.full_name if @person %></p>
-
-      </div>
-    </div>
-
-
     <div class="container">
+      <div class="row">
+
+
+      <div class="col-md-6 col-md-offset-1">
+        <h1 class="document-title"><%=@document_title%></h1>
+      </div>
+
+      <div class="col-md-4 text-right">
+        <dl class="dl-horizontal">
+          <dt>Doc ID:</dt>
+          <dd><%=@document_id %></dd>
+          <% if @person %>
+            <dt>Name:</dt>
+            <dd><%=@person.full_name if @person %></dd>
+          <% end %>
+          <dt>Date:</dt>
+          <dd><%=format_date @document_date %></dd>
+        </dl>  
+      </div>
+      </div>
 
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-10 col-md-offset-1">
 
           <div id="main">
             <%=bootstrap_flash %>
@@ -65,11 +72,6 @@
 
         </div>
 
-        <div class="col-md-3">
-
-            <%=yield :sidebar if content_for?(:sidebar) %>
-
-        </div>
       </div>
 
       <% if content_for?(:dialog) %>

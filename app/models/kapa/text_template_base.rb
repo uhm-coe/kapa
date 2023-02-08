@@ -5,6 +5,30 @@ module Kapa::TextTemplateBase
     has_many :texts
   end
 
+  def to_html(options = {})
+    locals = options[:locals] ? options[:locals] : {}
+    locals[:dept] = self.dept if self.dept.present?
+    html = Liquid::Template.parse(self.body, :error_mode => :strict).render(locals.stringify_keys).html_safe
+    if self.template_path.present?
+      ApplicationController.render(:html => html, :layout => self.template_path, :assigns => locals)
+    else
+      html
+    end
+  end
+
+  def to_pdf(options = {})
+    WickedPdf.new.pdf_from_string(self.to_html(options))
+  end
+
+  def to_file(options = {})
+    @file = Kapa::File.new
+    @file.name = "#{self.title}.pdf"
+    @file.data = StringIO.new(self.to_pdf(options))
+    @file.data_file_name = @file.name
+    @file.data_content_type = "application/pdf"
+    return @file
+  end
+  
   class_methods do
 
     def selections(options = {})

@@ -14,15 +14,19 @@ module Kapa::KapaModelBase
   end
 
   def deserialize(name, options = {})
-    if self.yml.blank? or self.yml[name].blank?
-      object = Hash.new
+    name = name.to_s if self.class.serialize_field.to_s == "json"
+    attr_storage = self[self.class.serialize_field]
+    if attr_storage.blank? or attr_storage[name].blank?
+      value = Hash.new
     else
-      object = self.yml[name]
+      value = attr_storage[name]
     end
-    options[:as] ? options[:as].new(object) : object.clone
+
+    options[:as] ? options[:as].new(value) : value.clone
   end
 
   def serialize(name, value)
+    name = name.to_s if self.class.serialize_field.to_s == "json"
     #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
     #However, it should not be used to store values which change application behaviors. 
     if value.is_a?(ActionController::Parameters)
@@ -31,8 +35,8 @@ module Kapa::KapaModelBase
       value = value.to_h
     end
 
-    self.yml = Hash.new if self.yml.blank?
-    self.yml[name] = value if value
+    self[self.class.serialize_field] ||= Hash.new
+    self[self.class.serialize_field][name] = value
   end
 
   def serialize!(name, value)
@@ -99,7 +103,7 @@ module Kapa::KapaModelBase
   end
 
   def accessible?(user)
-    unless user.check_permission(10, kapa_model_name)
+    unless user.check_permission(kapa_model_name, "R")
       return false
     end
 
@@ -107,8 +111,8 @@ module Kapa::KapaModelBase
       when 30
         return true
       when 20
-        depts = self.dept.is_a?(Array) ? self.dept : [self.dept]
-        return (user.dept.any? {|dept| depts.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
+#        depts = self.dept.is_a?(Array) ? self.dept : [self.dept]
+        return (user.depts.any? {|dept| depts.include?(dept)} or self.user_assignments.exists?(:user_id => user.id))
       when 10
         return self.user_assignments.exists?(:user_id => user.id)
       else
@@ -124,7 +128,37 @@ module Kapa::KapaModelBase
     self.dept.to_s.split(/,\s*/)
   end
 
+  def desc_of(attr_name, options = {})
+    options[:property] = attr_name if options[:property].nil?
+    options[:default] = self.send(attr_name) if options[:default].nil?
+    Kapa::Property.lookup_description(options[:property], self.send(attr_name))
+  end
+
+  def short_desc_of(attr_name, options = {})
+    options[:property] = attr_name if options[:property].nil?
+    options[:default] = self.send(attr_name) if options[:default].nil?
+    Kapa::Property.lookup_description_short(options[:property], self.send(attr_name))
+  end
+
+  def category_of(attr_name, options = {})
+    options[:property] = attr_name if options[:property].nil?
+    options[:default] = self.send(attr_name) if options[:default].nil?
+    Kapa::Property.lookup_category(options[:property], self.send(attr_name))
+  end
+
   class_methods do
+    def serialize_field
+      if @serialize_field
+        @serialize_field 
+      else
+        :yml
+      end  
+    end
+
+    def serialize_field=(name)
+      @serialize_field = name
+    end
+
     def selections
       [["Not Defined!", "ND"]]
     end
@@ -200,7 +234,12 @@ module Kapa::KapaModelBase
 
     def to_table(options = {})
       objects = self.search(options)
-      format = options[:format] ? options[:format] : self.csv_format
+      if options[:format]
+        format = options[:format]
+      else
+        #default format to dump all columns   
+        format = self.attribute_names.each_with_object({}) {|a, h|  h[a.to_sym] = [a.to_sym]}
+      end
       excluded_keys = options[:exclude] || []
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
@@ -208,7 +247,16 @@ module Kapa::KapaModelBase
         CSV.generate do |csv|
           csv << keys
           objects.each do |o|
-            csv << keys.collect {|k| o.rsend(*format[k])}
+            csv << keys.collect {|k| 
+              value = o.rsend(*format[k])
+              if k.to_s == "yml"
+                o.yml_before_type_cast
+              elsif value.is_a? Array
+                value.join(",")
+              else
+                value
+              end
+            }
           end
         end
       else
@@ -217,13 +265,8 @@ module Kapa::KapaModelBase
         objects.each do |o|
           table << keys.collect {|k| o.rsend(*format[k]) }
         end
+        return table
       end
-      return table
-    end
-
-    def csv_format
-      #This method should be implemented in subclasses to define csv data.
-      {}
     end
 
     def find(id)
@@ -240,20 +283,6 @@ module Kapa::KapaModelBase
 
     def hashids
       Hashids.new("#{table_name}#{Rails.application.secrets.hashid_salt}", 10)
-    end
-
-    def property_lookup(attr_name, options = {:property => attr_name})
-      if options[:map].present?
-        options[:map].each_pair do |key, value|
-         define_method("#{attr_name}_#{key}") do
-           Kapa::Property.send("lookup_#{value}", *[options[:property], self.send(attr_name)])
-         end
-        end
-      else
-        define_method("#{attr_name}_desc") do
-          Kapa::Property.send("lookup_description", *[options[:property], self.send(attr_name)])
-        end
-      end
     end
   end
 end

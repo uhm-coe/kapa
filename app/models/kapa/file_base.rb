@@ -7,24 +7,23 @@ module Kapa::FileBase
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    property_lookup :status
     has_attached_file :data
     validates_attachment_content_type :data, :content_type => Rails.configuration.attachment_content_types
   end
 
   def document_id
-    "F" + self.id.to_s.rjust(9, '0')
+    "FL" + self.id.to_s.rjust(9, '0')
   end
 
-  def type
+  def document_type
     "File"
   end
 
-  def title
+  def document_title
     self.name
   end
 
-  def date
+  def document_date
     self.updated_at
   end
 
@@ -44,10 +43,14 @@ module Kapa::FileBase
     data_file_size
   end
 
+  def status_desc
+    self.desc_of(:status)
+  end
+  
   class_methods do
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      files = Kapa::File.eager_load({:users => :person}, :person).order("files.created_at DESC").limit(500)
+      files = Kapa::File.eager_load({:users => :person}, :person).where(:active => true).order("files.created_at DESC")
       files = files.column_matches("name" => filter.name) if filter.name.present?
 
       case filter.user.access_scope(:kapa_files)

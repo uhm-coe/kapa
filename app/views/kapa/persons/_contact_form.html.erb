@@ -1,20 +1,14 @@
 <%=bootstrap_fields_for :person do |f| %>
   <div class="row">
-    <div class="col-sm-6">
-      <h4>E-mail</h4>
+    <div class="col-sm-4">
+      <h4>E-mail/Phone</h4>
       <%= f.static :email, :size => 30, :label => "Campus Email", :content => @person.email %>
       <%= f.text_field :email_alt, :size => 30, :label => "Other Email" %>
-    </div>
-
-    <div class="col-sm-6">
-      <h4>Phone</h4>
       <%=f.text_field :cur_phone, :label => "Phone" %>
       <%=f.text_field :mobile_phone, :label => "Mobile Phone" %>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <h4>Current Address</h4>
       <%=f.text_field :cur_street, :label => "Street" %>
       <%=f.text_field :cur_city, :label => "City" %>
@@ -22,12 +16,16 @@
       <%=f.text_field :cur_postal_code, :label => "ZIP" %>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <h4>Permanent Address</h4>
       <%=f.text_field :per_street, :label => "Street"  %>
       <%=f.text_field :per_city, :label => "City"  %>
       <%=f.text_field :per_state, :label => "State"  %>
       <%=f.text_field :per_postal_code, :label => "ZIP"  %>
     </div>
+
+  </div>
+
+  <div class="row">
   </div>
 <% end %>

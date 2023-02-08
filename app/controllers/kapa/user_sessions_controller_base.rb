@@ -5,12 +5,18 @@ module Kapa::UserSessionsControllerBase
     skip_before_action :validate_url
     skip_before_action :validate_user
     skip_before_action :validate_permission
-    before_action :validate_user, :only => :show
+    before_action :validate_user, :only => [:show, :destroy]
   end
-
+  
   def new
+    flash_clone = flash.clone
     Kapa::UserSession.find.try(:destroy)
     reset_session
+
+    #Restore flash messages
+    flash_clone.keys.each do |key|
+      flash[key] = flash_clone[key]
+    end
   end
 
   def show
@@ -19,9 +25,10 @@ module Kapa::UserSessionsControllerBase
   def create
     session = Kapa::UserSession.new(user_session_params.to_h)
     unless session.save
-      flash[:danger] = "Username/password do not match!"
-      redirect_to :action => :new and return false
+      flash[:alert] = "Username/password do not match!"
+      redirect_to new_kapa_user_session_path and return
     end
+    flash[:alert] = nil
     success
     redirect_to kapa_root_path
   end
@@ -55,7 +62,7 @@ module Kapa::UserSessionsControllerBase
     if @cas_results[0] == "yes"
       uid = @cas_results[1]
       register(uid)
-      user = Kapa::User.find_by(:uid => uid, :category => "ldap", :status => 30)
+      user = Kapa::User.find_by("uid = ? and category = ? and status >= ?", uid, "ldap", 30)
       if user
         Kapa::UserSession.create(user, true)
         success
@@ -71,6 +78,7 @@ module Kapa::UserSessionsControllerBase
   end
 
   def success
+    flash.clear
   end
 
   def error

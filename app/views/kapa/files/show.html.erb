@@ -1,24 +1,35 @@
 <% content_for(:main) do %>
 
+  <div class="text-right">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-option-vertical"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><%=link_to("Edit file properties", "#", "data-toggle" => "modal", "data-target" => "#edit_file_dialog") %></li>
+        <li><%=link_to("Delete", kapa_file_path(:id => @file), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
+      </ul>
+    </div>
+    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%=button_to_link("Download", kapa_file_path(:id => @file, :format => :file), :icon => "glyphicon-download") %>
+  </div>
+
+  <hr/>
+
   <%=render :partial => "file_container", :locals => {:file => @file} %>
 
 <% end %>
 
-<% content_for(:sidebar) do %>
+<% content_for(:dialog) do %>
 
-  <%=bootstrap_form_for(:file, :url => kapa_file_path(:id => @file), :html => {:method => :put, :id => "edit_file_form"}) do |f| %>
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_file_dialog", :modal_title => "Edit file property", :modal_form_id => "edit_file_form"} do %>
+    <%=bootstrap_form_for(:file, :url => kapa_file_path(:id => @file), :html => {:method => :put, :id => "edit_file_form"}) do |f| %>
 
-    <%=f.text_field :name, :label => "Title" %>
-    <%=f.text_area :note, :text => "Note", :size => "5x7" %>
-    <%= f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
+      <%=f.text_field :name, :label => "Title" %>
+      <%=f.property_select(:depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true) if manage? :kapa_files %>
+      <%=f.text_area :note, :text => "Note", :size => "5x7" %>
 
-    <% more_actions = [] %>
-    <% more_actions << link_to("Download", kapa_file_path(:id => @file, :format => :file)) %>
-    <% more_actions << link_to("Delete", kapa_file_path(:id => @file, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true, :more_actions => more_actions}) do %>
-      <%=button_to_link "Cancel", nil, "data-close" => true %>
-    <% end if update? %>
-
+    <% end %>
   <% end %>
 
 <% end %>

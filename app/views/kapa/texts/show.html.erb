@@ -1,31 +1,79 @@
 <% content_for(:head) do %>
 
-  <%=javascript_include_tag "kapa/ckeditor" %>
+  <%= stylesheet_link_tag "kapa/editor" %>
+  <%= javascript_include_tag "kapa/editor" %>
+  
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('#create_pdf_button').click(function () {
+        if(confirm("Are you sure you want to generate PDF from the current edit?")) {
+          $('#pdf').val("Y");
+          $('#update_text_form').submit();
+        }
+      });
+    });
+  </script>
 
 <% end %>
 
 <% content_for(:main) do %>
 
-  <%=bootstrap_form_for :text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "text_form"} do |f| %>
-    <%=f.text_area :body, :id => "editor", :label => :no %>
+  <div class="text-right">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-option-vertical"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><%=link_to("Edit text properties", "#", "data-toggle" => "modal", "data-target" => "#edit_text_dialog") %></li>
+        <li><%=link_to("Delete", kapa_text_path(:id => @text), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %></li>
+      </ul>
+    </div>
+    <%#=button_to_link("Cancel", nil, "data-close" => true, :icon => "glyphicon-ban-circle") %>
+    <%=button_to_link("Create PDF", "#", :icon => "glyphicon-plus", :id => "create_pdf_button") %>
+    <%=button_to_link("Update", "#", "data-submit" => "#update_text_form", :icon => "glyphicon-ok-circle") %>
+  </div>
+
+  <hr/>
+
+  <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => "update_text_form"}) do |f| %>
+    <%=hidden_field_tag :pdf, nil, :id => "pdf" %>
+    <%=f.text_area(:body, :id => "editor", :label => :no) %>
+  <% end %>
+
+  <% if @text.files.present? %>
+      <legend>Generated PDFs</legend>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Created at</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @text.files.sort_by { |d| d.created_at }.reverse_each do |d| %>
+          <tr>
+            <td><%= d.type %></td>
+            <td><%= d.name %></td>
+            <td><%= d.date %></td>
+            <td class="right"><%=button_to_link "", kapa_file_path(:id => d), :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank" %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
   <% end %>
 
 <% end %>
 
-<% content_for(:sidebar) do %>
+<% content_for(:dialog) do %>
 
-  <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put}) do |f| %>
-
-    <%=f.text_field :title %>
-    <%=f.text_area :note, :text => "Note", :size => "5x7" %>
-    <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if manage? :kapa_texts %>
-
-    <% more_actions = [] %>
-    <% more_actions << link_to("Add an attachemnt", "javascript:void(0)", "data-toggle" => "modal", "data-target" => "#document_dialog") %>
-    <% more_actions << link_to("Delete", kapa_text_path(:id => @text, :return_path => session[:return_path]), :method => :delete, "data-confirm" => "Are you sure you want to delete?") if destroy? %>
-    <%=render(:layout => "/kapa/layouts/controls", :locals => {:hide_cancel => true, :more_actions => more_actions}) do %>
-      <%=button_to_link "Cancel", nil, "data-close" => true %>
+  <%=render(:layout => '/kapa/layouts/modal', :locals => {:modal_id => "edit_text_dialog", :modal_title => "Edit texts property", :modal_form_id => "edit_text_form"}) do %>
+    <%=bootstrap_form_for(:text, :url => kapa_text_path(:id => @text), :html => {:method => :put, :id => :edit_text_form}) do |f| %>
+      <%=f.text_field :title %>
+      <%=f.text_area :note, :text => "Note", :size => "5x7" %>
+      <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, :multiple => true if manage? :kapa_texts %>
     <% end %>
-
   <% end %>
+
 <% end %>
