@@ -77,7 +77,7 @@ module Kapa::PropertyBase
     def append(name, code, options={})
       options[:description] = code if options[:description].blank?
       property = where(:name => name, :code => code).first_or_create
-      property.update_attributes(options)
+      property.update(options)
       return property
     end
 

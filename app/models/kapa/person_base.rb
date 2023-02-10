@@ -94,7 +94,7 @@ module Kapa::PersonBase
         end
 
         #Deactivate another person
-        another_person.update_attributes(:status => "D", :id_number => nil, :note => "Merged to #{self.id}")
+        another_person.update(:status => "D", :id_number => nil, :note => "Merged to #{self.id}")
       end
       self.save!
     end

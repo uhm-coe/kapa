@@ -38,7 +38,7 @@ module Kapa::TextBase
   end
 
   def submit
-    self.update_attributes(:submitted_at => DateTime.now, :lock => "Y")
+    self.update(:submitted_at => DateTime.now, :lock => "Y")
   end
 
   def set_default_contents
