@@ -20,8 +20,8 @@ module Kapa
     end
 
     initializer :kapa_assets do |app|
-      app.config.assets.precompile += %w(kapa/*)
-      app.config.assets.precompile << /.(?:svg|eot|woff|ttf|icon|png)$/
+      app.config.assets.precompile += %w(kapa/kapa.css kapa/kapa.js kapa/editor.js kapa/reports.js)
+      app.config.assets.precompile << /.(?:svg|eot|woff|ttf|icon|ico|png)$/
     end
 
   end
