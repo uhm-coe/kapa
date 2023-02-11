@@ -28,6 +28,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'will_paginate-bootstrap'
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
+  s.add_dependency 'sassc-rails'
+  s.add_dependency 'sassc', '~> 2.1.0'
   s.add_dependency 'sprockets', '~> 3.7.0'
   s.add_dependency 'wicked_pdf'
   s.add_dependency 'liquid'
