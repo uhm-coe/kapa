@@ -7,7 +7,10 @@ module Kapa
 
     config.generators do |g|
       g.assets false
+      g.stylesheets false
       g.helper false
+      g.integration_tool false
+      g.system_tests false
     end
 
     initializer :append_migrations do |app|
@@ -20,7 +23,7 @@ module Kapa
     end
 
     initializer :kapa_assets do |app|
-      app.config.assets.precompile += %w(kapa/kapa.css kapa/kapa.js kapa/editor.js kapa/reports.js)
+      app.config.assets.precompile += %w(kapa/*)
       app.config.assets.precompile << /.(?:svg|eot|woff|ttf|icon|ico|png)$/
     end
 

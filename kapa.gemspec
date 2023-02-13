@@ -7,7 +7,7 @@ require "kapa/version"
 Gem::Specification.new do |s|
   s.name        = "kapa"
   s.version     = Kapa::VERSION
-  s.authors = ["College of Education, University of Hawaii at Manoa"]
+  s.authors     = ["College of Education, University of Hawaii at Manoa"]
   s.email       = ["sishelp@hawaii.edu"]
   s.homepage    = "https://coe.hawaii.edu"
   s.summary     = "Office Records Engine"
@@ -28,8 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'will_paginate-bootstrap'
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
-  s.add_dependency 'sassc-rails'
-  s.add_dependency 'sassc', '~> 2.1.0'
   s.add_dependency 'sprockets', '~> 3.7.0'
   s.add_dependency 'wicked_pdf'
   s.add_dependency 'liquid'
