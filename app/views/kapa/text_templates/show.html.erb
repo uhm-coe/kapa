@@ -17,7 +17,7 @@
     <%=f.text_area :body, :class => "editor" %>
     <%=f.text_field :template_path, :label => "Layout Path" %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
-    <%=f.property_select :dept %>
+    <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
     <%=render(:layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)}) do %>
       <li><%=link_to "Preview", {:action => :preview, :id => @text_template}, :target => :blank %></li>
     <% end if update?%>
