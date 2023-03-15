@@ -4,7 +4,7 @@ module ApplicationControllerBase
   included do
     protect_from_forgery
     helper :all
-    helper_method :beta?
+    helper_method :beta?, :debug
   end
 
   def error_404
@@ -34,5 +34,9 @@ module ApplicationControllerBase
 
   def beta?
     Rails.application.secrets.release != "live"
+  end
+
+  def debug(*args)
+    Rails.logger.debug("*DEBUG* " + args.collect {|a| a.inspect}.join(", "))
   end
 end
