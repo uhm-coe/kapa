@@ -28,12 +28,18 @@ module Kapa::BootstrapHelper
   end 
 
   def datetime_picker(object_name, method, options = {})
+    object = instance_variable_get("@#{object_name}".delete("[]"))
+    current_value = object.send("#{method}") if object
+    options[:value] = current_value.to_fs(:datetime) if current_value.present? and current_value.is_a?(DateTime)
     input_tag = text_field(object_name, method, options)
     icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
     content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datetimepicker")
   end
 
   def date_picker(object_name, method, options = {})
+    object = instance_variable_get("@#{object_name}".delete("[]"))
+    current_value = object.send("#{method}") if object
+    options[:value] = current_value.to_fs(:date) if current_value.present? and current_value.is_a?(Date)
     input_tag = text_field(object_name, method, options)
     icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
     content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datepicker")
