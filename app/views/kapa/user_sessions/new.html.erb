@@ -17,7 +17,7 @@
         <p class="text-right">
           <% if Kapa::Cas.defined? %>
             <%=button_to_link t(:kapa_login_cas), Kapa::Cas.login_url(kapa_user_session_validate_url), :class => "btn btn-primary btn-lg"  %>
-            <%=button_to_link t(:kapa_login_local), nil, "data-toggle" => "modal", "data-target" => "#login_dialog", :class => "btn btn-default btn-lg" if beta? %>
+            <%=button_to_link t(:kapa_login_local), nil, "data-toggle" => "modal", "data-target" => "#login_dialog", :class => "btn btn-default btn-lg" if Kapa.beta? %>
           <% else %>
             <%=button_to_link t(:kapa_login_local), nil, "data-toggle" => "modal", "data-target" => "#login_dialog", :class => "btn btn-primary btn-lg" %>
           <% end %>
@@ -35,5 +35,5 @@
       <%=f.text_field :uid, :label => "Username" %>
       <%=f.password_field :password %>
     <% end %>
-  <% end if beta? %>
+  <% end if Kapa.beta? %>
 <% end %>
