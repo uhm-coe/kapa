@@ -14,8 +14,8 @@ module Kapa::KapaModelBase
   end
 
   def deserialize(name, options = {})
-    name = name.to_s if self.class.serialize_field.to_s == "json"
-    attr_storage = self[self.class.serialize_field]
+    name = name.to_s if Rails.configuration.serialize_field.to_s == "json"
+    attr_storage = self[Rails.configuration.serialize_field]
     if attr_storage.blank? or attr_storage[name].blank?
       value = Hash.new
     else
@@ -26,7 +26,7 @@ module Kapa::KapaModelBase
   end
 
   def serialize(name, value)
-    name = name.to_s if self.class.serialize_field.to_s == "json"
+    name = name.to_s if Rails.configuration.serialize_field.to_s == "json"
     #Serialized attributes are designed to store extra fields like additional file information, so it is OK to bypass strong parameter; 
     #However, it should not be used to store values which change application behaviors. 
     if value.is_a?(ActionController::Parameters)
@@ -35,8 +35,8 @@ module Kapa::KapaModelBase
       value = value.to_h
     end
 
-    self[self.class.serialize_field] ||= Hash.new
-    self[self.class.serialize_field][name] = value
+    self[Rails.configuration.serialize_field] ||= Hash.new
+    self[Rails.configuration.serialize_field][name] = value
   end
 
   def serialize!(name, value)
@@ -147,18 +147,6 @@ module Kapa::KapaModelBase
   end
 
   class_methods do
-    def serialize_field
-      if @serialize_field
-        @serialize_field 
-      else
-        :yml
-      end  
-    end
-
-    def serialize_field=(name)
-      @serialize_field = name
-    end
-
     def selections
       [["Not Defined!", "ND"]]
     end
