@@ -141,7 +141,7 @@
           <td><%=user.role %></td>
           <td><%=user.status_desc %></td>
           <td><%=user.primary_dept %></td>
-          <td><%=user.depts.join(", ") %></td>
+          <td><%=user.depts_desc %></td>
           <td class="right"><%=button_to_link "", {:action => :show, :id => user}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
         </tr>
       <% end %>

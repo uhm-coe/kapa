@@ -36,7 +36,7 @@
           <td><%=text_template.type %></td>
           <td><%=text_template.title %></td>
           <td><%=text_template.active %></td>
-          <td><%=text_template.depts.join(", ") %></td>
+          <td><%=text_template.depts_desc %></td>
           <td class="right"><%=button_to_link "", {:action => :show, :id => text_template}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
         </tr>
       <% end %>

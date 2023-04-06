@@ -128,6 +128,10 @@ module Kapa::KapaModelBase
     self.dept.to_s.split(/,\s*/)
   end
 
+  def depts_desc
+    self.send(:public).to_s == "Y" ? "Any" : self.depts.join(", ")
+  end
+
   def desc_of(attr_name, options = {})
     options[:property] = attr_name if options[:property].nil?
     options[:default] = self.send(attr_name) if options[:default].nil?

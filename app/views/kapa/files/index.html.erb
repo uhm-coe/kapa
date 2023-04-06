@@ -39,7 +39,7 @@
         <td><%=file.name %></td>
         <td><%=link_to abbr(file.person.full_name), kapa_person_path(:id => file.person) if file.person %></td>
         <td><%=format_date file.updated_at %></td>
-        <td><%=file.depts.join(", ") %></td>
+        <td><%=file.depts_desc %></td>
         <td><%=file.status_desc %></td>
         <td class="right"><%=button_to_link "", {:action => :show, :id => file}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank"%></td>
       </tr>
