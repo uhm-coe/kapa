@@ -129,7 +129,11 @@ module Kapa::KapaModelBase
   end
 
   def depts_desc
-    self.send(:public).to_s == "Y" ? "Any" : self.depts.join(", ")
+    if(self.has_attribute?(:public) and self.public == "Y")
+      "Any"
+    else  
+      self.depts.join(", ")
+    end  
   end
 
   def desc_of(attr_name, options = {})
