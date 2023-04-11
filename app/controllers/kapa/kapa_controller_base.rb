@@ -5,10 +5,10 @@ module Kapa::KapaControllerBase
     layout "/kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
+    before_action :remember_return_path, :only => :show
     before_action :validate_url
     before_action :validate_user
     before_action :validate_permission
-    after_action :remember_return_path, :only => [:show, :index]
     after_action :put_timestamp
     helper :all
     helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :summarize?, :manage?, :access_all?, :access_dept?, :access_assigned?
@@ -21,6 +21,10 @@ module Kapa::KapaControllerBase
         params[key1][key2] = value2.delete_if {|v| v.blank?} if value2.is_a? Array
       end if value1.is_a?(ActionController::Parameters)
     end
+  end
+
+  def remember_return_path
+    session[:return_path] = params[:return_path] if params[:return_path]
   end
 
   def validate_url
@@ -76,11 +80,6 @@ module Kapa::KapaControllerBase
       flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
-  end
-
-  def remember_return_path
-#    session[:return_path] = request.fullpath.gsub( /\?.*/, "" )
-    session[:return_path] = url_for(:only_path => true)
   end
 
   def put_timestamp
