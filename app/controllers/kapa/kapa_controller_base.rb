@@ -5,7 +5,6 @@ module Kapa::KapaControllerBase
     layout "/kapa/layouts/kapa"
     protect_from_forgery
     before_action :sanitize_params
-    before_action :remember_return_path, :only => :show
     before_action :validate_url
     before_action :validate_user
     before_action :validate_permission
@@ -21,10 +20,6 @@ module Kapa::KapaControllerBase
         params[key1][key2] = value2.delete_if {|v| v.blank?} if value2.is_a? Array
       end if value1.is_a?(ActionController::Parameters)
     end
-  end
-
-  def remember_return_path
-    session[:return_path] = params[:return_path] if params[:return_path]
   end
 
   def validate_url
@@ -87,6 +82,10 @@ module Kapa::KapaControllerBase
                                          :path => request.path,
                                          :remote_ip => request.remote_ip,
                                          :agent => request.env['HTTP_USER_AGENT'].downcase) if @current_user
+  end
+
+  def remember_return_path
+    session[:return_path] = url_for(:only_path => true)
   end
 
   def redirect_to(options = {}, response_status = {})

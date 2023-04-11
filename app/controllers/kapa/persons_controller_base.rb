@@ -1,6 +1,10 @@
 module Kapa::PersonsControllerBase
   extend ActiveSupport::Concern
 
+  included do
+    before_action :remember_return_path, :only => :show
+  end
+
   def show
     options= {:filter => {:user => @current_user}}
     @person = Kapa::Person.find(params[:id])
