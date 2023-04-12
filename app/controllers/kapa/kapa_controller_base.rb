@@ -84,10 +84,6 @@ module Kapa::KapaControllerBase
                                          :agent => request.env['HTTP_USER_AGENT'].downcase) if @current_user
   end
 
-  def remember_return_path
-    session[:return_path] = url_for(:only_path => true)
-  end
-
   def redirect_to(options = {}, response_status = {})
     if request.xhr?
       render(:js => "window.location.href = '#{url_for(options)}'")
