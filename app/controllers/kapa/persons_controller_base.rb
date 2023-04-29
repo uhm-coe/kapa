@@ -49,6 +49,7 @@ module Kapa::PersonsControllerBase
   end
 
   def index
+    params[:filter][:key].strip! 
     @filter = filter
     if params[:modal]
       @modal = true

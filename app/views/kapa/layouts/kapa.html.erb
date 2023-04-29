@@ -62,8 +62,7 @@
         <ul class="nav navbar-nav navbar-right">
           <%= bootstrap_form_for(:filter, :url => kapa_persons_path, :html => {:method => :get, :class => "navbar-form navbar-left", :role => "search"}) do |f| %>
             <div class="input-group">
-              <%#=f.text_field :key, :label => :no, :placeholder => "Search Person", "data-toggle" => "tooltip", "data-placement" => "bottom", :title => "ID, Name, Email, or Phone", :class => "form-control"%>
-              <input name="filter[key]" type="text" class="form-control" placeholder = "Search Person" data-toggle = "tooltip" data-placement = "bottom" title = "ID, Name, Email, or Phone">
+              <input name="filter[key]" type="text" class="form-control" placeholder = "Search Person" data-toggle = "tooltip" data-placement = "bottom" title = "ID, Name, Email, or Phone" value="<%=@filter.key%>">
               <%=f.hidden_field :limit, :value => 10 %>
               <span class="input-group-btn">
                 <button type="submit" class="btn btn-default">
