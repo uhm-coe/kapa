@@ -56,10 +56,17 @@
            </tr>
            <% @documents.sort_by {|d| d.created_at}.reverse_each do |d| %>
              <tr>
+<<<<<<< HEAD
                <td><%=d.document_type%></td>
                <td><%=d.document_title%></td>
                <td><%=format_date d.document_date %></td>
                <td><%=d.depts.join(", ") %></td>
+=======
+               <td><%=d.type%></td>
+               <td><%=d.title%></td>
+               <td><%=format_date d.date %></td>
+               <td><%=d.depts_desc %></td>
+>>>>>>> origin/release-2.0
                <td><%=d.status_desc %></td>
                <td class="right"><%=button_to_link "", document_path(d), :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank" %></td>
              </tr>

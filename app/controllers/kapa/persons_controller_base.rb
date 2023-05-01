@@ -11,7 +11,6 @@ module Kapa::PersonsControllerBase
     @documents += @person.texts.search(options)
     @form_templates = Kapa::FormTemplate.all
     @text_templates = Kapa::TextTemplate.all
-    session[:return_path] = kapa_person_path(:id => @person)
   end
 
   def new
@@ -50,6 +49,7 @@ module Kapa::PersonsControllerBase
   end
 
   def index
+    params[:filter][:key].strip! 
     @filter = filter
     if params[:modal]
       @modal = true

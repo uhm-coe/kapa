@@ -41,7 +41,7 @@
         <td><%=link_to abbr(text.person.full_name), kapa_person_path(:id => text.person) if text.person %></td>
         <td><%=time_ago_in_words text.updated_at if text.updated_at %> ago</td>
         <td><%=format_date text.submitted_at %></td>
-        <td><%=text.depts.join(", ") %></td>
+        <td><%=text.depts_desc %></td>
         <td><%=text.status_desc %></td>
         <td class="right"><%=button_to_link "", {:action => :show, :id => text}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right", :target => "_blank"%></td>
       </tr>

@@ -8,7 +8,6 @@ module Kapa::KapaControllerBase
     before_action :validate_url
     before_action :validate_user
     before_action :validate_permission
-    after_action :remember_return_path, :only => [:show, :index]
     after_action :put_timestamp
     helper :all
     helper_method :read?, :update?, :create?, :destroy?, :import?, :export?, :summarize?, :manage?, :access_all?, :access_dept?, :access_assigned?
@@ -76,11 +75,6 @@ module Kapa::KapaControllerBase
       flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
       redirect_to(kapa_error_path) and return false
     end
-  end
-
-  def remember_return_path
-#    session[:return_path] = request.fullpath.gsub( /\?.*/, "" )
-    session[:return_path] = url_for(:only_path => true)
   end
 
   def put_timestamp

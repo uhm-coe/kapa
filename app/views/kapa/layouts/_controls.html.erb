@@ -16,7 +16,7 @@
   <% end %>
 
   <% unless local_assigns[:hide_cancel] %>
-    <%=button_to_link "Cancel", session[:return_path], "data-confirm" => "Are you sure you want to discard changes?", :icon => "glyphicon-ban-circle" %>
+    <%=button_to_link "Cancel", url_for(:only_path => true), "data-confirm" => "Are you sure you want to discard changes?", :icon => "glyphicon-ban-circle" %>
   <% end %>
 
   <% unless local_assigns[:hide_update] or local_assigns[:hide_save] %>
