@@ -3,7 +3,8 @@ module Kapa::KapaHelper
 
   def model_select(object_name, method, options = {}, html_options = {})
     model_class = options[:model_class]
-    selections = model_class.selections(options[:model_options])
+    model_options = options[:model_options] || {} 
+    selections = model_class.selections(model_options)
 
     if options[:selected]
       current_value = options[:selected]
@@ -16,7 +17,7 @@ module Kapa::KapaHelper
       options[:selected] = current_value if current_value.present?
     end
 
-    if not options[:grouped]
+    unless options[:grouped] or model_options[:grouped]
       selection = selections.select { |c| c[1].to_s == current_value.to_s }.first
       # If the current value exists in the db but is not in the selections because of deactivated properties
       # add it to the selections so that the value will apear in the selection (description will not be displayed)
