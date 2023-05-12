@@ -108,6 +108,14 @@ module Kapa::PersonBase
     end
   end
 
+  def phone_preferred
+    if self.mobile_phone.present?
+      self.mobile_phone
+    else
+      self.cur_phone
+    end
+  end
+
   class_methods do
     def selections(options = {})
       persons = order(:last_name, :first_name)
