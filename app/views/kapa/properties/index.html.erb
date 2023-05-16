@@ -16,7 +16,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" %>
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
       <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
