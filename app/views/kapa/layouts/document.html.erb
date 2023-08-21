@@ -52,12 +52,16 @@
         <dl class="dl-horizontal">
           <dt>Doc ID:</dt>
           <dd><%=@document_id %></dd>
-          <% if @person %>
-            <dt>Name:</dt>
-            <dd><%=@person.full_name if @person %></dd>
-          <% end %>
           <dt>Date:</dt>
           <dd><%=format_date @document_date %></dd>
+          <% if @person %>
+            <dt>Name:</dt>
+            <dd><%=@person.full_name %></dd>
+            <dt>Phone:</dt>
+            <dd><%=@person.phone_preferred %></dd>
+            <dt>E-mail:</dt>
+            <dd><%=@person.email_preferred %></dd>
+          <% end %>
         </dl>  
       </div>
       </div>

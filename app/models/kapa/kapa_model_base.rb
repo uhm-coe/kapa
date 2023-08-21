@@ -223,7 +223,7 @@ module Kapa::KapaModelBase
       CSV.generate do |csv|
         csv << keys
         objects.each do |o|
-          csv << keys.collect {|k| o.rsend(*csv_format[k]) }
+          csv << keys.collect {|k| o.rsend(*format[k]) }
         end
       end
     end
@@ -247,8 +247,11 @@ module Kapa::KapaModelBase
               value = o.rsend(*format[k])
               if k.to_s == "yml"
                 o.yml_before_type_cast
+                value
               elsif value.is_a? Array
                 value.join(",")
+              elsif value.is_a? String
+                value.force_encoding('UTF-8')
               else
                 value
               end

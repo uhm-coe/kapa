@@ -42,7 +42,7 @@
 <body>
 
 <div class="navbar navbar-default navbar-static-top">
-  <div class="container">
+  <div class="container-fluid">
     <%=link_to t(:kapa_brand), kapa_root_path, :class => "navbar-brand" %>
 
     <div class="navbar-header">
@@ -64,11 +64,11 @@
             <div class="input-group">
               <input name="filter[key]" type="text" class="form-control" placeholder = "Search Person" data-toggle = "tooltip" data-placement = "bottom" title = "ID, Name, Email, or Phone" value="<%=@filter.key if @filter %>">
               <%=f.hidden_field :limit, :value => 10 %>
-              <span class="input-group-btn">
+              <div class="input-group-btn">
                 <button type="submit" class="btn btn-default">
-                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                  <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
                 </button>
-              </span>
+              </div>
             </div>
           <% end if read? :kapa_persons and access_dept?(:kapa_persons) %>
           <li class="dropdown">
