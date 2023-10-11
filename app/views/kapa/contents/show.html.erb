@@ -1,0 +1,30 @@
+<% content_for(:head) do %>
+
+  <%= stylesheet_link_tag "kapa/editor" %>
+  <%= javascript_include_tag "kapa/editor" %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h4 class="section-header">
+    <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
+    <%=@content.page%>/<%=@content.region %>
+  </h4>
+
+  <div class="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#content_tab" data-toggle="tab">Properties</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="content_tab" class="tab-pane active">
+        <%=bootstrap_form_for :content, :url => kapa_content_path(:id => @content), :html => {:method => :put} do |f| %>
+          <%=render :partial => "content_form", :locals => {:f => f} %>
+          <%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => kapa_content_path(:id => @content)} if update? %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
