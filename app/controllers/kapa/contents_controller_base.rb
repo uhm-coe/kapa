@@ -10,7 +10,7 @@ module Kapa::ContentsControllerBase
   def new
     @filter = filter
     @content = Kapa::Content.new
-    @content.page = @filter.content_page
+    @content.page = @filter.page
     @content_pages = Kapa::Content.select("distinct page").where("length(page) > 0").order('1').collect { |p| p.page }
   end
 
