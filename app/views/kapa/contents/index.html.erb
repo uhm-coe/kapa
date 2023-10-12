@@ -7,6 +7,12 @@
     <% end %>
   <% end %>
 
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Contents", :modal_form_id => "import_contents_form"} do %>
+    <%=bootstrap_form_for(:data, :url => import_kapa_contents_path, :html => {:multipart => true, :id => "import_contents_form"}) do |f|%>
+      <%=f.file_field :import_file %>
+    <% end %>
+  <% end %>
+
 <% end %>
 
 <% content_for(:box1) do %>
@@ -16,6 +22,9 @@
   <div class="row">
     <div class="col-sm-12 text-right">
       <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
+      <% if manage? %>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
+      <% end %>
       <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
@@ -37,7 +46,7 @@
         <td><%=content.page %></td>
         <td><%=content.region %></td>
         <td><%=abbr content.html, 20 %></td>
-        <td><%=content.updated_at %></td>
+        <td><%=content.updated_at.to_fs(:datetime) %></td>
         <td class="right"><%=button_to_link "", {:action => :show, :id => content}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
       </tr>
     <% end %>

@@ -21,9 +21,9 @@ module Kapa::ContentBase
 
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      contents = Kapa::Property.all.order(:page, :region)
-      contents = contents.where(:page => filter.name)  if filter.page.present?
-      return application_properties
+      contents = Kapa::Content.all.order(:page, :region)
+      contents = contents.where(:page => filter.page)  if filter.page.present?
+      return contents
     end
 
   end

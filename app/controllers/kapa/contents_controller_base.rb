@@ -45,13 +45,44 @@ module Kapa::ContentsControllerBase
     @contents = Kapa::Content.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
   end
 
+  def destroy
+    @content = Kapa::Content.find params[:id]
+
+    unless @content.destroy
+      flash[:alert] = error_message_for(@content)
+      redirect_to kapa_content_path(:id => @content) and return false
+    end
+    flash[:notice] = "Content was successfully deleted."
+    redirect_to kapa_contents_path
+  end
 
   def export
     @filter = filter
     send_data Kapa::Content.to_table(:as => :csv, :filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "Contents_#{DateTime.now}.csv"
+              :filename => "Contents_#{DateTime.now.to_fs(:datetime)}.csv"
+  end
+
+  def import
+    # Do error checking of the file
+    unless params[:data].present? && params[:data][:import_file].present?
+      flash[:warning] = "Please specify the file you are importing."
+      redirect_to(:action => :index) and return false
+    end
+
+    CSV.new(params[:data][:import_file].tempfile, :headers => true).each do |row|
+      if row["page"].blank? or row["region"].blank?
+        flash[:danger] = "Skipped some items."
+        next
+      else  
+        content = Kapa::Content.find_or_create_by(:page => row["page"], :region => row["region"])
+        content.html = row["html"]
+        content.save
+      end
+    end
+    flash[:notice] = 'Contents were imported.'
+    redirect_to(:action => :index)
   end
 
   private
