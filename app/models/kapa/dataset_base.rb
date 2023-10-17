@@ -64,7 +64,7 @@ module Kapa::DatasetBase
               columns_hash[attr] = nil
             end
           end
-          self.update_attributes(:ldap_attr => columns_hash.keys.join(","))
+          self.update(:ldap_attr => columns_hash.keys.join(","))
         end
         search_options[:attributes] = self.ldap_attr
         build(self.ldap_attr.split(/,\s*/))
@@ -91,7 +91,7 @@ module Kapa::DatasetBase
         end
     end
 
-    self.update_attributes(:record_count => cache.count, :loaded_at => DateTime.now)
+    self.update(:record_count => cache.count, :loaded_at => DateTime.now)
     self.serialize!(:columns, columns)
   end
 

@@ -15,16 +15,17 @@ module Kapa::UserBase
     validates_uniqueness_of :uid
     validates_presence_of :uid, :person_id
     validates_presence_of :password, :on => :create, :if => :local?
-
+    validates :uid, :length => { :minimum => 2, :maximum => 100}, :if => :local?
+    validates :password, :length => {:minimum => 5}, :on => :create, :if => :local?
+    
     before_validation :use_email_as_uid
     before_save :format_fields
     after_save :update_person
 
     acts_as_authentic do |c|
       c.login_field = :uid
-      c.merge_validates_length_of_login_field_options :within => 2..100
+      c.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
       c.crypted_password_field = :hashed_password
-      c.merge_validates_length_of_password_field_options :on => :create, :if => :local?
       c.require_password_confirmation = false
       c.logged_in_timeout = 12.hours
 

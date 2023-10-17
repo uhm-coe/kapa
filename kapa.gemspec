@@ -15,13 +15,14 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 5.2.0'
-  s.add_dependency 'authlogic', '~> 4.4.2'
+  s.add_dependency 'rails', '~> 7.0.0'
+  s.add_dependency 'authlogic'
+  s.add_dependency 'scrypt'  
 #  s.add_dependency 'activerecord-session_store'
 #  s.add_dependency 'rails-csv-fixtures'
 #  s.add_dependency 'rake'
   s.add_dependency 'american_date'
-  s.add_dependency 'paperclip'
+  s.add_dependency 'kt-paperclip'
   s.add_dependency 'fastercsv'
   s.add_dependency 'mysql2'
   s.add_dependency 'net-ldap'
@@ -32,5 +33,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
   s.add_dependency 'bootstrap-sass'
-
+  s.add_dependency 'sprockets', '~> 3.7.0'
 end

@@ -60,7 +60,7 @@ module Kapa::DatasetsControllerBase
 
   def load_data
     @dataset = Kapa::Dataset.find(params[:id])
-    @dataset.update_attributes(dataset_params)
+    @dataset.update(dataset_params)
 
     begin
       @dataset.load
