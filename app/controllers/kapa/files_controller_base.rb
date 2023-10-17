@@ -14,7 +14,7 @@ module Kapa::FilesControllerBase
     @title = @file.name
 
     respond_to do |format|
-      format.html {render :layout => "/kapa/layouts/document"}
+      format.html {render :layout => "kapa/layouts/document"}
       format.file {
         disposition = params[:inline] ? "inline" : "attachment"
         send_file @file.data.path,

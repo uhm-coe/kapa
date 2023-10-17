@@ -11,7 +11,7 @@
       <%=render :partial => "/kapa/files/file_container", :locals => {:file => @form.file} %>
     <% end %>
 
-    <%=render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} do %>
+    <%=render :layout => "kapa/layouts/controls", :locals => {:delete_path => kapa_form_path(:id => @form, :return_path => params[:return_path])} do %>
       <%=button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_form_dialog", :icon => "glyphicon-wrench" %>
       <% if @form.file %>
         <%=button_to_link "View File", kapa_file_path(:id => @form.file), :icon => "glyphicon-search" %>

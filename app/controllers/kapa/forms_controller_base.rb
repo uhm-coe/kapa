@@ -7,7 +7,7 @@ module Kapa::FormsControllerBase
     @person = @form.person
     @person_ext = @person.ext
     @title = @form.type_desc
-    render :layout => "/kapa/layouts/document"
+    render :layout => "kapa/layouts/document"
   end
 
   def update

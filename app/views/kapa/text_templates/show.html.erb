@@ -29,7 +29,7 @@
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
     <div id="editor"><%=@text_template.body.to_s.html_safe %></div>
     <%=f.hidden_field :body %>
-    <%= render :layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => params[:return_path])} do %>
+    <%= render :layout => "kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => params[:return_path])} do %>
       <%= button_to_link "Setting", nil, "data-toggle" => "modal", "data-target" => "#edit_text_template_dialog", :icon => "glyphicon-wrench" %>
     <% end if @current_user.write? %>
   <% end %>

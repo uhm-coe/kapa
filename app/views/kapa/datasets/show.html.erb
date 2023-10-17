@@ -16,7 +16,7 @@
       <div id="dataset_profile_tab" class="tab-pane">
         <%=bootstrap_form_for :dataset, :url => kapa_dataset_path(:id => @dataset), :html => {:method => :put} do |f| %>
           <%=render :partial => "dataset_form" %>
-          <%=render :layout => "/kapa/layouts/controls" do %>
+          <%=render :layout => "kapa/layouts/controls" do %>
           <% end if @current_user.write? %>
         <% end %>
       </div>

@@ -7,7 +7,7 @@ module Kapa::TextsControllerBase
     @person = @text.person
     @person_ext = @person.ext if @person
     @title = @text.title
-    render :layout => "/kapa/layouts/document"
+    render :layout => "kapa/layouts/document"
   end
 
   def update

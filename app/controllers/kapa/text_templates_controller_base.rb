@@ -10,7 +10,7 @@ module Kapa::TextTemplatesControllerBase
     @text_template = Kapa::TextTemplate.find(params[:id])
     @text_template_ext = @text_template.ext
     @title = @text_template.title
-    render :layout => "/kapa/layouts/document"
+    render :layout => "kapa/layouts/document"
   end
 
   def update
