@@ -27,8 +27,9 @@ jQuery(document).ready(function ($) {
   });
 
   // Reset a form if data-reset attribute is set
-  $('button[data-reset]').click(function () {
+  $('[data-reset]').click(function () {
     var form_id = $(this).attr('data-reset');
+    console.log(form_id);
     $(form_id).trigger('reset');
   });
 

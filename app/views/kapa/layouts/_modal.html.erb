@@ -9,6 +9,11 @@
         <%=yield%>
       </div>
       <div class="modal-footer">
+        <% if modal_form_id == "filter_form" %>
+        <div class="pull-left">
+          <%=button_to_link "Clear", {:clear_filter => true}, :icon => "glyphicon-remove", :class => "btn btn-warning", :data => {:confirm => "Are you sure you want to clear filter feilds?"} %>
+        </div>
+        <% end %>
         <button type="button" id="modal_close" class="btn btn-default" data-dismiss="modal">Close</button>
         <% if local_assigns[:modal_form_id] %>
           <button type="button" id="modal_submit" class="btn btn-primary" data-submit="#<%=modal_form_id%>">OK</button>
