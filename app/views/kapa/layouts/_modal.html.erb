@@ -1,5 +1,5 @@
 <div class="modal fade" id="<%=modal_id%>" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
-  <div class="modal-dialog <%=modal_class if defined? modal_class %>">
+  <div class="modal-dialog <%=modal_class if local_assigns[:modal_class] %>">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -9,10 +9,10 @@
         <%=yield%>
       </div>
       <div class="modal-footer">
-        <% if defined? modal_form_id and modal_form_id == "filter_form" %>
-        <div class="pull-left">
-          <%=button_to_link "Clear", {:clear_filter => true}, :icon => "glyphicon-remove", :class => "btn btn-warning", :data => {:confirm => "Are you sure you want to clear search fields?"} %>
-        </div>
+        <% if local_assigns[:modal_form_id] and modal_form_id == "filter_form" %>
+          <div class="pull-left">
+            <%=button_to_link "Clear", {:clear_filter => true}, :icon => "glyphicon-remove", :class => "btn btn-warning", :data => {:confirm => "Are you sure you want to clear search fields?"} %>
+          </div>
         <% end %>
         <button type="button" id="modal_close" class="btn btn-default" data-dismiss="modal">Close</button>
         <% if local_assigns[:modal_form_id] %>
