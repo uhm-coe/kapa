@@ -147,7 +147,10 @@ module Kapa::PersonBase
         persons = persons.column_matches(:last_name => keys[0])
         persons = persons.column_matches(:first_name => keys[1])
       else
-        persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
+        keys = filter.key.split(/\s+/)
+        keys.each do |key|
+          persons = persons.column_matches(:first_name => key, :last_name => key, :other_name => key)
+        end  
       end
 
       return persons.order("status desc").limit(filter.limit.present? ? filter.limit : 100)

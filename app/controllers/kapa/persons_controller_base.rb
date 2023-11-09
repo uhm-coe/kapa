@@ -49,8 +49,8 @@ module Kapa::PersonsControllerBase
   end
 
   def index
-    params[:filter][:key].strip! if params[:filter] and params[:filter][:key]
     @filter = filter
+    @filter.key.strip! if @filter.key
     if params[:modal]
       @modal = true
       @persons = Kapa::Person.where("0=1")
