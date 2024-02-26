@@ -1,4 +1,4 @@
-class AddUserIdOnFiles < ActiveRecord::Migration
+class AddUserIdOnFiles < ActiveRecord::Migration[5.2]
   def change
     change_table :files, :bulk => true do |t|
       t.integer :user_id

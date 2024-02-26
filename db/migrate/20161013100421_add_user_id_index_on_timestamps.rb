@@ -1,4 +1,4 @@
-class AddUserIdIndexOnTimestamps < ActiveRecord::Migration
+class AddUserIdIndexOnTimestamps < ActiveRecord::Migration[5.2]
 
   def change
     change_table :timestamps, :bulk => true do |t|

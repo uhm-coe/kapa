@@ -1,4 +1,4 @@
-class CreateKapaSchema < ActiveRecord::Migration
+class CreateKapaSchema < ActiveRecord::Migration[5.2]
   def change
 
     create_table "assessment_criterions", force: :cascade do |t|
