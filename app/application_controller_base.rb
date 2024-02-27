@@ -6,6 +6,7 @@ module ApplicationControllerBase
     helper :all
   end
 
+  
   def error_404
     unless request.path =~ /^\/apple-touch-icon/
       logger.error "The page doesn't exist. #{Kapa::UserSession.find.try(:user).try(:uid)}"
