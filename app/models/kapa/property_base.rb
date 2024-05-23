@@ -74,6 +74,14 @@ module Kapa::PropertyBase
       return properties.order("sequence DESC, code").collect { |v| v.code }
     end
 
+    def to_a(name, options={})
+      properties = where(:active => true, :name => name)
+      properties = properties.depts_scope(options[:depts]) if options[:depts]
+      properties = properties.where(options[:conditions]) if options[:conditions]
+      method = options[:method] ? options[:method] : :code
+      return properties.order("sequence DESC, code").collect { |v| v.send(method)}
+    end
+
     def append(name, code, options={})
       options[:description] = code if options[:description].blank?
       property = where(:name => name, :code => code).first_or_create
