@@ -240,7 +240,7 @@ module Kapa::KapaModelBase
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
       if options[:as].to_s == "csv"
-        CSV.generate do |csv|
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << keys
           objects.each do |o|
             csv << keys.collect {|k| 
