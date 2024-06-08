@@ -53,7 +53,7 @@ module Kapa::FormBase
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       forms = Kapa::Form.eager_load({:users => :person}, :person, :form_template).where(:active => true).order("forms.submitted_at DESC")
       forms = forms.where("forms.form_template_id" => filter.form_template_id) if filter.form_template_id.present?
-      forms = forms.where("forms.term" => filter.term) if filter.form_term.present?
+      forms = forms.where("forms.term" => filter.form_term) if filter.form_term.present?
       forms = forms.where("forms.lock" => filter.lock) if filter.lock.present?
       forms = forms.depts_scope(filter.user.depts) if filter.depts.present?
 
