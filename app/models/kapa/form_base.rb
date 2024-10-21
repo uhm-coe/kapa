@@ -37,7 +37,7 @@ module Kapa::FormBase
   end
 
   def submit
-    self.update(:submitted_at => DateTime.now, :lock => "Y")
+    self.update(:submitted_at => DateTime.now, :lock => "Y", :active => true)
   end
 
   def term_desc
