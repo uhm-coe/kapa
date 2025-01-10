@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
   });
 
   $('.modal-dialog').keypress(function(e){
-    if(e.which == 13) {
+    if(e.which == 13 && $(document.activeElement).prop("tagName") != "TEXTAREA") {
       $(this).find("#modal_submit").click();
     }
   });
