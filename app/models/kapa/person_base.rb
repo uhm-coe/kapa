@@ -140,7 +140,7 @@ module Kapa::PersonBase
         persons = persons.where(:id_number => filter.key)
       elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
         persons = persons.where(:email => filter.key)
-      elsif filter.key =~ /\d+/
+      elsif filter.key =~ /^[0-9]*$/
         persons = persons.column_matches("cur_phone" => filter.key, "per_phone" => filter.key, "mobile_phone" => filter.key)
       elsif filter.key =~ /\w+,\s*\w+/
         keys = filter.key.split(/,\s*/)
