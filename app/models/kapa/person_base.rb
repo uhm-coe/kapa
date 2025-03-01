@@ -149,7 +149,7 @@ module Kapa::PersonBase
       else
         keys = filter.key.split(/\s+/)
         keys.each do |key|
-          persons = persons.column_matches(:first_name => key, :last_name => key, :other_name => key)
+          persons = persons.column_matches(:first_name => key, :last_name => key, :other_name => key, :email => key, :uid => key)
         end  
       end
 
