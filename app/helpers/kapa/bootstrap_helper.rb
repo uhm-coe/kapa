@@ -84,7 +84,7 @@ module Kapa::BootstrapHelper
       close_button = content_tag(:button, raw("&times;"), type: "button", class: "close", "data-dismiss" => "alert")
 
       Array(message).each do |msg|
-        text = content_tag(:div, close_button + msg, tag_options)
+        text = content_tag(:div, close_button + msg.html_safe, tag_options)
         flash_messages << text if msg
       end
     end
