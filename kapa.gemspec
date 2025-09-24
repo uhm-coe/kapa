@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 7.0.0'
+  s.add_dependency 'rails', '~> 7.2.0'
   s.add_dependency 'mysql2'
   s.add_dependency 'authlogic'
   s.add_dependency 'scrypt'

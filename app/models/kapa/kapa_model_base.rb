@@ -4,7 +4,7 @@ module Kapa::KapaModelBase
   included do
     self.abstract_class = true
     self.inheritance_column = nil
-    serialize :yml, Hash
+    serialize :yml, :type => Hash
     attr_writer :depts
     before_save :serialize_depts
   end

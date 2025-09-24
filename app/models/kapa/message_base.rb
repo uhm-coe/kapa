@@ -3,11 +3,11 @@ module Kapa::MessageBase
 
   included do
     belongs_to :messageable, :polymorphic => true
-    serialize :to, Kapa::CsvSerializer
-    serialize :from, Kapa::CsvSerializer
-    serialize :cc, Kapa::CsvSerializer
-    serialize :bcc, Kapa::CsvSerializer
-    serialize :reply_to, Kapa::CsvSerializer
+    serialize :to, :type => Kapa::CsvSerializer
+    serialize :from, :type => Kapa::CsvSerializer
+    serialize :cc, :type => Kapa::CsvSerializer
+    serialize :bcc, :type => Kapa::CsvSerializer
+    serialize :reply_to, :type => Kapa::CsvSerializer
   end
 
   def date

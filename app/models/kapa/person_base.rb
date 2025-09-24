@@ -3,7 +3,7 @@ module Kapa::PersonBase
 
   included do
     self.table_name = :persons
-    serialize :type, Kapa::CsvSerializer
+    serialize :type, :type => Kapa::CsvSerializer
 
     has_many :users
     has_many :files
