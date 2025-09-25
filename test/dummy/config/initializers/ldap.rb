@@ -7,6 +7,6 @@
 #  :host => "ldap.hawaii.edu",
 #  :port => 389,
 #  :encryption => {:method => :simple},
-#  :auth => {:username => Rails.application.secrets.ldap_uh_username,
-#            :password =>  Rails.application.secrets.ldap_uh_password}
+#  :auth => {:username => Rails.application.credentials.ldap_uh_username,
+#            :password =>  Rails.application.credentials.ldap_uh_password}
 #}

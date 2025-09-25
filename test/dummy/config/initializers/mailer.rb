@@ -9,8 +9,8 @@
 #  :address => "smtp.gmail.com",
 #  :port => 587,
 #  :domain => "hawaii.edu",
-#  :user_name => Rails.application.secrets.mail_sishelp_username,
-#  :password => Rails.application.secrets.mail_sishelp_password,
+#  :user_name => Rails.application.credentials.mail_sishelp_username,
+#  :password => Rails.application.credentials.mail_sishelp_password,
 #  :authentication => :login,
 #  :enable_starttls_auto => true
 #}

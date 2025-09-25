@@ -7,8 +7,8 @@ test/dummy/tmp
 test/dummy/public/assets/*
 provision/*
 
-#Do not commit the secret file!
-test/dummy/config/secrets.yml
+#Do not commit the master.key!
+test/dummy/config/master.key
 test/dummy/config/*.yml
 
 #Generic files to ignore

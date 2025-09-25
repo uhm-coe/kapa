@@ -281,7 +281,7 @@ module Kapa::KapaModelBase
     end
 
     def hashids
-      Hashids.new("#{table_name}#{Rails.application.secrets.hashid_salt}", 10)
+      Hashids.new("#{table_name}#{Rails.application.credentials.hashid_salt}", 10)
     end
   end
 end
