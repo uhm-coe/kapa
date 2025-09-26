@@ -1,0 +1,12 @@
+ServerName localhost
+<VirtualHost *:80>
+        DocumentRoot /vagrant/public
+        RailsEnv development
+        PassengerRuby /usr/share/rvm/gems/ruby-{{ruby_version}}/wrappers/ruby
+        PassengerMaxPoolSize 1
+        <Directory /vagrant/public>
+                Allow from all
+                Options -MultiViews
+                Require all granted
+        </Directory>
+</VirtualHost>

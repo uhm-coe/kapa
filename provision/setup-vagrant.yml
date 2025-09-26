@@ -1,0 +1,62 @@
+---
+- hosts: all
+  vars:
+    ruby_version: 3.3.8
+    mysql_user: admin
+    mysql_password: admin
+  tasks:
+    - name: Load distribution specific tasks
+      include_tasks: '{{ansible_distribution}}-{{ansible_distribution_major_version}}.yml'
+
+    - name: Add a mysql user {{mysql_user}} for local access
+      shell: mysql --user=root --password='{{mysql_password}}' -e "CREATE USER '{{mysql_user}}'@'localhost' IDENTIFIED BY '{{mysql_password}}';"
+      ignore_errors: yes
+
+    - name: Grant all privileges to {{mysql_user}}
+      shell: mysql --user=root --password='{{mysql_password}}' -e "GRANT ALL PRIVILEGES ON *.* TO '{{mysql_user}}'@'localhost';"
+      ignore_errors: yes
+
+    - name: Add a MySQL user {{mysql_user}} for remote access
+      shell: mysql --user=root --password='{{mysql_password}}' -e "CREATE USER '{{mysql_user}}'@'%' IDENTIFIED BY '{{mysql_password}}';"
+      ignore_errors: yes
+
+    - name: Grant all privileges to {{mysql_user}} for remote access
+      shell: mysql --user=root --password='{{mysql_password}}' -e "GRANT ALL PRIVILEGES ON *.* TO '{{mysql_user}}'@'%';"
+      ignore_errors: yes
+
+    - name: Restart MySQL
+      service: name=mysql state=restarted
+      become: yes
+
+    - name: Set RVM autolibs
+      command: /usr/share/rvm/bin/rvm autolibs 3
+      become: yes
+
+    - name: Get the username running the script
+      shell: whoami
+      register: whoami
+
+    - name: Add current user to RVM group
+      shell: usermod -a -G rvm {{whoami.stdout}}
+      become: yes
+
+    - name: Install Ruby wtih RVM
+      command: /usr/share/rvm/bin/rvm install {{ruby_version}} creates=/usr/share/rvm/gems/ruby-{{ruby_version}}
+      become: yes
+
+    - name: Set default Ruby version
+      command: /usr/share/rvm/bin/rvm alias create default {{ruby_version}}
+      become: yes
+
+    - name: Change the directory permission for /srv
+      file: path="/srv" mode=0755 owner=vagrant group=vagrant
+      become: yes      
+
+    - name: Suppress Ruby warnings
+      lineinfile: dest=~/.bash_profile regexp='^export RUBYOPT' line='export RUBYOPT=W0' create=yes
+
+    - name: Automatically cd to /vagrant
+      lineinfile: dest=~/.bash_profile state=present regexp='^cd' line='cd /vagrant' create=yes
+
+    - name: Add alias apprestart
+      lineinfile: dest=~/.bash_profile state=present regexp='^alias apprestart=' line='alias apprestart=\'sudo service apache2 restart\'' create=yes
