@@ -3,7 +3,7 @@ require "kapa/engine"
 module Kapa
 
   def self.beta?
-    ENV['RELEASE'] != "live"
+    ENV['APP_RELEASE'] != "live"
   end
 
   def self.debug(*args)
