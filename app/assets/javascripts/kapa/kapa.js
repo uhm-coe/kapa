@@ -21,14 +21,15 @@ jQuery(document).ready(function ($) {
   });
 
   $('.modal-dialog').keypress(function(e){
-    if(e.which == 13) {
+    if(e.which == 13 && $(document.activeElement).prop("tagName") != "TEXTAREA") {
       $(this).find("#modal_submit").click();
     }
   });
 
   // Reset a form if data-reset attribute is set
-  $('button[data-reset]').click(function () {
+  $('[data-reset]').click(function () {
     var form_id = $(this).attr('data-reset');
+    console.log(form_id);
     $(form_id).trigger('reset');
   });
 

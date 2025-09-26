@@ -1,0 +1,57 @@
+<% content_for(:dialog) do %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "filter_dialog", :modal_title => "Search", :modal_form_id => "filter_form"} do %>
+    <%=bootstrap_form_for(:filter, :url => kapa_contents_path, :html => {:method => :get, :id => "filter_form"}) do |f| %>
+      <%=f.history_select :page, {:model_class => Kapa::Content, :model_method => :page, :label => "Page"}, {:class => "search-select"} %>
+      <%=f.select :per_page, Rails.configuration.items_per_page_selections %>
+    <% end %>
+  <% end %>
+
+  <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "import_dialog", :modal_title => "Import Contents", :modal_form_id => "import_contents_form"} do %>
+    <%=bootstrap_form_for(:data, :url => import_kapa_contents_path, :html => {:multipart => true, :id => "import_contents_form"}) do |f|%>
+      <%=f.file_field :import_file %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% content_for(:box1) do %>
+
+  <h3>Contents</h3>
+
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
+      <% if manage? %>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#import_dialog">Import</button>
+      <% end %>
+      <%=button_to_link "Download", {:action => :export}, :icon => "glyphicon-download" %>
+      <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Page</th>
+      <th>Region</th>
+      <th>HTML</th>
+      <th>Last updated</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for content in @contents %>
+      <tr>
+        <td><%=content.page %></td>
+        <td><%=content.region %></td>
+        <td><%=abbr content.html, 20 %></td>
+        <td><%=content.updated_at.to_fs(:datetime) %></td>
+        <td class="right"><%=button_to_link "", {:action => :show, :id => content}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="text-center"><%=will_paginate @contents, :renderer => BootstrapPagination::Rails %></div>
+
+<% end %>

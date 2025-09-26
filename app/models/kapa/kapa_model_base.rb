@@ -4,7 +4,7 @@ module Kapa::KapaModelBase
   included do
     self.abstract_class = true
     self.inheritance_column = nil
-    serialize :yml, Hash
+    serialize :yml, :type => Hash
     attr_writer :depts
     before_save :serialize_depts
   end
@@ -240,7 +240,7 @@ module Kapa::KapaModelBase
       keys = format.keys.delete_if {|key| excluded_keys.include?(key)}
 
       if options[:as].to_s == "csv"
-        CSV.generate do |csv|
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << keys
           objects.each do |o|
             csv << keys.collect {|k| 
@@ -281,7 +281,7 @@ module Kapa::KapaModelBase
     end
 
     def hashids
-      Hashids.new("#{table_name}#{Rails.application.secrets.hashid_salt}", 10)
+      Hashids.new("#{table_name}#{Rails.application.credentials.hashid_salt}", 10)
     end
   end
 end

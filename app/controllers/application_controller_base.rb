@@ -10,7 +10,7 @@ module ApplicationControllerBase
     unless request.path =~ /^\/apple-touch-icon/
       logger.error "The page doesn't exist. #{Kapa::UserSession.find.try(:user).try(:uid)}"
     end
-    render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found
+    render :file => "#{Rails.root}/public/404.html", :layout => false, :status => :not_found
   end
 
   # def default_url_options(options={})

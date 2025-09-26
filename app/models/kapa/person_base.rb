@@ -3,7 +3,7 @@ module Kapa::PersonBase
 
   included do
     self.table_name = :persons
-    serialize :type, Kapa::CsvSerializer
+    serialize :type, :type => Kapa::CsvSerializer
 
     has_many :users
     has_many :files
@@ -140,14 +140,17 @@ module Kapa::PersonBase
         persons = persons.where(:id_number => filter.key)
       elsif filter.key =~ Regexp.new(Rails.configuration.regex_email, true)
         persons = persons.where(:email => filter.key)
-      elsif filter.key =~ /\d+/
+      elsif filter.key =~ /^[0-9]*$/
         persons = persons.column_matches("cur_phone" => filter.key, "per_phone" => filter.key, "mobile_phone" => filter.key)
       elsif filter.key =~ /\w+,\s*\w+/
         keys = filter.key.split(/,\s*/)
         persons = persons.column_matches(:last_name => keys[0])
         persons = persons.column_matches(:first_name => keys[1])
       else
-        persons = persons.column_matches(:first_name => filter.key, :last_name => filter.key, :other_name => filter.key)
+        keys = filter.key.split(/\s+/)
+        keys.each do |key|
+          persons = persons.column_matches(:first_name => key, :last_name => key, :other_name => key, :email => key, :uid => key)
+        end  
       end
 
       return persons.order("status desc").limit(filter.limit.present? ? filter.limit : 100)

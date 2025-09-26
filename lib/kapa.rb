@@ -3,7 +3,7 @@ require "kapa/engine"
 module Kapa
 
   def self.beta?
-    Rails.application.secrets.release != "live"
+    ENV['RELEASE'] != "live"
   end
 
   def self.debug(*args)

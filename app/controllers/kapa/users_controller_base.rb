@@ -113,7 +113,7 @@ module Kapa::UsersControllerBase
 
   def export
     @filter = filter
-    send_data Kapa::User.to_table(:as => :csv, :filter => @filter),
+    send_data Kapa::User.to_table(:as => :csv, :filter => @filter, :format => csv_format),
               :type         => "application/csv",
       :disposition  => "inline",
       :filename     => "user_#{Date.today}.csv"
@@ -127,4 +127,17 @@ module Kapa::UsersControllerBase
     params.require(:person).permit(:id_number, :last_name, :middle_initial, :birth_date, :email, :first_name, :other_name, :title, :gender, :status, :dept, :depts => [])
   end
 
+  def csv_format
+    {:uid => [:uid],
+      :id_number => [:person, :id_number],
+      :last_name => [:person, :last_name],
+      :first_name => [:person, :first_name],
+      :position => [:position],
+      :primary_dept => [:primary_dept],
+      :role => [:role],
+      :status => [:status],
+      :depts => [:depts, [:join, ","]],
+      :category => [:category]}
+  end
+  
 end

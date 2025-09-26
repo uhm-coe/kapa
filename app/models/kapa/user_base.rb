@@ -45,7 +45,7 @@ module Kapa::UserBase
   end
 
   def update_person
-    self.person.update_columns(:email_alt => self.uid) if local?
+    self.person.update_columns(:email_alt => self.uid) if local? and self.saved_change_to_uid?
   end
 
   def status_desc
@@ -131,17 +131,5 @@ module Kapa::UserBase
       return users
     end
 
-    # def csv_format
-    #   {:uid => [:uid],
-    #    :id_number => [:person, :id_number],
-    #    :last_name => [:person, :last_name],
-    #    :first_name => [:person, :first_name],
-    #    :position => [:position],
-    #    :primary_dept => [:primary_dept],
-    #    :role => [:role],
-    #    :status => [:status],
-    #    :dept => [:dept, [:join, ","]],
-    #    :category => [:category]}
-    # end
   end
 end

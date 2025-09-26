@@ -30,7 +30,7 @@ module Kapa::BootstrapHelper
   def datetime_picker(object_name, method, options = {})
     object = instance_variable_get("@#{object_name}".delete("[]"))
     current_value = object.send("#{method}") if object
-    options[:value] = current_value.to_fs(:datetime) if current_value.present? and current_value.is_a?(DateTime)
+    options[:value] = current_value.to_fs(:datetime) if current_value.present? and current_value.is_a?(Time)
     input_tag = text_field(object_name, method, options)
     icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-calendar"), :class => "input-group-addon")
     content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date datetimepicker")
@@ -47,6 +47,8 @@ module Kapa::BootstrapHelper
 
   def time_picker(object_name, method, options = {})
     input_tag = text_field(object_name, method, options)
+    current_value = object.send("#{method}") if object
+    options[:value] = current_value.to_fs(:time) if current_value.present? and current_value.is_a?(Time)
     icon_tag = content_tag(:span, content_tag(:span, "", :class => "glyphicon glyphicon-time"), :class => "input-group-addon")
     content_tag(:div, "#{input_tag} #{icon_tag}".html_safe, :class => "input-group date timepicker")
   end
@@ -82,7 +84,7 @@ module Kapa::BootstrapHelper
       close_button = content_tag(:button, raw("&times;"), type: "button", class: "close", "data-dismiss" => "alert")
 
       Array(message).each do |msg|
-        text = content_tag(:div, close_button + msg, tag_options)
+        text = content_tag(:div, close_button + msg.html_safe, tag_options)
         flash_messages << text if msg
       end
     end

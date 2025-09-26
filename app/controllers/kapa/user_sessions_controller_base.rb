@@ -9,14 +9,14 @@ module Kapa::UserSessionsControllerBase
   end
   
   def new
-    # flash_clone = flash.clone
-    # Kapa::UserSession.find.try(:destroy)
-    # reset_session
-
-    # #Restore flash messages
-    # flash_clone.keys.each do |key|
-    #   flash[key] = flash_clone[key]
-    # end
+    if params[:redirect_to]
+      session[:redirect_to] = params[:redirect_to]
+    else
+      session[:redirect_to] = nil
+    end
+    if params[:cas] and Kapa::Cas.defined?
+      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url) and return
+    end
   end
 
   def show
@@ -66,7 +66,11 @@ module Kapa::UserSessionsControllerBase
       if user
         Kapa::UserSession.create(user, true)
         success
-        redirect_to(:action => :show)
+        if session[:redirect_to]
+          redirect_to(session[:redirect_to])
+        else
+          redirect_to(kapa_root_path)
+        end
       else
         flash[:alert] = "#{uid} is not an authorized user."
         redirect_to(:action => :new) and return false

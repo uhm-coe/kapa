@@ -29,18 +29,5 @@ jQuery(document).ready(function($) {
     });
     editor.setValue(textarea.val());
   });
-
-  $('button[data-submit="#update_contents_form"]').off('click');
-  $('button[data-submit="#update_contents_form"]').click(function(e) {
-    e.preventDefault();
-    $.ajax({
-      type: 'PUT',
-      url: $('#update_contents_form').attr('action'),
-      data: $('#update_contents_form').serialize(),
-      success: function (data) {
-        location.reload();
-      }
-    });
-  });
   
 });
