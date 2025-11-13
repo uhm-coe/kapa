@@ -1,4 +1,6 @@
 require "kapa/engine"
+require "csv"
+require 'net/http'
 
 module Kapa
 
