@@ -1,5 +1,6 @@
 require "kapa/engine"
 require "csv"
+require "stringio"
 require 'net/http'
 
 module Kapa
