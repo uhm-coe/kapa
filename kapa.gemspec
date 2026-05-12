@@ -31,4 +31,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'sprockets', '~> 3.7.0'
   s.add_dependency 'wicked_pdf'
   s.add_dependency 'liquid'
+  s.add_dependency 'csv'
 end
