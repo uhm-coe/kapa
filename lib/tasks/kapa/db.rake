@@ -50,9 +50,11 @@ namespace :kapa do
         command += " #{database.shellescape}"
         command += " > #{File.join(directory, filename).shellescape}"
 
+        puts "[#{Time.now}] Backup started: #{File.join(directory, filename)}"
         sh command, verbose: false do |ok, status|
           fail "Backup failed with status (#{status.exitstatus})" unless ok
         end
+        puts "[#{Time.now}] Backup finished: #{File.join(directory, filename)}"
       ensure
         cnf.unlink
       end
@@ -90,9 +92,11 @@ namespace :kapa do
         command += " #{database.shellescape}"
         command += " < #{filename.shellescape}"
 
+        puts "[#{Time.now}] Restore started: #{filename}"
         sh command, verbose: false do |ok, status|
           fail "Restore failed with status (#{status.exitstatus})" unless ok
         end
+        puts "[#{Time.now}] Restore finished: #{filename}"
       ensure
         cnf.unlink
       end
