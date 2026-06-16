@@ -24,8 +24,8 @@ module Kapa::KapaControllerBase
   end
 
   def validate_url
-    unless Rails.configuration.available_routes.include?(controller_name.to_s)
-      flash[:alert] = "#{controller_name} is not available."
+    unless Rails.configuration.available_routes.include?(kapa_controller_name.to_s)
+      flash[:alert] = "#{kapa_controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
 
@@ -73,7 +73,7 @@ module Kapa::KapaControllerBase
     end
 
     if permission and not self.send(permission)
-      flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
+      flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{kapa_controller_name}."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -121,52 +121,52 @@ module Kapa::KapaControllerBase
     return message
   end
 
-  def controller_name
-    @controller_name = params[:controller].gsub("/", "_").to_sym if @controller_name.nil?
-    return @controller_name
+  def kapa_controller_name
+    @kapa_controller_name = params[:controller].gsub("/", "_").to_sym if @kapa_controller_name.nil?
+    return @kapa_controller_name
   end
 
-  def read?(name = controller_name)
+  def read?(name = kapa_controller_name)
     @current_user.check_permission(name, "R")
   end
 
-  def update?(name = controller_name)
+  def update?(name = kapa_controller_name)
     @current_user.check_permission(name, "U")
   end
 
-  def create?(name = controller_name)
+  def create?(name = kapa_controller_name)
     @current_user.check_permission(name, "C")
   end
 
-  def destroy?(name = controller_name)
+  def destroy?(name = kapa_controller_name)
     @current_user.check_permission(name, "D")
   end
 
-  def export?(name = controller_name)
+  def export?(name = kapa_controller_name)
     @current_user.check_permission(name, "E")
   end
 
-  def import?(name = controller_name)
+  def import?(name = kapa_controller_name)
     @current_user.check_permission(name, "I")
   end
 
-  def summarize?(name = controller_name)
+  def summarize?(name = kapa_controller_name)
     @current_user.check_permission(name, "S")
   end
 
-  def manage?(name = controller_name)
+  def manage?(name = kapa_controller_name)
     @current_user.check_permission(name, "M")
   end
 
-  def access_all?(name = controller_name)
+  def access_all?(name = kapa_controller_name)
     @current_user.access_scope(name) >= 30
   end
 
-  def access_dept?(name = controller_name)
+  def access_dept?(name = kapa_controller_name)
     @current_user.access_scope(name) >= 20
   end
 
-  def access_assigned?(name = controller_name)
+  def access_assigned?(name = kapa_controller_name)
     @current_user.access_scope(name) >= 10
   end
 

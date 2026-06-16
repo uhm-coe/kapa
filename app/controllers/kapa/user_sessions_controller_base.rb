@@ -67,7 +67,7 @@ module Kapa::UserSessionsControllerBase
         Kapa::UserSession.create(user, true)
         success
         if session[:redirect_to]
-          redirect_to(session[:redirect_to])
+          redirect_to(session[:redirect_to], allow_other_host: false)
         else
           redirect_to(kapa_root_path)
         end
