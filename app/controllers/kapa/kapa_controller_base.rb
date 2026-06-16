@@ -3,7 +3,8 @@ module Kapa::KapaControllerBase
 
   included do
     layout "kapa/layouts/kapa"
-    protect_from_forgery
+    protect_from_forgery with: :exception
+    rescue_from StandardError, with: :rescue_action_in_public
     before_action :sanitize_params
     before_action :validate_url
     before_action :validate_user
@@ -85,8 +86,8 @@ module Kapa::KapaControllerBase
   end
 
   def redirect_to(options = {}, response_status = {})
-    if request.xhr?
-      render(:js => "window.location.href = '#{url_for(options)}'")
+    if request.format.js?
+      render(js: "window.location.href = '#{url_for(options)}'")
     else
       super(options, response_status)
     end
@@ -103,7 +104,7 @@ module Kapa::KapaControllerBase
   protected
   def rescue_action_in_public(exception)
     flash[:alert] = t(:kapa_error_message_default)
-    if request.xhr?
+    if request.format.js?
       render_notice and return false
     else
       redirect_to(kapa_error_path) and return false

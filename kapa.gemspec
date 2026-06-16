@@ -15,20 +15,18 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 7.2.0'
+  s.add_dependency 'rails', '~> 8.1'
   s.add_dependency 'mysql2'
   s.add_dependency 'authlogic'
   s.add_dependency 'scrypt'
   s.add_dependency 'american_date'
   s.add_dependency 'kt-paperclip', '~> 6.4', '>= 6.4.1' 
-  s.add_dependency 'fastercsv'
   s.add_dependency 'net-ldap'
   s.add_dependency 'hashids'
   s.add_dependency 'will_paginate'
   s.add_dependency 'will_paginate-bootstrap'
-  s.add_dependency 'uglifier'
   s.add_dependency 'sass-rails'
-  s.add_dependency 'sprockets', '~> 3.7.0'
+  s.add_dependency 'sprockets', '~> 4.2'
   s.add_dependency 'wicked_pdf'
   s.add_dependency 'liquid'
   s.add_dependency 'csv'
