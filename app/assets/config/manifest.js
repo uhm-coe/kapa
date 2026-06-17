@@ -1,3 +1,8 @@
 //= link_tree ../images
 //= link kapa/kapa.js
 //= link kapa/kapa.css
+//= link kapa/editor.js
+//= link kapa/editor.css
+//= link kapa/reports.js
+//= link kapa/reports.css
+//= link kapa/pdf.css
