@@ -20,10 +20,11 @@ module Kapa
       end
     end
 
-    # initializer :kapa_assets do |app|
-    #   app.config.assets.precompile += %w[kapa/kapa.js kapa/kapa.css kapa/editor.js kapa/editor.css kapa/reports.js kapa/reports.css kapa/pdf.css]
-    #   app.config.assets.precompile += %w[*.svg *.eot *.woff *.woff2 *.ttf *.ico *.png]
-    # end
+    initializer :kapa_assets do |app|
+#      app.config.assets.precompile += %w[kapa/kapa.js kapa/kapa.css kapa/editor.js kapa/editor.css kapa/reports.js kapa/reports.css kapa/pdf.css]
+#      app.config.assets.precompile += %w[*.svg *.eot *.woff *.woff2 *.ttf *.ico *.png]
+      app.config.assets.precompile += %w[kapa_manifest.js]
+    end
 
   end
 end
