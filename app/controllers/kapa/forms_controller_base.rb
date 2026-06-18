@@ -40,6 +40,7 @@ module Kapa::FormsControllerBase
 
   def create
     @form = Kapa::Form.new(form_param)
+    @form.type = @form.form_template.template_path if @form.form_template
 
     unless @form.save
       flash[:alert] = error_message_for(@form)
