@@ -2,7 +2,8 @@ module ApplicationControllerBase
   extend ActiveSupport::Concern
   
   included do
-    protect_from_forgery
+    protect_from_forgery with: :exception
+    rescue_from StandardError, with: :error_500    
     helper :all
   end
 
@@ -10,16 +11,18 @@ module ApplicationControllerBase
     unless request.path =~ /^\/apple-touch-icon/
       logger.error "The page doesn't exist. #{Kapa::UserSession.find.try(:user).try(:uid)}"
     end
-    render :file => "#{Rails.root}/public/404.html", :layout => false, :status => :not_found
+    render :template => "errors/404", :layout => false, :status => :not_found
   end
 
-  # def default_url_options(options={})
-  #   if Rails.env.production?
-  #     options.merge(:protocol => "https")
-  #   else
-  #     options
-  #   end
-  # end
+  def error_500(exception)
+    if Rails.env.production?
+      @error_id = SecureRandom.hex(4)
+      logger.error "[#{@error_id}] #{exception.class}: #{exception.message}\n#{exception.backtrace.join("\n")}"
+      render :template => "errors/500", :layout => false, :status => :internal_server_error
+    else
+      raise exception
+    end
+  end
 
   private
   def error_message_for(*args)

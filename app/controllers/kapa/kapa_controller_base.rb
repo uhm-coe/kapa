@@ -3,17 +3,6 @@ module Kapa::KapaControllerBase
 
   included do
     layout "kapa/layouts/kapa"
-    protect_from_forgery with: :exception
-    if Rails.env.production?
-      rescue_from StandardError do |exception|
-        flash[:alert] = t(:kapa_error_message_default)
-        if request.format.js?
-          render_notice and return false
-        else
-          redirect_to(kapa_error_path) and return false
-        end
-      end
-    end
     before_action :sanitize_params
     before_action :validate_url
     before_action :validate_user
