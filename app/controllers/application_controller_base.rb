@@ -3,8 +3,7 @@ module ApplicationControllerBase
   
   included do
     protect_from_forgery with: :exception
-    rescue_from StandardError, with: :error_500    
-    helper :all
+    rescue_from StandardError, with: :error_500
   end
 
   def error_404
@@ -16,7 +15,7 @@ module ApplicationControllerBase
 
   def error_500(exception)
     if Rails.env.production?
-      @error_id = SecureRandom.hex(4)
+      @error_id = SecureRandom.uuid
       logger.error "[#{@error_id}] #{exception.class}: #{exception.message}\n#{exception.backtrace.join("\n")}"
       render :template => "errors/500", :layout => false, :status => :internal_server_error
     else

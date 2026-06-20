@@ -100,15 +100,6 @@ module Kapa::KapaControllerBase
   end
 
   private
-  def error_message_for(*args)
-    options = args.last.is_a?(Hash) ? args.last : {}
-    errors = []
-    args.each { |a| errors << a.errors.full_messages.join(", ") if a.is_a?(ActiveRecord::Base) and not a.errors.blank? }
-    message = errors.join(", ")
-    options[:sub].each_pair { |pattern, replacement| message.gsub!(pattern, replacement) } if options[:sub]
-    return message
-  end
-
   def kapa_controller_name
     @kapa_controller_name = params[:controller].gsub("/", "_").to_sym if @kapa_controller_name.nil?
     return @kapa_controller_name
