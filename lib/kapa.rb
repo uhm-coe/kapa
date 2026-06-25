@@ -1,9 +1,12 @@
 require "kapa/engine"
+require "csv"
+require "stringio"
+require 'net/http'
 
 module Kapa
 
   def self.beta?
-    ENV['RELEASE'] != "live"
+    ENV['APP_RELEASE'] != "live"
   end
 
   def self.debug(*args)

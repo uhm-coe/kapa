@@ -3,8 +3,6 @@ Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require d.name} if Gem.l
 module Kapa
   class Engine < Rails::Engine
 
-    config.autoload_paths << File.expand_path("#{Kapa::Engine.root}/app", __FILE__) if Rails.env.development?
-
     config.generators do |g|
       g.assets false
       g.stylesheets false
@@ -23,8 +21,9 @@ module Kapa
     end
 
     initializer :kapa_assets do |app|
-      app.config.assets.precompile += %w(kapa/*)
-      app.config.assets.precompile << /.(?:svg|eot|woff|ttf|icon|ico|png)$/
+#      app.config.assets.precompile += %w[kapa/kapa.js kapa/kapa.css kapa/editor.js kapa/editor.css kapa/reports.js kapa/reports.css kapa/pdf.css]
+#      app.config.assets.precompile += %w[*.svg *.eot *.woff *.woff2 *.ttf *.ico *.png]
+      app.config.assets.precompile += %w[kapa_manifest.js]
     end
 
   end

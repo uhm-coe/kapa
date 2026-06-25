@@ -3,7 +3,6 @@ module Kapa::KapaControllerBase
 
   included do
     layout "kapa/layouts/kapa"
-    protect_from_forgery
     before_action :sanitize_params
     before_action :validate_url
     before_action :validate_user
@@ -23,8 +22,8 @@ module Kapa::KapaControllerBase
   end
 
   def validate_url
-    unless Rails.configuration.available_routes.include?(controller_name.to_s)
-      flash[:alert] = "#{controller_name} is not available."
+    unless Rails.configuration.available_routes.include?(kapa_controller_name.to_s)
+      flash[:alert] = "#{kapa_controller_name} is not available."
       redirect_to(kapa_error_path) and return false
     end
 
@@ -72,7 +71,7 @@ module Kapa::KapaControllerBase
     end
 
     if permission and not self.send(permission)
-      flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{controller_name}."
+      flash[:alert] = "You do not have a #{permission.to_s.gsub("?", "")} permission on #{kapa_controller_name}."
       redirect_to(kapa_error_path) and return false
     end
   end
@@ -85,8 +84,8 @@ module Kapa::KapaControllerBase
   end
 
   def redirect_to(options = {}, response_status = {})
-    if request.xhr?
-      render(:js => "window.location.href = '#{url_for(options)}'")
+    if request.format.js?
+      render(js: "window.location.href = '#{url_for(options)}'")
     else
       super(options, response_status)
     end
@@ -100,72 +99,53 @@ module Kapa::KapaControllerBase
     render(:js => script)
   end
 
-  protected
-  def rescue_action_in_public(exception)
-    flash[:alert] = t(:kapa_error_message_default)
-    if request.xhr?
-      render_notice and return false
-    else
-      redirect_to(kapa_error_path) and return false
-    end
-  end
-
   private
-  def error_message_for(*args)
-    options = args.last.is_a?(Hash) ? args.last : {}
-    errors = []
-    args.each { |a| errors << a.errors.full_messages.join(", ") if a.is_a?(ActiveRecord::Base) and not a.errors.blank? }
-    message = errors.join(", ")
-    options[:sub].each_pair { |pattern, replacement| message.gsub!(pattern, replacement) } if options[:sub]
-    return message
+  def kapa_controller_name
+    @kapa_controller_name = params[:controller].gsub("/", "_").to_sym if @kapa_controller_name.nil?
+    return @kapa_controller_name
   end
 
-  def controller_name
-    @controller_name = params[:controller].gsub("/", "_").to_sym if @controller_name.nil?
-    return @controller_name
-  end
-
-  def read?(name = controller_name)
+  def read?(name = kapa_controller_name)
     @current_user.check_permission(name, "R")
   end
 
-  def update?(name = controller_name)
+  def update?(name = kapa_controller_name)
     @current_user.check_permission(name, "U")
   end
 
-  def create?(name = controller_name)
+  def create?(name = kapa_controller_name)
     @current_user.check_permission(name, "C")
   end
 
-  def destroy?(name = controller_name)
+  def destroy?(name = kapa_controller_name)
     @current_user.check_permission(name, "D")
   end
 
-  def export?(name = controller_name)
+  def export?(name = kapa_controller_name)
     @current_user.check_permission(name, "E")
   end
 
-  def import?(name = controller_name)
+  def import?(name = kapa_controller_name)
     @current_user.check_permission(name, "I")
   end
 
-  def summarize?(name = controller_name)
+  def summarize?(name = kapa_controller_name)
     @current_user.check_permission(name, "S")
   end
 
-  def manage?(name = controller_name)
+  def manage?(name = kapa_controller_name)
     @current_user.check_permission(name, "M")
   end
 
-  def access_all?(name = controller_name)
+  def access_all?(name = kapa_controller_name)
     @current_user.access_scope(name) >= 30
   end
 
-  def access_dept?(name = controller_name)
+  def access_dept?(name = kapa_controller_name)
     @current_user.access_scope(name) >= 20
   end
 
-  def access_assigned?(name = controller_name)
+  def access_assigned?(name = kapa_controller_name)
     @current_user.access_scope(name) >= 10
   end
 

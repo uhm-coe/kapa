@@ -5,7 +5,6 @@ node_modules/*
 test/dummy/log
 test/dummy/tmp
 test/dummy/public/assets/*
-provision/*
 
 #Do not commit the master.key!
 test/dummy/config/master.key

@@ -4,8 +4,8 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery-ui-dist/jquery-ui.min
-//= require d3/dist/d3.min
-//= require c3/c3.min
-//= require pivottable/dist/pivot
-//= require pivottable/dist/c3_renderers
+//= require jquery-ui.min
+//= require d3.min
+//= require c3.min
+//= require pivot
+//= require c3_renderers

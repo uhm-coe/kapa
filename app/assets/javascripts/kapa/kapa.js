@@ -4,14 +4,14 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery/dist/jquery
-//= require dragula/dist/dragula
-//= require moment/min/moment-with-locales
-//= require rails-ujs/lib/assets/compiled/rails-ujs
-//= require bootstrap-sass/assets/javascripts/bootstrap
-//= require bootstrap-multiselect/dist/js/bootstrap-multiselect
-//= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
-//= require bootstrap-3-typeahead/bootstrap3-typeahead
+//= require jquery.min
+//= require dragula.min
+//= require moment-with-locales.min
+//= require rails-ujs
+//= require bootstrap.min
+//= require bootstrap-multiselect
+//= require bootstrap-datetimepicker.min
+//= require bootstrap3-typeahead.min
 
 jQuery(document).ready(function ($) {
 
