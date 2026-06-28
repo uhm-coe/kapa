@@ -94,9 +94,12 @@ module Kapa::UserBase
 
   def valid_credential?(password)
     if category == "ldap"
+      attr_map = Rails.configuration.respond_to?(:ldap_person_attr_map) ? Rails.configuration.ldap_person_attr_map : {}
+      uid_attr = attr_map[:uid] || "uid"
+
       ldap = Net::LDAP.new(Rails.configuration.ldap_settings)
       base = Rails.configuration.ldap_base
-      filter = Rails.configuration.ldap_filter.gsub("?", self.uid)
+      filter = Net::LDAP::Filter.eq(uid_attr, self.uid)
       dn = nil
       ldap.search(:base => base, :filter => filter) do |entry|
         dn = entry.dn
