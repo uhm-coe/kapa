@@ -188,9 +188,43 @@ module Kapa::PersonBase
     end
 
     def lookup_remote(key)
-      #Implement a way to load single person data from a remote datasource in main application.
-      #This method is called from lookup method if the system cannot find a person in the local database.
-      return nil
+      return nil unless Rails.configuration.respond_to?(:ldap_settings)
+
+      Rails.logger.debug "LDAP lookup_remote: key=#{key}"
+
+      attr_map = Rails.configuration.respond_to?(:ldap_person_attr_map) ? Rails.configuration.ldap_person_attr_map : {}
+
+      # Build an inverted map: downcased LDAP attribute name => Person field
+      field_map = {
+        (attr_map[:id_number]  || "employeeNumber").downcase => :id_number,
+        (attr_map[:last_name]  || "sn").downcase             => :last_name,
+        (attr_map[:first_name] || "givenname").downcase      => :first_name,
+        (attr_map[:email]      || "mail").downcase           => :email
+      }
+
+      if key =~ Regexp.new(Rails.configuration.regex_id_number, true)
+        filter = Net::LDAP::Filter.eq(attr_map[:id_number] || "employeeNumber", key)
+      elsif key =~ Regexp.new(Rails.configuration.regex_email, true)
+        filter = Net::LDAP::Filter.eq(attr_map[:email] || "mail", key)
+      else
+        Rails.logger.debug "LDAP lookup_remote: key did not match id_number or email pattern"
+        return nil
+      end
+
+      ldap = Net::LDAP.new(Rails.configuration.ldap_settings)
+      base = Rails.configuration.ldap_base
+
+      ldap.search(:base => base, :filter => filter) do |entry|
+        person = Kapa::Person.new
+        entry.each do |attribute, values|
+          field = field_map[attribute.to_s.downcase]
+          person.send(:"#{field}=", values.first.to_s) if field
+        end
+        person.status = "V"
+        return person
+      end
+
+      nil
     end
   end
 end
