@@ -12,8 +12,8 @@
 
     <div class="tab-content">
       <div id="main_tab" class="tab-pane active">
-        <%%=bootstrap_form_for :<%=singular_name %>, :url => <%=singular_table_name%>_path(:id => @<%=singular_name %>), :html => {:method => :put} do |f| %>
-          <%%=render :partial => "<%=singular_name %>_form", :locals => {:f => f} %>
+        <%%=bootstrap_form_for :<%=singular_name %>, :url => <%=singular_table_name%>_path(:id => @<%=singular_name %>), :html => {:method => :put} do %>
+          <%%=render :partial => "<%=singular_name %>_form" %>
           <%%=render :partial => "/kapa/layouts/controls", :locals => {:delete_path => <%=singular_table_name%>_path(:id => @<%=singular_name %>)} if update? %>
         <%% end %>
       </div>

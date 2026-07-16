@@ -1,11 +1,14 @@
 <%%=bootstrap_fields_for :<%=singular_name%> do |f| %>
-
   <div class="row">
-    <div class="col-sm-12">
-      <% attributes_names.each do |name| %>
+    <div class="col-sm-6">
+      <% attributes_names.first(attributes_names.length / 2 + attributes_names.length % 2).each do |name| %>
+        <%%=f.text_field :<%=name%> %>
+      <% end %>
+    </div>
+    <div class="col-sm-6">
+      <% attributes_names.last(attributes_names.length / 2).each do |name| %>
         <%%=f.text_field :<%=name%> %>
       <% end %>
     </div>
   </div>
-
 <%% end %>

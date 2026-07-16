@@ -34,7 +34,7 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
       flash[:notice] = "<%= singular_name.humanize %> was successfully created."
       redirect_to <%= singular_table_name %>_path(:id => @<%= singular_name %>)
     else
-      flash[:alert] = error_message_for(@property)
+      flash[:alert] = error_message_for(@<%= singular_name %>)
       redirect_to new_<%= singular_table_name %>_path and return false
     end
   end
@@ -45,7 +45,7 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
     @<%= singular_name %>.attributes= <%= singular_name %>_params
     @<%= singular_name %>.update_serialized_attributes!(:_ext, <%= singular_name %>_ext_params) if params[:<%= singular_name %>_ext].present?
 
-    if @<%= singular_name %>
+    if @<%= singular_name %>.save
       flash[:notice] = "<%= singular_name.humanize %> was successfully updated."
     else
       flash[:alert] = error_message_for(@<%= singular_name %>)
@@ -73,6 +73,10 @@ class <%= controller_class_name %>Controller < Kapa::KapaController
     <%- else -%>
     params.require(:<%= singular_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
     <%- end -%>
+  end
+
+  def <%= "#{singular_name}_ext_params" %>
+    params[:<%= singular_name %>_ext]
   end
 end
 <% end -%>

@@ -188,7 +188,13 @@ module Kapa::KapaModelBase
       hash.each_pair do |key, value|
         values = value.is_a?(Array) ? value : [value]
         values = values.delete_if { |v| v.blank? }
-        values.each { |v| conditions[0] << " or find_in_set(?, replace(#{key}, ' ', '')) > 0" if v.present? }
+        quoted_key = if key.to_s.include?('.')
+          table, col = key.to_s.split('.', 2)
+          "#{connection.quote_table_name(table)}.#{connection.quote_column_name(col)}"
+        else
+          connection.quote_column_name(key.to_s)
+        end
+        values.each { |v| conditions[0] << " or find_in_set(?, replace(#{quoted_key}, ' ', '')) > 0" if v.present? }
         conditions.concat(values)
       end
       conditions[0] << " or #{exception}" if exception
