@@ -45,7 +45,7 @@ Built-in pivot table and C3 chart support for building tabular and visual report
 1. Create a new Rails application:
 
    ```
-   rails new your_app --database=mysql
+   rails new your_app --database=mysql --asset-pipeline sprockets --skip-javascript
    ```
 
 2. Add KAPA to your `Gemfile` and run `bundle install`:

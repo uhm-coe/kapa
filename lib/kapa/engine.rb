@@ -20,9 +20,19 @@ module Kapa
       end
     end
 
+    initializer :kapa_mime_types do
+      Mime::Type.register "application/octet-stream", :file unless Mime[:file]
+    end
+
+    initializer :kapa_date_formats do
+      Time::DATE_FORMATS[:default]  = '%m/%d/%Y %I:%M %p'
+      Time::DATE_FORMATS[:datetime] = '%m/%d/%Y %I:%M %p'
+      Time::DATE_FORMATS[:time]     = '%I:%M:%S %p'
+      Date::DATE_FORMATS[:date]     = '%m/%d/%Y'
+      Date::DATE_FORMATS[:default]  = '%m/%d/%Y'
+    end
+
     initializer :kapa_assets do |app|
-#      app.config.assets.precompile += %w[kapa/kapa.js kapa/kapa.css kapa/editor.js kapa/editor.css kapa/reports.js kapa/reports.css kapa/pdf.css]
-#      app.config.assets.precompile += %w[*.svg *.eot *.woff *.woff2 *.ttf *.ico *.png]
       app.config.assets.precompile += %w[kapa_manifest.js]
     end
 

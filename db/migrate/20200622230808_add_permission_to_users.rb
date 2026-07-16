@@ -1,6 +1,6 @@
 class AddPermissionToUsers < ActiveRecord::Migration[5.2]
   def up
-    add_column "users", "role", :string
+    add_column "users", "role", :string unless column_exists?("users", "role")
 
     Kapa::User.where("status >= 30").each do |user|
       permission = user.deserialize(:permission, :as => OpenStruct)

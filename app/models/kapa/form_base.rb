@@ -21,11 +21,7 @@ module Kapa::FormBase
   end
 
   def document_title
-    if self.term.blank?
-      self.form_template.title
-    else
-      "#{self.form_template.title} (#{term_desc})"
-    end
+    self.form_template.title
   end
 
   def document_date

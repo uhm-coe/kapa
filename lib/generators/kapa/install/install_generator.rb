@@ -6,15 +6,8 @@ class Kapa::InstallGenerator < Rails::Generators::Base
   def install_initializers
     puts "Installing initializers..."
 
-    copy_from_dummy("config/initializers/attachments.rb")
-    copy_from_dummy("config/initializers/cas.rb")
-    copy_from_dummy("config/initializers/filter_parameter_logging.rb")
     copy_from_dummy("config/initializers/kapa.rb")
-    copy_from_dummy("config/initializers/ldap.rb")
-    copy_from_dummy("config/initializers/mailer.rb")
-    copy_from_dummy("config/initializers/time_formats.rb")
-    copy_from_dummy("config/initializers/users.rb")
-    inject_into_file "#{Rails.root}/config/initializers/mime_types.rb", "Mime::Type.register \"application/octet-stream\", :file\n", :after => "# Add new mime types for use in respond_to blocks:\n"
+    copy_from_dummy("config/initializers/kapa_services.rb")
   end
 
   def install_locale
