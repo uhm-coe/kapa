@@ -61,7 +61,7 @@ Built-in pivot table and C3 chart support for building tabular and visual report
 2. Add KAPA to your `Gemfile` and run `bundle install`:
 
    ```ruby
-   gem 'kapa', github: 'uhm-coe/kapa', branch: 'master'
+   gem 'kapa', github: 'uhm-coe/kapa'
    ```
 
 3. Install configuration files:
