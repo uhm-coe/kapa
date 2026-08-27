@@ -3,6 +3,7 @@ module ApplicationControllerBase
   
   included do
     protect_from_forgery with: :exception
+    rescue_from ActionController::InvalidAuthenticityToken, with: :error_422
     rescue_from StandardError, with: :error_500
   end
 
@@ -11,6 +12,11 @@ module ApplicationControllerBase
       logger.error "The page doesn't exist. #{Kapa::UserSession.find.try(:user).try(:uid)}"
     end
     render :template => "errors/404", :layout => false, :status => :not_found, :formats => [:html]
+  end
+
+  def error_422(exception)
+    logger.error "#{exception.class}: #{exception.message} #{Kapa::UserSession.find.try(:user).try(:uid)}"
+    render :template => "errors/422", :layout => false, :status => :unprocessable_entity, :formats => [:html]
   end
 
   def error_500(exception)
