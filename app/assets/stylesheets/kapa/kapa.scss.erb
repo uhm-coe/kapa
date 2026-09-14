@@ -3,19 +3,13 @@
  *= require bootstrap-datetimepicker.min
  *= require dragula.min
 */
+@import "bootstrap-sprockets";
+@function twbs-font-path($path) {
+  @return asset-path($path);
+}
 @import "bootswatch/<%=Rails.configuration.theme %>/variables";
 @import "bootstrap";
 @import "bootswatch/<%=Rails.configuration.theme %>/bootswatch";
-
-@font-face{
-  font-family:'Glyphicons Halflings';
-  src: font-url("bootstrap/glyphicons-halflings-regular.eot");
-  src: font-url("bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),
-       font-url("bootstrap/glyphicons-halflings-regular.woff2") format("woff2"),
-       font-url("bootstrap/glyphicons-halflings-regular.woff") format("woff"),
-       font-url("bootstrap/glyphicons-halflings-regular.ttf") format("truetype"),
-       font-url("bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg")
-}
 
 .section-header {
   padding-bottom: 9px;
