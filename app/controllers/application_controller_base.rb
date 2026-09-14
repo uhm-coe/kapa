@@ -3,8 +3,8 @@ module ApplicationControllerBase
   
   included do
     protect_from_forgery with: :exception
-    rescue_from ActionController::InvalidAuthenticityToken, with: :error_422
     rescue_from StandardError, with: :error_500
+    rescue_from ActionController::InvalidAuthenticityToken, with: :error_422
   end
 
   def error_404
