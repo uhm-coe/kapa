@@ -5,6 +5,7 @@ module Kapa::PropertyBase
     self.table_name = :properties
     validates_uniqueness_of :code, :scope => :name
     validates_presence_of :name, :code
+    before_create -> { self.sequence ||= 0 }
     after_save :refresh_cache
     after_destroy :refresh_cache
   end
