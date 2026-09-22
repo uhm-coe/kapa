@@ -5,6 +5,8 @@ module Kapa::PropertyBase
     self.table_name = :properties
     validates_uniqueness_of :code, :scope => :name
     validates_presence_of :name, :code
+    after_save :refresh_cache
+    after_destroy :refresh_cache
   end
 
   class_methods do
@@ -54,17 +56,17 @@ module Kapa::PropertyBase
 
     def lookup_description(name, code, default_value = code)
       refresh_cache if @@description_cache.empty?
-      return @@description_cache["#{name}_#{code}"] ||= default_value
+      return @@description_cache["#{name}_#{code}"] || default_value
     end
 
     def lookup_description_short(name, code, default_value = code)
       refresh_cache if @@description_short_cache.empty?
-      return @@description_short_cache["#{name}_#{code}"] ||= default_value
+      return @@description_short_cache["#{name}_#{code}"] || default_value
     end
 
     def lookup_category(name, code, default_value = code)
       refresh_cache if @@category_cache.empty?
-      return @@category_cache["#{name}_#{code}"] ||= default_value
+      return @@category_cache["#{name}_#{code}"] || default_value
     end
 
     def keys(name, options={})
