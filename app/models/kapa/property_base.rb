@@ -6,8 +6,8 @@ module Kapa::PropertyBase
     validates_uniqueness_of :code, :scope => :name
     validates_presence_of :name, :code
     before_create -> { self.sequence ||= 0 }
-    after_save :refresh_cache
-    after_destroy :refresh_cache
+    after_save { self.class.refresh_cache }
+    after_destroy { self.class.refresh_cache }
   end
 
   class_methods do
