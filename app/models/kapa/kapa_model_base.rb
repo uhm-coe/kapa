@@ -102,6 +102,13 @@ module Kapa::KapaModelBase
     self.class.hashids.encode(id)
   end
 
+  # Returns the random token stored in column, generating and saving one first if blank.
+  # Writes with update_column, so validations and callbacks are skipped.
+  def secure_token!(column, length = 32)
+    update_column(column, SecureRandom.urlsafe_base64(length)) if self[column].blank?
+    self[column]
+  end
+
   def accessible?(user)
     unless user.check_permission(kapa_model_name, "R")
       return false
