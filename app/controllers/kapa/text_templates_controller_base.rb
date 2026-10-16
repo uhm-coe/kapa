@@ -29,7 +29,17 @@ module Kapa::TextTemplatesControllerBase
     @text_template = Kapa::TextTemplate.new(:template_path => "/kapa/text_templates/default")
   end
 
+  # Text templates are PDF letters or emails (type "email"). When the app registers templates of that
+  # type (Kapa::TextTemplate.registry), a new template must be for one of them; emails always need one.
+  # Emails use the mail layout, not a layout path.
   def create
+    type = params.dig(:text_template, :type).to_s
+    registry = Kapa::TextTemplate.registry(type)
+    if (type == "email" || registry.any?) && !registry.key?(params.dig(:text_template, :code))
+      flash[:alert] = "Please choose which #{type == "email" ? "email" : "letter"} this template is for."
+      redirect_to new_kapa_text_template_path and return false
+    end
+
     @text_template = Kapa::TextTemplate.new
     @text_template.attributes = text_template_params
 
@@ -60,16 +70,25 @@ module Kapa::TextTemplatesControllerBase
               :filename => "text_templates.csv"
   end
 
+  # Emails preview in the browser with the registry's sample values; letters preview as PDF.
   def preview
     @text_template = Kapa::TextTemplate.find(params[:id])
-    logger.debug "*DEBUG* #{@text_template.to_html}"
-    send_data @text_template.to_pdf,
+    if @text_template.email?
+      sample = @text_template.template_config[:sample] || {}
+      subject = ERB::Util.html_escape(@text_template.render_subject(sample))
+      html = "<p><strong>Subject:</strong> #{subject}</p><hr>".html_safe + @text_template.to_html(:locals => sample)
+      layout = @text_template.layout_path || (lookup_context.exists?("mailer", ["layouts"]) ? "mailer" : false)
+      render :html => html, :layout => layout and return
+    end
+    sample = @text_template.template_config[:sample] || {}
+    logger.debug "*DEBUG* #{@text_template.to_html(:locals => sample.dup)}"
+    send_data @text_template.to_pdf(:locals => sample.dup),
               :type => "application/pdf",
               :disposition => "inline",
               :filename => "#{@text_template.title}_preview.pdf"
   end
 
   def text_template_params
-    params.require(:text_template).permit(:type, :title, :body, :active, :template_path, :dept, :depts => [])
+    params.require(:text_template).permit(:type, :title, :body, :subject, :code, :active, :template_path, :dept, :depts => [])
   end
 end

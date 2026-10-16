@@ -14,8 +14,36 @@
 
   <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
     <%=f.text_field :title %>
-    <%=f.text_area :body, :class => "editor" %>
-    <%=f.text_field :template_path, :label => "Layout Path" %>
+    <% config = @text_template.template_config %>
+    <% if @text_template.code.present? %>
+      <%=f.static :code, :label => (@text_template.email? ? "Email" : "Letter"), :content => "#{config[:title] || @text_template.code} (#{@text_template.code})" %>
+    <% end %>
+    <% if @text_template.email? %>
+      <%=f.text_field :subject, :hint => "Liquid, like the body: e.g. {{ first_name }}" %>
+    <% end %>
+    <%=f.text_area :body, :class => "editor", :tooltip => "Find: Ctrl+F (⌘F on Mac). Replace: Ctrl+H (⌘⌥F on Mac)." %>
+    <% if config[:variables].present? %>
+      <div class="form-group">
+        <label class="control-label">Available variables</label>
+        <table class="table table-condensed">
+          <% config[:variables].each do |name, description| %>
+            <tr><td><code>{{ <%= name %> }}</code></td><td><%= description %></td></tr>
+          <% end %>
+        </table>
+        <p class="help-block">
+          <% if @text_template.email? %>
+            Use <code>| escape</code> for names, e.g. <code>{{ first_name | escape }}</code>. If this template is inactive or deleted, this email is not sent.
+          <% else %>
+            If this template is inactive or deleted, this letter can't be generated.
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+    <% if @text_template.email? %>
+      <%=f.text_field :template_path, :label => "Layout Path", :hint => "Mail layout used for this email, e.g. mailer (app/views/layouts/mailer). Blank uses the mailer's default." %>
+    <% else %>
+      <%=f.text_field :template_path, :label => "Layout Path" %>
+    <% end %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
     <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
     <%=render(:layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)}) do %>

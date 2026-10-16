@@ -7,6 +7,7 @@
 //= require ace-builds/src-noconflict/ace
 //= require ace-builds/src-noconflict/mode-liquid
 //= require ace-builds/src-noconflict/theme-chrome
+//= require ace-builds/src-noconflict/ext-searchbox
 
 jQuery(document).ready(function($) {
 
@@ -27,7 +28,8 @@ jQuery(document).ready(function($) {
     editor.getSession().on("change", function () {
       textarea.val(editor.getSession().getValue());
     });
-    editor.setValue(textarea.val());
+    // -1: put the cursor at the start; by default setValue selects all the text, and typing would replace it.
+    editor.setValue(textarea.val(), -1);
   });
   
 });
