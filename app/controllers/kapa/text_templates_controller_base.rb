@@ -77,9 +77,8 @@ module Kapa::TextTemplatesControllerBase
       sample = @text_template.template_config[:sample] || {}
       subject = ERB::Util.html_escape(@text_template.render_subject(sample))
       html = "<p><strong>Subject:</strong> #{subject}</p><hr>".html_safe + @text_template.to_html(:locals => sample)
-      # to_html already applied the template's layout; without one, use the mailer default like the mailer does.
-      layout = @text_template.template_path.blank? && lookup_context.exists?("mailer", ["layouts"]) ? "mailer" : false
-      render :html => html, :layout => layout and return
+      # to_html already applied the template's layout (none for a plain email).
+      render :html => html, :layout => false and return
     end
     sample = @text_template.template_config[:sample] || {}
     logger.debug "*DEBUG* #{@text_template.to_html(:locals => sample.dup)}"
