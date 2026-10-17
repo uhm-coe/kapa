@@ -77,7 +77,8 @@ module Kapa::TextTemplatesControllerBase
       sample = @text_template.template_config[:sample] || {}
       subject = ERB::Util.html_escape(@text_template.render_subject(sample))
       html = "<p><strong>Subject:</strong> #{subject}</p><hr>".html_safe + @text_template.to_html(:locals => sample)
-      layout = @text_template.layout_path || (lookup_context.exists?("mailer", ["layouts"]) ? "mailer" : false)
+      # to_html already applied the template's layout; without one, use the mailer default like the mailer does.
+      layout = @text_template.template_path.blank? && lookup_context.exists?("mailer", ["layouts"]) ? "mailer" : false
       render :html => html, :layout => layout and return
     end
     sample = @text_template.template_config[:sample] || {}
@@ -85,7 +86,7 @@ module Kapa::TextTemplatesControllerBase
     send_data @text_template.to_pdf(:locals => sample.dup),
               :type => "application/pdf",
               :disposition => "inline",
-              :filename => "#{@text_template.title}_preview.pdf"
+              :filename => @text_template.pdf_file_name(sample) || "#{@text_template.title}_preview.pdf"
   end
 
   def text_template_params

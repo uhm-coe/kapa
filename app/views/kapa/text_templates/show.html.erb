@@ -20,6 +20,8 @@
     <% end %>
     <% if @text_template.email? %>
       <%=f.text_field :subject, :hint => "Liquid, like the body: e.g. {{ first_name }}" %>
+    <% else %>
+      <%=f.text_field :subject, :label => "File name", :hint => "Name of the generated PDF (Liquid, like the body), e.g. Admission Letter {{ term_desc }}. Blank uses the title." %>
     <% end %>
     <%=f.text_area :body, :class => "editor", :tooltip => "Find: Ctrl+F (⌘F on Mac). Replace: Ctrl+H (⌘⌥F on Mac)." %>
     <% if config[:variables].present? %>
