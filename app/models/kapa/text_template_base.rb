@@ -109,8 +109,8 @@ module Kapa::TextTemplateBase
 
     # Creates the default template for each registered code of this type that has none yet (templates
     # staff already edited are left alone). The body is read from db/<type>_templates/<code>.liquid;
-    # title, subject, template_path and dept come from the registry entry. Returns the created templates.
-    def create_missing_defaults!(type, codes = nil, dept: nil)
+    # title, subject and template_path come from the registry entry. Returns the created templates.
+    def create_missing_defaults!(type, codes = nil)
       entries = registry(type)
       entries = entries.slice(*codes) if codes
       entries.filter_map do |code, config|
@@ -118,7 +118,7 @@ module Kapa::TextTemplateBase
         body = Rails.root.join("db/#{type}_templates/#{code}.liquid")
         Kapa::TextTemplate.create!(:type => type, :code => code, :title => config[:title], :subject => config[:subject],
                                    :template_path => config[:template_path], :body => (body.exist? ? body.read : ""),
-                                   :active => true, :dept => config[:dept] || dept)
+                                   :active => true)
       end
     end
 

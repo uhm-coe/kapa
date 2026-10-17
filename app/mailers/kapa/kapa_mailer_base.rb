@@ -23,11 +23,18 @@ module Kapa::KapaMailerBase
   end
 
   # ERB email: options become instance variables for template_path/template_name in headers.
+  # headers[:layout] wraps it in a layout, e.g. "mailer" (app/views/layouts/mailer); without one it has none.
   def build(headers, options = {})
     options.each_pair do |key, value|
       instance_variable_set("@#{key}", value)
     end
-    mail(headers) if mail_enabled?
+    return unless mail_enabled?
+    headers = headers.dup
+    layout = headers.delete(:layout)
+    return mail(headers) unless layout
+    mail(headers) do |format|
+      format.html { render "#{headers[:template_path]}/#{headers[:template_name]}", :layout => layout }
+    end
   end
 
   # Sends a staff-editable email: the active Kapa::TextTemplate with type "email" and this code
