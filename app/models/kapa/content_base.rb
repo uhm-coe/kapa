@@ -102,38 +102,68 @@ module Kapa::ContentBase
 
     # Contents the app's code looks up, by type ("email", "pdf") and code: Rails.configuration.contents,
     # loaded by the app from config/content.yml. Codes are defined by developers, and only registered
-    # contents exist (create_missing_defaults!). Each entry may have :title, :subject, :template_path,
-    # :variables ({name => description}) and :sample (preview values). Apps without a registry get {}.
+    # contents exist (create_missing_defaults!). Each entry has :title (the internal name, which staff
+    # can't change), :variables ({name => description}) and :sample (preview values). Apps without a
+    # registry get {}.
     def registry(type)
       contents = Rails.configuration.respond_to?(:contents) ? Rails.configuration.contents : {}
       contents[type.to_s] || {}
     end
 
+    def registry_types
+      Rails.configuration.respond_to?(:contents) ? Rails.configuration.contents.keys : []
+    end
+
+    # The attributes a registered content is created with: type, code and title from the registry, and
+    # the rest from db/contents/<type>/<code>.liquid, which starts with YAML front matter:
+    #   ---
+    #   subject: "Your application was submitted"
+    #   template_path: mailer
+    #   dept: OSAS
+    #   active: true
+    #   ---
+    #   <p>Dear {{ student_name | escape }},</p>
+    def default_attributes(type, code)
+      path = Rails.root.join("db/contents/#{type}/#{code}.liquid")
+      source = path.exist? ? path.read : ""
+      front_matter, body = {}, source
+      if (match = source.match(/\A---[ \t]*\n(.*?)\n---[ \t]*(?:\n|\z)/m))
+        front_matter, body = (YAML.safe_load(match[1]) || {}), match.post_match
+      end
+      front_matter = front_matter.slice("subject", "template_path", "dept", "active").transform_keys(&:to_sym)
+      {:type => type, :code => code, :title => registry(type).dig(code, :title), :active => true}
+        .merge(front_matter).merge(:body => body)
+    end
+
     # Creates the default template for each registered code that has none yet (templates staff already
-    # edited are left alone), for one type or, without a type, every registered type. The body is read
-    # from db/contents/<type>/<code>.liquid; title, subject and template_path come from the registry
-    # entry. Returns the created templates.
+    # edited are left alone), for one type or, without a type, every registered type, from
+    # default_attributes. Returns the created templates.
     def create_missing_defaults!(type = nil, codes = nil)
-      types = type ? [type] : (Rails.configuration.respond_to?(:contents) ? Rails.configuration.contents.keys : [])
-      types.flat_map do |t|
-        entries = registry(t)
-        entries = entries.slice(*codes) if codes
-        existing = Kapa::Content.where(:code => entries.keys).pluck(:code)
-        entries.except(*existing).map do |code, config|
-          body = Rails.root.join("db/contents/#{t}/#{code}.liquid")
-          Kapa::Content.create!(:type => t, :code => code, :title => config[:title], :subject => config[:subject],
-                                :template_path => config[:template_path], :body => (body.exist? ? body.read : ""),
-                                :active => true)
+      (type ? [type] : registry_types).flat_map do |t|
+        codes_of_type = registry(t).keys
+        codes_of_type &= codes if codes
+        existing = Kapa::Content.where(:code => codes_of_type).pluck(:code)
+        (codes_of_type - existing).map { |code| Kapa::Content.create!(default_attributes(t, code)) }
+      end
+    end
+
+    # Titles are defined in the registry; copies a changed title to its record. Returns the number updated.
+    def sync_titles!
+      registry_types.sum do |t|
+        registry(t).sum do |code, config|
+          next 0 if config[:title].blank?
+          Kapa::Content.where(:code => code).where("title IS NULL OR title <> ?", config[:title]).update_all(:title => config[:title])
         end
       end
     end
 
-    # Run when the app boots (config.after_initialize), so a code added to the registry, or a template
-    # staff deleted, gets its default. Skipped while the database isn't ready: no database (e.g. assets
-    # precompile) or pending migrations (e.g. db:migrate, which boots the app before migrating).
+    # Run when the app boots (config.after_initialize), so a code added to the registry gets its default
+    # and a renamed title reaches its record. Skipped while the database isn't ready: no database (e.g.
+    # assets precompile) or pending migrations (e.g. db:migrate, which boots the app before migrating).
     def create_missing_defaults_on_boot!
       return if ActiveRecord::Base.connection_pool.migration_context.needs_migration?
       created = create_missing_defaults!
+      sync_titles!
       Rails.logger.info "Created default contents: #{created.map(&:code).join(", ")}" if created.any?
     rescue ActiveRecord::NoDatabaseError, ActiveRecord::ConnectionNotEstablished => e
       Rails.logger.warn "Default contents not created (database not ready): #{e.message}"

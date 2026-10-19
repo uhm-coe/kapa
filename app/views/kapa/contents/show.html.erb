@@ -13,11 +13,8 @@
   </h4>
 
   <%=bootstrap_form_for :content, :url => kapa_content_path(:id => @content), :html => {:method => :put, :id => "content_form"} do |f| %>
-    <%=f.text_field :title %>
     <% config = @content.template_config %>
-    <% if @content.code.present? %>
-      <%=f.static :code, :label => (@content.email? ? "Email" : "PDF"), :content => "#{config[:title] || @content.code} (#{@content.code})" %>
-    <% end %>
+    <%=f.static :code, :label => (@content.email? ? "Email" : "PDF"), :content => "#{@content.title} (#{@content.code})" %>
     <% if @content.email? %>
       <%=f.text_field :subject, :hint => "Liquid, like the body: e.g. {{ first_name }}" %>
     <% else %>

@@ -52,6 +52,6 @@ module Kapa::ContentsControllerBase
   end
 
   def content_params
-    params.require(:content).permit(:title, :body, :subject, :active, :template_path, :dept, :depts => [])
+    params.require(:content).permit(:body, :subject, :active, :template_path, :dept, :depts => [])
   end
 end
