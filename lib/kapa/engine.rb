@@ -1,4 +1,6 @@
-Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require d.name} if Gem.loaded_specs['kapa']
+# Gems whose require name differs from the gem name.
+require_names = {"rubyzip" => "zip"}
+Gem.loaded_specs['kapa'].runtime_dependencies.each {|d| require require_names.fetch(d.name, d.name)} if Gem.loaded_specs['kapa']
 
 module Kapa
   class Engine < Rails::Engine

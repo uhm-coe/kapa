@@ -25,12 +25,12 @@ module Kapa::ContentsControllerBase
     redirect_to kapa_content_path(:id => @content)
   end
 
+  # All contents as db/contents files in a zip; unzip it into the app's db/ folder.
   def export
-    @filter = filter
-    send_data Kapa::Content.to_table(:as => :csv, :filter => @filter),
-              :type => "application/csv",
-              :disposition => "inline",
-              :filename => "contents.csv"
+    send_data Kapa::Content.to_zip,
+              :type => "application/zip",
+              :disposition => "attachment",
+              :filename => "contents-#{Date.today.strftime("%Y%m%d")}.zip"
   end
 
   # Emails preview in the browser with the registry's sample values; PDFs preview as PDF.

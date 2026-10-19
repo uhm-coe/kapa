@@ -78,6 +78,24 @@ module Kapa::ContentBase
     end
   end
 
+  # This content as a db/contents/<type>/<code>.liquid file: YAML front matter, then the body.
+  # default_attributes reads it back.
+  def to_default_file
+    front_matter = {"subject" => self.subject.to_s.to_json}
+    front_matter["template_path"] = default_file_value(self.template_path) if self.template_path.present?
+    front_matter["dept"] = default_file_value(self.dept) if self.dept.present?
+    front_matter["active"] = self.active ? "true" : "false"
+    "---\n#{front_matter.map { |name, value| "#{name}: #{value}" }.join("\n")}\n---\n#{self.body}"
+  end
+
+  # Plain words and paths (mailer, kapa/layouts/letter, OSAS) stay unquoted, as in the hand-written
+  # files; anything YAML could read as another type (yes, null, 123, "- x") is quoted.
+  def default_file_value(value)
+    value = value.to_s
+    plain = value.match?(%r{\A[A-Za-z][\w/.\-]*\z}) && !value.match?(/\A(true|false|yes|no|on|off|null|y|n)\z/i)
+    plain ? value : value.to_json
+  end
+
   def to_pdf(options = {})
     WickedPdf.new.pdf_from_string(self.to_html(options))
   end
@@ -125,14 +143,18 @@ module Kapa::ContentBase
     #   <p>Dear {{ student_name | escape }},</p>
     def default_attributes(type, code)
       path = Rails.root.join("db/contents/#{type}/#{code}.liquid")
-      source = path.exist? ? path.read : ""
+      {:type => type, :code => code, :title => registry(type).dig(code, :title), :active => true}
+        .merge(parse_default_file(path.exist? ? path.read : ""))
+    end
+
+    # The subject, template_path, dept and active in a default file's front matter (those present),
+    # and the body after it.
+    def parse_default_file(source)
       front_matter, body = {}, source
       if (match = source.match(/\A---[ \t]*\n(.*?)\n---[ \t]*(?:\n|\z)/m))
         front_matter, body = (YAML.safe_load(match[1]) || {}), match.post_match
       end
-      front_matter = front_matter.slice("subject", "template_path", "dept", "active").transform_keys(&:to_sym)
-      {:type => type, :code => code, :title => registry(type).dig(code, :title), :active => true}
-        .merge(front_matter).merge(:body => body)
+      front_matter.slice("subject", "template_path", "dept", "active").transform_keys(&:to_sym).merge(:body => body)
     end
 
     # Creates the default template for each registered code that has none yet (templates staff already
@@ -144,6 +166,35 @@ module Kapa::ContentBase
         codes_of_type &= codes if codes
         existing = Kapa::Content.where(:code => codes_of_type).pluck(:code)
         (codes_of_type - existing).map { |code| Kapa::Content.create!(default_attributes(t, code)) }
+      end
+    end
+
+    # Every content with a code, as a zip of db/contents files (contents/<type>/<code>.liquid), so the
+    # contents in one database (e.g. production) can be copied into a checkout's db/ folder.
+    def to_zip
+      Zip::OutputStream.write_buffer do |zip|
+        Kapa::Content.where.not(:code => [nil, ""]).where(:type => %w(email pdf)).order(:type, :code).each do |content|
+          zip.put_next_entry("contents/#{content.type}/#{content.code}.liquid")
+          zip.write(content.to_default_file)
+        end
+      end.string
+    end
+
+    # Overwrites each registered content with its db/contents file, creating it if missing (rake
+    # kapa:contents:load), e.g. after unzipping contents downloaded from production. Unlike
+    # create_missing_defaults!, staff edits are replaced. Returns {code => :created, :updated or :unchanged}.
+    def load_defaults!(codes = nil)
+      registry_types.each_with_object({}) do |type, results|
+        codes_of_type = registry(type).keys
+        codes_of_type &= codes if codes
+        codes_of_type.each do |code|
+          content = Kapa::Content.find_or_initialize_by(:code => code)
+          status = content.new_record? ? :created : :updated
+          content.assign_attributes(default_attributes(type, code))
+          status = :unchanged unless content.changed?
+          content.save!
+          results[code] = status
+        end
       end
     end
 
