@@ -11,7 +11,7 @@ module Kapa::FormTemplatesControllerBase
          color_field
          search_field
          person_select 
-         text_template_select
+         content_select
          program_select
          history_select
          model_select

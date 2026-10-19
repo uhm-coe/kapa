@@ -10,17 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2023_09_29_054220) do
-  create_table "contents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.text "html"
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
+  create_table "contents", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.boolean "active", default: true
+    t.text "body"
+    t.string "category"
+    t.string "code"
+    t.datetime "created_at", precision: nil
+    t.string "dept"
     t.json "json"
-    t.string "page", null: false
-    t.string "region", null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.string "sequence"
+    t.string "subject"
+    t.string "template_path"
+    t.string "title"
+    t.string "type"
+    t.datetime "updated_at", precision: nil
     t.text "yml"
-    t.index ["page", "region"], name: "index_contents_on_page_and_region", unique: true
-    t.index ["page"], name: "index_contents_on_page"
+    t.index ["code"], name: "index_contents_on_code", unique: true
   end
 
   create_table "files", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -261,21 +267,6 @@ ActiveRecord::Schema[8.1].define(version: 2023_09_29_054220) do
     t.text "yml"
   end
 
-  create_table "text_templates", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.boolean "active", default: true
-    t.text "body"
-    t.string "category"
-    t.datetime "created_at", precision: nil
-    t.string "dept"
-    t.json "json"
-    t.string "sequence"
-    t.string "template_path"
-    t.string "title"
-    t.string "type"
-    t.datetime "updated_at", precision: nil
-    t.text "yml"
-  end
-
   create_table "texts", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "active", default: true
     t.integer "attachable_id"
@@ -290,12 +281,12 @@ ActiveRecord::Schema[8.1].define(version: 2023_09_29_054220) do
     t.string "sequence"
     t.string "status"
     t.datetime "submitted_at", precision: nil
-    t.integer "text_template_id"
+    t.integer "content_id"
     t.string "title"
     t.datetime "updated_at", precision: nil
     t.text "yml"
     t.index ["person_id"], name: "index_texts_on_person_id"
-    t.index ["text_template_id"], name: "index_texts_on_text_template_id"
+    t.index ["content_id"], name: "index_texts_on_content_id"
   end
 
   create_table "timestamps", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

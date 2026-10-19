@@ -10,7 +10,7 @@ module Kapa::PersonsControllerBase
     @documents += @person.forms.search(options)
     @documents += @person.texts.search(options)
     @form_templates = Kapa::FormTemplate.all
-    @text_templates = Kapa::TextTemplate.all
+    @contents = Kapa::Content.letters
   end
 
   def new

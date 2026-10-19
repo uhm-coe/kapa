@@ -65,8 +65,8 @@ module Kapa::KapaHelper
     model_select(object_name, method, options, html_options)
   end
 
-  def text_template_select(object_name, method, options = {}, html_options = {})
-    options[:model_class] = Kapa::TextTemplate
+  def content_select(object_name, method, options = {}, html_options = {})
+    options[:model_class] = Kapa::Content
     options[:model_options] = options
     model_select(object_name, method, options, html_options)
   end

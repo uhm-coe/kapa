@@ -2,14 +2,14 @@ module Kapa::TextBase
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :text_template
+    belongs_to :content
     belongs_to :person, :optional => true
     belongs_to :attachable, :polymorphic => true, :optional => true
     has_many :files, :as => :attachable
     has_many :user_assignments, :as => :assignable
     has_many :users, :through => :user_assignments
 
-    #validates_presence_of :text_template_id
+    #validates_presence_of :content_id
     after_create :set_default_contents, :replace_variables
   end
 
@@ -42,8 +42,8 @@ module Kapa::TextBase
   end
 
   def set_default_contents
-    self.title = self.text_template.title
-    self.body = self.text_template.body
+    self.title = self.content.title
+    self.body = self.content.body
     self.save
   end
 
@@ -53,7 +53,7 @@ module Kapa::TextBase
   def generate_pdf(options = {})
     locals = options[:locals] || {}
     locals[:@text] = self
-    html = ApplicationController.render(self.text_template.template_path, :layout => nil, :locals => locals)
+    html = ApplicationController.render(self.content.template_path, :layout => nil, :locals => locals)
     logger.debug "*DEBUG* #{html}"
     pdf_contents = WickedPdf.new.pdf_from_string(html)
     pdf = Kapa::File.new

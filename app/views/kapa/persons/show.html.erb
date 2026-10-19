@@ -88,7 +88,7 @@
 
   <%=render :layout => '/kapa/layouts/modal', :locals => {:modal_id => "text_dialog", :modal_title => "Select a template", :modal_form_id => "new_text_form"} do %>
     <%= bootstrap_form_for :text, :url => kapa_texts_path(:return_path => url_for(:anchor => :document, :only_path => true)), :html => {:id => "new_text_form"} do |f| %>
-      <%=f.select :text_template_id, @text_templates.collect {|t| [t.title, t.id]}, {:label => "Template"} %>
+      <%=f.select :content_id, @contents.collect {|t| [t.title, t.id]}, {:label => "Template"} %>
       <%=f.hidden_field :person_id, :value => @person.id %>
     <% end %>
   <% end %>

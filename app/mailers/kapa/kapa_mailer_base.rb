@@ -37,14 +37,14 @@ module Kapa::KapaMailerBase
     end
   end
 
-  # Sends a staff-editable email: the active Kapa::TextTemplate with type "email" and this code
+  # Sends a staff-editable email: the active Kapa::Content with type "email" and this code
   # (managed in kapa under Letter/E-mail Templates). The subject and body are Liquid, rendered with
-  # locals plus Rails.configuration.email_default_locals. TextTemplate#to_html returns the complete
+  # locals plus Rails.configuration.email_default_locals. Content#to_html returns the complete
   # HTML with the template's layout (template_path); a template without one is sent plain.
   # Without a template nothing is sent.
-  def build_from_text_template(code, headers, locals, subject_prefix: nil)
+  def build_from_content(code, headers, locals, subject_prefix: nil)
     return unless mail_enabled?
-    template = Kapa::TextTemplate.email(code)
+    template = Kapa::Content.email(code)
     unless template
       Rails.logger.error "Email template '#{code}' is missing or inactive; email not sent."
       return

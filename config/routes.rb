@@ -23,9 +23,8 @@ Rails.application.routes.draw do
     resources :form_templates, &extra_actions
     resources :form_template_fields, &extra_actions
     resources :texts, &extra_actions
-    resources :text_templates, &extra_actions
-    get 'text_templates/preview(/:id)' => 'text_templates#preview', :as => :text_templates_preview
     resources :contents, &extra_actions
+    get 'contents/preview(/:id)' => 'contents#preview', :as => :contents_preview
     resources :properties, &extra_actions
     resources :users, &extra_actions
     resources :user_assignments, &extra_actions

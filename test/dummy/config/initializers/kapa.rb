@@ -24,7 +24,7 @@ Rails.configuration.available_routes = %w{
   kapa_form_templates
   kapa_form_template_fields
   kapa_texts
-  kapa_text_templates
+  kapa_contents
   kapa_users
   kapa_user_assignments
   kapa_notifications
@@ -71,7 +71,7 @@ Rails.configuration.form_helpers = %w{
   time_picker 
   select
   person_select 
-  text_template_select
+  content_select
   model_select
   property_select
   term_select

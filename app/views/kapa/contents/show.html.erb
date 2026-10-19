@@ -9,16 +9,16 @@
 
   <h4 class="section-header">
     <%=link_to "", {:action => :index}, :class => "glyphicon glyphicon-chevron-left" %>
-    <%=@text_template.title %>
+    <%=@content.title %>
   </h4>
 
-  <%=bootstrap_form_for :text_template, :url => kapa_text_template_path(:id => @text_template), :html => {:method => :put, :id => "text_template_form"} do |f| %>
+  <%=bootstrap_form_for :content, :url => kapa_content_path(:id => @content), :html => {:method => :put, :id => "content_form"} do |f| %>
     <%=f.text_field :title %>
-    <% config = @text_template.template_config %>
-    <% if @text_template.code.present? %>
-      <%=f.static :code, :label => (@text_template.email? ? "Email" : "Letter"), :content => "#{config[:title] || @text_template.code} (#{@text_template.code})" %>
+    <% config = @content.template_config %>
+    <% if @content.code.present? %>
+      <%=f.static :code, :label => (@content.email? ? "Email" : "Letter"), :content => "#{config[:title] || @content.code} (#{@content.code})" %>
     <% end %>
-    <% if @text_template.email? %>
+    <% if @content.email? %>
       <%=f.text_field :subject, :hint => "Liquid, like the body: e.g. {{ first_name }}" %>
     <% else %>
       <%=f.text_field :subject, :label => "File name", :hint => "Name of the generated PDF (Liquid, like the body), e.g. Admission Letter {{ term_desc }}. Blank uses the title." %>
@@ -33,7 +33,7 @@
           <% end %>
         </table>
         <p class="help-block">
-          <% if @text_template.email? %>
+          <% if @content.email? %>
             Use <code>| escape</code> for names, e.g. <code>{{ first_name | escape }}</code>. If this template is inactive or deleted, this email is not sent.
           <% else %>
             If this template is inactive or deleted, this letter can't be generated.
@@ -41,15 +41,15 @@
         </p>
       </div>
     <% end %>
-    <% if @text_template.email? %>
+    <% if @content.email? %>
       <%=f.text_field :template_path, :label => "Layout Path", :hint => "Mail layout used for this email, e.g. mailer (app/views/layouts/mailer). Blank uses the mailer's default." %>
     <% else %>
       <%=f.text_field :template_path, :label => "Layout Path" %>
     <% end %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
     <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
-    <%=render(:layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_text_template_path(:id => @text_template, :return_path => kapa_text_templates_path)}) do %>
-      <li><%=link_to "Preview", {:action => :preview, :id => @text_template}, :target => :blank %></li>
+    <%=render(:layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_content_path(:id => @content, :return_path => kapa_contents_path)}) do %>
+      <li><%=link_to "Preview", {:action => :preview, :id => @content}, :target => :blank %></li>
     <% end if update?%>
   <% end %>
 

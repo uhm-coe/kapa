@@ -1,10 +1,11 @@
-module Kapa::TextTemplateBase
+module Kapa::ContentBase
   extend ActiveSupport::Concern
 
   included do
     has_many :texts
     # Email templates (type "email") are rendered by the app's mailer; other types are PDF letters.
     scope :emails, -> { where(:type => "email") }
+    scope :letters, -> { where("type IS NULL OR type <> 'email'") }
     validates_presence_of :code, :subject, :if => :email?
     validates_uniqueness_of :code, :allow_blank => true
     validate :validate_liquid
@@ -94,17 +95,13 @@ module Kapa::TextTemplateBase
   
   class_methods do
 
-    # Templates the app's code looks up, keyed by code: Rails.configuration.email_templates for emails
-    # and Rails.configuration.letter_templates for letters (PDF). Codes are defined by developers; staff
-    # pick one when creating a template. Each entry may have :title, :subject (emails), :variables
-    # ({name => description}) and :sample (preview values). Apps without a registry get {}.
+    # Contents the app's code looks up, by type ("email", "letter") and code: Rails.configuration.contents,
+    # loaded by the app from config/content.yml. A blank type is a letter. Codes are defined by developers;
+    # staff pick one when creating a template. Each entry may have :title, :subject, :template_path,
+    # :variables ({name => description}) and :sample (preview values). Apps without a registry get {}.
     def registry(type)
-      name = type == "email" ? :email_templates : :letter_templates
-      Rails.configuration.respond_to?(name) ? Rails.configuration.send(name) : {}
-    end
-
-    def email_registry
-      registry("email")
+      contents = Rails.configuration.respond_to?(:contents) ? Rails.configuration.contents : {}
+      contents[type.presence || "letter"] || {}
     end
 
     # Creates the default template for each registered code of this type that has none yet (templates
@@ -114,11 +111,11 @@ module Kapa::TextTemplateBase
       entries = registry(type)
       entries = entries.slice(*codes) if codes
       entries.filter_map do |code, config|
-        next if Kapa::TextTemplate.exists?(:code => code)
+        next if Kapa::Content.exists?(:code => code)
         body = Rails.root.join("db/#{type}_templates/#{code}.liquid")
-        Kapa::TextTemplate.create!(:type => type, :code => code, :title => config[:title], :subject => config[:subject],
-                                   :template_path => config[:template_path], :body => (body.exist? ? body.read : ""),
-                                   :active => true)
+        Kapa::Content.create!(:type => type, :code => code, :title => config[:title], :subject => config[:subject],
+                              :template_path => config[:template_path], :body => (body.exist? ? body.read : ""),
+                              :active => true)
       end
     end
 
@@ -129,22 +126,22 @@ module Kapa::TextTemplateBase
 
     # The active letter (PDF) template for a code, or nil.
     def letter(code)
-      where(:code => code, :active => true).where("type IS NULL OR type <> 'email'").first
+      letters.find_by(:code => code, :active => true)
     end
 
     def selections(options = {})
       selections = []
-      text_templates = Kapa::TextTemplate.where(:active => true).order("sequence DESC")
-      text_templates = text_templates.where(options[:conditions]) if options[:conditions].present?
-      text_templates.each { |v| selections.push [v.title, "0#{v.id}"] }
+      contents = Kapa::Content.where(:active => true).order("sequence DESC")
+      contents = contents.where(options[:conditions]) if options[:conditions].present?
+      contents.each { |v| selections.push [v.title, "0#{v.id}"] }
       return selections
     end
 
     def search(options = {})
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
-      text_templates = Kapa::TextTemplate.all
-      text_templates = text_templates.where("active" => filter.active) if filter.active.present?
-      return text_templates
+      contents = Kapa::Content.all
+      contents = contents.where("active" => filter.active) if filter.active.present?
+      return contents
     end
   end
 end
