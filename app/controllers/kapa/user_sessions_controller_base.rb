@@ -15,7 +15,7 @@ module Kapa::UserSessionsControllerBase
       session[:redirect_to] = nil
     end
     if params[:cas] and Kapa::Cas.defined?
-      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url) and return
+      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url), allow_other_host: true and return
     end
   end
 
@@ -37,7 +37,7 @@ module Kapa::UserSessionsControllerBase
     @current_user.serialize!(:filter, {}) if Rails.configuration.try(:filter_save)
     flash[:info] = "You are successfully logged out."
     if Kapa::Cas.defined?
-      redirect_to Kapa::Cas.logout_url(new_kapa_user_session_url) and return
+      redirect_to Kapa::Cas.logout_url(new_kapa_user_session_url), allow_other_host: true and return
     else
       redirect_to :action => :new and return
     end
@@ -45,7 +45,7 @@ module Kapa::UserSessionsControllerBase
 
   def cas
     if Kapa::Cas.defined?
-      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url) and return
+      redirect_to Kapa::Cas.login_url(kapa_user_session_validate_url), allow_other_host: true and return
     else
       flash[:alert] = "CAS configration error"
       redirect_to :action => :new and return
@@ -58,9 +58,8 @@ module Kapa::UserSessionsControllerBase
       redirect_to :action => :new and return false
     end
 
-    @cas_results = Kapa::Cas.validate(params[:ticket], kapa_user_session_validate_url)
-    if @cas_results[0] == "yes"
-      uid = @cas_results[1]
+    uid = Kapa::Cas.authenticate(params[:ticket], kapa_user_session_validate_url)
+    if uid
       register(uid)
       user = Kapa::User.find_by("uid = ? and category = ? and status >= ?", uid, "ldap", 30)
       if user
