@@ -16,7 +16,7 @@
     <%=f.text_field :title %>
     <% config = @content.template_config %>
     <% if @content.code.present? %>
-      <%=f.static :code, :label => (@content.email? ? "Email" : "Letter"), :content => "#{config[:title] || @content.code} (#{@content.code})" %>
+      <%=f.static :code, :label => (@content.email? ? "Email" : "PDF"), :content => "#{config[:title] || @content.code} (#{@content.code})" %>
     <% end %>
     <% if @content.email? %>
       <%=f.text_field :subject, :hint => "Liquid, like the body: e.g. {{ first_name }}" %>
@@ -34,9 +34,9 @@
         </table>
         <p class="help-block">
           <% if @content.email? %>
-            Use <code>| escape</code> for names, e.g. <code>{{ first_name | escape }}</code>. If this template is inactive or deleted, this email is not sent.
+            Use <code>| escape</code> for names, e.g. <code>{{ first_name | escape }}</code>. If this template is inactive, this email is not sent.
           <% else %>
-            If this template is inactive or deleted, this letter can't be generated.
+            If this template is inactive, this PDF can't be generated.
           <% end %>
         </p>
       </div>
@@ -48,7 +48,7 @@
     <% end %>
     <%=f.select :active, [["Active", "1"], ["In-Active", "0"]] %>
     <%=f.property_select :depts, {:name => :dept, :label => t(:kapa_global_dept).pluralize}, {:multiple => true} %>
-    <%=render(:layout => "/kapa/layouts/controls", :locals => {:delete_path => kapa_content_path(:id => @content, :return_path => kapa_contents_path)}) do %>
+    <%=render(:layout => "/kapa/layouts/controls") do %>
       <li><%=link_to "Preview", {:action => :preview, :id => @content}, :target => :blank %></li>
     <% end if update?%>
   <% end %>

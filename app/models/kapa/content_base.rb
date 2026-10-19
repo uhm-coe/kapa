@@ -3,9 +3,10 @@ module Kapa::ContentBase
 
   included do
     has_many :texts
-    # Email templates (type "email") are rendered by the app's mailer; other types are PDF letters.
+    # Types: "email" (rendered by the app's mailer) and "pdf" (letters and other generated documents).
     scope :emails, -> { where(:type => "email") }
-    scope :letters, -> { where("type IS NULL OR type <> 'email'") }
+    scope :pdfs, -> { where(:type => "pdf") }
+    validates_inclusion_of :type, :in => %w(email pdf)
     validates_presence_of :code, :subject, :if => :email?
     validates_uniqueness_of :code, :allow_blank => true
     validate :validate_liquid
@@ -14,6 +15,10 @@ module Kapa::ContentBase
 
   def email?
     self.type == "email"
+  end
+
+  def pdf?
+    self.type == "pdf"
   end
 
   # This template's entry in the app's registry (title, subject, variables, sample values), or {}.
@@ -50,7 +55,7 @@ module Kapa::ContentBase
     end
   end
 
-  # Liquid errors are reported when saving, so a broken template can't reach a letter or an email.
+  # Liquid errors are reported when saving, so a broken template can't reach a PDF or an email.
   def validate_liquid
     {:body => self.body, :subject => self.subject}.each do |attribute, source|
       next if source.blank?
@@ -64,8 +69,8 @@ module Kapa::ContentBase
     locals = options[:locals] ? options[:locals] : {}
     locals[:dept] = self.dept if self.dept.present?
     html = Liquid::Template.parse(self.body, :error_mode => :strict).render(locals.stringify_keys).html_safe
-    # The layout (template_path) is applied here for letters and emails alike, so this is the complete
-    # HTML: the PDF source for letters, the message body for emails (Kapa::KapaMailerBase).
+    # The layout (template_path) is applied here for PDFs and emails alike, so this is the complete
+    # HTML: the PDF source for PDFs, the message body for emails (Kapa::KapaMailerBase).
     if self.template_path.present?
       layout_renderer.render(:html => html, :layout => layout_path, :assigns => locals)
     else
@@ -77,8 +82,8 @@ module Kapa::ContentBase
     WickedPdf.new.pdf_from_string(self.to_html(options))
   end
 
-  # For letters, the subject (Liquid) is the PDF file name, e.g. "Admission Letter {{ term_desc }}".
-  # Returns nil when the letter has no subject.
+  # For PDFs, the subject (Liquid) is the file name, e.g. "Admission Letter {{ term_desc }}".
+  # Returns nil when the template has no subject.
   def pdf_file_name(locals = {})
     name = render_subject(locals).gsub(%r{[\\/:*?"<>|\r\n\t]+}, " ").squish.sub(/\.pdf\z/i, "")
     "#{name}.pdf" if name.present?
@@ -95,28 +100,45 @@ module Kapa::ContentBase
   
   class_methods do
 
-    # Contents the app's code looks up, by type ("email", "letter") and code: Rails.configuration.contents,
-    # loaded by the app from config/content.yml. A blank type is a letter. Codes are defined by developers;
-    # staff pick one when creating a template. Each entry may have :title, :subject, :template_path,
+    # Contents the app's code looks up, by type ("email", "pdf") and code: Rails.configuration.contents,
+    # loaded by the app from config/content.yml. Codes are defined by developers, and only registered
+    # contents exist (create_missing_defaults!). Each entry may have :title, :subject, :template_path,
     # :variables ({name => description}) and :sample (preview values). Apps without a registry get {}.
     def registry(type)
       contents = Rails.configuration.respond_to?(:contents) ? Rails.configuration.contents : {}
-      contents[type.presence || "letter"] || {}
+      contents[type.to_s] || {}
     end
 
-    # Creates the default template for each registered code of this type that has none yet (templates
-    # staff already edited are left alone). The body is read from db/<type>_templates/<code>.liquid;
-    # title, subject and template_path come from the registry entry. Returns the created templates.
-    def create_missing_defaults!(type, codes = nil)
-      entries = registry(type)
-      entries = entries.slice(*codes) if codes
-      entries.filter_map do |code, config|
-        next if Kapa::Content.exists?(:code => code)
-        body = Rails.root.join("db/#{type}_templates/#{code}.liquid")
-        Kapa::Content.create!(:type => type, :code => code, :title => config[:title], :subject => config[:subject],
-                              :template_path => config[:template_path], :body => (body.exist? ? body.read : ""),
-                              :active => true)
+    # Creates the default template for each registered code that has none yet (templates staff already
+    # edited are left alone), for one type or, without a type, every registered type. The body is read
+    # from db/contents/<type>/<code>.liquid; title, subject and template_path come from the registry
+    # entry. Returns the created templates.
+    def create_missing_defaults!(type = nil, codes = nil)
+      types = type ? [type] : (Rails.configuration.respond_to?(:contents) ? Rails.configuration.contents.keys : [])
+      types.flat_map do |t|
+        entries = registry(t)
+        entries = entries.slice(*codes) if codes
+        existing = Kapa::Content.where(:code => entries.keys).pluck(:code)
+        entries.except(*existing).map do |code, config|
+          body = Rails.root.join("db/contents/#{t}/#{code}.liquid")
+          Kapa::Content.create!(:type => t, :code => code, :title => config[:title], :subject => config[:subject],
+                                :template_path => config[:template_path], :body => (body.exist? ? body.read : ""),
+                                :active => true)
+        end
       end
+    end
+
+    # Run when the app boots (config.after_initialize), so a code added to the registry, or a template
+    # staff deleted, gets its default. Skipped while the database isn't ready: no database (e.g. assets
+    # precompile) or pending migrations (e.g. db:migrate, which boots the app before migrating).
+    def create_missing_defaults_on_boot!
+      return if ActiveRecord::Base.connection_pool.migration_context.needs_migration?
+      created = create_missing_defaults!
+      Rails.logger.info "Created default contents: #{created.map(&:code).join(", ")}" if created.any?
+    rescue ActiveRecord::NoDatabaseError, ActiveRecord::ConnectionNotEstablished => e
+      Rails.logger.warn "Default contents not created (database not ready): #{e.message}"
+    rescue ActiveRecord::RecordNotUnique
+      # Another process booting at the same time created it.
     end
 
     # The active email template for a code, or nil.
@@ -124,9 +146,9 @@ module Kapa::ContentBase
       emails.find_by(:code => code, :active => true)
     end
 
-    # The active letter (PDF) template for a code, or nil.
-    def letter(code)
-      letters.find_by(:code => code, :active => true)
+    # The active PDF template for a code, or nil.
+    def pdf(code)
+      pdfs.find_by(:code => code, :active => true)
     end
 
     def selections(options = {})

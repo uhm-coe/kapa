@@ -15,7 +15,6 @@
 
   <div class="row">
     <div class="col-sm-12 text-right">
-      <%=button_to_link "New", {:action => :new}, :icon => "glyphicon-plus" if create? %>
       <%=button_to_link "Search", nil, "data-toggle" => "modal", "data-target" => "#filter_dialog", :icon => "glyphicon-search" %>
     </div>
   </div>
@@ -34,7 +33,7 @@
     <tbody>
       <% for content in @contents %>
         <tr>
-          <td><%=content.email? ? "Email" : "Letter" %></td>
+          <td><%=content.email? ? "Email" : "PDF" %></td>
           <td><%=content.title %></td>
           <td><%=content.code %></td>
           <td><%=content.active %></td>
