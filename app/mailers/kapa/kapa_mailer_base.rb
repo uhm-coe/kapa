@@ -23,7 +23,7 @@ module Kapa::KapaMailerBase
   end
 
   # ERB email: options become instance variables for template_path/template_name in headers.
-  # headers[:layout] wraps it in a layout, e.g. "mailer" (app/views/layouts/mailer); without one it has none.
+  # headers[:layout] wraps it in a layout, e.g. "student_mail" (app/views/layouts/student_mail); without one it has none.
   def build(headers, options = {})
     options.each_pair do |key, value|
       instance_variable_set("@#{key}", value)

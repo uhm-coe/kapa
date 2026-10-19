@@ -39,7 +39,7 @@
       </div>
     <% end %>
     <% if @content.email? %>
-      <%=f.text_field :template_path, :label => "Layout Path", :hint => "Mail layout used for this email, e.g. mailer (app/views/layouts/mailer). Blank uses the mailer's default." %>
+      <%=f.text_field :template_path, :label => "Layout Path", :hint => "Mail layout used for this email, e.g. student_mail (app/views/layouts/student_mail). Blank sends the email without a layout." %>
     <% else %>
       <%=f.text_field :template_path, :label => "Layout Path" %>
     <% end %>

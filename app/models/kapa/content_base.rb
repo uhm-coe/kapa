@@ -40,7 +40,7 @@ module Kapa::ContentBase
     ApplicationController.renderer.new(env)
   end
 
-  # template_path is a layout: "mailer" (app/views/layouts/mailer) or a full path such as "kapa/layouts/letter".
+  # template_path is a layout: "student_mail" (app/views/layouts/student_mail) or a full path such as "kapa/layouts/letter".
   def layout_path
     return nil if self.template_path.blank?
     path = self.template_path.delete_prefix("/")
@@ -51,7 +51,7 @@ module Kapa::ContentBase
     return if self.template_path.blank?
     lookup = ActionView::LookupContext.new(ActionController::Base.view_paths)
     unless lookup.exists?(File.basename(layout_path), [File.dirname(layout_path)])
-      errors.add(:template_path, "is not a layout in this app (e.g. mailer or kapa/layouts/letter)")
+      errors.add(:template_path, "is not a layout in this app (e.g. student_mail or kapa/layouts/letter)")
     end
   end
 
@@ -88,7 +88,7 @@ module Kapa::ContentBase
     "---\n#{front_matter.map { |name, value| "#{name}: #{value}" }.join("\n")}\n---\n#{self.body}"
   end
 
-  # Plain words and paths (mailer, kapa/layouts/letter, OSAS) stay unquoted, as in the hand-written
+  # Plain words and paths (student_mail, kapa/layouts/letter, OSAS) stay unquoted, as in the hand-written
   # files; anything YAML could read as another type (yes, null, 123, "- x") is quoted.
   def default_file_value(value)
     value = value.to_s
@@ -136,7 +136,7 @@ module Kapa::ContentBase
     # the rest from db/contents/<type>/<code>.liquid, which starts with YAML front matter:
     #   ---
     #   subject: "Your application was submitted"
-    #   template_path: mailer
+    #   template_path: student_mail
     #   dept: OSAS
     #   active: true
     #   ---
