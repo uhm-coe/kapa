@@ -78,24 +78,6 @@ module Kapa::ContentBase
     end
   end
 
-  # This content as a db/contents/<type>/<code>.liquid file: YAML front matter, then the body.
-  # default_attributes reads it back.
-  def to_default_file
-    front_matter = {"subject" => self.subject.to_s.to_json}
-    front_matter["template_path"] = default_file_value(self.template_path) if self.template_path.present?
-    front_matter["dept"] = default_file_value(self.dept) if self.dept.present?
-    front_matter["active"] = self.active ? "true" : "false"
-    "---\n#{front_matter.map { |name, value| "#{name}: #{value}" }.join("\n")}\n---\n#{self.body}"
-  end
-
-  # Plain words and paths (student_mail, kapa/layouts/letter, OSAS) stay unquoted, as in the hand-written
-  # files; anything YAML could read as another type (yes, null, 123, "- x") is quoted.
-  def default_file_value(value)
-    value = value.to_s
-    plain = value.match?(%r{\A[A-Za-z][\w/.\-]*\z}) && !value.match?(/\A(true|false|yes|no|on|off|null|y|n)\z/i)
-    plain ? value : value.to_json
-  end
-
   def to_pdf(options = {})
     WickedPdf.new.pdf_from_string(self.to_html(options))
   end
@@ -133,28 +115,18 @@ module Kapa::ContentBase
     end
 
     # The attributes a registered content is created with: type, code and title from the registry, and
-    # the rest from db/contents/<type>/<code>.liquid, which starts with YAML front matter:
-    #   ---
-    #   subject: "Your application was submitted"
-    #   template_path: student_mail
-    #   dept: OSAS
-    #   active: true
-    #   ---
-    #   <p>Dear {{ student_name | escape }},</p>
+    # subject, body, template_path, dept and active from its row (labeled by code) in
+    # db/fixtures/contents.yml (rake kapa:contents:dump). Without a row, it is created active and empty.
     def default_attributes(type, code)
-      path = Rails.root.join("db/contents/#{type}/#{code}.liquid")
+      row = (default_fixtures[code] || {}).slice("subject", "body", "template_path", "dept", "active")
       {:type => type, :code => code, :title => registry(type).dig(code, :title), :active => true}
-        .merge(parse_default_file(path.exist? ? path.read : ""))
+        .merge(row.transform_keys(&:to_sym))
     end
 
-    # The subject, template_path, dept and active in a default file's front matter (those present),
-    # and the body after it.
-    def parse_default_file(source)
-      front_matter, body = {}, source
-      if (match = source.match(/\A---[ \t]*\n(.*?)\n---[ \t]*(?:\n|\z)/m))
-        front_matter, body = (YAML.safe_load(match[1]) || {}), match.post_match
-      end
-      front_matter.slice("subject", "template_path", "dept", "active").transform_keys(&:to_sym).merge(:body => body)
+    # The rows of db/fixtures/contents.yml, read like Rails fixtures (ERB, then YAML), or {}.
+    def default_fixtures
+      path = Rails.root.join("db/fixtures/contents.yml")
+      path.exist? ? (YAML.safe_load(ERB.new(path.read).result) || {}) : {}
     end
 
     # Creates the default template for each registered code that has none yet (templates staff already
@@ -169,19 +141,8 @@ module Kapa::ContentBase
       end
     end
 
-    # Every content with a code, as a zip of db/contents files (contents/<type>/<code>.liquid), so the
-    # contents in one database (e.g. production) can be copied into a checkout's db/ folder.
-    def to_zip
-      Zip::OutputStream.write_buffer do |zip|
-        Kapa::Content.where.not(:code => [nil, ""]).where(:type => %w(email pdf)).order(:type, :code).each do |content|
-          zip.put_next_entry("contents/#{content.type}/#{content.code}.liquid")
-          zip.write(content.to_default_file)
-        end
-      end.string
-    end
-
-    # Overwrites each registered content with its db/contents file, creating it if missing (rake
-    # kapa:contents:load), e.g. after unzipping contents downloaded from production. Unlike
+    # Overwrites each registered content with its row in db/fixtures/contents.yml, creating it if missing
+    # (rake kapa:contents:load), e.g. after saving contents downloaded from production there. Unlike
     # create_missing_defaults!, staff edits are replaced. Returns {code => :created, :updated or :unchanged}.
     def load_defaults!(codes = nil)
       registry_types.each_with_object({}) do |type, results|
@@ -196,6 +157,22 @@ module Kapa::ContentBase
           results[code] = status
         end
       end
+    end
+
+    # All contents as a Rails fixture file (rake kapa:contents:dump and the admin's Download), labeled by code. Psych quotes values
+    # YAML would misread, such as a subject starting with Liquid's "{{" or "{%". Fixture files also run
+    # through ERB before YAML, so "<%" in a value is written as "<%%" (Liquid tags aren't ERB).
+    # Serialized and JSON columns (yml, json) are written as stored, not as Ruby hashes.
+    def to_fixtures
+      fixtures = Kapa::Content.order(:type, :code, :id).each_with_object({}) do |content, rows|
+        rows[content.code.presence || "content_#{content.id}"] = content.attributes.to_h do |name, value|
+          value = content.read_attribute_before_type_cast(name) if value.is_a?(Hash) || value.is_a?(Array)
+          value = value.utc.to_fs(:db) if value.is_a?(Time)
+          value = value.gsub("<%", "<%%") if value.is_a?(String)
+          [name, value]
+        end
+      end
+      fixtures.to_yaml(:line_width => -1)
     end
 
     # Titles are defined in the registry; copies a changed title to its record. Returns the number updated.

@@ -31,5 +31,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'wicked_pdf'
   s.add_dependency 'liquid'
   s.add_dependency 'csv'
-  s.add_dependency 'rubyzip', '>= 2.3', '< 3.0'
 end

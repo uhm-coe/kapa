@@ -25,12 +25,12 @@ module Kapa::ContentsControllerBase
     redirect_to kapa_content_path(:id => @content)
   end
 
-  # All contents as db/contents files in a zip; unzip it into the app's db/ folder.
+  # All contents as a fixture file; save it as the app's db/fixtures/contents.yml.
   def export
-    send_data Kapa::Content.to_zip,
-              :type => "application/zip",
+    send_data Kapa::Content.to_fixtures,
+              :type => "application/x-yaml",
               :disposition => "attachment",
-              :filename => "contents-#{Date.today.strftime("%Y%m%d")}.zip"
+              :filename => "contents.yml"
   end
 
   # Emails preview in the browser with the registry's sample values; PDFs preview as PDF.

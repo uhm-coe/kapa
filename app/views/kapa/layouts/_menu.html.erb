@@ -7,7 +7,7 @@
    menu_items["Document"].push ["Letters", kapa_texts_path] if read?(:kapa_texts)
    menu_items["Administration"] = []
    menu_items["Administration"].push ["Form Builder", kapa_form_templates_path] if manage?(:kapa_form_templates)
-   menu_items["Administration"].push ["Contents", kapa_contents_path] if manage?(:kapa_contents)
+   menu_items["Administration"].push ["Edit Contents", kapa_contents_path] if manage?(:kapa_contents)
    menu_items["Administration"].push ["Properties", kapa_properties_path] if manage?(:kapa_properties)
    menu_items["Administration"].push ["Users", kapa_users_path] if manage?(:kapa_users)
  end
