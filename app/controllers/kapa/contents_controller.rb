@@ -1,3 +1,3 @@
-class Kapa::ContentsController < Kapa::KapaController
-  include Kapa::ContentsControllerBase
+class Kapa::TextTemplatesController < Kapa::KapaController
+  include Kapa::TextTemplatesControllerBase
 end

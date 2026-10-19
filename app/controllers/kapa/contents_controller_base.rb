@@ -1,92 +1,94 @@
-module Kapa::ContentsControllerBase
+module Kapa::TextTemplatesControllerBase
   extend ActiveSupport::Concern
-
-  def show
-    @content = Kapa::Content.find params[:id]
-    @content_ext = @content.ext
-    @content_pages = Kapa::Content.select("distinct page").where("length(page) > 0").order('1').collect { |p| p.page }
-  end
-
-  def new
-    @filter = filter
-    @content = Kapa::Content.new
-    @content.page = @filter.page
-    @content_pages = Kapa::Content.select("distinct page").where("length(page) > 0").order('1').collect { |p| p.page }
-  end
-
-  def update
-    @content = Kapa::Content.find params[:id]
-    @content.attributes= content_params
-    @content.update_serialized_attributes!(:_ext, params[:content_ext]) if params[:content_ext].present?
-
-    if @content.save
-      flash[:notice] = "Content was successfully updated."
-    else
-      flash[:alert] = error_message_for(@content)
-    end
-    redirect_to kapa_content_path(:id => @content)
-  end
-
-  def create
-    @content = Kapa::Content.new
-    @content.attributes= content_params
-
-    unless @content.save
-      flash[:alert] = error_message_for(@content)
-      redirect_to new_kapa_content_path and return false
-    end
-    flash[:notice] = 'Content was successfully created.'
-    redirect_to kapa_content_path(:id => @content, :anchor => params[:anchor])
-  end
 
   def index
     @filter = filter
-    @modal = true if @filter.page.blank?
-    @contents = Kapa::Content.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+    @text_templates = Kapa::TextTemplate.search(:filter => @filter).paginate(:page => params[:page], :per_page => @filter.per_page)
+  end
+
+  def show
+    @text_template = Kapa::TextTemplate.find(params[:id])
+    @text_template_ext = @text_template.ext
+    @title = @text_template.title
+  end
+
+  def update
+    @text_template = Kapa::TextTemplate.find(params[:id])
+    @text_template.attributes = text_template_params
+    @text_template.update_serialized_attributes!(:_ext, params[:text_template_ext]) if params[:text_template_ext].present?
+
+    if @text_template.save
+      flash[:notice] = "Text template was successfully updated."
+    else
+      flash[:alert] = @text_template.errors.full_messages.join(", ")
+    end
+    redirect_to kapa_text_template_path(:id => @text_template)
+  end
+
+  def new
+    @text_template = Kapa::TextTemplate.new(:template_path => "/kapa/text_templates/default")
+  end
+
+  # Text templates are PDF letters or emails (type "email"). When the app registers templates of that
+  # type (Kapa::TextTemplate.registry), a new template must be for one of them; emails always need one.
+  # Emails use the mail layout, not a layout path.
+  def create
+    type = params.dig(:text_template, :type).to_s
+    registry = Kapa::TextTemplate.registry(type)
+    if (type == "email" || registry.any?) && !registry.key?(params.dig(:text_template, :code))
+      flash[:alert] = "Please choose which #{type == "email" ? "email" : "letter"} this template is for."
+      redirect_to new_kapa_text_template_path and return false
+    end
+
+    @text_template = Kapa::TextTemplate.new
+    @text_template.attributes = text_template_params
+
+    unless @text_template.save
+      flash[:alert] = @text_template.errors.full_messages.join(", ")
+      redirect_to new_kapa_text_template_path and return false
+    end
+    flash[:notice] = "Text template was successfully created."
+    redirect_to kapa_text_template_path(:id => @text_template)
   end
 
   def destroy
-    @content = Kapa::Content.find params[:id]
+    @text_template = Kapa::TextTemplate.find params[:id]
 
-    unless @content.destroy
-      flash[:alert] = error_message_for(@content)
-      redirect_to kapa_content_path(:id => @content) and return false
+    unless @text_template.destroy
+      flash[:alert] = error_message_for(@text_template)
+      redirect_to kapa_text_template_path(:id => @text_template) and return false
     end
-    flash[:notice] = "Content was successfully deleted."
-    redirect_to kapa_contents_path
+    flash[:notice] = "Text template was successfully deleted."
+    redirect_to kapa_text_templates_path
   end
 
   def export
     @filter = filter
-    send_data Kapa::Content.to_table(:as => :csv, :filter => @filter),
+    send_data Kapa::TextTemplate.to_table(:as => :csv, :filter => @filter),
               :type => "application/csv",
               :disposition => "inline",
-              :filename => "Contents_#{DateTime.now.to_fs(:datetime)}.csv"
+              :filename => "text_templates.csv"
   end
 
-  def import
-    # Do error checking of the file
-    unless params[:data].present? && params[:data][:import_file].present?
-      flash[:warning] = "Please specify the file you are importing."
-      redirect_to(:action => :index) and return false
+  # Emails preview in the browser with the registry's sample values; letters preview as PDF.
+  def preview
+    @text_template = Kapa::TextTemplate.find(params[:id])
+    if @text_template.email?
+      sample = @text_template.template_config[:sample] || {}
+      subject = ERB::Util.html_escape(@text_template.render_subject(sample))
+      html = "<p><strong>Subject:</strong> #{subject}</p><hr>".html_safe + @text_template.to_html(:locals => sample)
+      # to_html already applied the template's layout (none for a plain email).
+      render :html => html, :layout => false and return
     end
-
-    CSV.new(params[:data][:import_file].tempfile, :headers => true).each do |row|
-      if row["page"].blank? or row["region"].blank?
-        flash[:danger] = "Skipped some items."
-        next
-      else  
-        content = Kapa::Content.find_or_create_by(:page => row["page"], :region => row["region"])
-        content.html = row["html"]
-        content.save
-      end
-    end
-    flash[:notice] = 'Contents were imported.'
-    redirect_to(:action => :index)
+    sample = @text_template.template_config[:sample] || {}
+    logger.debug "*DEBUG* #{@text_template.to_html(:locals => sample.dup)}"
+    send_data @text_template.to_pdf(:locals => sample.dup),
+              :type => "application/pdf",
+              :disposition => "inline",
+              :filename => @text_template.pdf_file_name(sample) || "#{@text_template.title}_preview.pdf"
   end
 
-  private
-  def content_params
-    params.require(:content).permit(:page, :region, :html)
+  def text_template_params
+    params.require(:text_template).permit(:type, :title, :body, :subject, :code, :active, :template_path, :dept, :depts => [])
   end
 end

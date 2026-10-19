@@ -1,3 +1,3 @@
-class Kapa::Content < Kapa::KapaModel
-  include Kapa::ContentBase
+class Kapa::TextTemplate < Kapa::KapaModel
+  include Kapa::TextTemplateBase
 end
