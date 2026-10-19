@@ -117,8 +117,9 @@ module Kapa::ContentBase
     # The attributes a registered content is created with: type, code and title from the registry, and
     # subject, body, template_path, dept and active from its row (labeled by code) in
     # db/fixtures/contents.yml (rake kapa:contents:dump). Without a row, it is created active and empty.
-    def default_attributes(type, code)
-      row = (default_fixtures[code] || {}).slice("subject", "body", "template_path", "dept", "active")
+    # Pass fixtures (default_fixtures) when looking up several codes, so the file is read once.
+    def default_attributes(type, code, fixtures = default_fixtures)
+      row = (fixtures[code] || {}).slice("subject", "body", "template_path", "dept", "active")
       {:type => type, :code => code, :title => registry(type).dig(code, :title), :active => true}
         .merge(row.transform_keys(&:to_sym))
     end
@@ -131,30 +132,18 @@ module Kapa::ContentBase
 
     # Creates the default template for each registered code that has none yet (templates staff already
     # edited are left alone), for one type or, without a type, every registered type, from
-    # default_attributes. Returns the created templates.
+    # default_attributes. Used when the app boots, so a code added to the registry reaches production.
+    # (Seeds and rake kapa:contents:load replace the whole table from the fixture instead.)
+    # Returns the created templates.
     def create_missing_defaults!(type = nil, codes = nil)
+      fixtures = nil
       (type ? [type] : registry_types).flat_map do |t|
         codes_of_type = registry(t).keys
         codes_of_type &= codes if codes
         existing = Kapa::Content.where(:code => codes_of_type).pluck(:code)
-        (codes_of_type - existing).map { |code| Kapa::Content.create!(default_attributes(t, code)) }
-      end
-    end
-
-    # Overwrites each registered content with its row in db/fixtures/contents.yml, creating it if missing
-    # (rake kapa:contents:load), e.g. after saving contents downloaded from production there. Unlike
-    # create_missing_defaults!, staff edits are replaced. Returns {code => :created, :updated or :unchanged}.
-    def load_defaults!(codes = nil)
-      registry_types.each_with_object({}) do |type, results|
-        codes_of_type = registry(type).keys
-        codes_of_type &= codes if codes
-        codes_of_type.each do |code|
-          content = Kapa::Content.find_or_initialize_by(:code => code)
-          status = content.new_record? ? :created : :updated
-          content.assign_attributes(default_attributes(type, code))
-          status = :unchanged unless content.changed?
-          content.save!
-          results[code] = status
+        (codes_of_type - existing).map do |code|
+          fixtures ||= default_fixtures
+          Kapa::Content.create!(default_attributes(t, code, fixtures))
         end
       end
     end
@@ -162,10 +151,10 @@ module Kapa::ContentBase
     # All contents as a Rails fixture file (rake kapa:contents:dump and the admin's Download), labeled by code. Psych quotes values
     # YAML would misread, such as a subject starting with Liquid's "{{" or "{%". Fixture files also run
     # through ERB before YAML, so "<%" in a value is written as "<%%" (Liquid tags aren't ERB).
-    # Serialized and JSON columns (yml, json) are written as stored, not as Ruby hashes.
+    # The serialized yml column is written as stored, not as a Ruby hash. The json column isn't used.
     def to_fixtures
       fixtures = Kapa::Content.order(:type, :code, :id).each_with_object({}) do |content, rows|
-        rows[content.code.presence || "content_#{content.id}"] = content.attributes.to_h do |name, value|
+        rows[content.code.presence || "content_#{content.id}"] = content.attributes.except("json").to_h do |name, value|
           value = content.read_attribute_before_type_cast(name) if value.is_a?(Hash) || value.is_a?(Array)
           value = value.utc.to_fs(:db) if value.is_a?(Time)
           value = value.gsub("<%", "<%%") if value.is_a?(String)
