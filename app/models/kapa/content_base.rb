@@ -89,13 +89,18 @@ module Kapa::ContentBase
     "#{name}.pdf" if name.present?
   end
 
+  # This PDF template rendered into a Kapa::File (not saved). Options, besides :locals:
+  #   :file       an existing record to fill instead of a new one, e.g. to regenerate a letter in place
+  #   :file_name  the name when the subject gives none (default: the title)
+  # StringIO: Paperclip takes IO-like objects, not a string of PDF bytes; it has no name or type of
+  # its own, so both are set after assigning the data.
   def to_file(options = {})
-    @file = Kapa::File.new
-    @file.name = pdf_file_name(options[:locals] || {}) || "#{self.title}.pdf"
-    @file.data = StringIO.new(self.to_pdf(options))
-    @file.data_file_name = @file.name
-    @file.data_content_type = "application/pdf"
-    return @file
+    file = options[:file] || Kapa::File.new
+    file.name = pdf_file_name(options[:locals] || {}) || options[:file_name] || "#{self.title}.pdf"
+    file.data = StringIO.new(self.to_pdf(options))
+    file.data_file_name = file.name
+    file.data_content_type = "application/pdf"
+    file
   end
   
   class_methods do
@@ -210,7 +215,7 @@ module Kapa::ContentBase
       filter = options[:filter].is_a?(Hash) ? OpenStruct.new(options[:filter]) : options[:filter]
       contents = Kapa::Content.all
       contents = contents.where("active" => filter.active) if filter.active.present?
-      return contents
+      return contents.order(:type, :code)
     end
   end
 end

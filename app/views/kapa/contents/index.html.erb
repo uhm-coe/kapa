@@ -24,8 +24,8 @@
     <thead>
       <tr>
         <th>Type</th>
-        <th>Title</th>
         <th>Code</th>
+        <th>Title</th>
         <th>Active</th>
         <th><%=t(:kapa_global_dept).pluralize %></th>
         <th></th>
@@ -35,8 +35,8 @@
       <% for content in @contents %>
         <tr>
           <td><%=content.email? ? "Email" : "PDF" %></td>
-          <td><%=content.title %></td>
           <td><%=content.code %></td>
+          <td><%=content.title %></td>
           <td><%=content.active %></td>
           <td><%=content.depts_desc %></td>
           <td class="right"><%=button_to_link "", {:action => :show, :id => content}, :icon => "glyphicon-chevron-right", :class => "btn-default btn-xs pull-right" %></td>

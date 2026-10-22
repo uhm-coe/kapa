@@ -14,7 +14,7 @@
 
   <%=bootstrap_form_for :content, :url => kapa_content_path(:id => @content), :html => {:method => :put, :id => "content_form"} do |f| %>
     <% config = @content.template_config %>
-    <%=f.static :code, :label => (@content.email? ? "Email" : "PDF"), :content => "#{@content.title} (#{@content.code})" %>
+    <%=f.static :code, :label => (@content.email? ? "Email" : "PDF"), :content => @content.code %>
     <% if @content.email? %>
       <%=f.text_field :subject, :hint => "Liquid, like the body: e.g. {{ first_name }}" %>
     <% else %>
