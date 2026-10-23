@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails'
   s.add_dependency 'sprockets', '~> 4.2'
   s.add_dependency 'uglifier'
-  s.add_dependency 'wicked_pdf'
+  s.add_dependency 'grover'
   s.add_dependency 'liquid'
   s.add_dependency 'csv'
 end

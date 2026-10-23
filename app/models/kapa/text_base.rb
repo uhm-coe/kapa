@@ -55,7 +55,7 @@ module Kapa::TextBase
     locals[:@text] = self
     html = ApplicationController.render(self.content.template_path, :layout => nil, :locals => locals)
     logger.debug "*DEBUG* #{html}"
-    pdf_contents = WickedPdf.new.pdf_from_string(html)
+    pdf_contents = Kapa::Pdf.from_html(html)
     pdf = Kapa::File.new
     pdf.name = "#{self.title}.pdf"
     pdf.data = StringIO.new(pdf_contents)

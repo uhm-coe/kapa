@@ -68,7 +68,10 @@ module Kapa::ContentBase
   def to_html(options = {})
     locals = options[:locals] ? options[:locals] : {}
     locals[:dept] = self.dept if self.dept.present?
-    html = Liquid::Template.parse(self.body, :error_mode => :strict).render(locals.stringify_keys).html_safe
+    # Variables are data, so the body gets them HTML-escaped, like <%= %> in Rails views; a value the
+    # code marks html_safe is inserted as is. (Kapa::LiquidFilters keeps a template's own | escape from
+    # escaping twice.) Subjects and PDF file names are plain text, so render_subject doesn't escape.
+    html = Liquid::Template.parse(self.body, :error_mode => :strict).render(self.class.escape_locals(locals)).html_safe
     # The layout (template_path) is applied here for PDFs and emails alike, so this is the complete
     # HTML: the PDF source for PDFs, the message body for emails (Kapa::KapaMailerBase).
     if self.template_path.present?
@@ -79,7 +82,7 @@ module Kapa::ContentBase
   end
 
   def to_pdf(options = {})
-    WickedPdf.new.pdf_from_string(self.to_html(options))
+    Kapa::Pdf.from_html(self.to_html(options))
   end
 
   # For PDFs, the subject (Liquid) is the file name, e.g. "Admission Letter {{ term_desc }}".
@@ -105,8 +108,21 @@ module Kapa::ContentBase
   
   class_methods do
 
+    # Strings HTML-escaped, in hashes and arrays too (e.g. the hours log digest's students); html_safe
+    # strings and other values (numbers, dates, booleans) unchanged. Hash keys become strings at every
+    # level, since Liquid only reads string keys.
+    def escape_locals(value)
+      case value
+      when Hash then value.to_h { |key, v| [key.to_s, escape_locals(v)] }
+      when Array then value.map { |v| escape_locals(v) }
+      when ActiveSupport::SafeBuffer then value.to_str
+      when String then ERB::Util.html_escape(value).to_str
+      else value
+      end
+    end
+
     # Contents the app's code looks up, by type ("email", "pdf") and code: Rails.configuration.contents,
-    # loaded by the app from config/content.yml. Codes are defined by developers, and only registered
+    # loaded by the app from config/contents_metadata.yml. Codes are defined by developers, and only registered
     # contents exist (create_missing_defaults!). Each entry has :title (the internal name, which staff
     # can't change), :variables ({name => description}) and :sample (preview values). Apps without a
     # registry get {}.

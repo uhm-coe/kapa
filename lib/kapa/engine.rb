@@ -32,6 +32,13 @@ module Kapa
       Date::DATE_FORMATS[:default]  = '%m/%d/%Y'
     end
 
+    # PDF layouts inline their CSS and images (Kapa::PdfHelper) wherever they are rendered,
+    # including ApplicationController.renderer in models.
+    config.to_prepare do
+      ActionView::Base.include Kapa::PdfHelper
+      Liquid::Template.register_filter(Kapa::LiquidFilters)
+    end
+
     initializer :kapa_assets do |app|
       app.config.assets.precompile += %w[kapa_manifest.js]
     end
