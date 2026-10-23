@@ -1,19 +1,29 @@
-# Renders HTML to PDF with headless Chrome: the grover gem, which runs Puppeteer (Node). The app
-# installs Puppeteer (yarn add puppeteer) and may set Rails.configuration.grover_options, merged
-# over the defaults below (e.g. :executable_path for a system Chrome, :launch_args).
-# Layouts should inline their CSS and images (Kapa::PdfHelper): the HTML is rendered without a base
-# URL, so links to /assets would not load.
+require "open3"
+
+# Renders HTML to PDF with WeasyPrint (lib/kapa/pdf_render.py), which servers install with
+# apt (weasyprint, plus fonts: fonts-urw-base35 for Helvetica, fonts-liberation). Only data: URIs
+# are loaded, so layouts inline their CSS and images (Kapa::PdfHelper).
+# App settings (optional): Rails.configuration.pdf_options (merged over DEFAULT_OPTIONS),
+# pdf_python (default "python3").
 module Kapa::Pdf
+  class Error < StandardError; end
+
+  RENDER_SCRIPT = Kapa::Engine.root.join("lib/kapa/pdf_render.py").to_s
+
   DEFAULT_OPTIONS = {
-    :format => "Letter",
-    :margin => {:top => "10mm", :bottom => "10mm", :left => "10mm", :right => "10mm"},
-    :print_background => true,
-    :emulate_media => "screen",  # the screen CSS the letters were designed with (as wkhtmltopdf used)
-    :wait_until => "load"        # everything is inline; nothing to wait for on the network
+    :width => 8.5, :height => 11,  # page size in inches (US Letter)
+    :margin => 10,                 # page margin in mm
+    :zoom => 0.8,                  # the scale WickedPdf (wkhtmltopdf's smart shrinking) printed letters at
+    :timeout => 30                 # seconds
   }.freeze
 
   def self.from_html(html, options = {})
-    app_options = Rails.configuration.respond_to?(:grover_options) ? Rails.configuration.grover_options.to_h : {}
-    Grover.new(html.to_s, **DEFAULT_OPTIONS.deep_merge(app_options).deep_merge(options).deep_symbolize_keys).to_pdf
+    options = DEFAULT_OPTIONS.merge(Rails.configuration.try(:pdf_options).to_h).merge(options)
+    python = Rails.configuration.try(:pdf_python) || "python3"
+    args = options.slice(*DEFAULT_OPTIONS.keys).flat_map { |key, value| ["--#{key}", value.to_s] }
+    pdf, errors, status = Open3.capture3(python, RENDER_SCRIPT, *args, :stdin_data => html.to_s, :binmode => true)
+    raise Error, "PDF rendering failed (#{status}): #{errors.strip.lines.last(5).join}" unless status.success?
+    Rails.logger.warn("Kapa::Pdf: #{errors.strip}") if errors.present?
+    pdf
   end
 end

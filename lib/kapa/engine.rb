@@ -33,10 +33,10 @@ module Kapa
     end
 
     # PDF layouts inline their CSS and images (Kapa::PdfHelper) wherever they are rendered,
-    # including ApplicationController.renderer in models.
+    # including ApplicationController.renderer in models. Template filters: Kapa::LiquidFilters.
     config.to_prepare do
       ActionView::Base.include Kapa::PdfHelper
-      Liquid::Template.register_filter(Kapa::LiquidFilters)
+      Liquid::Environment.default.register_filter(Kapa::LiquidFilters)
     end
 
     initializer :kapa_assets do |app|

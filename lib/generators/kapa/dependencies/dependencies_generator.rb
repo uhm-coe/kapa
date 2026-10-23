@@ -9,8 +9,4 @@ class Kapa::DependenciesGenerator < Rails::Generators::Base
     gem 'whenever', :require => false
   end
 
-  def add_yarn_dependencies
-    puts "Installing yarn dependencies..."
-    run "yarn add puppeteer"
-  end
 end
