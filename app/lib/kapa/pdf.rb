@@ -1,6 +1,6 @@
 require "open3"
 
-# Renders HTML to PDF with WeasyPrint (lib/kapa/pdf_render.py), which servers install with
+# Renders HTML to PDF with WeasyPrint (pdf_render.py, next to this file), which servers install with
 # apt (weasyprint, plus fonts: fonts-urw-base35 for Helvetica, fonts-liberation). Only data: URIs
 # are loaded, so layouts inline their CSS and images (Kapa::PdfHelper).
 # App settings (optional): Rails.configuration.pdf_options (merged over DEFAULT_OPTIONS),
@@ -8,7 +8,7 @@ require "open3"
 module Kapa::Pdf
   class Error < StandardError; end
 
-  RENDER_SCRIPT = Kapa::Engine.root.join("lib/kapa/pdf_render.py").to_s
+  RENDER_SCRIPT = File.expand_path("pdf_render.py", __dir__)
 
   DEFAULT_OPTIONS = {
     :width => 8.5, :height => 11,  # page size in inches (US Letter)
