@@ -2,7 +2,7 @@ require 'net/http'
 
 # CAS 1.0 client shared by the admin and student sites. Configure with
 # Rails.configuration.cas_host, cas_login_path, cas_validate_path and cas_logout_path.
-class Kapa::Cas
+module Kapa::Cas
   TIMEOUT = 10
 
   def self.defined?

@@ -1,9 +1,11 @@
-class Kapa::CsvSerializer
+# Stores an array as a comma-separated string. Use as a serialize coder:
+#   serialize :licensure, :coder => Kapa::CsvSerializer
+module Kapa::CsvSerializer
   def self.load(value)
     value.to_s.split(/,\s*/)
   end
 
   def self.dump(value)
-    value.delete_if {|v| v.blank?}.join(",")
+    Array(value).reject(&:blank?).join(",")
   end
 end
